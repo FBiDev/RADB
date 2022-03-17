@@ -3,25 +3,20 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 //
 using System.Linq;
-using System.IO;
-using System.Net;
-using Newtonsoft.Json;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace RADB
 {
     public partial class RADB : Form
     {
-        private WebClient web = new WebClient()
-        {
-            Proxy = new WebProxy("http://cohab-proxy.cohabct.com.br:3128", true,
-                    new string[] { }, new NetworkCredential("fbirnfeld", "zumbie")),
-        };
-
-        private string URI_API = "http://retroachievements.org/API/";
-        private string AuthQS = "?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
+        private WebClient web = new WebClient() { Proxy = Config.Proxy, };
+        private string URI_API = Config.URI_API;
+        private string AuthQS = Config.AuthQS;
         private string URL = "";
 
         private List<int> IDs = new List<int>();
