@@ -64,16 +64,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Console.cs" />
+    <Compile Include="src\cls\Console.cs" />
     <Compile Include="RADB.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RADB.Designer.cs">
       <DependentUpon>RADB.cs</DependentUpon>
     </Compile>
-    <Compile Include="Game.cs" />
+    <Compile Include="src\cls\Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\cls\Achievement.cs" />
     <EmbeddedResource Include="RADB.resx">
       <DependentUpon>RADB.cs</DependentUpon>
     </EmbeddedResource>

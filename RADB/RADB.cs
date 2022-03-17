@@ -33,6 +33,7 @@ namespace RADB
 
         private void btnGameID_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtSearch.Text)) { return; }
             var page = "API_GetGame.php";
             URL = URI_API + page + AuthQS + "&i=" + txtSearch.Text;
             txtURL.Text = URL;

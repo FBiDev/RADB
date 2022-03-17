@@ -8,11 +8,11 @@ namespace RADB
         List<string> Achievements { get; set; }
         public string Console { get; set; }
 
-        public string ConsoleID { get; set; }
+        public int ConsoleID { get; set; }
         public string ConsoleName { get; set; }
         public string Developer { get; set; }
         public string Flags { get; set; }
-        public string ForumTopicID { get; set; }
+        public int ForumTopicID { get; set; }
 
         public string GameIcon { get; set; }
         public string GameTitle { get; set; }
@@ -30,7 +30,7 @@ namespace RADB
         public int NumDistinctPlayersHardcore { get; set; }
 
         public string Publisher { get; set; }
-        public string Released { get; set; }
+        public DateTime Released { get; set; }
         public string RichPresencePatch { get; set; }
         public string Title { get; set; }
     }
