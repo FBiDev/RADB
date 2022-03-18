@@ -9,6 +9,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Text;
 
 namespace RADB
 {
@@ -21,22 +23,60 @@ namespace RADB
 
         private List<int> IDs = new List<int>();
 
+        //txts
+        private int ID_value;
+        private string User_value;
+        private int Count_value;
+        private int Offset_value;
+        private DateTime Date1_value;
+        private DateTime Date2_value;
+
         public RADB()
         {
             InitializeComponent();
+            Config.WebStart();
+        }
+
+        private void ParseValues()
+        {
+            int.TryParse(txtID.Text.Trim(), out ID_value);
+            User_value = txtUser.Text.Trim();
+            int.TryParse(txtCount.Text.Trim(), out Count_value);
+            int.TryParse(txtOffset.Text.Trim(), out Offset_value);
+            DateTime.TryParse(dtpDate1.Text.Trim(), out Date1_value);
+            DateTime.TryParse(dtpDate2.Text.Trim(), out Date2_value);
+        }
+
+        private bool ValidID()
+        {
+            return ID_value > 0;
         }
 
         private void btnGameID_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtSearch.Text)) { return; }
-            var page = "API_GetGame.php";
-            URL = URI_API + page + AuthQS + "&i=" + txtSearch.Text;
-            txtURL.Text = URL;
+            ParseValues();
+            if (!ValidID()) { return; }
 
-            var content = web.DownloadString(URL);
+            Game game = RA.GetGameInfoExtended(ID_value);
 
-            Game game = JsonConvert.DeserializeObject<Game>(content);
-            txtOutput.Text = string.IsNullOrWhiteSpace(game.Title) ? "NULL" : game.Title;
+            txtOutput.Text = string.IsNullOrWhiteSpace(game.Title) ? "NULL" : game.Title + Environment.NewLine;
+
+            string badges = string.Empty;
+            foreach (var achievement in game.AchievementsList)
+            {
+                badges += achievement.BadgeName + Environment.NewLine;
+            }
+
+            txtOutput.Text += badges.TrimEnd('\r', '\n');
+        }
+
+        private void btnDownloadBadges_Click(object sender, EventArgs e)
+        {
+            ParseValues();
+            if (!ValidID()) { return; }
+
+            RA.DownloadBadges(ID_value);
+            txtOutput.Text = "Badges Downloaded!";
         }
 
         private void btnConsoleIDs_Click(object sender, EventArgs e)
@@ -65,7 +105,7 @@ namespace RADB
         private void btnGameList_Click(object sender, EventArgs e)
         {
             var file = "API_GetGameList.php";
-            URL = URI_API + file + AuthQS + "&i=" + txtSearch.Text;
+            URL = URI_API + file + AuthQS + "&i=" + txtID.Text;
             txtURL.Text = URL;
 
             using (StreamReader r = new StreamReader("src/rsc/API_GetGameList.json"))
@@ -106,18 +146,17 @@ namespace RADB
                 Game game = JsonConvert.DeserializeObject<Game>(content);
                 textTotal += game.ID.ToString().PadLeft(5, ' ') + " : " + game.Genre + Environment.NewLine;
             }
-            textTotal = textTotal.ToString().TrimEnd('\r', '\n');
-            txtOutput.Text = textTotal;
+            txtOutput.Text = textTotal.TrimEnd('\r', '\n');
         }
 
         private void btnMergeImages_Click(object sender, EventArgs e)
         {
             int gameID;
-            bool isNumber = int.TryParse(txtSearch.Text.Trim(), out gameID);
-            string filePath = "src/rsc/game/" + txtSearch.Text + "/";
+            bool isNumber = int.TryParse(txtID.Text.Trim(), out gameID);
+            string filePath = "src/rsc/game/" + txtID.Text + "/";
             string[] files = new string[] { "93518_lock.png", "93519_lock.png" };
 
-            if (txtSearch.Text.Trim() == string.Empty || !isNumber || !Directory.Exists(filePath)) return;
+            if (txtID.Text.Trim() == string.Empty || !isNumber || !Directory.Exists(filePath)) return;
 
             foreach (string file in files)
             {
@@ -194,7 +233,7 @@ namespace RADB
                 ImageCodecInfo encoder = GetEncoder(ImageFormat.Jpeg);
                 EncoderParameters parameters = new EncoderParameters(1)
                 {
-                    Param = new EncoderParameter[] { new EncoderParameter(Encoder.Quality, 91L) }
+                    Param = new EncoderParameter[] { new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 91L) }
                 };
 
                 string fileName = "_" + gameID + ".jpg";
@@ -233,5 +272,7 @@ namespace RADB
             }
             return null;
         }
+
+        
     }
 }

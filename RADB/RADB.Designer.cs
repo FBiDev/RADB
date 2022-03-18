@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.btnGameInfo = new System.Windows.Forms.Button();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.lblSearch = new System.Windows.Forms.Label();
+            this.txtID = new System.Windows.Forms.TextBox();
+            this.lblID = new System.Windows.Forms.Label();
             this.btnGetConsoles = new System.Windows.Forms.Button();
             this.btnGameList = new System.Windows.Forms.Button();
             this.txtURL = new System.Windows.Forms.TextBox();
@@ -38,37 +38,48 @@
             this.btnGamesGenre = new System.Windows.Forms.Button();
             this.txtOutput = new System.Windows.Forms.RichTextBox();
             this.btnMergeImages = new System.Windows.Forms.Button();
+            this.lblUser = new System.Windows.Forms.Label();
+            this.txtUser = new System.Windows.Forms.TextBox();
+            this.lblCount = new System.Windows.Forms.Label();
+            this.txtCount = new System.Windows.Forms.TextBox();
+            this.lblOffset = new System.Windows.Forms.Label();
+            this.txtOffset = new System.Windows.Forms.TextBox();
+            this.dtpDate1 = new System.Windows.Forms.DateTimePicker();
+            this.lblDate1 = new System.Windows.Forms.Label();
+            this.lblDate2 = new System.Windows.Forms.Label();
+            this.dtpDate2 = new System.Windows.Forms.DateTimePicker();
+            this.btnDownloadBadges = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnGameInfo
             // 
-            this.btnGameInfo.Location = new System.Drawing.Point(12, 80);
+            this.btnGameInfo.Location = new System.Drawing.Point(12, 51);
             this.btnGameInfo.Name = "btnGameInfo";
-            this.btnGameInfo.Size = new System.Drawing.Size(199, 23);
+            this.btnGameInfo.Size = new System.Drawing.Size(190, 23);
             this.btnGameInfo.TabIndex = 1;
             this.btnGameInfo.Text = "GetGameInfo";
             this.btnGameInfo.UseVisualStyleBackColor = true;
             this.btnGameInfo.Click += new System.EventHandler(this.btnGameID_Click);
             // 
-            // txtSearch
+            // txtID
             // 
-            this.txtSearch.Location = new System.Drawing.Point(12, 25);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(635, 20);
-            this.txtSearch.TabIndex = 2;
+            this.txtID.Location = new System.Drawing.Point(12, 25);
+            this.txtID.Name = "txtID";
+            this.txtID.Size = new System.Drawing.Size(92, 20);
+            this.txtID.TabIndex = 2;
             // 
-            // lblSearch
+            // lblID
             // 
-            this.lblSearch.AutoSize = true;
-            this.lblSearch.Location = new System.Drawing.Point(12, 9);
-            this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(41, 13);
-            this.lblSearch.TabIndex = 3;
-            this.lblSearch.Text = "Search";
+            this.lblID.AutoSize = true;
+            this.lblID.Location = new System.Drawing.Point(9, 9);
+            this.lblID.Name = "lblID";
+            this.lblID.Size = new System.Drawing.Size(18, 13);
+            this.lblID.TabIndex = 3;
+            this.lblID.Text = "ID";
             // 
             // btnGetConsoles
             // 
-            this.btnGetConsoles.Location = new System.Drawing.Point(12, 51);
+            this.btnGetConsoles.Location = new System.Drawing.Point(263, 142);
             this.btnGetConsoles.Name = "btnGetConsoles";
             this.btnGetConsoles.Size = new System.Drawing.Size(199, 23);
             this.btnGetConsoles.TabIndex = 4;
@@ -90,7 +101,7 @@
             // 
             this.txtURL.Location = new System.Drawing.Point(12, 184);
             this.txtURL.Name = "txtURL";
-            this.txtURL.Size = new System.Drawing.Size(635, 20);
+            this.txtURL.Size = new System.Drawing.Size(582, 20);
             this.txtURL.TabIndex = 6;
             // 
             // label2
@@ -104,9 +115,9 @@
             // 
             // btnGamesGenre
             // 
-            this.btnGamesGenre.Location = new System.Drawing.Point(448, 51);
+            this.btnGamesGenre.Location = new System.Drawing.Point(404, 92);
             this.btnGamesGenre.Name = "btnGamesGenre";
-            this.btnGamesGenre.Size = new System.Drawing.Size(199, 23);
+            this.btnGamesGenre.Size = new System.Drawing.Size(190, 23);
             this.btnGamesGenre.TabIndex = 8;
             this.btnGamesGenre.Text = "Games Genre";
             this.btnGamesGenre.UseVisualStyleBackColor = true;
@@ -118,26 +129,135 @@
             this.txtOutput.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtOutput.Location = new System.Drawing.Point(12, 211);
             this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(635, 236);
+            this.txtOutput.Size = new System.Drawing.Size(582, 236);
             this.txtOutput.TabIndex = 9;
             this.txtOutput.Text = "";
             this.txtOutput.WordWrap = false;
             // 
             // btnMergeImages
             // 
-            this.btnMergeImages.Location = new System.Drawing.Point(448, 80);
+            this.btnMergeImages.Location = new System.Drawing.Point(404, 51);
             this.btnMergeImages.Name = "btnMergeImages";
-            this.btnMergeImages.Size = new System.Drawing.Size(199, 23);
+            this.btnMergeImages.Size = new System.Drawing.Size(190, 23);
             this.btnMergeImages.TabIndex = 10;
             this.btnMergeImages.Text = "Merge Cheevo Images";
             this.btnMergeImages.UseVisualStyleBackColor = true;
             this.btnMergeImages.Click += new System.EventHandler(this.btnMergeImages_Click);
+            // 
+            // lblUser
+            // 
+            this.lblUser.AutoSize = true;
+            this.lblUser.Location = new System.Drawing.Point(107, 9);
+            this.lblUser.Name = "lblUser";
+            this.lblUser.Size = new System.Drawing.Size(29, 13);
+            this.lblUser.TabIndex = 12;
+            this.lblUser.Text = "User";
+            // 
+            // txtUser
+            // 
+            this.txtUser.Location = new System.Drawing.Point(110, 25);
+            this.txtUser.Name = "txtUser";
+            this.txtUser.Size = new System.Drawing.Size(92, 20);
+            this.txtUser.TabIndex = 11;
+            // 
+            // lblCount
+            // 
+            this.lblCount.AutoSize = true;
+            this.lblCount.Location = new System.Drawing.Point(205, 9);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new System.Drawing.Size(35, 13);
+            this.lblCount.TabIndex = 14;
+            this.lblCount.Text = "Count";
+            // 
+            // txtCount
+            // 
+            this.txtCount.Location = new System.Drawing.Point(208, 25);
+            this.txtCount.Name = "txtCount";
+            this.txtCount.Size = new System.Drawing.Size(92, 20);
+            this.txtCount.TabIndex = 13;
+            // 
+            // lblOffset
+            // 
+            this.lblOffset.AutoSize = true;
+            this.lblOffset.Location = new System.Drawing.Point(303, 9);
+            this.lblOffset.Name = "lblOffset";
+            this.lblOffset.Size = new System.Drawing.Size(35, 13);
+            this.lblOffset.TabIndex = 16;
+            this.lblOffset.Text = "Offset";
+            // 
+            // txtOffset
+            // 
+            this.txtOffset.Location = new System.Drawing.Point(306, 25);
+            this.txtOffset.Name = "txtOffset";
+            this.txtOffset.Size = new System.Drawing.Size(92, 20);
+            this.txtOffset.TabIndex = 15;
+            // 
+            // dtpDate1
+            // 
+            this.dtpDate1.CustomFormat = "dd/MM/yyyy";
+            this.dtpDate1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDate1.Location = new System.Drawing.Point(404, 25);
+            this.dtpDate1.MinDate = new System.DateTime(1950, 1, 1, 0, 0, 0, 0);
+            this.dtpDate1.Name = "dtpDate1";
+            this.dtpDate1.Size = new System.Drawing.Size(92, 20);
+            this.dtpDate1.TabIndex = 17;
+            this.dtpDate1.Value = new System.DateTime(1990, 1, 1, 0, 0, 0, 0);
+            // 
+            // lblDate1
+            // 
+            this.lblDate1.AutoSize = true;
+            this.lblDate1.Location = new System.Drawing.Point(401, 9);
+            this.lblDate1.Name = "lblDate1";
+            this.lblDate1.Size = new System.Drawing.Size(55, 13);
+            this.lblDate1.TabIndex = 18;
+            this.lblDate1.Text = "Date Start";
+            // 
+            // lblDate2
+            // 
+            this.lblDate2.AutoSize = true;
+            this.lblDate2.Location = new System.Drawing.Point(499, 9);
+            this.lblDate2.Name = "lblDate2";
+            this.lblDate2.Size = new System.Drawing.Size(52, 13);
+            this.lblDate2.TabIndex = 20;
+            this.lblDate2.Text = "Date End";
+            // 
+            // dtpDate2
+            // 
+            this.dtpDate2.CustomFormat = "dd/MM/yyyy";
+            this.dtpDate2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDate2.Location = new System.Drawing.Point(502, 25);
+            this.dtpDate2.MinDate = new System.DateTime(1950, 1, 1, 0, 0, 0, 0);
+            this.dtpDate2.Name = "dtpDate2";
+            this.dtpDate2.Size = new System.Drawing.Size(92, 20);
+            this.dtpDate2.TabIndex = 19;
+            this.dtpDate2.Value = new System.DateTime(1990, 1, 1, 0, 0, 0, 0);
+            // 
+            // btnDownloadBadges
+            // 
+            this.btnDownloadBadges.Location = new System.Drawing.Point(12, 80);
+            this.btnDownloadBadges.Name = "btnDownloadBadges";
+            this.btnDownloadBadges.Size = new System.Drawing.Size(190, 23);
+            this.btnDownloadBadges.TabIndex = 21;
+            this.btnDownloadBadges.Text = "Download Badges";
+            this.btnDownloadBadges.UseVisualStyleBackColor = true;
+            this.btnDownloadBadges.Click += new System.EventHandler(this.btnDownloadBadges_Click);
             // 
             // RADB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(659, 459);
+            this.Controls.Add(this.btnDownloadBadges);
+            this.Controls.Add(this.lblDate2);
+            this.Controls.Add(this.dtpDate2);
+            this.Controls.Add(this.lblDate1);
+            this.Controls.Add(this.dtpDate1);
+            this.Controls.Add(this.lblOffset);
+            this.Controls.Add(this.txtOffset);
+            this.Controls.Add(this.lblCount);
+            this.Controls.Add(this.txtCount);
+            this.Controls.Add(this.lblUser);
+            this.Controls.Add(this.txtUser);
             this.Controls.Add(this.btnMergeImages);
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.btnGamesGenre);
@@ -145,8 +265,8 @@
             this.Controls.Add(this.txtURL);
             this.Controls.Add(this.btnGameList);
             this.Controls.Add(this.btnGetConsoles);
-            this.Controls.Add(this.lblSearch);
-            this.Controls.Add(this.txtSearch);
+            this.Controls.Add(this.lblID);
+            this.Controls.Add(this.txtID);
             this.Controls.Add(this.btnGameInfo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -160,8 +280,8 @@
         #endregion
 
         private System.Windows.Forms.Button btnGameInfo;
-        private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.Label lblSearch;
+        private System.Windows.Forms.TextBox txtID;
+        private System.Windows.Forms.Label lblID;
         private System.Windows.Forms.Button btnGetConsoles;
         private System.Windows.Forms.Button btnGameList;
         private System.Windows.Forms.TextBox txtURL;
@@ -169,6 +289,17 @@
         private System.Windows.Forms.Button btnGamesGenre;
         private System.Windows.Forms.RichTextBox txtOutput;
         private System.Windows.Forms.Button btnMergeImages;
+        private System.Windows.Forms.Label lblUser;
+        private System.Windows.Forms.TextBox txtUser;
+        private System.Windows.Forms.Label lblCount;
+        private System.Windows.Forms.TextBox txtCount;
+        private System.Windows.Forms.Label lblOffset;
+        private System.Windows.Forms.TextBox txtOffset;
+        private System.Windows.Forms.DateTimePicker dtpDate1;
+        private System.Windows.Forms.Label lblDate1;
+        private System.Windows.Forms.Label lblDate2;
+        private System.Windows.Forms.DateTimePicker dtpDate2;
+        private System.Windows.Forms.Button btnDownloadBadges;
     }
 }
 
