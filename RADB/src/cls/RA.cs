@@ -8,47 +8,67 @@ using System.Drawing.Imaging;
 //
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace RADB
 {
     public static class RA
     {
-        public static string CreateURL(string page, string param1Name = "", string param1Value = "")
-        {
-            //var page = "API_GetGameExtended.php";
-            //URL = URI_API + page + AuthQS + "&i=" + txtID.Text;
-            return Config.URI_API + page + Config.AuthQS + param1Name + param1Value;
-        }
-
-        public static Game GetGameInfoExtended(int id)
-        {
-            var URL = CreateURL("API_GetGameExtended.php", "&i=", id.ToString());
-            var content = Config.DownloadString(URL);
-            JObject result = JsonConvert.DeserializeObject<JObject>(content);
-            Game game = result.ToObject<Game>();
-            game.SetAchievements(result);
-            return game;
-        }
-
+        //JSON
+        public static string Update_JsonFile = "API_Files.json";
+        public static string ConsolesJson = "API_GetConsoleIDs.json";
+        public static string GameListJson = "API_GetGameList.json";
+        
+        //Folders
         private static string URL_BadgesFolder = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
-        private static string Local_GameFolder = string.Empty;
-        private static string Local_BadgesFolder = string.Empty;
+        private static string Local_BaseFolder = "src/rsc/game/";
+        private static string Local_GameFolder = Local_BaseFolder;
+        private static string Local_BadgesFolder = Local_BaseFolder;
+        public static string Local_JsonFolder = "src/rsc/json/";
+        //Images
         private static string URL_BadgesFormat = ".png";
         private static string Local_BadgesFormat = ".png";
 
-        public static void DownloadBadges(int gameID)
+        public static string CreateURL(string page, string param1Name = "", string param1Value = "")
         {
-            Game game = GetGameInfoExtended(gameID);
+            return Browser.URI_API + page + Browser.AuthQS + param1Name + param1Value;
+        }
 
-            if (game.AchievementsList.Count == 0) { return; }
+        public static Task<Game> GetGameInfoExtended(int gameID)
+        {
+            if (gameID <= 0) { return null; }
 
-            Local_GameFolder = "src/rsc/game/" + gameID + "/";
+            return Task.Run(() =>
+            {
+                var URL = CreateURL("API_GetGameExtended.php", "&i=", gameID.ToString());
+                var content = Browser.DownloadString(URL);
+                JObject result = JsonConvert.DeserializeObject<JObject>(content);
+                Game game = result.ToObject<Game>();
+                game.SetAchievements(result);
+                return game;
+            });
+        }
+
+        public async static Task<bool> DownloadBadges(int gameID)
+        {
+            Game game = await GetGameInfoExtended(gameID);
+
+            if (game.AchievementsList.Count == 0) { return false; }
+
+            Local_GameFolder += gameID + "/";
             Local_BadgesFolder = Local_GameFolder + "badges/";
 
             if (!Directory.Exists(Local_GameFolder)) { Directory.CreateDirectory(Local_GameFolder); }
             if (!Directory.Exists(Local_BadgesFolder)) { Directory.CreateDirectory(Local_BadgesFolder); }
 
+            foreach (Achievement achievement in game.AchievementsList)
+            {
+                byte[] badgeFile = Browser.DownloadData(URL_BadgesFolder + achievement.BadgeName + URL_BadgesFormat);
+                File.WriteAllBytes(Local_BadgesFolder + achievement.BadgeName + Local_BadgesFormat, badgeFile);
+            }
+
             MergeBadges(game.AchievementsList);
+            return true;
         }
 
         public static void MergeBadges(List<Achievement> achievements)
@@ -67,21 +87,6 @@ namespace RADB
 
                 foreach (Achievement achievement in achievements)
                 {
-                    var imageFile = Config.DownloadData(URL_BadgesFolder + achievement.BadgeName + URL_BadgesFormat);
-
-                    using (MemoryStream mem = new MemoryStream(imageFile))
-                    {
-                        using (var yourImage = Image.FromStream(mem))
-                        {
-                            // If you want it as Png
-                            File.WriteAllBytes(Local_BadgesFolder + achievement.BadgeName + Local_BadgesFormat, imageFile);
-                            //yourImage.Save(Local_BadgesFolder + achievement.BadgeName + Local_BadgesFormat, ImageFormat.Png);
-
-                            // If you want it as Jpeg
-                            //yourImage.Save("path_to_your_file.jpg", ImageFormat.Jpeg);
-                        }
-                    }
-
                     //create a Bitmap from the file and add it to the list
                     Bitmap bitmap = new Bitmap(Local_BadgesFolder + achievement.BadgeName + Local_BadgesFormat);
 
