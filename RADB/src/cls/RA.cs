@@ -74,7 +74,8 @@ namespace RADB
                         using (var yourImage = Image.FromStream(mem))
                         {
                             // If you want it as Png
-                            yourImage.Save(Local_BadgesFolder + achievement.BadgeName + Local_BadgesFormat, ImageFormat.Png);
+                            File.WriteAllBytes(Local_BadgesFolder + achievement.BadgeName + Local_BadgesFormat, imageFile);
+                            //yourImage.Save(Local_BadgesFolder + achievement.BadgeName + Local_BadgesFormat, ImageFormat.Png);
 
                             // If you want it as Jpeg
                             //yourImage.Save("path_to_your_file.jpg", ImageFormat.Jpeg);

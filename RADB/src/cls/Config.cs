@@ -8,6 +8,7 @@ namespace RADB
 {
     public static class Config
     {
+        public static bool useProxy = false;
         private static WebClient web;
         public static string URI_API = "http://retroachievements.org/API/";
         public static string AuthQS = "?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
@@ -24,7 +25,8 @@ namespace RADB
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            web = new WebClient() { Proxy = Config.Proxy, };
+            web = new WebClient() { };
+            if (useProxy) { web.Proxy = Config.Proxy; }
 
             //web.Headers["User-Agent"] = "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15";
         }
