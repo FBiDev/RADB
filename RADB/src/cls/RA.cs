@@ -14,25 +14,114 @@ namespace RADB
 {
     public static class RA
     {
+        //URLs
+        private static string URI_API = "http://retroachievements.org/API/";
+        private static string AuthQS = "?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
+
         //JSON
-        public static string Update_JsonFile = "API_Files.json";
-        public static string ConsolesJson = "API_GetConsoleIDs.json";
-        public static string GameListJson = "API_GetGameList.json";
-        
+        public static string Update_JsonFile = "Files.json";
+        public static string JSN_Consoles = "Consoles.json";
+        public static string JSN_GameList = "GameList.json";
+
+        //API
+        public static string API_ConsoleIDs = "API_GetConsoleIDs.php";
+
         //Folders
         private static string URL_BadgesFolder = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
         private static string Local_BaseFolder = "src/rsc/game/";
         private static string Local_GameFolder = Local_BaseFolder;
         private static string Local_BadgesFolder = Local_BaseFolder;
         public static string Local_JsonFolder = "src/rsc/json/";
+
         //Images
         private static string URL_BadgesFormat = ".png";
         private static string Local_BadgesFormat = ".png";
 
-        public static string CreateURL(string page, string param1Name = "", string param1Value = "")
+        public static void CheckLocalFiles()
         {
-            return Browser.URI_API + page + Browser.AuthQS + param1Name + param1Value;
+            string file1 = Local_JsonFolder + Update_JsonFile;
+            List<string> updateFiles = new List<string>
+            {
+                JSN_Consoles,
+            };
+
+            if (!File.Exists(file1))
+            {
+                int index = 1;
+                List<FileUpdate> list = new List<FileUpdate>();
+                foreach (var file in updateFiles)
+                {
+                    FileUpdate fileObj = new FileUpdate
+                    {
+                        ID = index++,
+                        Name = file,
+                    };
+                    list.Add(fileObj);
+                }
+
+                UpdateFile<List<FileUpdate>>(list, file1);
+                return;
+            }
         }
+
+        public static string GetURL(string page, string param1Name = "", string param1Value = "")
+        {
+            return URI_API + page + AuthQS + param1Name + param1Value;
+        }
+
+        public static Task<DateTime> UpdateConsolesFile()
+        {
+            return Task.Run(() =>
+            {
+                string fileLocal = Local_JsonFolder + JSN_Consoles;
+                //string fileUpdate = Local_JsonFolder + Update_JsonFile;
+
+                DownloadFile(GetURL(API_ConsoleIDs), fileLocal);
+                
+                //List<FileUpdate> objList = FileToList<FileUpdate>(fileUpdate);
+                //FileUpdate obj = FindFileName(objList, JSN_Consoles);
+
+                //if (obj is object)
+                //{
+                //    obj.Update = DateTime.Now;
+                //}
+
+                //UpdateFile<List<FileUpdate>>(objList, fileUpdate);
+                //return obj;
+                return File.GetLastWriteTime(fileLocal);
+            });
+        }
+
+
+        public static void DownloadFile(string url, string filePath)
+        {
+            //Download and Save file
+            byte[] data = Browser.DownloadData(url);
+            File.WriteAllBytes(filePath, data);
+        }
+
+        public static List<T> FileToList<T>(string filePath)
+        {
+            //Read and Convert File
+            string text = File.ReadAllText(filePath);
+            List<T> objList = JsonConvert.DeserializeObject<List<T>>(text);
+            return objList;
+        }
+
+        public static void UpdateFile<T>(T list, string path)
+        {
+            //Serialize List and Save Json File
+            string jsonData = JsonConvert.SerializeObject(list);
+            File.WriteAllText(path, jsonData);
+        }
+
+        public static FileUpdate FindFileName(List<FileUpdate> list, string name)
+        {
+            return list.Find(o => o.Name == name);
+        }
+
+
+
 
         public static Task<Game> GetGameInfoExtended(int gameID)
         {
@@ -40,9 +129,7 @@ namespace RADB
 
             return Task.Run(() =>
             {
-                var URL = CreateURL("API_GetGameExtended.php", "&i=", gameID.ToString());
-                var content = Browser.DownloadString(URL);
-                JObject result = JsonConvert.DeserializeObject<JObject>(content);
+                JObject result = Browser.ToJObject(GetURL("API_GetGameExtended.php", "&i=", gameID.ToString()));
                 Game game = result.ToObject<Game>();
                 game.SetAchievements(result);
                 return game;

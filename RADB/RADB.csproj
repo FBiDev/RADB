@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\cls\Console.cs" />
-    <Compile Include="src\cls\Config.cs" />
+    <Compile Include="src\cls\Browser.cs" />
     <Compile Include="RADB.cs">
       <SubType>Form</SubType>
     </Compile>
