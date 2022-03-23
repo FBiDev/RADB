@@ -2,16 +2,19 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 //
 using System.Net;
 using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace RADB
 {
     public static class Browser
     {
         private static bool useProxy = true;
-        private static WebClient web;
+        public static WebClient web;
 
         private static WebProxy Proxy = new WebProxy
         {
@@ -88,5 +91,7 @@ namespace RADB
         //    T result = JsonConvert.DeserializeObject<T>(content);
         //    return result;
         //}
+
+        
     }
 }

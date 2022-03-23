@@ -56,9 +56,8 @@
             this.lblUpdateConsoles = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabConsoles = new System.Windows.Forms.TabPage();
-            this.tabUpdates = new System.Windows.Forms.TabPage();
             this.tabGameList = new System.Windows.Forms.TabPage();
-            this.lblFileConsoles = new System.Windows.Forms.Label();
+            this.tabUpdates = new System.Windows.Forms.TabPage();
             this.gpbFiles = new System.Windows.Forms.GroupBox();
             this.pgbUpdates = new System.Windows.Forms.ProgressBar();
             this.lblUpdateProgress = new System.Windows.Forms.Label();
@@ -96,7 +95,7 @@
             // 
             // btnUpdateConsoles
             // 
-            this.btnUpdateConsoles.Location = new System.Drawing.Point(6, 19);
+            this.btnUpdateConsoles.Location = new System.Drawing.Point(122, 19);
             this.btnUpdateConsoles.Name = "btnUpdateConsoles";
             this.btnUpdateConsoles.Size = new System.Drawing.Size(70, 23);
             this.btnUpdateConsoles.TabIndex = 4;
@@ -294,7 +293,7 @@
             // lblUpdateConsoles
             // 
             this.lblUpdateConsoles.AutoSize = true;
-            this.lblUpdateConsoles.Location = new System.Drawing.Point(82, 24);
+            this.lblUpdateConsoles.Location = new System.Drawing.Point(6, 24);
             this.lblUpdateConsoles.Name = "lblUpdateConsoles";
             this.lblUpdateConsoles.Size = new System.Drawing.Size(110, 13);
             this.lblUpdateConsoles.TabIndex = 27;
@@ -305,10 +304,10 @@
             this.tabControl1.Controls.Add(this.tabConsoles);
             this.tabControl1.Controls.Add(this.tabGameList);
             this.tabControl1.Controls.Add(this.tabUpdates);
-            this.tabControl1.Location = new System.Drawing.Point(47, 158);
+            this.tabControl1.Location = new System.Drawing.Point(24, 220);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(557, 193);
+            this.tabControl1.Size = new System.Drawing.Size(472, 193);
             this.tabControl1.TabIndex = 28;
             // 
             // tabConsoles
@@ -321,17 +320,6 @@
             this.tabConsoles.Text = "Consoles";
             this.tabConsoles.UseVisualStyleBackColor = true;
             // 
-            // tabUpdates
-            // 
-            this.tabUpdates.Controls.Add(this.gpbFiles);
-            this.tabUpdates.Location = new System.Drawing.Point(4, 22);
-            this.tabUpdates.Name = "tabUpdates";
-            this.tabUpdates.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUpdates.Size = new System.Drawing.Size(549, 167);
-            this.tabUpdates.TabIndex = 1;
-            this.tabUpdates.Text = "Updates";
-            this.tabUpdates.UseVisualStyleBackColor = true;
-            // 
             // tabGameList
             // 
             this.tabGameList.Location = new System.Drawing.Point(4, 22);
@@ -342,40 +330,46 @@
             this.tabGameList.Text = "GameList";
             this.tabGameList.UseVisualStyleBackColor = true;
             // 
-            // lblFileConsoles
+            // tabUpdates
             // 
-            this.lblFileConsoles.AutoSize = true;
-            this.lblFileConsoles.Location = new System.Drawing.Point(198, 24);
-            this.lblFileConsoles.Name = "lblFileConsoles";
-            this.lblFileConsoles.Size = new System.Drawing.Size(66, 13);
-            this.lblFileConsoles.TabIndex = 28;
-            this.lblFileConsoles.Text = "FileConsoles";
+            this.tabUpdates.Controls.Add(this.gpbFiles);
+            this.tabUpdates.Location = new System.Drawing.Point(4, 22);
+            this.tabUpdates.Name = "tabUpdates";
+            this.tabUpdates.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUpdates.Size = new System.Drawing.Size(464, 167);
+            this.tabUpdates.TabIndex = 1;
+            this.tabUpdates.Text = "Updates";
+            this.tabUpdates.UseVisualStyleBackColor = true;
             // 
             // gpbFiles
             // 
+            this.gpbFiles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gpbFiles.Controls.Add(this.lblUpdateConsoles);
             this.gpbFiles.Controls.Add(this.lblUpdateProgress);
             this.gpbFiles.Controls.Add(this.pgbUpdates);
-            this.gpbFiles.Controls.Add(this.lblFileConsoles);
-            this.gpbFiles.Controls.Add(this.lblUpdateConsoles);
             this.gpbFiles.Controls.Add(this.btnUpdateConsoles);
-            this.gpbFiles.Location = new System.Drawing.Point(3, 6);
+            this.gpbFiles.Location = new System.Drawing.Point(6, 7);
             this.gpbFiles.Name = "gpbFiles";
-            this.gpbFiles.Size = new System.Drawing.Size(540, 155);
+            this.gpbFiles.Size = new System.Drawing.Size(452, 58);
             this.gpbFiles.TabIndex = 29;
             this.gpbFiles.TabStop = false;
-            this.gpbFiles.Text = "Files";
+            this.gpbFiles.Text = "Consoles";
             // 
             // pgbUpdates
             // 
-            this.pgbUpdates.Location = new System.Drawing.Point(6, 126);
+            this.pgbUpdates.Location = new System.Drawing.Point(198, 20);
+            this.pgbUpdates.MarqueeAnimationSpeed = 0;
             this.pgbUpdates.Name = "pgbUpdates";
-            this.pgbUpdates.Size = new System.Drawing.Size(70, 23);
+            this.pgbUpdates.Size = new System.Drawing.Size(70, 21);
+            this.pgbUpdates.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.pgbUpdates.TabIndex = 29;
             // 
             // lblUpdateProgress
             // 
             this.lblUpdateProgress.AutoSize = true;
-            this.lblUpdateProgress.Location = new System.Drawing.Point(82, 136);
+            this.lblUpdateProgress.BackColor = System.Drawing.Color.Snow;
+            this.lblUpdateProgress.Location = new System.Drawing.Point(274, 24);
             this.lblUpdateProgress.Name = "lblUpdateProgress";
             this.lblUpdateProgress.Size = new System.Drawing.Size(93, 13);
             this.lblUpdateProgress.TabIndex = 30;
@@ -457,7 +451,6 @@
         private System.Windows.Forms.TabPage tabUpdates;
         private System.Windows.Forms.TabPage tabGameList;
         private System.Windows.Forms.GroupBox gpbFiles;
-        private System.Windows.Forms.Label lblFileConsoles;
         private System.Windows.Forms.ProgressBar pgbUpdates;
         private System.Windows.Forms.Label lblUpdateProgress;
     }

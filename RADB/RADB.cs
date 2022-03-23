@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.ComponentModel;
 
 namespace RADB
 {
@@ -34,8 +35,6 @@ namespace RADB
             Browser.Load();
 
             sts.Visible = true;
-
-            lblFileConsoles.Text = RA.JSN_Consoles;
 
             cboConsoles.DisplayMember = "Name";
             cboConsoles.ValueMember = "ID";
@@ -61,19 +60,33 @@ namespace RADB
 
         private bool ValidID() { return ID_value > 0; }
 
-        private void StartBar(ProgressBar bar)
+        private void StartBar(ProgressBar bar, ProgressBarStyle style = ProgressBarStyle.Continuous, int maximum = 100)
         {
             stsL1.Text = string.Empty;
-            bar.Style = ProgressBarStyle.Marquee;
-            bar.MarqueeAnimationSpeed = 30;
+            bar.Style = style;
+            bar.MarqueeAnimationSpeed = 1;
+            bar.Maximum = maximum;
             bar.Value = 0;
+        }
+
+        private void StepBar(ProgressBar bar)
+        {
+            bar.Value += bar.Step;
         }
 
         private void StoptBar(ProgressBar bar)
         {
-            bar.Style = ProgressBarStyle.Continuous;
-            bar.MarqueeAnimationSpeed = 0;
+            if (bar.Style == ProgressBarStyle.Marquee)
+            {
+                bar.MarqueeAnimationSpeed = 0;
+                bar.Style = ProgressBarStyle.Continuous;
+            }
+
+            //Hack for Win7
+            bar.Maximum++;
             bar.Value = bar.Maximum;
+            bar.Value--;
+            bar.Maximum--;
         }
 
         private async void btnGameID_Click(object sender, EventArgs e)
@@ -113,12 +126,18 @@ namespace RADB
 
         private async void btnUpdateConsoles_Click(object sender, EventArgs e)
         {
-            StartBar(pgbUpdates);
             lblUpdateProgress.Text = "Atualizando arquivo...";
-            DateTime date = await RA.UpdateConsolesFile();
-            lblUpdateConsoles.Text = date.ToString();
+            //StartBar(pgbUpdates, ProgressBarStyle.Marquee);
+            //DateTime date = await RA.UpdateConsolesFile();
+            //StoptBar(pgbUpdates);
+            //lblUpdateConsoles.Text = date.ToString();
             lblUpdateProgress.Text = "Arquivo atualizado!";
-            StoptBar(pgbUpdates);
+            lblUpdateProgress.Text = "Abrindo URL...";
+
+            
+            await startDownload(lblUpdateProgress, pgbUpdates);
+
+
 
 
 
@@ -194,6 +213,83 @@ namespace RADB
                 textTotal += game.ID.ToString().PadLeft(5, ' ') + " : " + game.Genre + Environment.NewLine;
             }
             txtOutput.Text = textTotal.TrimEnd('\r', '\n');
+        }
+
+        private Task startDownload(Label lbl, ProgressBar bar)
+        {
+            if (!Browser.web.IsBusy)
+            {
+                StartBar(bar, ProgressBarStyle.Marquee);
+            }
+            return Task.Run(() =>
+            {
+                if (!Browser.web.IsBusy)
+                {
+                    
+
+                    Browser.web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
+                    Browser.web.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
+                    //Browser.web.DownloadFileAsync(new Uri(RA.GetURL("API_GetGameList.php", "&i=", "12")), RA.Local_JsonFolder + "GameList.json", new List<object> { lbl, bar });
+                    //Browser.web.DownloadFileAsync(new Uri(@"file:///C:/Users/fbirnfeld/Downloads/DOCS/Projects/GitHub/RADB/RADB/bin/Debug/src/rsc/json/Files.json"), RA.Local_JsonFolder + "GameList.json");
+
+                    Browser.web.DownloadFileAsync(new Uri("https://drive.google.com/u/0/uc?id=1_C8I5Vt62xbpcFF6otwRtHczXm-NY3Y8&export=download"), RA.Local_JsonFolder + "GameList.json", new List<object> { lbl, bar });
+
+                    //Browser.web.OpenRead("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_julho_2020.pdf");
+                    //Int64 bytes_total = Convert.ToInt64(Browser.web.ResponseHeaders["Content-Length"]);
+                }
+            });
+        }
+        void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            this.BeginInvoke((MethodInvoker)delegate
+            {
+                double bytesIn = double.Parse(e.BytesReceived.ToString());
+                double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
+                double percentage = bytesIn / totalBytes * 100;
+
+                Label l = (Label)((List<object>)e.UserState)[0];
+                l.Text = "Downloaded " + ToFileSizeString(bytesIn, totalBytes);
+
+                ProgressBar bar = (ProgressBar)((List<object>)e.UserState)[1];
+                if (totalBytes == -1) { bar.Style = ProgressBarStyle.Marquee; }
+                else
+                {
+                    bar.Style = ProgressBarStyle.Blocks;
+                    //bar.Maximum = (int)totalBytes;
+
+                    double barValue = int.Parse(Math.Truncate(percentage).ToString());
+                    if (barValue > 0 && barValue <= bar.Maximum)
+                    {
+                        pgbUpdates.Value = (int)barValue;
+                    }
+                }
+            });
+        }
+        void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            this.BeginInvoke((MethodInvoker)delegate
+            {
+                //lblUpdateProgress.Text = "Completed";
+                ProgressBar bar = (ProgressBar)((List<object>)e.UserState)[1];
+                StoptBar(bar);
+            });
+        }
+
+        string ToFileSizeString(double bytesIn, double bytesTotal)
+        {
+            if (bytesTotal == -1) { return ToFileSize(bytesIn); }
+            return ToFileSize(bytesIn) + " of " + ToFileSize(bytesTotal);
+        }
+
+        string ToFileSize(double bytesValue)
+        {
+            string size = bytesValue < 1024 ? "bytes" :
+                bytesValue < 1048576 ? "KB" : "MB";
+
+            double bytesSize = bytesValue < 1024 ? bytesValue :
+                bytesValue < 1048576 ? bytesValue / 1024 : bytesValue / 1024 / 1024;
+
+            return Math.Round(bytesSize) + " " + size;
         }
     }
 }
