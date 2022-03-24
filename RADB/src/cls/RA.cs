@@ -45,6 +45,7 @@ namespace RADB
 
         public static void CheckLocalFiles()
         {
+            if (Directory.Exists(Local_JsonFolder) == false) { Directory.CreateDirectory(Local_JsonFolder); }
             foreach (string json in LocalJsonFiles)
             {
                 if (!File.Exists(Local_JsonFolder + json))

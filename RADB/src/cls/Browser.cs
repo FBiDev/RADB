@@ -16,7 +16,7 @@ namespace RADB
     public static class Browser
     {
         public static WebClient client;
-        private static bool useProxy = true;
+        private static bool useProxy = false;
 
         private static WebProxy Proxy = new WebProxy
         {
@@ -70,6 +70,7 @@ namespace RADB
 
                 //client.DownloadFileAsync(new Uri("https://drive.google.com/u/0/uc?id=1_C8I5Vt62xbpcFF6otwRtHczXm-NY3Y8&export=download"), RA.Local_JsonFolder + "GameList.json", new List<object> { lbl, bar });
                 //client.DownloadFileAsync(new Uri("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_julho_2020.pdf"), RA.Local_JsonFolder + "GameList.json", new List<object> { lbl, bar });
+                client.DownloadFileAsync(new Uri(download.URL), download.FileName, download);
                 client.DownloadFileAsync(new Uri(download.URL), download.FileName, download);
 
                 //client.OpenRead("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_julho_2020.pdf");
