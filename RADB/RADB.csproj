@@ -74,6 +74,7 @@
     <Compile Include="RADB.Designer.cs">
       <DependentUpon>RADB.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\cls\Download.cs" />
     <Compile Include="src\cls\FileUpdate.cs" />
     <Compile Include="src\cls\Game.cs" />
     <Compile Include="Program.cs" />

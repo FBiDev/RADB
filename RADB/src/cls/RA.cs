@@ -9,6 +9,8 @@ using System.Drawing.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace RADB
 {
@@ -37,31 +39,42 @@ namespace RADB
         private static string URL_BadgesFormat = ".png";
         private static string Local_BadgesFormat = ".png";
 
+        private static List<string> LocalJsonFiles = new List<string>() {
+            JSN_Consoles, "Teste"
+        };
+
         public static void CheckLocalFiles()
         {
-            string file1 = Local_JsonFolder + Update_JsonFile;
-            List<string> updateFiles = new List<string>
+            foreach (string json in LocalJsonFiles)
             {
-                JSN_Consoles,
-            };
-
-            if (!File.Exists(file1))
-            {
-                int index = 1;
-                List<FileUpdate> list = new List<FileUpdate>();
-                foreach (var file in updateFiles)
+                if (!File.Exists(Local_JsonFolder + json))
                 {
-                    FileUpdate fileObj = new FileUpdate
-                    {
-                        ID = index++,
-                        Name = file,
-                    };
-                    list.Add(fileObj);
+                    File.WriteAllBytes(Local_JsonFolder + json, new byte[0]);
                 }
-
-                UpdateFile<List<FileUpdate>>(list, file1);
-                return;
             }
+            //string file1 = Local_JsonFolder + Update_JsonFile;
+            //List<string> updateFiles = new List<string>
+            //{
+            //    JSN_Consoles,
+            //};
+
+            //if (!File.Exists(file1))
+            //{
+            //    int index = 1;
+            //    List<FileUpdate> list = new List<FileUpdate>();
+            //    foreach (var file in updateFiles)
+            //    {
+            //        FileUpdate fileObj = new FileUpdate
+            //        {
+            //            ID = index++,
+            //            Name = file,
+            //        };
+            //        list.Add(fileObj);
+            //    }
+
+            //    UpdateFile<List<FileUpdate>>(list, file1);
+            //    return;
+            //}
         }
 
         public static string GetURL(string page, string param1Name = "", string param1Value = "")
@@ -69,15 +82,20 @@ namespace RADB
             return URI_API + page + AuthQS + param1Name + param1Value;
         }
 
-        public static Task<DateTime> UpdateConsolesFile()
+        public static void UpdateConsolesFile(Download download)
         {
-            return Task.Run(() =>
+            download.Form.BeginInvoke((MethodInvoker)delegate
             {
-                string fileLocal = Local_JsonFolder + JSN_Consoles;
+                download.URL = GetURL(API_ConsoleIDs);
+                download.FileName = Local_JsonFolder + JSN_Consoles;
+                Browser.startDownload(download);
+
+                //string fileLocal = Local_JsonFolder + JSN_Consoles;
+
                 //string fileUpdate = Local_JsonFolder + Update_JsonFile;
 
-                DownloadFile(GetURL(API_ConsoleIDs), fileLocal);
-                
+                //DownloadFile(GetURL(API_ConsoleIDs), fileLocal);
+
                 //List<FileUpdate> objList = FileToList<FileUpdate>(fileUpdate);
                 //FileUpdate obj = FindFileName(objList, JSN_Consoles);
 
@@ -88,10 +106,9 @@ namespace RADB
 
                 //UpdateFile<List<FileUpdate>>(objList, fileUpdate);
                 //return obj;
-                return File.GetLastWriteTime(fileLocal);
+                //return File.GetLastWriteTime(fileLocal);
             });
         }
-
 
         public static void DownloadFile(string url, string filePath)
         {
@@ -118,6 +135,11 @@ namespace RADB
         public static FileUpdate FindFileName(List<FileUpdate> list, string name)
         {
             return list.Find(o => o.Name == name);
+        }
+
+        public static DateTime FileModifiedTime(string fileName)
+        {
+            return File.GetLastWriteTime(Local_JsonFolder + fileName);
         }
 
 

@@ -59,8 +59,8 @@
             this.tabGameList = new System.Windows.Forms.TabPage();
             this.tabUpdates = new System.Windows.Forms.TabPage();
             this.gpbFiles = new System.Windows.Forms.GroupBox();
-            this.pgbUpdates = new System.Windows.Forms.ProgressBar();
             this.lblUpdateProgress = new System.Windows.Forms.Label();
+            this.pgbUpdates = new System.Windows.Forms.ProgressBar();
             this.sts.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabUpdates.SuspendLayout();
@@ -297,7 +297,7 @@
             this.lblUpdateConsoles.Name = "lblUpdateConsoles";
             this.lblUpdateConsoles.Size = new System.Drawing.Size(110, 13);
             this.lblUpdateConsoles.TabIndex = 27;
-            this.lblUpdateConsoles.Text = "21/03/2022 17:22:22";
+            this.lblUpdateConsoles.Text = "00/00/0000 00:00:00";
             // 
             // tabControl1
             // 
@@ -315,7 +315,7 @@
             this.tabConsoles.Location = new System.Drawing.Point(4, 22);
             this.tabConsoles.Name = "tabConsoles";
             this.tabConsoles.Padding = new System.Windows.Forms.Padding(3);
-            this.tabConsoles.Size = new System.Drawing.Size(549, 167);
+            this.tabConsoles.Size = new System.Drawing.Size(464, 167);
             this.tabConsoles.TabIndex = 0;
             this.tabConsoles.Text = "Consoles";
             this.tabConsoles.UseVisualStyleBackColor = true;
@@ -325,7 +325,7 @@
             this.tabGameList.Location = new System.Drawing.Point(4, 22);
             this.tabGameList.Name = "tabGameList";
             this.tabGameList.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGameList.Size = new System.Drawing.Size(549, 167);
+            this.tabGameList.Size = new System.Drawing.Size(464, 167);
             this.tabGameList.TabIndex = 2;
             this.tabGameList.Text = "GameList";
             this.tabGameList.UseVisualStyleBackColor = true;
@@ -356,15 +356,6 @@
             this.gpbFiles.TabStop = false;
             this.gpbFiles.Text = "Consoles";
             // 
-            // pgbUpdates
-            // 
-            this.pgbUpdates.Location = new System.Drawing.Point(198, 20);
-            this.pgbUpdates.MarqueeAnimationSpeed = 0;
-            this.pgbUpdates.Name = "pgbUpdates";
-            this.pgbUpdates.Size = new System.Drawing.Size(70, 21);
-            this.pgbUpdates.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.pgbUpdates.TabIndex = 29;
-            // 
             // lblUpdateProgress
             // 
             this.lblUpdateProgress.AutoSize = true;
@@ -374,6 +365,16 @@
             this.lblUpdateProgress.Size = new System.Drawing.Size(93, 13);
             this.lblUpdateProgress.TabIndex = 30;
             this.lblUpdateProgress.Text = "lblUpdateProgress";
+            // 
+            // pgbUpdates
+            // 
+            this.pgbUpdates.Location = new System.Drawing.Point(198, 20);
+            this.pgbUpdates.MarqueeAnimationSpeed = 0;
+            this.pgbUpdates.Name = "pgbUpdates";
+            this.pgbUpdates.Size = new System.Drawing.Size(70, 21);
+            this.pgbUpdates.Step = 1;
+            this.pgbUpdates.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.pgbUpdates.TabIndex = 29;
             // 
             // RADB
             // 
