@@ -111,7 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\rsc\dll\Newtonsoft.Json.dll" />
-    <Content Include="src\rsc\exe\jpegoptim.exe" />
+    <Content Include="src\rsc\exe\jpegoptim_1.4.6.exe" />
     <Content Include="src\rsc\exe\pngcrush_1_8_11_w64.exe" />
   </ItemGroup>
   <ItemGroup>
