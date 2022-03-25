@@ -29,6 +29,19 @@ namespace RADB
         private DateTime Date1_value;
         private DateTime Date2_value;
 
+        private ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
         public RADB()
         {
             InitializeComponent();
@@ -46,7 +59,7 @@ namespace RADB
             //FileUpdate obj = RA.FindFileName(objList, RA.JSN_Consoles);
 
             //if (obj is object) { lblUpdateConsoles.Text = obj.Update.ToString(); }
-            lblUpdateConsoles.Text = RA.FileModifiedTime(RA.JSN_Consoles).ToString();
+            lblUpdateConsoles.Text = Archive.LastUpdate(RA.JSN_Consoles).ToString();
         }
 
         private void ParseValues()

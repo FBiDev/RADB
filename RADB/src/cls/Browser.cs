@@ -16,7 +16,7 @@ namespace RADB
     public static class Browser
     {
         public static WebClient client;
-        private static bool useProxy = false;
+        private static bool useProxy = true;
 
         private static WebProxy Proxy = new WebProxy
         {

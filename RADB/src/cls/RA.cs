@@ -138,10 +138,7 @@ namespace RADB
             return list.Find(o => o.Name == name);
         }
 
-        public static DateTime FileModifiedTime(string fileName)
-        {
-            return File.GetLastWriteTime(Local_JsonFolder + fileName);
-        }
+
 
 
 
@@ -165,16 +162,16 @@ namespace RADB
 
             if (game.AchievementsList.Count == 0) { return false; }
 
-            Local_GameFolder += gameID + "/";
-            Local_BadgesFolder = Local_GameFolder + "badges/";
+            Local_GameFolder = Local_BaseFolder + gameID + "/";
+            Local_BadgesFolder = Local_BaseFolder + gameID + "/badges/";
 
             if (!Directory.Exists(Local_GameFolder)) { Directory.CreateDirectory(Local_GameFolder); }
             if (!Directory.Exists(Local_BadgesFolder)) { Directory.CreateDirectory(Local_BadgesFolder); }
 
             foreach (Achievement achievement in game.AchievementsList)
             {
-                byte[] badgeFile = Browser.DownloadData(URL_BadgesFolder + achievement.BadgeName + URL_BadgesFormat);
-                File.WriteAllBytes(Local_BadgesFolder + achievement.BadgeName + Local_BadgesFormat, badgeFile);
+                //byte[] badgeFile = Browser.DownloadData(URL_BadgesFolder + achievement.BadgeName + URL_BadgesFormat);
+                //File.WriteAllBytes(Local_BadgesFolder + achievement.BadgeName + Local_BadgesFormat, badgeFile);
             }
 
             MergeBadges(game.AchievementsList);
@@ -185,7 +182,8 @@ namespace RADB
         {
             //read all images into memory
             List<Bitmap> images = new List<Bitmap>();
-            Bitmap finalImage = null;
+            //Bitmap finalImage = null;
+            Picture finalImage = null;
 
             try
             {
@@ -226,13 +224,14 @@ namespace RADB
                 }
 
                 //create a bitmap to hold the combined image
-                finalImage = new Bitmap(maxWidth, height);
+                //finalImage = new Bitmap(maxWidth, height);
+                finalImage = new Picture(maxWidth, height);
 
                 //get a graphics object from the image so we can draw on it
-                using (Graphics g = Graphics.FromImage(finalImage))
+                using (Graphics g = Graphics.FromImage(finalImage.Bitmap))
                 {
                     //set background color
-                    g.Clear(Color.Magenta);
+                    //g.Clear(Color.Magenta);
 
                     //go through each image and draw it on the final image
                     int offsetW = 0;
@@ -249,23 +248,23 @@ namespace RADB
                         }
                         index++;
 
-                        g.DrawImage(image,
-                          new Rectangle(offsetW, offsetH, image.Width, image.Height));
+                        g.DrawImage(image, new Rectangle(offsetW, offsetH, image.Width, image.Height));
                         offsetW += image.Width;
                     }
                 }
 
-                ImageCodecInfo encoder = GetEncoder(ImageFormat.Jpeg);
-                EncoderParameters parameters = new EncoderParameters(1)
-                {
-                    Param = new EncoderParameter[] { new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 91L) }
-                };
+                //ImageCodecInfo encoder = GetEncoder(ImageFormat.Jpeg);
+                //EncoderParameters parameters = new EncoderParameters(1)
+                //{
+                //Param = new EncoderParameter[] { new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 91L) }
+                //};
 
-                string fileName = "_Badges.jpg";
+                string fileName = "_Badges";
 
-                if (File.Exists(Local_BadgesFolder + fileName)) { File.Delete(Local_BadgesFolder + fileName); }
+                //if (File.Exists(Local_BadgesFolder + fileName)) { File.Delete(Local_BadgesFolder + fileName); }
 
-                finalImage.Save(Local_BadgesFolder + fileName, encoder, parameters);
+                //finalImage.Save(Local_BadgesFolder + fileName, encoder, parameters);
+                finalImage.Save(Local_BadgesFolder + fileName, PictureFormat.Png);
             }
             catch (Exception ex)
             {
@@ -283,19 +282,6 @@ namespace RADB
                 }
                 finalImage.Dispose();
             }
-        }
-
-        private static ImageCodecInfo GetEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == format.Guid)
-                {
-                    return codec;
-                }
-            }
-            return null;
         }
     }
 }

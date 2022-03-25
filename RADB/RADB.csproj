@@ -75,11 +75,13 @@
       <DependentUpon>RADB.cs</DependentUpon>
     </Compile>
     <Compile Include="src\cls\Download.cs" />
+    <Compile Include="src\cls\Archive.cs" />
     <Compile Include="src\cls\FileUpdate.cs" />
     <Compile Include="src\cls\Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\cls\Achievement.cs" />
+    <Compile Include="src\cls\Picture.cs" />
     <Compile Include="src\cls\RA.cs" />
     <EmbeddedResource Include="RADB.resx">
       <DependentUpon>RADB.cs</DependentUpon>
@@ -92,6 +94,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -108,12 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\rsc\dll\Newtonsoft.Json.dll" />
-    <Content Include="src\rsc\game\11256\93518_lock.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="src\rsc\game\11256\93519_lock.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="src\rsc\exe\jpegoptim.exe" />
+    <Content Include="src\rsc\exe\pngcrush_1_8_11_w64.exe" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

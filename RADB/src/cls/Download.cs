@@ -21,14 +21,5 @@ namespace RADB
             //URL = GetDaoClassAndMethod(2);
             Form = Form.ActiveForm;
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static string GetDaoClassAndMethod(int frameIndex = 0)
-        {
-            var st = new StackTrace();
-            var sf = st.GetFrame(frameIndex);
-
-            return sf.GetMethod().DeclaringType.Name;
-        }
     }
 }
