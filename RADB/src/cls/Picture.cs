@@ -103,19 +103,22 @@ namespace RADB
                 exeNewFile.Write(exeResource, 0, exeResource.Length);
             }
 
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            //startInfo.WorkingDirectory = RA.FolderTemp;
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.CreateNoWindow = true;
-            startInfo.UseShellExecute = false;
-            startInfo.StandardOutputEncoding = Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage);
-            startInfo.StandardErrorEncoding = Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage);
-            startInfo.RedirectStandardError = true;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C " + exeCmd;
-            process.StartInfo = startInfo;
+            Process process = new Process()
+            {
+                StartInfo = new ProcessStartInfo()
+                {
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    StandardOutputEncoding = Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage),
+                    StandardErrorEncoding = Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage),
+                    RedirectStandardError = true,
+                    RedirectStandardOutput = true,
+                    FileName = "cmd.exe",
+                    Arguments = "/C " + exeCmd,
+                    //WorkingDirectory = "",
+                },
+            };
             process.Start();
 
             string output = process.StandardError.ReadToEnd() + process.StandardOutput.ReadToEnd();

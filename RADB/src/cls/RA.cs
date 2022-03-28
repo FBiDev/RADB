@@ -168,6 +168,7 @@ namespace RADB
 
         public static string GetBadgeFile(Achievement achievement)
         {
+
             return FolderBadges + achievement.BadgeName + FormatBadgesLocal;
         }
 
@@ -186,15 +187,14 @@ namespace RADB
 
             foreach (Achievement achievement in game.AchievementsList)
             {
-                //byte[] badgeFile = Browser.DownloadData(URL_BadgesFolder + achievement.BadgeName + URL_BadgesFormat);
-                //File.WriteAllBytes(Local_BadgesFolder + achievement.BadgeName + Local_BadgesFormat, badgeFile);
+                //byte[] badgeFile = Browser.DownloadData(URL_Badges + achievement.BadgeName + FormatBadgesURL);
+                //File.WriteAllBytes(GetBadgeFile(achievement), badgeFile);
             }
 
-            MergeBadges(game.AchievementsList);
-            return true;
+            return MergeBadges(game.AchievementsList);
         }
 
-        public static void MergeBadges(List<Achievement> achievements)
+        public static bool MergeBadges(List<Achievement> achievements)
         {
             //read all images into memory
             List<Bitmap> images = new List<Bitmap>();
@@ -211,8 +211,22 @@ namespace RADB
                 int index = 1;
                 int imagesPerRow = 11;
 
+                string FileNotFound = string.Empty;
+                int FileNotFoundIndex = 1;
+
                 foreach (Achievement achievement in achievements)
                 {
+                    if (!File.Exists(GetBadgeFile(achievement)))
+                    {
+                        if (FileNotFoundIndex <= 30)
+                        {
+                            FileNotFound += "[" + FileNotFoundIndex + "] " + GetBadgeFile(achievement) + Environment.NewLine;
+                        }
+
+                        FileNotFoundIndex++;
+
+                        continue;
+                    }
                     //create a Bitmap from the file and add it to the list
                     Bitmap bitmap = new Bitmap(GetBadgeFile(achievement));
 
@@ -240,6 +254,16 @@ namespace RADB
                     index++;
 
                     images.Add(bitmap);
+                }
+
+                if (string.IsNullOrWhiteSpace(FileNotFound) == false)
+                {
+                    if (FileNotFoundIndex > 30)
+                    {
+                        FileNotFound += Environment.NewLine + "and more... total = " + (FileNotFoundIndex - 1); ;
+                    }
+                    MessageBox.Show("File Not Found: " + Environment.NewLine + FileNotFound, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
                 }
 
                 maxHeight += height;
@@ -289,6 +313,7 @@ namespace RADB
 
                 //finalImage.Save(Local_BadgesFolder + fileName, encoder, parameters);
                 finalImage.Save(GetBadgesMergedFile(), PictureFormat.Png);
+                return true;
             }
             catch (Exception ex)
             {
@@ -304,7 +329,8 @@ namespace RADB
                 {
                     image.Dispose();
                 }
-                finalImage.Dispose();
+                if (finalImage != null)
+                    finalImage.Dispose();
             }
         }
     }
