@@ -16,28 +16,29 @@ namespace RADB
 {
     public static class RA
     {
-        //URLs
-        private static string URI_API = "http://retroachievements.org/API/";
-        private static string AuthQS = "?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
+        //Folders
+        private static string FolderBase { get { return @"data\"; } }
+        public static string FolderTemp { get { return FolderBase + @"temp\"; } }
+        public static string FolderJson = FolderBase + @"json\";
+        private static string FolderGame = FolderBase + @"game\";
+        private static string FolderBadges = FolderGame;
 
-        //JSON
-        public static string Update_JsonFile = "Files.json";
-        public static string JSN_Consoles = "Consoles.json";
-        public static string JSN_GameList = "GameList.json";
+        //URLs
+        private static string URL_API = "http://retroachievements.org/API/";
+        private static string URL_Auth = "?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
+        private static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
 
         //API
         public static string API_ConsoleIDs = "API_GetConsoleIDs.php";
 
-        //Folders
-        private static string URL_BadgesFolder = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
-        private static string Local_BaseFolder = "src/rsc/game/";
-        private static string Local_GameFolder = Local_BaseFolder;
-        private static string Local_BadgesFolder = Local_BaseFolder;
-        public static string Local_JsonFolder = "src/rsc/json/";
+        //JSON
+        public static string JSN_Consoles = "Consoles.json";
+        public static string JSN_GameList = "GameList.json";
+        //public static string Update_JsonFile = "Files.json";
 
         //Images
-        private static string URL_BadgesFormat = ".png";
-        private static string Local_BadgesFormat = ".png";
+        private static string FormatBadgesURL = ".png";
+        private static string FormatBadgesLocal = ".png";
 
         private static List<string> LocalJsonFiles = new List<string>() {
             JSN_Consoles, "Teste"
@@ -45,12 +46,12 @@ namespace RADB
 
         public static void CheckLocalFiles()
         {
-            if (Directory.Exists(Local_JsonFolder) == false) { Directory.CreateDirectory(Local_JsonFolder); }
+            Directory.CreateDirectory(FolderJson);
             foreach (string json in LocalJsonFiles)
             {
-                if (!File.Exists(Local_JsonFolder + json))
+                if (!File.Exists(FolderJson + json))
                 {
-                    File.WriteAllBytes(Local_JsonFolder + json, new byte[0]);
+                    File.WriteAllBytes(FolderJson + json, new byte[0]);
                 }
             }
             //string file1 = Local_JsonFolder + Update_JsonFile;
@@ -80,7 +81,7 @@ namespace RADB
 
         public static string GetURL(string page, string param1Name = "", string param1Value = "")
         {
-            return URI_API + page + AuthQS + param1Name + param1Value;
+            return URL_API + page + URL_Auth + param1Name + param1Value;
         }
 
         public static void UpdateConsolesFile(Download download)
@@ -88,7 +89,7 @@ namespace RADB
             download.Form.BeginInvoke((MethodInvoker)delegate
             {
                 download.URL = GetURL(API_ConsoleIDs);
-                download.FileName = Local_JsonFolder + JSN_Consoles;
+                download.FileName = FolderJson + JSN_Consoles;
                 Browser.startDownload(download);
 
                 //string fileLocal = Local_JsonFolder + JSN_Consoles;
@@ -156,17 +157,32 @@ namespace RADB
             });
         }
 
+        public static void SetGameFolder(int gameID)
+        {
+            FolderGame = FolderBase + @"game\" + gameID + @"\";
+            FolderBadges = FolderGame + @"badges\";
+
+            Directory.CreateDirectory(FolderGame);
+            Directory.CreateDirectory(FolderBadges);
+        }
+
+        public static string GetBadgeFile(Achievement achievement)
+        {
+            return FolderBadges + achievement.BadgeName + FormatBadgesLocal;
+        }
+
+        public static string GetBadgesMergedFile()
+        {
+            return FolderBadges + "_Badges";
+        }
+
         public async static Task<bool> DownloadBadges(int gameID)
         {
+            SetGameFolder(gameID);
+
             Game game = await GetGameInfoExtended(gameID);
 
             if (game.AchievementsList.Count == 0) { return false; }
-
-            Local_GameFolder = Local_BaseFolder + gameID + "/";
-            Local_BadgesFolder = Local_BaseFolder + gameID + "/badges/";
-
-            if (!Directory.Exists(Local_GameFolder)) { Directory.CreateDirectory(Local_GameFolder); }
-            if (!Directory.Exists(Local_BadgesFolder)) { Directory.CreateDirectory(Local_BadgesFolder); }
 
             foreach (Achievement achievement in game.AchievementsList)
             {
@@ -188,15 +204,17 @@ namespace RADB
             try
             {
                 int width = 0;
-                int height = 64;
+                int maxWidth = 0;
+                int height = 0;
+                int maxHeight = 0;
+
                 int index = 1;
                 int imagesPerRow = 11;
-                int maxWidth = 0;
 
                 foreach (Achievement achievement in achievements)
                 {
                     //create a Bitmap from the file and add it to the list
-                    Bitmap bitmap = new Bitmap(Local_BadgesFolder + achievement.BadgeName + Local_BadgesFormat);
+                    Bitmap bitmap = new Bitmap(GetBadgeFile(achievement));
 
                     //update the size of the final bitmap
                     if (index <= imagesPerRow && width <= maxWidth)
@@ -208,24 +226,26 @@ namespace RADB
                         //}
                         //height = bitmap.Height > height ? bitmap.Height : height;
                     }
-
                     if (width > maxWidth) { maxWidth = width; }
 
-                    if (index > imagesPerRow)
+                    if (bitmap.Height > height) { height = bitmap.Height; }
+
+                    if (index == imagesPerRow)
                     {
-                        height += 64;
-                        //height += bitmap.Height > height ? bitmap.Height : height;
+                        maxHeight += height;
+                        height = 0;
                         width = 0;
-                        index = 0;
+                        index = 1;
                     }
                     index++;
 
                     images.Add(bitmap);
                 }
 
+                maxHeight += height;
                 //create a bitmap to hold the combined image
                 //finalImage = new Bitmap(maxWidth, height);
-                finalImage = new Picture(maxWidth, height);
+                finalImage = new Picture(maxWidth, maxHeight);
 
                 //get a graphics object from the image so we can draw on it
                 using (Graphics g = Graphics.FromImage(finalImage.Bitmap))
@@ -236,15 +256,21 @@ namespace RADB
                     //go through each image and draw it on the final image
                     int offsetW = 0;
                     int offsetH = 0;
+                    int offsetHLine = 0;
                     index = 1;
 
                     foreach (Bitmap image in images)
                     {
                         if (index > imagesPerRow)
                         {
-                            offsetH += image.Height;
+                            offsetH += offsetHLine;
+                            offsetHLine = 0;
                             offsetW = 0;
-                            index = 0;
+                            index = 1;
+                        }
+                        if (image.Height > offsetHLine)
+                        {
+                            offsetHLine = image.Height;
                         }
                         index++;
 
@@ -259,12 +285,10 @@ namespace RADB
                 //Param = new EncoderParameter[] { new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 91L) }
                 //};
 
-                string fileName = "_Badges";
-
                 //if (File.Exists(Local_BadgesFolder + fileName)) { File.Delete(Local_BadgesFolder + fileName); }
 
                 //finalImage.Save(Local_BadgesFolder + fileName, encoder, parameters);
-                finalImage.Save(Local_BadgesFolder + fileName, PictureFormat.Png);
+                finalImage.Save(GetBadgesMergedFile(), PictureFormat.Png);
             }
             catch (Exception ex)
             {

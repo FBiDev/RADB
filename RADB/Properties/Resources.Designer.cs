@@ -63,9 +63,9 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] jpegoptim {
+        internal static byte[] jpegoptim_1_4_6 {
             get {
-                object obj = ResourceManager.GetObject("jpegoptim", resourceCulture);
+                object obj = ResourceManager.GetObject("jpegoptim_1_4_6", resourceCulture);
                 return ((byte[])(obj));
             }
         }

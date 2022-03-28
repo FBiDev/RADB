@@ -118,8 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="jpegoptim" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\exe\jpegoptim.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="jpegoptim_1_4_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\exe\jpegoptim_1.4.6.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="pngcrush_1_8_11_w64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\src\rsc\exe\pngcrush_1_8_11_w64.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

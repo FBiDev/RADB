@@ -83,6 +83,7 @@
     <Compile Include="src\cls\Achievement.cs" />
     <Compile Include="src\cls\Picture.cs" />
     <Compile Include="src\cls\RA.cs" />
+    <Compile Include="src\cls\StringExtensions.cs" />
     <EmbeddedResource Include="RADB.resx">
       <DependentUpon>RADB.cs</DependentUpon>
     </EmbeddedResource>

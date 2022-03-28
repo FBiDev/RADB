@@ -7,6 +7,9 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Diagnostics;
+using RADB.Properties;
+using System.Windows.Forms;
+using System.Globalization;
 
 namespace RADB
 {
@@ -20,7 +23,6 @@ namespace RADB
     {
         public Bitmap Bitmap { get; set; }
         private EncoderParameters Parameters { get; set; }
-        public ImageFormat Format { get; set; }
         private long _Quality;
         public long Quality
         {
@@ -28,16 +30,19 @@ namespace RADB
             set
             {
                 Parameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, value);
-                Parameters.Param[1] = new EncoderParameter(System.Drawing.Imaging.Encoder.ColorDepth, (long)EncoderValue.ColorTypeCMYK);
                 _Quality = value;
             }
         }
+
+        public string FileName { get; set; }
+        public ImageFormat Format { get; set; }
+        public PictureFormat FormatEnum { get; set; }
 
         public Picture(int width, int height)
         {
             Bitmap = new Bitmap(width, height);
 
-            Parameters = new EncoderParameters(2);
+            Parameters = new EncoderParameters(1);
 
             //Default Jpeg Quality
             Quality = 91L;//90%
@@ -48,57 +53,111 @@ namespace RADB
 
         public void Save(string fileName, PictureFormat format = PictureFormat.Jpg)
         {
-            string cmdLine = string.Empty;
-            fileName = fileName + "." + format.ToString().ToLower();
+            FileName = fileName + "." + format.ToString().ToLower();
+            FormatEnum = format;
 
-            byte[] exeResource = new byte[0];
-            string exeCompressImage = string.Empty;
-
-            //Default Format
-            switch (format)
+            switch (FormatEnum)
             {
-                case PictureFormat.Jpg:
-                    Format = ImageFormat.Jpeg;
-                    cmdLine += "jpegoptim.exe " + fileName;
-
-                    exeResource = Properties.Resources.jpegoptim;
-                    exeCompressImage = @"jpegoptim.exe";
-                    break;
-                case PictureFormat.Png:
-                    Format = ImageFormat.Png;
-                    cmdLine += "pngcrush_1_8_11_w64.exe -ow " + fileName;
-
-                    exeResource = Properties.Resources.pngcrush_1_8_11_w64;
-                    exeCompressImage = @"pngcrush_1_8_11_w64.exe";
-                    break;
+                case PictureFormat.Jpg: Format = ImageFormat.Jpeg; break;
+                case PictureFormat.Png: Format = ImageFormat.Png; break;
             }
 
-            if (File.Exists(fileName)) { File.Delete(fileName); }
-            Bitmap.Save(fileName, GetEncoder(Format), Parameters);
+            if (File.Exists(FileName)) { File.Delete(FileName); }
+            Bitmap.Save(FileName, GetEncoder(Format), Parameters);
             Dispose();
 
-            using (FileStream exeFile = new FileStream(exeCompressImage, FileMode.CreateNew))
+            CompressCMD();
+        }
+
+        public void SaveGrayscale(string fileName, PictureFormat format = PictureFormat.Jpg)
+        {
+            Bitmap = MakeGrayscale(Bitmap);
+            Save(fileName, format);
+        }
+
+        public void CompressCMD()
+        {
+            Directory.CreateDirectory(RA.FolderTemp);
+
+            byte[] exeResource = new byte[0];
+            string exeFile = RA.FolderTemp;
+            string exeCmd = string.Empty;
+
+            switch (FormatEnum)
             {
-                exeFile.Write(exeResource, 0, exeResource.Length);
+                case PictureFormat.Jpg:
+                    exeResource = Resources.jpegoptim_1_4_6;
+                    exeFile += "jpegoptim_1_4_6.exe";
+                    //exeCmd = "\"" + RA.FolderTemp + exeFileName + "\"\" " + FileName;
+                    exeCmd = exeFile + " " + FileName;
+                    break;
+                case PictureFormat.Png:
+                    exeResource = Resources.pngcrush_1_8_11_w64;
+                    exeFile += "pngcrush_1_8_11_w64.exe";
+                    exeCmd = exeFile + " -ow " + FileName;
+                    break;
             }
 
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            using (FileStream exeNewFile = new FileStream(exeFile, FileMode.Create))
+            {
+                exeNewFile.Write(exeResource, 0, exeResource.Length);
+            }
+
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            //startInfo.WorkingDirectory = RA.FolderTemp;
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.CreateNoWindow = true;
+            startInfo.UseShellExecute = false;
+            startInfo.StandardOutputEncoding = Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage);
+            startInfo.StandardErrorEncoding = Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage);
+            startInfo.RedirectStandardError = true;
+            startInfo.RedirectStandardOutput = true;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C " + cmdLine;
+            startInfo.Arguments = "/C " + exeCmd;
             process.StartInfo = startInfo;
             process.Start();
 
+            string output = process.StandardError.ReadToEnd() + process.StandardOutput.ReadToEnd();
             process.WaitForExit();
             process.Dispose();
 
-            File.Delete(exeCompressImage);
+            File.Delete(exeFile);
         }
 
-        public void Dispose()
+        private Bitmap MakeGrayscale(Bitmap original)
         {
-            Bitmap.Dispose();
+            //create a blank bitmap the same size as original
+            Bitmap newBitmap = new Bitmap(original.Width, original.Height);
+
+            //get a graphics object from the new image
+            using (Graphics g = Graphics.FromImage(newBitmap))
+            {
+                //create the grayscale ColorMatrix
+                ColorMatrix colorMatrix = new ColorMatrix(
+                    new float[][] 
+                    {
+                        new float[] {.3f, .3f, .3f, 0, 0},
+                        new float[] {.59f, .59f, .59f, 0, 0},
+                        new float[] {.11f, .11f, .11f, 0, 0},
+                        new float[] {0, 0, 0, 1, 0},
+                        new float[] {0, 0, 0, 0, 1}
+                    }
+                );
+
+                //create some image attributes
+                using (ImageAttributes attributes = new ImageAttributes())
+                {
+                    //set the color matrix attribute
+                    attributes.SetColorMatrix(colorMatrix);
+
+                    //draw the original image on the new image
+                    //using the grayscale color matrix
+                    g.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height),
+                                0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
+                }
+            }
+            return newBitmap;
         }
 
         private ImageCodecInfo GetEncoder(ImageFormat format)
@@ -112,6 +171,11 @@ namespace RADB
                 }
             }
             return null;
+        }
+
+        public void Dispose()
+        {
+            Bitmap.Dispose();
         }
     }
 }

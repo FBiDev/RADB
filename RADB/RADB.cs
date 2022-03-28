@@ -83,7 +83,7 @@ namespace RADB
 
             //StartBar(pgb.ProgressBar);
             //var game = await getGame(ID_value);
-            string c = File.ReadAllText(RA.Local_JsonFolder + RA.Update_JsonFile);
+            //string c = File.ReadAllText(RA.FolderJson + RA.Update_JsonFile);
             //List<FileUpdate> f = Browser.ToObject<List<FileUpdate>>(c);
             var game = await Task.Run(() =>
             {
@@ -130,7 +130,7 @@ namespace RADB
             //List<FileUpdate> f = JsonConvert.DeserializeObject<List<FileUpdate>>(File.ReadAllText(RA.Local_JsonFolder + RA.Update_JsonFile));
 
             //read file
-            using (StreamReader r = new StreamReader(RA.Local_JsonFolder + RA.JSN_Consoles))
+            using (StreamReader r = new StreamReader(RA.FolderJson + RA.JSN_Consoles))
             {
                 string json = r.ReadToEnd();
                 List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(json);
