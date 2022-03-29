@@ -78,6 +78,7 @@
     <Compile Include="src\cls\Download.cs" />
     <Compile Include="src\cls\Archive.cs" />
     <Compile Include="src\cls\FileUpdate.cs" />
+    <Compile Include="src\cls\Folder.cs" />
     <Compile Include="src\cls\Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

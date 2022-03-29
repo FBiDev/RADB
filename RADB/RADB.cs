@@ -46,6 +46,7 @@ namespace RADB
         {
             InitializeComponent();
             Browser.Load();
+            Folder.CreateFolders();
 
             sts.Visible = true;
 
@@ -123,7 +124,7 @@ namespace RADB
 
 
             return;
-            var URL = RA.GetURL("API_GetConsoleIDs.php");
+            var URL = RA.API_URL("API_GetConsoleIDs.php");
             txtURL.Text = URL;
 
 
@@ -152,7 +153,7 @@ namespace RADB
         {
             ParseValues();
             if (!ValidID()) { return; }
-            txtURL.Text = RA.GetURL("API_GetConsoleIDs.php", "&i=", ID_value.ToString());
+            txtURL.Text = RA.API_URL("API_GetConsoleIDs.php", "&i=", ID_value.ToString());
 
             using (StreamReader r = new StreamReader("src/rsc/API_GetGameList.json"))
             {
@@ -181,7 +182,7 @@ namespace RADB
             ParseValues();
             if (!ValidID()) { return; }
 
-            string URL = RA.GetURL("API_GetGame.php", "&i=", "");
+            string URL = RA.API_URL("API_GetGame.php", "&i=", "");
             txtURL.Text = URL;
 
             string textTotal = string.Empty;

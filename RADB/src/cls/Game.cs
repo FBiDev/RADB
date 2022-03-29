@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 //
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
+using System.IO;
 
 namespace RADB
 {
     public class Game
     {
+        //Duplicate Info
         //public string Console { get; set; }
         //public string GameIcon { get; set; }
         //public string GameTitle { get; set; }
@@ -68,7 +71,39 @@ namespace RADB
                     AchievementsList.Add(JsonConvert.DeserializeObject<Achievement>(cheevo.Value.ToString()));
                 }
                 result.Remove("Achievements");
+                AchievementsList.ForEach(c => { c.GameID = ID; });
             }
         }
+
+        public List<string> AchievementsFiles()
+        {
+            List<string> files = new List<string>();
+            AchievementsList.ForEach(c => { files.Add(c.BadgeFile); });
+            return files;
+        }
+
+        public string BadgesMergedFile
+        {
+            get
+            {
+                return Folder.Badges(ID) + "_Badges";
+            }
+        }
+
+        //public string FolderID
+        //{
+        //    get
+        //    {
+        //        return Folder.GameID(ID);
+        //    }
+        //}
+
+        //public string BadgesFolder
+        //{
+        //    get
+        //    {
+        //        return Folder.Badges(ID);
+        //    }
+        //}
     }
 }

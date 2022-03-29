@@ -34,14 +34,23 @@ namespace RADB
             }
         }
 
-        public string FileName { get; set; }
-        public ImageFormat Format { get; set; }
-        public PictureFormat FormatEnum { get; set; }
+        private string FileName { get; set; }
+        private ImageFormat Format { get; set; }
+        private PictureFormat FormatEnum { get; set; }
 
-        public Picture(int width, int height)
+        private List<string> ImageFiles { get; set; }
+        public string Error { get; set; }
+
+        private string FolderTemp
         {
-            Bitmap = new Bitmap(width, height);
+            get
+            {
+                return Folder.Temp;
+            }
+        }
 
+        private void DefaultValues()
+        {
             Parameters = new EncoderParameters(1);
 
             //Default Jpeg Quality
@@ -51,6 +60,27 @@ namespace RADB
             using (Graphics g = Graphics.FromImage(Bitmap)) { g.Clear(Color.Magenta); }
         }
 
+        public Picture(List<string> imageFilesToMerge, bool merge = true)
+        {
+            ImageFiles = imageFilesToMerge;
+
+            BlankBitmap();
+            if (merge)
+            {
+                MergeImages();
+            }
+
+            //DefaultValues();
+        }
+
+        public Picture(int width, int height)
+        {
+            Bitmap = new Bitmap(width, height);
+
+            DefaultValues();
+        }
+
+        #region Saves
         public void Save(string fileName, PictureFormat format = PictureFormat.Jpg)
         {
             FileName = fileName + "." + format.ToString().ToLower();
@@ -65,7 +95,7 @@ namespace RADB
             if (File.Exists(FileName)) { File.Delete(FileName); }
 
             Bitmap.Save(FileName, GetEncoder(Format), Parameters);
-            Dispose();
+            Bitmap.Dispose();
 
             CompressCMD();
         }
@@ -76,12 +106,10 @@ namespace RADB
             Save(fileName, format);
         }
 
-        public void CompressCMD()
+        private void CompressCMD()
         {
-            Directory.CreateDirectory(RA.FolderTemp);
-
             byte[] exeResource = new byte[0];
-            string exeFile = RA.FolderTemp;
+            string exeFile = FolderTemp;
             string exeCmd = string.Empty;
 
             switch (FormatEnum)
@@ -129,6 +157,130 @@ namespace RADB
             File.Delete(exeFile);
         }
 
+        private ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+        #endregion
+
+        #region MergeImages
+        private void BlankBitmap()
+        {
+            int width = 0;
+            int maxWidth = 0;
+            int height = 0;
+            int maxHeight = 0;
+
+            int index = 1;
+            int imagesPerRow = 11;
+
+            string FileNotFound = string.Empty;
+            int FileNotFoundIndex = 1;
+
+            foreach (string imageFile in ImageFiles)
+            {
+                if (!File.Exists(imageFile))
+                {
+                    if (FileNotFoundIndex <= 30)
+                    {
+                        FileNotFound += "[" + FileNotFoundIndex + "] " + imageFile + Environment.NewLine;
+                    }
+
+                    FileNotFoundIndex++;
+                    continue;
+                }
+
+                //create a Bitmap from the file and add it to the list
+                Bitmap image = new Bitmap(imageFile);
+
+                //update the width of the final bitmap
+                if (index <= imagesPerRow && width <= maxWidth)
+                {
+                    width += image.Width;
+                }
+
+                if (width > maxWidth) { maxWidth = width; }
+
+                if (index > imagesPerRow)
+                {
+                    maxHeight += height;
+                    height = 0;
+                    width = 0;
+                    index = 1;
+                }
+
+                //update the height of the final bitmap
+                if (image.Height > height) { height = image.Height; }
+                index++;
+
+                image.Dispose();
+            }
+
+            if (string.IsNullOrWhiteSpace(FileNotFound) == false)
+            {
+                if (FileNotFoundIndex > 30) { FileNotFound += Environment.NewLine + "and more... total = " + (FileNotFoundIndex - 1); ;                }
+
+                Error = "File Not Found: " + Environment.NewLine + FileNotFound;
+                //MessageBox.Show("File Not Found: " + Environment.NewLine + FileNotFound, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            maxHeight += height;
+
+            if (maxWidth == 0 || maxHeight == 0) { return; }
+
+            //create a bitmap to hold the combined image
+            Bitmap = new Picture(maxWidth, maxHeight).Bitmap;
+        }
+
+        private void MergeImages()
+        {
+            //get a graphics object from the image so we can draw on it
+            using (Graphics g = Graphics.FromImage(Bitmap))
+            {
+                //go through each image and draw it on the final image
+                int offsetW = 0;
+                int offsetH = 0;
+                int offsetHLine = 0;
+
+                int index = 1;
+                int imagesPerRow = 11;
+
+                foreach (string imageFile in ImageFiles)
+                {
+                    Bitmap image = new Bitmap(imageFile);
+
+                    if (index > imagesPerRow)
+                    {
+                        offsetH += offsetHLine;
+                        offsetHLine = 0;
+                        offsetW = 0;
+                        index = 1;
+                    }
+                    if (image.Height > offsetHLine)
+                    {
+                        offsetHLine = image.Height;
+                    }
+                    index++;
+
+                    g.DrawImage(image, new Rectangle(offsetW, offsetH, image.Width, image.Height));
+                    offsetW += image.Width;
+
+                    image.Dispose();
+                }
+            }
+        }
+        #endregion
+
+        #region Effects
         private Bitmap MakeGrayscale(Bitmap original)
         {
             //create a blank bitmap the same size as original
@@ -163,23 +315,6 @@ namespace RADB
             }
             return newBitmap;
         }
-
-        private ImageCodecInfo GetEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == format.Guid)
-                {
-                    return codec;
-                }
-            }
-            return null;
-        }
-
-        public void Dispose()
-        {
-            Bitmap.Dispose();
-        }
+        #endregion
     }
 }
