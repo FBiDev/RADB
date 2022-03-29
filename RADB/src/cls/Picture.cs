@@ -63,6 +63,7 @@ namespace RADB
             }
 
             if (File.Exists(FileName)) { File.Delete(FileName); }
+
             Bitmap.Save(FileName, GetEncoder(Format), Parameters);
             Dispose();
 

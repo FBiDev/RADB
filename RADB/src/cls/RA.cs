@@ -187,7 +187,7 @@ namespace RADB
 
             foreach (Achievement achievement in game.AchievementsList)
             {
-                //byte[] badgeFile = Browser.DownloadData(URL_Badges + achievement.BadgeName + FormatBadgesURL);
+                //byte[] badgeFile = Browser.DownloadData(URL_Badges + achievement.BadgeName + "" + FormatBadgesURL);
                 //File.WriteAllBytes(GetBadgeFile(achievement), badgeFile);
             }
 
@@ -242,15 +242,15 @@ namespace RADB
                     }
                     if (width > maxWidth) { maxWidth = width; }
 
-                    if (bitmap.Height > height) { height = bitmap.Height; }
-
-                    if (index == imagesPerRow)
+                    if (index > imagesPerRow)
                     {
                         maxHeight += height;
                         height = 0;
                         width = 0;
                         index = 1;
                     }
+
+                    if (bitmap.Height > height) { height = bitmap.Height; }
                     index++;
 
                     images.Add(bitmap);
