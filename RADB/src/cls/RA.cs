@@ -66,12 +66,12 @@ namespace RADB
 
             foreach (Achievement achievement in game.AchievementsList)
             {
-                //byte[] badgeData = Browser.DownloadData(achievement.BadgeURL);
-                //File.WriteAllBytes(achievement.BadgeFile, badgeData);
+                byte[] badgeData = Browser.DownloadData(achievement.BadgeURL);
+                File.WriteAllBytes(achievement.BadgeFile, badgeData);
             }
 
             Picture pic = new Picture(game.AchievementsFiles());
-            pic.Save(game.BadgesMergedFile, PictureFormat.Png);
+            pic.Save(game.BadgesMergedFile, PictureFormat.Jpg);
 
             return true;
         }

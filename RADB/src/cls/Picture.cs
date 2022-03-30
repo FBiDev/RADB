@@ -55,9 +55,6 @@ namespace RADB
 
             //Default Jpeg Quality
             Quality = 91L;//90%
-
-            //Default Background
-            using (Graphics g = Graphics.FromImage(Bitmap)) { g.Clear(Color.Magenta); }
         }
 
         public Picture(List<string> imageFilesToMerge, bool merge = true)
@@ -70,7 +67,7 @@ namespace RADB
                 MergeImages();
             }
 
-            //DefaultValues();
+            DefaultValues();
         }
 
         public Picture(int width, int height)
@@ -78,6 +75,9 @@ namespace RADB
             Bitmap = new Bitmap(width, height);
 
             DefaultValues();
+
+            //Default Background
+            using (Graphics g = Graphics.FromImage(Bitmap)) { g.Clear(Color.Magenta); }
         }
 
         #region Saves
@@ -141,6 +141,7 @@ namespace RADB
                     UseShellExecute = false,
                     StandardOutputEncoding = Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage),
                     StandardErrorEncoding = Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage),
+                    RedirectStandardInput = true,
                     RedirectStandardError = true,
                     RedirectStandardOutput = true,
                     FileName = "cmd.exe",
@@ -150,7 +151,7 @@ namespace RADB
             };
             process.Start();
 
-            string output = process.StandardError.ReadToEnd() + process.StandardOutput.ReadToEnd();
+            string output = exeCmd + Environment.NewLine + process.StandardError.ReadToEnd() + Environment.NewLine + process.StandardOutput.ReadToEnd();
             process.WaitForExit();
             process.Dispose();
 
