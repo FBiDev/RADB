@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -16,9 +17,9 @@ namespace RADB
     public static class Browser
     {
         public static WebClient client;
-        private static bool useProxy = true;
+        public static bool useProxy = true;
 
-        private static WebProxy Proxy = new WebProxy
+        public static WebProxy Proxy = new WebProxy
         {
             Address = new Uri("http://cohab-proxy.cohabct.com.br:3128"),
             BypassProxyOnLocal = true,
@@ -38,7 +39,7 @@ namespace RADB
 
             if (useProxy)
             {
-                client.Proxy = Browser.Proxy;
+                client.Proxy = Proxy;
             }
 
             //web.Headers["User-Agent"] = "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15";
@@ -56,6 +57,8 @@ namespace RADB
             return data;
         }
 
+        
+
         public static void startDownload(Download download)
         {
             if (client.IsBusy == false)
@@ -70,7 +73,6 @@ namespace RADB
 
                 //client.DownloadFileAsync(new Uri("https://drive.google.com/u/0/uc?id=1_C8I5Vt62xbpcFF6otwRtHczXm-NY3Y8&export=download"), RA.Local_JsonFolder + "GameList.json", new List<object> { lbl, bar });
                 //client.DownloadFileAsync(new Uri("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_julho_2020.pdf"), RA.Local_JsonFolder + "GameList.json", new List<object> { lbl, bar });
-                client.DownloadFileAsync(new Uri(download.URL), download.FileName, download);
                 client.DownloadFileAsync(new Uri(download.URL), download.FileName, download);
 
                 //client.OpenRead("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_julho_2020.pdf");

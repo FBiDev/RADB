@@ -11,6 +11,10 @@ using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Net.NetworkInformation;
+using System.Threading;
+using System.Net;
+using System.Collections;
 
 namespace RADB
 {
@@ -58,22 +62,112 @@ namespace RADB
             });
         }
 
-        public async static Task<bool> DownloadBadges(int gameID)
+        private static readonly SemaphoreSlim _mutex = new SemaphoreSlim(10);
+        public static async Task Start(string url, string filename)
+        {
+            using (WebClient client = new WebClient() { Proxy = Browser.Proxy })
+            {
+                await client.DownloadFileTaskAsync(new Uri(url), filename);
+            }
+        }
+
+        public static IEnumerable<Task> DownloadStart(IEnumerable<Download> downloads)
+        {
+            return downloads.Select(d => DownloadAsyncX(d));
+        }
+
+
+        private static async Task DownloadAsyncX(Download download)
+        {
+            await _mutex.WaitAsync();
+            using (WebClient client = new WebClient() { Proxy = Browser.Proxy })
+            {
+                //client.DownloadProgressChanged += (o, e) => { UpdateBar(e.ProgressPercentage); };
+                await client.DownloadFileTaskAsync(new Uri(download.URL), download.FileName);
+            }
+        }
+
+        public async static Task DownloadBadges(int gameID)
         {
             Game game = await GetGameInfoExtended(gameID);
 
-            if (game.AchievementsList.Count == 0) { return false; }
+            if (game.AchievementsList.Count == 0) { return; }
+
+            //IEnumerable<Task> downloads = game.AchievementsList.Select(file => DownloadAsyncX(file.BadgeURL, file.BadgeFile));
+            //IEnumerable<Download> acs = game.AchievementsList.Select(ac => new Download() { FileName = ac.BadgeFile, URL = ac.BadgeURL });
+            //IEnumerable<Task> downloads = acs.Select(file => DownloadAsyncX(file.URL, file.FileName));
+
+            List<Download> ds = new List<Download>();
+            foreach (Achievement achievement in game.AchievementsList)
+            {
+                var d = new Download() { FileName = achievement.BadgeFile, URL = achievement.BadgeURL, ProgressBarName = "pgbUpdates" };
+                ds.Add(d);
+            }
+            IEnumerable<Task> tasks = ds.Select(file => DownloadAsyncX(file));
+
+
+
+            //await Task.WhenAll(DownloadStart(downloads));
+            await Task.WhenAll(tasks);
+
+            Download downloadX = new Download() { FileName = game.AchievementsList[0].BadgeFile, URL = game.AchievementsList[0].BadgeURL };
+
+
+            return;
+
+
+            var list = new List<Task>();
 
             foreach (Achievement achievement in game.AchievementsList)
             {
-                byte[] badgeData = Browser.DownloadData(achievement.BadgeURL);
-                File.WriteAllBytes(achievement.BadgeFile, badgeData);
+                //byte[] badgeData = Browser.DownloadData(achievement.BadgeURL);
+                //File.WriteAllBytes(achievement.BadgeFile, badgeData);
+
+                Download download = new Download() { FileName = achievement.BadgeFile, URL = achievement.BadgeURL };
+
+                var task = download.client.DownloadFileTaskAsync(download.URL, download.FileName);
+
+                list.Add(task);
+                //tasks2[index] = download.Start();
+                //index++;
             }
 
-            Picture pic = new Picture(game.AchievementsFiles());
-            pic.Save(game.BadgesMergedFile, PictureFormat.Jpg);
+            //Task.WaitAll(tasks2);
+            await Task.WhenAll(list);
+            //File.Delete(download.FileName);
+            var x = 1;
 
-            return true;
+            try
+            {
+                //await t;
+
+                var a = 1;
+            }
+            catch { }
+
+            //Picture pic = new Picture(game.AchievementsFiles());
+            //pic.Save(game.BadgesMergedFile, PictureFormat.Jpg);
+            return;
+        }
+
+        private static async Task DownloadAsync(string url, string file)
+        {
+            await _mutex.WaitAsync();
+            try
+            {
+                //ServicePointManager.Expect100Continue = true;
+                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                using (WebClient client = new WebClient() { Proxy = Browser.Proxy })
+                {
+                    await client.DownloadFileTaskAsync(new Uri(url), file);
+                    //return true;
+                }
+            }
+            finally
+            {
+                _mutex.Release();
+            }
         }
 
         public static void UpdateConsolesFile(Download download)
