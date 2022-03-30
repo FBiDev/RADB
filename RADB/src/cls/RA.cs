@@ -76,14 +76,38 @@ namespace RADB
             return downloads.Select(d => DownloadAsyncX(d));
         }
 
+        private static bool IsFileLocked(string fileName)
+        {
+            try
+            {
+                using (FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    stream.Close();
+                }
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                return true;
+            }
+
+            //file is not locked
+            return false;
+        }
 
         private static async Task DownloadAsyncX(Download download)
         {
-            await _mutex.WaitAsync();
-            using (WebClient client = new WebClient() { Proxy = Browser.Proxy })
+            //await _mutex.WaitAsync();
+            if (File.Exists(download.FileName) == false || IsFileLocked(download.FileName) == false)
             {
-                //client.DownloadProgressChanged += (o, e) => { UpdateBar(e.ProgressPercentage); };
-                await client.DownloadFileTaskAsync(new Uri(download.URL), download.FileName);
+                using (WebClient client = new WebClient() { Proxy = Browser.Proxy })
+                {
+                    //client.DownloadProgressChanged += (o, e) => { UpdateBar(e.ProgressPercentage); };
+                    await client.DownloadFileTaskAsync(new Uri(download.URL), download.FileName);
+                }
             }
         }
 
@@ -110,8 +134,10 @@ namespace RADB
             //await Task.WhenAll(DownloadStart(downloads));
             await Task.WhenAll(tasks);
 
-            Download downloadX = new Download() { FileName = game.AchievementsList[0].BadgeFile, URL = game.AchievementsList[0].BadgeURL };
+            //Download downloadX = new Download() { FileName = game.AchievementsList[0].BadgeFile, URL = game.AchievementsList[0].BadgeURL };
 
+            Picture pic = new Picture(game.AchievementsFiles());
+            pic.Save(game.BadgesMergedFile, PictureFormat.Jpg);
 
             return;
 
@@ -145,8 +171,7 @@ namespace RADB
             }
             catch { }
 
-            //Picture pic = new Picture(game.AchievementsFiles());
-            //pic.Save(game.BadgesMergedFile, PictureFormat.Jpg);
+
             return;
         }
 
