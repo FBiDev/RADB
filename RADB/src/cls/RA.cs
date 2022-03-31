@@ -127,7 +127,7 @@ namespace RADB
             List<Download> ds = new List<Download>();
             foreach (Achievement achievement in game.AchievementsList)
             {
-                var d = new Download() { FileName = achievement.BadgeFile, URL = achievement.BadgeURL, ProgressBarName = "pgbUpdates",  };
+                var d = new Download() { FileName = achievement.BadgeFile, URL = achievement.BadgeURL, ProgressBarName = "pgbUpdates", ProgressBar = new ProgressBar()  };
                 
                 ds.Add(d);
             }

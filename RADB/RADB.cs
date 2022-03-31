@@ -104,11 +104,11 @@ namespace RADB
         {
             ParseValues();
             if (!ValidID()) { return; }
-
-            await Task.Run(async () =>
-            {
+            
+            //await Task.Run(async () =>
+            //{
                 await RA.DownloadBadges(ID_value);
-            });
+            //});
             txtOutput.Text = "Badges Downloaded!";
         }
 
