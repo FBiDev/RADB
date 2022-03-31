@@ -231,7 +231,7 @@ namespace RADB
 
             if (string.IsNullOrWhiteSpace(FileNotFound) == false)
             {
-                if (FileNotFoundIndex > 30) { FileNotFound += Environment.NewLine + "and more... total = " + (FileNotFoundIndex - 1); ;                }
+                if (FileNotFoundIndex > 30) { FileNotFound += Environment.NewLine + "and more... total = " + (FileNotFoundIndex - 1); }
 
                 Error = "File Not Found: " + Environment.NewLine + FileNotFound;
                 //MessageBox.Show("File Not Found: " + Environment.NewLine + FileNotFound, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -25,8 +25,6 @@ namespace RADB
         {
             try
             {
-                if (File.Exists(fileName) == false) { return false; }
-
                 using (FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.None))
                 {
                     stream.Close();

@@ -72,6 +72,7 @@ namespace RADB
             {
                 Files = game.AchievementsList.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList()
             };
+            
             await dl.Start();
 
             Picture pic = new Picture(game.AchievementsFiles());

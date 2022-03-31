@@ -15,8 +15,8 @@ namespace RADB
 {
     public class Download
     {
-
         public List<DownloadFile> Files { get; set; }
+        public TimeSpan ElapsedTime { get; set; }
 
         public string URL { get; set; }
         public string FileName { get; set; }
@@ -56,33 +56,52 @@ namespace RADB
         }
 
         //private readonly SemaphoreSlim _mutex = new SemaphoreSlim(10);
-        public Task Start()
+        public async Task Start()
         {
             List<Task> Tasks = new List<Task>();
-            //Tasks.Add(_mutex.WaitAsync());
 
-            try
+            foreach (DownloadFile file in Files)
             {
-                foreach (DownloadFile file in Files)
-                {
-                    if (Archive.IsFileLocked(file.Path)) { continue; }
+                if (File.Exists(file.Path) && Archive.IsFileLocked(file.Path)) { continue; }
 
+                try
+                {
+                    //await _mutex.WaitAsync();
                     using (WebClient client = new WebClient())
                     {
                         if (Browser.useProxy)
                         {
                             client.Proxy = Browser.Proxy;
                         }
+                        DownloadingProgress = new Tuple<DateTime, long, long>(DateTime.Now, 0, 0);
+                        client.DownloadProgressChanged += (sender, args) =>
+                        {
+                            bytes = args.BytesReceived;
+                            bytes = args.ProgressPercentage;
+                        };
 
                         Tasks.Add(client.DownloadFileTaskAsync(new Uri(file.URL), file.Path));
                     }
                 }
+                finally
+                {
+                    //_mutex.Release();
+                }
             }
-            finally
-            {
-                //_mutex.Release();
-            }
-            return Task.WhenAll(Tasks);
+
+            TimeSpan initialTime = new TimeSpan(DateTime.Now.Ticks);
+            await Task.WhenAll(Tasks);
+            ElapsedTime = new TimeSpan(DateTime.Now.Ticks) - initialTime;
+        }
+
+
+        public Tuple<DateTime, long, long> DownloadingProgress = new Tuple<DateTime, long, long>(DateTime.MinValue, 0, 0);
+        public long bytes = 0;
+
+        private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs downloadProgressChangedEventArgs)
+        {
+            bytes += downloadProgressChangedEventArgs.BytesReceived;
+            DownloadingProgress = new Tuple<DateTime, long, long>(DateTime.Now, DownloadingProgress.Item2 + downloadProgressChangedEventArgs.TotalBytesToReceive, (DownloadingProgress.Item3 + downloadProgressChangedEventArgs.BytesReceived));
         }
 
         /////////////////////////////////
