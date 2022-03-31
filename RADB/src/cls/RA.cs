@@ -103,7 +103,10 @@ namespace RADB
             //await _mutex.WaitAsync();
             if (File.Exists(download.FileName) == false || IsFileLocked(download.FileName) == false)
             {
-                using (WebClient client = new WebClient() { Proxy = Browser.Proxy })
+                using (WebClient client = new WebClient()
+                {
+                    Proxy = Browser.Proxy 
+                })
                 {
                     //client.DownloadProgressChanged += (o, e) => { UpdateBar(e.ProgressPercentage); };
                     await client.DownloadFileTaskAsync(new Uri(download.URL), download.FileName);
@@ -124,13 +127,14 @@ namespace RADB
             List<Download> ds = new List<Download>();
             foreach (Achievement achievement in game.AchievementsList)
             {
-                var d = new Download() { FileName = achievement.BadgeFile, URL = achievement.BadgeURL, ProgressBarName = "pgbUpdates" };
+                var d = new Download() { FileName = achievement.BadgeFile, URL = achievement.BadgeURL, ProgressBarName = "pgbUpdates",  };
+                
                 ds.Add(d);
             }
             IEnumerable<Task> tasks = ds.Select(file => DownloadAsyncX(file));
 
-
-
+            var x1 = new FileInfo(@"data\game\teste.jpg");
+            var x2 = x1.DirectoryName.Replace(Application.StartupPath+"\\", "")+"\\";
             //await Task.WhenAll(DownloadStart(downloads));
             await Task.WhenAll(tasks);
 
