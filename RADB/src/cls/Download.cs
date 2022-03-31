@@ -15,6 +15,9 @@ namespace RADB
 {
     public class Download
     {
+
+        public List<DownloadFile> Files { get; set; }
+
         public string URL { get; set; }
         public string FileName { get; set; }
         public Form Form { get; set; }
@@ -28,9 +31,11 @@ namespace RADB
 
         public Download()
         {
+            Files = new List<DownloadFile>();
+
             //URL = GetDaoClassAndMethod(2);
             Form = Application.OpenForms[0];
-            
+
             //ProgressBar = new ProgressBar();
 
             //LabelTime = new Label();
@@ -50,8 +55,38 @@ namespace RADB
             //}
         }
 
+        //private readonly SemaphoreSlim _mutex = new SemaphoreSlim(10);
+        public Task Start()
+        {
+            List<Task> Tasks = new List<Task>();
+            //Tasks.Add(_mutex.WaitAsync());
+
+            try
+            {
+                foreach (DownloadFile file in Files)
+                {
+                    if (Archive.IsFileLocked(file.Path)) { continue; }
+
+                    using (WebClient client = new WebClient())
+                    {
+                        if (Browser.useProxy)
+                        {
+                            client.Proxy = Browser.Proxy;
+                        }
+
+                        Tasks.Add(client.DownloadFileTaskAsync(new Uri(file.URL), file.Path));
+                    }
+                }
+            }
+            finally
+            {
+                //_mutex.Release();
+            }
+            return Task.WhenAll(Tasks);
+        }
+
         /////////////////////////////////
-        public async Task Start()
+        public async Task StartX()
         {
             using (WebClient client = new WebClient() { Proxy = Browser.Proxy })
             {

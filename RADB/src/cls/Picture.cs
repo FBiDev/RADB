@@ -39,6 +39,7 @@ namespace RADB
         private PictureFormat FormatEnum { get; set; }
 
         private List<string> ImageFiles { get; set; }
+        public int ImagesPerRow { get; set; }
         public string Error { get; set; }
 
         private string FolderTemp
@@ -55,11 +56,14 @@ namespace RADB
 
             //Default Jpeg Quality
             Quality = 91L;//90%
+
+            //ImagesPerRow = 11;
         }
 
-        public Picture(List<string> imageFilesToMerge, bool merge = true)
+        public Picture(List<string> imagesToMerge, bool merge = true, int imagesPerRow = 11)
         {
-            ImageFiles = imageFilesToMerge;
+            ImageFiles = imagesToMerge;
+            ImagesPerRow = imagesPerRow;
 
             BlankBitmap();
             if (merge)
@@ -181,7 +185,7 @@ namespace RADB
             int maxHeight = 0;
 
             int index = 1;
-            int imagesPerRow = 11;
+            int imagesPerRow = ImagesPerRow;
 
             string FileNotFound = string.Empty;
             int FileNotFoundIndex = 1;
@@ -253,7 +257,7 @@ namespace RADB
                 int offsetHLine = 0;
 
                 int index = 1;
-                int imagesPerRow = 11;
+                int imagesPerRow = ImagesPerRow;
 
                 foreach (string imageFile in ImageFiles)
                 {

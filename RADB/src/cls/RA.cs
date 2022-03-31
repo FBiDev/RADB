@@ -62,141 +62,22 @@ namespace RADB
             });
         }
 
-        private static readonly SemaphoreSlim _mutex = new SemaphoreSlim(10);
-        public static async Task Start(string url, string filename)
-        {
-            using (WebClient client = new WebClient() { Proxy = Browser.Proxy })
-            {
-                await client.DownloadFileTaskAsync(new Uri(url), filename);
-            }
-        }
-
-        public static IEnumerable<Task> DownloadStart(IEnumerable<Download> downloads)
-        {
-            return downloads.Select(d => DownloadAsyncX(d));
-        }
-
-        private static bool IsFileLocked(string fileName)
-        {
-            try
-            {
-                using (FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.None))
-                {
-                    stream.Close();
-                }
-            }
-            catch (IOException)
-            {
-                //the file is unavailable because it is:
-                //still being written to
-                //or being processed by another thread
-                //or does not exist (has already been processed)
-                return true;
-            }
-
-            //file is not locked
-            return false;
-        }
-
-        private static async Task DownloadAsyncX(Download download)
-        {
-            //await _mutex.WaitAsync();
-            if (File.Exists(download.FileName) == false || IsFileLocked(download.FileName) == false)
-            {
-                using (WebClient client = new WebClient()
-                {
-                    Proxy = Browser.Proxy 
-                })
-                {
-                    //client.DownloadProgressChanged += (o, e) => { UpdateBar(e.ProgressPercentage); };
-                    await client.DownloadFileTaskAsync(new Uri(download.URL), download.FileName);
-                }
-            }
-        }
-
         public async static Task DownloadBadges(int gameID)
         {
             Game game = await GetGameInfoExtended(gameID);
 
             if (game.AchievementsList.Count == 0) { return; }
 
-            //IEnumerable<Task> downloads = game.AchievementsList.Select(file => DownloadAsyncX(file.BadgeURL, file.BadgeFile));
-            //IEnumerable<Download> acs = game.AchievementsList.Select(ac => new Download() { FileName = ac.BadgeFile, URL = ac.BadgeURL });
-            //IEnumerable<Task> downloads = acs.Select(file => DownloadAsyncX(file.URL, file.FileName));
-
-            List<Download> ds = new List<Download>();
-            foreach (Achievement achievement in game.AchievementsList)
+            Download dl = new Download()
             {
-                var d = new Download() { FileName = achievement.BadgeFile, URL = achievement.BadgeURL, ProgressBarName = "pgbUpdates", ProgressBar = new ProgressBar()  };
-                
-                ds.Add(d);
-            }
-            IEnumerable<Task> tasks = ds.Select(file => DownloadAsyncX(file));
-
-            var x1 = new FileInfo(@"data\game\teste.jpg");
-            var x2 = x1.DirectoryName.Replace(Application.StartupPath+"\\", "")+"\\";
-            //await Task.WhenAll(DownloadStart(downloads));
-            await Task.WhenAll(tasks);
-
-            //Download downloadX = new Download() { FileName = game.AchievementsList[0].BadgeFile, URL = game.AchievementsList[0].BadgeURL };
+                Files = game.AchievementsList.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList()
+            };
+            await dl.Start();
 
             Picture pic = new Picture(game.AchievementsFiles());
             pic.Save(game.BadgesMergedFile, PictureFormat.Jpg);
 
             return;
-
-
-            var list = new List<Task>();
-
-            foreach (Achievement achievement in game.AchievementsList)
-            {
-                //byte[] badgeData = Browser.DownloadData(achievement.BadgeURL);
-                //File.WriteAllBytes(achievement.BadgeFile, badgeData);
-
-                Download download = new Download() { FileName = achievement.BadgeFile, URL = achievement.BadgeURL };
-
-                var task = download.client.DownloadFileTaskAsync(download.URL, download.FileName);
-
-                list.Add(task);
-                //tasks2[index] = download.Start();
-                //index++;
-            }
-
-            //Task.WaitAll(tasks2);
-            await Task.WhenAll(list);
-            //File.Delete(download.FileName);
-            var x = 1;
-
-            try
-            {
-                //await t;
-
-                var a = 1;
-            }
-            catch { }
-
-
-            return;
-        }
-
-        private static async Task DownloadAsync(string url, string file)
-        {
-            await _mutex.WaitAsync();
-            try
-            {
-                //ServicePointManager.Expect100Continue = true;
-                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-                using (WebClient client = new WebClient() { Proxy = Browser.Proxy })
-                {
-                    await client.DownloadFileTaskAsync(new Uri(url), file);
-                    //return true;
-                }
-            }
-            finally
-            {
-                _mutex.Release();
-            }
         }
 
         public static void UpdateConsolesFile(Download download)
