@@ -70,7 +70,8 @@ namespace RADB
 
             Download dl = new Download()
             {
-                Files = game.AchievementsList.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList()
+                Files = game.AchievementsList.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList(),
+                Overwrite = true,
             };
             
             await dl.Start();

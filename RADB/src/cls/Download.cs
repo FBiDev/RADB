@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -17,21 +18,23 @@ namespace RADB
     {
         public List<DownloadFile> Files { get; set; }
         public TimeSpan ElapsedTime { get; set; }
+        public bool Overwrite { get; set; }
+
+
 
         public string URL { get; set; }
         public string FileName { get; set; }
         public Form Form { get; set; }
         public ProgressBar ProgressBar { get; set; }
-
         public string ProgressBarName { set { ProgressBar = Form.Controls.Find(value, true).First() as ProgressBar; } }
         public Label LabelTime { get; set; }
         public Label LabelBytes { get; set; }
-
         public WebClient client;
 
         public Download()
         {
             Files = new List<DownloadFile>();
+            Overwrite = true;
 
             //URL = GetDaoClassAndMethod(2);
             Form = Application.OpenForms[0];
@@ -60,9 +63,13 @@ namespace RADB
         {
             List<Task> Tasks = new List<Task>();
 
+            //Remove Files with same URL
+            Files = Files.Distinct().ToList();
+
             foreach (DownloadFile file in Files)
             {
-                if (File.Exists(file.Path) && Archive.IsFileLocked(file.Path)) { continue; }
+                if (File.Exists(file.Path) && Archive.IsFileLocked(file.Path) || File.Exists(file.Path) && Overwrite == false)
+                { continue; }
 
                 try
                 {
