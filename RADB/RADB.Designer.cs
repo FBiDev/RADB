@@ -373,7 +373,6 @@
             this.pgbUpdates.Name = "pgbUpdates";
             this.pgbUpdates.Size = new System.Drawing.Size(70, 21);
             this.pgbUpdates.Step = 1;
-            this.pgbUpdates.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.pgbUpdates.TabIndex = 29;
             // 
             // RADB

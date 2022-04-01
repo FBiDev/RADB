@@ -66,6 +66,7 @@ namespace RADB
             ImagesPerRow = imagesPerRow;
 
             BlankBitmap();
+
             if (merge)
             {
                 MergeImages();
@@ -87,6 +88,8 @@ namespace RADB
         #region Saves
         public void Save(string fileName, PictureFormat format = PictureFormat.Jpg)
         {
+            if (Bitmap == null || (Bitmap is Bitmap) == false) { return; }
+
             FileName = fileName + "." + format.ToString().ToLower();
             FormatEnum = format;
 
@@ -248,6 +251,8 @@ namespace RADB
 
         private void MergeImages()
         {
+            if (Bitmap == null || (Bitmap is Bitmap) == false) { return; }
+
             //get a graphics object from the image so we can draw on it
             using (Graphics g = Graphics.FromImage(Bitmap))
             {

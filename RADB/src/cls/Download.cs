@@ -17,18 +17,26 @@ namespace RADB
     public class Download
     {
         public List<DownloadFile> Files { get; set; }
-        public TimeSpan ElapsedTime { get; set; }
+        public int FilesCompleted { get; set; }
         public bool Overwrite { get; set; }
+        public TimeSpan ElapsedTime { get; set; }
 
+        public long BytesReceived { get; set; }
+        public long TotalBytesToReceive { get; set; }
+        public float ProgressPercentage { get; set; }
 
+        public ProgressBar ProgressBar { get; set; }
+        public string ProgressBarName { set { ProgressBar = Form.Controls.Find(value, true).First() as ProgressBar; } }
+
+        public Label LabelBytes { get; set; }
+        public string LabelBytesName { set { LabelBytes = Form.Controls.Find(value, true).First() as Label; } }
+
+        public Label LabelTime { get; set; }
+        public string LabelTimeName { set { LabelTime = Form.Controls.Find(value, true).First() as Label; } }
 
         public string URL { get; set; }
         public string FileName { get; set; }
         public Form Form { get; set; }
-        public ProgressBar ProgressBar { get; set; }
-        public string ProgressBarName { set { ProgressBar = Form.Controls.Find(value, true).First() as ProgressBar; } }
-        public Label LabelTime { get; set; }
-        public Label LabelBytes { get; set; }
         public WebClient client;
 
         public Download()
@@ -59,12 +67,17 @@ namespace RADB
         }
 
         //private readonly SemaphoreSlim _mutex = new SemaphoreSlim(10);
-        public async Task Start()
+
+        public Task Start()
         {
             List<Task> Tasks = new List<Task>();
 
             //Remove Files with same URL
             Files = Files.Distinct().ToList();
+
+            StartBar(ProgressBar);
+            TimeSpan initialTime = new TimeSpan(DateTime.Now.Ticks);
+            ToolTip ttip = new ToolTip();
 
             foreach (DownloadFile file in Files)
             {
@@ -80,11 +93,43 @@ namespace RADB
                         {
                             client.Proxy = Browser.Proxy;
                         }
-                        DownloadingProgress = new Tuple<DateTime, long, long>(DateTime.Now, 0, 0);
+
                         client.DownloadProgressChanged += (sender, args) =>
                         {
-                            bytes = args.BytesReceived;
-                            bytes = args.ProgressPercentage;
+                            file.BytesReceived = args.BytesReceived;
+                            file.TotalBytesToReceive = args.TotalBytesToReceive;
+                            file.ProgressPercentage = args.ProgressPercentage;
+
+                            BytesReceived = 0;
+                            TotalBytesToReceive = 0;
+                            ProgressPercentage = 0;
+
+                            Files.ForEach(f =>
+                            {
+                                BytesReceived += f.BytesReceived;
+                                TotalBytesToReceive += f.TotalBytesToReceive;
+                                ProgressPercentage += f.ProgressPercentage / Files.Count;
+                            });
+
+                            LabelBytes.Text = "Downloaded " + DownloadedProgress(BytesReceived, TotalBytesToReceive);
+
+                            ProgressBar.Value = (int)(Math.Round(ProgressPercentage));
+
+                            ttip.SetToolTip(ProgressBar, (TotalBytesToReceive == -1 ? "?" : ProgressBar.Value.ToString()) + " %");
+                            ProgressBar.Style = (TotalBytesToReceive == -1 ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous);
+                        };
+
+                        client.DownloadFileCompleted += (sender, args) =>
+                        {
+                            FilesCompleted++;
+
+                            //Downloaded All Files
+                            if (FilesCompleted == Files.Count)
+                            {
+                                LabelTime.Text = DateTime.Now.ToString();
+                                StoptBar(ProgressBar);
+                                ElapsedTime = new TimeSpan(DateTime.Now.Ticks) - initialTime;
+                            }
                         };
 
                         Tasks.Add(client.DownloadFileTaskAsync(new Uri(file.URL), file.Path));
@@ -96,19 +141,19 @@ namespace RADB
                 }
             }
 
-            TimeSpan initialTime = new TimeSpan(DateTime.Now.Ticks);
-            await Task.WhenAll(Tasks);
-            ElapsedTime = new TimeSpan(DateTime.Now.Ticks) - initialTime;
+
+            return Task.WhenAll(Tasks);
+
         }
 
 
-        public Tuple<DateTime, long, long> DownloadingProgress = new Tuple<DateTime, long, long>(DateTime.MinValue, 0, 0);
-        public long bytes = 0;
+
+
 
         private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs downloadProgressChangedEventArgs)
         {
-            bytes += downloadProgressChangedEventArgs.BytesReceived;
-            DownloadingProgress = new Tuple<DateTime, long, long>(DateTime.Now, DownloadingProgress.Item2 + downloadProgressChangedEventArgs.TotalBytesToReceive, (DownloadingProgress.Item3 + downloadProgressChangedEventArgs.BytesReceived));
+            //bytes += downloadProgressChangedEventArgs.BytesReceived;
+            //DownloadingProgress = new Tuple<DateTime, long, long>(DateTime.Now, DownloadingProgress.Item2 + downloadProgressChangedEventArgs.TotalBytesToReceive, (DownloadingProgress.Item3 + downloadProgressChangedEventArgs.BytesReceived));
         }
 
         /////////////////////////////////

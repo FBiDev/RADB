@@ -68,12 +68,24 @@ namespace RADB
 
             if (game.AchievementsList.Count == 0) { return; }
 
+            List<DownloadFile> ll = new List<global::RADB.DownloadFile>();
+            ll.Add(new DownloadFile("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_julho_2020.pdf", "t1"));
+            ll.Add(new DownloadFile("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_agost_2020.pdf", "t2"));
+            ll.Add(new DownloadFile("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_set_2020.pdf", "t3"));
+            ll.Add(new DownloadFile("http://www.cohabct.com.br/userfiles/file/Inscri%C3%A7%C3%A3o%20Class%2010183%2010185.pdf", "t4"));
+            ll.Add(new DownloadFile("http://www.cohabct.com.br/userfiles/file/Inscri%C3%A7%C3%A3o%20Class%2010190%2010192.pdf", "t5"));
+
             Download dl = new Download()
             {
                 Files = game.AchievementsList.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList(),
+                //Files = ll,
+                //Files = new List<DownloadFile>() { new DownloadFile(RA.API_URL("API_GetGameList.php", "&i=", ""), "GameList.json") },
                 Overwrite = true,
+                ProgressBarName = "pgbUpdates",
+                LabelBytesName = "lblUpdateProgress",
+                LabelTimeName = "lblUpdateConsoles",
             };
-            
+
             await dl.Start();
 
             Picture pic = new Picture(game.AchievementsFiles());

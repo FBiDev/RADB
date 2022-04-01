@@ -11,6 +11,10 @@ namespace RADB
         public string URL { get; set; }
         public string Path { get; set; }
 
+        public long BytesReceived { get; set; }
+        public long TotalBytesToReceive { get; set; }
+        public float ProgressPercentage { get; set; }
+
         public DownloadFile(string url = "", string path = "")
         {
             URL = url;
