@@ -13,6 +13,7 @@ namespace RADB
         {
             Directory.CreateDirectory(Base);
             Directory.CreateDirectory(Game);
+            Directory.CreateDirectory(Json);
             Directory.CreateDirectory(Temp);
         }
 
@@ -37,6 +38,14 @@ namespace RADB
             get
             {
                 return Base + @"game\";
+            }
+        }
+
+        public static string Json
+        {
+            get
+            {
+                return Base + @"json\";
             }
         }
 

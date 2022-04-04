@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnGameInfo = new System.Windows.Forms.Button();
             this.txtID = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
@@ -61,6 +62,7 @@
             this.gpbFiles = new System.Windows.Forms.GroupBox();
             this.lblUpdateProgress = new System.Windows.Forms.Label();
             this.pgbUpdates = new System.Windows.Forms.ProgressBar();
+            this.Ttip = new System.Windows.Forms.ToolTip(this.components);
             this.sts.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabUpdates.SuspendLayout();
@@ -453,6 +455,7 @@
         private System.Windows.Forms.GroupBox gpbFiles;
         private System.Windows.Forms.ProgressBar pgbUpdates;
         private System.Windows.Forms.Label lblUpdateProgress;
+        public System.Windows.Forms.ToolTip Ttip;
     }
 }
 

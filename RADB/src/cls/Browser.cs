@@ -17,7 +17,7 @@ namespace RADB
     public static class Browser
     {
         public static WebClient client;
-        public static bool useProxy = true;
+        public static bool useProxy = false;
 
         public static WebProxy Proxy = new WebProxy
         {
@@ -31,6 +31,7 @@ namespace RADB
         {
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            ServicePointManager.DefaultConnectionLimit = 128;
 
             client = new WebClient()
             {
@@ -57,7 +58,7 @@ namespace RADB
             return data;
         }
 
-        
+
 
         public static void startDownload(Download download)
         {
@@ -168,6 +169,13 @@ namespace RADB
             if (path.IndexOf("http://") >= 0 || path.IndexOf("https://") >= 0)
             {
                 content = DownloadString(path);
+            }
+            else
+            {
+                using (StreamReader file = new StreamReader(path))
+                {
+                    content = file.ReadToEnd();
+                }
             }
             JObject result = JsonConvert.DeserializeObject<JObject>(content);
             return result;

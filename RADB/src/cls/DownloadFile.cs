@@ -30,7 +30,7 @@ namespace RADB
             if (Object.ReferenceEquals(this, other)) return true;
 
             //Check whether the products' properties are equal.
-            //return URL.Equals(other.URL) && Path.Equals(other.Path);
+            return URL.Equals(other.URL) && Path.Equals(other.Path);
             return URL.Equals(other.URL);
         }
 
@@ -40,13 +40,13 @@ namespace RADB
         public override int GetHashCode()
         {
             //Get hash code for the Name field if it is not null.
-            //int hashProductPath = Path == null ? 0 : Path.GetHashCode();
+            int hashProductPath = Path == null ? 0 : Path.GetHashCode();
 
             //Get hash code for the Code field.
             int hashProductURL = URL == null ? 0 : URL.GetHashCode();
 
             //Calculate the hash code for the product.
-            //return hashProductPath ^ hashProductURL;
+            return hashProductPath ^ hashProductURL;
             return hashProductURL;
         }
     }

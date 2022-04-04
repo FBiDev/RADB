@@ -49,47 +49,99 @@ namespace RADB
             JSN_Consoles, "Teste"
         };
 
-        public static Task<Game> GetGameInfoExtended(int gameID)
+        public async static Task<Game> GetGameInfoExtended(int gameID)
         {
             if (gameID <= 0) { return null; }
 
-            return Task.Run(() =>
+            string fileName = Folder.Game + gameID + ".json";
+            //JObject result = Browser.ToJObject(API_URL("API_GetGameExtended.php", "&i=", gameID.ToString()));
+            Download dl = new Download()
             {
-                JObject result = Browser.ToJObject(API_URL("API_GetGameExtended.php", "&i=", gameID.ToString()));
+                Overwrite = false,
+                Files = new List<DownloadFile>() { new DownloadFile(API_URL("API_GetGameExtended.php", "&i=", gameID.ToString()), fileName) },
+                ProgressBarName = "pgbUpdates",
+                LabelBytesName = "lblUpdateProgress",
+                LabelTimeName = "lblUpdateConsoles",
+            };
+            await dl.Start();
+
+            return await Task.Run(() =>
+            {
+                JObject result = Browser.ToJObject(fileName);
+
                 Game game = result.ToObject<Game>();
-                game.SetAchievements(result);
+                JToken a = result["Achievements"];
+                game.SetAchievements(result["Achievements"]);
                 return game;
             });
+            //return new Game();
         }
 
         public async static Task DownloadBadges(int gameID)
         {
-            Game game = await GetGameInfoExtended(gameID);
-
-            if (game.AchievementsList.Count == 0) { return; }
-
-            List<DownloadFile> ll = new List<global::RADB.DownloadFile>();
-            ll.Add(new DownloadFile("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_julho_2020.pdf", "t1"));
-            ll.Add(new DownloadFile("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_agost_2020.pdf", "t2"));
-            ll.Add(new DownloadFile("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_set_2020.pdf", "t3"));
-            ll.Add(new DownloadFile("http://www.cohabct.com.br/userfiles/file/Inscri%C3%A7%C3%A3o%20Class%2010183%2010185.pdf", "t4"));
-            ll.Add(new DownloadFile("http://www.cohabct.com.br/userfiles/file/Inscri%C3%A7%C3%A3o%20Class%2010190%2010192.pdf", "t5"));
-
+            string fileGameList = Folder.Json + "GameList" + "12" + ".json";
             Download dl = new Download()
             {
-                Files = game.AchievementsList.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList(),
-                //Files = ll,
-                //Files = new List<DownloadFile>() { new DownloadFile(RA.API_URL("API_GetGameList.php", "&i=", ""), "GameList.json") },
-                Overwrite = true,
+                Overwrite = false,
+                Files = new List<DownloadFile>() { new DownloadFile(API_URL("API_GetGameList.php", "&i=", 12.ToString()), fileGameList) },
+                ProgressBarName = "pgbUpdates",
+                LabelBytesName = "lblUpdateProgress",
+                LabelTimeName = "lblUpdateConsoles",
+            };
+            await dl.Start();
+
+            List<Game> Games = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(fileGameList));
+            List<Game> GamesWithCheevos = new List<Game>();
+
+            List<Achievement> gCheevos = new List<Achievement>();
+            List<DownloadFile> gFiles = new List<DownloadFile>();
+
+            int FilesDownloaded = 0;
+            foreach (Game g in Games)
+            {
+                Game game = await GetGameInfoExtended(g.ID);
+                if (game.AchievementsList.Count > 0)
+                {
+                    GamesWithCheevos.Add(game);
+                }
+            }
+
+            //GamesWithCheevos.ForEach(gc => gCheevos.AddRange(gc.AchievementsList));
+            GamesWithCheevos.ForEach(gc => gFiles.AddRange(gc.AchievementsList.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList().Distinct().ToList()));
+
+            //gFiles = gCheevos.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList().Distinct().ToList();
+
+            //var query = gCheevos.GroupBy(x => new { x.BadgeURL, x.GameID }).Where(g => g.Count() > 1)
+            //  .Select(y => new { Element = y.Key, Counter = y.Count() })
+            //  .ToList().OrderBy(x => x.Element.BadgeURL).ToList();
+
+            //var queryTotal = gCheevos.Count - (query.Select(x => x.Counter).Sum() - query.Count);
+
+            //foreach (Game game in GamesWithCheevos)
+            //{
+            Game gameX = await GetGameInfoExtended(gameID);
+            Download dlGameBadges = new Download()
+            {
+                Files = gFiles,
+                //Files = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList(),
+                //Files = new List<DownloadFile>() { new DownloadFile("https://dl18.cdromance.com/download.php?file=Megaman_Powered_Up_USA_PSP-DMU.7z&id=251&platform=psp&key=6299971769", "MM.7z") },
+                Overwrite = false,
                 ProgressBarName = "pgbUpdates",
                 LabelBytesName = "lblUpdateProgress",
                 LabelTimeName = "lblUpdateConsoles",
             };
 
-            await dl.Start();
+            await dlGameBadges.Start();
 
-            Picture pic = new Picture(game.AchievementsFiles());
-            pic.Save(game.BadgesMergedFile, PictureFormat.Jpg);
+            FilesDownloaded += dlGameBadges.FilesCompleted;
+            var L = (Application.OpenForms[0].Controls.Find("lblUpdateConsoles", true).First() as Label);
+            L.Text = FilesDownloaded.ToString();
+            //}
+
+            List<string> afiles = gFiles.Select(x => x.Path).ToList();
+            Picture pic = new Picture(afiles, true, 110);
+            //Picture pic = new Picture(gameX.AchievementsFiles());
+            pic.Save(Folder.Game + "badges", PictureFormat.Jpg);
 
             return;
         }

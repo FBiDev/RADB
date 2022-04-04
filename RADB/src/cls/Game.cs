@@ -62,17 +62,17 @@ namespace RADB
             AchievementsList = new List<Achievement>();
         }
 
-        public void SetAchievements(JObject result)
+        public void SetAchievements(JToken result)
         {
-            if (result.ContainsKey("Achievements"))
-            {
-                foreach (JProperty cheevo in result["Achievements"])
+            //if (result.ContainsKey("Achievements"))
+            //{
+                foreach (JProperty cheevo in result)
                 {
                     AchievementsList.Add(JsonConvert.DeserializeObject<Achievement>(cheevo.Value.ToString()));
                 }
-                result.Remove("Achievements");
+                //result.Remove("Achievements");
                 AchievementsList.ForEach(c => { c.GameID = ID; });
-            }
+            //}
         }
 
         public List<string> AchievementsFiles()

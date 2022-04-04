@@ -100,7 +100,8 @@ namespace RADB
             }
 
             if (File.Exists(FileName)) { File.Delete(FileName); }
-
+            
+            //Max image Size is 65.000 x 65.000
             Bitmap.Save(FileName, GetEncoder(Format), Parameters);
             Bitmap.Dispose();
 

@@ -34,6 +34,8 @@ namespace RADB
         public Label LabelTime { get; set; }
         public string LabelTimeName { set { LabelTime = Form.Controls.Find(value, true).First() as Label; } }
 
+        private ToolTip Tip { get; set; }
+
         public string URL { get; set; }
         public string FileName { get; set; }
         public Form Form { get; set; }
@@ -46,6 +48,7 @@ namespace RADB
 
             //URL = GetDaoClassAndMethod(2);
             Form = Application.OpenForms[0];
+            Tip = ((RADB)Form).Ttip;
 
             //ProgressBar = new ProgressBar();
 
@@ -66,23 +69,26 @@ namespace RADB
             //}
         }
 
-        //private readonly SemaphoreSlim _mutex = new SemaphoreSlim(10);
+        //private readonly SemaphoreSlim _mutex = new SemaphoreSlim(3);
 
-        public Task Start()
+        public async Task Start()
         {
+
             List<Task> Tasks = new List<Task>();
 
             //Remove Files with same URL
             Files = Files.Distinct().ToList();
+            int TotalFilesToDownload = Files.Count;
 
-            StartBar(ProgressBar);
+            //StartBar(ProgressBar);
             TimeSpan initialTime = new TimeSpan(DateTime.Now.Ticks);
-            ToolTip ttip = new ToolTip();
+            //Tip.RemoveAll();
 
             foreach (DownloadFile file in Files)
             {
-                if (File.Exists(file.Path) && Archive.IsFileLocked(file.Path) || File.Exists(file.Path) && Overwrite == false)
-                { continue; }
+                //File.Exists(file.Path) && Archive.IsFileLocked(file.Path) ||
+                if (File.Exists(file.Path) && new FileInfo(file.Path).Length > 0 && Overwrite == false)
+                { TotalFilesToDownload--; continue; }
 
                 try
                 {
@@ -108,23 +114,23 @@ namespace RADB
                             {
                                 BytesReceived += f.BytesReceived;
                                 TotalBytesToReceive += f.TotalBytesToReceive;
-                                ProgressPercentage += f.ProgressPercentage / Files.Count;
+                                ProgressPercentage += (f.ProgressPercentage / TotalFilesToDownload);
                             });
 
                             LabelBytes.Text = "Downloaded " + DownloadedProgress(BytesReceived, TotalBytesToReceive);
 
-                            ProgressBar.Value = (int)(Math.Round(ProgressPercentage));
+                            ProgressBar.Value = ProgressPercentage > 100 ? 100 : (int)(Math.Ceiling(ProgressPercentage));
 
-                            ttip.SetToolTip(ProgressBar, (TotalBytesToReceive == -1 ? "?" : ProgressBar.Value.ToString()) + " %");
+                            Tip.SetToolTip(ProgressBar, (TotalBytesToReceive == -1 ? "?" : ProgressBar.Value.ToString()) + " %");
                             ProgressBar.Style = (TotalBytesToReceive == -1 ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous);
                         };
 
                         client.DownloadFileCompleted += (sender, args) =>
                         {
                             FilesCompleted++;
-
+                            LabelTime.Text = FilesCompleted.ToString();
                             //Downloaded All Files
-                            if (FilesCompleted == Files.Count)
+                            if (FilesCompleted == TotalFilesToDownload)
                             {
                                 LabelTime.Text = DateTime.Now.ToString();
                                 StoptBar(ProgressBar);
@@ -133,6 +139,11 @@ namespace RADB
                         };
 
                         Tasks.Add(client.DownloadFileTaskAsync(new Uri(file.URL), file.Path));
+                        if(Tasks.Count == ServicePointManager.DefaultConnectionLimit)
+                        {
+                            await Task.WhenAll(Tasks);
+                            Tasks.Clear();
+                        }
                     }
                 }
                 finally
@@ -141,9 +152,7 @@ namespace RADB
                 }
             }
 
-
-            return Task.WhenAll(Tasks);
-
+            await Task.WhenAll(Tasks);
         }
 
 
