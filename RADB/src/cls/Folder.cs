@@ -14,6 +14,7 @@ namespace RADB
             Directory.CreateDirectory(Base);
             Directory.CreateDirectory(Game);
             Directory.CreateDirectory(Json);
+            Directory.CreateDirectory(Consoles);
             Directory.CreateDirectory(Temp);
         }
 
@@ -46,6 +47,14 @@ namespace RADB
             get
             {
                 return Base + @"json\";
+            }
+        }
+
+        public static string Consoles
+        {
+            get
+            {
+                return Base + @"consoles\";
             }
         }
 

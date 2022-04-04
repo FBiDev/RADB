@@ -25,28 +25,30 @@ namespace RADB
         public static string FolderJson = FolderBase + @"json\";
 
         //URLs
-        private static string URL_API = "http://retroachievements.org/API/";
-        private static string URL_Auth = "?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
+        private static string API_URL = "http://retroachievements.org/API/";
+        private static string AuthQS = "?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
         public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
 
         //API
         public static string API_ConsoleIDs = "API_GetConsoleIDs.php";
+        public static string API_GameList = "API_GetGameList.php";
+
 
         //JSON
-        public static string JSN_Consoles = "Consoles.json";
-        public static string JSN_GameList = "GameList.json";
+        public static string JSN_ConsoleIDs = Folder.Consoles + "Consoles.json";
+        public static string JSN_GameList(string consoleID) { return Folder.Consoles + "GameList" + consoleID + ".json"; }
 
         //Images
         public static string Format_Badges = ".png";
         public static string Format_BadgesLocal = ".png";
 
-        public static string API_URL(string page, string param1Name = "", string param1Value = "")
+        public static string GetRAURL(string target, string parames = "")
         {
-            return URL_API + page + URL_Auth + param1Name + param1Value;
+            return API_URL + target + AuthQS + "&" + parames;
         }
 
         private static List<string> LocalJsonFiles = new List<string>() {
-            JSN_Consoles, "Teste"
+            JSN_ConsoleIDs, "Teste"
         };
 
         public async static Task<Game> GetGameInfoExtended(int gameID)
@@ -58,7 +60,7 @@ namespace RADB
             Download dl = new Download()
             {
                 Overwrite = false,
-                Files = new List<DownloadFile>() { new DownloadFile(API_URL("API_GetGameExtended.php", "&i=", gameID.ToString()), fileName) },
+                Files = new List<DownloadFile>() { new DownloadFile(GetRAURL("API_GetGameExtended.php", "i=" + gameID.ToString()), fileName) },
                 ProgressBarName = "pgbUpdates",
                 LabelBytesName = "lblUpdateProgress",
                 LabelTimeName = "lblUpdateConsoles",
@@ -82,13 +84,14 @@ namespace RADB
             string fileGameList = Folder.Json + "GameList" + "12" + ".json";
             Download dl = new Download()
             {
-                Overwrite = false,
-                Files = new List<DownloadFile>() { new DownloadFile(API_URL("API_GetGameList.php", "&i=", 12.ToString()), fileGameList) },
+                Overwrite = true,
+                Files = new List<DownloadFile>() { new DownloadFile(GetRAURL("API_GetGameList.php", "i=" + 12.ToString()), fileGameList) },
                 ProgressBarName = "pgbUpdates",
                 LabelBytesName = "lblUpdateProgress",
                 LabelTimeName = "lblUpdateConsoles",
             };
             await dl.Start();
+            return;
 
             List<Game> Games = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(fileGameList));
             List<Game> GamesWithCheevos = new List<Game>();
@@ -148,10 +151,10 @@ namespace RADB
 
         public static void UpdateConsolesFile(Download download)
         {
-            download.Form.BeginInvoke((MethodInvoker)delegate
+            download.FormObj.BeginInvoke((MethodInvoker)delegate
             {
-                download.URL = API_URL(API_ConsoleIDs);
-                download.FileName = FolderJson + JSN_Consoles;
+                download.URL = GetRAURL(API_ConsoleIDs);
+                download.FileName = FolderJson + JSN_ConsoleIDs;
                 Browser.startDownload(download);
 
                 //string fileLocal = Local_JsonFolder + JSN_Consoles;
@@ -179,9 +182,9 @@ namespace RADB
             Directory.CreateDirectory(FolderJson);
             foreach (string json in LocalJsonFiles)
             {
-                if (!File.Exists(FolderJson + json))
+                if (!File.Exists(json))
                 {
-                    File.WriteAllBytes(FolderJson + json, new byte[0]);
+                    File.WriteAllBytes(json, new byte[0]);
                 }
             }
             //string file1 = Local_JsonFolder + Update_JsonFile;

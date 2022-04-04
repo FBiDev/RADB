@@ -17,7 +17,7 @@ namespace RADB
     public static class Browser
     {
         public static WebClient client;
-        public static bool useProxy = false;
+        public static bool useProxy = true;
 
         public static WebProxy Proxy = new WebProxy
         {
@@ -85,7 +85,7 @@ namespace RADB
         {
             Download download = e.UserState as Download;
 
-            download.Form.BeginInvoke((MethodInvoker)delegate
+            download.FormObj.BeginInvoke((MethodInvoker)delegate
             {
                 double bytesIn = double.Parse(e.BytesReceived.ToString());
                 double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
@@ -107,7 +107,7 @@ namespace RADB
         private static void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             Download download = e.UserState as Download;
-            download.Form.BeginInvoke((MethodInvoker)delegate
+            download.FormObj.BeginInvoke((MethodInvoker)delegate
             {
                 StoptBar(download.ProgressBar);
                 download.LabelTime.Text = File.GetLastWriteTime(download.FileName).ToString();

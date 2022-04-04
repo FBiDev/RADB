@@ -23,30 +23,25 @@ namespace RADB
 
         //txts
         private int ID_value;
+        private int ConsoleID_value;
         private string User_value;
         private int Count_value;
         private int Offset_value;
         private DateTime Date1_value;
         private DateTime Date2_value;
 
-        private ImageCodecInfo GetEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == format.Guid)
-                {
-                    return codec;
-                }
-            }
-            return null;
-        }
-
         public RADB()
         {
             InitializeComponent();
+            //Load Values
+            //Reset placeholders
+            lblProgressConsoles.Text = string.Empty;
+            //Internet
             Browser.Load();
+            //Folders
             Folder.CreateFolders();
+            //Consoles
+            LoadConsoles();
 
             sts.Visible = true;
 
@@ -54,17 +49,19 @@ namespace RADB
             cboConsoles.ValueMember = "ID";
 
             RA.CheckLocalFiles();
-            lblUpdateProgress.Text = string.Empty;
+
 
             //List<FileUpdate> objList = RA.FileToList<FileUpdate>(RA.Local_JsonFolder + RA.JSN_Consoles);
             //FileUpdate obj = RA.FindFileName(objList, RA.JSN_Consoles);
 
             //if (obj is object) { lblUpdateConsoles.Text = obj.Update.ToString(); }
-            lblUpdateConsoles.Text = Archive.LastUpdate(RA.JSN_Consoles).ToString();
+
         }
 
         private void ParseValues()
         {
+            int.TryParse(cboConsoles.SelectedValue.ToString(), out ConsoleID_value);
+
             int.TryParse(txtID.Text.Trim(), out ID_value);
             User_value = txtUser.Text.Trim();
             int.TryParse(txtCount.Text.Trim(), out Count_value);
@@ -74,6 +71,7 @@ namespace RADB
         }
 
         private bool ValidID() { return ID_value > 0; }
+        private bool ValidConsoleID() { return ConsoleID_value > 0; }
 
 
 
@@ -104,34 +102,34 @@ namespace RADB
         {
             ParseValues();
             if (!ValidID()) { return; }
-            
+
             //await Task.Run(async () =>
             //{
-                await RA.DownloadBadges(ID_value);
+            await RA.DownloadBadges(ID_value);
             //});
             txtOutput.Text = "Badges Downloaded!";
         }
 
-        private void btnUpdateConsoles_Click(object sender, EventArgs e)
+        private void btnUpdateConsoles_Click_old(object sender, EventArgs e)
         {
             Download download = new Download
             {
                 LabelTime = lblUpdateConsoles,
-                LabelBytes = lblUpdateProgress,
-                ProgressBar = pgbUpdates,
+                LabelBytes = lblProgressConsoles,
+                ProgressBar = pgbConsoles,
             };
             RA.UpdateConsolesFile(download);
 
 
             return;
-            var URL = RA.API_URL("API_GetConsoleIDs.php");
+            var URL = RA.GetRAURL("API_GetConsoleIDs.php");
             txtURL.Text = URL;
 
 
             //List<FileUpdate> f = JsonConvert.DeserializeObject<List<FileUpdate>>(File.ReadAllText(RA.Local_JsonFolder + RA.Update_JsonFile));
 
             //read file
-            using (StreamReader r = new StreamReader(RA.FolderJson + RA.JSN_Consoles))
+            using (StreamReader r = new StreamReader(RA.FolderJson + RA.JSN_ConsoleIDs))
             {
                 string json = r.ReadToEnd();
                 List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(json);
@@ -153,7 +151,7 @@ namespace RADB
         {
             ParseValues();
             if (!ValidID()) { return; }
-            txtURL.Text = RA.API_URL("API_GetConsoleIDs.php", "&i=", ID_value.ToString());
+            txtURL.Text = RA.GetRAURL("API_GetConsoleIDs.php", "i=" + ID_value.ToString());
 
             using (StreamReader r = new StreamReader("src/rsc/API_GetGameList.json"))
             {
@@ -182,7 +180,7 @@ namespace RADB
             ParseValues();
             if (!ValidID()) { return; }
 
-            string URL = RA.API_URL("API_GetGame.php", "&i=", "");
+            string URL = RA.GetRAURL("API_GetGame.php", "i=");
             txtURL.Text = URL;
 
             string textTotal = string.Empty;
@@ -195,6 +193,60 @@ namespace RADB
                 textTotal += game.ID.ToString().PadLeft(5, ' ') + " : " + game.Genre + Environment.NewLine;
             }
             txtOutput.Text = textTotal.TrimEnd('\r', '\n');
+        }
+
+        private async void btnUpdateConsoles_Click(object sender, EventArgs e)
+        {
+            pnlDownloadConsoles.Enabled = false;
+            Download dl = new Download(RA.GetRAURL(RA.API_ConsoleIDs), RA.JSN_ConsoleIDs)
+            {
+                Overwrite = true,
+                ProgressBarName = pgbConsoles.Name,
+                LabelBytesName = lblProgressConsoles.Name,
+                LabelTimeName = lblUpdateConsoles.Name,
+            };
+
+            await dl.Start();
+            pnlDownloadConsoles.Enabled = true;
+
+            LoadConsoles();
+
+            txtOutput.Text += "Consoles Updated!" + Environment.NewLine;
+        }
+
+        private void LoadConsoles()
+        {
+            if (File.Exists(RA.JSN_ConsoleIDs))
+            {
+                lblUpdateConsoles.Text = Archive.LastUpdate(RA.JSN_ConsoleIDs).ToString();
+
+                List<Console> Consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(RA.JSN_ConsoleIDs));
+                dgvConsoles.AutoGenerateColumns = false;
+                dgvConsoles.DataSource = Consoles;
+
+                cboConsoles.DataSource = Consoles;
+            }
+        }
+
+        private async void btnUpdateGameList_Click(object sender, EventArgs e)
+        {
+            ParseValues();
+            if (!ValidConsoleID()) { return; }
+
+            pnlDownloadGameList.Enabled = false;
+            Download dl = new Download(RA.GetRAURL(RA.API_GameList, "i=" + ConsoleID_value), RA.JSN_GameList(ConsoleID_value.ToString()))
+            {
+                Overwrite = true,
+                ProgressBarName = pgbGameList.Name,
+                LabelBytesName = lblProgressGameList.Name,
+                LabelTimeName = lblUpdateGameList.Name,
+            };
+
+            await dl.Start();
+            pnlDownloadGameList.Enabled = true;
+
+            txtOutput.Text += "GameList " + cboConsoles.Text + " Updated!" + Environment.NewLine;
+
         }
 
 

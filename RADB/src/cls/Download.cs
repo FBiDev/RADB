@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -26,63 +27,57 @@ namespace RADB
         public float ProgressPercentage { get; set; }
 
         public ProgressBar ProgressBar { get; set; }
-        public string ProgressBarName { set { ProgressBar = Form.Controls.Find(value, true).First() as ProgressBar; } }
+
+        public T FindControl<T>(string controlName) where T : Control, new()
+        {
+            var c = FormObj.Controls.Find(controlName, true) as Control[];
+            return c.Count() == 0 ? new T() : (T)c.First();
+        }
+
+        public string ProgressBarName { set { ProgressBar = FindControl<ProgressBar>(value); } }
 
         public Label LabelBytes { get; set; }
-        public string LabelBytesName { set { LabelBytes = Form.Controls.Find(value, true).First() as Label; } }
+        public string LabelBytesName { set { LabelBytes = FindControl<Label>(value); } }
 
         public Label LabelTime { get; set; }
-        public string LabelTimeName { set { LabelTime = Form.Controls.Find(value, true).First() as Label; } }
+        public string LabelTimeName { set { LabelTime = FindControl<Label>(value); } }
 
         private ToolTip Tip { get; set; }
 
         public string URL { get; set; }
         public string FileName { get; set; }
-        public Form Form { get; set; }
+        public Form FormObj { get; set; }
+        public string FormName { set { FormObj = Application.OpenForms[value]; } }
         public WebClient client;
+
+        public Download(string URL, string fileName)
+        {
+            Files = new List<DownloadFile>() { new DownloadFile(URL, fileName) };
+            Overwrite = true;
+            FormObj = Application.OpenForms[0];
+        }
 
         public Download()
         {
             Files = new List<DownloadFile>();
             Overwrite = true;
-
-            //URL = GetDaoClassAndMethod(2);
-            Form = Application.OpenForms[0];
-            Tip = ((RADB)Form).Ttip;
-
-            //ProgressBar = new ProgressBar();
-
-            //LabelTime = new Label();
-            //LabelBytes = new Label();
-
-            //ServicePointManager.Expect100Continue = true;
-            //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-            //client = new WebClient()
-            //{
-            //    Encoding = UTF8Encoding.UTF8,
-            //};
-
-            //if (Browser.useProxy)
-            //{
-            //    client.Proxy = Browser.Proxy;
-            //}
+            FormObj = Application.OpenForms[0];
         }
 
         //private readonly SemaphoreSlim _mutex = new SemaphoreSlim(3);
-
         public async Task Start()
         {
-
             List<Task> Tasks = new List<Task>();
 
             //Remove Files with same URL
             Files = Files.Distinct().ToList();
             int TotalFilesToDownload = Files.Count;
 
-            //StartBar(ProgressBar);
-            TimeSpan initialTime = new TimeSpan(DateTime.Now.Ticks);
+            StartBar(ProgressBar, ProgressBarStyle.Marquee);
             //Tip.RemoveAll();
+            LabelBytes.Text = "Connecting...";
+            TimeSpan initialTime = new TimeSpan(DateTime.Now.Ticks);
+
 
             foreach (DownloadFile file in Files)
             {
@@ -121,7 +116,7 @@ namespace RADB
 
                             ProgressBar.Value = ProgressPercentage > 100 ? 100 : (int)(Math.Ceiling(ProgressPercentage));
 
-                            Tip.SetToolTip(ProgressBar, (TotalBytesToReceive == -1 ? "?" : ProgressBar.Value.ToString()) + " %");
+                            //Tip.SetToolTip(ProgressBar, (TotalBytesToReceive == -1 ? "?" : ProgressBar.Value.ToString()) + " %");
                             ProgressBar.Style = (TotalBytesToReceive == -1 ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous);
                         };
 
@@ -139,7 +134,7 @@ namespace RADB
                         };
 
                         Tasks.Add(client.DownloadFileTaskAsync(new Uri(file.URL), file.Path));
-                        if(Tasks.Count == ServicePointManager.DefaultConnectionLimit)
+                        if (Tasks.Count == ServicePointManager.DefaultConnectionLimit)
                         {
                             await Task.WhenAll(Tasks);
                             Tasks.Clear();
@@ -243,7 +238,7 @@ namespace RADB
         private void StartBar(ProgressBar bar, ProgressBarStyle style = ProgressBarStyle.Continuous, int maximum = 100)
         {
             bar.Style = style;
-            bar.MarqueeAnimationSpeed = 1;
+            bar.MarqueeAnimationSpeed = 50;
             bar.Maximum = maximum;
             bar.Value = 0;
         }
@@ -257,7 +252,7 @@ namespace RADB
         {
             if (bar.Style == ProgressBarStyle.Marquee)
             {
-                bar.MarqueeAnimationSpeed = 0;
+                //bar.MarqueeAnimationSpeed = 0;
                 bar.Style = ProgressBarStyle.Continuous;
             }
 
