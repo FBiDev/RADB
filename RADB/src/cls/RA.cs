@@ -32,11 +32,13 @@ namespace RADB
         //API
         public static string API_ConsoleIDs = "API_GetConsoleIDs.php";
         public static string API_GameList = "API_GetGameList.php";
+        public static string API_GameExtended = "API_GetGameExtended.php";
 
 
         //JSON
         public static string JSN_ConsoleIDs = Folder.Consoles + "Consoles.json";
-        public static string JSN_GameList(string consoleID) { return Folder.Consoles + "GameList" + consoleID + ".json"; }
+        public static string JSN_GameList(string consoleName) { return Folder.Consoles + consoleName + " GameList.json"; }
+        public static string JSN_GameInfoExtend(int consoleID, int gameID) { return Folder.GameInfo(consoleID) + gameID + ".json"; }
 
         //Images
         public static string Format_Badges = ".png";

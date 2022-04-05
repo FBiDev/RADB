@@ -38,7 +38,7 @@ namespace RADB
         {
             get
             {
-                return Base + @"game\";
+                return Base + @"gamelist\";
             }
         }
 
@@ -58,16 +58,16 @@ namespace RADB
             }
         }
 
-        public static string Badges(int gameID)
+        public static string Badges(int consoleID, int gameID)
         {
-            string folder = Game + gameID + @"\badges\";
+            string folder = Game + consoleID + @"\" + gameID + @"\badges\";
             Directory.CreateDirectory(folder);
             return folder;
         }
 
-        public static string GameID(int gameID)
+        public static string GameInfo(int consoleID)
         {
-            string folder = Game + gameID + @"\";
+            string folder = Game + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }

@@ -8,6 +8,7 @@ namespace RADB
     {
         public int ID { get; set; }
         public int GameID { get; set; }
+        public int ConsoleID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int Points { get; set; }
@@ -28,7 +29,7 @@ namespace RADB
         {
             get
             {
-                return Folder.Badges(GameID) + BadgeName + RA.Format_BadgesLocal;
+                return Folder.Badges(ConsoleID, GameID) + BadgeName + RA.Format_BadgesLocal;
             }
         }
 

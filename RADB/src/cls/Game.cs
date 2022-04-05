@@ -66,12 +66,12 @@ namespace RADB
         {
             //if (result.ContainsKey("Achievements"))
             //{
-                foreach (JProperty cheevo in result)
-                {
-                    AchievementsList.Add(JsonConvert.DeserializeObject<Achievement>(cheevo.Value.ToString()));
-                }
-                //result.Remove("Achievements");
-                AchievementsList.ForEach(c => { c.GameID = ID; });
+            foreach (JProperty cheevo in result)
+            {
+                AchievementsList.Add(JsonConvert.DeserializeObject<Achievement>(cheevo.Value.ToString()));
+            }
+            //result.Remove("Achievements");
+            AchievementsList.ForEach(c => { c.GameID = ID; c.ConsoleID = ConsoleID; });
             //}
         }
 
@@ -82,12 +82,9 @@ namespace RADB
             return files;
         }
 
-        public string BadgesMergedFile
+        public string BadgesMergedFile()
         {
-            get
-            {
-                return Folder.Badges(ID) + "_Badges";
-            }
+            return Folder.Badges(ConsoleID, ID) + "_Badges";
         }
 
         //public string FolderID

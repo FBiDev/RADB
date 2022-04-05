@@ -33,29 +33,55 @@ namespace RADB
         public RADB()
         {
             InitializeComponent();
-            //Load Values
-            //Reset placeholders
-            lblProgressConsoles.Text = string.Empty;
-            //Internet
-            Browser.Load();
-            //Folders
-            Folder.CreateFolders();
-            //Consoles
-            LoadConsoles();
+            Load += RADB_Load;
+            Shown += RADB_Shown;
+            Paint += RADB_Paint;
+            Activated += RADB_Activated;
 
-            sts.Visible = true;
-
-            cboConsoles.DisplayMember = "Name";
-            cboConsoles.ValueMember = "ID";
-
-            RA.CheckLocalFiles();
-
+            //RA.CheckLocalFiles();
 
             //List<FileUpdate> objList = RA.FileToList<FileUpdate>(RA.Local_JsonFolder + RA.JSN_Consoles);
             //FileUpdate obj = RA.FindFileName(objList, RA.JSN_Consoles);
 
             //if (obj is object) { lblUpdateConsoles.Text = obj.Update.ToString(); }
+            //Load Values
+            //Reset placeholders
+            lblProgressConsoles.Text = string.Empty;
+            lblUpdateConsoles.Text = string.Empty;
+            lblProgressGameList.Text = string.Empty;
+            lblUpdateGameList.Text = string.Empty;
 
+            sts.Visible = true;
+            //Internet
+            Browser.Load();
+            //Folders
+            Folder.CreateFolders();
+            //cbos
+            cboConsoles.DisplayMember = "Name";
+            cboConsoles.ValueMember = "ID";
+            //dgvs
+            LoadConsoles();
+        }
+
+        void RADB_Activated(object sender, EventArgs e)
+        {
+
+        }
+
+        void RADB_Paint(object sender, PaintEventArgs e)
+        {
+
+
+        }
+
+        void RADB_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        void RADB_Shown(object sender, EventArgs e)
+        {
+            dgvConsoles.Focus();
         }
 
         private void ParseValues()
@@ -214,43 +240,117 @@ namespace RADB
             txtOutput.Text += "Consoles Updated!" + Environment.NewLine;
         }
 
-        private void LoadConsoles()
+        private async void btnUpdateGameList_Click(object sender, EventArgs e)
         {
-            if (File.Exists(RA.JSN_ConsoleIDs))
+            if (cboConsoles.Items.Count > 0)
             {
-                lblUpdateConsoles.Text = Archive.LastUpdate(RA.JSN_ConsoleIDs).ToString();
+                ParseValues();
+                if (!ValidConsoleID()) { return; }
 
-                List<Console> Consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(RA.JSN_ConsoleIDs));
-                dgvConsoles.AutoGenerateColumns = false;
-                dgvConsoles.DataSource = Consoles;
+                Console console = (cboConsoles.SelectedItem as Console);
 
-                cboConsoles.DataSource = Consoles;
+                pnlDownloadGameList.Enabled = false;
+                //Download GameList
+                string fileGameList = RA.JSN_GameList(console.Name);
+                Download dl = new Download(RA.GetRAURL(RA.API_GameList, "i=" + ConsoleID_value), fileGameList)
+                {
+                    Overwrite = true,
+                    ProgressBarName = pgbGameList.Name,
+                    LabelBytesName = lblProgressGameList.Name,
+                    LabelTimeName = lblUpdateGameList.Name,
+                };
+
+                await dl.Start();
+
+                //Read GameList
+                List<Game> GameList = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(fileGameList));
+
+                List<DownloadFile> gFiles = GameList.Select(a => new DownloadFile(RA.GetRAURL(RA.API_GameExtended, "i=" + a.ID), RA.JSN_GameInfoExtend(a.ConsoleID, a.ID))).ToList();
+                foreach (var file in gFiles)
+                {
+                    Download dlInfoExtend = new Download(file.URL, file.Path)
+                    {
+                        Overwrite = false,
+                        ProgressBarName = pgbGameList.Name,
+                        LabelBytesName = lblProgressGameList.Name,
+                        LabelTimeName = lblUpdateGameList.Name,
+                    };
+                    await dlInfoExtend.Start();
+                }
+
+                
+
+                pnlDownloadGameList.Enabled = true;
+
+                LoadGameList();
+
+                txtOutput.Text += console.Name + " GameList Updated!" + Environment.NewLine;
             }
         }
 
-        private async void btnUpdateGameList_Click(object sender, EventArgs e)
+        private void cboConsoles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ParseValues();
-            if (!ValidConsoleID()) { return; }
+            lblUpdateGameList.Text = string.Empty;
+            lblProgressGameList.Text = string.Empty;
+            pgbGameList.Value = 0;
 
-            pnlDownloadGameList.Enabled = false;
-            Download dl = new Download(RA.GetRAURL(RA.API_GameList, "i=" + ConsoleID_value), RA.JSN_GameList(ConsoleID_value.ToString()))
-            {
-                Overwrite = true,
-                ProgressBarName = pgbGameList.Name,
-                LabelBytesName = lblProgressGameList.Name,
-                LabelTimeName = lblUpdateGameList.Name,
-            };
-
-            await dl.Start();
-            pnlDownloadGameList.Enabled = true;
-
-            txtOutput.Text += "GameList " + cboConsoles.Text + " Updated!" + Environment.NewLine;
-
+            LoadGameList();
         }
 
+        private void LoadConsoles()
+        {
+            List<Console> Consoles = new List<Console>();
+            string file = RA.JSN_ConsoleIDs;
 
+            if (File.Exists(file))
+            {
+                lblUpdateConsoles.Text = Archive.LastUpdate(file).ToString();
 
+                Consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(file));
 
+                dgvConsoles.AutoGenerateColumns = true;
+                dgvConsoles.DataSource = Consoles;
+                dgvConsoles.Focus();
+
+                cboConsoles.DataSource = Consoles;
+            }
+            dgvConsoles.Visible = File.Exists(file) && Consoles.Count > 0;
+        }
+
+        private void LoadGameList()
+        {
+            if (cboConsoles.Items.Count > 0 && cboConsoles.SelectedIndex >= 0)
+            {
+                List<Game> GameList = new List<Game>();
+                string file = RA.JSN_GameList((cboConsoles.SelectedItem as Console).Name);
+
+                if (File.Exists(file))
+                {
+                    lblUpdateGameList.Text = Archive.LastUpdate(file).ToString();
+
+                    GameList = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(file));
+
+                    dgvGameList.AutoGenerateColumns = false;
+                    dgvGameList.DataSource = GameList;
+                    dgvGameList.Focus();
+                }
+                dgvGameList.Visible = File.Exists(file) && GameList.Count > 0;
+            }
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabControl tab = (sender as TabControl);
+
+            if (tab.SelectedTab == tabGameList)
+            {
+                dgvGameList.Focus(); return;
+            }
+
+            if (tab.SelectedTab == tabConsoles)
+            {
+                dgvConsoles.Focus(); return;
+            }
+        }
     }
 }
