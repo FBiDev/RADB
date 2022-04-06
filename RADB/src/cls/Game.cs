@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.IO;
+using System.Drawing;
+using RADB.Properties;
 
 namespace RADB
 {
@@ -78,13 +80,58 @@ namespace RADB
         public List<string> AchievementsFiles()
         {
             List<string> files = new List<string>();
-            AchievementsList.ForEach(c => { files.Add(c.BadgeFile); });
+            AchievementsList.ForEach(c => { files.Add(c.BadgeFile()); });
             return files;
+        }
+
+        public int AchievementsCount
+        {
+            get { return AchievementsList.Count(); }
+        }
+
+        public string AchievementsPoints
+        {
+            get { return AchievementsList.Sum(x => x.Points) + " (" + AchievementsList.Sum(x => x.TrueRatio) + ")"; }
+        }
+
+        public string LastUpdate
+        {
+            get
+            {
+                if (AchievementsList.Count > 0)
+                {
+                    var date = AchievementsList.Max(x => x.DateModified).ToString("dd MMM yyyy");
+                    return date.Substring(0, 3) + char.ToUpper(date[3]) + date.Substring(4);
+                }
+                return string.Empty;
+            }
+        }
+
+        public string ImageIconName
+        {
+            get
+            {
+                return ImageIcon.Replace(@"/Images/", "");
+            }
+        }
+
+        public string ImageIconFile()
+        {
+            return Folder.ImageIcon(ConsoleID) + ImageIconName;
+        }
+
+        public Bitmap ImageIconBitmap
+        {
+            get
+            {
+                if (File.Exists(ImageIconFile())) { return new Bitmap(ImageIconFile()); }
+                return new Bitmap(36, 36);
+            }
         }
 
         public string BadgesMergedFile()
         {
-            return Folder.Badges(ConsoleID, ID) + "_Badges";
+            return Folder.Achievements(ConsoleID, ID) + "_Badges";
         }
 
         //public string FolderID

@@ -12,7 +12,7 @@ namespace RADB
         public static void CreateFolders()
         {
             Directory.CreateDirectory(Base);
-            Directory.CreateDirectory(Game);
+            Directory.CreateDirectory(GameInfoExtend);
             Directory.CreateDirectory(Json);
             Directory.CreateDirectory(Consoles);
             Directory.CreateDirectory(Temp);
@@ -22,7 +22,7 @@ namespace RADB
         {
             get
             {
-                return @"data\";
+                return @"Data\";
             }
         }
 
@@ -30,15 +30,15 @@ namespace RADB
         {
             get
             {
-                return Base + @"temp\";
+                return Base + @"Temp\";
             }
         }
 
-        public static string Game
+        public static string GameInfoExtend
         {
             get
             {
-                return Base + @"gamelist\";
+                return Base + @"GameInfoExtend\";
             }
         }
 
@@ -46,7 +46,7 @@ namespace RADB
         {
             get
             {
-                return Base + @"json\";
+                return Base + @"Json\";
             }
         }
 
@@ -54,20 +54,27 @@ namespace RADB
         {
             get
             {
-                return Base + @"consoles\";
+                return Base + @"GameList\";
             }
         }
 
-        public static string Badges(int consoleID, int gameID)
+        public static string Achievements(int consoleID, int gameID)
         {
-            string folder = Game + consoleID + @"\" + gameID + @"\badges\";
+            string folder = Base + @"Achievements\" + consoleID + @"\" + gameID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }
 
-        public static string GameInfo(int consoleID)
+        public static string ImageIcon(int consoleID)
         {
-            string folder = Game + consoleID + @"\";
+            string folder = Base + @"ImageIcon\" + consoleID + @"\";
+            Directory.CreateDirectory(folder);
+            return folder;
+        }
+
+        public static string GameInfoExtendConsole(int consoleID)
+        {
+            string folder = GameInfoExtend + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }

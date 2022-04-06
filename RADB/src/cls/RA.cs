@@ -28,6 +28,7 @@ namespace RADB
         private static string API_URL = "http://retroachievements.org/API/";
         private static string AuthQS = "?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
         public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
+        public static string URL_Images = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Images/";
 
         //API
         public static string API_ConsoleIDs = "API_GetConsoleIDs.php";
@@ -38,7 +39,7 @@ namespace RADB
         //JSON
         public static string JSN_ConsoleIDs = Folder.Consoles + "Consoles.json";
         public static string JSN_GameList(string consoleName) { return Folder.Consoles + consoleName + " GameList.json"; }
-        public static string JSN_GameInfoExtend(int consoleID, int gameID) { return Folder.GameInfo(consoleID) + gameID + ".json"; }
+        public static string JSN_GameInfoExtend(int consoleID, int gameID) { return Folder.GameInfoExtendConsole(consoleID) + gameID + ".json"; }
 
         //Images
         public static string Format_Badges = ".png";
@@ -57,7 +58,7 @@ namespace RADB
         {
             if (gameID <= 0) { return null; }
 
-            string fileName = Folder.Game + gameID + ".json";
+            string fileName = Folder.GameInfoExtend + gameID + ".json";
             //JObject result = Browser.ToJObject(API_URL("API_GetGameExtended.php", "&i=", gameID.ToString()));
             Download dl = new Download()
             {
@@ -112,7 +113,7 @@ namespace RADB
             }
 
             //GamesWithCheevos.ForEach(gc => gCheevos.AddRange(gc.AchievementsList));
-            GamesWithCheevos.ForEach(gc => gFiles.AddRange(gc.AchievementsList.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList().Distinct().ToList()));
+            GamesWithCheevos.ForEach(gc => gFiles.AddRange(gc.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList().Distinct().ToList()));
 
             //gFiles = gCheevos.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList().Distinct().ToList();
 
@@ -146,7 +147,7 @@ namespace RADB
             List<string> afiles = gFiles.Select(x => x.Path).ToList();
             Picture pic = new Picture(afiles, true, 110);
             //Picture pic = new Picture(gameX.AchievementsFiles());
-            pic.Save(Folder.Game + "badges", PictureFormat.Jpg);
+            pic.Save(Folder.GameInfoExtend + "badges", PictureFormat.Jpg);
 
             return;
         }

@@ -148,6 +148,8 @@ namespace RADB
             }
 
             await Task.WhenAll(Tasks);
+            StoptBar(ProgressBar);
+            LabelBytes.Text = LabelBytes.Text == "Connecting..." ? "" : LabelBytes.Text; 
         }
 
 

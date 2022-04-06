@@ -25,20 +25,14 @@ namespace RADB
 
         public int TrueRatio { get; set; }
 
-        public string BadgeFile
+        public string BadgeFile()
         {
-            get
-            {
-                return Folder.Badges(ConsoleID, GameID) + BadgeName + RA.Format_BadgesLocal;
-            }
+            return Folder.Achievements(ConsoleID, GameID) + BadgeName + RA.Format_BadgesLocal;
         }
 
-        public string BadgeURL
+        public string BadgeURL()
         {
-            get
-            {
-                return RA.URL_Badges + BadgeName + RA.Format_Badges;
-            }
+            return RA.URL_Badges + BadgeName + RA.Format_Badges;
         }
     }
 }

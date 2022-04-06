@@ -117,6 +117,7 @@
     <Content Include="src\rsc\dll\Newtonsoft.Json.dll" />
     <Content Include="src\rsc\exe\jpegoptim_1.4.6.exe" />
     <Content Include="src\rsc\exe\pngcrush_1_8_11_w64.exe" />
+    <Content Include="src\rsc\image\notfound.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
