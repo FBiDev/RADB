@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 //
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Globalization;
 using System.IO;
 using System.Drawing;
-using RADB.Properties;
+using System.Globalization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace RADB
 {
@@ -125,7 +124,7 @@ namespace RADB
             get
             {
                 if (File.Exists(ImageIconFile())) { return new Bitmap(ImageIconFile()); }
-                return new Bitmap(36, 36);
+                return new Picture(36, 36).Bitmap;
             }
         }
 
@@ -133,21 +132,5 @@ namespace RADB
         {
             return Folder.Achievements(ConsoleID, ID) + "_Badges";
         }
-
-        //public string FolderID
-        //{
-        //    get
-        //    {
-        //        return Folder.GameID(ID);
-        //    }
-        //}
-
-        //public string BadgesFolder
-        //{
-        //    get
-        //    {
-        //        return Folder.Badges(ID);
-        //    }
-        //}
     }
 }

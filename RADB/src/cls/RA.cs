@@ -2,19 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 //
-using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
-//
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel;
+//
+using System.IO;
 using System.Windows.Forms;
-using System.Net.NetworkInformation;
-using System.Threading;
-using System.Net;
-using System.Collections;
 
 namespace RADB
 {
@@ -49,10 +42,6 @@ namespace RADB
         {
             return API_URL + target + AuthQS + "&" + parames;
         }
-
-        private static List<string> LocalJsonFiles = new List<string>() {
-            JSN_ConsoleIDs, "Teste"
-        };
 
         public async static Task<Game> GetGameInfoExtended(int gameID)
         {
@@ -150,69 +139,6 @@ namespace RADB
             pic.Save(Folder.GameInfoExtend + "badges", PictureFormat.Jpg);
 
             return;
-        }
-
-        public static void UpdateConsolesFile(Download download)
-        {
-            download.FormObj.BeginInvoke((MethodInvoker)delegate
-            {
-                download.URL = GetRAURL(API_ConsoleIDs);
-                download.FileName = FolderJson + JSN_ConsoleIDs;
-                Browser.startDownload(download);
-
-                //string fileLocal = Local_JsonFolder + JSN_Consoles;
-
-                //string fileUpdate = Local_JsonFolder + Update_JsonFile;
-
-                //DownloadFile(GetURL(API_ConsoleIDs), fileLocal);
-
-                //List<FileUpdate> objList = FileToList<FileUpdate>(fileUpdate);
-                //FileUpdate obj = FindFileName(objList, JSN_Consoles);
-
-                //if (obj is object)
-                //{
-                //    obj.Update = DateTime.Now;
-                //}
-
-                //UpdateFile<List<FileUpdate>>(objList, fileUpdate);
-                //return obj;
-                //return File.GetLastWriteTime(fileLocal);
-            });
-        }
-
-        public static void CheckLocalFiles()
-        {
-            Directory.CreateDirectory(FolderJson);
-            foreach (string json in LocalJsonFiles)
-            {
-                if (!File.Exists(json))
-                {
-                    File.WriteAllBytes(json, new byte[0]);
-                }
-            }
-            //string file1 = Local_JsonFolder + Update_JsonFile;
-            //List<string> updateFiles = new List<string>
-            //{
-            //    JSN_Consoles,
-            //};
-
-            //if (!File.Exists(file1))
-            //{
-            //    int index = 1;
-            //    List<FileUpdate> list = new List<FileUpdate>();
-            //    foreach (var file in updateFiles)
-            //    {
-            //        FileUpdate fileObj = new FileUpdate
-            //        {
-            //            ID = index++,
-            //            Name = file,
-            //        };
-            //        list.Add(fileObj);
-            //    }
-
-            //    UpdateFile<List<FileUpdate>>(list, file1);
-            //    return;
-            //}
         }
 
         public static void DownloadFile(string url, string filePath)

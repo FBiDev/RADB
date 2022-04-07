@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 //
+using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Globalization;
 using System.Diagnostics;
 using RADB.Properties;
-using System.Windows.Forms;
-using System.Globalization;
 
 namespace RADB
 {
@@ -100,7 +99,7 @@ namespace RADB
             }
 
             if (File.Exists(FileName)) { File.Delete(FileName); }
-            
+
             //Max image Size is 65.000 x 65.000
             Bitmap.Save(FileName, GetEncoder(Format), Parameters);
             Bitmap.Dispose();

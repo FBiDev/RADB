@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RADB
 {
@@ -31,7 +29,7 @@ namespace RADB
 
             //Check whether the products' properties are equal.
             return URL.Equals(other.URL) && Path.Equals(other.Path);
-            return URL.Equals(other.URL);
+            //return URL.Equals(other.URL);
         }
 
         // If Equals() returns true for a pair of objects
@@ -47,7 +45,7 @@ namespace RADB
 
             //Calculate the hash code for the product.
             return hashProductPath ^ hashProductURL;
-            return hashProductURL;
+            //return hashProductURL;
         }
     }
 }
