@@ -69,16 +69,16 @@
   <ItemGroup>
     <Compile Include="src\cls\Console.cs" />
     <Compile Include="src\cls\Browser.cs" />
-    <Compile Include="RADB.cs">
+    <Compile Include="src\forms\RADB.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RADB.Designer.cs">
+    <Compile Include="src\forms\RADB.Designer.cs">
       <DependentUpon>RADB.cs</DependentUpon>
     </Compile>
     <Compile Include="src\cls\Download.cs" />
     <Compile Include="src\cls\Archive.cs" />
     <Compile Include="src\cls\DownloadFile.cs" />
-    <Compile Include="src\cls\FileUpdate.cs" />
+    <Compile Include="src\temp\FileUpdate.cs" />
     <Compile Include="src\cls\Folder.cs" />
     <Compile Include="src\cls\Game.cs" />
     <Compile Include="Program.cs" />
@@ -86,8 +86,9 @@
     <Compile Include="src\cls\Achievement.cs" />
     <Compile Include="src\cls\Picture.cs" />
     <Compile Include="src\cls\RA.cs" />
-    <Compile Include="src\cls\StringExtensions.cs" />
-    <EmbeddedResource Include="RADB.resx">
+    <Compile Include="src\temp\StringExtensions.cs" />
+    <Compile Include="src\temp\Temp.cs" />
+    <EmbeddedResource Include="src\forms\RADB.resx">
       <DependentUpon>RADB.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

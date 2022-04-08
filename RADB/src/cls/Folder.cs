@@ -11,9 +11,12 @@ namespace RADB
         public static void CreateFolders()
         {
             Directory.CreateDirectory(Base);
+            
             Directory.CreateDirectory(GameInfoExtend);
-            Directory.CreateDirectory(Json);
             Directory.CreateDirectory(Consoles);
+            Directory.CreateDirectory(Icons);
+            
+            Directory.CreateDirectory(Json);
             Directory.CreateDirectory(Temp);
         }
 
@@ -25,19 +28,27 @@ namespace RADB
             }
         }
 
-        public static string Temp
-        {
-            get
-            {
-                return Base + @"Temp\";
-            }
-        }
-
         public static string GameInfoExtend
         {
             get
             {
                 return Base + @"GameInfoExtend\";
+            }
+        }
+
+        public static string Consoles
+        {
+            get
+            {
+                return Base + @"GameList\";
+            }
+        }
+
+        public static string Icons
+        {
+            get
+            {
+                return Base + @"ImageIcon\";
             }
         }
 
@@ -49,11 +60,11 @@ namespace RADB
             }
         }
 
-        public static string Consoles
+        public static string Temp
         {
             get
             {
-                return Base + @"GameList\";
+                return Base + @"Temp\";
             }
         }
 
@@ -66,7 +77,7 @@ namespace RADB
 
         public static string ImageIcon(int consoleID)
         {
-            string folder = Base + @"ImageIcon\" + consoleID + @"\";
+            string folder = Icons + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }

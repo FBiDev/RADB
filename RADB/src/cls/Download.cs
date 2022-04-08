@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
+//
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
 
 namespace RADB
 {
@@ -26,14 +20,14 @@ namespace RADB
         public long TotalBytesToReceive { get; set; }
         public float ProgressPercentage { get; set; }
 
-        public ProgressBar ProgressBar { get; set; }
-
         public T FindControl<T>(string controlName) where T : Control, new()
         {
             var c = FormObj.Controls.Find(controlName, true) as Control[];
-            return c.Count() == 0 ? new T() : (T)c.First();
+            var b = c.Count() == 0 ? new T() : (T)c.First();
+            return b;
         }
 
+        public ProgressBar ProgressBar { get; set; }
         public string ProgressBarName { set { ProgressBar = FindControl<ProgressBar>(value); } }
 
         public Label LabelBytes { get; set; }
@@ -73,7 +67,7 @@ namespace RADB
             Files = Files.Distinct().ToList();
             int TotalFilesToDownload = Files.Count;
 
-            StartBar(ProgressBar, ProgressBarStyle.Marquee);
+            BarStart(ProgressBar, ProgressBarStyle.Marquee);
             //Tip.RemoveAll();
             LabelBytes.Text = "Connecting...";
             TimeSpan initialTime = new TimeSpan(DateTime.Now.Ticks);
@@ -128,7 +122,7 @@ namespace RADB
                             if (FilesCompleted == TotalFilesToDownload)
                             {
                                 LabelTime.Text = DateTime.Now.ToString();
-                                StoptBar(ProgressBar);
+                                BarStop(ProgressBar);
                                 ElapsedTime = new TimeSpan(DateTime.Now.Ticks) - initialTime;
                             }
                         };
@@ -148,83 +142,17 @@ namespace RADB
             }
 
             await Task.WhenAll(Tasks);
-            StoptBar(ProgressBar);
-            LabelBytes.Text = LabelBytes.Text == "Connecting..." ? "" : LabelBytes.Text; 
-        }
-
-
-
-
-
-        private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs downloadProgressChangedEventArgs)
-        {
-            //bytes += downloadProgressChangedEventArgs.BytesReceived;
-            //DownloadingProgress = new Tuple<DateTime, long, long>(DateTime.Now, DownloadingProgress.Item2 + downloadProgressChangedEventArgs.TotalBytesToReceive, (DownloadingProgress.Item3 + downloadProgressChangedEventArgs.BytesReceived));
-        }
-
-        /////////////////////////////////
-        public async Task StartX()
-        {
-            using (WebClient client = new WebClient() { Proxy = Browser.Proxy })
-            {
-                //if (client.IsBusy == false)
-                //{
-                //StartBar(ProgressBar, ProgressBarStyle.Marquee);
-                //LabelBytes.Text = "Opening URL... ";
-
-                //client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-                //client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                //client.DownloadFileAsync(new Uri(RA.GetURL("API_GetGameList.php", "&i=", "12")), RA.Local_JsonFolder + "GameList.json", new List<object> { lbl, bar });
-                //client.DownloadFileAsync(new Uri(@"file:///C:/Users/fbirnfeld/Downloads/DOCS/Projects/GitHub/RADB/RADB/bin/Debug/src/rsc/json/Files.json"), RA.Local_JsonFolder + "GameList.json");
-
-                //client.DownloadFileAsync(new Uri("https://drive.google.com/u/0/uc?id=1_C8I5Vt62xbpcFF6otwRtHczXm-NY3Y8&export=download"), RA.Local_JsonFolder + "GameList.json", new List<object> { lbl, bar });
-                //client.DownloadFileAsync(new Uri("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_julho_2020.pdf"), RA.Local_JsonFolder + "GameList.json", new List<object> { lbl, bar });
-                await client.DownloadFileTaskAsync(new Uri(URL), FileName);
-                //client.OpenRead("http://www.cohabct.com.br/userfiles/file/Concovados/2020/classificacao_julho_2020.pdf");
-                //Int64 bytes_total = Convert.ToInt64(Browser.web.ResponseHeaders["Content-Length"]);
-                //}
-            }
-        }
-
-        private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            //Form.BeginInvoke((MethodInvoker)delegate
-            //{
-            double bytesIn = double.Parse(e.BytesReceived.ToString());
-            double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
-            LabelBytes.Text = "Downloaded " + DownloadedProgress(bytesIn, totalBytes);
-
-            if (totalBytes == -1) { ProgressBar.Style = ProgressBarStyle.Marquee; return; }
-
-            ProgressBar.Style = ProgressBarStyle.Blocks;
-
-            double percentage = bytesIn / totalBytes * 100;
-            int barValue = int.Parse(Math.Truncate(percentage).ToString());
-            if (barValue > 0 && barValue <= ProgressBar.Maximum && barValue > ProgressBar.Value)
-            {
-                ProgressBar.Value = barValue;
-            }
-            //});
-        }
-
-        private void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            //Form.BeginInvoke((MethodInvoker)delegate
-            //{
-            StoptBar(ProgressBar);
-            LabelTime.Text = File.GetLastWriteTime(FileName).ToString();
-            //client.Dispose();
-            //return;
-            //});
+            BarStop(ProgressBar);
+            LabelBytes.Text = LabelBytes.Text == "Connecting..." ? "" : LabelBytes.Text;
         }
 
         private string DownloadedProgress(double bytesIn, double bytesTotal)
         {
-            if (bytesTotal == -1) { return CalculateFileSize(bytesIn); }
-            return CalculateFileSize(bytesIn) + " of " + CalculateFileSize(bytesTotal);
+            if (bytesTotal == -1) { return UnitSize(bytesIn); }
+            return UnitSize(bytesIn) + " of " + UnitSize(bytesTotal);
         }
 
-        private string CalculateFileSize(double _bytes)
+        private string UnitSize(double _bytes)
         {
             string unitSimbol = _bytes < 1024 ? "bytes" :
                 _bytes < 1048576 ? "KB" : "MB";
@@ -237,20 +165,15 @@ namespace RADB
             return Math.Floor(unitSize) + " " + unitSimbol;
         }
 
-        private void StartBar(ProgressBar bar, ProgressBarStyle style = ProgressBarStyle.Continuous, int maximum = 100)
+        private void BarStart(ProgressBar bar, ProgressBarStyle style = ProgressBarStyle.Continuous, int maximum = 100)
         {
-            bar.Style = style;
-            bar.MarqueeAnimationSpeed = 50;
             bar.Maximum = maximum;
             bar.Value = 0;
+            bar.MarqueeAnimationSpeed = 50;
+            bar.Style = style;
         }
 
-        private void StepBar(ProgressBar bar)
-        {
-            bar.Value += bar.Step;
-        }
-
-        private void StoptBar(ProgressBar bar)
+        private void BarStop(ProgressBar bar)
         {
             if (bar.Style == ProgressBarStyle.Marquee)
             {

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 //
-using System.Net;
+using System.IO;
 using System.Text;
+using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -12,9 +12,8 @@ namespace RADB
 {
     public static class Browser
     {
-        public static WebClient client;
+        public static Encoding Encoding = UTF8Encoding.UTF8;
         public static bool useProxy = true;
-
         public static WebProxy Proxy = new WebProxy
         {
             Address = new Uri("http://cohab-proxy.cohabct.com.br:3128"),
@@ -28,30 +27,7 @@ namespace RADB
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.DefaultConnectionLimit = 128;
-
-            client = new WebClient()
-            {
-                Encoding = UTF8Encoding.UTF8,
-            };
-
-            if (useProxy)
-            {
-                client.Proxy = Proxy;
-            }
-
             //web.Headers["User-Agent"] = "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15";
-        }
-
-        public static string DownloadString(string URL)
-        {
-            string data = client.DownloadString(URL);
-            return data;
-        }
-
-        public static byte[] DownloadData(string URL)
-        {
-            byte[] data = client.DownloadData(URL);
-            return data;
         }
 
         public static JObject ToJObject(string path)
@@ -61,7 +37,7 @@ namespace RADB
             string content = path;
             if (path.IndexOf("http://") >= 0 || path.IndexOf("https://") >= 0)
             {
-                content = DownloadString(path);
+                //content = DownloadString(path);
             }
             else
             {

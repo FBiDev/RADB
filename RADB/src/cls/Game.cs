@@ -106,25 +106,24 @@ namespace RADB
             }
         }
 
-        public string ImageIconName
+        public Picture _Icon = null;
+        public Bitmap IconBitmap
         {
             get
             {
-                return ImageIcon.Replace(@"/Images/", "");
+                return Icon.Bitmap;
             }
         }
-
-        public string ImageIconFile()
-        {
-            return Folder.ImageIcon(ConsoleID) + ImageIconName;
-        }
-
-        public Bitmap ImageIconBitmap
+        public Picture Icon
         {
             get
             {
-                if (File.Exists(ImageIconFile())) { return new Bitmap(ImageIconFile()); }
-                return new Picture(36, 36).Bitmap;
+                if (_Icon is Picture) { return _Icon; }
+                //if (File.Exists(IconPath())) { return new Bitmap(IconPath()); }
+                string path = Folder.ImageIcon(ConsoleID) + ImageIcon.Replace(@"/Images/", "");
+
+                if (File.Exists(path)) { return new Picture(path); }
+                return new Picture(96, 96);
             }
         }
 

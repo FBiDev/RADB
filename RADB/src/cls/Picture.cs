@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 //
-using System.Text;
+using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
+//
+using System.Text;
 using System.Globalization;
 using System.Diagnostics;
 using RADB.Properties;
@@ -33,7 +34,8 @@ namespace RADB
             }
         }
 
-        private string FileName { get; set; }
+        public string Path { get; set; }
+        public string Name { get { return System.IO.Path.GetFileName(Path); } }
         private ImageFormat Format { get; set; }
         private PictureFormat FormatEnum { get; set; }
 
@@ -41,7 +43,7 @@ namespace RADB
         public int ImagesPerRow { get; set; }
         public string Error { get; set; }
 
-        private string FolderTemp
+        private string FolderExe
         {
             get
             {
@@ -51,12 +53,24 @@ namespace RADB
 
         private void DefaultValues()
         {
+            Path = string.Empty;
+            ImageFiles = new List<string>();
+            Error = string.Empty;
+
             Parameters = new EncoderParameters(1);
 
             //Default Jpeg Quality
             Quality = 91L;//90%
 
             //ImagesPerRow = 11;
+        }
+
+        public Picture(string fileName)
+        {
+            Path = fileName;
+            Bitmap = new Bitmap(Path);
+
+            DefaultValues();
         }
 
         public Picture(List<string> imagesToMerge, bool merge = true, int imagesPerRow = 11)
@@ -89,7 +103,7 @@ namespace RADB
         {
             if (Bitmap == null || (Bitmap is Bitmap) == false) { return; }
 
-            FileName = fileName + "." + format.ToString().ToLower();
+            Path = fileName + "." + format.ToString().ToLower();
             FormatEnum = format;
 
             switch (FormatEnum)
@@ -98,10 +112,10 @@ namespace RADB
                 case PictureFormat.Png: Format = ImageFormat.Png; break;
             }
 
-            if (File.Exists(FileName)) { File.Delete(FileName); }
+            if (File.Exists(Path)) { File.Delete(Path); }
 
             //Max image Size is 65.000 x 65.000
-            Bitmap.Save(FileName, GetEncoder(Format), Parameters);
+            Bitmap.Save(Path, GetEncoder(Format), Parameters);
             Bitmap.Dispose();
 
             CompressCMD();
@@ -116,7 +130,7 @@ namespace RADB
         private void CompressCMD()
         {
             byte[] exeResource = new byte[0];
-            string exeFile = FolderTemp;
+            string exeFile = FolderExe;
             string exeCmd = string.Empty;
 
             switch (FormatEnum)
@@ -125,12 +139,12 @@ namespace RADB
                     exeResource = Resources.jpegoptim_1_4_6;
                     exeFile += "jpegoptim_1_4_6.exe";
                     //exeCmd = "\"" + RA.FolderTemp + exeFileName + "\"\" " + FileName;
-                    exeCmd = exeFile + " " + FileName;
+                    exeCmd = exeFile + " " + Path;
                     break;
                 case PictureFormat.Png:
                     exeResource = Resources.pngcrush_1_8_11_w64;
                     exeFile += "pngcrush_1_8_11_w64.exe";
-                    exeCmd = exeFile + " -ow " + FileName;
+                    exeCmd = exeFile + " -ow " + Path;
                     break;
             }
 
