@@ -67,14 +67,16 @@ namespace RADB
 
         public Picture(string fileName)
         {
+            DefaultValues();
+
             Path = fileName;
             Bitmap = new Bitmap(Path);
-
-            DefaultValues();
         }
 
         public Picture(List<string> imagesToMerge, bool merge = true, int imagesPerRow = 11)
         {
+            DefaultValues();
+
             ImageFiles = imagesToMerge;
             ImagesPerRow = imagesPerRow;
 
@@ -84,15 +86,14 @@ namespace RADB
             {
                 MergeImages();
             }
-
-            DefaultValues();
         }
 
-        public Picture(int width, int height)
+        public Picture(int width, int height, string fileName = "")
         {
-            Bitmap = new Bitmap(width, height);
-
             DefaultValues();
+
+            Path = fileName;
+            Bitmap = new Bitmap(width, height);
 
             //Default Background
             using (Graphics g = Graphics.FromImage(Bitmap)) { g.Clear(Color.Magenta); }

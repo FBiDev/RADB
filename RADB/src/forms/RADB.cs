@@ -39,13 +39,13 @@ namespace RADB
             Browser.Load();
             //Folders
             Folder.CreateFolders();
-            //dgvs
-            LoadConsoles();
         }
 
         void RADB_Shown(object sender, EventArgs e)
         {
-            dgvConsoles.Focus();
+            //dgvs
+            LoadConsoles();
+            LoadGameList(dgvConsoles.CurrentRow.DataBoundItem as Console);
         }
 
         private void ParseValues()
@@ -113,36 +113,42 @@ namespace RADB
             List<Console> Consoles = new List<Console>();
             string file = RA.JSN_ConsoleIDs;
 
-            if (File.Exists(file))
+            lblConsolesFound.Visible = false;
+            if (File.Exists(file) == false)
             {
-                lblUpdateConsoles.Text = Archive.LastUpdate(file).ToString();
-
-                Consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(file));
-                Consoles = Consoles.OrderBy(x => x.Name).ToList();
-
-                dgvConsoles.AutoGenerateColumns = true;
-                dgvConsoles.DataSource = Consoles;
-                dgvConsoles.Focus();
+                lblConsolesFound.Visible = true;
+                return;
             }
-            dgvConsoles.Visible = File.Exists(file) && Consoles.Count > 0;
+
+            lblUpdateConsoles.Text = Archive.LastUpdate(file).ToString();
+
+            Consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(file));
+            Consoles = Consoles.OrderBy(x => x.Name).ToList();
+
+            dgvConsoles.AutoGenerateColumns = true;
+            dgvConsoles.DataSource = Consoles;
+            dgvConsoles.Focus();
         }
         #endregion
 
         #region GameList
         private async void btnUpdateGameList_Click(object sender, EventArgs e)
         {
+            if (dgvConsoles.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("No Console Selected");
+                return;
+            }
+
             if (dgvConsoles.SelectedRows.Count > 0)
             {
-                ParseValues();
-                if (!ValidConsoleID()) { return; }
-
                 Console console = (dgvConsoles.CurrentRow.DataBoundItem as Console);
 
                 pnlDownloadGameList.Enabled = false;
 
                 //Download GameList
                 string fileGameList = RA.JSN_GameList(console.Name);
-                Download dlGameList = new Download(RA.GetRAURL(RA.API_GameList, "i=" + ConsoleID_value), fileGameList)
+                Download dlGameList = new Download(RA.GetRAURL(RA.API_GameList, "i=" + console.ID), fileGameList)
                 {
                     Overwrite = true,
                     ProgressBarName = pgbGameList.Name,
@@ -154,25 +160,9 @@ namespace RADB
 
                 //Read GameList
                 List<Game> GameList = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(fileGameList));
-                List<Game> GameListExtend = new List<Game>();
-                //Download GameInfo Extend
-                List<DownloadFile> gInfoFiles = GameList.Select(a => new DownloadFile(RA.GetRAURL(RA.API_GameExtended, "i=" + a.ID), RA.JSN_GameInfoExtend(a.ConsoleID, a.ID))).ToList();
-                foreach (var file in gInfoFiles)
-                {
-                    Download dlInfoExtend = new Download(file.URL, file.Path)
-                    {
-                        Overwrite = false,
-                        ProgressBarName = pgbGameList.Name,
-                        LabelBytesName = lblProgressGameList.Name,
-                        LabelTimeName = lblUpdateGameList.Name,
-                    };
-                    await dlInfoExtend.Start();
-
-                    GameListExtend.Add(JsonConvert.DeserializeObject<Game>(File.ReadAllText(file.Path)));
-                }
 
                 //Download Game Icons
-                List<DownloadFile> gIconFiles = GameListExtend.Select(a => new DownloadFile(RA.URL_Images + a.Icon.Name, a.Icon.Path)).ToList();
+                List<DownloadFile> gIconFiles = GameList.Select(a => new DownloadFile(RA.URL_Images + a.Icon.Name, a.Icon.Path)).ToList();
                 Download dlIconFiles = new Download()
                 {
                     Overwrite = false,
@@ -185,7 +175,7 @@ namespace RADB
 
                 pnlDownloadGameList.Enabled = true;
 
-                if (dgvGameList.SelectedRows.Count > 0)
+                if (GameList.Count > 0)
                 {
                     LoadGameList(dgvConsoles.CurrentRow.DataBoundItem as Console);
                 }
@@ -196,79 +186,80 @@ namespace RADB
 
         private void LoadGameList(Console console)
         {
-            if (dgvConsoles.SelectedRows.Count > 0)
+            if (dgvConsoles.SelectedRows.Count == 0) return;
+
+            dgvGameList.DataSource = null;
+            string file = RA.JSN_GameList(console.Name);
+
+            lblGameListFound.Visible = false;
+            if (File.Exists(file) == false)
             {
-                List<Game> GameList = new List<Game>();
-                string file = RA.JSN_GameList((dgvConsoles.CurrentRow.DataBoundItem as Console).Name);
-
-                if (File.Exists(file))
-                {
-                    lblUpdateGameList.Text = Archive.LastUpdate(file).ToString();
-
-                    TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
-                    GameList = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(file));
-                    TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
-
-                    List<Game> LCheevos = new List<Game>();
-                    List<Game> LNotOffical = new List<Game>();
-                    List<Game> LNoCheevos = new List<Game>();
-                    List<Game> LNotOfficalNoCheevos = new List<Game>();
-
-                    TimeSpan ini = new TimeSpan(DateTime.Now.Ticks);
-                    foreach (Game game in GameList)
-                    {
-                        string infoFile = RA.JSN_GameInfoExtend(game.ConsoleID, game.ID);
-
-                        if (File.Exists(infoFile))
-                        {
-                            JObject resultInfo = Browser.ToJObject(infoFile);
-                            Game gameInfo = resultInfo.ToObject<Game>();
-
-                            gameInfo.SetAchievements(resultInfo["Achievements"]);
-
-                            //Add to List
-                            if (gameInfo.Title.IndexOf("~Hack~") >= 0 || gameInfo.Title.IndexOf("~Demo~") >= 0
-                                    || gameInfo.Title.IndexOf("~Homebrew~") >= 0 || gameInfo.Title.IndexOf("~Prototype~") >= 0
-                                    || gameInfo.Title.IndexOf("~Z~") >= 0)
-                            {
-                                if (gameInfo.AchievementsCount > 0)
-                                {
-                                    LNotOffical.Add(gameInfo);
-                                }
-                                else
-                                {
-                                    LNotOfficalNoCheevos.Add(gameInfo);
-                                }
-                            }
-                            else
-                            {
-                                if (gameInfo.AchievementsCount > 0)
-                                {
-                                    LCheevos.Add(gameInfo);
-                                }
-                                else
-                                {
-                                    LNoCheevos.Add(gameInfo);
-                                }
-                            }
-                        }
-                    }
-                    TimeSpan fim = new TimeSpan(DateTime.Now.Ticks) - ini;
-
-                    TimeSpan ini2 = new TimeSpan(DateTime.Now.Ticks);
-                    //Join Ordered Lists
-                    GameList = LCheevos.OrderBy(x => x.Title).ToList();
-                    GameList.AddRange(LNotOffical.OrderBy(x => x.Title).ToList());
-                    GameList.AddRange(LNoCheevos.OrderBy(x => x.Title).ToList());
-                    GameList.AddRange(LNotOfficalNoCheevos.OrderBy(x => x.Title).ToList());
-
-                    dgvGameList.AutoGenerateColumns = false;
-                    dgvGameList.DataSource = GameList;
-                    dgvGameList.Focus();
-                    TimeSpan fim2 = new TimeSpan(DateTime.Now.Ticks) - ini2;
-                }
-                dgvGameList.Visible = File.Exists(file) && GameList.Count > 0;
+                lblGameListFound.Visible = true;
+                return;
             }
+
+            //File exist
+            List<Game> GameList = new List<Game>();
+            lblUpdateGameList.Text = Archive.LastUpdate(file).ToString();
+
+            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
+            GameList = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(file));
+            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
+
+            List<Game> LCheevos = new List<Game>();
+            List<Game> LNotOffical = new List<Game>();
+            List<Game> LNoCheevos = new List<Game>();
+            List<Game> LNotOfficalNoCheevos = new List<Game>();
+
+            TimeSpan ini = new TimeSpan(DateTime.Now.Ticks);
+            foreach (Game game in GameList)
+            {
+                string infoFile = RA.JSN_GameInfoExtend(game.ConsoleID, game.ID);
+
+                if (File.Exists(infoFile) == false) continue;
+
+                JObject resultInfo = Browser.ToJObject(infoFile);
+                Game gameInfo = resultInfo.ToObject<Game>();
+
+                gameInfo.SetAchievements(resultInfo["Achievements"]);
+                game.AchievementsList = gameInfo.AchievementsList;
+
+                game.Developer = gameInfo.Developer;
+                game.Publisher = gameInfo.Publisher;
+                game.Genre = gameInfo.Genre;
+                game.Released = gameInfo.Released;
+            }
+
+            List<string> prefixNotOffical = new List<string> { 
+                        "~Demo~", "~Hack~", "~Homebrew~", "~Prototype~", "~Test Kit~", "~Unlicesed~", "~Z~" };
+
+            //Get NotOffical
+            LNotOffical = GameList.Where(x => prefixNotOffical.Any(y => x.Title.IndexOf(y) >= 0)).ToList();
+            //Remove NotOffical from Main List
+            GameList = GameList.Except(LNotOffical).ToList();
+            //Get Game with no cheevos from NotOffical
+            LNotOfficalNoCheevos = LNotOffical.Where(x => x.AchievementsCount == 0).ToList();
+            //Get Games Has Cheevos
+            LNotOffical = LNotOffical.Where(x => x.AchievementsCount > 0).ToList();
+            //Get Game with no cheevos from Main List
+            LNoCheevos = GameList.Where(x => x.AchievementsCount == 0).ToList();
+            //Remove Games no Cheevos from Main List
+            GameList = GameList.Except(LNoCheevos).ToList();
+
+            TimeSpan fim = new TimeSpan(DateTime.Now.Ticks) - ini;
+
+            TimeSpan ini2 = new TimeSpan(DateTime.Now.Ticks);
+
+            //Join Ordered Lists
+            GameList = GameList.OrderBy(x => x.Title).ToList();
+            GameList.AddRange(LNotOffical.OrderBy(x => x.Title).ToList());
+            GameList.AddRange(LNoCheevos.OrderBy(x => x.Title).ToList());
+            GameList.AddRange(LNotOfficalNoCheevos.OrderBy(x => x.Title).ToList());
+
+            dgvGameList.AutoGenerateColumns = false;
+            dgvGameList.DataSource = GameList;
+            dgvGameList.Focus();
+            TimeSpan fim2 = new TimeSpan(DateTime.Now.Ticks) - ini2;
         }
         #endregion
 
@@ -277,7 +268,6 @@ namespace RADB
         {
             if (e.RowIndex == -1) return;
 
-            tabControl1.SelectedTab = tabGameInfo;
             Game obj = dgvGameList.CurrentRow.DataBoundItem as Game;
             lblInfoName.Text = obj.Title + " (" + obj.ConsoleName + ")";
 
@@ -304,13 +294,14 @@ namespace RADB
 
                 acLocation += p.Height + 5;
             }
+
+            tabControl1.SelectedTab = tabGameInfo;
         }
 
         private void dgvConsoles_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
 
-            tabControl1.SelectedTab = tabGames;
             Console obj = dgvConsoles.CurrentRow.DataBoundItem as Console;
 
             lblUpdateGameList.Text = string.Empty;
@@ -318,7 +309,39 @@ namespace RADB
             pgbGameList.Value = 0;
 
             LoadGameList(obj);
+
+            tabControl1.SelectedTab = tabGames;
         }
         #endregion
+
+        private async void btnUpdateInfo_Click(object sender, EventArgs e)
+        {
+            //Download GameInfo Extend
+            Game obj = dgvGameList.CurrentRow.DataBoundItem as Game;
+            string fileJson = RA.JSN_GameInfoExtend(obj.ConsoleID, obj.ID);
+
+            List<DownloadFile> dlFiles = new List<DownloadFile>() {
+                new DownloadFile(RA.GetRAURL(RA.API_GameExtended, "i=" + obj.ID), fileJson),
+                new DownloadFile(RA.URL_Images + obj.Icon.Name, obj.Icon.Path),
+                new DownloadFile(RA.URL_Images + obj.TitleImage.Name, obj.TitleImage.Path),
+            };
+
+            Download dlInfoExtend = new Download()
+            {
+                Files = dlFiles,
+                Overwrite = false,
+                ProgressBarName = pgbInfo.Name,
+                LabelBytesName = lblProgressInfo.Name,
+                LabelTimeName = lblUpdateInfo.Name,
+            };
+            await dlInfoExtend.Start();
+
+            Game objExtend = JsonConvert.DeserializeObject<Game>(File.ReadAllText(fileJson));
+            obj = objExtend;
+            dgvGameList.Refresh();
+            lblUpdateInfo.Text = Archive.LastUpdate(fileJson).ToString();
+            picInfoIcon.Image = obj.IconBitmap;
+            picInfoTitle.Image = obj.TitleImage.Bitmap;
+        }
     }
 }

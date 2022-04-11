@@ -122,8 +122,29 @@ namespace RADB
                 //if (File.Exists(IconPath())) { return new Bitmap(IconPath()); }
                 string path = Folder.ImageIcon(ConsoleID) + ImageIcon.Replace(@"/Images/", "");
 
-                if (File.Exists(path)) { return new Picture(path); }
-                return new Picture(96, 96);
+                if (File.Exists(path)) { return _Icon = new Picture(path); }
+                return _Icon = new Picture(96, 96, path);
+            }
+        }
+
+        public Picture _TitleImage = null;
+        public Bitmap _TitleImageBitmap
+        {
+            get
+            {
+                return _TitleImage.Bitmap;
+            }
+        }
+        public Picture TitleImage
+        {
+            get
+            {
+                if (_TitleImage is Picture) { return _TitleImage; }
+                //if (File.Exists(IconPath())) { return new Bitmap(IconPath()); }
+                string path = Folder.ImageTitle(ConsoleID) + ImageTitle.Replace(@"/Images/", "");
+
+                if (File.Exists(path)) { return _TitleImage = new Picture(path); }
+                return _TitleImage = new Picture(96, 96, path);
             }
         }
 

@@ -52,6 +52,14 @@ namespace RADB
             }
         }
 
+        public static string Titles
+        {
+            get
+            {
+                return Base + @"ImageTitle\";
+            }
+        }
+
         public static string Json
         {
             get
@@ -78,6 +86,13 @@ namespace RADB
         public static string ImageIcon(int consoleID)
         {
             string folder = Icons + consoleID + @"\";
+            Directory.CreateDirectory(folder);
+            return folder;
+        }
+
+        public static string ImageTitle(int consoleID)
+        {
+            string folder = Titles + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }
