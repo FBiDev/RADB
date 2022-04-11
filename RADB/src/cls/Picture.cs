@@ -38,6 +38,14 @@ namespace RADB
         public string Name { get { return System.IO.Path.GetFileName(Path); } }
         private ImageFormat Format { get; set; }
         private PictureFormat FormatEnum { get; set; }
+        public Size Scale(int maxWidth)
+        {
+            var width = Bitmap.Width;
+            if (maxWidth < width) { width = maxWidth; }
+
+            var height = (int)(width * ((float)Bitmap.Height / (float)Bitmap.Width));
+            return new Size(width, height);
+        }
 
         private List<string> ImageFiles { get; set; }
         public int ImagesPerRow { get; set; }

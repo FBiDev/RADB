@@ -12,7 +12,6 @@ namespace RADB
 {
     public static class Browser
     {
-        public static Encoding Encoding = UTF8Encoding.UTF8;
         public static bool useProxy = true;
         public static WebProxy Proxy = new WebProxy
         {
@@ -21,6 +20,8 @@ namespace RADB
             BypassList = new string[] { },
             Credentials = new NetworkCredential("fbirnfeld", "zumbie")
         };
+
+        public static Encoding Encoding = UTF8Encoding.UTF8;
 
         public static void Load()
         {

@@ -45,7 +45,10 @@ namespace RADB
         {
             //dgvs
             LoadConsoles();
-            LoadGameList(dgvConsoles.CurrentRow.DataBoundItem as Console);
+            if (dgvConsoles.CurrentRow != null)
+            {
+                LoadGameList(dgvConsoles.CurrentRow.DataBoundItem as Console);
+            }
         }
 
         private void ParseValues()
@@ -228,6 +231,8 @@ namespace RADB
                 game.Publisher = gameInfo.Publisher;
                 game.Genre = gameInfo.Genre;
                 game.Released = gameInfo.Released;
+
+                game.ImageTitle = gameInfo.ImageTitle;
             }
 
             List<string> prefixNotOffical = new List<string> { 
@@ -277,6 +282,9 @@ namespace RADB
             lblInfoGenre.Text = obj.Genre;
             lblInfoReleased.Text = obj.Released;
 
+            picInfoTitle.Image = obj.TitleImage.Bitmap;
+            picInfoTitle.Size = obj.TitleImage.Scale(picInfoTitle.MaximumSize.Width);
+
             int acLocation = 0;
             int size = 32;
             pnlAchievements.Controls.Clear();
@@ -320,15 +328,9 @@ namespace RADB
             Game obj = dgvGameList.CurrentRow.DataBoundItem as Game;
             string fileJson = RA.JSN_GameInfoExtend(obj.ConsoleID, obj.ID);
 
-            List<DownloadFile> dlFiles = new List<DownloadFile>() {
-                new DownloadFile(RA.GetRAURL(RA.API_GameExtended, "i=" + obj.ID), fileJson),
-                new DownloadFile(RA.URL_Images + obj.Icon.Name, obj.Icon.Path),
-                new DownloadFile(RA.URL_Images + obj.TitleImage.Name, obj.TitleImage.Path),
-            };
-
-            Download dlInfoExtend = new Download()
+            Download dlInfoExtend = new Download(RA.GetRAURL(RA.API_GameExtended, "i=" + obj.ID), fileJson)
             {
-                Files = dlFiles,
+                //Files = dlFiles,
                 Overwrite = false,
                 ProgressBarName = pgbInfo.Name,
                 LabelBytesName = lblProgressInfo.Name,
@@ -336,12 +338,31 @@ namespace RADB
             };
             await dlInfoExtend.Start();
 
-            Game objExtend = JsonConvert.DeserializeObject<Game>(File.ReadAllText(fileJson));
-            obj = objExtend;
-            dgvGameList.Refresh();
+            //Game objExtend = JsonConvert.DeserializeObject<Game>(File.ReadAllText(fileJson));
+            JObject resultInfo = Browser.ToJObject(fileJson);
+            Game gameInfo = resultInfo.ToObject<Game>();
+
+            obj.SetAchievements(resultInfo["Achievements"]);
+
+            obj.Developer = gameInfo.Developer;
+            obj.ImageTitle = gameInfo.ImageTitle;
+
+            lblInfoDeveloper.Text = obj.Developer;
+
+            List<DownloadFile> dlFiles = new List<DownloadFile>() {
+                new DownloadFile(RA.URL_Images + obj.Icon.Name, obj.Icon.Path),
+                new DownloadFile(RA.URL_Images + obj.TitleImage.Name, obj.TitleImage.Path),
+            };
+
+            dlInfoExtend.Files = dlFiles;
+            await dlInfoExtend.Start();
             lblUpdateInfo.Text = Archive.LastUpdate(fileJson).ToString();
+
             picInfoIcon.Image = obj.IconBitmap;
             picInfoTitle.Image = obj.TitleImage.Bitmap;
+            picInfoTitle.Size = obj.TitleImage.Scale(picInfoTitle.MaximumSize.Width);
+
+            dgvGameList.Refresh();
         }
     }
 }

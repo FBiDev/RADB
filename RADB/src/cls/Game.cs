@@ -118,12 +118,9 @@ namespace RADB
         {
             get
             {
-                if (_Icon is Picture) { return _Icon; }
-                //if (File.Exists(IconPath())) { return new Bitmap(IconPath()); }
                 string path = Folder.ImageIcon(ConsoleID) + ImageIcon.Replace(@"/Images/", "");
-
-                if (File.Exists(path)) { return _Icon = new Picture(path); }
-                return _Icon = new Picture(96, 96, path);
+                if (File.Exists(path) == false) { return _Icon = new Picture(96, 96, path); }
+                return _Icon = new Picture(path);
             }
         }
 
@@ -139,12 +136,12 @@ namespace RADB
         {
             get
             {
-                if (_TitleImage is Picture) { return _TitleImage; }
-                //if (File.Exists(IconPath())) { return new Bitmap(IconPath()); }
-                string path = Folder.ImageTitle(ConsoleID) + ImageTitle.Replace(@"/Images/", "");
+                if (ImageTitle == null) { return _TitleImage = new Picture(96, 96); }
 
-                if (File.Exists(path)) { return _TitleImage = new Picture(path); }
-                return _TitleImage = new Picture(96, 96, path);
+                string path = Folder.ImageTitle(ConsoleID) + ImageTitle.Replace(@"/Images/", "");
+                if (File.Exists(path) == false) { return _TitleImage = new Picture(96, 96, path); }
+
+                return _TitleImage = new Picture(path);
             }
         }
 
