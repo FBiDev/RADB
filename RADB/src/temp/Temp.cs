@@ -130,5 +130,12 @@ namespace RADB.temp
         {
             return list.Find(o => o.Name == name);
         }
+
+        //RADB
+        private void btnDownloadBadges_Click(object sender, EventArgs e)
+        {
+            //await RA.DownloadBadges(0);
+            //txtOutput.Text = "Badges Downloaded!";
+        }
     }
 }

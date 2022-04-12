@@ -12,6 +12,21 @@ namespace RADB
     public class Download
     {
         public List<DownloadFile> Files { get; set; }
+        public DownloadFile File
+        {
+            get
+            {
+                if (Files.Count > 0)
+                {
+                    return Files[0];
+                }
+                return null;
+            }
+            set
+            {
+                Files = new List<DownloadFile>() { value };
+            }
+        }
         public int FilesCompleted { get; set; }
         public bool Overwrite { get; set; }
         public TimeSpan ElapsedTime { get; set; }
@@ -76,7 +91,7 @@ namespace RADB
             foreach (DownloadFile file in Files)
             {
                 //File.Exists(file.Path) && Archive.IsFileLocked(file.Path) ||
-                if (File.Exists(file.Path) && new FileInfo(file.Path).Length > 0 && Overwrite == false)
+                if (System.IO.File.Exists(file.Path) && new FileInfo(file.Path).Length > 0 && Overwrite == false)
                 { TotalFilesToDownload--; continue; }
 
                 try

@@ -38,12 +38,23 @@ namespace RADB
         public string Name { get { return System.IO.Path.GetFileName(Path); } }
         private ImageFormat Format { get; set; }
         private PictureFormat FormatEnum { get; set; }
-        public Size Scale(int maxWidth)
+        public Size Scale(Size sz)
         {
-            var width = Bitmap.Width;
-            if (maxWidth < width) { width = maxWidth; }
+            var factor = Bitmap.Width >= Bitmap.Height ? (float)Bitmap.Height / (float)Bitmap.Width : (float)Bitmap.Width / (float)Bitmap.Height;
 
-            var height = (int)(width * ((float)Bitmap.Height / (float)Bitmap.Width));
+            var width = Bitmap.Width;
+            var height = Bitmap.Height;
+
+            if (width >= height)
+            {
+                if (width > sz.Width) { width = sz.Width; }
+                height = (int)(width * factor);
+            }
+            else if (width < height)
+            {
+                if (height > sz.Height) { height = sz.Height; }
+                width = (int)(height * factor);
+            }
             return new Size(width, height);
         }
 

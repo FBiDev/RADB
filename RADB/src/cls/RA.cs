@@ -9,31 +9,70 @@ using Newtonsoft.Json.Linq;
 
 namespace RADB
 {
-    public static class RA
+    public class RA
     {
+        private const string API_URL = "http://retroachievements.org/API/";
+        public string user;
+        public string api_key;
+
+        public RA()
+        {
+            user = "FBiDev";
+            api_key = "uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
+        }
+
+        private string AuthQS()
+        {
+            return "?z=" + user + "&y=" + api_key;
+        }
+
+        public string GetRAURL(string target, string parames = "")
+        {
+            return API_URL + target + AuthQS() + "&" + parames;
+        }
+
+        public DownloadFile DownloadConsoles()
+        {
+            return new DownloadFile(GetRAURL("API_GetConsoleIDs.php"), FileConsoles());
+        }
+        public string FileConsoles()
+        {
+            return Folder.Consoles + "Consoles.json";
+        }
+        public List<Console> ListConsoles()
+        {
+            List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(FileConsoles()));
+            return consoles.OrderBy(x => x.Name).ToList();
+        }
+
+        public DownloadFile DownloadGameList(Console console)
+        {
+            return new DownloadFile(GetRAURL("API_GetGameList.php", "i=" + console.ID), FileGameList(console.Name));
+        }
+        public string FileGameList(string consoleName)
+        {
+            return Folder.Consoles + consoleName + " GameList.json";
+        }
+
+        public DownloadFile DownloadGameInfoExtended(Game game)
+        {
+            return new DownloadFile(GetRAURL("API_GetGameExtended.php", "i=" + game.ID), JSN_GameInfoExtend(game.ConsoleID, game.ID));
+        }
+        public string FileGameInfoExtended(int consoleID, int gameID)
+        {
+            return Folder.GameInfoExtendConsole(consoleID) + gameID + ".json";
+        }
+
         //URLs
         public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
         public static string URL_Images = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Images/";
 
-        //API
-        private static string API_URL = "http://retroachievements.org/API/";
-        private static string API_AuthQS = "?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
-
-        public static string GetRAURL(string target, string parames = "")
-        {
-            return API_URL + target + API_AuthQS + "&" + parames;
-        }
-
-        public static string API_ConsoleIDs = "API_GetConsoleIDs.php";
-        public static string API_GameList = "API_GetGameList.php";
         public static string API_GameExtended = "API_GetGameExtended.php";
 
         //JSON
-        public static string JSN_ConsoleIDs = Folder.Consoles + "Consoles.json";
-        public static string JSN_GameList(string consoleName) { return Folder.Consoles + consoleName + " GameList.json"; }
         public static string JSN_GameInfoExtend(int consoleID, int gameID) { return Folder.GameInfoExtendConsole(consoleID) + gameID + ".json"; }
 
-        public async static Task<Game> GetGameInfoExtended(int gameID)
+        public async Task<Game> GetGameInfoExtended(int gameID)
         {
             if (gameID <= 0) { return null; }
 
@@ -61,7 +100,7 @@ namespace RADB
             //return new Game();
         }
 
-        public async static Task DownloadBadges(int gameID)
+        public async Task DownloadBadges(int gameID)
         {
             string fileGameList = Folder.Json + "GameList" + "12" + ".json";
             Download dl = new Download()
