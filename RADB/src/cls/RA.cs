@@ -51,6 +51,7 @@ namespace RADB
         }
         public string FileGameList(string consoleName)
         {
+            consoleName = consoleName.Replace("/", "-");
             return Folder.Consoles + consoleName + " GameList.json";
         }
 

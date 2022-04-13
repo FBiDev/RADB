@@ -12,7 +12,7 @@ namespace RADB
 {
     public static class Browser
     {
-        public static bool useProxy = true;
+        public static bool useProxy = false;
         public static WebProxy Proxy = new WebProxy
         {
             Address = new Uri("http://cohab-proxy.cohabct.com.br:3128"),
