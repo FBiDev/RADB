@@ -41,7 +41,23 @@ namespace RADB
             }
         }
 
-        public string ImageIcon { get; set; }
+        //Icon
+        private string _ImageIcon = string.Empty;
+        public string ImageIcon
+        {
+            get { return _ImageIcon; }
+            set
+            {
+                _ImageIcon = value.Replace(@"/Images/", "");
+                if (File.Exists(ImageIconPath) && new FileInfo(ImageIconPath).Length > 0)
+                {
+                    ImageIconBitmap = new Picture(ImageIconPath).Bitmap;
+                }
+            }
+        }
+        public string ImageIconPath { get { return Folder.ImageIcon(ConsoleID) + ImageIcon; } }
+        public Bitmap ImageIconBitmap { get; set; }
+
         public string ImageTitle { get; set; }
         public string ImageIngame { get; set; }
         public string ImageBoxArt { get; set; }
@@ -61,6 +77,8 @@ namespace RADB
         public Game()
         {
             AchievementsList = new List<Achievement>();
+
+            ImageIconBitmap = new Picture(96, 96).Bitmap;
         }
 
         public void SetAchievements(JToken result)
@@ -103,24 +121,6 @@ namespace RADB
                     return date.Substring(0, 3) + char.ToUpper(date[3]) + date.Substring(4);
                 }
                 return string.Empty;
-            }
-        }
-
-        public Picture _Icon = null;
-        public Bitmap IconBitmap
-        {
-            get
-            {
-                return Icon.Bitmap;
-            }
-        }
-        public Picture Icon
-        {
-            get
-            {
-                string path = Folder.ImageIcon(ConsoleID) + ImageIcon.Replace(@"/Images/", "");
-                if (File.Exists(path) == false) { return _Icon = new Picture(96, 96, path); }
-                return _Icon = new Picture(path);
             }
         }
 

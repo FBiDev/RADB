@@ -169,8 +169,9 @@ namespace RADB
                 //Read GameList
                 List<Game> GameList = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(fileGameList));
 
+                //dgvGameList.Visible = false;
                 //Download Game Icons
-                List<DownloadFile> gIconFiles = GameList.Select(a => new DownloadFile(RA.URL_Images + a.Icon.Name, a.Icon.Path)).ToList();
+                List<DownloadFile> gIconFiles = GameList.Select(g => new DownloadFile(RA.URL_Images + g.ImageIcon, g.ImageIconPath)).ToList();
                 Download dlIconFiles = new Download()
                 {
                     Overwrite = false,
@@ -179,7 +180,8 @@ namespace RADB
                     LabelBytesName = lblProgressGameList.Name,
                     LabelTimeName = lblUpdateGameList.Name,
                 };
-                await dlIconFiles.Start();
+                await (dlIconFiles.Start());
+                dgvGameList.Visible = true;
 
                 pnlDownloadGameList.Enabled = true;
 
@@ -187,7 +189,6 @@ namespace RADB
                 {
                     await LoadGameList(dgvConsoles.CurrentRow.DataBoundItem as Console);
                 }
-
                 txtOutput.Text += console.Name + " GameList Updated!" + Environment.NewLine;
             }
         }
@@ -245,7 +246,7 @@ namespace RADB
                 }
 
                 List<string> prefixNotOffical = new List<string> { 
-                        "~Demo~", "~Hack~", "~Homebrew~", "~Prototype~", "~Test Kit~", "~Unlicesed~", "~Z~" };
+                        "~Demo~", "~Hack~", "~Homebrew~", "~Prototype~", "~Test Kit~", "~Unlicensed~", "~Z~" };
 
                 //Get NotOffical
                 LNotOffical = GameList.Where(x => prefixNotOffical.Any(y => x.Title.IndexOf(y) >= 0)).ToList();
@@ -286,7 +287,7 @@ namespace RADB
             Game obj = dgvGameList.CurrentRow.DataBoundItem as Game;
             lblInfoName.Text = obj.Title + " (" + obj.ConsoleName + ")";
 
-            picInfoIcon.Image = obj.Icon.Bitmap;
+            picInfoIcon.Image = obj.ImageIconBitmap;
             lblInfoDeveloper.Text = obj.Developer;
             lblInfoPublisher.Text = obj.Publisher;
             lblInfoGenre.Text = obj.Genre;
@@ -342,14 +343,14 @@ namespace RADB
             lblInfoDeveloper.Text = game.Developer;
 
             List<DownloadFile> dlFiles = new List<DownloadFile>() {
-                new DownloadFile(RA.URL_Images + game.Icon.Name, game.Icon.Path),
+                new DownloadFile(RA.URL_Images + game.ImageIcon, game.ImageIconPath),
                 new DownloadFile(RA.URL_Images + game.TitleImage.Name, game.TitleImage.Path),
             };
 
             dlGameInfoExtended.Files = dlFiles;
             await dlGameInfoExtended.Start();
 
-            picInfoIcon.Image = game.Icon.Bitmap;
+            picInfoIcon.Image = game.ImageIconBitmap;
             picInfoTitle.Image = game.TitleImage.Bitmap;
             picInfoTitle.Size = game.TitleImage.Scale(picInfoTitle.MaximumSize);
 

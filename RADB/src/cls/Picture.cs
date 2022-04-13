@@ -89,7 +89,14 @@ namespace RADB
             DefaultValues();
 
             Path = fileName;
-            Bitmap = new Bitmap(Path);
+            try
+            {
+                Bitmap = new Bitmap(Path);
+            }
+            catch (Exception e)
+            {
+                var a = e.Message;
+            }
         }
 
         public Picture(List<string> imagesToMerge, bool merge = true, int imagesPerRow = 11)

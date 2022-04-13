@@ -77,6 +77,7 @@ namespace RADB
         public async Task Start()
         {
             List<Task> Tasks = new List<Task>();
+            FilesCompleted = 0;
 
             //Remove Files with same URL
             Files = Files.Distinct().ToList();
@@ -86,7 +87,6 @@ namespace RADB
             //Tip.RemoveAll();
             LabelBytes.Text = "Connecting...";
             TimeSpan initialTime = new TimeSpan(DateTime.Now.Ticks);
-
 
             foreach (DownloadFile file in Files)
             {
@@ -119,6 +119,7 @@ namespace RADB
                                 BytesReceived += f.BytesReceived;
                                 TotalBytesToReceive += f.TotalBytesToReceive;
                                 ProgressPercentage += (f.ProgressPercentage / TotalFilesToDownload);
+                                //if (TotalBytesToReceive > 0) { ProgressPercentage = (float)((float)(BytesReceived / TotalBytesToReceive) * 100); }
                             });
 
                             LabelBytes.Text = "Downloaded " + DownloadedProgress(BytesReceived, TotalBytesToReceive);
@@ -132,7 +133,7 @@ namespace RADB
                         client.DownloadFileCompleted += (sender, args) =>
                         {
                             FilesCompleted++;
-                            LabelTime.Text = FilesCompleted.ToString();
+                            LabelBytes.Text += " (" + FilesCompleted + "/" + TotalFilesToDownload + ")";
                             //Downloaded All Files
                             if (FilesCompleted == TotalFilesToDownload)
                             {
@@ -145,6 +146,7 @@ namespace RADB
                         Tasks.Add(client.DownloadFileTaskAsync(new Uri(file.URL), file.Path));
                         if (Tasks.Count == ServicePointManager.DefaultConnectionLimit)
                         {
+                            LabelBytes.Text = "Connecting...";
                             await Task.WhenAll(Tasks);
                             Tasks.Clear();
                         }
@@ -158,7 +160,7 @@ namespace RADB
 
             await Task.WhenAll(Tasks);
             BarStop(ProgressBar);
-            LabelBytes.Text = LabelBytes.Text == "Connecting..." ? "" : LabelBytes.Text;
+            LabelBytes.Text = LabelBytes.Text == "Connecting..." ? "Files already exist" : LabelBytes.Text;
         }
 
         private string DownloadedProgress(double bytesIn, double bytesTotal)

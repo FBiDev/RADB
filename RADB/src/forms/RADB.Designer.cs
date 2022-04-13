@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RADB));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtID = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
             this.txtURL = new System.Windows.Forms.TextBox();
@@ -58,6 +58,7 @@
             this.pgbConsoles = new System.Windows.Forms.ProgressBar();
             this.lblProgressConsoles = new System.Windows.Forms.Label();
             this.lblConsolesFound = new System.Windows.Forms.Label();
+            this.picLoaderConsole = new System.Windows.Forms.PictureBox();
             this.dgvConsoles = new System.Windows.Forms.DataGridView();
             this.cID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,13 +69,8 @@
             this.pgbGameList = new System.Windows.Forms.ProgressBar();
             this.lblProgressGameList = new System.Windows.Forms.Label();
             this.lblGameListFound = new System.Windows.Forms.Label();
+            this.picLoaderGameList = new System.Windows.Forms.PictureBox();
             this.dgvGameList = new System.Windows.Forms.DataGridView();
-            this.gID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
-            this.gTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gAchievementsCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gAchievementsPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gLastUpdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGameInfo = new System.Windows.Forms.TabPage();
             this.pnlDownloadInfo = new System.Windows.Forms.Panel();
             this.btnUpdateInfo = new System.Windows.Forms.Button();
@@ -99,14 +95,20 @@
             this.picInfoTitle = new System.Windows.Forms.PictureBox();
             this.tabTemp = new System.Windows.Forms.TabPage();
             this.Ttip = new System.Windows.Forms.ToolTip(this.components);
-            this.picLoaderConsole = new System.Windows.Forms.PictureBox();
-            this.picLoaderGameList = new System.Windows.Forms.PictureBox();
+            this.gID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
+            this.gTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gAchievementsCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gAchievementsPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gLastUpdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabMain.SuspendLayout();
             this.tabConsoles.SuspendLayout();
             this.pnlDownloadConsoles.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoaderConsole)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsoles)).BeginInit();
             this.tabGames.SuspendLayout();
             this.pnlDownloadGameList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoaderGameList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGameList)).BeginInit();
             this.tabGameInfo.SuspendLayout();
             this.pnlDownloadInfo.SuspendLayout();
@@ -117,8 +119,6 @@
             this.gpbInfoAchievements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoTitle)).BeginInit();
             this.tabTemp.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picLoaderConsole)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLoaderGameList)).BeginInit();
             this.SuspendLayout();
             // 
             // txtID
@@ -362,6 +362,17 @@
             this.lblConsolesFound.Text = "No Consoles Found";
             this.lblConsolesFound.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // picLoaderConsole
+            // 
+            this.picLoaderConsole.Image = global::RADB.Properties.Resources.loader;
+            this.picLoaderConsole.Location = new System.Drawing.Point(6, 146);
+            this.picLoaderConsole.Name = "picLoaderConsole";
+            this.picLoaderConsole.Size = new System.Drawing.Size(615, 52);
+            this.picLoaderConsole.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picLoaderConsole.TabIndex = 4;
+            this.picLoaderConsole.TabStop = false;
+            this.picLoaderConsole.Visible = false;
+            // 
             // dgvConsoles
             // 
             this.dgvConsoles.AllowUserToAddRows = false;
@@ -479,6 +490,17 @@
             this.lblGameListFound.Text = "No Games Found";
             this.lblGameListFound.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // picLoaderGameList
+            // 
+            this.picLoaderGameList.Image = global::RADB.Properties.Resources.loader;
+            this.picLoaderGameList.Location = new System.Drawing.Point(6, 146);
+            this.picLoaderGameList.Name = "picLoaderGameList";
+            this.picLoaderGameList.Size = new System.Drawing.Size(615, 52);
+            this.picLoaderGameList.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picLoaderGameList.TabIndex = 5;
+            this.picLoaderGameList.TabStop = false;
+            this.picLoaderGameList.Visible = false;
+            // 
             // dgvGameList
             // 
             this.dgvGameList.AllowUserToAddRows = false;
@@ -509,65 +531,6 @@
             this.dgvGameList.Size = new System.Drawing.Size(615, 465);
             this.dgvGameList.TabIndex = 1;
             this.dgvGameList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGameList_CellDoubleClick);
-            // 
-            // gID
-            // 
-            this.gID.DataPropertyName = "ID";
-            this.gID.HeaderText = "ID";
-            this.gID.Name = "gID";
-            this.gID.ReadOnly = true;
-            this.gID.Width = 43;
-            // 
-            // gIconBitmap
-            // 
-            this.gIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.gIconBitmap.DataPropertyName = "IconBitmap";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle13.NullValue")));
-            dataGridViewCellStyle13.Padding = new System.Windows.Forms.Padding(2);
-            this.gIconBitmap.DefaultCellStyle = dataGridViewCellStyle13;
-            this.gIconBitmap.HeaderText = "Icon";
-            this.gIconBitmap.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.gIconBitmap.Name = "gIconBitmap";
-            this.gIconBitmap.ReadOnly = true;
-            this.gIconBitmap.Width = 36;
-            // 
-            // gTitle
-            // 
-            this.gTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.gTitle.DataPropertyName = "Title";
-            this.gTitle.HeaderText = "Title";
-            this.gTitle.Name = "gTitle";
-            this.gTitle.ReadOnly = true;
-            // 
-            // gAchievementsCount
-            // 
-            this.gAchievementsCount.DataPropertyName = "AchievementsCount";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gAchievementsCount.DefaultCellStyle = dataGridViewCellStyle14;
-            this.gAchievementsCount.HeaderText = "Achievements";
-            this.gAchievementsCount.Name = "gAchievementsCount";
-            this.gAchievementsCount.ReadOnly = true;
-            this.gAchievementsCount.Width = 99;
-            // 
-            // gAchievementsPoints
-            // 
-            this.gAchievementsPoints.DataPropertyName = "AchievementsPoints";
-            this.gAchievementsPoints.HeaderText = "Points";
-            this.gAchievementsPoints.Name = "gAchievementsPoints";
-            this.gAchievementsPoints.ReadOnly = true;
-            this.gAchievementsPoints.Width = 61;
-            // 
-            // gLastUpdate
-            // 
-            this.gLastUpdate.DataPropertyName = "LastUpdate";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gLastUpdate.DefaultCellStyle = dataGridViewCellStyle15;
-            this.gLastUpdate.HeaderText = "LastUpdate";
-            this.gLastUpdate.Name = "gLastUpdate";
-            this.gLastUpdate.ReadOnly = true;
-            this.gLastUpdate.Width = 87;
             // 
             // tabGameInfo
             // 
@@ -840,27 +803,64 @@
             this.tabTemp.Text = "Temp";
             this.tabTemp.UseVisualStyleBackColor = true;
             // 
-            // picLoaderConsole
+            // gID
             // 
-            this.picLoaderConsole.Image = global::RADB.Properties.Resources.loader;
-            this.picLoaderConsole.Location = new System.Drawing.Point(6, 146);
-            this.picLoaderConsole.Name = "picLoaderConsole";
-            this.picLoaderConsole.Size = new System.Drawing.Size(615, 52);
-            this.picLoaderConsole.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.picLoaderConsole.TabIndex = 4;
-            this.picLoaderConsole.TabStop = false;
-            this.picLoaderConsole.Visible = false;
+            this.gID.DataPropertyName = "ID";
+            this.gID.HeaderText = "ID";
+            this.gID.Name = "gID";
+            this.gID.ReadOnly = true;
+            this.gID.Width = 43;
             // 
-            // picLoaderGameList
+            // gIconBitmap
             // 
-            this.picLoaderGameList.Image = global::RADB.Properties.Resources.loader;
-            this.picLoaderGameList.Location = new System.Drawing.Point(6, 146);
-            this.picLoaderGameList.Name = "picLoaderGameList";
-            this.picLoaderGameList.Size = new System.Drawing.Size(615, 52);
-            this.picLoaderGameList.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.picLoaderGameList.TabIndex = 5;
-            this.picLoaderGameList.TabStop = false;
-            this.picLoaderGameList.Visible = false;
+            this.gIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.gIconBitmap.DataPropertyName = "ImageIconBitmap";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle1.NullValue")));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
+            this.gIconBitmap.DefaultCellStyle = dataGridViewCellStyle1;
+            this.gIconBitmap.HeaderText = "Icon";
+            this.gIconBitmap.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.gIconBitmap.Name = "gIconBitmap";
+            this.gIconBitmap.ReadOnly = true;
+            this.gIconBitmap.Width = 36;
+            // 
+            // gTitle
+            // 
+            this.gTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.gTitle.DataPropertyName = "Title";
+            this.gTitle.HeaderText = "Title";
+            this.gTitle.Name = "gTitle";
+            this.gTitle.ReadOnly = true;
+            // 
+            // gAchievementsCount
+            // 
+            this.gAchievementsCount.DataPropertyName = "AchievementsCount";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gAchievementsCount.DefaultCellStyle = dataGridViewCellStyle2;
+            this.gAchievementsCount.HeaderText = "Achievements";
+            this.gAchievementsCount.Name = "gAchievementsCount";
+            this.gAchievementsCount.ReadOnly = true;
+            this.gAchievementsCount.Width = 99;
+            // 
+            // gAchievementsPoints
+            // 
+            this.gAchievementsPoints.DataPropertyName = "AchievementsPoints";
+            this.gAchievementsPoints.HeaderText = "Points";
+            this.gAchievementsPoints.Name = "gAchievementsPoints";
+            this.gAchievementsPoints.ReadOnly = true;
+            this.gAchievementsPoints.Width = 61;
+            // 
+            // gLastUpdate
+            // 
+            this.gLastUpdate.DataPropertyName = "LastUpdate";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gLastUpdate.DefaultCellStyle = dataGridViewCellStyle3;
+            this.gLastUpdate.HeaderText = "LastUpdate";
+            this.gLastUpdate.Name = "gLastUpdate";
+            this.gLastUpdate.ReadOnly = true;
+            this.gLastUpdate.Width = 87;
             // 
             // RADB
             // 
@@ -876,10 +876,12 @@
             this.tabConsoles.ResumeLayout(false);
             this.pnlDownloadConsoles.ResumeLayout(false);
             this.pnlDownloadConsoles.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoaderConsole)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsoles)).EndInit();
             this.tabGames.ResumeLayout(false);
             this.pnlDownloadGameList.ResumeLayout(false);
             this.pnlDownloadGameList.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoaderGameList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGameList)).EndInit();
             this.tabGameInfo.ResumeLayout(false);
             this.tabGameInfo.PerformLayout();
@@ -895,8 +897,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picInfoTitle)).EndInit();
             this.tabTemp.ResumeLayout(false);
             this.tabTemp.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picLoaderConsole)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLoaderGameList)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -962,15 +962,15 @@
         private System.Windows.Forms.Label lblProgressInfo;
         private System.Windows.Forms.ProgressBar pgbInfo;
         private System.Windows.Forms.PictureBox picInfoTitle;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.PictureBox picLoaderConsole;
+        private System.Windows.Forms.PictureBox picLoaderGameList;
         private System.Windows.Forms.DataGridViewTextBoxColumn gID;
         private System.Windows.Forms.DataGridViewImageColumn gIconBitmap;
         private System.Windows.Forms.DataGridViewTextBoxColumn gTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn gAchievementsCount;
         private System.Windows.Forms.DataGridViewTextBoxColumn gAchievementsPoints;
         private System.Windows.Forms.DataGridViewTextBoxColumn gLastUpdate;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.PictureBox picLoaderConsole;
-        private System.Windows.Forms.PictureBox picLoaderGameList;
     }
 }
 
