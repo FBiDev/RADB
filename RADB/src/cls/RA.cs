@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using GNX;
 
 namespace RADB
 {
@@ -39,10 +40,13 @@ namespace RADB
         {
             return Folder.Consoles + "Consoles.json";
         }
-        public List<Console> ListConsoles()
+        public Task<ListBind<Console>> ListConsoles()
         {
-            List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(FileConsoles()));
-            return consoles.OrderBy(x => x.Name).ToList();
+            return Task<ListBind<Console>>.Run(() =>
+            {
+                List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(FileConsoles()));
+                return new ListBind<Console>(consoles.OrderBy(x => x.Name).ToList());
+            });
         }
 
         public DownloadFile DownloadGameList(Console console)
@@ -52,6 +56,67 @@ namespace RADB
         public string FileGameList(string consoleName)
         {
             return Folder.Consoles + consoleName + " GameList.json";
+        }
+        public Task<ListBind<Game>> ListGameList(Console console)
+        {
+            return Task<ListBind<Game>>.Run(() =>
+            {
+                List<Game> GameList = new List<Game>();
+                //TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
+                GameList = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(FileGameList(console.Name)));
+                //TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
+
+                List<Game> LCheevos = new List<Game>();
+                List<Game> LNotOffical = new List<Game>();
+                List<Game> LNoCheevos = new List<Game>();
+                List<Game> LNotOfficalNoCheevos = new List<Game>();
+
+                //TimeSpan ini = new TimeSpan(DateTime.Now.Ticks);
+                foreach (Game game in GameList)
+                {
+                    string infoFile = RA.JSN_GameInfoExtend(game.ConsoleID, game.ID);
+
+                    if (File.Exists(infoFile) == false) continue;
+
+                    JObject resultInfo = Browser.ToJObject(infoFile);
+                    Game gameInfo = resultInfo.ToObject<Game>();
+
+                    gameInfo.SetAchievements(resultInfo["Achievements"]);
+                    game.AchievementsList = gameInfo.AchievementsList;
+
+                    game.Developer = gameInfo.Developer;
+                    game.Publisher = gameInfo.Publisher;
+                    game.Genre = gameInfo.Genre;
+                    game.Released = gameInfo.Released;
+
+                    game.ImageTitle = gameInfo.ImageTitle;
+                }
+
+                List<string> prefixNotOffical = new List<string> { 
+                        "~Demo~", "~Hack~", "~Homebrew~", "~Prototype~", "~Test Kit~", "~Unlicensed~", "~Z~" };
+
+                //Get NotOffical
+                LNotOffical = GameList.Where(x => prefixNotOffical.Any(y => x.Title.IndexOf(y) >= 0)).ToList();
+                //Remove NotOffical from Main List
+                GameList = GameList.Except(LNotOffical).ToList();
+                //Get Game with no cheevos from NotOffical
+                LNotOfficalNoCheevos = LNotOffical.Where(x => x.AchievementsCount == 0).ToList();
+                //Get Games Has Cheevos
+                LNotOffical = LNotOffical.Where(x => x.AchievementsCount > 0).ToList();
+                //Get Game with no cheevos from Main List
+                LNoCheevos = GameList.Where(x => x.AchievementsCount == 0).ToList();
+                //Remove Games no Cheevos from Main List
+                GameList = GameList.Except(LNoCheevos).ToList();
+
+                //TimeSpan fim = new TimeSpan(DateTime.Now.Ticks) - ini;
+                //Join Ordered Lists
+                GameList = GameList.OrderBy(x => x.Title).ToList();
+                GameList.AddRange(LNotOffical.OrderBy(x => x.Title).ToList());
+                GameList.AddRange(LNoCheevos.OrderBy(x => x.Title).ToList());
+                GameList.AddRange(LNotOfficalNoCheevos.OrderBy(x => x.Title).ToList());
+
+                return new ListBind<Game>(GameList);
+            });
         }
 
         public DownloadFile DownloadGameInfoExtended(Game game)
