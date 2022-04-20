@@ -55,6 +55,7 @@ namespace RADB
         }
         public string FileGameList(string consoleName)
         {
+            consoleName = consoleName.Replace("/", "-");
             return Folder.Consoles + consoleName + " GameList.json";
         }
         public Task<ListBind<Game>> ListGameList(Console console)

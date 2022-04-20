@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RADB));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtID = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
             this.txtURL = new System.Windows.Forms.TextBox();
@@ -544,10 +544,10 @@
             // 
             this.gIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.gIconBitmap.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle7.NullValue")));
-            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(2);
-            this.gIconBitmap.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle13.NullValue")));
+            dataGridViewCellStyle13.Padding = new System.Windows.Forms.Padding(2);
+            this.gIconBitmap.DefaultCellStyle = dataGridViewCellStyle13;
             this.gIconBitmap.HeaderText = "Icon";
             this.gIconBitmap.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
             this.gIconBitmap.Name = "gIconBitmap";
@@ -565,8 +565,8 @@
             // gAchievementsCount
             // 
             this.gAchievementsCount.DataPropertyName = "AchievementsCount";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gAchievementsCount.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gAchievementsCount.DefaultCellStyle = dataGridViewCellStyle14;
             this.gAchievementsCount.HeaderText = "Achievements";
             this.gAchievementsCount.Name = "gAchievementsCount";
             this.gAchievementsCount.ReadOnly = true;
@@ -583,9 +583,9 @@
             // gLastUpdate
             // 
             this.gLastUpdate.DataPropertyName = "LastUpdate";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gLastUpdate.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gLastUpdate.DefaultCellStyle = dataGridViewCellStyle15;
             this.gLastUpdate.HeaderText = "LastUpdate";
             this.gLastUpdate.Name = "gLastUpdate";
             this.gLastUpdate.ReadOnly = true;
@@ -788,11 +788,14 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.AutoSize = true;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.gpbInfoAchievements, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.picInfoTitle, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.gpbInfoAchievements, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 193);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
@@ -803,13 +806,14 @@
             // 
             // gpbInfoAchievements
             // 
-            this.gpbInfoAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.gpbInfoAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gpbInfoAchievements.Controls.Add(this.pnlAchievements);
-            this.gpbInfoAchievements.Location = new System.Drawing.Point(3, 108);
-            this.gpbInfoAchievements.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
+            this.gpbInfoAchievements.Location = new System.Drawing.Point(0, 108);
+            this.gpbInfoAchievements.Margin = new System.Windows.Forms.Padding(0, 6, 6, 3);
             this.gpbInfoAchievements.Name = "gpbInfoAchievements";
-            this.gpbInfoAchievements.Size = new System.Drawing.Size(615, 169);
+            this.gpbInfoAchievements.Size = new System.Drawing.Size(615, 195);
             this.gpbInfoAchievements.TabIndex = 5;
             this.gpbInfoAchievements.TabStop = false;
             this.gpbInfoAchievements.Text = "Achievements";
@@ -822,13 +826,14 @@
             this.pnlAchievements.AutoScroll = true;
             this.pnlAchievements.Location = new System.Drawing.Point(6, 19);
             this.pnlAchievements.Name = "pnlAchievements";
-            this.pnlAchievements.Size = new System.Drawing.Size(603, 144);
+            this.pnlAchievements.Size = new System.Drawing.Size(603, 170);
             this.pnlAchievements.TabIndex = 0;
             this.pnlAchievements.TabStop = true;
             // 
             // picInfoTitle
             // 
-            this.picInfoTitle.Location = new System.Drawing.Point(3, 3);
+            this.picInfoTitle.Location = new System.Drawing.Point(6, 3);
+            this.picInfoTitle.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             this.picInfoTitle.MaximumSize = new System.Drawing.Size(200, 240);
             this.picInfoTitle.Name = "picInfoTitle";
             this.picInfoTitle.Size = new System.Drawing.Size(96, 95);
@@ -869,7 +874,6 @@
             this.ClientSize = new System.Drawing.Size(659, 650);
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.txtOutput);
-            this.DoubleBuffered = true;
             this.Name = "RADB";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RADB";
