@@ -40,20 +40,20 @@ namespace RADB
         private PictureFormat FormatEnum { get; set; }
         public Size Scale(Size sz)
         {
-            var factor = Bitmap.Width >= Bitmap.Height ? (float)Bitmap.Height / (float)Bitmap.Width : (float)Bitmap.Width / (float)Bitmap.Height;
+            float factor = Bitmap.Width >= Bitmap.Height ? (float)Bitmap.Height / (float)Bitmap.Width : (float)Bitmap.Width / (float)Bitmap.Height;
 
-            var width = Bitmap.Width;
-            var height = Bitmap.Height;
+            int width = Bitmap.Width;
+            int height = Bitmap.Height;
 
             if (width >= height)
             {
                 if (width > sz.Width) { width = sz.Width; }
-                height = (int)(width * factor);
+                height = (int)Math.Ceiling(width * factor);
             }
             else if (width < height)
             {
                 if (height > sz.Height) { height = sz.Height; }
-                width = (int)(height * factor);
+                width = (int)Math.Ceiling(height * factor);
             }
             return new Size(width, height);
         }
@@ -91,7 +91,8 @@ namespace RADB
             Path = fileName;
             try
             {
-                Bitmap = new Bitmap(Path);
+                if (new FileInfo(fileName).Length > 0)
+                { Bitmap = new Bitmap(Path); }
             }
             catch (Exception e)
             {

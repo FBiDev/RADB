@@ -91,6 +91,7 @@ namespace RADB
                     game.Released = gameInfo.Released;
 
                     game.ImageTitle = gameInfo.ImageTitle;
+                    game.ImageIngame = gameInfo.ImageIngame;
                 }
 
                 List<string> prefixNotOffical = new List<string> { 

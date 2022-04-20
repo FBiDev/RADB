@@ -157,8 +157,13 @@ namespace RADB
                     //_mutex.Release();
                 }
             }
+            
+            try
+            {
+                await Task.WhenAll(Tasks);
+            }
+            catch (Exception e) { MessageBox.Show(e.Message); }
 
-            await Task.WhenAll(Tasks);
             BarStop(ProgressBar);
             LabelBytes.Text = LabelBytes.Text == "Connecting..." ? "Files already exist" : LabelBytes.Text;
         }

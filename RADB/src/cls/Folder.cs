@@ -60,6 +60,14 @@ namespace RADB
             }
         }
 
+        public static string InGame
+        {
+            get
+            {
+                return Base + @"ImageInGame\";
+            }
+        }
+
         public static string Json
         {
             get
@@ -93,6 +101,13 @@ namespace RADB
         public static string ImageTitle(int consoleID)
         {
             string folder = Titles + consoleID + @"\";
+            Directory.CreateDirectory(folder);
+            return folder;
+        }
+
+        public static string ImageIngame(int consoleID)
+        {
+            string folder = InGame + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }

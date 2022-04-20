@@ -41,7 +41,7 @@ namespace RADB
             }
         }
 
-        //Icon
+        #region Icon
         private string _ImageIcon = string.Empty;
         public string ImageIcon
         {
@@ -57,9 +57,48 @@ namespace RADB
         }
         public string ImageIconPath { get { return Folder.ImageIcon(ConsoleID) + ImageIcon; } }
         public Bitmap ImageIconBitmap { get; set; }
+        #endregion
 
-        public string ImageTitle { get; set; }
-        public string ImageIngame { get; set; }
+        #region Title
+        private string _ImageTitle = string.Empty;
+        public string ImageTitle
+        {
+            get { return _ImageTitle; }
+            set
+            {
+                _ImageTitle = value.Replace(@"/Images/", "");
+                if (File.Exists(ImageTitlePath) && new FileInfo(ImageTitlePath).Length > 0)
+                {
+                    ImageTitlePicture = new Picture(ImageTitlePath);
+                    ImageTitleBitmap = ImageTitlePicture.Bitmap;
+                }
+            }
+        }
+        public string ImageTitlePath { get { return Folder.ImageTitle(ConsoleID) + ImageTitle; } }
+        public Bitmap ImageTitleBitmap { get; set; }
+        public Picture ImageTitlePicture = null;
+        #endregion
+
+        #region InGame
+        private string _ImageIngame = string.Empty;
+        public string ImageIngame
+        {
+            get { return _ImageIngame; }
+            set
+            {
+                _ImageIngame = value.Replace(@"/Images/", "");
+                if (File.Exists(ImageIngamePath) && new FileInfo(ImageIngamePath).Length > 0)
+                {
+                    ImageIngamePicture = new Picture(ImageIngamePath);
+                    ImageIngameBitmap = ImageIngamePicture.Bitmap;
+                }
+            }
+        }
+        public string ImageIngamePath { get { return Folder.ImageIngame(ConsoleID) + ImageIngame; } }
+        public Bitmap ImageIngameBitmap { get; set; }
+        public Picture ImageIngamePicture = null;
+        #endregion
+
         public string ImageBoxArt { get; set; }
 
         public int? ForumTopicID { get; set; }
@@ -79,6 +118,12 @@ namespace RADB
             AchievementsList = new List<Achievement>();
 
             ImageIconBitmap = new Picture(96, 96).Bitmap;
+
+            ImageTitlePicture = new Picture(200, 150);
+            ImageTitleBitmap = ImageTitlePicture.Bitmap;
+
+            ImageIngamePicture = new Picture(200, 150);
+            ImageIngameBitmap = ImageIngamePicture.Bitmap;
         }
 
         public void SetAchievements(JToken result)
@@ -124,26 +169,7 @@ namespace RADB
             }
         }
 
-        public Picture _TitleImage = null;
-        public Bitmap _TitleImageBitmap
-        {
-            get
-            {
-                return _TitleImage.Bitmap;
-            }
-        }
-        public Picture TitleImage
-        {
-            get
-            {
-                if (ImageTitle == null) { return _TitleImage = new Picture(96, 96); }
 
-                string path = Folder.ImageTitle(ConsoleID) + ImageTitle.Replace(@"/Images/", "");
-                if (File.Exists(path) == false) { return _TitleImage = new Picture(96, 96, path); }
-
-                return _TitleImage = new Picture(path);
-            }
-        }
 
         public string BadgesMergedFile()
         {

@@ -8,6 +8,8 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using System.Data;
+using System.Globalization;
 
 namespace RADB
 {
@@ -69,10 +71,10 @@ namespace RADB
             };
 
             //dgvs
-            await LoadListConsoles();
+            await LoadConsoles();
             if (dgvConsoles.CurrentRow != null)
             {
-                await LoadGameList(dgvConsoles.CurrentRow.DataBoundItem as Console);
+                await LoadGames(dgvConsoles.CurrentRow.DataBoundItem as Console);
             }
         }
 
@@ -89,11 +91,16 @@ namespace RADB
             {
                 dgvConsoles.Focus(); return;
             }
+
+            if (tab.SelectedTab == tabGameInfo)
+            {
+                pnlInfoScroll.Focus(); return;
+            }
         }
         #endregion
 
         #region Consoles
-        private void EnableConsoles(bool enable)
+        private void EnablePanelConsoles(bool enable)
         {
             pnlDownloadConsoles.Enabled = enable;
 
@@ -114,24 +121,24 @@ namespace RADB
             }
         }
 
-        private async Task LoadListConsoles()
+        private async Task LoadConsoles()
         {
             if (File.Exists(RA.FileConsoles()) == false) return;
-            EnableConsoles(false);
+            EnablePanelConsoles(false);
 
             dgvConsoles.DataSource = await RA.ListConsoles();
             dgvConsoles.Focus();
 
-            EnableConsoles(true);
+            EnablePanelConsoles(true);
         }
 
         private async void btnUpdateConsoles_Click(object sender, EventArgs e)
         {
-            EnableConsoles(false);
+            EnablePanelConsoles(false);
             dlConsoles.File = RA.DownloadConsoles();
             await dlConsoles.Start();
 
-            await LoadListConsoles();
+            await LoadConsoles();
 
             txtOutput.Text += "Consoles Updated!" + Environment.NewLine;
         }
@@ -147,12 +154,12 @@ namespace RADB
             tabMain.SelectedTab = tabGames;
 
             Console obj = dgvConsoles.CurrentRow.DataBoundItem as Console;
-            await LoadGameList(obj);
+            await LoadGames(obj);
         }
         #endregion
 
         #region GameList
-        private void EnableGameList(bool enable)
+        private void EnablePanelGames(bool enable)
         {
             pnlDownloadGameList.Enabled = enable;
 
@@ -174,17 +181,19 @@ namespace RADB
             }
         }
 
-        private async Task LoadGameList(Console console)
+        private async Task LoadGames(Console console)
         {
-            if (console == null) return;
-            if (File.Exists(RA.FileGameList(console.Name)) == false) return;
+            EnablePanelGames(false);
 
-            EnableGameList(false);
+            if (console == null || File.Exists(RA.FileGameList(console.Name)) == false)
+            {
+                EnablePanelGames(true); return;
+            }
 
             dgvGameList.DataSource = await RA.ListGameList(console);
             dgvGameList.Focus();
 
-            EnableGameList(true);
+            EnablePanelGames(true);
         }
 
         private async void btnUpdateGameList_Click(object sender, EventArgs e)
@@ -195,7 +204,7 @@ namespace RADB
                 return;
             }
 
-            EnableGameList(false);
+            EnablePanelGames(false);
             Console console = (dgvConsoles.CurrentRow.DataBoundItem as Console);
 
             //Download GameList
@@ -219,7 +228,7 @@ namespace RADB
             //};
             //await (dlIconFiles.Start());
 
-            await LoadGameList(console);
+            await LoadGames(console);
             txtOutput.Text += console.Name + " GameList Updated!" + Environment.NewLine;
         }
 
@@ -236,9 +245,20 @@ namespace RADB
             lblInfoGenre.Text = obj.Genre;
             lblInfoReleased.Text = obj.Released;
 
-            picInfoTitle.Image = obj.TitleImage.Bitmap;
-            picInfoTitle.Size = obj.TitleImage.Scale(picInfoTitle.MaximumSize);
+            picInfoTitle.Image = obj.ImageTitleBitmap;
+            picInfoTitle.Size = obj.ImageTitlePicture.Scale(picInfoTitle.MaximumSize);
+            picInfoInGame.Image = obj.ImageIngameBitmap;
+            picInfoInGame.Size = obj.ImageIngamePicture.Scale(picInfoInGame.MaximumSize);
 
+            FillAchievements(obj);
+
+            tabMain.SelectedTab = tabGameInfo;
+        }
+        #endregion
+
+        #region GameInfo
+        private void FillAchievements(Game obj)
+        {
             int acLocation = 0;
             int size = 32;
             pnlAchievements.Controls.Clear();
@@ -256,12 +276,7 @@ namespace RADB
 
                 acLocation += p.Height + 5;
             }
-
-            tabMain.SelectedTab = tabGameInfo;
         }
-        #endregion
-
-        #region GameInfo
         private async void btnUpdateInfo_Click(object sender, EventArgs e)
         {
             //Download GameInfo Extend
@@ -276,27 +291,72 @@ namespace RADB
             JObject resultInfo = Browser.ToJObject(FileGameInfoExtended);
             Game gameInfo = resultInfo.ToObject<Game>();
 
-            game.SetAchievements(resultInfo["Achievements"]);
             game.Developer = gameInfo.Developer;
-            game.ImageIcon = gameInfo.ImageIcon;
-            game.ImageTitle = gameInfo.ImageTitle;
+            game.Publisher = gameInfo.Publisher;
+            game.Genre = gameInfo.Genre;
+            game.Released = gameInfo.Released;
 
             lblInfoDeveloper.Text = game.Developer;
+            lblInfoPublisher.Text = game.Publisher;
+            lblInfoGenre.Text = game.Genre;
+            lblInfoReleased.Text = game.Released;
 
             List<DownloadFile> dlFiles = new List<DownloadFile>() {
-                new DownloadFile(RA.URL_Images + game.ImageIcon, game.ImageIconPath),
-                new DownloadFile(RA.URL_Images + game.TitleImage.Name, game.TitleImage.Path),
+                new DownloadFile(RA.URL_Images + gameInfo.ImageIcon, gameInfo.ImageIconPath),
+                new DownloadFile(RA.URL_Images + gameInfo.ImageTitle, gameInfo.ImageTitlePath),
+                new DownloadFile(RA.URL_Images + gameInfo.ImageIngame, gameInfo.ImageIngamePath),
             };
 
             dlGameInfoExtended.Files = dlFiles;
             await dlGameInfoExtended.Start();
 
+            game.ImageIcon = gameInfo.ImageIcon;
+            game.ImageTitle = gameInfo.ImageTitle;
+            game.ImageIngame = gameInfo.ImageIngame;
+
             picInfoIcon.Image = game.ImageIconBitmap;
-            picInfoTitle.Image = game.TitleImage.Bitmap;
-            picInfoTitle.Size = game.TitleImage.Scale(picInfoTitle.MaximumSize);
+            picInfoTitle.Image = game.ImageTitleBitmap;
+            picInfoTitle.Size = game.ImageTitlePicture.Scale(picInfoTitle.MaximumSize);
+            picInfoInGame.Image = game.ImageIngameBitmap;
+            picInfoInGame.Size = game.ImageIngamePicture.Scale(picInfoInGame.MaximumSize);
+
+            game.SetAchievements(resultInfo["Achievements"]);
+            FillAchievements(game);
 
             dgvGameList.Refresh();
+            pnlInfoScroll.Focus();
         }
         #endregion
+
+        private void dgvConsoles_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            string columnName = "cName";
+
+            char typedChar;
+            if (Char.IsLetter(e.KeyChar))
+            {
+                typedChar = e.KeyChar;
+
+                if (typedChar == (char)Keys.Left || typedChar == (char)Keys.Right ||
+                    typedChar == (char)Keys.Up || typedChar == (char)Keys.Down)
+                {
+                    return;
+                }
+
+                for (int i = 0; i < (dgvConsoles.Rows.Count); i++)
+                {
+                    if (dgvConsoles.Rows[i].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), true, CultureInfo.InvariantCulture))
+                    {
+                        if (dgvConsoles.Rows[dgvConsoles.CurrentRow.Index].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), true, CultureInfo.InvariantCulture))
+                        {
+                            if (i <= dgvConsoles.CurrentRow.Index) continue;
+                        }
+
+                        dgvConsoles.Rows[i].Cells[0].Selected = true;
+                        return; // stop looping
+                    }
+                }
+            }
+        }
     }
 }
