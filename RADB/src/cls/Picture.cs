@@ -38,7 +38,8 @@ namespace RADB
         public string Name { get { return System.IO.Path.GetFileName(Path); } }
         private ImageFormat Format { get; set; }
         private PictureFormat FormatEnum { get; set; }
-        public Size Scale(Size sz)
+        
+        public Size Scale(Size maxSize)
         {
             float factor = Bitmap.Width >= Bitmap.Height ? (float)Bitmap.Height / (float)Bitmap.Width : (float)Bitmap.Width / (float)Bitmap.Height;
 
@@ -47,12 +48,12 @@ namespace RADB
 
             if (width >= height)
             {
-                if (width > sz.Width) { width = sz.Width; }
+                if (width > maxSize.Width) { width = maxSize.Width; }
                 height = (int)Math.Ceiling(width * factor);
             }
             else if (width < height)
             {
-                if (height > sz.Height) { height = sz.Height; }
+                if (height > maxSize.Height) { height = maxSize.Height; }
                 width = (int)Math.Ceiling(height * factor);
             }
             return new Size(width, height);
@@ -91,7 +92,7 @@ namespace RADB
             Path = fileName;
             try
             {
-                if (new FileInfo(fileName).Length > 0)
+                if (new FileInfo(Path).Length > 0)
                 { Bitmap = new Bitmap(Path); }
             }
             catch (Exception e)

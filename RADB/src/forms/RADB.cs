@@ -5,11 +5,9 @@ using System.Windows.Forms;
 //
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Threading.Tasks;
-using System.Data;
-using System.Globalization;
 
 namespace RADB
 {
@@ -345,9 +343,9 @@ namespace RADB
 
                 for (int i = 0; i < (dgvConsoles.Rows.Count); i++)
                 {
-                    if (dgvConsoles.Rows[i].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), true, CultureInfo.InvariantCulture))
+                    if (dgvConsoles.Rows[i].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), StringComparison.InvariantCultureIgnoreCase))
                     {
-                        if (dgvConsoles.Rows[dgvConsoles.CurrentRow.Index].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), true, CultureInfo.InvariantCulture))
+                        if (dgvConsoles.Rows[dgvConsoles.CurrentRow.Index].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), StringComparison.InvariantCultureIgnoreCase))
                         {
                             if (i <= dgvConsoles.CurrentRow.Index) continue;
                         }
