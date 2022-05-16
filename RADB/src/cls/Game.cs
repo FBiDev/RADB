@@ -169,8 +169,6 @@ namespace RADB
             }
         }
 
-
-
         public string BadgesMergedFile()
         {
             return Folder.Achievements(ConsoleID, ID) + "_Badges";

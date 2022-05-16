@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 //
-using System.IO;
+//using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
@@ -91,7 +91,7 @@ namespace RADB
             foreach (DownloadFile file in Files)
             {
                 //File.Exists(file.Path) && Archive.IsFileLocked(file.Path) ||
-                if (System.IO.File.Exists(file.Path) && new FileInfo(file.Path).Length > 0 && Overwrite == false)
+                if (System.IO.File.Exists(file.Path) && new System.IO.FileInfo(file.Path).Length > 0 && Overwrite == false)
                 { TotalFilesToDownload--; continue; }
 
                 try
@@ -157,7 +157,7 @@ namespace RADB
                     //_mutex.Release();
                 }
             }
-            
+
             try
             {
                 await Task.WhenAll(Tasks);
