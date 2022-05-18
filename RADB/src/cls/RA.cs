@@ -67,46 +67,46 @@ namespace RADB
                 GameList = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(FileGameList(console.Name)));
                 //TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
 
-                List<Game> LCheevos = new List<Game>();
-                List<Game> LNotOffical = new List<Game>();
-                List<Game> LNoCheevos = new List<Game>();
-                List<Game> LNotOfficalNoCheevos = new List<Game>();
+                //List<Game> LCheevos = new List<Game>();
+                //List<Game> LNotOffical = new List<Game>();
+                //List<Game> LNoCheevos = new List<Game>();
+                //List<Game> LNotOfficalNoCheevos = new List<Game>();
 
                 //TimeSpan ini = new TimeSpan(DateTime.Now.Ticks);
                 foreach (Game game in GameList)
                 {
-                    string infoFile = RA.JSN_GameInfoExtend(game.ConsoleID, game.ID);
+                    //string infoFile = RA.JSN_GameInfo(game.ConsoleID, game.ID);
 
-                    if (File.Exists(infoFile) == false) continue;
+                    //if (File.Exists(infoFile) == false) continue;
 
-                    JObject resultInfo = Browser.ToJObject(infoFile);
-                    Game gameInfo = resultInfo.ToObject<Game>();
+                    //JObject resultInfo = Browser.ToJObject(infoFile);
+                    //Game gameInfo = resultInfo.ToObject<Game>();
 
-                    gameInfo.SetAchievements(resultInfo["Achievements"]);
-                    game.AchievementsList = gameInfo.AchievementsList;
+                    //gameInfo.SetAchievements(resultInfo["Achievements"]);
+                    //game.AchievementsList = gameInfo.AchievementsList;
 
-                    game.Developer = gameInfo.Developer;
-                    game.Publisher = gameInfo.Publisher;
-                    game.Genre = gameInfo.Genre;
-                    game.Released = gameInfo.Released;
+                    //game.Developer = gameInfo.Developer;
+                    //game.Publisher = gameInfo.Publisher;
+                    //game.Genre = gameInfo.Genre;
+                    //game.Released = gameInfo.Released;
 
-                    game.ImageTitle = gameInfo.ImageTitle;
-                    game.ImageIngame = gameInfo.ImageIngame;
+                    //game.ImageTitle = gameInfo.ImageTitle;
+                    //game.ImageIngame = gameInfo.ImageIngame;
                 }
 
                 List<string> prefixNotOffical = new List<string> { 
                         "~Demo~", "~Hack~", "~Homebrew~", "~Prototype~", "~Test Kit~", "~Unlicensed~", "~Z~" };
 
                 //Get NotOffical
-                LNotOffical = GameList.Where(x => prefixNotOffical.Any(y => x.Title.IndexOf(y) >= 0)).ToList();
+                List<Game> LNotOffical = GameList.Where(x => prefixNotOffical.Any(y => x.Title.IndexOf(y) >= 0)).ToList();
                 //Remove NotOffical from Main List
                 GameList = GameList.Except(LNotOffical).ToList();
                 //Get Game with no cheevos from NotOffical
-                LNotOfficalNoCheevos = LNotOffical.Where(x => x.AchievementsCount == 0).ToList();
+                List<Game> LNotOfficalNoCheevos = LNotOffical.Where(x => x.NumAchievements == 0).ToList();
                 //Get Games Has Cheevos
-                LNotOffical = LNotOffical.Where(x => x.AchievementsCount > 0).ToList();
+                LNotOffical = LNotOffical.Where(x => x.NumAchievements > 0).ToList();
                 //Get Game with no cheevos from Main List
-                LNoCheevos = GameList.Where(x => x.AchievementsCount == 0).ToList();
+                List<Game> LNoCheevos = GameList.Where(x => x.NumAchievements == 0).ToList();
                 //Remove Games no Cheevos from Main List
                 GameList = GameList.Except(LNoCheevos).ToList();
 
@@ -137,6 +137,7 @@ namespace RADB
         public static string API_GameExtended = "API_GetGameExtended.php";
 
         //JSON
+        public static string JSN_GameInfo(int consoleID, int gameID) { return Folder.GameInfoConsole(consoleID) + gameID + ".json"; }
         public static string JSN_GameInfoExtend(int consoleID, int gameID) { return Folder.GameInfoExtendConsole(consoleID) + gameID + ".json"; }
 
         public async Task<Game> GetGameInfoExtended(int gameID)

@@ -41,7 +41,7 @@ namespace RADB
             }
         }
 
-        #region Icon
+        #region _ImageIcon
         private string _ImageIcon = string.Empty;
         public string ImageIcon
         {
@@ -59,7 +59,7 @@ namespace RADB
         public Bitmap ImageIconBitmap { get; set; }
         #endregion
 
-        #region Title
+        #region _ImageTitle
         private string _ImageTitle = string.Empty;
         public string ImageTitle
         {
@@ -79,7 +79,7 @@ namespace RADB
         public Picture ImageTitlePicture = null;
         #endregion
 
-        #region InGame
+        #region _ImageIngame
         private string _ImageIngame = string.Empty;
         public string ImageIngame
         {
@@ -105,13 +105,16 @@ namespace RADB
         public string Flags { get; set; }
 
         //GameInfoExtended
-        public List<Achievement> AchievementsList { get; set; }
         public int ID { get; set; }
         public bool IsFinal { get; set; }
         public int NumAchievements { get; set; }
+        public int NumLeaderboards { get; set; }
+        public int Points { get; set; }
         public int NumDistinctPlayersCasual { get; set; }
         public int NumDistinctPlayersHardcore { get; set; }
         public string RichPresencePatch { get; set; }
+
+        public List<Achievement> AchievementsList { get; set; }
 
         public Game()
         {
@@ -172,6 +175,16 @@ namespace RADB
         public string BadgesMergedFile()
         {
             return Folder.Achievements(ConsoleID, ID) + "_Badges";
+        }
+
+        public bool Incluir()
+        {
+            return GameDao.Incluir(this);
+        }
+
+        public bool Excluir()
+        {
+            return GameDao.Excluir(this);
         }
     }
 }

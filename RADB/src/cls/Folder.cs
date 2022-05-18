@@ -11,11 +11,11 @@ namespace RADB
         public static void CreateFolders()
         {
             Directory.CreateDirectory(Base);
-            
+
             Directory.CreateDirectory(GameInfoExtend);
             Directory.CreateDirectory(Consoles);
             Directory.CreateDirectory(Icons);
-            
+
             Directory.CreateDirectory(Json);
             Directory.CreateDirectory(Temp);
         }
@@ -25,6 +25,14 @@ namespace RADB
             get
             {
                 return @"Data\";
+            }
+        }
+
+        public static string GameInfo
+        {
+            get
+            {
+                return Base + @"Game\";
             }
         }
 
@@ -108,6 +116,13 @@ namespace RADB
         public static string ImageIngame(int consoleID)
         {
             string folder = InGame + consoleID + @"\";
+            Directory.CreateDirectory(folder);
+            return folder;
+        }
+
+        public static string GameInfoConsole(int consoleID)
+        {
+            string folder = GameInfo + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }

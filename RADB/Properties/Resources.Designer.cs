@@ -61,6 +61,67 @@ namespace RADB.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to --
+        ///DELETE 
+        ///FROM game 
+        ///WHERE 1 = 1 
+        ///	AND (ID = @Id 
+        ///		OR (@Id = 0 OR @Id IS NULL))
+        ///;
+        ///--.
+        /// </summary>
+        internal static string GameExcluir {
+            get {
+                return ResourceManager.GetString("GameExcluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///INSERT INTO game ( 
+        ///	  Title 
+        ///	, ConsoleID 
+        ///	, NumAchievements 
+        ///	, NumLeaderboards 
+        ///	, Points 
+        ///	) VALUES ( 
+        ///	  @Title 
+        ///	, @ConsoleID 
+        ///	, @NumAchievements 
+        ///	, @NumLeaderboards 
+        ///	, @Points 
+        ///);
+        ///--.
+        /// </summary>
+        internal static string GameIncluir {
+            get {
+                return ResourceManager.GetString("GameIncluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///SELECT 
+        ///	  Title 
+        ///	, ConsoleID 
+        ///	, NumAchievements 
+        ///	, NumLeaderboards 
+        ///	, Points 
+        ///FROM [Aviso] WITH (NOLOCK) 
+        ///WHERE 1 = 1 
+        ///	AND (Title LIKE &apos;%&apos;+@Title+&apos;%&apos; 
+        ///		OR (@Title = &apos;&apos; OR @Title IS NULL)) 
+        ///	AND (ConsoleID = @ConsoleID 
+        ///		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
+        ///	.
+        /// </summary>
+        internal static string GameListar {
+            get {
+                return ResourceManager.GetString("GameListar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] jpegoptim_1_4_6 {

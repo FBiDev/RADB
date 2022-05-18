@@ -8,6 +8,8 @@ using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+//
+using GNX;
 
 namespace RADB
 {
@@ -188,7 +190,8 @@ namespace RADB
                 EnablePanelGames(true); return;
             }
 
-            dgvGameList.DataSource = await RA.ListGameList(console);
+            //dgvGameList.DataSource = await RA.ListGameList(console);
+            dgvGameList.DataSource = await GameDao.Listar(new Game() { ConsoleID = console.ID });
             dgvGameList.Focus();
 
             EnablePanelGames(true);
@@ -209,6 +212,11 @@ namespace RADB
             //string fileGameList = RA.FileGameList(console.Name);
             dlGameList.File = RA.DownloadGameList(console);
             await dlGameList.Start();
+
+            bool excluidos = new Game() { ConsoleID = console.ID }.Excluir();
+            ListBind<Game> games = (await RA.ListGameList(console));
+            GameDao.IncluirLista(games);
+            //games.ToList().ForEach(g => g.Incluir());
 
             ////Read GameList
             //List<Game> GameList = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(fileGameList));

@@ -37,7 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -54,13 +54,15 @@
     <Reference Include="GNX">
       <HintPath>..\..\GNX\GNX\bin\Debug\GNX.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>.\Newtonsoft.Json.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>src\rsc\dll\referenced\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>src\rsc\dll\referenced\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -71,8 +73,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\cfg\Banco.cs" />
+    <Compile Include="src\cfg\Config.cs" />
     <Compile Include="src\cls\Console.cs" />
     <Compile Include="src\cls\Browser.cs" />
+    <Compile Include="src\dao\GameDao.cs" />
     <Compile Include="src\forms\RADB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,16 +119,28 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <ContentWithTargetPath Include="src\rsc\db\database.db">
+      <TargetPath>database.db</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="src\rsc\dll\Newtonsoft.Json.dll" />
+    <Content Include="src\rsc\dll\referenced\Newtonsoft.Json.dll" />
+    <Content Include="src\rsc\dll\referenced\System.Data.SQLite.dll" />
     <Content Include="src\rsc\exe\jpegoptim_1.4.6.exe" />
     <Content Include="src\rsc\exe\pngcrush_1_8_11_w64.exe" />
     <Content Include="src\rsc\image\loader.gif" />
     <Content Include="src\rsc\image\notfound.png" />
+    <Content Include="src\rsc\sql\GameListar.sql" />
+    <Content Include="src\rsc\sql\GameExcluir.sql" />
+    <Content Include="src\rsc\sql\GameIncluir.sql" />
+    <ContentWithTargetPath Include="src\rsc\dll\unmanaged\SQLite.Interop.dll">
+      <TargetPath>SQLite.Interop.dll</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
