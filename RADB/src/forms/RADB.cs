@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 //
 using GNX;
+using System.Net;
 
 namespace RADB
 {
@@ -26,11 +27,22 @@ namespace RADB
             InitializeComponent();
             Shown += RADB_Shown;
 
+            dgvConsoles.KeyPress += dgvConsoles_KeyPress;
+            dgvConsoles.CellDoubleClick += dgvConsoles_CellDoubleClick;
+
+            dgvGames.KeyPress += dgvGames_KeyPress;
+            dgvGames.CellDoubleClick += dgvGames_CellDoubleClick;
+            dgvGames.Scroll += dgvGames_Scroll;
+            dgvGames.Sorted += dgvGames_Sorted;
+            dgvGames.DataSourceChanged += dgvGames_Sorted;
+
+            btnDownloadBadges.Click += btnDownloadBadges_Click;
+
             //RA.CheckLocalFiles();
 
             //Load Values
             dgvConsoles.AutoGenerateColumns = true;
-            dgvGameList.AutoGenerateColumns = false;
+            dgvGames.AutoGenerateColumns = false;
 
             //Reset placeholders
             lblProgressConsoles.Text = string.Empty;
@@ -42,6 +54,11 @@ namespace RADB
             Browser.Load();
             //Folders
             Folder.CreateFolders();
+        }
+
+        private async void btnDownloadBadges_Click(object sender, EventArgs e)
+        {
+            await RA.DownloadBadges(1);
         }
 
         private async void RADB_Shown(object sender, EventArgs e)
@@ -84,7 +101,7 @@ namespace RADB
 
             if (tab.SelectedTab == tabGames)
             {
-                dgvGameList.Focus(); return;
+                dgvGames.Focus(); return;
             }
 
             if (tab.SelectedTab == tabConsoles)
@@ -177,7 +194,7 @@ namespace RADB
             }
             else
             {
-                dgvGameList.DataSource = new List<Game>();
+                dgvGames.DataSource = new ListBind<Game>();
             }
         }
 
@@ -190,11 +207,15 @@ namespace RADB
                 EnablePanelGames(true); return;
             }
 
-            //dgvGameList.DataSource = await RA.ListGameList(console);
-            dgvGameList.DataSource = await GameDao.Listar(new Game() { ConsoleID = console.ID });
-            dgvGameList.Focus();
+            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
+            //ListBind<Game> list = await RA.ListGameList(console);
+            ListBind<Game> list = await GameDao.Listar(new Game() { ConsoleID = console.ID });
+
+            dgvGames.DataSource = list;
+            dgvGames.Focus();
 
             EnablePanelGames(true);
+            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
         }
 
         private async void btnUpdateGameList_Click(object sender, EventArgs e)
@@ -215,7 +236,7 @@ namespace RADB
 
             bool excluidos = new Game() { ConsoleID = console.ID }.Excluir();
             ListBind<Game> games = (await RA.ListGameList(console));
-            GameDao.IncluirLista(games);
+            await GameDao.IncluirLista(games);
             //games.ToList().ForEach(g => g.Incluir());
 
             ////Read GameList
@@ -235,14 +256,14 @@ namespace RADB
             //await (dlIconFiles.Start());
 
             await LoadGames(console);
-            txtOutput.Text += console.Name + " GameList Updated!" + Environment.NewLine;
+            txtOutput.Text = console.Name + " GameList Updated!" + Environment.NewLine + txtOutput.Text;
         }
 
-        private void dgvGameList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvGames_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
 
-            Game obj = dgvGameList.CurrentRow.DataBoundItem as Game;
+            Game obj = dgvGames.CurrentRow.DataBoundItem as Game;
             lblInfoName.Text = obj.Title + " (" + obj.ConsoleName + ")";
 
             picInfoIcon.Image = obj.ImageIconBitmap;
@@ -259,6 +280,29 @@ namespace RADB
             FillAchievements(obj);
 
             tabMain.SelectedTab = tabGameInfo;
+        }
+
+        private void dgvGames_Scroll(object sender, ScrollEventArgs e)
+        {
+            ListBind<Game> list = (ListBind<Game>)((DataGridView)sender).DataSource;
+            int index = dgvGames.FirstDisplayedScrollingRowIndex;
+            if (index < 0) { index = 0; }
+            for (int i = index; i < index + 20; i++)
+            {
+                if (i == dgvGames.RowCount) { break; }
+                if (list[i].ImageIconBitmap == Game.DefaultIconImage.Bitmap)
+                {
+                    if (File.Exists(list[i].ImageIconPath) && new FileInfo(list[i].ImageIconPath).Length > 0)
+                    {
+                        list[i].ImageIconBitmap = new Picture(list[i].ImageIconPath).Bitmap;
+                    }
+                }
+            }
+        }
+
+        private void dgvGames_Sorted(object sender, EventArgs e)
+        {
+            dgvGames_Scroll(dgvGames, null);
         }
         #endregion
 
@@ -286,7 +330,7 @@ namespace RADB
         private async void btnUpdateInfo_Click(object sender, EventArgs e)
         {
             //Download GameInfo Extend
-            Game game = dgvGameList.CurrentRow.DataBoundItem as Game;
+            Game game = dgvGames.CurrentRow.DataBoundItem as Game;
             if (game == null) { return; }
 
             dlGameInfoExtended.File = RA.DownloadGameInfoExtended(game);
@@ -329,15 +373,13 @@ namespace RADB
             game.SetAchievements(resultInfo["Achievements"]);
             FillAchievements(game);
 
-            dgvGameList.Refresh();
+            dgvGames.Refresh();
             pnlInfoScroll.Focus();
         }
         #endregion
 
-        private void dgvConsoles_KeyPress(object sender, KeyPressEventArgs e)
+        private void dgv_KeyPress(DataGridView dgv, KeyPressEventArgs e, string columnName)
         {
-            string columnName = "cName";
-
             char typedChar;
             if (Char.IsLetter(e.KeyChar))
             {
@@ -349,20 +391,50 @@ namespace RADB
                     return;
                 }
 
-                for (int i = 0; i < (dgvConsoles.Rows.Count); i++)
+                for (int i = 0; i < (dgv.Rows.Count); i++)
                 {
-                    if (dgvConsoles.Rows[i].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), StringComparison.InvariantCultureIgnoreCase))
+                    if (dgv.Rows[i].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), StringComparison.InvariantCultureIgnoreCase))
                     {
-                        if (dgvConsoles.Rows[dgvConsoles.CurrentRow.Index].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), StringComparison.InvariantCultureIgnoreCase))
+                        if (dgv.Rows[dgv.CurrentRow.Index].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), StringComparison.InvariantCultureIgnoreCase))
                         {
-                            if (i <= dgvConsoles.CurrentRow.Index) continue;
+                            if (i <= dgv.CurrentRow.Index) continue;
                         }
 
-                        dgvConsoles.Rows[i].Cells[0].Selected = true;
+                        dgv.Rows[i].Cells[0].Selected = true;
                         return; // stop looping
                     }
                 }
             }
+        }
+
+        private void dgvConsoles_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            dgv_KeyPress((DataGridView)sender, e, "cName");
+        }
+
+        private void dgvGames_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            dgv_KeyPress((DataGridView)sender, e, "gTitle");
+        }
+
+        private void btnUserCheevos_Click(object sender, EventArgs e)
+        {
+            Game g = dgvGames.CurrentRow.DataBoundItem as Game;
+            picUserCheevos.Image = new Bitmap(g.ImageIconBitmap);
+            Game obj = RA.UserProgress(g.ID);
+            lblUserCheevos.Text = 0 + "/" + g.NumAchievements;
+
+            //using (WebClient wc = new WebClient() { Proxy = Browser.Proxy })
+            //{
+            //    using (Stream s = wc.OpenRead(RA.URL_Badges + txtID.Text + ".png"))
+            //    {
+            //        using (Bitmap bmp = new Bitmap(s))
+            //        {
+            //            picUserCheevos.Image = bmp;
+            //            //bmp.Save("C:\\temp\\octopus.jpg");
+            //        }
+            //    }
+            //}
         }
     }
 }

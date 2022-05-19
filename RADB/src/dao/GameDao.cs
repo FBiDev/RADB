@@ -20,6 +20,7 @@ namespace RADB
             {
                 list.Add(new Game()
                 {
+                    ID = row.Value<int>("ID"),
                     Title = row.Value<string>("Title"),
                     ConsoleID = row.Value<int>("ConsoleID"),
                     NumAchievements = row.Value<int>("NumAchievements"),
@@ -37,6 +38,7 @@ namespace RADB
         {
             return new List<cSqlParameter>
             {
+                new cSqlParameter("@ID", obj.ID),
                 new cSqlParameter("@Title", obj.Title),
                 new cSqlParameter("@ConsoleID", obj.ConsoleID),
                 new cSqlParameter("@ImageIcon", obj.ImageIcon),
@@ -49,6 +51,7 @@ namespace RADB
         {
             return new List<cSqlParameter>
             {
+                new cSqlParameter("@ID", obj.ID),
                 new cSqlParameter("@Title", obj.Title),
                 new cSqlParameter("@ConsoleID", obj.ConsoleID),
                 new cSqlParameter("@NumAchievements", obj.NumAchievements),
@@ -60,22 +63,24 @@ namespace RADB
         #endregion
 
         #region " _Listar "
-        public static Task<List<Game>> Listar(Game obj = null)
+        public static Task<ListBind<Game>> Listar(Game obj = null)
         {
-            return Task<List<Game>>.Run(() =>
+            return Task<ListBind<Game>>.Run(() =>
             {
                 obj = obj ?? new Game();
 
                 //Monta SQL
                 string sql = Resources.GameListar;
-                sql += " ORDER BY Title ASC ";
+                sql += " ORDER BY NumAchievements=0, Title ASC ";
 
-                List<Game> GameList = Carregar<List<Game>>(Banco.ExecutarSelect(sql, MontarFiltros(obj)));
-                return OrdenarLista(GameList);
+                //List<Game> GameList = 
+                return new ListBind<Game>(Carregar<List<Game>>(Banco.ExecutarSelect(sql, MontarFiltros(obj))));
+                //return GameList;
+                //return OrdenarLista(GameList);
             });
         }
 
-        public static List<Game> OrdenarLista(List<Game> GameList)
+        public static ListBind<Game> OrdenarLista(List<Game> GameList)
         {
             List<string> prefixNotOffical = new List<string> { 
                         "~Demo~", "~Hack~", "~Homebrew~", "~Prototype~", "~Test Kit~", "~Unlicensed~", "~Z~" };
@@ -100,7 +105,7 @@ namespace RADB
             GameList.AddRange(LNoCheevos.OrderBy(x => x.Title).ToList());
             GameList.AddRange(LNotOfficalNoCheevos.OrderBy(x => x.Title).ToList());
 
-            return GameList;
+            return new ListBind<Game>(GameList);
         }
         #endregion
 
@@ -115,19 +120,45 @@ namespace RADB
             return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
         }
 
-        public static bool IncluirLista(ListBind<Game> list)
+        public static Task<bool> IncluirLista(ListBind<Game> list)
         {
-            //Monta SQL
-            //string sql = Resources.GameIncluir;
-            string sql = "INSERT INTO game (Title) VALUES ";
+            return Task<bool>.Run(() =>
+            {
+                //Monta SQL
+                //string sql = Resources.GameIncluir;
+                string sql = "INSERT INTO game (ID, Title, ConsoleID, NumAchievements, NumLeaderboards, Points, ImageIcon) VALUES " + Environment.NewLine; ;
 
-            list.ToList().ForEach(g => sql += "('" + g.Title.Replace("'", "''") + "'),");
+                var parametros = new List<cSqlParameter>();
 
-            sql = sql.Substring(0, sql.Length - 1);
+                int index = 0;
+                foreach (var g in list)
+                {
+                    parametros.AddRange(new List<cSqlParameter>
+                {
+                    new cSqlParameter("@ID" + index, g.ID),
+                    new cSqlParameter("@Title" + index, g.Title),
+                    new cSqlParameter("@ConsoleID" + index, g.ConsoleID),
+                    new cSqlParameter("@NumAchievements" + index, g.NumAchievements),
+                    new cSqlParameter("@NumLeaderboards" + index, g.NumLeaderboards),
+                    new cSqlParameter("@Points" + index, g.Points),
+                    new cSqlParameter("@ImageIcon" + index, g.ImageIcon)
+                });
 
-            //var parametros = MontarParametros(obj);
+                    sql += "(" + "@ID" + index + ", @Title" + index + ", @ConsoleID" + index +
+                               ", @NumAchievements" + index + ", @NumLeaderboards" + index +
+                               ", @Points" + index + ", @ImageIcon" + index +
+                           ")";
 
-            return Banco.Executar(sql, MovimentoLog.Inclusão, new List<cSqlParameter>()).AffectedRows > 0;
+                    index++;
+                    if (index < list.Count) { sql += "," + Environment.NewLine; }
+                }
+                //sql = sql.Substring(0, sql.Length - 1);
+
+                //list.ToList().ForEach(g => sql += "(" + "@Title" + "),");
+                //var parametros = MontarParametros(obj);
+
+                return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
+            });
         }
         #endregion
 

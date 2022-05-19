@@ -37,7 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -54,14 +54,14 @@
     <Reference Include="GNX">
       <HintPath>..\..\GNX\GNX\bin\Debug\GNX.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>src\rsc\dll\referenced\Newtonsoft.Json.dll</HintPath>
+      <HintPath>src\rsc\dll64\referenced\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
-      <HintPath>src\rsc\dll\referenced\System.Data.SQLite.dll</HintPath>
+      <HintPath>src\rsc\dll64\referenced\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -128,16 +128,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="src\rsc\dll\referenced\Newtonsoft.Json.dll" />
-    <Content Include="src\rsc\dll\referenced\System.Data.SQLite.dll" />
-    <Content Include="src\rsc\exe\jpegoptim_1.4.6.exe" />
+    <Content Include="src\rsc\dll64\referenced\Newtonsoft.Json.dll" />
+    <Content Include="src\rsc\dll64\referenced\System.Data.SQLite.dll" />
+    <Content Include="src\rsc\exe\jpegoptim_1.4.7.exe" />
     <Content Include="src\rsc\exe\pngcrush_1_8_11_w64.exe" />
     <Content Include="src\rsc\image\loader.gif" />
     <Content Include="src\rsc\image\notfound.png" />
     <Content Include="src\rsc\sql\GameListar.sql" />
     <Content Include="src\rsc\sql\GameExcluir.sql" />
     <Content Include="src\rsc\sql\GameIncluir.sql" />
-    <ContentWithTargetPath Include="src\rsc\dll\unmanaged\SQLite.Interop.dll">
+    <ContentWithTargetPath Include="src\rsc\dll64\unmanaged\SQLite.Interop.dll">
       <TargetPath>SQLite.Interop.dll</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
@@ -160,6 +160,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\rsc\dll32\referenced\" />
+    <Folder Include="src\rsc\dll32\unmanaged\" />
     <Folder Include="src\rsc\json\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

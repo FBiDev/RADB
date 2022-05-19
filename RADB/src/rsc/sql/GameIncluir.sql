@@ -1,13 +1,15 @@
 ﻿--
 INSERT INTO game ( 
-	  Title 
+	  ID 
+	, Title 
 	, ConsoleID 
 	, NumAchievements 
 	, NumLeaderboards 
 	, Points 
 	, ImageIcon
 	) VALUES ( 
-	  @Title 
+	  @ID 
+	, @Title 
 	, @ConsoleID 
 	, @NumAchievements 
 	, @NumLeaderboards 

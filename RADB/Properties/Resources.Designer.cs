@@ -65,8 +65,10 @@ namespace RADB.Properties {
         ///DELETE 
         ///FROM game 
         ///WHERE 1 = 1 
-        ///	AND (ID = @Id 
-        ///		OR (@Id = 0 OR @Id IS NULL))
+        ///	AND (ID = @ID 
+        ///		OR (@ID = 0 OR @ID IS NULL)) 
+        ///	AND (ConsoleID = @ConsoleID 
+        ///		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
         ///;
         ///--.
         /// </summary>
@@ -84,12 +86,14 @@ namespace RADB.Properties {
         ///	, NumAchievements 
         ///	, NumLeaderboards 
         ///	, Points 
+        ///	, ImageIcon
         ///	) VALUES ( 
         ///	  @Title 
         ///	, @ConsoleID 
         ///	, @NumAchievements 
         ///	, @NumLeaderboards 
         ///	, @Points 
+        ///	, @ImageIcon 
         ///);
         ///--.
         /// </summary>
@@ -107,7 +111,8 @@ namespace RADB.Properties {
         ///	, NumAchievements 
         ///	, NumLeaderboards 
         ///	, Points 
-        ///FROM [Aviso] WITH (NOLOCK) 
+        ///	, ImageIcon 
+        ///FROM game  
         ///WHERE 1 = 1 
         ///	AND (Title LIKE &apos;%&apos;+@Title+&apos;%&apos; 
         ///		OR (@Title = &apos;&apos; OR @Title IS NULL)) 
@@ -124,9 +129,9 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] jpegoptim_1_4_6 {
+        internal static byte[] jpegoptim_1_4_7 {
             get {
-                object obj = ResourceManager.GetObject("jpegoptim_1_4_6", resourceCulture);
+                object obj = ResourceManager.GetObject("jpegoptim_1_4_7", resourceCulture);
                 return ((byte[])(obj));
             }
         }

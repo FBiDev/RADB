@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using GNX;
+using System.Net;
 
 namespace RADB
 {
@@ -66,7 +67,7 @@ namespace RADB
                 //TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
                 GameList = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(FileGameList(console.Name)));
                 //TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
-
+                //return new ListBind<Game>(GameList);
                 //List<Game> LCheevos = new List<Game>();
                 //List<Game> LNotOffical = new List<Game>();
                 //List<Game> LNoCheevos = new List<Game>();
@@ -140,11 +141,25 @@ namespace RADB
         public static string JSN_GameInfo(int consoleID, int gameID) { return Folder.GameInfoConsole(consoleID) + gameID + ".json"; }
         public static string JSN_GameInfoExtend(int consoleID, int gameID) { return Folder.GameInfoExtendConsole(consoleID) + gameID + ".json"; }
 
+        public Game UserProgress(int gameID)
+        {
+            Game obj = new Game();
+            using (WebClient wc = new WebClient() { Proxy = Browser.Proxy })
+            {
+                string x = wc.DownloadString(GetRAURL("API_GetUserProgress.php", "u=" + user + "&i=" + gameID));
+                obj = JsonConvert.DeserializeObject<Game>(x);
+                JObject result = JsonConvert.DeserializeObject<JObject>(x);
+                obj = JsonConvert.DeserializeObject<Game>(result[gameID.ToString()]);
+            }
+
+            return obj;
+        }
+
         public async Task<Game> GetGameInfoExtended(int gameID)
         {
             if (gameID <= 0) { return null; }
 
-            string fileName = Folder.GameInfoExtend + gameID + ".json";
+            string fileName = Folder.GameInfoExtend + 1 + @"\" + gameID + ".json";
             //JObject result = Browser.ToJObject(API_URL("API_GetGameExtended.php", "&i=", gameID.ToString()));
             Download dl = new Download()
             {
@@ -170,36 +185,36 @@ namespace RADB
 
         public async Task DownloadBadges(int gameID)
         {
-            string fileGameList = Folder.Json + "GameList" + "12" + ".json";
-            Download dl = new Download()
-            {
-                Overwrite = true,
-                Files = new List<DownloadFile>() { new DownloadFile(GetRAURL("API_GetGameList.php", "i=" + 12.ToString()), fileGameList) },
-                ProgressBarName = "pgbUpdates",
-                LabelBytesName = "lblUpdateProgress",
-                LabelTimeName = "lblUpdateConsoles",
-            };
-            await dl.Start();
-            return;
+            ////string fileGameList = Folder.Json + "GameList" + "12" + ".json";
+            ////Download dl = new Download()
+            ////{
+            ////    Overwrite = true,
+            ////    Files = new List<DownloadFile>() { new DownloadFile(GetRAURL("API_GetGameList.php", "i=" + 12.ToString()), fileGameList) },
+            ////    ProgressBarName = "pgbUpdates",
+            ////    LabelBytesName = "lblUpdateProgress",
+            ////    LabelTimeName = "lblUpdateConsoles",
+            ////};
+            ////await dl.Start();
+            ////return;
 
-            List<Game> Games = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(fileGameList));
-            List<Game> GamesWithCheevos = new List<Game>();
+            ////List<Game> Games = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(fileGameList));
+            ////List<Game> GamesWithCheevos = new List<Game>();
 
-            List<Achievement> gCheevos = new List<Achievement>();
+            ////List<Achievement> gCheevos = new List<Achievement>();
             List<DownloadFile> gFiles = new List<DownloadFile>();
 
             int FilesDownloaded = 0;
-            foreach (Game g in Games)
-            {
-                Game game = await GetGameInfoExtended(g.ID);
-                if (game.AchievementsList.Count > 0)
-                {
-                    GamesWithCheevos.Add(game);
-                }
-            }
+            ////foreach (Game g in Games)
+            ////{
+            ////    Game game = await GetGameInfoExtended(g.ID);
+            ////    if (game.AchievementsList.Count > 0)
+            ////    {
+            ////        GamesWithCheevos.Add(game);
+            ////    }
+            ////}
 
             //GamesWithCheevos.ForEach(gc => gCheevos.AddRange(gc.AchievementsList));
-            GamesWithCheevos.ForEach(gc => gFiles.AddRange(gc.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList().Distinct().ToList()));
+            ////GamesWithCheevos.ForEach(gc => gFiles.AddRange(gc.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList().Distinct().ToList()));
 
             //gFiles = gCheevos.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList().Distinct().ToList();
 
@@ -214,8 +229,8 @@ namespace RADB
             Game gameX = await GetGameInfoExtended(gameID);
             Download dlGameBadges = new Download()
             {
-                Files = gFiles,
-                //Files = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList(),
+                ////Files = gFiles,
+                Files = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList(),
                 //Files = new List<DownloadFile>() { new DownloadFile("https://dl18.cdromance.com/download.php?file=Megaman_Powered_Up_USA_PSP-DMU.7z&id=251&platform=psp&key=6299971769", "MM.7z") },
                 Overwrite = false,
                 ProgressBarName = "pgbUpdates",
@@ -230,10 +245,10 @@ namespace RADB
             //L.Text = FilesDownloaded.ToString();
             //}
 
-            List<string> afiles = gFiles.Select(x => x.Path).ToList();
-            Picture pic = new Picture(afiles, true, 110);
-            //Picture pic = new Picture(gameX.AchievementsFiles());
-            pic.Save(Folder.GameInfoExtend + "badges", PictureFormat.Jpg);
+            //List<string> afiles = gFiles.Select(x => x.Path).ToList();
+            //Picture pic = new Picture(afiles, true, 110);
+            Picture pic = new Picture(gameX.AchievementsFiles());
+            pic.Save(Folder.Achievements(gameX.ConsoleID, gameX.ID) + "badges", PictureFormat.Jpg);
 
             return;
         }
