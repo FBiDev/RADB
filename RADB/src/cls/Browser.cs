@@ -7,6 +7,7 @@ using System.Text;
 using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace RADB
 {
@@ -63,6 +64,18 @@ namespace RADB
             }
             JObject result = JsonConvert.DeserializeObject<JObject>(content);
             return result;
+        }
+
+        public static Task<string> DownloadString(string url)
+        {
+            return Task<string>.Run(() =>
+            {
+                using (WebClient client = new WebClient() { Proxy = Proxy })
+                {
+                    string data = client.DownloadString(url);
+                    return data;
+                }
+            });
         }
     }
 }

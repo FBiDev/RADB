@@ -428,19 +428,18 @@ namespace RADB
         {
             if (dgvGames.CurrentRow.IsNull()) return;
 
-            Game g = null;
-
             do
             {
-                lblUserCheevos.Text = await Task<string>.Run(() =>
+                lblUserCheevos.Text = await Task<string>.Run(async () =>
                 {
-                    if (g.NotNull()) Thread.Sleep(5000);
-
-                    g = dgvGames.CurrentRow.DataBoundItem as Game;
-                    picUserCheevos.Image = new Bitmap(g.ImageIconBitmap);
-                    Game obj = RA.UserProgress(g.ID);
-                    return obj.NumAchieved + " / " + g.NumAchievements;
+                    Game game = dgvGames.CurrentRow.DataBoundItem as Game;
+                    picUserCheevos.Image = new Bitmap(game.ImageIconBitmap);
+                    UserProgress obj = await RA.GetUserProgress(game.ID);
+                    return obj.NumAchieved + " / " + game.NumAchievements;
                 });
+
+                await Task.Run(() => { Thread.Sleep(5000); });
+
             } while (chkUserCheevos.Checked);
         }
     }

@@ -112,7 +112,6 @@ namespace RADB
         public int ID { get; set; }
         public bool IsFinal { get; set; }
         public int NumAchievements { get; set; }
-        public int NumAchieved { get; set; }
         
         public int NumLeaderboards { get; set; }
         public int Points { get; set; }

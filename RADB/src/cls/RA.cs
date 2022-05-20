@@ -8,29 +8,43 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using GNX;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace RADB
 {
     public class RA
     {
         private const string API_URL = "http://retroachievements.org/API/";
-        public string user;
+        public string userName;
         public string api_key;
 
         public RA()
         {
-            user = "FBiDev";
+            userName = "FBiDev";
             api_key = "uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
         }
 
         private string AuthQS()
         {
-            return "?z=" + user + "&y=" + api_key;
+            return "?z=" + userName + "&y=" + api_key;
         }
 
         public string GetRAURL(string target, string parames = "")
         {
             return API_URL + target + AuthQS() + "&" + parames;
+        }
+
+        public async Task<UserProgress> GetUserProgress(int gameID)
+        {
+            string download = await Browser.DownloadString(GetRAURL("API_GetUserProgress.php", "u=" + userName + "&i=" + gameID));
+            string userData = RegexHelper.Between(":", "}", download);
+
+            UserProgress user = null;
+            if (string.IsNullOrWhiteSpace(userData) == false)
+            {
+                user = JsonConvert.DeserializeObject<UserProgress>(userData);
+            }
+            return user;
         }
 
         public DownloadFile DownloadConsoles()
@@ -141,20 +155,6 @@ namespace RADB
         public static string JSN_GameInfo(int consoleID, int gameID) { return Folder.GameInfoConsole(consoleID) + gameID + ".json"; }
         public static string JSN_GameInfoExtend(int consoleID, int gameID) { return Folder.GameInfoExtendConsole(consoleID) + gameID + ".json"; }
 
-        public Game UserProgress(int gameID)
-        {
-            Game obj = new Game();
-            JObject result = new JObject();
-            using (WebClient wc = new WebClient() { Proxy = Browser.Proxy })
-            {
-                string x = wc.DownloadString(GetRAURL("API_GetUserProgress.php", "u=" + user + "&i=" + gameID));
-                result = JsonConvert.DeserializeObject<JObject>(x);
-                obj = JsonConvert.DeserializeObject<Game>(result[gameID.ToString()].ToString());
-            }
-
-            return obj;
-        }
-
         public async Task<Game> GetGameInfoExtended(int gameID)
         {
             if (gameID <= 0) { return null; }
@@ -248,7 +248,7 @@ namespace RADB
             //List<string> afiles = gFiles.Select(x => x.Path).ToList();
             //Picture pic = new Picture(afiles, true, 110);
             Picture pic = new Picture(gameX.AchievementsFiles());
-            pic.Save(Folder.Achievements(gameX.ConsoleID, gameX.ID) + "badges", PictureFormat.Jpg);
+            pic.Save(Folder.Achievements(gameX.ConsoleID, gameX.ID) + "badges", PictureFormat.Png);
 
             return;
         }
