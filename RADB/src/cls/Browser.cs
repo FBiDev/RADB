@@ -17,7 +17,8 @@ namespace RADB
         {
             get
             {
-                return !Environment.MachineName.Equals("FERPC");
+                //return !Environment.MachineName.Equals("FERPC");
+                return Environment.MachineName.Equals("COHAB-CT0920");
             }
         }
         public static WebProxy Proxy
