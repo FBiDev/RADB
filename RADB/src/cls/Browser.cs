@@ -12,7 +12,14 @@ namespace RADB
 {
     public static class Browser
     {
-        public static bool useProxy = true;
+        public static bool useProxy
+        {
+            get
+            {
+                if (Environment.MachineName.Equals("FERPC")) { return false; }
+                return true;
+            }
+        }
         public static WebProxy Proxy
         {
             get
