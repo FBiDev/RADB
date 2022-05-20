@@ -144,12 +144,12 @@ namespace RADB
         public Game UserProgress(int gameID)
         {
             Game obj = new Game();
+            JObject result = new JObject();
             using (WebClient wc = new WebClient() { Proxy = Browser.Proxy })
             {
                 string x = wc.DownloadString(GetRAURL("API_GetUserProgress.php", "u=" + user + "&i=" + gameID));
-                obj = JsonConvert.DeserializeObject<Game>(x);
-                JObject result = JsonConvert.DeserializeObject<JObject>(x);
-                obj = JsonConvert.DeserializeObject<Game>(result[gameID.ToString()]);
+                result = JsonConvert.DeserializeObject<JObject>(x);
+                obj = JsonConvert.DeserializeObject<Game>(result[gameID.ToString()].ToString());
             }
 
             return obj;

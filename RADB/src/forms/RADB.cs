@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 //
 using GNX;
 using System.Net;
+using System.Threading;
 
 namespace RADB
 {
@@ -21,6 +22,8 @@ namespace RADB
         private Download dlConsoles;
         private Download dlGameList;
         private Download dlGameInfoExtended;
+
+        private Task UserCheevos;
 
         public RADB()
         {
@@ -346,6 +349,8 @@ namespace RADB
             game.Genre = gameInfo.Genre;
             game.Released = gameInfo.Released;
 
+            lblInfoName.Text = game.Title + " (" + game.ConsoleName + ")";
+
             lblInfoDeveloper.Text = game.Developer;
             lblInfoPublisher.Text = game.Publisher;
             lblInfoGenre.Text = game.Genre;
@@ -417,24 +422,24 @@ namespace RADB
             dgv_KeyPress((DataGridView)sender, e, "gTitle");
         }
 
-        private void btnUserCheevos_Click(object sender, EventArgs e)
+        private async void btnUserCheevos_Click(object sender, EventArgs e)
         {
-            Game g = dgvGames.CurrentRow.DataBoundItem as Game;
-            picUserCheevos.Image = new Bitmap(g.ImageIconBitmap);
-            Game obj = RA.UserProgress(g.ID);
-            lblUserCheevos.Text = 0 + "/" + g.NumAchievements;
+            if (dgvGames.CurrentRow.IsNull()) return;
 
-            //using (WebClient wc = new WebClient() { Proxy = Browser.Proxy })
-            //{
-            //    using (Stream s = wc.OpenRead(RA.URL_Badges + txtID.Text + ".png"))
-            //    {
-            //        using (Bitmap bmp = new Bitmap(s))
-            //        {
-            //            picUserCheevos.Image = bmp;
-            //            //bmp.Save("C:\\temp\\octopus.jpg");
-            //        }
-            //    }
-            //}
+            Game g = null;
+
+            do
+            {
+                lblUserCheevos.Text = await Task<string>.Run(() =>
+                {
+                    if (g.NotNull()) Thread.Sleep(5000);
+
+                    g = dgvGames.CurrentRow.DataBoundItem as Game;
+                    picUserCheevos.Image = new Bitmap(g.ImageIconBitmap);
+                    Game obj = RA.UserProgress(g.ID);
+                    return obj.NumAchieved + " / " + g.NumAchievements;
+                });
+            } while (chkUserCheevos.Checked);
         }
     }
 }

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RADB));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtID = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
             this.txtURL = new System.Windows.Forms.TextBox();
@@ -103,11 +103,13 @@
             this.pgbInfo = new System.Windows.Forms.ProgressBar();
             this.lblProgressInfo = new System.Windows.Forms.Label();
             this.tabTemp = new System.Windows.Forms.TabPage();
-            this.Ttip = new System.Windows.Forms.ToolTip(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.picUserCheevos = new System.Windows.Forms.PictureBox();
-            this.lblUserCheevos = new System.Windows.Forms.Label();
             this.btnUserCheevos = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblUserCheevos = new System.Windows.Forms.Label();
+            this.picUserCheevos = new System.Windows.Forms.PictureBox();
+            this.Ttip = new System.Windows.Forms.ToolTip(this.components);
+            this.chkUserCheevos = new System.Windows.Forms.CheckBox();
+            this.lblCheevos = new System.Windows.Forms.Label();
             this.tabMain.SuspendLayout();
             this.tabConsoles.SuspendLayout();
             this.pnlDownloadConsoles.SuspendLayout();
@@ -554,10 +556,10 @@
             // 
             this.gIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.gIconBitmap.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle10.NullValue")));
-            dataGridViewCellStyle10.Padding = new System.Windows.Forms.Padding(2);
-            this.gIconBitmap.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle25.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle25.NullValue")));
+            dataGridViewCellStyle25.Padding = new System.Windows.Forms.Padding(2);
+            this.gIconBitmap.DefaultCellStyle = dataGridViewCellStyle25;
             this.gIconBitmap.HeaderText = "Icon";
             this.gIconBitmap.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
             this.gIconBitmap.Name = "gIconBitmap";
@@ -575,8 +577,8 @@
             // gNumAchievements
             // 
             this.gNumAchievements.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gNumAchievements.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gNumAchievements.DefaultCellStyle = dataGridViewCellStyle26;
             this.gNumAchievements.HeaderText = "Achievements";
             this.gNumAchievements.Name = "gNumAchievements";
             this.gNumAchievements.ReadOnly = true;
@@ -593,9 +595,9 @@
             // gLastUpdate
             // 
             this.gLastUpdate.DataPropertyName = "LastUpdate";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gLastUpdate.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gLastUpdate.DefaultCellStyle = dataGridViewCellStyle27;
             this.gLastUpdate.HeaderText = "LastUpdate";
             this.gLastUpdate.Name = "gLastUpdate";
             this.gLastUpdate.ReadOnly = true;
@@ -883,6 +885,7 @@
             // 
             // tabTemp
             // 
+            this.tabTemp.Controls.Add(this.chkUserCheevos);
             this.tabTemp.Controls.Add(this.btnUserCheevos);
             this.tabTemp.Controls.Add(this.panel1);
             this.tabTemp.Controls.Add(this.lblConsoles);
@@ -909,45 +912,70 @@
             this.tabTemp.Text = "Temp";
             this.tabTemp.UseVisualStyleBackColor = true;
             // 
+            // btnUserCheevos
+            // 
+            this.btnUserCheevos.Location = new System.Drawing.Point(400, 183);
+            this.btnUserCheevos.Name = "btnUserCheevos";
+            this.btnUserCheevos.Size = new System.Drawing.Size(165, 23);
+            this.btnUserCheevos.TabIndex = 28;
+            this.btnUserCheevos.Text = "UserCheevos";
+            this.btnUserCheevos.UseVisualStyleBackColor = true;
+            this.btnUserCheevos.Click += new System.EventHandler(this.btnUserCheevos_Click);
+            // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Magenta;
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.lblCheevos);
             this.panel1.Controls.Add(this.lblUserCheevos);
             this.panel1.Controls.Add(this.picUserCheevos);
             this.panel1.Location = new System.Drawing.Point(400, 105);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(221, 100);
+            this.panel1.Size = new System.Drawing.Size(221, 72);
             this.panel1.TabIndex = 27;
+            // 
+            // lblUserCheevos
+            // 
+            this.lblUserCheevos.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserCheevos.ForeColor = System.Drawing.Color.White;
+            this.lblUserCheevos.Location = new System.Drawing.Point(60, 6);
+            this.lblUserCheevos.Name = "lblUserCheevos";
+            this.lblUserCheevos.Size = new System.Drawing.Size(156, 48);
+            this.lblUserCheevos.TabIndex = 1;
+            this.lblUserCheevos.Text = "11/24";
+            this.lblUserCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // picUserCheevos
             // 
-            this.picUserCheevos.Location = new System.Drawing.Point(3, 3);
+            this.picUserCheevos.Location = new System.Drawing.Point(11, 11);
+            this.picUserCheevos.Margin = new System.Windows.Forms.Padding(6);
             this.picUserCheevos.Name = "picUserCheevos";
             this.picUserCheevos.Size = new System.Drawing.Size(48, 48);
             this.picUserCheevos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picUserCheevos.TabIndex = 0;
             this.picUserCheevos.TabStop = false;
             // 
-            // lblUserCheevos
+            // chkUserCheevos
             // 
-            this.lblUserCheevos.Font = new System.Drawing.Font("Arial Black", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserCheevos.ForeColor = System.Drawing.Color.White;
-            this.lblUserCheevos.Location = new System.Drawing.Point(57, 3);
-            this.lblUserCheevos.Name = "lblUserCheevos";
-            this.lblUserCheevos.Size = new System.Drawing.Size(161, 48);
-            this.lblUserCheevos.TabIndex = 1;
-            this.lblUserCheevos.Text = "11/24";
-            this.lblUserCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkUserCheevos.AutoSize = true;
+            this.chkUserCheevos.Location = new System.Drawing.Point(571, 187);
+            this.chkUserCheevos.Name = "chkUserCheevos";
+            this.chkUserCheevos.Size = new System.Drawing.Size(50, 17);
+            this.chkUserCheevos.TabIndex = 29;
+            this.chkUserCheevos.Text = "Loop";
+            this.chkUserCheevos.UseVisualStyleBackColor = true;
             // 
-            // btnUserCheevos
+            // lblCheevos
             // 
-            this.btnUserCheevos.Location = new System.Drawing.Point(400, 212);
-            this.btnUserCheevos.Name = "btnUserCheevos";
-            this.btnUserCheevos.Size = new System.Drawing.Size(221, 23);
-            this.btnUserCheevos.TabIndex = 28;
-            this.btnUserCheevos.Text = "UserCheevos";
-            this.btnUserCheevos.UseVisualStyleBackColor = true;
-            this.btnUserCheevos.Click += new System.EventHandler(this.btnUserCheevos_Click);
+            this.lblCheevos.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCheevos.ForeColor = System.Drawing.Color.White;
+            this.lblCheevos.Location = new System.Drawing.Point(60, 45);
+            this.lblCheevos.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
+            this.lblCheevos.Name = "lblCheevos";
+            this.lblCheevos.Size = new System.Drawing.Size(156, 20);
+            this.lblCheevos.TabIndex = 2;
+            this.lblCheevos.Text = "Achievements";
+            this.lblCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // RADB
             // 
@@ -1072,6 +1100,8 @@
         private System.Windows.Forms.Label lblUserCheevos;
         private System.Windows.Forms.PictureBox picUserCheevos;
         private System.Windows.Forms.Button btnUserCheevos;
+        private System.Windows.Forms.CheckBox chkUserCheevos;
+        private System.Windows.Forms.Label lblCheevos;
     }
 }
 

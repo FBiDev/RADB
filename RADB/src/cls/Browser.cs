@@ -13,13 +13,21 @@ namespace RADB
     public static class Browser
     {
         public static bool useProxy = true;
-        public static WebProxy Proxy = new WebProxy
+        public static WebProxy Proxy
         {
-            Address = new Uri("http://cohab-proxy.cohabct.com.br:3128"),
-            BypassProxyOnLocal = true,
-            BypassList = new string[] { },
-            Credentials = new NetworkCredential("fbirnfeld", "zumbie")
-        };
+            get
+            {
+                if (useProxy == false) { return new WebProxy(); }
+
+                return new WebProxy
+                {
+                    Address = new Uri("http://cohab-proxy.cohabct.com.br:3128"),
+                    BypassProxyOnLocal = true,
+                    BypassList = new string[] { },
+                    Credentials = new NetworkCredential("fbirnfeld", "zumbie")
+                };
+            }
+        }
 
         public static Encoding Encoding = UTF8Encoding.UTF8;
 
