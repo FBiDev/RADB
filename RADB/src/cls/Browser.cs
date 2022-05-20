@@ -16,8 +16,7 @@ namespace RADB
         {
             get
             {
-                if (Environment.MachineName.Equals("FERPC")) { return false; }
-                return true;
+                return !Environment.MachineName.Equals("FERPC");
             }
         }
         public static WebProxy Proxy

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RADB));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtID = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
             this.txtURL = new System.Windows.Forms.TextBox();
@@ -103,13 +103,13 @@
             this.pgbInfo = new System.Windows.Forms.ProgressBar();
             this.lblProgressInfo = new System.Windows.Forms.Label();
             this.tabTemp = new System.Windows.Forms.TabPage();
+            this.chkUserCheevos = new System.Windows.Forms.CheckBox();
             this.btnUserCheevos = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblCheevos = new System.Windows.Forms.Label();
             this.lblUserCheevos = new System.Windows.Forms.Label();
             this.picUserCheevos = new System.Windows.Forms.PictureBox();
             this.Ttip = new System.Windows.Forms.ToolTip(this.components);
-            this.chkUserCheevos = new System.Windows.Forms.CheckBox();
-            this.lblCheevos = new System.Windows.Forms.Label();
             this.tabMain.SuspendLayout();
             this.tabConsoles.SuspendLayout();
             this.pnlDownloadConsoles.SuspendLayout();
@@ -369,9 +369,10 @@
             // 
             // lblConsolesFound
             // 
-            this.lblConsolesFound.Location = new System.Drawing.Point(6, 162);
+            this.lblConsolesFound.Location = new System.Drawing.Point(9, 162);
+            this.lblConsolesFound.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblConsolesFound.Name = "lblConsolesFound";
-            this.lblConsolesFound.Size = new System.Drawing.Size(615, 23);
+            this.lblConsolesFound.Size = new System.Drawing.Size(634, 23);
             this.lblConsolesFound.TabIndex = 3;
             this.lblConsolesFound.Text = "No Consoles Found";
             this.lblConsolesFound.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -381,7 +382,7 @@
             this.picLoaderConsole.Image = global::RADB.Properties.Resources.loader;
             this.picLoaderConsole.Location = new System.Drawing.Point(6, 146);
             this.picLoaderConsole.Name = "picLoaderConsole";
-            this.picLoaderConsole.Size = new System.Drawing.Size(615, 52);
+            this.picLoaderConsole.Size = new System.Drawing.Size(640, 52);
             this.picLoaderConsole.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picLoaderConsole.TabIndex = 4;
             this.picLoaderConsole.TabStop = false;
@@ -496,9 +497,10 @@
             // 
             // lblGameListFound
             // 
-            this.lblGameListFound.Location = new System.Drawing.Point(6, 162);
+            this.lblGameListFound.Location = new System.Drawing.Point(9, 162);
+            this.lblGameListFound.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblGameListFound.Name = "lblGameListFound";
-            this.lblGameListFound.Size = new System.Drawing.Size(615, 23);
+            this.lblGameListFound.Size = new System.Drawing.Size(634, 23);
             this.lblGameListFound.TabIndex = 2;
             this.lblGameListFound.Text = "No Games Found";
             this.lblGameListFound.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -508,7 +510,7 @@
             this.picLoaderGameList.Image = global::RADB.Properties.Resources.loader;
             this.picLoaderGameList.Location = new System.Drawing.Point(6, 146);
             this.picLoaderGameList.Name = "picLoaderGameList";
-            this.picLoaderGameList.Size = new System.Drawing.Size(615, 52);
+            this.picLoaderGameList.Size = new System.Drawing.Size(640, 52);
             this.picLoaderGameList.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picLoaderGameList.TabIndex = 5;
             this.picLoaderGameList.TabStop = false;
@@ -556,10 +558,10 @@
             // 
             this.gIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.gIconBitmap.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle25.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle25.NullValue")));
-            dataGridViewCellStyle25.Padding = new System.Windows.Forms.Padding(2);
-            this.gIconBitmap.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle4.NullValue")));
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(2);
+            this.gIconBitmap.DefaultCellStyle = dataGridViewCellStyle4;
             this.gIconBitmap.HeaderText = "Icon";
             this.gIconBitmap.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
             this.gIconBitmap.Name = "gIconBitmap";
@@ -577,8 +579,8 @@
             // gNumAchievements
             // 
             this.gNumAchievements.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gNumAchievements.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gNumAchievements.DefaultCellStyle = dataGridViewCellStyle5;
             this.gNumAchievements.HeaderText = "Achievements";
             this.gNumAchievements.Name = "gNumAchievements";
             this.gNumAchievements.ReadOnly = true;
@@ -595,9 +597,9 @@
             // gLastUpdate
             // 
             this.gLastUpdate.DataPropertyName = "LastUpdate";
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gLastUpdate.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gLastUpdate.DefaultCellStyle = dataGridViewCellStyle6;
             this.gLastUpdate.HeaderText = "LastUpdate";
             this.gLastUpdate.Name = "gLastUpdate";
             this.gLastUpdate.ReadOnly = true;
@@ -912,6 +914,16 @@
             this.tabTemp.Text = "Temp";
             this.tabTemp.UseVisualStyleBackColor = true;
             // 
+            // chkUserCheevos
+            // 
+            this.chkUserCheevos.AutoSize = true;
+            this.chkUserCheevos.Location = new System.Drawing.Point(571, 187);
+            this.chkUserCheevos.Name = "chkUserCheevos";
+            this.chkUserCheevos.Size = new System.Drawing.Size(50, 17);
+            this.chkUserCheevos.TabIndex = 29;
+            this.chkUserCheevos.Text = "Loop";
+            this.chkUserCheevos.UseVisualStyleBackColor = true;
+            // 
             // btnUserCheevos
             // 
             this.btnUserCheevos.Location = new System.Drawing.Point(400, 183);
@@ -934,6 +946,18 @@
             this.panel1.Size = new System.Drawing.Size(221, 72);
             this.panel1.TabIndex = 27;
             // 
+            // lblCheevos
+            // 
+            this.lblCheevos.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCheevos.ForeColor = System.Drawing.Color.White;
+            this.lblCheevos.Location = new System.Drawing.Point(60, 45);
+            this.lblCheevos.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
+            this.lblCheevos.Name = "lblCheevos";
+            this.lblCheevos.Size = new System.Drawing.Size(156, 20);
+            this.lblCheevos.TabIndex = 2;
+            this.lblCheevos.Text = "Achievements";
+            this.lblCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // lblUserCheevos
             // 
             this.lblUserCheevos.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -954,28 +978,6 @@
             this.picUserCheevos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picUserCheevos.TabIndex = 0;
             this.picUserCheevos.TabStop = false;
-            // 
-            // chkUserCheevos
-            // 
-            this.chkUserCheevos.AutoSize = true;
-            this.chkUserCheevos.Location = new System.Drawing.Point(571, 187);
-            this.chkUserCheevos.Name = "chkUserCheevos";
-            this.chkUserCheevos.Size = new System.Drawing.Size(50, 17);
-            this.chkUserCheevos.TabIndex = 29;
-            this.chkUserCheevos.Text = "Loop";
-            this.chkUserCheevos.UseVisualStyleBackColor = true;
-            // 
-            // lblCheevos
-            // 
-            this.lblCheevos.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCheevos.ForeColor = System.Drawing.Color.White;
-            this.lblCheevos.Location = new System.Drawing.Point(60, 45);
-            this.lblCheevos.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
-            this.lblCheevos.Name = "lblCheevos";
-            this.lblCheevos.Size = new System.Drawing.Size(156, 20);
-            this.lblCheevos.TabIndex = 2;
-            this.lblCheevos.Text = "Achievements";
-            this.lblCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // RADB
             // 

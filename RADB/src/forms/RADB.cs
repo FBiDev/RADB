@@ -332,6 +332,8 @@ namespace RADB
         }
         private async void btnUpdateInfo_Click(object sender, EventArgs e)
         {
+            if (dgvGames.CurrentRow.IsNull()) return;
+
             //Download GameInfo Extend
             Game game = dgvGames.CurrentRow.DataBoundItem as Game;
             if (game == null) { return; }
