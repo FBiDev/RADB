@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RADB));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtID = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
             this.txtURL = new System.Windows.Forms.TextBox();
@@ -558,10 +558,10 @@
             // 
             this.gIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.gIconBitmap.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle4.NullValue")));
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(2);
-            this.gIconBitmap.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle1.NullValue")));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
+            this.gIconBitmap.DefaultCellStyle = dataGridViewCellStyle1;
             this.gIconBitmap.HeaderText = "Icon";
             this.gIconBitmap.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
             this.gIconBitmap.Name = "gIconBitmap";
@@ -579,8 +579,8 @@
             // gNumAchievements
             // 
             this.gNumAchievements.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gNumAchievements.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gNumAchievements.DefaultCellStyle = dataGridViewCellStyle2;
             this.gNumAchievements.HeaderText = "Achievements";
             this.gNumAchievements.Name = "gNumAchievements";
             this.gNumAchievements.ReadOnly = true;
@@ -597,9 +597,9 @@
             // gLastUpdate
             // 
             this.gLastUpdate.DataPropertyName = "LastUpdate";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gLastUpdate.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gLastUpdate.DefaultCellStyle = dataGridViewCellStyle3;
             this.gLastUpdate.HeaderText = "LastUpdate";
             this.gLastUpdate.Name = "gLastUpdate";
             this.gLastUpdate.ReadOnly = true;
@@ -751,6 +751,8 @@
             // 
             // flowInfo
             // 
+            this.flowInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flowInfo.AutoSize = true;
             this.flowInfo.Controls.Add(this.pnlInfoImages);
             this.flowInfo.Controls.Add(this.gpbInfoAchievements);
