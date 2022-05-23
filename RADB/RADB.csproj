@@ -78,12 +78,13 @@
     <Compile Include="src\cls\Console.cs" />
     <Compile Include="src\cls\Browser.cs" />
     <Compile Include="src\cls\UserProgress.cs" />
+    <Compile Include="src\dao\ConsoleDao.cs" />
     <Compile Include="src\dao\GameDao.cs" />
-    <Compile Include="src\forms\RADB.cs">
+    <Compile Include="src\forms\Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\forms\RADB.Designer.cs">
-      <DependentUpon>RADB.cs</DependentUpon>
+    <Compile Include="src\forms\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="src\cls\Download.cs" />
     <Compile Include="src\cls\Archive.cs" />
@@ -98,8 +99,8 @@
     <Compile Include="src\cls\RA.cs" />
     <Compile Include="src\temp\StringExtensions.cs" />
     <Compile Include="src\temp\Temp.cs" />
-    <EmbeddedResource Include="src\forms\RADB.resx">
-      <DependentUpon>RADB.cs</DependentUpon>
+    <EmbeddedResource Include="src\forms\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -135,6 +136,9 @@
     <Content Include="src\rsc\exe\pngcrush_1_8_11_w64.exe" />
     <Content Include="src\rsc\image\loader.gif" />
     <Content Include="src\rsc\image\notfound.png" />
+    <Content Include="src\rsc\sql\ConsoleListar.sql" />
+    <Content Include="src\rsc\sql\ConsoleIncluir.sql" />
+    <Content Include="src\rsc\sql\ConsoleExcluir.sql" />
     <Content Include="src\rsc\sql\GameListar.sql" />
     <Content Include="src\rsc\sql\GameExcluir.sql" />
     <Content Include="src\rsc\sql\GameIncluir.sql" />

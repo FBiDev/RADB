@@ -25,7 +25,7 @@ namespace RADB
             GNX.cApp.SingleProcess(Config.umaExecucao, new Mutex(true, Config.sistema));
             Config.Start();
 
-            Application.Run(new RADB());
+            Application.Run(new Main());
         }
     }
 }

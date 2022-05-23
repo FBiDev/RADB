@@ -7,6 +7,9 @@ using System.Drawing;
 using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
+//
+using GNX;
 
 namespace RADB
 {
@@ -20,7 +23,19 @@ namespace RADB
         //GameInfo
         public string Title { get; set; }
         public int ConsoleID { get; set; }
-        public string ConsoleName { get; set; }
+
+        private string _ConsoleName { get; set; }
+        public string ConsoleName
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_ConsoleName))
+                    return ConsoleDao.Listar(new Console() { ID = ConsoleID }).Result[0].Name;
+                return _ConsoleName;
+            }
+
+            set { _ConsoleName = value; }
+        }
         public string Developer { get; set; }
         public string Publisher { get; set; }
         public string Genre { get; set; }
@@ -112,7 +127,7 @@ namespace RADB
         public int ID { get; set; }
         public bool IsFinal { get; set; }
         public int NumAchievements { get; set; }
-        
+
         public int NumLeaderboards { get; set; }
         public int Points { get; set; }
         public int NumDistinctPlayersCasual { get; set; }
@@ -182,14 +197,39 @@ namespace RADB
             return Folder.Achievements(ConsoleID, ID) + "_Badges";
         }
 
+        public DownloadFile ImageIconDownload()
+        {
+            return new DownloadFile(RA.URL_Images + ImageIcon, ImageIconPath);
+        }
+
         public bool Incluir()
         {
             return GameDao.Incluir(this);
         }
 
-        public bool Excluir()
+        public async static Task<bool> IncluirLista(IList<Game> list)
         {
-            return GameDao.Excluir(this);
+            return await GameDao.IncluirLista(list);
+        }
+
+        public async Task<bool> Excluir()
+        {
+            return await GameDao.Excluir(this);
+        }
+
+        public async static Task<bool> Excluir(int ConsoleID)
+        {
+            return await GameDao.Excluir(new Game() { ConsoleID = ConsoleID });
+        }
+
+        public async static Task<List<Game>> Listar()
+        {
+            return await GameDao.Listar();
+        }
+
+        public async static Task<ListBind<Game>> ListarBind(int consoleID)
+        {
+            return new ListBind<Game>(await GameDao.Listar(new Game() { ConsoleID = consoleID }));
         }
     }
 }

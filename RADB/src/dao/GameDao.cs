@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 //
 using RADB.Properties;
 using GNX;
+using System.Threading;
 
 namespace RADB
 {
@@ -63,9 +64,9 @@ namespace RADB
         #endregion
 
         #region " _Listar "
-        public static Task<ListBind<Game>> Listar(Game obj = null)
+        public static Task<List<Game>> Listar(Game obj = null)
         {
-            return Task<ListBind<Game>>.Run(() =>
+            return Task<List<Game>>.Run(() =>
             {
                 obj = obj ?? new Game();
 
@@ -73,10 +74,7 @@ namespace RADB
                 string sql = Resources.GameListar;
                 sql += " ORDER BY NumAchievements=0, Title ASC ";
 
-                //List<Game> GameList = 
-                return new ListBind<Game>(Carregar<List<Game>>(Banco.ExecutarSelect(sql, MontarFiltros(obj))));
-                //return GameList;
-                //return OrdenarLista(GameList);
+                return Carregar<List<Game>>(Banco.ExecutarSelect(sql, MontarFiltros(obj)));
             });
         }
 
@@ -120,42 +118,46 @@ namespace RADB
             return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
         }
 
-        public static Task<bool> IncluirLista(ListBind<Game> list)
+        public static Task<bool> IncluirLista(IList<Game> list)
         {
             return Task<bool>.Run(() =>
             {
                 //Monta SQL
-                //string sql = Resources.GameIncluir;
-                string sql = "INSERT INTO game (ID, Title, ConsoleID, NumAchievements, NumLeaderboards, Points, ImageIcon) VALUES " + Environment.NewLine; ;
+                string sql = "INSERT INTO Game (ID, Title, ConsoleID, NumAchievements, NumLeaderboards, Points, ImageIcon)" +
+                             " VALUES " + Environment.NewLine;
 
                 var parametros = new List<cSqlParameter>();
 
                 int index = 0;
-                foreach (var g in list)
+                foreach (var i in list)
                 {
-                    parametros.AddRange(new List<cSqlParameter>
-                {
-                    new cSqlParameter("@ID" + index, g.ID),
-                    new cSqlParameter("@Title" + index, g.Title),
-                    new cSqlParameter("@ConsoleID" + index, g.ConsoleID),
-                    new cSqlParameter("@NumAchievements" + index, g.NumAchievements),
-                    new cSqlParameter("@NumLeaderboards" + index, g.NumLeaderboards),
-                    new cSqlParameter("@Points" + index, g.Points),
-                    new cSqlParameter("@ImageIcon" + index, g.ImageIcon)
-                });
+                    sql += "(" + i.ID +
+                            ",'" + i.Title.Replace("'", "''") + "'" +
+                            ", " + i.ConsoleID +
+                            ", " + i.NumAchievements +
+                            ", " + i.NumLeaderboards +
+                            ", " + i.Points +
+                            ", '" + i.ImageIcon + "')";
 
-                    sql += "(" + "@ID" + index + ", @Title" + index + ", @ConsoleID" + index +
-                               ", @NumAchievements" + index + ", @NumLeaderboards" + index +
-                               ", @Points" + index + ", @ImageIcon" + index +
-                           ")";
+                    //parametros.AddRange(new List<cSqlParameter>
+                    //{
+                    //    new cSqlParameter("@ID" + index, i.ID),
+                    //    new cSqlParameter("@Title" + index, i.Title),
+                    //    new cSqlParameter("@ConsoleID" + index, i.ConsoleID),
+                    //    new cSqlParameter("@NumAchievements" + index, i.NumAchievements),
+                    //    new cSqlParameter("@NumLeaderboards" + index, i.NumLeaderboards),
+                    //    new cSqlParameter("@Points" + index, i.Points),
+                    //    new cSqlParameter("@ImageIcon" + index, i.ImageIcon)
+                    //});
+
+                    //sql += "(" + "@ID" + index + ", @Title" + index + ", @ConsoleID" + index +
+                    //           ", @NumAchievements" + index + ", @NumLeaderboards" + index +
+                    //           ", @Points" + index + ", @ImageIcon" + index +
+                    //       ")";
 
                     index++;
                     if (index < list.Count) { sql += "," + Environment.NewLine; }
                 }
-                //sql = sql.Substring(0, sql.Length - 1);
-
-                //list.ToList().ForEach(g => sql += "(" + "@Title" + "),");
-                //var parametros = MontarParametros(obj);
 
                 return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
             });
@@ -163,17 +165,20 @@ namespace RADB
         #endregion
 
         #region " _Excluir "
-        public static bool Excluir(Game obj)
+        public static Task<bool> Excluir(Game obj)
         {
-            string sql = Resources.GameExcluir;
-
-            var parametros = new List<cSqlParameter> 
+            return Task<bool>.Run(() =>
             {
-                new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID),
-            };
+                string sql = Resources.GameExcluir;
 
-            return Banco.Executar(sql, MovimentoLog.Exclusão, parametros).AffectedRows > 0;
+                var parametros = new List<cSqlParameter> 
+                {
+                    new cSqlParameter("@ID", obj.ID),
+                    new cSqlParameter("@ConsoleID", obj.ConsoleID),
+                };
+
+                return Banco.Executar(sql, MovimentoLog.Exclusão, parametros).AffectedRows > 0;
+            });
         }
         #endregion
     }

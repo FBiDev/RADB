@@ -1,5 +1,5 @@
 ﻿--
-INSERT INTO game ( 
+INSERT INTO Game ( 
 	  ID 
 	, Title 
 	, ConsoleID 

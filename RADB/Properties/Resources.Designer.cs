@@ -63,6 +63,60 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized string similar to --
         ///DELETE 
+        ///FROM Console 
+        ///WHERE 1 = 1 
+        ///	AND (ID = @ID 
+        ///		OR (@ID = 0 OR @ID IS NULL)) 
+        ///	AND (Name LIKE &apos;%&apos;+@Name+&apos;%&apos; 
+        ///		OR (@Name = &apos;&apos; OR @Name IS NULL)) 
+        ///;
+        ///--.
+        /// </summary>
+        internal static string ConsoleExcluir {
+            get {
+                return ResourceManager.GetString("ConsoleExcluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///INSERT INTO Console ( 
+        ///	  ID 
+        ///	, Name 
+        ///	) VALUES ( 
+        ///	  @ID 
+        ///	, @Name 
+        ///);
+        ///--.
+        /// </summary>
+        internal static string ConsoleIncluir {
+            get {
+                return ResourceManager.GetString("ConsoleIncluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///SELECT 
+        ///	  ID 
+        ///	, Name 
+        ///FROM Console 
+        ///WHERE 1 = 1 
+        ///	AND (ID = @ID 
+        ///		OR (@ID = 0 OR @ID IS NULL)) 
+        ///	AND (Name LIKE &apos;%&apos;+@Name+&apos;%&apos; 
+        ///		OR (@Name = &apos;&apos; OR @Name IS NULL)) 
+        ///	.
+        /// </summary>
+        internal static string ConsoleListar {
+            get {
+                return ResourceManager.GetString("ConsoleListar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///DELETE 
         ///FROM game 
         ///WHERE 1 = 1 
         ///	AND (ID = @ID 
@@ -81,14 +135,16 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized string similar to --
         ///INSERT INTO game ( 
-        ///	  Title 
+        ///	  ID 
+        ///	, Title 
         ///	, ConsoleID 
         ///	, NumAchievements 
         ///	, NumLeaderboards 
         ///	, Points 
         ///	, ImageIcon
         ///	) VALUES ( 
-        ///	  @Title 
+        ///	  @ID 
+        ///	, @Title 
         ///	, @ConsoleID 
         ///	, @NumAchievements 
         ///	, @NumLeaderboards 
@@ -105,8 +161,9 @@ namespace RADB.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to --
-        ///SELECT 
-        ///	  Title 
+        ///SELECT
+        ///	  ID 
+        ///	, Title 
         ///	, ConsoleID 
         ///	, NumAchievements 
         ///	, NumLeaderboards 
@@ -114,6 +171,8 @@ namespace RADB.Properties {
         ///	, ImageIcon 
         ///FROM game  
         ///WHERE 1 = 1 
+        ///	AND (ID = @ID 
+        ///		OR (@ID = 0 OR @ID IS NULL)) 
         ///	AND (Title LIKE &apos;%&apos;+@Title+&apos;%&apos; 
         ///		OR (@Title = &apos;&apos; OR @Title IS NULL)) 
         ///	AND (ConsoleID = @ConsoleID 

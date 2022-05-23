@@ -15,17 +15,16 @@ using System.Threading;
 
 namespace RADB
 {
-    public partial class RADB : Form
+    public partial class Main : Form
     {
         #region Init
         private RA RA = new RA();
         private Download dlConsoles;
         private Download dlGameList;
         private Download dlGameInfoExtended;
+        private Download dlGameIcons;
 
-        private Task UserCheevos;
-
-        public RADB()
+        public Main()
         {
             InitializeComponent();
             Shown += RADB_Shown;
@@ -77,6 +76,14 @@ namespace RADB
             dlGameList = new Download
             {
                 Overwrite = true,
+                ProgressBarName = pgbGameList.Name,
+                LabelBytesName = lblProgressGameList.Name,
+                LabelTimeName = lblUpdateGameList.Name,
+            };
+
+            dlGameIcons = new Download()
+            {
+                Overwrite = false,
                 ProgressBarName = pgbGameList.Name,
                 LabelBytesName = lblProgressGameList.Name,
                 LabelTimeName = lblUpdateGameList.Name,
@@ -146,7 +153,11 @@ namespace RADB
             if (File.Exists(RA.FileConsoles()) == false) return;
             EnablePanelConsoles(false);
 
-            dgvConsoles.DataSource = await RA.ListConsoles();
+            //ListBind<Console> list = await RA.ListConsoles();
+            ListBind<Console> list = await Console.ListarBind();
+
+            dgvConsoles.DataSource = list;
+
             dgvConsoles.Focus();
 
             EnablePanelConsoles(true);
@@ -158,9 +169,12 @@ namespace RADB
             dlConsoles.File = RA.DownloadConsoles();
             await dlConsoles.Start();
 
+            await Console.Excluir();
+            await ConsoleDao.IncluirLista(await RA.ListConsoles());
+
             await LoadConsoles();
 
-            txtOutput.Text += "Consoles Updated!" + Environment.NewLine;
+            lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + "Consoles Updated!" + Environment.NewLine + lblOutput.Text;
         }
 
         private async void dgvConsoles_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -210,14 +224,11 @@ namespace RADB
                 EnablePanelGames(true); return;
             }
 
-            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
-            //ListBind<Game> list = await RA.ListGameList(console);
-            ListBind<Game> list = await GameDao.Listar(new Game() { ConsoleID = console.ID });
-
-            dgvGames.DataSource = list;
+            dgvGames.DataSource = await Game.ListarBind(console.ID);
             dgvGames.Focus();
 
             EnablePanelGames(true);
+            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
         }
 
@@ -233,33 +244,23 @@ namespace RADB
             Console console = (dgvConsoles.CurrentRow.DataBoundItem as Console);
 
             //Download GameList
-            //string fileGameList = RA.FileGameList(console.Name);
             dlGameList.File = RA.DownloadGameList(console);
             await dlGameList.Start();
 
-            bool excluidos = new Game() { ConsoleID = console.ID }.Excluir();
-            ListBind<Game> games = (await RA.ListGameList(console));
-            await GameDao.IncluirLista(games);
-            //games.ToList().ForEach(g => g.Incluir());
-
-            ////Read GameList
-            //List<Game> GameList = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(fileGameList));
-
-            ////dgvGameList.Visible = false;
-            ////Download Game Icons
-            //List<DownloadFile> gIconFiles = GameList.Select(g => new DownloadFile(RA.URL_Images + g.ImageIcon, g.ImageIconPath)).ToList();
-            //Download dlIconFiles = new Download()
-            //{
-            //    Overwrite = false,
-            //    Files = gIconFiles,
-            //    ProgressBarName = pgbGameList.Name,
-            //    LabelBytesName = lblProgressGameList.Name,
-            //    LabelTimeName = lblUpdateGameList.Name,
-            //};
-            //await (dlIconFiles.Start());
-
+            await Game.Excluir(console.ID);
+            List<Game> games = await RA.ListGameList(console);
+            await Game.IncluirLista(games);
             await LoadGames(console);
-            txtOutput.Text = console.Name + " GameList Updated!" + Environment.NewLine + txtOutput.Text;
+
+            dgvGames.Enabled = false;
+            await RA.DownloadGameIcons(games, dlGameIcons);
+
+            dgvGames.Enabled = true;
+            dgvGames.Focus();
+            dgvGames_Sorted(null, null);
+            dgvGames.Refresh();
+
+            lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + console.Name + " GameList Updated!" + Environment.NewLine + lblOutput.Text;
         }
 
         private void dgvGames_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
