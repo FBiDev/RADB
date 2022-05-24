@@ -8,9 +8,10 @@ namespace RADB
 {
     public static class Archive
     {
-        public static DateTime LastUpdate(string fileName)
+        public static string LastUpdate(string fileName)
         {
-            return File.GetLastWriteTime(fileName);
+            if (File.Exists(fileName)) { return File.GetLastWriteTime(fileName).ToString(); }
+            return "";
         }
 
         public static string RelativePath(string fileName)

@@ -47,6 +47,18 @@ namespace RADB
             //web.Headers["User-Agent"] = "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15";
         }
 
+        public static Task<string> DownloadString(string url)
+        {
+            return Task<string>.Run(() =>
+            {
+                using (WebClient client = new WebClient() { Proxy = Proxy })
+                {
+                    string data = client.DownloadString(url);
+                    return data;
+                }
+            });
+        }
+
         public static JObject ToJObject(string path)
         {
             if (string.IsNullOrWhiteSpace(path)) { return new JObject(); }
@@ -65,18 +77,6 @@ namespace RADB
             }
             JObject result = JsonConvert.DeserializeObject<JObject>(content);
             return result;
-        }
-
-        public static Task<string> DownloadString(string url)
-        {
-            return Task<string>.Run(() =>
-            {
-                using (WebClient client = new WebClient() { Proxy = Proxy })
-                {
-                    string data = client.DownloadString(url);
-                    return data;
-                }
-            });
         }
     }
 }

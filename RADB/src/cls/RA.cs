@@ -14,29 +14,94 @@ namespace RADB
 {
     public class RA
     {
-        private const string API_URL = "http://retroachievements.org/API/";
-        public string userName;
-        public string api_key;
+        #region _Main
+        //URLs
+        public static string URL_Images = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Images/";
+        public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
+
+        private string API_URL = "http://retroachievements.org/API/";
+        private string API_UserName;
+        private string API_Key;
 
         public RA()
         {
-            userName = "FBiDev";
-            api_key = "uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
+            API_UserName = "FBiDev";
+            API_Key = "uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
         }
 
         private string AuthQS()
         {
-            return "?z=" + userName + "&y=" + api_key;
+            return "?z=" + API_UserName + "&y=" + API_Key;
         }
 
-        public string GetRAURL(string target, string parames = "")
+        private string GetURL(string target, string parames = "")
         {
             return API_URL + target + AuthQS() + "&" + parames;
+        }
+        #endregion
+
+        #region _Consoles
+        public string ConsolesFile() { return Folder.Consoles + "Consoles.json"; }
+
+        public async Task DownloadConsoles(Download dlConsoles)
+        {
+            dlConsoles.File = new DownloadFile(GetURL("API_GetConsoleIDs.php"), ConsolesFile());
+            await dlConsoles.Start();
+
+            await Console.Excluir();
+            await Console.IncluirLista(await GetConsoles());
+        }
+
+        public Task<List<Console>> GetConsoles()
+        {
+            return Task<List<Console>>.Run(() =>
+            {
+                List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(ConsolesFile()));
+                return consoles.OrderBy(x => x.ID).ToList();
+            });
+        }
+        #endregion
+
+        #region _Games
+        public string GamesFile(string consoleName) { return (Folder.Consoles + consoleName + " GameList.json").Replace("/", "-"); }
+
+        public async Task DownloadGames(Download dlGames, Console console)
+        {
+            dlGames.File = new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID), GamesFile(console.Name));
+            await (dlGames.Start());
+
+            await Game.Excluir(console.ID);
+            await Game.IncluirLista(await GetGames(console));
+        }
+
+        public async Task DownloadGamesIcon(Download dlGameIcons, Console console)
+        {
+            List<Game> games = await Game.Listar(new Game() { ConsoleID = console.ID });
+            dlGameIcons.Files = games.Select(g => g.ImageIconDownload()).ToList();
+            await (dlGameIcons.Start());
+        }
+
+        public Task<List<Game>> GetGames(Console console)
+        {
+            return Task<List<Game>>.Run(() =>
+            {
+                return JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(GamesFile(console.Name)));
+            });
+        }
+        #endregion
+
+        public DownloadFile DownloadGameInfoExtended(Game game)
+        {
+            return new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), JSN_GameInfoExtend(game.ConsoleID, game.ID));
+        }
+        public string FileGameInfoExtended(int consoleID, int gameID)
+        {
+            return Folder.GameInfoExtendConsole(consoleID) + gameID + ".json";
         }
 
         public async Task<UserProgress> GetUserProgress(int gameID)
         {
-            string download = await Browser.DownloadString(GetRAURL("API_GetUserProgress.php", "u=" + userName + "&i=" + gameID));
+            string download = await Browser.DownloadString(GetURL("API_GetUserProgress.php", "u=" + API_UserName + "&i=" + gameID));
             string userData = RegexHelper.Between(":", "}", download);
 
             UserProgress user = null;
@@ -46,64 +111,6 @@ namespace RADB
             }
             return user;
         }
-
-        public DownloadFile DownloadConsoles()
-        {
-            return new DownloadFile(GetRAURL("API_GetConsoleIDs.php"), FileConsoles());
-        }
-        public string FileConsoles()
-        {
-            return Folder.Consoles + "Consoles.json";
-        }
-        public Task<List<Console>> ListConsoles()
-        {
-            return Task<List<Console>>.Run(() =>
-            {
-                List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(FileConsoles()));
-                return consoles.OrderBy(x => x.Name).ToList();
-                //return new List<Console>(consoles.OrderBy(x => x.Name).ToList());
-            });
-        }
-
-        public DownloadFile DownloadGameList(Console console)
-        {
-            return new DownloadFile(GetRAURL("API_GetGameList.php", "i=" + console.ID), FileGameList(console.Name));
-        }
-        public async Task DownloadGameIcons(List<Game> games, Download dlGameIcons)
-        {
-            //Download Game Icons
-            List<DownloadFile> gIconFiles = games.Select(g => g.ImageIconDownload()).ToList();
-            dlGameIcons.Files = gIconFiles;
-            await (dlGameIcons.Start());
-        }
-
-        public string FileGameList(string consoleName)
-        {
-            consoleName = consoleName.Replace("/", "-");
-            return Folder.Consoles + consoleName + " GameList.json";
-        }
-
-        public Task<List<Game>> ListGameList(Console console)
-        {
-            return Task<List<Game>>.Run(() =>
-            {
-                List<Game> gameList = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(FileGameList(console.Name)));
-                return gameList;
-            });
-        }
-
-        public DownloadFile DownloadGameInfoExtended(Game game)
-        {
-            return new DownloadFile(GetRAURL("API_GetGameExtended.php", "i=" + game.ID), JSN_GameInfoExtend(game.ConsoleID, game.ID));
-        }
-        public string FileGameInfoExtended(int consoleID, int gameID)
-        {
-            return Folder.GameInfoExtendConsole(consoleID) + gameID + ".json";
-        }
-
-        //URLs
-        public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
-        public static string URL_Images = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Images/";
 
         public static string API_GameExtended = "API_GetGameExtended.php";
 
@@ -120,7 +127,7 @@ namespace RADB
             Download dl = new Download()
             {
                 Overwrite = false,
-                Files = new List<DownloadFile>() { new DownloadFile(GetRAURL("API_GetGameExtended.php", "i=" + gameID.ToString()), fileName) },
+                Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + gameID.ToString()), fileName) },
                 ProgressBarName = "pgbUpdates",
                 LabelBytesName = "lblUpdateProgress",
                 LabelTimeName = "lblUpdateConsoles",

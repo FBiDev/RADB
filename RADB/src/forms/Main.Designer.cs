@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtID = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
             this.txtURL = new System.Windows.Forms.TextBox();
@@ -57,7 +57,7 @@
             this.lblUpdateConsoles = new System.Windows.Forms.Label();
             this.pgbConsoles = new System.Windows.Forms.ProgressBar();
             this.lblProgressConsoles = new System.Windows.Forms.Label();
-            this.lblConsolesFound = new System.Windows.Forms.Label();
+            this.lblNotFoundConsoles = new System.Windows.Forms.Label();
             this.picLoaderConsole = new System.Windows.Forms.PictureBox();
             this.dgvConsoles = new System.Windows.Forms.DataGridView();
             this.cID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,9 +68,15 @@
             this.lblUpdateGameList = new System.Windows.Forms.Label();
             this.pgbGameList = new System.Windows.Forms.ProgressBar();
             this.lblProgressGameList = new System.Windows.Forms.Label();
-            this.lblGameListFound = new System.Windows.Forms.Label();
+            this.lblNotFoundGameList = new System.Windows.Forms.Label();
             this.picLoaderGameList = new System.Windows.Forms.PictureBox();
             this.dgvGames = new System.Windows.Forms.DataGridView();
+            this.gID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
+            this.gTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gLastUpdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGameInfo = new System.Windows.Forms.TabPage();
             this.pnlInfoScroll = new System.Windows.Forms.Panel();
             this.gpbInfo = new System.Windows.Forms.GroupBox();
@@ -104,12 +110,6 @@
             this.lblUserCheevos = new System.Windows.Forms.Label();
             this.picUserCheevos = new System.Windows.Forms.PictureBox();
             this.Ttip = new System.Windows.Forms.ToolTip(this.components);
-            this.gID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
-            this.gTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gLastUpdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblOutput = new System.Windows.Forms.Label();
             this.pnlOutput = new System.Windows.Forms.Panel();
             this.tabMain.SuspendLayout();
@@ -295,7 +295,7 @@
             // tabConsoles
             // 
             this.tabConsoles.Controls.Add(this.pnlDownloadConsoles);
-            this.tabConsoles.Controls.Add(this.lblConsolesFound);
+            this.tabConsoles.Controls.Add(this.lblNotFoundConsoles);
             this.tabConsoles.Controls.Add(this.picLoaderConsole);
             this.tabConsoles.Controls.Add(this.dgvConsoles);
             this.tabConsoles.Location = new System.Drawing.Point(4, 22);
@@ -358,15 +358,15 @@
             this.lblProgressConsoles.TabIndex = 31;
             this.lblProgressConsoles.Text = "lblProgress";
             // 
-            // lblConsolesFound
+            // lblNotFoundConsoles
             // 
-            this.lblConsolesFound.Location = new System.Drawing.Point(9, 162);
-            this.lblConsolesFound.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblConsolesFound.Name = "lblConsolesFound";
-            this.lblConsolesFound.Size = new System.Drawing.Size(634, 23);
-            this.lblConsolesFound.TabIndex = 3;
-            this.lblConsolesFound.Text = "No Consoles Found";
-            this.lblConsolesFound.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblNotFoundConsoles.Location = new System.Drawing.Point(9, 162);
+            this.lblNotFoundConsoles.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblNotFoundConsoles.Name = "lblNotFoundConsoles";
+            this.lblNotFoundConsoles.Size = new System.Drawing.Size(634, 23);
+            this.lblNotFoundConsoles.TabIndex = 3;
+            this.lblNotFoundConsoles.Text = "No Consoles Found";
+            this.lblNotFoundConsoles.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // picLoaderConsole
             // 
@@ -423,7 +423,7 @@
             // tabGames
             // 
             this.tabGames.Controls.Add(this.pnlDownloadGameList);
-            this.tabGames.Controls.Add(this.lblGameListFound);
+            this.tabGames.Controls.Add(this.lblNotFoundGameList);
             this.tabGames.Controls.Add(this.picLoaderGameList);
             this.tabGames.Controls.Add(this.dgvGames);
             this.tabGames.Location = new System.Drawing.Point(4, 22);
@@ -486,15 +486,15 @@
             this.lblProgressGameList.TabIndex = 33;
             this.lblProgressGameList.Text = "lblProgress";
             // 
-            // lblGameListFound
+            // lblNotFoundGameList
             // 
-            this.lblGameListFound.Location = new System.Drawing.Point(9, 162);
-            this.lblGameListFound.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblGameListFound.Name = "lblGameListFound";
-            this.lblGameListFound.Size = new System.Drawing.Size(634, 23);
-            this.lblGameListFound.TabIndex = 2;
-            this.lblGameListFound.Text = "No Games Found";
-            this.lblGameListFound.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblNotFoundGameList.Location = new System.Drawing.Point(9, 162);
+            this.lblNotFoundGameList.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblNotFoundGameList.Name = "lblNotFoundGameList";
+            this.lblNotFoundGameList.Size = new System.Drawing.Size(634, 23);
+            this.lblNotFoundGameList.TabIndex = 2;
+            this.lblNotFoundGameList.Text = "No Games Found";
+            this.lblNotFoundGameList.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // picLoaderGameList
             // 
@@ -536,6 +536,67 @@
             this.dgvGames.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvGames.Size = new System.Drawing.Size(640, 477);
             this.dgvGames.TabIndex = 1;
+            // 
+            // gID
+            // 
+            this.gID.DataPropertyName = "ID";
+            this.gID.HeaderText = "ID";
+            this.gID.Name = "gID";
+            this.gID.ReadOnly = true;
+            this.gID.Width = 43;
+            // 
+            // gIconBitmap
+            // 
+            this.gIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.gIconBitmap.DataPropertyName = "ImageIconBitmap";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle1.NullValue")));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(2);
+            this.gIconBitmap.DefaultCellStyle = dataGridViewCellStyle1;
+            this.gIconBitmap.HeaderText = "Icon";
+            this.gIconBitmap.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.gIconBitmap.Name = "gIconBitmap";
+            this.gIconBitmap.ReadOnly = true;
+            this.gIconBitmap.Width = 36;
+            // 
+            // gTitle
+            // 
+            this.gTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.gTitle.DataPropertyName = "Title";
+            this.gTitle.HeaderText = "Title";
+            this.gTitle.Name = "gTitle";
+            this.gTitle.ReadOnly = true;
+            // 
+            // gNumAchievements
+            // 
+            this.gNumAchievements.DataPropertyName = "NumAchievements";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gNumAchievements.DefaultCellStyle = dataGridViewCellStyle2;
+            this.gNumAchievements.HeaderText = "Achievements";
+            this.gNumAchievements.Name = "gNumAchievements";
+            this.gNumAchievements.ReadOnly = true;
+            this.gNumAchievements.Width = 99;
+            // 
+            // gPoints
+            // 
+            this.gPoints.DataPropertyName = "Points";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gPoints.DefaultCellStyle = dataGridViewCellStyle3;
+            this.gPoints.HeaderText = "Points";
+            this.gPoints.Name = "gPoints";
+            this.gPoints.ReadOnly = true;
+            this.gPoints.Width = 61;
+            // 
+            // gLastUpdate
+            // 
+            this.gLastUpdate.DataPropertyName = "LastUpdate";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gLastUpdate.DefaultCellStyle = dataGridViewCellStyle4;
+            this.gLastUpdate.HeaderText = "LastUpdate";
+            this.gLastUpdate.Name = "gLastUpdate";
+            this.gLastUpdate.ReadOnly = true;
+            this.gLastUpdate.Width = 87;
             // 
             // tabGameInfo
             // 
@@ -913,67 +974,6 @@
             this.picUserCheevos.TabIndex = 0;
             this.picUserCheevos.TabStop = false;
             // 
-            // gID
-            // 
-            this.gID.DataPropertyName = "ID";
-            this.gID.HeaderText = "ID";
-            this.gID.Name = "gID";
-            this.gID.ReadOnly = true;
-            this.gID.Width = 43;
-            // 
-            // gIconBitmap
-            // 
-            this.gIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.gIconBitmap.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle37.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle37.NullValue")));
-            dataGridViewCellStyle37.Padding = new System.Windows.Forms.Padding(2);
-            this.gIconBitmap.DefaultCellStyle = dataGridViewCellStyle37;
-            this.gIconBitmap.HeaderText = "Icon";
-            this.gIconBitmap.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.gIconBitmap.Name = "gIconBitmap";
-            this.gIconBitmap.ReadOnly = true;
-            this.gIconBitmap.Width = 36;
-            // 
-            // gTitle
-            // 
-            this.gTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.gTitle.DataPropertyName = "Title";
-            this.gTitle.HeaderText = "Title";
-            this.gTitle.Name = "gTitle";
-            this.gTitle.ReadOnly = true;
-            // 
-            // gNumAchievements
-            // 
-            this.gNumAchievements.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gNumAchievements.DefaultCellStyle = dataGridViewCellStyle38;
-            this.gNumAchievements.HeaderText = "Achievements";
-            this.gNumAchievements.Name = "gNumAchievements";
-            this.gNumAchievements.ReadOnly = true;
-            this.gNumAchievements.Width = 99;
-            // 
-            // gPoints
-            // 
-            this.gPoints.DataPropertyName = "Points";
-            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gPoints.DefaultCellStyle = dataGridViewCellStyle39;
-            this.gPoints.HeaderText = "Points";
-            this.gPoints.Name = "gPoints";
-            this.gPoints.ReadOnly = true;
-            this.gPoints.Width = 61;
-            // 
-            // gLastUpdate
-            // 
-            this.gLastUpdate.DataPropertyName = "LastUpdate";
-            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle40.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gLastUpdate.DefaultCellStyle = dataGridViewCellStyle40;
-            this.gLastUpdate.HeaderText = "LastUpdate";
-            this.gLastUpdate.Name = "gLastUpdate";
-            this.gLastUpdate.ReadOnly = true;
-            this.gLastUpdate.Width = 87;
-            // 
             // lblOutput
             // 
             this.lblOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1095,8 +1095,8 @@
         private System.Windows.Forms.Label lblInfoDeveloper;
         private System.Windows.Forms.Label lblInfoGenre;
         private System.Windows.Forms.Label lblInfoPublisher;
-        private System.Windows.Forms.Label lblGameListFound;
-        private System.Windows.Forms.Label lblConsolesFound;
+        private System.Windows.Forms.Label lblNotFoundGameList;
+        private System.Windows.Forms.Label lblNotFoundConsoles;
         private System.Windows.Forms.Panel pnlDownloadInfo;
         private System.Windows.Forms.Button btnUpdateInfo;
         private System.Windows.Forms.Label lblUpdateInfo;

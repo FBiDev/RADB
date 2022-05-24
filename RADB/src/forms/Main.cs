@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 //
-using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 //
+using System.Drawing;
 using GNX;
-using System.Net;
-using System.Threading;
 
 namespace RADB
 {
@@ -19,19 +17,35 @@ namespace RADB
     {
         #region Init
         private RA RA = new RA();
+
+        private Console ConsoleBind = null;
+        private Game GameBind = null;
+
         private Download dlConsoles;
-        private Download dlGameList;
-        private Download dlGameInfoExtended;
-        private Download dlGameIcons;
+        private Download dlGames;
+        private Download dlGameInfo;
+        private Download dlGamesIcon;
 
         public Main()
         {
             InitializeComponent();
+
             Shown += RADB_Shown;
 
+            //KeyPreview = true;
+            //KeyDown += Main_KeyDown;
+
+            tabMain.KeyDown += tabMain_KeyDown;
+
+            dgvConsoles.AutoGenerateColumns = true;
+            dgvConsoles.SelectionChanged += dgvConsoles_SelectionChanged;
+            dgvConsoles.KeyDown += dgvConsoles_KeyDown;
             dgvConsoles.KeyPress += dgvConsoles_KeyPress;
             dgvConsoles.CellDoubleClick += dgvConsoles_CellDoubleClick;
 
+            dgvGames.AutoGenerateColumns = false;
+            dgvGames.SelectionChanged += dgvGames_SelectionChanged;
+            dgvGames.KeyDown += dgvGames_KeyDown;
             dgvGames.KeyPress += dgvGames_KeyPress;
             dgvGames.CellDoubleClick += dgvGames_CellDoubleClick;
             dgvGames.Scroll += dgvGames_Scroll;
@@ -39,12 +53,6 @@ namespace RADB
             dgvGames.DataSourceChanged += dgvGames_Sorted;
 
             btnDownloadBadges.Click += btnDownloadBadges_Click;
-
-            //RA.CheckLocalFiles();
-
-            //Load Values
-            dgvConsoles.AutoGenerateColumns = true;
-            dgvGames.AutoGenerateColumns = false;
 
             //Reset placeholders
             lblProgressConsoles.Text = string.Empty;
@@ -58,11 +66,6 @@ namespace RADB
             Folder.CreateFolders();
         }
 
-        private async void btnDownloadBadges_Click(object sender, EventArgs e)
-        {
-            await RA.DownloadBadges(1);
-        }
-
         private async void RADB_Shown(object sender, EventArgs e)
         {
             dlConsoles = new Download
@@ -73,7 +76,7 @@ namespace RADB
                 LabelTimeName = lblUpdateConsoles.Name,
             };
 
-            dlGameList = new Download
+            dlGames = new Download
             {
                 Overwrite = true,
                 ProgressBarName = pgbGameList.Name,
@@ -81,7 +84,7 @@ namespace RADB
                 LabelTimeName = lblUpdateGameList.Name,
             };
 
-            dlGameIcons = new Download()
+            dlGamesIcon = new Download()
             {
                 Overwrite = false,
                 ProgressBarName = pgbGameList.Name,
@@ -89,7 +92,7 @@ namespace RADB
                 LabelTimeName = lblUpdateGameList.Name,
             };
 
-            dlGameInfoExtended = new Download
+            dlGameInfo = new Download
             {
                 Overwrite = false,
                 ProgressBarName = pgbInfo.Name,
@@ -97,14 +100,19 @@ namespace RADB
                 LabelTimeName = lblUpdateInfo.Name,
             };
 
-            //dgvs
             await LoadConsoles();
-            if (dgvConsoles.CurrentRow != null)
-            {
-                await LoadGames(dgvConsoles.CurrentRow.DataBoundItem as Console);
-            }
+            await LoadGames();
+            //TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
+            //TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
         }
 
+        private void Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = e.Modifiers == Keys.Alt;
+        }
+        #endregion
+
+        #region Tab
         private void tabMain_SelectedIndexChanged(object sender, EventArgs e)
         {
             TabControl tab = (sender as TabControl);
@@ -124,6 +132,13 @@ namespace RADB
                 pnlInfoScroll.Focus(); return;
             }
         }
+
+        private void tabMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers != Keys.Alt) { return; }
+            if (e.KeyCode == Keys.Right && tabMain.SelectedIndex < tabMain.TabPages.Count) { tabMain.SelectedIndex += 1; }
+            if (e.KeyCode == Keys.Left && tabMain.SelectedIndex > 0) { tabMain.SelectedIndex -= 1; }
+        }
         #endregion
 
         #region Consoles
@@ -131,16 +146,14 @@ namespace RADB
         {
             pnlDownloadConsoles.Enabled = enable;
 
-            lblConsolesFound.Visible = enable;
+            lblNotFoundConsoles.Visible = enable;
             picLoaderConsole.Visible = !enable;
+
             if (enable)
             {
-                string FileConsoles = RA.FileConsoles();
-                if (File.Exists(FileConsoles))
-                {
-                    lblConsolesFound.Visible = !enable;
-                    lblUpdateConsoles.Text = Archive.LastUpdate(FileConsoles).ToString();
-                }
+                if (dgvConsoles.RowCount > 0) { lblNotFoundConsoles.Visible = false; }
+
+                lblUpdateConsoles.Text = Archive.LastUpdate(RA.ConsolesFile());
             }
             else
             {
@@ -150,28 +163,16 @@ namespace RADB
 
         private async Task LoadConsoles()
         {
-            if (File.Exists(RA.FileConsoles()) == false) return;
             EnablePanelConsoles(false);
-
-            //ListBind<Console> list = await RA.ListConsoles();
-            ListBind<Console> list = await Console.ListarBind();
-
-            dgvConsoles.DataSource = list;
-
+            dgvConsoles.DataSource = await Console.ListarBind(); ;
             dgvConsoles.Focus();
-
             EnablePanelConsoles(true);
         }
 
         private async void btnUpdateConsoles_Click(object sender, EventArgs e)
         {
             EnablePanelConsoles(false);
-            dlConsoles.File = RA.DownloadConsoles();
-            await dlConsoles.Start();
-
-            await Console.Excluir();
-            await ConsoleDao.IncluirLista(await RA.ListConsoles());
-
+            await RA.DownloadConsoles(dlConsoles);
             await LoadConsoles();
 
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + "Consoles Updated!" + Environment.NewLine + lblOutput.Text;
@@ -179,7 +180,7 @@ namespace RADB
 
         private async void dgvConsoles_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == -1) return;
+            if (e.RowHeader()) return;
 
             lblUpdateGameList.Text = string.Empty;
             lblProgressGameList.Text = string.Empty;
@@ -187,8 +188,7 @@ namespace RADB
 
             tabMain.SelectedTab = tabGames;
 
-            Console obj = dgvConsoles.CurrentRow.DataBoundItem as Console;
-            await LoadGames(obj);
+            await LoadGames();
         }
         #endregion
 
@@ -197,17 +197,14 @@ namespace RADB
         {
             pnlDownloadGameList.Enabled = enable;
 
-            lblGameListFound.Visible = enable;
+            lblNotFoundGameList.Visible = enable;
             picLoaderGameList.Visible = !enable;
+
             if (enable)
             {
-                Console console = dgvConsoles.CurrentRow.DataBoundItem as Console;
-                string FileGameList = RA.FileGameList(console.Name);
-                if (File.Exists(FileGameList))
-                {
-                    lblGameListFound.Visible = !enable;
-                    lblUpdateGameList.Text = Archive.LastUpdate(FileGameList).ToString();
-                }
+                if (dgvGames.RowCount > 0) { lblNotFoundGameList.Visible = false; }
+
+                lblUpdateGameList.Text = Archive.LastUpdate(RA.GamesFile(ConsoleBind.Name));
             }
             else
             {
@@ -215,73 +212,57 @@ namespace RADB
             }
         }
 
-        private async Task LoadGames(Console console)
+        private async Task LoadGames()
         {
+            if (ConsoleBind.IsNull()) { return; }
+
             EnablePanelGames(false);
-
-            if (console == null || File.Exists(RA.FileGameList(console.Name)) == false)
-            {
-                EnablePanelGames(true); return;
-            }
-
-            dgvGames.DataSource = await Game.ListarBind(console.ID);
+            dgvGames.DataSource = await Game.ListarBind(ConsoleBind.ID);
             dgvGames.Focus();
-
             EnablePanelGames(true);
-            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
-            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
         }
 
         private async void btnUpdateGameList_Click(object sender, EventArgs e)
         {
-            if (dgvConsoles.RowCount == 0)
-            {
-                MessageBox.Show("No Console Selected");
-                return;
-            }
+            if (ConsoleBind.IsNull()) { MessageBox.Show("No Console Selected"); return; }
 
             EnablePanelGames(false);
-            Console console = (dgvConsoles.CurrentRow.DataBoundItem as Console);
 
             //Download GameList
-            dlGameList.File = RA.DownloadGameList(console);
-            await dlGameList.Start();
-
-            await Game.Excluir(console.ID);
-            List<Game> games = await RA.ListGameList(console);
-            await Game.IncluirLista(games);
-            await LoadGames(console);
+            await RA.DownloadGames(dlGames, ConsoleBind);
+            await LoadGames();
 
             dgvGames.Enabled = false;
-            await RA.DownloadGameIcons(games, dlGameIcons);
+
+            //Download game icons
+            await RA.DownloadGamesIcon(dlGamesIcon, ConsoleBind);
 
             dgvGames.Enabled = true;
             dgvGames.Focus();
             dgvGames_Sorted(null, null);
             dgvGames.Refresh();
 
-            lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + console.Name + " GameList Updated!" + Environment.NewLine + lblOutput.Text;
+            lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + ConsoleBind.Name + " GameList Updated!" + Environment.NewLine + lblOutput.Text;
         }
 
         private void dgvGames_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == -1) return;
+            if (e.RowHeader()) return;
 
-            Game obj = dgvGames.CurrentRow.DataBoundItem as Game;
-            lblInfoName.Text = obj.Title + " (" + obj.ConsoleName + ")";
+            lblInfoName.Text = GameBind.Title + " (" + GameBind.ConsoleName + ")";
 
-            picInfoIcon.Image = obj.ImageIconBitmap;
-            lblInfoDeveloper.Text = obj.Developer;
-            lblInfoPublisher.Text = obj.Publisher;
-            lblInfoGenre.Text = obj.Genre;
-            lblInfoReleased.Text = obj.Released;
+            picInfoIcon.Image = GameBind.ImageIconBitmap;
+            lblInfoDeveloper.Text = GameBind.Developer;
+            lblInfoPublisher.Text = GameBind.Publisher;
+            lblInfoGenre.Text = GameBind.Genre;
+            lblInfoReleased.Text = GameBind.Released;
 
-            picInfoTitle.Image = obj.ImageTitleBitmap;
-            picInfoTitle.Size = obj.ImageTitlePicture.Scale(picInfoTitle.MaximumSize);
-            picInfoInGame.Image = obj.ImageIngameBitmap;
-            picInfoInGame.Size = obj.ImageIngamePicture.Scale(picInfoInGame.MaximumSize);
+            picInfoTitle.Image = GameBind.ImageTitleBitmap;
+            picInfoTitle.Size = GameBind.ImageTitlePicture.Scale(picInfoTitle.MaximumSize);
+            picInfoInGame.Image = GameBind.ImageIngameBitmap;
+            picInfoInGame.Size = GameBind.ImageIngamePicture.Scale(picInfoInGame.MaximumSize);
 
-            FillAchievements(obj);
+            FillAchievements(GameBind);
 
             tabMain.SelectedTab = tabGameInfo;
         }
@@ -333,31 +314,28 @@ namespace RADB
         }
         private async void btnUpdateInfo_Click(object sender, EventArgs e)
         {
-            if (dgvGames.CurrentRow.IsNull()) return;
-
             //Download GameInfo Extend
-            Game game = dgvGames.CurrentRow.DataBoundItem as Game;
-            if (game == null) { return; }
+            if (GameBind == null) { return; }
 
-            dlGameInfoExtended.File = RA.DownloadGameInfoExtended(game);
-            await dlGameInfoExtended.Start();
+            dlGameInfo.File = RA.DownloadGameInfoExtended(GameBind);
+            await dlGameInfo.Start();
 
-            string FileGameInfoExtended = dlGameInfoExtended.File.Path;
+            string FileGameInfoExtended = dlGameInfo.File.Path;
             lblUpdateInfo.Text = Archive.LastUpdate(FileGameInfoExtended).ToString();
             JObject resultInfo = Browser.ToJObject(FileGameInfoExtended);
             Game gameInfo = resultInfo.ToObject<Game>();
 
-            game.Developer = gameInfo.Developer;
-            game.Publisher = gameInfo.Publisher;
-            game.Genre = gameInfo.Genre;
-            game.Released = gameInfo.Released;
+            GameBind.Developer = gameInfo.Developer;
+            GameBind.Publisher = gameInfo.Publisher;
+            GameBind.Genre = gameInfo.Genre;
+            GameBind.Released = gameInfo.Released;
 
-            lblInfoName.Text = game.Title + " (" + game.ConsoleName + ")";
+            lblInfoName.Text = GameBind.Title + " (" + GameBind.ConsoleName + ")";
 
-            lblInfoDeveloper.Text = game.Developer;
-            lblInfoPublisher.Text = game.Publisher;
-            lblInfoGenre.Text = game.Genre;
-            lblInfoReleased.Text = game.Released;
+            lblInfoDeveloper.Text = GameBind.Developer;
+            lblInfoPublisher.Text = GameBind.Publisher;
+            lblInfoGenre.Text = GameBind.Genre;
+            lblInfoReleased.Text = GameBind.Released;
 
             List<DownloadFile> dlFiles = new List<DownloadFile>() {
                 new DownloadFile(RA.URL_Images + gameInfo.ImageIcon, gameInfo.ImageIconPath),
@@ -365,34 +343,34 @@ namespace RADB
                 new DownloadFile(RA.URL_Images + gameInfo.ImageIngame, gameInfo.ImageIngamePath),
             };
 
-            dlGameInfoExtended.Files = dlFiles;
-            await dlGameInfoExtended.Start();
+            dlGameInfo.Files = dlFiles;
+            await dlGameInfo.Start();
 
-            game.ImageIcon = gameInfo.ImageIcon;
-            game.ImageTitle = gameInfo.ImageTitle;
-            game.ImageIngame = gameInfo.ImageIngame;
+            GameBind.ImageIcon = gameInfo.ImageIcon;
+            GameBind.ImageTitle = gameInfo.ImageTitle;
+            GameBind.ImageIngame = gameInfo.ImageIngame;
 
-            picInfoIcon.Image = game.ImageIconBitmap;
-            picInfoTitle.Image = game.ImageTitleBitmap;
-            picInfoTitle.Size = game.ImageTitlePicture.Scale(picInfoTitle.MaximumSize);
-            picInfoInGame.Image = game.ImageIngameBitmap;
-            picInfoInGame.Size = game.ImageIngamePicture.Scale(picInfoInGame.MaximumSize);
+            picInfoIcon.Image = GameBind.ImageIconBitmap;
+            picInfoTitle.Image = GameBind.ImageTitleBitmap;
+            picInfoTitle.Size = GameBind.ImageTitlePicture.Scale(picInfoTitle.MaximumSize);
+            picInfoInGame.Image = GameBind.ImageIngameBitmap;
+            picInfoInGame.Size = GameBind.ImageIngamePicture.Scale(picInfoInGame.MaximumSize);
 
-            game.SetAchievements(resultInfo["Achievements"]);
-            FillAchievements(game);
+            GameBind.SetAchievements(resultInfo["Achievements"]);
+            FillAchievements(GameBind);
 
             dgvGames.Refresh();
             pnlInfoScroll.Focus();
         }
         #endregion
 
-        private void dgv_KeyPress(DataGridView dgv, KeyPressEventArgs e, string columnName)
+        private void dgv_KeyPress(object sender, KeyPressEventArgs e, string columnName)
         {
-            char typedChar;
-            if (Char.IsLetter(e.KeyChar))
-            {
-                typedChar = e.KeyChar;
+            DataGridView dgv = (DataGridView)sender;
+            char typedChar = e.KeyChar;
 
+            if (Char.IsLetter(typedChar))
+            {
                 if (typedChar == (char)Keys.Left || typedChar == (char)Keys.Right ||
                     typedChar == (char)Keys.Up || typedChar == (char)Keys.Down)
                 {
@@ -417,12 +395,47 @@ namespace RADB
 
         private void dgvConsoles_KeyPress(object sender, KeyPressEventArgs e)
         {
-            dgv_KeyPress((DataGridView)sender, e, "cName");
+            dgv_KeyPress(sender, e, "cName");
         }
 
         private void dgvGames_KeyPress(object sender, KeyPressEventArgs e)
         {
-            dgv_KeyPress((DataGridView)sender, e, "gTitle");
+            dgv_KeyPress(sender, e, "gTitle");
+        }
+
+        private void dgvGames_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                e.Handled = true;
+                dgvGames_CellDoubleClick(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
+            }
+        }
+
+        private void dgvConsoles_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                e.Handled = true;
+                dgvConsoles_CellDoubleClick(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
+            }
+        }
+
+        private T dgv_SelectionChanged<T>(object sender) where T : class
+        {
+            if (((DataGridView)sender).CurrentRow.NotNull())
+                return ((DataGridView)sender).CurrentRow.DataBoundItem as T;
+            return null;
+        }
+
+        private void dgvGames_SelectionChanged(object sender, EventArgs e)
+        {
+            GameBind = dgv_SelectionChanged<Game>(sender);
+        }
+
+        private void dgvConsoles_SelectionChanged(object sender, EventArgs e)
+        {
+            ConsoleBind = dgv_SelectionChanged<Console>(sender);
         }
 
         private async void btnUserCheevos_Click(object sender, EventArgs e)
@@ -433,15 +446,19 @@ namespace RADB
             {
                 lblUserCheevos.Text = await Task<string>.Run(async () =>
                 {
-                    Game game = dgvGames.CurrentRow.DataBoundItem as Game;
-                    picUserCheevos.Image = new Bitmap(game.ImageIconBitmap);
-                    UserProgress obj = await RA.GetUserProgress(game.ID);
-                    return obj.NumAchieved + " / " + game.NumAchievements;
+                    picUserCheevos.Image = GameBind.ImageIconBitmap;
+                    UserProgress user = await RA.GetUserProgress(GameBind.ID);
+                    return user.NumAchieved + " / " + GameBind.NumAchievements;
                 });
 
                 await Task.Run(() => { Thread.Sleep(5000); });
 
             } while (chkUserCheevos.Checked);
+        }
+
+        private async void btnDownloadBadges_Click(object sender, EventArgs e)
+        {
+            await RA.DownloadBadges(1);
         }
     }
 }
