@@ -49,10 +49,10 @@ namespace RADB
             dgvGames.KeyDown += dgvGames_KeyDown;
             dgvGames.KeyPress += dgvGames_KeyPress;
             dgvGames.CellDoubleClick += dgvGames_CellDoubleClick;
+
             dgvGames.Scroll += dgvGames_Scroll;
             dgvGames.Sorted += dgvGames_Sorted;
             dgvGames.DataSourceChanged += dgvGames_Sorted;
-            dgvGames.CurrentCellChanged+=dgvGames_CurrentCellChanged;
 
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
 
@@ -174,6 +174,15 @@ namespace RADB
             EnablePanelConsoles(true);
         }
 
+        private void UpdateConsoleLabels()
+        {
+            if (ConsoleBind.NotNull())
+            {
+                lblConsoleName.Text = ConsoleBind.Name;
+                lblConsoleGamesTotal.Text = ConsoleBind.NumGames + " of " + ConsoleBind.TotalGames + " Games";
+            }
+        }
+
         private async void btnUpdateConsoles_Click(object sender, EventArgs e)
         {
             EnablePanelConsoles(false);
@@ -188,11 +197,7 @@ namespace RADB
             if (e.RowHeader()) return;
 
             ConsoleBind = dgv_SelectionChanged<Console>(sender);
-            if (ConsoleBind.NotNull())
-            {
-                lblConsoleName.Text = ConsoleBind.Name;
-                lblConsoleGamesTotal.Text = ConsoleBind.NumGames + " of " + ConsoleBind.TotalGames + " Games";
-            }
+            UpdateConsoleLabels();
 
             lblUpdateGameList.Text = string.Empty;
             lblProgressGameList.Text = string.Empty;
@@ -254,6 +259,8 @@ namespace RADB
             ListBind<Game> list = (ListBind<Game>)dgvGames.DataSource;
             ConsoleBind.NumGames = list.Sum(g => (g.NumAchievements > 0).ToInt());
             ConsoleBind.TotalGames = list.Count();
+
+            UpdateConsoleLabels();
 
             dgvGames.Enabled = false;
 
@@ -430,11 +437,6 @@ namespace RADB
 
         private void dgvGames_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyData == Keys.Tab || e.KeyData == Keys.Left || e.KeyData == Keys.Right)
-            {
-                e.Handled = true;
-            }
-
             if (e.KeyData == Keys.Enter)
             {
                 e.Handled = true;
@@ -458,10 +460,6 @@ namespace RADB
             return null;
         }
 
-        private void dgvGames_CurrentCellChanged(object sender, EventArgs e)
-        {
-        }
-
         private void txtSearchGames_TextChanged(object sender, EventArgs e)
         {
             lstGamesSearch.Clear();
@@ -477,9 +475,7 @@ namespace RADB
                     lstGamesSearch.Add(obj);
                 }
             }
-            dgvGames_Sorted(null, null);
-            //Coluna inicial para ordenar
-            //dgvGames.SortDefaultColumn();
+            dgvGames_Scroll(dgvGames, null);
         }
 
         private async void btnUserCheevos_Click(object sender, EventArgs e)
