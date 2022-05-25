@@ -15,9 +15,9 @@ namespace RADB
         [STAThread]
         static void Main()
         {
-            AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures.3", true);
-            AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures.2", true);
-            AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures", true);
+            //AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures.3", true);
+            //AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures.2", true);
+            //AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures", true);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

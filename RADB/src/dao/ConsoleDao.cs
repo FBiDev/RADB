@@ -22,6 +22,8 @@ namespace RADB
                 {
                     ID = row.Value<int>("ID"),
                     Name = row.Value<string>("Name"),
+                    NumGames = row.Value<int>("NumGames"),
+                    TotalGames = row.Value<int>("TotalGames"),
                 });
             }
             return list;

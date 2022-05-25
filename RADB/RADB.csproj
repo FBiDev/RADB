@@ -78,6 +78,12 @@
     <Compile Include="src\cls\Console.cs" />
     <Compile Include="src\cls\Browser.cs" />
     <Compile Include="src\cls\UserProgress.cs" />
+    <Compile Include="src\custom\FlatButtonA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\custom\FlatTextBoxA.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="src\dao\ConsoleDao.cs" />
     <Compile Include="src\dao\GameDao.cs" />
     <Compile Include="src\forms\Main.cs">

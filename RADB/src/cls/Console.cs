@@ -11,6 +11,8 @@ namespace RADB
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public int NumGames { get; set; }
+        public int TotalGames { get; set; }
 
         public async static Task<bool> IncluirLista(IList<Console> list)
         {
