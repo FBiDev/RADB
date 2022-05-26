@@ -10,6 +10,7 @@ namespace RADB
     public class Console
     {
         public int ID { get; set; }
+        public string Company { get; set; }
         public string Name { get; set; }
         public int NumGames { get; set; }
         public int TotalGames { get; set; }

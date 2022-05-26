@@ -102,7 +102,8 @@ namespace RADB
         public async Task<UserProgress> GetUserProgress(int gameID)
         {
             string download = await Browser.DownloadString(GetURL("API_GetUserProgress.php", "u=" + API_UserName + "&i=" + gameID));
-            string userData = RegexHelper.Between(":", "}", download);
+            string userData = cString.GetBetween(":{", "}}", download);
+            userData = "{" + userData + "}";
 
             UserProgress user = null;
             if (string.IsNullOrWhiteSpace(userData) == false)

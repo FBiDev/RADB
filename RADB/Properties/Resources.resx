@@ -127,6 +127,9 @@
   <data name="ConsoleListar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\src\rsc\sql\consolelistar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="favicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\image\favicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="GameExcluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\src\rsc\sql\gameexcluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

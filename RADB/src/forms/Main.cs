@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 //
 using System.Drawing;
 using GNX;
+using RADB.Properties;
 
 namespace RADB
 {
@@ -32,6 +33,7 @@ namespace RADB
         public Main()
         {
             InitializeComponent();
+            Icon = GNX.cConvert.ToIco(Resources.favicon, new Size(250, 250));
 
             Shown += RADB_Shown;
 

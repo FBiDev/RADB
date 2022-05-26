@@ -140,6 +140,7 @@
     <Content Include="src\rsc\dll64\referenced\System.Data.SQLite.dll" />
     <Content Include="src\rsc\exe\jpegoptim_1.4.7.exe" />
     <Content Include="src\rsc\exe\pngcrush_1_8_11_w64.exe" />
+    <Content Include="src\rsc\image\favicon.png" />
     <Content Include="src\rsc\image\loader.gif" />
     <Content Include="src\rsc\image\notfound.png" />
     <Content Include="src\rsc\sql\ConsoleListar.sql" />

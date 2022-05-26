@@ -21,6 +21,7 @@ namespace RADB
                 list.Add(new Console()
                 {
                     ID = row.Value<int>("ID"),
+                    Company = row.Value<string>("Company"),
                     Name = row.Value<string>("Name"),
                     NumGames = row.Value<int>("NumGames"),
                     TotalGames = row.Value<int>("TotalGames"),
@@ -61,7 +62,7 @@ namespace RADB
 
                 //Monta SQL
                 string sql = Resources.ConsoleListar;
-                sql += " ORDER BY Name ASC ";
+                //sql += " ORDER BY Name ASC ";
 
                 return Carregar<List<Console>>(Banco.ExecutarSelect(sql, MontarFiltros(obj)));
             });

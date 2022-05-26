@@ -98,14 +98,18 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized string similar to --
         ///SELECT 
-        ///	  ID 
-        ///	, Name 
-        ///FROM Console 
+        ///	  c.ID 
+        ///	, c.Name 
+        ///	, SUM(CASE WHEN g.NumAchievements &gt; 0 THEN 1 ELSE 0 END) NumGames 
+        ///	, Count(g.ID) AS TotalGames 
+        ///FROM Console AS c 
+        ///	LEFT JOIN Game AS g on g.ConsoleID = c.ID 
         ///WHERE 1 = 1 
-        ///	AND (ID = @ID 
+        ///	AND (c.ID = @ID 
         ///		OR (@ID = 0 OR @ID IS NULL)) 
-        ///	AND (Name LIKE &apos;%&apos;+@Name+&apos;%&apos; 
+        ///	AND (c.Name LIKE &apos;%&apos;+@Name+&apos;%&apos; 
         ///		OR (@Name = &apos;&apos; OR @Name IS NULL)) 
+        ///GROUP BY c.ID 
         ///	.
         /// </summary>
         internal static string ConsoleListar {
@@ -115,9 +119,19 @@ namespace RADB.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap favicon {
+            get {
+                object obj = ResourceManager.GetObject("favicon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to --
         ///DELETE 
-        ///FROM game 
+        ///FROM Game 
         ///WHERE 1 = 1 
         ///	AND (ID = @ID 
         ///		OR (@ID = 0 OR @ID IS NULL)) 
@@ -134,7 +148,7 @@ namespace RADB.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to --
-        ///INSERT INTO game ( 
+        ///INSERT INTO Game ( 
         ///	  ID 
         ///	, Title 
         ///	, ConsoleID 
@@ -169,7 +183,7 @@ namespace RADB.Properties {
         ///	, NumLeaderboards 
         ///	, Points 
         ///	, ImageIcon 
-        ///FROM game  
+        ///FROM Game  
         ///WHERE 1 = 1 
         ///	AND (ID = @ID 
         ///		OR (@ID = 0 OR @ID IS NULL)) 
