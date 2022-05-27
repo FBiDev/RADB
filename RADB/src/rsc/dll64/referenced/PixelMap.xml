@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PixelMap</name>
+    </assembly>
+    <members>
+        <member name="M:PixelMapSharp.Pixel.#ctor(System.Drawing.Color)">
+            <summary>
+            Creates a pixel from a System.Drawing color.</summary>
+        </member>
+        <member name="M:PixelMapSharp.Pixel.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a pixel from integer RGB values.</summary>
+        </member>
+        <member name="M:PixelMapSharp.Pixel.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a pixel from ARGB values.</summary>
+        </member>
+        <member name="M:PixelMapSharp.Pixel.#ctor(System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Creates a pixel from RGB values.</summary>
+        </member>
+        <member name="M:PixelMapSharp.Pixel.#ctor(System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Creates a pixel from ARGB values.</summary>
+        </member>
+        <member name="M:PixelMapSharp.Pixel.#ctor(System.Double,System.Double,System.Double,System.Byte)">
+            <summary>
+            Creates a pixel from HSL-A values.</summary>
+        </member>
+        <member name="M:PixelMapSharp.Pixel.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            Creates a pixel from HSL values.</summary>
+        </member>
+        <member name="F:PixelMapSharp.Pixel.A">
+            <summary>
+            The alpha value of the Pixel from 0 to 255.</summary>
+        </member>
+        <member name="F:PixelMapSharp.Pixel.R">
+            <summary>
+            The red value of the Pixel from 0 to 255.</summary>
+        </member>
+        <member name="F:PixelMapSharp.Pixel.G">
+            <summary>
+            The green value of the Pixel from 0 to 255.</summary>
+        </member>
+        <member name="F:PixelMapSharp.Pixel.B">
+            <summary>
+            The blue value of the Pixel from 0 to 255.</summary>
+        </member>
+        <member name="M:PixelMapSharp.Pixel.op_Addition(PixelMapSharp.Pixel,PixelMapSharp.Pixel)">
+            <summary>
+            Additive mix of two pixels.</summary>
+        </member>
+        <member name="M:PixelMapSharp.Pixel.op_Multiply(PixelMapSharp.Pixel,PixelMapSharp.Pixel)">
+            <summary>
+            Multiplicative mix of two pixels.</summary>
+        </member>
+        <member name="M:PixelMapSharp.Pixel.op_Subtraction(PixelMapSharp.Pixel,PixelMapSharp.Pixel)">
+            <summary>
+            Difference mix of two pixels.</summary>
+        </member>
+        <member name="P:PixelMapSharp.Pixel.AValue">
+            <summary>
+            The alpha value of the Pixel from 0 to 1.</summary>
+        </member>
+        <member name="P:PixelMapSharp.Pixel.RValue">
+            <summary>
+            The red value of the Pixel from 0 to 1.</summary>
+        </member>
+        <member name="P:PixelMapSharp.Pixel.GValue">
+            <summary>
+            The green value of the Pixel from 0 to 1.</summary>
+        </member>
+        <member name="P:PixelMapSharp.Pixel.BValue">
+            <summary>
+            The blue value of the Pixel from 0 to 1.</summary>
+        </member>
+        <member name="P:PixelMapSharp.Pixel.Hue">
+            <summary>
+            The Hue value of the Pixel, radially spanning from 0 to 360 degrees.</summary>
+        </member>
+        <member name="P:PixelMapSharp.Pixel.Saturation">
+            <summary>
+            The saturation value of the Pixel.</summary>
+        </member>
+        <member name="P:PixelMapSharp.Pixel.Lightness">
+            <summary>
+            The lightness value of the Pixel.</summary>
+        </member>
+        <member name="P:PixelMapSharp.Pixel.Color">
+            <summary>
+            The GDI color equivalent.</summary>
+        </member>
+        <member name="T:PixelMapSharp.PixelMap">
+            <summary>
+            A container of mutable pixel data.</summary>
+        </member>
+        <member name="M:PixelMapSharp.PixelMap.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates a blank PixelMap of desired width and height.</summary>
+        </member>
+        <member name="M:PixelMapSharp.PixelMap.#ctor(PixelMapSharp.PixelMap)">
+            <summary>
+            Clones a PixelMap.</summary>
+        </member>
+        <member name="M:PixelMapSharp.PixelMap.#ctor(System.String)">
+            <summary>
+            Quickly creates a PixelMap from a file path.</summary>
+        </member>
+        <member name="M:PixelMapSharp.PixelMap.#ctor(System.Drawing.Bitmap)">
+            <summary>
+            Quickly creates a PixelMap from a Bitmap.</summary>
+            <seealso cref="M:PixelMapSharp.PixelMap.SlowLoad(System.Drawing.Bitmap)">
+            Copies a Bitmap through slow pixel-by-pixel reads. </seealso>
+        </member>
+        <member name="F:PixelMapSharp.PixelMap.Width">
+            <summary>
+            The width of the PixelMap in pixels.</summary>
+        </member>
+        <member name="F:PixelMapSharp.PixelMap.Height">
+            <summary>
+            The height of the PixelMap in pixels.</summary>
+        </member>
+        <member name="M:PixelMapSharp.PixelMap.Inside(System.Drawing.Point)">
+            <summary>
+            Determine if a point is within this PixelMap.</summary>
+        </member>
+        <member name="M:PixelMapSharp.PixelMap.GetBitmap">
+            <summary>
+            Produce a Bitmap from this PixelMap.</summary>
+        </member>
+        <member name="M:PixelMapSharp.PixelMap.SlowLoad(System.Drawing.Bitmap)">
+            <summary>
+            Load a Bitmap pixel-by-pixel, slowly.</summary>
+        </member>
+        <member name="P:PixelMapSharp.PixelMap.Item(System.Int32,System.Int32)">
+            <summary>
+            Access a Pixel of the PixelMap from its X and Y coordinates.</summary>
+        </member>
+        <member name="P:PixelMapSharp.PixelMap.Item(System.Drawing.Point)">
+            <summary>
+            Access a Pixel of the PixelMap from its X and Y coordinates contained within a Point.</summary>
+        </member>
+        <member name="P:PixelMapSharp.PixelMap.Item(System.Int32)">
+            <summary>
+            Access a Pixel of the PixelMap from its flattened index.</summary>
+        </member>
+    </members>
+</doc>

@@ -10,6 +10,7 @@ using System.Text;
 using System.Globalization;
 using System.Diagnostics;
 using RADB.Properties;
+using PixelMapSharp;
 
 namespace RADB
 {
@@ -38,7 +39,7 @@ namespace RADB
         public string Name { get { return System.IO.Path.GetFileName(Path); } }
         private ImageFormat Format { get; set; }
         private PictureFormat FormatEnum { get; set; }
-        
+
         public Size Scale(Size maxSize)
         {
             float factor = Bitmap.Width >= Bitmap.Height ? (float)Bitmap.Height / (float)Bitmap.Width : (float)Bitmap.Width / (float)Bitmap.Height;
@@ -61,6 +62,8 @@ namespace RADB
 
         private List<string> ImageFiles { get; set; }
         public int ImagesPerRow { get; set; }
+        public Size FixedPerImage { get; set; }
+
         public string Error { get; set; }
 
         private string FolderExe
@@ -93,7 +96,9 @@ namespace RADB
             try
             {
                 if (new FileInfo(Path).Length > 0)
-                { Bitmap = new Bitmap(Path); }
+                {
+                    Bitmap = FromFile(Path);
+                }
             }
             catch (Exception e)
             {
@@ -101,12 +106,13 @@ namespace RADB
             }
         }
 
-        public Picture(List<string> imagesToMerge, bool merge = true, int imagesPerRow = 11)
+        public Picture(List<string> imagesToMerge, bool merge = true, int imagesPerRow = 11, Size fixedPerImage = default(Size))
         {
             DefaultValues();
 
             ImageFiles = imagesToMerge;
             ImagesPerRow = imagesPerRow;
+            FixedPerImage = fixedPerImage;
 
             BlankBitmap();
 
@@ -116,15 +122,26 @@ namespace RADB
             }
         }
 
-        public Picture(int width, int height, string fileName = "")
+        public Picture(Size size)
+            : this(size.Width, size.Height)
+        { }
+
+        public Picture(int width, int height)
         {
             DefaultValues();
 
-            Path = fileName;
             Bitmap = new Bitmap(width, height);
 
             //Default Background
             using (Graphics g = Graphics.FromImage(Bitmap)) { g.Clear(Color.Magenta); }
+        }
+
+        public Bitmap FromFile(string filePath)
+        {
+            var bytes = File.ReadAllBytes(filePath);
+            var ms = new MemoryStream(bytes);
+            //var img = Image.FromStream(ms);
+            return (Bitmap)Image.FromStream(ms);
         }
 
         #region Saves
@@ -147,7 +164,7 @@ namespace RADB
             Bitmap.Save(Path, GetEncoder(Format), Parameters);
             Bitmap.Dispose();
 
-            CompressCMD();
+            //CompressCMD();
         }
 
         public void SaveGrayscale(string fileName, PictureFormat format = PictureFormat.Jpg)
@@ -250,7 +267,8 @@ namespace RADB
                 }
 
                 //create a Bitmap from the file and add it to the list
-                Bitmap image = new Bitmap(imageFile);
+                Bitmap image = FromFile(imageFile);
+                //Bitmap image = new Bitmap(imageFile);
 
                 //update the width of the final bitmap
                 if (index <= imagesPerRow && width <= maxWidth)
@@ -309,7 +327,8 @@ namespace RADB
 
                 foreach (string imageFile in ImageFiles)
                 {
-                    Bitmap image = new Bitmap(imageFile);
+                    Bitmap image = FromFile(imageFile);
+                    //Bitmap image = new Bitmap(imageFile);
 
                     if (index > imagesPerRow)
                     {
@@ -320,12 +339,12 @@ namespace RADB
                     }
                     if (image.Height > offsetHLine)
                     {
-                        offsetHLine = image.Height;
+                        offsetHLine = FixedPerImage.Height == 0 ? image.Height : FixedPerImage.Height;
                     }
                     index++;
 
                     g.DrawImage(image, new Rectangle(offsetW, offsetH, image.Width, image.Height));
-                    offsetW += image.Width;
+                    offsetW += FixedPerImage.Width == 0 ? image.Width : FixedPerImage.Width;
 
                     image.Dispose();
                 }

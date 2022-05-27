@@ -9,6 +9,9 @@ using Newtonsoft.Json.Linq;
 using GNX;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Drawing;
+using System.Security.Cryptography;
+using System.Collections;
 
 namespace RADB
 {
@@ -39,6 +42,8 @@ namespace RADB
             return API_URL + target + AuthQS() + "&" + parames;
         }
         #endregion
+
+        public static Size GamesIconSize { get { return new Size(96, 96); } }
 
         #region _Consoles
         public string ConsolesFile() { return Folder.Consoles + "Consoles.json"; }
@@ -101,8 +106,8 @@ namespace RADB
 
         public async Task<UserProgress> GetUserProgress(int gameID)
         {
-            string download = await Browser.DownloadString(GetURL("API_GetUserProgress.php", "u=" + API_UserName + "&i=" + gameID));
-            string userData = cString.GetBetween(":{", "}}", download);
+            string userData = await Browser.DownloadString(GetURL("API_GetUserProgress.php", "u=" + API_UserName + "&i=" + gameID));
+            userData = userData.GetBetween(":{", "}}");
             userData = "{" + userData + "}";
 
             UserProgress user = null;
@@ -147,6 +152,107 @@ namespace RADB
             //return new Game();
         }
 
+        static bool FilesAreEqual_Hash(List<DownloadFile> list)
+        {
+            List<FileInfo> fList = new List<FileInfo>();
+            bool equal = false;
+            for (int f = 0; f < list.Count; f++)
+            {
+                FileInfo first = new FileInfo(list[f].Path);
+                byte[] firstHash = MD5.Create().ComputeHash(first.OpenRead());
+
+                for (int s = f + 1; s < list.Count; s++)
+                {
+                    FileInfo second = new FileInfo(list[s].Path);
+                    byte[] secondHash = MD5.Create().ComputeHash(second.OpenRead());
+
+                    equal = true;
+                    for (int i = 0; i < firstHash.Length; i++)
+                    {
+                        if (firstHash[i] != secondHash[i])
+                        {
+                            equal = false;
+                            break;
+                            //return false;
+                        }
+                    }
+                    if (equal)
+                    {
+                        fList.Add(second);
+                    }
+                    //return true;
+                }
+            }
+            fList = fList.Distinct().ToList();
+            return false;
+
+            //byte[] firstHash = MD5.Create().ComputeHash(first.OpenRead());
+            //byte[] secondHash = MD5.Create().ComputeHash(second.OpenRead());
+        }
+
+        static void QueryDuplicates(List<DownloadFile> list)
+        {
+            var a = list.Select(f =>
+            {
+                using (var fs = new FileStream(f.Path, FileMode.Open, FileAccess.Read))
+                {
+                    return new
+                    {
+                        FileName = f,
+                        FileHash = BitConverter.ToString(SHA1.Create().ComputeHash(fs))
+                    };
+                }
+            });
+            // Change the root drive or folder if necessary  
+            //string startFolder = @"c:\program files\Microsoft Visual Studio 9.0\";
+
+            // Take a snapshot of the file system.  
+            //System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(startFolder);
+
+            // This method assumes that the application has discovery permissions  
+            // for all folders under the specified path.  
+            IEnumerable<System.IO.FileInfo> fileList = list.Select(i => new FileInfo(i.Path));
+
+            // used in WriteLine to keep the lines shorter  
+            //int charsToSkip = startFolder.Length;
+
+            // var can be used for convenience with groups.  
+            var queryDupNames =
+                from file in fileList
+                group file.FullName by file.Name into fileGroup
+                where fileGroup.Count() > 1
+                select fileGroup;
+
+            // Pass the query to a method that will  
+            // output one page at a time.  
+            //PageOutput<string, string>(queryDupNames);
+        }
+
+        //public static void DeleteDuplicateFiles(string searchPath)
+        //{
+        //    foreach (var file in FindDuplicateFiles(searchPath))
+        //        TryDeleteFile(file);
+        //}
+
+        //private static IEnumerable<string> FindDuplicateFiles(List<DownloadFile> lst)
+        //{
+        //    var hashedFiles = new List<FileInfo>(lst.Select(f => new FileInfo(f.Path)))
+        //        .AsParallel()
+        //        .Select(x => new { Path = x, Hash = MD5.Create().ComputeHash(x.OpenRead()) });
+
+        //    return FindDuplicates(hashedFiles);
+        //}
+
+        public void Find(List<DownloadFile> lst)
+        {
+            var hashedFiles = lst.Select(x => new { Path = x.Path, Hash = MD5.Create().ComputeHash(new FileInfo(x.Path).OpenRead()) });
+
+            foreach (var item in hashedFiles)
+            {
+                var duplicates = hashedFiles.Where(i => i.Hash == item.Hash);
+            }
+        }
+
         public async Task DownloadBadges(int gameID)
         {
             ////string fileGameList = Folder.Json + "GameList" + "12" + ".json";
@@ -162,20 +268,25 @@ namespace RADB
             ////return;
 
             ////List<Game> Games = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(fileGameList));
-            ////List<Game> GamesWithCheevos = new List<Game>();
+            //List<Game> GamesWithCheevos = new List<Game>();
 
-            ////List<Achievement> gCheevos = new List<Achievement>();
+            //List<Achievement> gCheevos = new List<Achievement>();
             List<DownloadFile> gFiles = new List<DownloadFile>();
 
             int FilesDownloaded = 0;
-            ////foreach (Game g in Games)
-            ////{
-            ////    Game game = await GetGameInfoExtended(g.ID);
-            ////    if (game.AchievementsList.Count > 0)
-            ////    {
-            ////        GamesWithCheevos.Add(game);
-            ////    }
-            ////}
+
+            //Get ManyGames
+            List<Game> Games = await Game.Listar(58);
+            Games.ForEach(g => gFiles.Add(g.ImageIconDownload()));
+            QueryDuplicates(gFiles);
+            //foreach (Game g in Games)
+            //{
+            //Game game = await GetGameInfoExtended(g.ID);
+            //if (game.AchievementsList.Count > 0)
+            //{
+            //    game.AchievementsList.ForEach(a => gFiles.Add(new DownloadFile(a.BadgeURL(), a.BadgeFile())));
+            //}
+            //}
 
             //GamesWithCheevos.ForEach(gc => gCheevos.AddRange(gc.AchievementsList));
             ////GamesWithCheevos.ForEach(gc => gFiles.AddRange(gc.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList().Distinct().ToList()));
@@ -190,11 +301,12 @@ namespace RADB
 
             //foreach (Game game in GamesWithCheevos)
             //{
-            Game gameX = await GetGameInfoExtended(gameID);
+
+            //Game gameX = await GetGameInfoExtended(gameID);
             Download dlGameBadges = new Download()
             {
-                ////Files = gFiles,
-                Files = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList(),
+                Files = gFiles,
+                //Files = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList(),
                 //Files = new List<DownloadFile>() { new DownloadFile("https://dl18.cdromance.com/download.php?file=Megaman_Powered_Up_USA_PSP-DMU.7z&id=251&platform=psp&key=6299971769", "MM.7z") },
                 Overwrite = false,
                 ProgressBarName = "pgbUpdates",
@@ -209,10 +321,12 @@ namespace RADB
             //L.Text = FilesDownloaded.ToString();
             //}
 
-            //List<string> afiles = gFiles.Select(x => x.Path).ToList();
-            //Picture pic = new Picture(afiles, true, 110);
-            Picture pic = new Picture(gameX.AchievementsFiles());
-            pic.Save(Folder.Achievements(gameX.ConsoleID, gameX.ID) + "badges", PictureFormat.Png);
+            List<string> afiles = gFiles.Select(x => x.Path).ToList();
+            Picture pic = new Picture(afiles, true, 11, GamesIconSize);
+            pic.Save(Folder.Temp + "badges", PictureFormat.Png);
+
+            //Picture pic = new Picture(gameX.AchievementsFiles());
+            //pic.Save(Folder.Achievements(gameX.ConsoleID, gameX.ID) + "badges", PictureFormat.Png);
 
             return;
         }

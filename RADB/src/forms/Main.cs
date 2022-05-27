@@ -100,7 +100,7 @@ namespace RADB
 
             dlGameInfo = new Download
             {
-                Overwrite = false,
+                Overwrite = true,
                 ProgressBarName = pgbInfo.Name,
                 LabelBytesName = lblProgressInfo.Name,
                 LabelTimeName = lblUpdateInfo.Name,
@@ -444,6 +444,11 @@ namespace RADB
                 e.Handled = true;
                 dgvGames_CellDoubleClick(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
             }
+
+            if (e.KeyData == Keys.F5)
+            {
+                btnUpdateGameList_Click(null, null);
+            }
         }
 
         private void dgvConsoles_KeyDown(object sender, KeyEventArgs e)
@@ -482,7 +487,7 @@ namespace RADB
 
         private async void btnUserCheevos_Click(object sender, EventArgs e)
         {
-            if (dgvGames.CurrentRow.IsNull()) return;
+            if (GameBind.IsNull()) return;
 
             do
             {
@@ -500,7 +505,9 @@ namespace RADB
 
         private async void btnDownloadBadges_Click(object sender, EventArgs e)
         {
+            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             await RA.DownloadBadges(1);
+            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
         }
     }
 }

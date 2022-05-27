@@ -58,6 +58,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>src\rsc\dll64\referenced\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PixelMap">
+      <HintPath>src\rsc\dll64\referenced\PixelMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">

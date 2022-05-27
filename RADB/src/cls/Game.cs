@@ -89,7 +89,7 @@ namespace RADB
                 }
             }
         }
-        public string ImageTitlePath { get { return Folder.ImageTitle(ConsoleID) + ImageTitle; } }
+        public string ImageTitlePath { get { return string.IsNullOrWhiteSpace(ImageTitle) ? string.Empty : Folder.ImageTitle(ConsoleID) + ImageTitle; } }
         public Bitmap ImageTitleBitmap { get; set; }
         public Picture ImageTitlePicture = null;
         #endregion
@@ -109,14 +109,14 @@ namespace RADB
                 }
             }
         }
-        public string ImageIngamePath { get { return Folder.ImageIngame(ConsoleID) + ImageIngame; } }
+        public string ImageIngamePath { get { return string.IsNullOrWhiteSpace(ImageIngame) ? string.Empty : Folder.ImageIngame(ConsoleID) + ImageIngame; } }
         public Bitmap ImageIngameBitmap { get; set; }
         public Picture ImageIngamePicture = null;
         #endregion
 
         public string ImageBoxArt { get; set; }
 
-        public static Picture DefaultIconImage = new Picture(96, 96);
+        public static Picture DefaultIconImage = new Picture(RA.GamesIconSize);
         public static Picture DefaultTitleImage = new Picture(200, 150);
         public static Picture DefaultIngameImage = new Picture(200, 150);
 
