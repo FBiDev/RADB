@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Security.Cryptography;
 using System.Collections;
+using System.Windows.Forms;
 
 namespace RADB
 {
@@ -152,65 +153,19 @@ namespace RADB
             //return new Game();
         }
 
-        private static List<string> QueryDuplicates(List<DownloadFile> list)
-        {
-            var files = list.Select(f =>
-            {
-                using (var fs = new FileStream(f.Path, FileMode.Open, FileAccess.Read))
-                {
-                    return new
-                    {
-                        FileName = f.Path,
-                        FileHash = BitConverter.ToString(SHA1.Create().ComputeHash(fs))
-                    };
-                }
-            });
 
-            files = files.Distinct();
-            return files.Select(i => i.FileName).ToList();
-        }
 
         public async Task DownloadBadges(int gameID)
         {
-            ////string fileGameList = Folder.Json + "GameList" + "12" + ".json";
-            ////Download dl = new Download()
-            ////{
-            ////    Overwrite = true,
-            ////    Files = new List<DownloadFile>() { new DownloadFile(GetRAURL("API_GetGameList.php", "i=" + 12.ToString()), fileGameList) },
-            ////    ProgressBarName = "pgbUpdates",
-            ////    LabelBytesName = "lblUpdateProgress",
-            ////    LabelTimeName = "lblUpdateConsoles",
-            ////};
-            ////await dl.Start();
-            ////return;
+            if (Main.ConsoleBind.IsNull()) { MessageBox.Show("No Console Selected"); return; }
 
-            ////List<Game> Games = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(fileGameList));
-            //List<Game> GamesWithCheevos = new List<Game>();
-
-            //List<Achievement> gCheevos = new List<Achievement>();
-            List<DownloadFile> gFiles = new List<DownloadFile>();
-
-            int FilesDownloaded = 0;
+            //int FilesDownloaded = 0;
 
             //Get ManyGames
             int cID = 58;
             if (Main.ConsoleBind.NotNull()) { cID = Main.ConsoleBind.ID; }
             List<Game> Games = await Game.Listar(cID);
-            Games.Where(a => a.NumAchievements > 0).ToList().ForEach(g => gFiles.Add(g.ImageIconDownload()));
-
-            //foreach (Game g in Games)
-            //{
-            //Game game = await GetGameInfoExtended(g.ID);
-            //if (game.AchievementsList.Count > 0)
-            //{
-            //    game.AchievementsList.ForEach(a => gFiles.Add(new DownloadFile(a.BadgeURL(), a.BadgeFile())));
-            //}
-            //}
-
-            //GamesWithCheevos.ForEach(gc => gCheevos.AddRange(gc.AchievementsList));
-            ////GamesWithCheevos.ForEach(gc => gFiles.AddRange(gc.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList().Distinct().ToList()));
-
-            //gFiles = gCheevos.Select(a => new DownloadFile(a.BadgeURL, a.BadgeFile)).ToList().Distinct().ToList();
+            List<DownloadFile> gFiles = new List<DownloadFile>(Games.Where(a => a.NumAchievements > 0).Select(g => g.ImageIconDownload()));
 
             //var query = gCheevos.GroupBy(x => new { x.BadgeURL, x.GameID }).Where(g => g.Count() > 1)
             //  .Select(y => new { Element = y.Key, Counter = y.Count() })
@@ -218,35 +173,27 @@ namespace RADB
 
             //var queryTotal = gCheevos.Count - (query.Select(x => x.Counter).Sum() - query.Count);
 
-            //foreach (Game game in GamesWithCheevos)
-            //{
-
             //Game gameX = await GetGameInfoExtended(gameID);
+            //gFiles = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
+            //gFiles = new List<DownloadFile>() { new DownloadFile("https://dl18.cdromance.com/download.php?file=Megaman_Powered_Up_USA_PSP-DMU.7z&id=251&platform=psp&key=6299971769", "MM.7z") };
             Download dlGameBadges = new Download()
             {
                 Files = gFiles,
-                //Files = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList(),
-                //Files = new List<DownloadFile>() { new DownloadFile("https://dl18.cdromance.com/download.php?file=Megaman_Powered_Up_USA_PSP-DMU.7z&id=251&platform=psp&key=6299971769", "MM.7z") },
                 Overwrite = false,
                 ProgressBarName = "pgbUpdates",
                 LabelBytesName = "lblUpdateProgress",
                 LabelTimeName = "lblUpdateConsoles",
             };
-
             await dlGameBadges.Start();
 
-            FilesDownloaded += dlGameBadges.FilesCompleted;
-            //var L = (Application.OpenForms[0].Controls.Find("lblUpdateConsoles", true).First() as Label);
-            //L.Text = FilesDownloaded.ToString();
-            //}
+            int FilesDownloaded = dlGameBadges.FilesCompleted;
 
-            List<string> afiles = QueryDuplicates(gFiles);
-            //List<string> afiles = gFiles.Select(f => f.Path).ToList();
-            Picture pic = new Picture(afiles, true, 11, GamesIconSize, true);
-            pic.Save(Folder.Temp + "badges", PictureFormat.Jpg, false);
-
-            //Picture pic = new Picture(gameX.AchievementsFiles());
-            //pic.Save(Folder.Achievements(gameX.ConsoleID, gameX.ID) + "badges", PictureFormat.Png);
+            List<string> afiles = Archive.RemoveDuplicates(gFiles.Select(f => f.Path).ToList());
+            if (afiles.Count > 0)
+            {
+                Picture pic = new Picture(afiles, true, 11, GamesIconSize, true);
+                pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Png, false);
+            }
 
             return;
         }

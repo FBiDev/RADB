@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace RADB
 {
@@ -8,6 +9,7 @@ namespace RADB
     {
         public string URL { get; set; }
         public string Path { get; set; }
+        public string Name { get; set; }
 
         public long BytesReceived { get; set; }
         public long TotalBytesToReceive { get; set; }
@@ -17,6 +19,7 @@ namespace RADB
         {
             URL = url;
             Path = path;
+            Name = new FileInfo(Path).Name;
         }
 
         public bool Equals(DownloadFile other)

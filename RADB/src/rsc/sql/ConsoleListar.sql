@@ -11,7 +11,8 @@ FROM Console AS co
 	LEFT JOIN Company AS c ON c.ID = ci.CompanyID 
 	LEFT JOIN Game AS g on g.ConsoleID = co.ID 
 WHERE 1 = 1 
-	AND ci.Active = 1 OR Company IS NULL 
+	AND Company IS NULL AND @ID = 0 
+	OR ci.Active = 1 
 	AND (co.ID = @ID 
 		OR (@ID = 0 OR @ID IS NULL)) 
 	AND (co.Name LIKE '%' + @Name + '%' 

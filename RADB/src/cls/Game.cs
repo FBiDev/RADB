@@ -30,7 +30,7 @@ namespace RADB
             get
             {
                 if (string.IsNullOrWhiteSpace(_ConsoleName))
-                    return ConsoleDao.Listar(new Console() { ID = ConsoleID }).Result[0].Name;
+                    _ConsoleName = ConsoleDao.Listar(new Console() { ID = ConsoleID }).Result[0].Name;
                 return _ConsoleName;
             }
 
@@ -192,9 +192,15 @@ namespace RADB
             }
         }
 
-        public string BadgesMergedFile()
+        public static string BadgesMerged(int consoleID = 0, string gameTitle = "")
         {
-            return Folder.Achievements(ConsoleID, ID) + "_Badges";
+            return Folder.Temp + consoleID + "_" + gameTitle + "_Badges";
+        }
+
+        public static string IconsMerged(string consoleName = "")
+        {
+            consoleName = consoleName.Replace("/", "-").Replace(" ", "-");
+            return Folder.Temp + consoleName + "_Icons";
         }
 
         public DownloadFile ImageIconDownload()
