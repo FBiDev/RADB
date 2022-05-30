@@ -152,105 +152,22 @@ namespace RADB
             //return new Game();
         }
 
-        static bool FilesAreEqual_Hash(List<DownloadFile> list)
+        private static List<string> QueryDuplicates(List<DownloadFile> list)
         {
-            List<FileInfo> fList = new List<FileInfo>();
-            bool equal = false;
-            for (int f = 0; f < list.Count; f++)
-            {
-                FileInfo first = new FileInfo(list[f].Path);
-                byte[] firstHash = MD5.Create().ComputeHash(first.OpenRead());
-
-                for (int s = f + 1; s < list.Count; s++)
-                {
-                    FileInfo second = new FileInfo(list[s].Path);
-                    byte[] secondHash = MD5.Create().ComputeHash(second.OpenRead());
-
-                    equal = true;
-                    for (int i = 0; i < firstHash.Length; i++)
-                    {
-                        if (firstHash[i] != secondHash[i])
-                        {
-                            equal = false;
-                            break;
-                            //return false;
-                        }
-                    }
-                    if (equal)
-                    {
-                        fList.Add(second);
-                    }
-                    //return true;
-                }
-            }
-            fList = fList.Distinct().ToList();
-            return false;
-
-            //byte[] firstHash = MD5.Create().ComputeHash(first.OpenRead());
-            //byte[] secondHash = MD5.Create().ComputeHash(second.OpenRead());
-        }
-
-        static void QueryDuplicates(List<DownloadFile> list)
-        {
-            var a = list.Select(f =>
+            var files = list.Select(f =>
             {
                 using (var fs = new FileStream(f.Path, FileMode.Open, FileAccess.Read))
                 {
                     return new
                     {
-                        FileName = f,
+                        FileName = f.Path,
                         FileHash = BitConverter.ToString(SHA1.Create().ComputeHash(fs))
                     };
                 }
             });
-            // Change the root drive or folder if necessary  
-            //string startFolder = @"c:\program files\Microsoft Visual Studio 9.0\";
 
-            // Take a snapshot of the file system.  
-            //System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(startFolder);
-
-            // This method assumes that the application has discovery permissions  
-            // for all folders under the specified path.  
-            IEnumerable<System.IO.FileInfo> fileList = list.Select(i => new FileInfo(i.Path));
-
-            // used in WriteLine to keep the lines shorter  
-            //int charsToSkip = startFolder.Length;
-
-            // var can be used for convenience with groups.  
-            var queryDupNames =
-                from file in fileList
-                group file.FullName by file.Name into fileGroup
-                where fileGroup.Count() > 1
-                select fileGroup;
-
-            // Pass the query to a method that will  
-            // output one page at a time.  
-            //PageOutput<string, string>(queryDupNames);
-        }
-
-        //public static void DeleteDuplicateFiles(string searchPath)
-        //{
-        //    foreach (var file in FindDuplicateFiles(searchPath))
-        //        TryDeleteFile(file);
-        //}
-
-        //private static IEnumerable<string> FindDuplicateFiles(List<DownloadFile> lst)
-        //{
-        //    var hashedFiles = new List<FileInfo>(lst.Select(f => new FileInfo(f.Path)))
-        //        .AsParallel()
-        //        .Select(x => new { Path = x, Hash = MD5.Create().ComputeHash(x.OpenRead()) });
-
-        //    return FindDuplicates(hashedFiles);
-        //}
-
-        public void Find(List<DownloadFile> lst)
-        {
-            var hashedFiles = lst.Select(x => new { Path = x.Path, Hash = MD5.Create().ComputeHash(new FileInfo(x.Path).OpenRead()) });
-
-            foreach (var item in hashedFiles)
-            {
-                var duplicates = hashedFiles.Where(i => i.Hash == item.Hash);
-            }
+            files = files.Distinct();
+            return files.Select(i => i.FileName).ToList();
         }
 
         public async Task DownloadBadges(int gameID)
@@ -276,9 +193,11 @@ namespace RADB
             int FilesDownloaded = 0;
 
             //Get ManyGames
-            List<Game> Games = await Game.Listar(58);
-            Games.ForEach(g => gFiles.Add(g.ImageIconDownload()));
-            QueryDuplicates(gFiles);
+            int cID = 58;
+            if (Main.ConsoleBind.NotNull()) { cID = Main.ConsoleBind.ID; }
+            List<Game> Games = await Game.Listar(cID);
+            Games.Where(a => a.NumAchievements > 0).ToList().ForEach(g => gFiles.Add(g.ImageIconDownload()));
+
             //foreach (Game g in Games)
             //{
             //Game game = await GetGameInfoExtended(g.ID);
@@ -321,9 +240,10 @@ namespace RADB
             //L.Text = FilesDownloaded.ToString();
             //}
 
-            List<string> afiles = gFiles.Select(x => x.Path).ToList();
-            Picture pic = new Picture(afiles, true, 11, GamesIconSize);
-            pic.Save(Folder.Temp + "badges", PictureFormat.Png);
+            List<string> afiles = QueryDuplicates(gFiles);
+            //List<string> afiles = gFiles.Select(f => f.Path).ToList();
+            Picture pic = new Picture(afiles, true, 11, GamesIconSize, true);
+            pic.Save(Folder.Temp + "badges", PictureFormat.Jpg, false);
 
             //Picture pic = new Picture(gameX.AchievementsFiles());
             //pic.Save(Folder.Achievements(gameX.ConsoleID, gameX.ID) + "badges", PictureFormat.Png);

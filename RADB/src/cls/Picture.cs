@@ -5,6 +5,7 @@ using System.Linq;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
 //
 using System.Text;
 using System.Globalization;
@@ -63,6 +64,7 @@ namespace RADB
         private List<string> ImageFiles { get; set; }
         public int ImagesPerRow { get; set; }
         public Size FixedPerImage { get; set; }
+        public bool StretchImage { get; set; }
 
         public string Error { get; set; }
 
@@ -106,13 +108,14 @@ namespace RADB
             }
         }
 
-        public Picture(List<string> imagesToMerge, bool merge = true, int imagesPerRow = 11, Size fixedPerImage = default(Size))
+        public Picture(List<string> imagesToMerge, bool merge = true, int imagesPerRow = 11, Size fixedPerImage = default(Size), bool stretchImage = false)
         {
             DefaultValues();
 
             ImageFiles = imagesToMerge;
             ImagesPerRow = imagesPerRow;
             FixedPerImage = fixedPerImage;
+            StretchImage = stretchImage;
 
             BlankBitmap();
 
@@ -145,7 +148,26 @@ namespace RADB
         }
 
         #region Saves
-        public void Save(string fileName, PictureFormat format = PictureFormat.Jpg)
+        private ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
+        public void SaveGrayscale(string fileName, PictureFormat format = PictureFormat.Jpg)
+        {
+            Bitmap = MakeGrayscale(Bitmap);
+            Save(fileName, format);
+        }
+
+        public void Save(string fileName, PictureFormat format = PictureFormat.Jpg, bool compress = false)
         {
             if (Bitmap == null || (Bitmap is Bitmap) == false) { return; }
 
@@ -164,13 +186,10 @@ namespace RADB
             Bitmap.Save(Path, GetEncoder(Format), Parameters);
             Bitmap.Dispose();
 
-            //CompressCMD();
-        }
-
-        public void SaveGrayscale(string fileName, PictureFormat format = PictureFormat.Jpg)
-        {
-            Bitmap = MakeGrayscale(Bitmap);
-            Save(fileName, format);
+            if (compress)
+            {
+                CompressCMD();
+            }
         }
 
         private void CompressCMD()
@@ -224,19 +243,6 @@ namespace RADB
 
             File.Delete(exeFile);
         }
-
-        private ImageCodecInfo GetEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == format.Guid)
-                {
-                    return codec;
-                }
-            }
-            return null;
-        }
         #endregion
 
         #region MergeImages
@@ -273,7 +279,7 @@ namespace RADB
                 //update the width of the final bitmap
                 if (index <= imagesPerRow && width <= maxWidth)
                 {
-                    width += image.Width;
+                    width += FixedPerImage.Width == 0 ? image.Width : FixedPerImage.Width;
                 }
 
                 if (width > maxWidth) { maxWidth = width; }
@@ -287,7 +293,10 @@ namespace RADB
                 }
 
                 //update the height of the final bitmap
-                if (image.Height > height) { height = image.Height; }
+                if (image.Height > height)
+                {
+                    height = FixedPerImage.Height == 0 ? image.Height : FixedPerImage.Height;
+                }
                 index++;
 
                 image.Dispose();
@@ -317,6 +326,17 @@ namespace RADB
             //get a graphics object from the image so we can draw on it
             using (Graphics g = Graphics.FromImage(Bitmap))
             {
+                //copy in High Quality
+                g.CompositingMode = CompositingMode.SourceCopy;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                //prevents ghosting around the image borders
+                var wrapMode = new ImageAttributes();
+                wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+
                 //go through each image and draw it on the final image
                 int offsetW = 0;
                 int offsetH = 0;
@@ -343,16 +363,27 @@ namespace RADB
                     }
                     index++;
 
-                    g.DrawImage(image, new Rectangle(offsetW, offsetH, image.Width, image.Height));
+                    if (StretchImage)
+                    {
+                        //Resize
+                        g.DrawImage(image, new Rectangle(offsetW, offsetH, FixedPerImage.Width, FixedPerImage.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                    }
+                    else
+                    {
+                        //Original Size
+                        g.DrawImage(image, new Rectangle(offsetW, offsetH, image.Width, image.Height));
+                    }
+
                     offsetW += FixedPerImage.Width == 0 ? image.Width : FixedPerImage.Width;
 
+                    wrapMode.Dispose();
                     image.Dispose();
                 }
             }
         }
         #endregion
 
-        #region Effects
+        #region Effects Grayscale
         private Bitmap MakeGrayscale(Bitmap original)
         {
             //create a blank bitmap the same size as original

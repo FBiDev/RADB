@@ -19,7 +19,7 @@ namespace RADB
         #region Init
         private RA RA = new RA();
 
-        private Console ConsoleBind = null;
+        public static Console ConsoleBind = null;
         private Game GameBind = null;
 
         private Download dlConsoles;
