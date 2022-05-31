@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
+using System.IO.Compression;
+using System.IO;
 
 namespace RADB
 {
@@ -97,12 +99,16 @@ namespace RADB
                 try
                 {
                     //await _mutex.WaitAsync();
-                    using (WebClient client = new WebClient())
+                    using (MyWebClient client = new MyWebClient())
                     {
-                        if (Browser.useProxy)
-                        {
-                            client.Proxy = Browser.Proxy;
-                        }
+                        client.Proxy = Browser.Proxy;
+
+                        //using (MyWebClient my = new MyWebClient())
+                        //{
+                        //    my.Proxy = Browser.Proxy;
+                        //    var a = my.DownloadString(file.URL);
+                        //}
+
 
                         client.DownloadProgressChanged += (sender, args) =>
                         {
@@ -144,7 +150,7 @@ namespace RADB
                         };
 
                         Tasks.Add(client.DownloadFileTaskAsync(new Uri(file.URL), file.Path));
-                        if (Tasks.Count == ServicePointManager.DefaultConnectionLimit)
+                        if (Tasks.Count == Browser.MaxConnections)
                         {
                             LabelBytes.Text = "Connecting...";
                             await Task.WhenAll(Tasks);

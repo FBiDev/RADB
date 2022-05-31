@@ -254,7 +254,9 @@ namespace RADB
             EnablePanelGames(false);
 
             //Download GameList
+            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             await RA.DownloadGames(dlGames, ConsoleBind);
+            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
             await LoadGames();
 
             //Update Console
@@ -508,6 +510,8 @@ namespace RADB
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             await RA.DownloadBadges(1);
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
+
+            var html = await Browser.DownloadString("https://retroachievements.org/API/API_GetGameList.php?i=1&z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29");
         }
     }
 }

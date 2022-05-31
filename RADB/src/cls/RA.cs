@@ -23,7 +23,7 @@ namespace RADB
         public static string URL_Images = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Images/";
         public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
 
-        private string API_URL = "http://retroachievements.org/API/";
+        private string API_URL = "https://retroachievements.org/API/";
         private string API_UserName;
         private string API_Key;
 

@@ -8,52 +8,141 @@ using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using System.IO.Compression;
+using System.ComponentModel;
 
 namespace RADB
 {
-    public static class Browser
+    public class MyWebClient : WebClient
     {
-        public static bool useProxy
+        private string FileDownloaded;
+        private string GzipExtension { get { return ".gz"; } }
+        private bool GzipContent { get { return ResponseHeaders[HttpResponseHeader.ContentEncoding] == "gzip"; } }
+
+        public MyWebClient()
+            : base()
         {
-            get
+            Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate, br";
+            Encoding = Encoding.UTF8;
+            Proxy = Browser.Proxy;
+        }
+
+        public new Task DownloadFileTaskAsync(Uri address, string fileName)
+        {
+            FileDownloaded = fileName;
+            return base.DownloadFileTaskAsync(address, fileName);
+        }
+
+        protected override WebRequest GetWebRequest(Uri address)
+        {
+            HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
+            //request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            return request;
+        }
+
+        protected override WebResponse GetWebResponse(WebRequest request, IAsyncResult result)
+        {
+            WebResponse response = base.GetWebResponse(request, result);
+            return response;
+        }
+
+        protected override void OnDownloadFileCompleted(AsyncCompletedEventArgs e)
+        {
+            if (GzipContent)
             {
-                //return !Environment.MachineName.Equals("FERPC");
-                return Environment.MachineName.Equals("COHAB-CT0920");
+                FileInfo fileToDecompress = new FileInfo(FileDownloaded);
+
+                string oldName = fileToDecompress.FullName;
+                string gzName = oldName.Remove(oldName.Length - fileToDecompress.Extension.Length);
+                gzName += GzipExtension;
+
+                File.Delete(gzName);
+                File.Move(oldName, gzName);
+                fileToDecompress = new FileInfo(gzName);
+
+                using (FileStream originalFileStream = fileToDecompress.OpenRead())
+                {
+                    using (FileStream decompressedFileStream = File.Create(oldName))
+                    {
+                        using (GZipStream decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
+                        {
+                            decompressionStream.CopyTo(decompressedFileStream);
+                        }
+                    }
+                }
+            }
+
+            base.OnDownloadFileCompleted(e);
+            return;
+        }
+
+        public string DecodeGzip(string str)
+        {
+            byte[] gzBuffer = Encoding.GetBytes(str);
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                long msgLength = BitConverter.ToInt64(gzBuffer, 0);
+                ms.Write(gzBuffer, 0, gzBuffer.Length);
+
+                byte[] buffer = new byte[msgLength];
+
+                ms.Position = 0;
+                int length;
+                using (GZipStream zip = new GZipStream(ms, CompressionMode.Decompress))
+                {
+                    length = zip.Read(buffer, 0, buffer.Length);
+                }
+
+                var data = new byte[length];
+                Array.Copy(buffer, data, length);
+                return Encoding.UTF8.GetString(data);
+
             }
         }
+    }
+
+    public static class Browser
+    {
+        public static int MaxConnections { get { return ServicePointManager.DefaultConnectionLimit; } }
+        public static Encoding Encoding = Encoding.UTF8;
+
+        public static bool useProxy { get { return Environment.MachineName.Equals("COHAB-CT0920"); } }
+
         public static WebProxy Proxy
         {
             get
             {
-                if (useProxy == false) { return new WebProxy(); }
-
-                return new WebProxy
+                if (useProxy)
                 {
-                    Address = new Uri("http://cohab-proxy.cohabct.com.br:3128"),
-                    BypassProxyOnLocal = true,
-                    BypassList = new string[] { },
-                    Credentials = new NetworkCredential("fbirnfeld", "zumbie")
-                };
+                    return new WebProxy
+                    {
+                        Address = new Uri("http://cohab-proxy.cohabct.com.br:3128"),
+                        BypassProxyOnLocal = true,
+                        BypassList = new string[] { },
+                        Credentials = new NetworkCredential("fbirnfeld", "zumbie")
+                    };
+                }
+
+                return new WebProxy();
             }
         }
-
-        public static Encoding Encoding = UTF8Encoding.UTF8;
 
         public static void Load()
         {
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.DefaultConnectionLimit = 128;
-            //web.Headers["User-Agent"] = "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15";
         }
 
         public static Task<string> DownloadString(string url)
         {
             return Task<string>.Run(() =>
             {
-                using (WebClient client = new WebClient() { Proxy = Proxy })
+                using (MyWebClient client = new MyWebClient())
                 {
                     string data = client.DownloadString(url);
+                    var d = client.DecodeGzip(data);
                     return data;
                 }
             });
