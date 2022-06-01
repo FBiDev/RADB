@@ -11,7 +11,6 @@ using System.Text;
 using System.Globalization;
 using System.Diagnostics;
 using RADB.Properties;
-using PixelMapSharp;
 
 namespace RADB
 {

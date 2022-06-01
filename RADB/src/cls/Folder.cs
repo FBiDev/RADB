@@ -16,7 +16,6 @@ namespace RADB
             Directory.CreateDirectory(Consoles);
             Directory.CreateDirectory(Icons);
 
-            Directory.CreateDirectory(Json);
             Directory.CreateDirectory(Temp);
         }
 
@@ -73,14 +72,6 @@ namespace RADB
             get
             {
                 return Base + @"ImageInGame\";
-            }
-        }
-
-        public static string Json
-        {
-            get
-            {
-                return Base + @"Json\";
             }
         }
 

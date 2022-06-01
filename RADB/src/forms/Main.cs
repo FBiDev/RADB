@@ -6,11 +6,11 @@ using System.Windows.Forms;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-//
 using System.Drawing;
-using GNX;
+//
+using Newtonsoft.Json.Linq;
 using RADB.Properties;
+using GNX;
 
 namespace RADB
 {
@@ -57,6 +57,7 @@ namespace RADB
             dgvGames.DataSourceChanged += dgvGames_Sorted;
 
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
+            txtSearchGames.KeyDown += txtSearchGames_KeyDown;
 
             btnDownloadBadges.Click += btnDownloadBadges_Click;
 
@@ -153,13 +154,12 @@ namespace RADB
         {
             pnlDownloadConsoles.Enabled = enable;
 
-            lblNotFoundConsoles.Visible = enable;
+            lblNotFoundConsoles.Visible = false;
             picLoaderConsole.Visible = !enable;
 
             if (enable)
             {
-                if (dgvConsoles.RowCount > 0) { lblNotFoundConsoles.Visible = false; }
-
+                lblNotFoundConsoles.Visible = (dgvConsoles.RowCount == 0);
                 lblUpdateConsoles.Text = Archive.LastUpdate(RA.ConsolesFile());
             }
             else
@@ -171,7 +171,7 @@ namespace RADB
         private async Task LoadConsoles()
         {
             EnablePanelConsoles(false);
-            dgvConsoles.DataSource = await Console.ListarBind(); ;
+            dgvConsoles.DataSource = await Console.ListarBind();
             dgvConsoles.Focus();
             EnablePanelConsoles(true);
         }
@@ -209,6 +209,12 @@ namespace RADB
             tabMain.SelectedTab = tabGames;
 
             await LoadGames();
+
+            //Update GameList
+            if (lstGames.Count == 0)
+            {
+                btnUpdateGameList_Click(null, null);
+            }
         }
         #endregion
 
@@ -216,14 +222,14 @@ namespace RADB
         private void EnablePanelGames(bool enable)
         {
             pnlDownloadGameList.Enabled = enable;
+            txtSearchGames.Enabled = enable;
 
-            lblNotFoundGameList.Visible = enable;
+            lblNotFoundGameList.Visible = false;
             picLoaderGameList.Visible = !enable;
 
             if (enable)
             {
-                if (dgvGames.RowCount > 0) { lblNotFoundGameList.Visible = false; }
-
+                lblNotFoundGameList.Visible = (dgvGames.RowCount == 0);
                 lblUpdateGameList.Text = Archive.LastUpdate(RA.GamesFile(ConsoleBind.Name));
             }
             else
@@ -305,25 +311,71 @@ namespace RADB
 
         private void dgvGames_Scroll(object sender, ScrollEventArgs e)
         {
-            ListBind<Game> list = (ListBind<Game>)((DataGridView)sender).DataSource;
-            int index = dgvGames.FirstDisplayedScrollingRowIndex;
-            if (index < 0) { index = 0; }
-            for (int i = index; i < index + 20; i++)
-            {
-                if (i == dgvGames.RowCount) { break; }
-                if (list[i].ImageIconBitmap == Game.DefaultIconImage.Bitmap)
-                {
-                    if (File.Exists(list[i].ImageIconPath) && new FileInfo(list[i].ImageIconPath).Length > 0)
-                    {
-                        list[i].ImageIconBitmap = new Picture(list[i].ImageIconPath).Bitmap;
-                    }
-                }
-            }
+            dgvGames.Focus();
+            LoadGamesIcon();
         }
 
         private void dgvGames_Sorted(object sender, EventArgs e)
         {
-            dgvGames_Scroll(dgvGames, null);
+            LoadGamesIcon();
+        }
+
+        private async void LoadGamesIcon()
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    ListBind<Game> list = (ListBind<Game>)(dgvGames.DataSource);
+                    int index = dgvGames.FirstDisplayedScrollingRowIndex;
+                    if (index == -1) { return; }
+                    for (int i = index; i < index + 20; i++)
+                    {
+                        if (i >= list.Count || list.Count == 0) { break; }
+
+                        if (list[i].ImageIconBitmap == Game.DefaultIconImage.Bitmap)
+                        {
+                            if (File.Exists(list[i].ImageIconPath) && new FileInfo(list[i].ImageIconPath).Length > 0)
+                            {
+                                list[i].ImageIconBitmap = new Picture(list[i].ImageIconPath).Bitmap;
+                            }
+                        }
+                    }
+                });
+
+            }
+            catch (Exception) { }
+            dgvGames.Refresh();
+        }
+
+        private void txtSearchGames_TextChanged(object sender, EventArgs e)
+        {
+            //if (txtSearchGames.Text.Count() > 0 && txtSearchGames.Text.Count() < 3) { return; }
+
+            ListBind<Game> newSearch = new ListBind<Game>();
+            foreach (Game obj in lstGames)
+            {
+                bool title;
+
+                title = (obj.Title != null && (obj.Title.IndexOf(txtSearchGames.Text, StringComparison.CurrentCultureIgnoreCase) > -1));
+
+                if (title)
+                {
+                    newSearch.Add(obj);
+                }
+            }
+            dgvGames.DataSource = newSearch;
+
+            LoadGamesIcon();
+            dgvGames.Refresh();
+        }
+
+        private void txtSearchGames_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                dgvGames.Focus();
+            }
         }
         #endregion
 
@@ -469,24 +521,6 @@ namespace RADB
             return null;
         }
 
-        private void txtSearchGames_TextChanged(object sender, EventArgs e)
-        {
-            lstGamesSearch.Clear();
-
-            foreach (Game obj in lstGames)
-            {
-                bool title;
-
-                title = (obj.Title != null && (obj.Title.IndexOf(txtSearchGames.Text, StringComparison.CurrentCultureIgnoreCase) > -1));
-
-                if (title)
-                {
-                    lstGamesSearch.Add(obj);
-                }
-            }
-            dgvGames_Scroll(dgvGames, null);
-        }
-
         private async void btnUserCheevos_Click(object sender, EventArgs e)
         {
             if (GameBind.IsNull()) return;
@@ -507,15 +541,16 @@ namespace RADB
 
         private async void btnDownloadBadges_Click(object sender, EventArgs e)
         {
-            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
+
             await RA.DownloadBadges(1);
-            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
 
+            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             var html = await Browser.DownloadString("https://retroachievements.org/API/API_GetGameList.php?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29&i=1");
-
+            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
             using (var w = new WebClientExtend())
             {
-                await w.DownloadFileTaskAsync("https://www.curitiba.pr.gov.br/", Folder.Temp + "cohab.html");
+                //await w.DownloadFileTaskAsync("https://www.curitiba.pr.gov.br/", Folder.Temp + "cohab.html");
+                await w.DownloadFileTaskAsync("https://retroachievements.org/API/API_GetGameList.php?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29&i=1", Folder.Temp + "cohab.html");
             }
         }
     }

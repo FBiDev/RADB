@@ -46,8 +46,8 @@ namespace RADB
 
             if (GZipContent)
             {
+                //string base64 = Convert.ToBase64String(data);
                 data = DecodeGZip(data);
-                //string base64 = Convert.ToBase64String(data); // as a string
             }
             return data;
         }

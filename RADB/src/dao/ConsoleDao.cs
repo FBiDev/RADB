@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 //
 using RADB.Properties;
 using GNX;
+using System.Text;
 
 namespace RADB
 {
@@ -64,7 +65,10 @@ namespace RADB
                 string sql = Resources.ConsoleListar;
                 //sql += " ORDER BY Name ASC ";
 
-                return Carregar<List<Console>>(Banco.ExecutarSelect(sql, MontarFiltros(obj)));
+                List<Console> lst = Carregar<List<Console>>(Banco.ExecutarSelect(sql, MontarFiltros(obj)));
+                //var a = Encoding.UTF8.GetBytes(lst[0]);
+                //var a = Encoding.UTF8.GetString(lst[0].ToString() as byte[]);
+                return lst;
             });
         }
         #endregion
