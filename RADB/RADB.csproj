@@ -81,6 +81,9 @@
     <Compile Include="src\cls\Console.cs" />
     <Compile Include="src\cls\Browser.cs" />
     <Compile Include="src\cls\UserProgress.cs" />
+    <Compile Include="src\cls\WebClientExtend.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="src\custom\FlatButtonA.cs">
       <SubType>Component</SubType>
     </Compile>

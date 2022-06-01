@@ -511,7 +511,12 @@ namespace RADB
             await RA.DownloadBadges(1);
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
 
-            var html = await Browser.DownloadString("https://retroachievements.org/API/API_GetGameList.php?i=1&z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29");
+            var html = await Browser.DownloadString("https://retroachievements.org/API/API_GetGameList.php?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29&i=1");
+
+            using (var w = new WebClientExtend())
+            {
+                await w.DownloadFileTaskAsync("https://www.curitiba.pr.gov.br/", Folder.Temp + "cohab.html");
+            }
         }
     }
 }

@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 //
-//using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
-using System.IO.Compression;
-using System.IO;
 
 namespace RADB
 {
@@ -59,7 +55,6 @@ namespace RADB
         public string FileName { get; set; }
         public Form FormObj { get; set; }
         public string FormName { set { FormObj = Application.OpenForms[value]; } }
-        public WebClient client;
 
         public Download(string URL, string fileName)
         {
@@ -99,17 +94,8 @@ namespace RADB
                 try
                 {
                     //await _mutex.WaitAsync();
-                    using (MyWebClient client = new MyWebClient())
+                    using (var client = new WebClientExtend())
                     {
-                        client.Proxy = Browser.Proxy;
-
-                        //using (MyWebClient my = new MyWebClient())
-                        //{
-                        //    my.Proxy = Browser.Proxy;
-                        //    var a = my.DownloadString(file.URL);
-                        //}
-
-
                         client.DownloadProgressChanged += (sender, args) =>
                         {
                             file.BytesReceived = args.BytesReceived;
@@ -176,21 +162,8 @@ namespace RADB
 
         private string DownloadedProgress(double bytesIn, double bytesTotal)
         {
-            if (bytesTotal == -1) { return UnitSize(bytesIn); }
-            return UnitSize(bytesIn) + " of " + UnitSize(bytesTotal);
-        }
-
-        private string UnitSize(double _bytes)
-        {
-            string unitSimbol = _bytes < 1024 ? "bytes" :
-                _bytes < 1048576 ? "KB" : "MB";
-
-            double unitSize = _bytes < 1024 ? _bytes :
-                _bytes < 1048576 ? _bytes / 1024 : _bytes / 1024 / 1024;
-
-            if (unitSize < 10) { return (Math.Floor(unitSize * 100) / 100).ToString("n2") + " " + unitSimbol; }
-            if (unitSize < 100) { return (Math.Floor(unitSize * 10) / 10).ToString("n1") + " " + unitSimbol; }
-            return Math.Floor(unitSize) + " " + unitSimbol;
+            if (bytesTotal == -1) { return Archive.CalculateSize(bytesIn); }
+            return Archive.CalculateSize(bytesIn) + " of " + Archive.CalculateSize(bytesTotal);
         }
 
         private void BarStart(ProgressBar bar, ProgressBarStyle style = ProgressBarStyle.Continuous, int maximum = 100)
