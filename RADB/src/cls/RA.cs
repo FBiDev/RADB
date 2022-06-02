@@ -23,6 +23,13 @@ namespace RADB
         public static string URL_Images = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Images/";
         public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
 
+        public static Size GamesIconSize { get { return new Size(96, 96); } }
+
+        public static Picture DefaultIconImage = new Picture(GamesIconSize);
+        public static Bitmap ErrorIcon = new Picture(GamesIconSize).Bitmap;
+        public static Picture DefaultTitleImage = new Picture(200, 150);
+        public static Picture DefaultIngameImage = new Picture(200, 150);
+
         private string API_URL = "https://retroachievements.org/API/";
         private string API_UserName;
         private string API_Key;
@@ -43,8 +50,6 @@ namespace RADB
             return API_URL + target + AuthQS() + "&" + parames;
         }
         #endregion
-
-        public static Size GamesIconSize { get { return new Size(96, 96); } }
 
         #region _Consoles
         public string ConsolesFile() { return Folder.Consoles + "Consoles.json"; }

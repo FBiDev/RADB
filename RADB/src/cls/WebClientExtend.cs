@@ -13,7 +13,17 @@ namespace RADB
 {
     public class WebClientExtend : WebClient
     {
-        private bool GZipContent { get { return ResponseHeaders[HttpResponseHeader.ContentEncoding] == "gzip"; } }
+        private bool GZipContent
+        {
+            get
+            {
+                if (ResponseHeaders.AllKeys.Contains("Content-Encoding"))
+                {
+                    return ResponseHeaders[HttpResponseHeader.ContentEncoding] == "gzip";
+                }
+                return false;
+            }
+        }
         private string GZipExtension { get { return ".gz"; } }
         private long GZipSize { get; set; }
         private long GZipSizeUncompressed { get; set; }

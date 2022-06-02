@@ -65,10 +65,7 @@ namespace RADB
                 string sql = Resources.ConsoleListar;
                 //sql += " ORDER BY Name ASC ";
 
-                List<Console> lst = Carregar<List<Console>>(Banco.ExecutarSelect(sql, MontarFiltros(obj)));
-                //var a = Encoding.UTF8.GetBytes(lst[0]);
-                //var a = Encoding.UTF8.GetString(lst[0].ToString() as byte[]);
-                return lst;
+                return Carregar<List<Console>>(Banco.ExecutarSelect(sql, MontarFiltros(obj)));
             });
         }
         #endregion

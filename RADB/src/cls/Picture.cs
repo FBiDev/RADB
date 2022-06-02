@@ -89,17 +89,20 @@ namespace RADB
             //ImagesPerRow = 11;
         }
 
-        public Picture(string fileName)
+        public Picture(string fileName, Bitmap errorBitmap = null)
         {
             DefaultValues();
-
             Path = fileName;
+
+            if (File.Exists(fileName) == false || new FileInfo(fileName).Length == 0)
+            {
+                Bitmap = errorBitmap;
+                return;
+            }
+
             try
             {
-                if (new FileInfo(Path).Length > 0)
-                {
-                    Bitmap = FromFile(Path);
-                }
+                Bitmap = FromFile(Path);
             }
             catch (Exception e)
             {

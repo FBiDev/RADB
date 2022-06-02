@@ -64,6 +64,7 @@ namespace RADB
             set
             {
                 _ImageIcon = value.Replace(@"/Images/", "");
+
                 //if (File.Exists(ImageIconPath) && new FileInfo(ImageIconPath).Length > 0)
                 //{
                 //    ImageIconBitmap = new Picture(ImageIconPath).Bitmap;
@@ -116,9 +117,7 @@ namespace RADB
 
         public string ImageBoxArt { get; set; }
 
-        public static Picture DefaultIconImage = new Picture(RA.GamesIconSize);
-        public static Picture DefaultTitleImage = new Picture(200, 150);
-        public static Picture DefaultIngameImage = new Picture(200, 150);
+        
 
         public int? ForumTopicID { get; set; }
         public string Flags { get; set; }
@@ -140,12 +139,12 @@ namespace RADB
         {
             AchievementsList = new List<Achievement>();
 
-            ImageIconBitmap = DefaultIconImage.Bitmap;
+            ImageIconBitmap = RA.DefaultIconImage.Bitmap;
 
-            ImageTitlePicture = DefaultTitleImage;
+            ImageTitlePicture = RA.DefaultTitleImage;
             ImageTitleBitmap = ImageTitlePicture.Bitmap;
 
-            ImageIngamePicture = DefaultIngameImage;
+            ImageIngamePicture = RA.DefaultIngameImage;
             ImageIngameBitmap = ImageIngamePicture.Bitmap;
         }
 

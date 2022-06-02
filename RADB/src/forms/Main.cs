@@ -36,6 +36,7 @@ namespace RADB
             Icon = GNX.cConvert.ToIco(Resources.favicon, new Size(250, 250));
 
             Shown += RADB_Shown;
+            Resize += Main_Resize;
 
             //KeyPreview = true;
             //KeyDown += Main_KeyDown;
@@ -43,18 +44,19 @@ namespace RADB
             tabMain.KeyDown += tabMain_KeyDown;
 
             dgvConsoles.AutoGenerateColumns = true;
-            dgvConsoles.KeyDown += dgvConsoles_KeyDown;
-            dgvConsoles.KeyPress += dgvConsoles_KeyPress;
             dgvConsoles.CellDoubleClick += dgvConsoles_CellDoubleClick;
+            dgvConsoles.KeyPress += dgvConsoles_KeyPress;
+            dgvConsoles.KeyDown += dgvConsoles_KeyDown;
 
             dgvGames.AutoGenerateColumns = false;
-            dgvGames.KeyDown += dgvGames_KeyDown;
-            dgvGames.KeyPress += dgvGames_KeyPress;
+            dgvGames.DataSourceChanged += dgvGames_DataSourceChanged;
             dgvGames.CellDoubleClick += dgvGames_CellDoubleClick;
+            dgvGames.KeyPress += dgvGames_KeyPress;
+            dgvGames.KeyDown += dgvGames_KeyDown;
 
+            dgvGames.MouseWheel += dgvGames_MouseWheel;
             dgvGames.Scroll += dgvGames_Scroll;
             dgvGames.Sorted += dgvGames_Sorted;
-            dgvGames.DataSourceChanged += dgvGames_Sorted;
 
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
             txtSearchGames.KeyDown += txtSearchGames_KeyDown;
@@ -117,6 +119,25 @@ namespace RADB
         {
             e.Handled = e.Modifiers == Keys.Alt;
         }
+
+        FormWindowState? LastWindowState = null;
+        private void Main_Resize(object sender, EventArgs e)
+        {
+            // When window state changes
+            if (WindowState != LastWindowState)
+            {
+                if (WindowState == FormWindowState.Maximized)
+                {
+                    // Maximized!
+                    LoadGamesIcon();
+                }
+                if (WindowState == FormWindowState.Normal)
+                {
+                    // Restored!
+                }
+                LastWindowState = WindowState;
+            }
+        }
         #endregion
 
         #region Tab
@@ -164,7 +185,7 @@ namespace RADB
             }
             else
             {
-                dgvConsoles.DataSource = new List<Console>();
+                //dgvConsoles.DataSource = new List<Console>();
             }
         }
 
@@ -227,6 +248,8 @@ namespace RADB
             lblNotFoundGameList.Visible = false;
             picLoaderGameList.Visible = !enable;
 
+            dgvGames.Visible = enable;
+
             if (enable)
             {
                 lblNotFoundGameList.Visible = (dgvGames.RowCount == 0);
@@ -234,7 +257,8 @@ namespace RADB
             }
             else
             {
-                dgvGames.DataSource = new ListBind<Game>();
+                
+                //dgvGames.DataSource = new ListBind<Game>();
             }
         }
 
@@ -245,7 +269,7 @@ namespace RADB
             EnablePanelGames(false);
 
             lstGames = await Game.ListarBind(ConsoleBind.ID);
-            lstGamesSearch.Clear();
+            lstGamesSearch = new ListBind<Game>();
             lstGamesSearch.AddRange(lstGames);
 
             dgvGames.DataSource = lstGamesSearch;
@@ -279,7 +303,7 @@ namespace RADB
 
             dgvGames.Enabled = true;
             dgvGames.Focus();
-            dgvGames_Sorted(null, null);
+            //dgvGames_Sorted(null, null);
             dgvGames.Refresh();
 
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + ConsoleBind.Name + " GameList Updated!" + Environment.NewLine + lblOutput.Text;
@@ -311,7 +335,21 @@ namespace RADB
 
         private void dgvGames_Scroll(object sender, ScrollEventArgs e)
         {
+            if (wheel > 0 && wheel < 3) { wheel++; return; }
+            wheel = 0;
+
             dgvGames.Focus();
+            LoadGamesIcon();
+        }
+
+        int wheel = 0;
+        private void dgvGames_MouseWheel(object sender, MouseEventArgs e)
+        {
+            wheel = 1;
+        }
+
+        private void dgvGames_DataSourceChanged(object sender, EventArgs e)
+        {
             LoadGamesIcon();
         }
 
@@ -326,23 +364,26 @@ namespace RADB
             {
                 await Task.Run(() =>
                 {
-                    ListBind<Game> list = (ListBind<Game>)(dgvGames.DataSource);
-                    int index = dgvGames.FirstDisplayedScrollingRowIndex;
-                    if (index == -1) { return; }
-                    for (int i = index; i < index + 20; i++)
-                    {
-                        if (i >= list.Count || list.Count == 0) { break; }
+                    if (dgvGames.DataSource.IsNull()) { return; }
 
-                        if (list[i].ImageIconBitmap == Game.DefaultIconImage.Bitmap)
+                    ListBind<Game> list = (ListBind<Game>)(dgvGames.DataSource);
+
+                    int index = dgvGames.FirstDisplayedScrollingRowIndex;
+                    if (list.Count == 0 || index < 0) { return; }
+
+                    double nItems = Math.Ceiling((float)((float)(this.Size.Height - 293) / 37)) + 3;
+
+                    for (int i = index; i < index + nItems; i++)
+                    {
+                        if (i >= list.Count) { return; }
+
+                        Game g = list[i];
+                        if (g.ImageIconBitmap == RA.DefaultIconImage.Bitmap)
                         {
-                            if (File.Exists(list[i].ImageIconPath) && new FileInfo(list[i].ImageIconPath).Length > 0)
-                            {
-                                list[i].ImageIconBitmap = new Picture(list[i].ImageIconPath).Bitmap;
-                            }
+                            g.ImageIconBitmap = new Picture(g.ImageIconPath, RA.ErrorIcon).Bitmap;
                         }
                     }
                 });
-
             }
             catch (Exception) { }
             dgvGames.Refresh();
@@ -475,7 +516,7 @@ namespace RADB
                         }
 
                         dgv.Rows[i].Cells[0].Selected = true;
-                        return; // stop looping
+                        return;
                     }
                 }
             }
@@ -541,17 +582,7 @@ namespace RADB
 
         private async void btnDownloadBadges_Click(object sender, EventArgs e)
         {
-
             await RA.DownloadBadges(1);
-
-            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
-            var html = await Browser.DownloadString("https://retroachievements.org/API/API_GetGameList.php?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29&i=1");
-            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
-            using (var w = new WebClientExtend())
-            {
-                //await w.DownloadFileTaskAsync("https://www.curitiba.pr.gov.br/", Folder.Temp + "cohab.html");
-                await w.DownloadFileTaskAsync("https://retroachievements.org/API/API_GetGameList.php?z=FBiDev&y=uBuG840fXTyKSQvS8MFKX5d40fOelJ29&i=1", Folder.Temp + "cohab.html");
-            }
         }
     }
 }
