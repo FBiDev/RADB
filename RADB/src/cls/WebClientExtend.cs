@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.Compression;
 using System.ComponentModel;
 using System.Net;
+using System.Windows.Forms;
 
 namespace RADB
 {
@@ -17,7 +18,7 @@ namespace RADB
         {
             get
             {
-                if (ResponseHeaders.AllKeys.Contains("Content-Encoding"))
+                if (ResponseHeaders != null && ResponseHeaders.AllKeys.Contains("Content-Encoding"))
                 {
                     return ResponseHeaders[HttpResponseHeader.ContentEncoding] == "gzip";
                 }
@@ -28,6 +29,7 @@ namespace RADB
         private long GZipSize { get; set; }
         private long GZipSizeUncompressed { get; set; }
         private string FileDownloaded;
+        private bool Error;
 
         public WebClientExtend()
             : base()
@@ -75,19 +77,36 @@ namespace RADB
         //For DownloadString
         protected override WebResponse GetWebResponse(WebRequest request)
         {
-            WebResponse response = base.GetWebResponse(request);
-            return response;
+            return base.GetWebResponse(request);
         }
 
         //For DownloadFile
         protected override WebResponse GetWebResponse(WebRequest request, IAsyncResult result)
         {
-            WebResponse response = base.GetWebResponse(request, result);
+            HttpWebResponse response = null;
+            try
+            {
+                response = base.GetWebResponse(request, result) as HttpWebResponse;
+            }
+            catch (WebException we)
+            {
+                response = we.Response as HttpWebResponse;
+                Error = true;
+                MessageBox.Show("Error to download: " + FileDownloaded + "\r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription);
+            }
+
             return response;
         }
 
         protected override void OnDownloadFileCompleted(AsyncCompletedEventArgs e)
         {
+            if (Error)
+            {
+                File.Delete(FileDownloaded);
+                base.OnDownloadFileCompleted(e);
+                return;
+            }
+
             if (GZipContent)
             {
                 FileInfo fileToDecompress = new FileInfo(FileDownloaded);

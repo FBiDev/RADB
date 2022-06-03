@@ -185,7 +185,7 @@ namespace RADB
             }
             else
             {
-                //dgvConsoles.DataSource = new List<Console>();
+                dgvConsoles.DataSource = new List<Console>();
             }
         }
 
@@ -193,8 +193,9 @@ namespace RADB
         {
             EnablePanelConsoles(false);
             dgvConsoles.DataSource = await Console.ListarBind();
-            dgvConsoles.Focus();
+
             EnablePanelConsoles(true);
+            dgvConsoles.Focus();
         }
 
         private void UpdateConsoleLabels()
@@ -248,7 +249,8 @@ namespace RADB
             lblNotFoundGameList.Visible = false;
             picLoaderGameList.Visible = !enable;
 
-            dgvGames.Visible = enable;
+            //Black color in last row
+            //dgvGames.Visible = enable;
 
             if (enable)
             {
@@ -257,24 +259,27 @@ namespace RADB
             }
             else
             {
-                
-                //dgvGames.DataSource = new ListBind<Game>();
+                dgvGames.DataSource = new ListBind<Game>();
             }
         }
 
         private async Task LoadGames()
         {
             if (ConsoleBind.IsNull()) { return; }
-
+            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             EnablePanelGames(false);
 
             lstGames = await Game.ListarBind(ConsoleBind.ID);
             lstGamesSearch = new ListBind<Game>();
+            //lstGamesSearch.Clear();
             lstGamesSearch.AddRange(lstGames);
 
             dgvGames.DataSource = lstGamesSearch;
-            dgvGames.Focus();
+
             EnablePanelGames(true);
+            dgvGames.Focus();
+
+            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
         }
 
         private async void btnUpdateGameList_Click(object sender, EventArgs e)
@@ -303,8 +308,6 @@ namespace RADB
 
             dgvGames.Enabled = true;
             dgvGames.Focus();
-            //dgvGames_Sorted(null, null);
-            dgvGames.Refresh();
 
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + ConsoleBind.Name + " GameList Updated!" + Environment.NewLine + lblOutput.Text;
         }
