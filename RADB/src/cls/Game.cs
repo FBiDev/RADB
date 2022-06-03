@@ -21,40 +21,19 @@ namespace RADB
         //public string GameTitle { get; set; }
 
         //GameInfo
+        public int ID { get; set; }
         public string Title { get; set; }
         public int ConsoleID { get; set; }
+        public string ConsoleName { get; set; }
+        public int NumAchievements { get; set; }
+        public int Points { get; set; }
+        public int NumLeaderboards { get; set; }
+        public DateTime? DateModified { get; set; }
+        public int? ForumTopicID { get; set; }
 
-        private string _ConsoleName { get; set; }
-        public string ConsoleName
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(_ConsoleName))
-                    _ConsoleName = ConsoleDao.Listar(new Console() { ID = ConsoleID }).Result[0].Name;
-                return _ConsoleName;
-            }
-
-            set { _ConsoleName = value; }
-        }
         public string Developer { get; set; }
         public string Publisher { get; set; }
         public string Genre { get; set; }
-
-        public string Released { get; set; }
-        public DateTime? ReleasedDate
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(Released)) return null;
-
-                DateTime d;
-
-                if (DateTime.TryParse(Released, out d)) { return d; }
-                if (DateTime.TryParseExact(Released, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out d)) { return d; }
-
-                return d;
-            }
-        }
 
         #region _ImageIcon
         private string _ImageIcon = string.Empty;
@@ -64,17 +43,13 @@ namespace RADB
             set
             {
                 _ImageIcon = value.Replace(@"/Images/", "");
-
-                //if (File.Exists(ImageIconPath) && new FileInfo(ImageIconPath).Length > 0)
-                //{
-                //    ImageIconBitmap = new Picture(ImageIconPath).Bitmap;
-                //}
             }
         }
         public string ImageIconPath { get { return Folder.ImageIcon(ConsoleID) + ImageIcon; } }
         public Bitmap ImageIconBitmap { get; set; }
         #endregion
 
+        //GameInfoExtended
         #region _ImageTitle
         private string _ImageTitle = string.Empty;
         public string ImageTitle
@@ -116,19 +91,25 @@ namespace RADB
         #endregion
 
         public string ImageBoxArt { get; set; }
-
-        
-
-        public int? ForumTopicID { get; set; }
         public string Flags { get; set; }
 
-        //GameInfoExtended
-        public int ID { get; set; }
-        public bool IsFinal { get; set; }
-        public int NumAchievements { get; set; }
+        public string Released { get; set; }
+        public DateTime? ReleasedDate
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(Released)) return null;
 
-        public int NumLeaderboards { get; set; }
-        public int Points { get; set; }
+                DateTime d;
+
+                if (DateTime.TryParse(Released, out d)) { return d; }
+                if (DateTime.TryParseExact(Released, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out d)) { return d; }
+
+                return d;
+            }
+        }
+
+        public bool IsFinal { get; set; }
         public int NumDistinctPlayersCasual { get; set; }
         public int NumDistinctPlayersHardcore { get; set; }
         public string RichPresencePatch { get; set; }
@@ -166,29 +147,6 @@ namespace RADB
             List<string> files = new List<string>();
             AchievementsList.ForEach(c => { files.Add(c.BadgeFile()); });
             return files;
-        }
-
-        public int AchievementsCount
-        {
-            get { return AchievementsList.Count(); }
-        }
-
-        public string AchievementsPoints
-        {
-            get { return AchievementsList.Sum(x => x.Points) + " (" + AchievementsList.Sum(x => x.TrueRatio) + ")"; }
-        }
-
-        public string LastUpdate
-        {
-            get
-            {
-                if (AchievementsList.Count > 0)
-                {
-                    var date = AchievementsList.Max(x => x.DateModified).ToString("dd MMM yyyy");
-                    return date.Substring(0, 3) + char.ToUpper(date[3]) + date.Substring(4);
-                }
-                return string.Empty;
-            }
         }
 
         public static string BadgesMerged(int consoleID = 0, string gameTitle = "")

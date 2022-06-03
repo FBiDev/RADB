@@ -89,16 +89,24 @@ namespace RADB
             //ImagesPerRow = 11;
         }
 
-        public Picture(string fileName, Bitmap errorBitmap = null)
+        public Picture(Size size)
+            : this(size.Width, size.Height)
+        { }
+
+        public Picture(int width, int height)
+        {
+            DefaultValues();
+
+            Bitmap = new Bitmap(width, height);
+
+            //Default Background
+            using (Graphics g = Graphics.FromImage(Bitmap)) { g.Clear(Color.Magenta); }
+        }
+
+        public Picture(string fileName)
         {
             DefaultValues();
             Path = fileName;
-
-            if (File.Exists(fileName) == false || new FileInfo(fileName).Length == 0)
-            {
-                Bitmap = errorBitmap;
-                return;
-            }
 
             try
             {
@@ -127,21 +135,16 @@ namespace RADB
             }
         }
 
-        public Picture(Size size)
-            : this(size.Width, size.Height)
-        { }
-
-        public Picture(int width, int height)
+        public static Picture Create(string fileName, Picture errorPicture = null)
         {
-            DefaultValues();
-
-            Bitmap = new Bitmap(width, height);
-
-            //Default Background
-            using (Graphics g = Graphics.FromImage(Bitmap)) { g.Clear(Color.Magenta); }
+            if (File.Exists(fileName) == false || new FileInfo(fileName).Length == 0)
+            {
+                return errorPicture;
+            }
+            return new Picture(fileName);
         }
 
-        public Bitmap FromFile(string filePath)
+        private Bitmap FromFile(string filePath)
         {
             var bytes = File.ReadAllBytes(filePath);
             var ms = new MemoryStream(bytes);

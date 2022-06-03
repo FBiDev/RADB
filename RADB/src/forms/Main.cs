@@ -383,7 +383,7 @@ namespace RADB
                         Game g = list[i];
                         if (g.ImageIconBitmap == RA.DefaultIconImage.Bitmap)
                         {
-                            g.ImageIconBitmap = new Picture(g.ImageIconPath, RA.ErrorIcon).Bitmap;
+                            g.ImageIconBitmap = Picture.Create(g.ImageIconPath, RA.ErrorIcon).Bitmap;
                         }
                     }
                 });
@@ -541,6 +541,11 @@ namespace RADB
             {
                 e.Handled = true;
                 dgvGames_CellDoubleClick(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
+            }
+
+            if (e.KeyData == Keys.Escape)
+            {
+                txtSearchGames.Focus();
             }
 
             if (e.KeyData == Keys.F5)

@@ -24,9 +24,12 @@ namespace RADB
                     ID = row.Value<int>("ID"),
                     Title = row.Value<string>("Title"),
                     ConsoleID = row.Value<int>("ConsoleID"),
+                    ConsoleName = row.Value<string>("ConsoleName"),
                     NumAchievements = row.Value<int>("NumAchievements"),
                     NumLeaderboards = row.Value<int>("NumLeaderboards"),
                     Points = row.Value<int>("Points"),
+                    DateModified = row.ValueNullable<DateTime>("DateModified"),
+                    ForumTopicID = row.ValueNullable<int>("ForumTopicID"),
                     ImageIcon = row.Value<string>("ImageIcon"),
                 });
             }
@@ -56,8 +59,10 @@ namespace RADB
                 new cSqlParameter("@Title", obj.Title),
                 new cSqlParameter("@ConsoleID", obj.ConsoleID),
                 new cSqlParameter("@NumAchievements", obj.NumAchievements),
-                new cSqlParameter("@NumLeaderboards", obj.NumLeaderboards),
                 new cSqlParameter("@Points", obj.Points),
+                new cSqlParameter("@NumLeaderboards", obj.NumLeaderboards),
+                new cSqlParameter("@DateModified", obj.DateModified),
+                new cSqlParameter("@ForumTopicID", obj.ForumTopicID),
                 new cSqlParameter("@ImageIcon", obj.ImageIcon),
             };
         }
@@ -123,7 +128,7 @@ namespace RADB
             return Task<bool>.Run(() =>
             {
                 //Monta SQL
-                string sql = "INSERT INTO Game (ID, Title, ConsoleID, NumAchievements, NumLeaderboards, Points, ImageIcon)" +
+                string sql = "INSERT INTO Game (ID, Title, ConsoleID, NumAchievements, Points, NumLeaderboards, DateModified, ForumTopicID, ImageIcon)" +
                              " VALUES " + Environment.NewLine;
 
                 var parametros = new List<cSqlParameter>();
@@ -131,12 +136,18 @@ namespace RADB
                 int index = 0;
                 foreach (var i in list)
                 {
+                    if (i.DateModified == null)
+                    {
+                        //i.DateModified = DBNull.Value;
+                    }
                     sql += "(" + i.ID +
                             ",'" + i.Title.Replace("'", "''") + "'" +
                             ", " + i.ConsoleID +
                             ", " + i.NumAchievements +
-                            ", " + i.NumLeaderboards +
                             ", " + i.Points +
+                            ", " + i.NumLeaderboards +
+                            ", " + i.DateModified.ToDBFormat() + "" +
+                            ", " + i.ForumTopicID.ToDBFormat() +
                             ", '" + i.ImageIcon + "')";
 
                     //parametros.AddRange(new List<cSqlParameter>

@@ -149,6 +149,7 @@
     <Content Include="src\rsc\sql\ConsoleListar.sql" />
     <Content Include="src\rsc\sql\ConsoleIncluir.sql" />
     <Content Include="src\rsc\sql\ConsoleExcluir.sql" />
+    <Content Include="src\rsc\sql\GameDuplicateForumTopicID.sql" />
     <Content Include="src\rsc\sql\GameListar.sql" />
     <Content Include="src\rsc\sql\GameExcluir.sql" />
     <Content Include="src\rsc\sql\GameIncluir.sql" />

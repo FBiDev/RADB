@@ -4,16 +4,20 @@ INSERT INTO Game (
 	, Title 
 	, ConsoleID 
 	, NumAchievements 
-	, NumLeaderboards 
 	, Points 
-	, ImageIcon
+	, NumLeaderboards 
+	, DateModified 
+	, ForumTopicID 
+	, ImageIcon 
 	) VALUES ( 
 	  @ID 
 	, @Title 
 	, @ConsoleID 
 	, @NumAchievements 
-	, @NumLeaderboards 
 	, @Points 
+	, @NumLeaderboards 
+	, @DateModified 
+	, @ForumTopicID 
 	, @ImageIcon 
 );
 --

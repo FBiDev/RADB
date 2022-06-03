@@ -26,7 +26,7 @@ namespace RADB
         public static Size GamesIconSize { get { return new Size(96, 96); } }
 
         public static Picture DefaultIconImage = new Picture(GamesIconSize);
-        public static Bitmap ErrorIcon = new Picture(GamesIconSize).Bitmap;
+        public static Picture ErrorIcon = new Picture(GamesIconSize);
         public static Picture DefaultTitleImage = new Picture(200, 150);
         public static Picture DefaultIngameImage = new Picture(200, 150);
 

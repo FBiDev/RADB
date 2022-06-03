@@ -1,18 +1,22 @@
 ﻿--
 SELECT
-	  ID 
+	  G.ID 
 	, Title 
 	, ConsoleID 
+	, C.Name as ConsoleName 
 	, NumAchievements 
-	, NumLeaderboards 
 	, Points 
+	, NumLeaderboards 
+	, DateModified 
+	, ForumTopicID 
 	, ImageIcon 
-FROM Game  
+FROM Game AS G 
+	LEFT JOIN Console as C on C.ID=G.ConsoleID 
 WHERE 1 = 1 
-	AND (ID = @ID 
+	AND (G.ID = @ID 
 		OR (@ID = 0 OR @ID IS NULL)) 
-	AND (Title LIKE '%'+@Title+'%' 
+	AND (G.Title LIKE '%'+@Title+'%' 
 		OR (@Title = '' OR @Title IS NULL)) 
-	AND (ConsoleID = @ConsoleID 
+	AND (G.ConsoleID = @ConsoleID 
 		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
 	
