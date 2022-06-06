@@ -85,14 +85,19 @@ namespace RADB
             await Game.IncluirLista(await GetGames(console));
         }
 
+        private DownloadFile IconFile(Game g)
+        {
+            return new DownloadFile(URL_Images + g.ImageIcon, g.ImageIconPath);
+        }
+
         public async Task DownloadGamesIcon(Download dlGameIcons, Console console)
         {
-            List<Game> games = await Game.Listar(new Game() { ConsoleID = console.ID });
-            dlGameIcons.Files = games.Select(g => g.ImageIconDownload()).ToList();
+            List<Game> games = await Game.Listar(console.ID);
+            dlGameIcons.Files = games.Select(g => IconFile(g)).ToList();
             await (dlGameIcons.Start());
         }
 
-        public Task<List<Game>> GetGames(Console console)
+        private Task<List<Game>> GetGames(Console console)
         {
             return Task<List<Game>>.Run(() =>
             {
@@ -158,8 +163,6 @@ namespace RADB
             //return new Game();
         }
 
-
-
         public async Task DownloadBadges(int gameID)
         {
             if (Main.ConsoleBind.IsNull()) { MessageBox.Show("No Console Selected"); return; }
@@ -170,7 +173,7 @@ namespace RADB
             int cID = 58;
             if (Main.ConsoleBind.NotNull()) { cID = Main.ConsoleBind.ID; }
             List<Game> Games = await Game.Listar(cID);
-            List<DownloadFile> gFiles = new List<DownloadFile>(Games.Where(a => a.NumAchievements > 0).Select(g => g.ImageIconDownload()));
+            List<DownloadFile> gFiles = new List<DownloadFile>(Games.Where(a => a.NumAchievements > 0).Select(g => IconFile(g)));
 
             //var query = gCheevos.GroupBy(x => new { x.BadgeURL, x.GameID }).Where(g => g.Count() > 1)
             //  .Select(y => new { Element = y.Key, Counter = y.Count() })

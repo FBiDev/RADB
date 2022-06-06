@@ -10,14 +10,16 @@ using System.Drawing.Drawing2D;
 using System.Text;
 using System.Globalization;
 using System.Diagnostics;
+//
+using GNX;
 using RADB.Properties;
 
 namespace RADB
 {
     public enum PictureFormat
     {
-        Jpg,
-        Png
+        Jpg = 0x2E6A7067,
+        Png = 0x2E706E67,
     }
 
     public class Picture
@@ -176,7 +178,8 @@ namespace RADB
         {
             if (Bitmap == null || (Bitmap is Bitmap) == false) { return; }
 
-            Path = fileName + "." + format.ToString().ToLower();
+            //Path = fileName + "." + format.HexToString().ToLower();
+            Path = fileName + format.HexToString().ToLower();
             FormatEnum = format;
 
             switch (FormatEnum)
@@ -208,7 +211,6 @@ namespace RADB
                 case PictureFormat.Jpg:
                     exeResource = Resources.jpegoptim_1_4_7;
                     exeFile += "jpegoptim_1_4_7.exe";
-                    //exeCmd = "\"" + RA.FolderTemp + exeFileName + "\"\" " + FileName;
                     exeCmd = exeFile + " " + Path;
                     break;
                 case PictureFormat.Png:

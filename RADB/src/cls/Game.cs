@@ -160,11 +160,6 @@ namespace RADB
             return Folder.Temp + consoleName + "_Icons";
         }
 
-        public DownloadFile ImageIconDownload()
-        {
-            return new DownloadFile(RA.URL_Images + ImageIcon, ImageIconPath);
-        }
-
         public bool Incluir()
         {
             return GameDao.Incluir(this);

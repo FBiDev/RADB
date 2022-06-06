@@ -19,7 +19,7 @@ namespace RADB
         {
             URL = url;
             Path = path;
-            Name = new FileInfo(Path).Name;
+            Name = Path.Split(new string[] { @"\" }, StringSplitOptions.None).Last().ToString();
         }
 
         public bool Equals(DownloadFile other)
