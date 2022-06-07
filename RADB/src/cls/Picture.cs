@@ -7,19 +7,14 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 //
-using System.Text;
-using System.Globalization;
-using System.Diagnostics;
-//
-using GNX;
 using RADB.Properties;
 
 namespace RADB
 {
     public enum PictureFormat
     {
-        Jpg = 0x2E6A7067,
-        Png = 0x2E706E67,
+        Jpg = 0x2E6A7067,   //.png
+        Png = 0x2E706E67,   //.jpg
     }
 
     public class Picture
@@ -178,8 +173,7 @@ namespace RADB
         {
             if (Bitmap == null || (Bitmap is Bitmap) == false) { return; }
 
-            //Path = fileName + "." + format.HexToString().ToLower();
-            Path = fileName + format.HexToString().ToLower();
+            Path = fileName + format.ToStringHex();
             FormatEnum = format;
 
             switch (FormatEnum)
@@ -224,29 +218,7 @@ namespace RADB
             {
                 exeNewFile.Write(exeResource, 0, exeResource.Length);
             }
-
-            Process process = new Process()
-            {
-                StartInfo = new ProcessStartInfo()
-                {
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    CreateNoWindow = true,
-                    UseShellExecute = false,
-                    StandardOutputEncoding = Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage),
-                    StandardErrorEncoding = Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage),
-                    RedirectStandardInput = true,
-                    RedirectStandardError = true,
-                    RedirectStandardOutput = true,
-                    FileName = "cmd.exe",
-                    Arguments = "/C " + exeCmd,
-                    //WorkingDirectory = "",
-                },
-            };
-            process.Start();
-
-            string output = exeCmd + Environment.NewLine + process.StandardError.ReadToEnd() + Environment.NewLine + process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-            process.Dispose();
+            Cmd.Execute(exeCmd);
 
             File.Delete(exeFile);
         }

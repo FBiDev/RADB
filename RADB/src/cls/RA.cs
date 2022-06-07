@@ -74,7 +74,10 @@ namespace RADB
         #endregion
 
         #region _Games
-        public string GamesFile(string consoleName) { return (Folder.Consoles + consoleName + " GameList.json").Replace("/", "-"); }
+        public string GamesFile(string consoleName)
+        {
+            return (Folder.Consoles + consoleName + " GameList.json").Replace("/", "-");
+        }
 
         public async Task DownloadGames(Download dlGames, Console console)
         {
@@ -82,12 +85,35 @@ namespace RADB
             await (dlGames.Start());
 
             await Game.Excluir(console.ID);
-            await Game.IncluirLista(await GetGames(console));
+            await Game.IncluirLista(await DeserializeGameList(console.Name));
+        }
+
+        private Task<List<Game>> DeserializeGameList(string consoleName)
+        {
+            return Task<List<Game>>.Run(() =>
+            {
+                List<Game> list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(GamesFile(consoleName)));
+                list.ForEach(g => { g.Icon = g.Icon.Replace(@"/Images/", ""); });
+                return list;
+            });
+        }
+
+        public string IconPath(Game g)
+        {
+            return Folder.Icons(g.ConsoleID) + g.Icon;
+        }
+
+        public void SetIcon(Game g)
+        {
+            if (g.IconBitmap.IsNull())
+            {
+                g.IconBitmap = Picture.Create(IconPath(g), ErrorIcon).Bitmap;
+            }
         }
 
         private DownloadFile IconFile(Game g)
         {
-            return new DownloadFile(URL_Images + g.ImageIcon, g.ImageIconPath);
+            return new DownloadFile(URL_Images + g.Icon, IconPath(g));
         }
 
         public async Task DownloadGamesIcon(Download dlGameIcons, Console console)
@@ -97,12 +123,17 @@ namespace RADB
             await (dlGameIcons.Start());
         }
 
-        private Task<List<Game>> GetGames(Console console)
+        public string ImageTitlePath(Game g)
         {
-            return Task<List<Game>>.Run(() =>
+            return string.IsNullOrWhiteSpace(g.ImageTitle) ? string.Empty : Folder.ImageTitle(g.ConsoleID) + g.ImageTitle;
+        }
+
+        public void SetImageTitle(Game g)
+        {
+            if (g.ImageTitleBitmap.IsNull())
             {
-                return JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(GamesFile(console.Name)));
-            });
+                g.ImageTitleBitmap = Picture.Create(ImageTitlePath(g), ErrorIcon).Bitmap;
+            }
         }
         #endregion
 
@@ -200,7 +231,7 @@ namespace RADB
             if (afiles.Count > 0)
             {
                 Picture pic = new Picture(afiles, true, 11, GamesIconSize, true);
-                pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Png, false);
+                pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Png, true);
             }
 
             return;

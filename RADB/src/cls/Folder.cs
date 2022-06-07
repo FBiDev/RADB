@@ -14,7 +14,7 @@ namespace RADB
 
             Directory.CreateDirectory(GameInfoExtend);
             Directory.CreateDirectory(Consoles);
-            Directory.CreateDirectory(Icons);
+            Directory.CreateDirectory(IconsBase);
 
             Directory.CreateDirectory(Temp);
         }
@@ -51,11 +51,11 @@ namespace RADB
             }
         }
 
-        public static string Icons
+        public static string IconsBase
         {
             get
             {
-                return Base + @"ImageIcon\";
+                return Base + @"Icons\";
             }
         }
 
@@ -90,9 +90,9 @@ namespace RADB
             return folder;
         }
 
-        public static string ImageIcon(int consoleID)
+        public static string Icons(int consoleID)
         {
-            string folder = Icons + consoleID + @"\";
+            string folder = IconsBase + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }

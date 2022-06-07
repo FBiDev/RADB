@@ -15,11 +15,6 @@ namespace RADB
 {
     public class Game
     {
-        //Duplicate Info
-        //public string Console { get; set; }
-        //public string GameIcon { get; set; }
-        //public string GameTitle { get; set; }
-
         //GameInfo
         public int ID { get; set; }
         public string Title { get; set; }
@@ -31,25 +26,15 @@ namespace RADB
         public DateTime? DateModified { get; set; }
         public int? ForumTopicID { get; set; }
 
+        [JsonProperty("ImageIcon")]
+        public string Icon { get; set; }
+        public Bitmap IconBitmap { get; set; }
+
+        //GameInfoExtended
         public string Developer { get; set; }
         public string Publisher { get; set; }
         public string Genre { get; set; }
 
-        #region _ImageIcon
-        private string _ImageIcon = string.Empty;
-        public string ImageIcon
-        {
-            get { return _ImageIcon; }
-            set
-            {
-                _ImageIcon = value.Replace(@"/Images/", "");
-            }
-        }
-        public string ImageIconPath { get { return Folder.ImageIcon(ConsoleID) + ImageIcon; } }
-        public Bitmap ImageIconBitmap { get; set; }
-        #endregion
-
-        //GameInfoExtended
         #region _ImageTitle
         private string _ImageTitle = string.Empty;
         public string ImageTitle
@@ -118,9 +103,8 @@ namespace RADB
 
         public Game()
         {
-            AchievementsList = new List<Achievement>();
-
-            ImageIconBitmap = RA.DefaultIconImage.Bitmap;
+            //AchievementsList = new List<Achievement>();
+            //IconBitmap = RA.DefaultIconImage.Bitmap;
 
             ImageTitlePicture = RA.DefaultTitleImage;
             ImageTitleBitmap = ImageTitlePicture.Bitmap;
@@ -131,15 +115,14 @@ namespace RADB
 
         public void SetAchievements(JToken result)
         {
-            //if (result.ContainsKey("Achievements"))
-            //{
+            if (AchievementsList.IsNull()) { return; }
+
             foreach (JProperty cheevo in result)
             {
                 AchievementsList.Add(JsonConvert.DeserializeObject<Achievement>(cheevo.Value.ToString()));
             }
-            //result.Remove("Achievements");
+
             AchievementsList.ForEach(c => { c.GameID = ID; c.ConsoleID = ConsoleID; });
-            //}
         }
 
         public List<string> AchievementsFiles()

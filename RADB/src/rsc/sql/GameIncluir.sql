@@ -1,5 +1,5 @@
 ﻿--
-INSERT INTO Game ( 
+INSERT INTO GameData ( 
 	  ID 
 	, Title 
 	, ConsoleID 
@@ -8,7 +8,7 @@ INSERT INTO Game (
 	, NumLeaderboards 
 	, DateModified 
 	, ForumTopicID 
-	, ImageIcon 
+	, Icon 
 	) VALUES ( 
 	  @ID 
 	, @Title 
@@ -18,6 +18,6 @@ INSERT INTO Game (
 	, @NumLeaderboards 
 	, @DateModified 
 	, @ForumTopicID 
-	, @ImageIcon 
+	, @Icon 
 );
 --

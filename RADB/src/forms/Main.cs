@@ -320,7 +320,7 @@ namespace RADB
 
             lblInfoName.Text = GameBind.Title + " (" + GameBind.ConsoleName + ")";
 
-            picInfoIcon.Image = GameBind.ImageIconBitmap;
+            picInfoIcon.Image = GameBind.IconBitmap;
             lblInfoDeveloper.Text = GameBind.Developer;
             lblInfoPublisher.Text = GameBind.Publisher;
             lblInfoGenre.Text = GameBind.Genre;
@@ -381,10 +381,7 @@ namespace RADB
                         if (i >= list.Count) { return; }
 
                         Game g = list[i];
-                        if (g.ImageIconBitmap == RA.DefaultIconImage.Bitmap)
-                        {
-                            g.ImageIconBitmap = Picture.Create(g.ImageIconPath, RA.ErrorIcon).Bitmap;
-                        }
+                        RA.SetIcon(g);
                     }
                 });
             }
@@ -429,6 +426,9 @@ namespace RADB
             int acLocation = 0;
             int size = 32;
             pnlAchievements.Controls.Clear();
+
+            if (obj.AchievementsList.IsNull()) { return; }
+
             foreach (var ac in obj.AchievementsList)
             {
                 Panel p = new Panel() { Height = size, Width = pnlAchievements.Width - 17, Location = new Point(0, acLocation) };
@@ -457,6 +457,9 @@ namespace RADB
             JObject resultInfo = Browser.ToJObject(FileGameInfoExtended);
             Game gameInfo = resultInfo.ToObject<Game>();
 
+            gameInfo.Icon = gameInfo.Icon.Replace(@"/Images/", "");
+            gameInfo.Icon = gameInfo.Icon.Replace(@"/Images/", "");
+
             GameBind.Developer = gameInfo.Developer;
             GameBind.Publisher = gameInfo.Publisher;
             GameBind.Genre = gameInfo.Genre;
@@ -470,7 +473,7 @@ namespace RADB
             lblInfoReleased.Text = GameBind.Released;
 
             List<DownloadFile> dlFiles = new List<DownloadFile>() {
-                new DownloadFile(RA.URL_Images + gameInfo.ImageIcon, gameInfo.ImageIconPath),
+                new DownloadFile(RA.URL_Images + gameInfo.Icon, RA.IconPath(gameInfo)),
                 new DownloadFile(RA.URL_Images + gameInfo.ImageTitle, gameInfo.ImageTitlePath),
                 new DownloadFile(RA.URL_Images + gameInfo.ImageIngame, gameInfo.ImageIngamePath),
             };
@@ -478,11 +481,11 @@ namespace RADB
             dlGameInfo.Files = dlFiles;
             await dlGameInfo.Start();
 
-            GameBind.ImageIcon = gameInfo.ImageIcon;
+            GameBind.Icon = gameInfo.Icon;
             GameBind.ImageTitle = gameInfo.ImageTitle;
             GameBind.ImageIngame = gameInfo.ImageIngame;
 
-            picInfoIcon.Image = GameBind.ImageIconBitmap;
+            picInfoIcon.Image = GameBind.IconBitmap;
             picInfoTitle.Image = GameBind.ImageTitleBitmap;
             picInfoTitle.Size = GameBind.ImageTitlePicture.Scale(picInfoTitle.MaximumSize);
             picInfoInGame.Image = GameBind.ImageIngameBitmap;
@@ -578,7 +581,7 @@ namespace RADB
             {
                 lblUserCheevos.Text = await Task<string>.Run(async () =>
                 {
-                    picUserCheevos.Image = GameBind.ImageIconBitmap;
+                    picUserCheevos.Image = GameBind.IconBitmap;
                     UserProgress user = await RA.GetUserProgress(GameBind.ID);
                     return user.NumAchieved + " / " + GameBind.NumAchievements;
                 });

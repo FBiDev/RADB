@@ -9,8 +9,8 @@ SELECT
 	, NumLeaderboards 
 	, DateModified 
 	, ForumTopicID 
-	, ImageIcon 
-FROM Game AS G 
+	, Icon 
+FROM GameData AS G 
 	LEFT JOIN Console as C on C.ID=G.ConsoleID 
 WHERE 1 = 1 
 	AND (G.ID = @ID 

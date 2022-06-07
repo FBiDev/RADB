@@ -1,9 +1,9 @@
 ﻿--
-SELECT * FROM Game 
+SELECT * FROM GameData 
 WHERE 1=1 
 	AND ForumTopicID IN 
 	(
-		SELECT ForumTopicID FROM Game 
+		SELECT ForumTopicID FROM GameData 
 		Group By ForumTopicID 
 		HAVING Count(*) > 1 
 	)

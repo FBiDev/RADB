@@ -30,7 +30,7 @@ namespace RADB
                     Points = row.Value<int>("Points"),
                     DateModified = row.ValueNullable<DateTime>("DateModified"),
                     ForumTopicID = row.ValueNullable<int>("ForumTopicID"),
-                    ImageIcon = row.Value<string>("ImageIcon"),
+                    Icon = row.Value<string>("Icon"),
                 });
             }
             return list;
@@ -45,7 +45,7 @@ namespace RADB
                 new cSqlParameter("@ID", obj.ID),
                 new cSqlParameter("@Title", obj.Title),
                 new cSqlParameter("@ConsoleID", obj.ConsoleID),
-                new cSqlParameter("@ImageIcon", obj.ImageIcon),
+                new cSqlParameter("@Icon", obj.Icon),
             };
         }
         #endregion
@@ -63,7 +63,7 @@ namespace RADB
                 new cSqlParameter("@NumLeaderboards", obj.NumLeaderboards),
                 new cSqlParameter("@DateModified", obj.DateModified),
                 new cSqlParameter("@ForumTopicID", obj.ForumTopicID),
-                new cSqlParameter("@ImageIcon", obj.ImageIcon),
+                new cSqlParameter("@Icon", obj.Icon),
             };
         }
         #endregion
@@ -128,43 +128,24 @@ namespace RADB
             return Task<bool>.Run(() =>
             {
                 //Monta SQL
-                string sql = "INSERT INTO Game (ID, Title, ConsoleID, NumAchievements, Points, NumLeaderboards, DateModified, ForumTopicID, ImageIcon)" +
-                             " VALUES " + Environment.NewLine;
+                string sql = "INSERT INTO GameData " +
+                                "(ID, Title, ConsoleID, NumAchievements, Points, NumLeaderboards, DateModified, ForumTopicID, Icon)" +
+                            " VALUES " + Environment.NewLine;
 
                 var parametros = new List<cSqlParameter>();
 
                 int index = 0;
                 foreach (var i in list)
                 {
-                    if (i.DateModified == null)
-                    {
-                        //i.DateModified = DBNull.Value;
-                    }
                     sql += "(" + i.ID +
                             ",'" + i.Title.Replace("'", "''") + "'" +
                             ", " + i.ConsoleID +
                             ", " + i.NumAchievements +
                             ", " + i.Points +
                             ", " + i.NumLeaderboards +
-                            ", " + i.DateModified.ToDBFormat() + "" +
-                            ", " + i.ForumTopicID.ToDBFormat() +
-                            ", '" + i.ImageIcon + "')";
-
-                    //parametros.AddRange(new List<cSqlParameter>
-                    //{
-                    //    new cSqlParameter("@ID" + index, i.ID),
-                    //    new cSqlParameter("@Title" + index, i.Title),
-                    //    new cSqlParameter("@ConsoleID" + index, i.ConsoleID),
-                    //    new cSqlParameter("@NumAchievements" + index, i.NumAchievements),
-                    //    new cSqlParameter("@NumLeaderboards" + index, i.NumLeaderboards),
-                    //    new cSqlParameter("@Points" + index, i.Points),
-                    //    new cSqlParameter("@ImageIcon" + index, i.ImageIcon)
-                    //});
-
-                    //sql += "(" + "@ID" + index + ", @Title" + index + ", @ConsoleID" + index +
-                    //           ", @NumAchievements" + index + ", @NumLeaderboards" + index +
-                    //           ", @Points" + index + ", @ImageIcon" + index +
-                    //       ")";
+                            ", " + i.DateModified.ToDB() + "" +
+                            ", " + i.ForumTopicID.ToDB() +
+                            ", '" + i.Icon + "')";
 
                     index++;
                     if (index < list.Count) { sql += "," + Environment.NewLine; }
