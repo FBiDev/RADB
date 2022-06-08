@@ -23,10 +23,11 @@ namespace RADB
         public static string URL_Images = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Images/";
         public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
 
-        public static Size GamesIconSize { get { return new Size(96, 96); } }
+        private static Size GamesIconSize { get { return new Size(96, 96); } }
 
         public static Picture DefaultIconImage = new Picture(GamesIconSize);
         public static Picture ErrorIcon = new Picture(GamesIconSize);
+
         public static Picture DefaultTitleImage = new Picture(200, 150);
         public static Picture DefaultIngameImage = new Picture(200, 150);
 
@@ -52,47 +53,50 @@ namespace RADB
         #endregion
 
         #region _Consoles
-        public string ConsolesFile() { return Folder.Consoles + "Consoles.json"; }
+        public string ConsolesPath()
+        {
+            return Folder.Consoles + "Consoles.json";
+        }
 
         public async Task DownloadConsoles(Download dlConsoles)
         {
-            dlConsoles.File = new DownloadFile(GetURL("API_GetConsoleIDs.php"), ConsolesFile());
+            dlConsoles.File = new DownloadFile(GetURL("API_GetConsoleIDs.php"), ConsolesPath());
             await dlConsoles.Start();
 
             await Console.Excluir();
-            await Console.IncluirLista(await GetConsoles());
+            await Console.IncluirLista(await DeserializeConsoles());
         }
 
-        public Task<List<Console>> GetConsoles()
+        private Task<List<Console>> DeserializeConsoles()
         {
             return Task<List<Console>>.Run(() =>
             {
-                List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(ConsolesFile()));
+                List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(ConsolesPath()));
                 return consoles.OrderBy(x => x.ID).ToList();
             });
         }
         #endregion
 
         #region _Games
-        public string GamesFile(string consoleName)
+        public string GamesPath(string consoleName)
         {
             return (Folder.Consoles + consoleName + " GameList.json").Replace("/", "-");
         }
 
         public async Task DownloadGames(Download dlGames, Console console)
         {
-            dlGames.File = new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID), GamesFile(console.Name));
+            dlGames.File = new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID), GamesPath(console.Name));
             await (dlGames.Start());
 
             await Game.Excluir(console.ID);
-            await Game.IncluirLista(await DeserializeGameList(console.Name));
+            await Game.IncluirLista(await DeserializeGames(console.Name));
         }
 
-        private Task<List<Game>> DeserializeGameList(string consoleName)
+        private Task<List<Game>> DeserializeGames(string consoleName)
         {
             return Task<List<Game>>.Run(() =>
             {
-                List<Game> list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(GamesFile(consoleName)));
+                List<Game> list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(GamesPath(consoleName)));
                 list.ForEach(g => { g.Icon = g.Icon.Replace(@"/Images/", ""); });
                 return list;
             });
@@ -103,7 +107,7 @@ namespace RADB
             return Folder.Icons(g.ConsoleID) + g.Icon;
         }
 
-        public void SetIcon(Game g)
+        public void SetIconBitmap(Game g)
         {
             if (g.IconBitmap.IsNull())
             {
@@ -128,7 +132,7 @@ namespace RADB
             return string.IsNullOrWhiteSpace(g.ImageTitle) ? string.Empty : Folder.ImageTitle(g.ConsoleID) + g.ImageTitle;
         }
 
-        public void SetImageTitle(Game g)
+        public void SetImageTitleBitmap(Game g)
         {
             if (g.ImageTitleBitmap.IsNull())
             {

@@ -181,7 +181,7 @@ namespace RADB
             if (enable)
             {
                 lblNotFoundConsoles.Visible = (dgvConsoles.RowCount == 0);
-                lblUpdateConsoles.Text = Archive.LastUpdate(RA.ConsolesFile());
+                lblUpdateConsoles.Text = Archive.LastUpdate(RA.ConsolesPath());
             }
             else
             {
@@ -255,7 +255,7 @@ namespace RADB
             if (enable)
             {
                 lblNotFoundGameList.Visible = (dgvGames.RowCount == 0);
-                lblUpdateGameList.Text = Archive.LastUpdate(RA.GamesFile(ConsoleBind.Name));
+                lblUpdateGameList.Text = Archive.LastUpdate(RA.GamesPath(ConsoleBind.Name));
             }
             else
             {
@@ -381,7 +381,7 @@ namespace RADB
                         if (i >= list.Count) { return; }
 
                         Game g = list[i];
-                        RA.SetIcon(g);
+                        RA.SetIconBitmap(g);
                     }
                 });
             }
