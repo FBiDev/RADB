@@ -104,7 +104,7 @@ namespace RADB
         public Game()
         {
             //AchievementsList = new List<Achievement>();
-            //IconBitmap = RA.DefaultIconImage.Bitmap;
+            IconBitmap = RA.DefaultIcon;
 
             ImageTitlePicture = RA.DefaultTitleImage;
             ImageTitleBitmap = ImageTitlePicture.Bitmap;

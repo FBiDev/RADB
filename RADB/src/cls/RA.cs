@@ -25,7 +25,7 @@ namespace RADB
 
         private static Size GamesIconSize { get { return new Size(96, 96); } }
 
-        public static Picture DefaultIconImage = new Picture(GamesIconSize);
+        public static Bitmap DefaultIcon = new Picture(GamesIconSize).Bitmap;
         public static Picture ErrorIcon = new Picture(GamesIconSize);
 
         public static Picture DefaultTitleImage = new Picture(200, 150);
@@ -109,7 +109,7 @@ namespace RADB
 
         public void SetIconBitmap(Game g)
         {
-            if (g.IconBitmap.IsNull())
+            if (g.IconBitmap == DefaultIcon)
             {
                 g.IconBitmap = Picture.Create(IconPath(g), ErrorIcon).Bitmap;
             }
@@ -234,8 +234,8 @@ namespace RADB
             List<string> afiles = Archive.RemoveDuplicates(gFiles.Select(f => f.Path).ToList());
             if (afiles.Count > 0)
             {
-                Picture pic = new Picture(afiles, true, 11, GamesIconSize, true);
-                pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Png, true);
+                Picture pic = new Picture(afiles, true, 11, GamesIconSize, false);
+                pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Jpg, false);
             }
 
             return;

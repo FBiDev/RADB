@@ -220,23 +220,30 @@ namespace RADB
         {
             if (e.RowHeader()) return;
 
-            ConsoleBind = dgv_SelectionChanged<Console>(sender);
-            UpdateConsoleLabels();
+            Console ConsoleSelected = dgv_SelectionChanged<Console>(sender);
+            if (ConsoleBind.IsNull() || ConsoleSelected.ID != ConsoleBind.ID)
+            {
+                ConsoleBind = ConsoleSelected;
 
-            lblUpdateGameList.Text = string.Empty;
-            lblProgressGameList.Text = string.Empty;
-            pgbGameList.Value = 0;
-            txtSearchGames.Text = string.Empty;
+                UpdateConsoleLabels();
+
+                lblUpdateGameList.Text = string.Empty;
+                lblProgressGameList.Text = string.Empty;
+                pgbGameList.Value = 0;
+                txtSearchGames.Text = string.Empty;
+
+                tabMain.SelectedTab = tabGames;
+
+                await LoadGames();
+
+                //Update GameList
+                if (lstGames.Count == 0)
+                {
+                    btnUpdateGameList_Click(null, null);
+                }
+            }
 
             tabMain.SelectedTab = tabGames;
-
-            await LoadGames();
-
-            //Update GameList
-            if (lstGames.Count == 0)
-            {
-                btnUpdateGameList_Click(null, null);
-            }
         }
         #endregion
 
@@ -292,6 +299,11 @@ namespace RADB
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             await RA.DownloadGames(dlGames, ConsoleBind);
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
+
+            //Download game icons
+            await RA.DownloadGamesIcon(dlGamesIcon, ConsoleBind);
+
+            //Load Games
             await LoadGames();
 
             //Update Console
@@ -301,13 +313,8 @@ namespace RADB
 
             UpdateConsoleLabels();
 
-            dgvGames.Enabled = false;
-
-            //Download game icons
-            await RA.DownloadGamesIcon(dlGamesIcon, ConsoleBind);
-
-            dgvGames.Enabled = true;
-            dgvGames.Focus();
+            //dgvGames.Enabled = true;
+            //dgvGames.Focus();
 
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + ConsoleBind.Name + " GameList Updated!" + Environment.NewLine + lblOutput.Text;
         }
