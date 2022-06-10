@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Security.Cryptography;
 using System.Collections;
 using System.Windows.Forms;
+using RADB.Properties;
 
 namespace RADB
 {
@@ -23,12 +24,12 @@ namespace RADB
         public static string URL_Images = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Images/";
         public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
 
-        private static Size GamesIconSize { get { return new Size(96, 96); } }
+        private static Size GameIconSize { get { return new Size(96, 96); } }
 
-        public static Bitmap DefaultIcon = new Picture(GamesIconSize).Bitmap;
-        public static Picture ErrorIcon = new Picture(GamesIconSize);
+        public static Bitmap DefaultIcon = new Picture(GameIconSize).Bitmap;
+        public static Bitmap ErrorIcon = Resources.notfound;
 
-        public static Picture DefaultTitleImage = new Picture(200, 150);
+        public static Bitmap DefaultTitleImage = new Picture(200, 150).Bitmap;
         public static Picture DefaultIngameImage = new Picture(200, 150);
 
         private string API_URL = "https://retroachievements.org/API/";
@@ -134,7 +135,7 @@ namespace RADB
 
         public void SetImageTitleBitmap(Game g)
         {
-            if (g.ImageTitleBitmap.IsNull())
+            if (g.ImageTitleBitmap == DefaultTitleImage)
             {
                 g.ImageTitleBitmap = Picture.Create(ImageTitlePath(g), ErrorIcon).Bitmap;
             }
@@ -234,8 +235,8 @@ namespace RADB
             List<string> afiles = Archive.RemoveDuplicates(gFiles.Select(f => f.Path).ToList());
             if (afiles.Count > 0)
             {
-                Picture pic = new Picture(afiles, true, 11, GamesIconSize, false);
-                pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Jpg, false);
+                Picture pic = new Picture(afiles, true, 11, GameIconSize, false);
+                pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Png, false);
             }
 
             return;

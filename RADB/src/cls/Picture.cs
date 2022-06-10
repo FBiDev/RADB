@@ -100,6 +100,13 @@ namespace RADB
             using (Graphics g = Graphics.FromImage(Bitmap)) { g.Clear(Color.Magenta); }
         }
 
+        public Picture(Bitmap bitmap)
+        {
+            DefaultValues();
+
+            Bitmap = bitmap;
+        }
+
         public Picture(string fileName)
         {
             DefaultValues();
@@ -132,11 +139,11 @@ namespace RADB
             }
         }
 
-        public static Picture Create(string fileName, Picture errorPicture = null)
+        public static Picture Create(string fileName, Bitmap errorBitmap = null)
         {
             if (File.Exists(fileName) == false || new FileInfo(fileName).Length == 0)
             {
-                return errorPicture;
+                return new Picture(errorBitmap);
             }
             return new Picture(fileName);
         }

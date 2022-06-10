@@ -43,16 +43,9 @@ namespace RADB
             set
             {
                 _ImageTitle = value.Replace(@"/Images/", "");
-                if (File.Exists(ImageTitlePath) && new FileInfo(ImageTitlePath).Length > 0)
-                {
-                    ImageTitlePicture = new Picture(ImageTitlePath);
-                    ImageTitleBitmap = ImageTitlePicture.Bitmap;
-                }
             }
         }
-        public string ImageTitlePath { get { return string.IsNullOrWhiteSpace(ImageTitle) ? string.Empty : Folder.ImageTitle(ConsoleID) + ImageTitle; } }
         public Bitmap ImageTitleBitmap { get; set; }
-        public Picture ImageTitlePicture = null;
         #endregion
 
         #region _ImageIngame
@@ -106,8 +99,7 @@ namespace RADB
             //AchievementsList = new List<Achievement>();
             IconBitmap = RA.DefaultIcon;
 
-            ImageTitlePicture = RA.DefaultTitleImage;
-            ImageTitleBitmap = ImageTitlePicture.Bitmap;
+            ImageTitleBitmap = RA.DefaultTitleImage;
 
             ImageIngamePicture = RA.DefaultIngameImage;
             ImageIngameBitmap = ImageIngamePicture.Bitmap;

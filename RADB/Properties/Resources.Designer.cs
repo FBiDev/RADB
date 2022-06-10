@@ -98,19 +98,18 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized string similar to --
         ///SELECT 
-        ///	  c.ID 
-        ///	, c.Name 
+        ///	 co.ID 
+        ///	, c.Name AS Company 
+        ///	,(CASE WHEN ci.ConsoleNameComplete IS NULL THEN co.Name ELSE ci.ConsoleNameComplete END) AS Name 
         ///	, SUM(CASE WHEN g.NumAchievements &gt; 0 THEN 1 ELSE 0 END) NumGames 
         ///	, Count(g.ID) AS TotalGames 
-        ///FROM Console AS c 
-        ///	LEFT JOIN Game AS g on g.ConsoleID = c.ID 
+        ///FROM Company AS c 
+        ///	LEFT JOIN CompanyItems AS ci ON ci.CompanyID = c.ID 
+        ///		--AND ci.Active = 1 
+        ///	LEFT JOIN Console AS co ON co.ID = ci.ConsoleID 
+        ///	LEFT JOIN GameData AS g on g.ConsoleID = co.ID OR co.Name IS NULL 
         ///WHERE 1 = 1 
-        ///	AND (c.ID = @ID 
-        ///		OR (@ID = 0 OR @ID IS NULL)) 
-        ///	AND (c.Name LIKE &apos;%&apos;+@Name+&apos;%&apos; 
-        ///		OR (@Name = &apos;&apos; OR @Name IS NULL)) 
-        ///GROUP BY c.ID 
-        ///	.
+        ///	AND co.Name IS NULL AND @ID = 0  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ConsoleListar {
             get {
@@ -131,7 +130,7 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized string similar to --
         ///DELETE 
-        ///FROM Game 
+        ///FROM GameData 
         ///WHERE 1 = 1 
         ///	AND (ID = @ID 
         ///		OR (@ID = 0 OR @ID IS NULL)) 
@@ -148,22 +147,26 @@ namespace RADB.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to --
-        ///INSERT INTO Game ( 
+        ///INSERT INTO GameData ( 
         ///	  ID 
         ///	, Title 
         ///	, ConsoleID 
         ///	, NumAchievements 
-        ///	, NumLeaderboards 
         ///	, Points 
-        ///	, ImageIcon
+        ///	, NumLeaderboards 
+        ///	, DateModified 
+        ///	, ForumTopicID 
+        ///	, Icon 
         ///	) VALUES ( 
         ///	  @ID 
         ///	, @Title 
         ///	, @ConsoleID 
         ///	, @NumAchievements 
-        ///	, @NumLeaderboards 
         ///	, @Points 
-        ///	, @ImageIcon 
+        ///	, @NumLeaderboards 
+        ///	, @DateModified 
+        ///	, @ForumTopicID 
+        ///	, @Icon 
         ///);
         ///--.
         /// </summary>
@@ -176,20 +179,24 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized string similar to --
         ///SELECT
-        ///	  ID 
+        ///	  G.ID 
         ///	, Title 
         ///	, ConsoleID 
+        ///	, C.Name as ConsoleName 
         ///	, NumAchievements 
-        ///	, NumLeaderboards 
         ///	, Points 
-        ///	, ImageIcon 
-        ///FROM Game  
+        ///	, NumLeaderboards 
+        ///	, DateModified 
+        ///	, ForumTopicID 
+        ///	, Icon 
+        ///FROM GameData AS G 
+        ///	LEFT JOIN Console as C on C.ID=G.ConsoleID 
         ///WHERE 1 = 1 
-        ///	AND (ID = @ID 
+        ///	AND (G.ID = @ID 
         ///		OR (@ID = 0 OR @ID IS NULL)) 
-        ///	AND (Title LIKE &apos;%&apos;+@Title+&apos;%&apos; 
+        ///	AND (G.Title LIKE &apos;%&apos;+@Title+&apos;%&apos; 
         ///		OR (@Title = &apos;&apos; OR @Title IS NULL)) 
-        ///	AND (ConsoleID = @ConsoleID 
+        ///	AND (G.ConsoleID = @ConsoleID 
         ///		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
         ///	.
         /// </summary>
@@ -215,6 +222,16 @@ namespace RADB.Properties {
         internal static System.Drawing.Bitmap loader {
             get {
                 object obj = ResourceManager.GetObject("loader", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap notfound {
+            get {
+                object obj = ResourceManager.GetObject("notfound", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

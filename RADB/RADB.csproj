@@ -106,7 +106,6 @@
     <Compile Include="src\cls\Achievement.cs" />
     <Compile Include="src\cls\Picture.cs" />
     <Compile Include="src\cls\RA.cs" />
-    <Compile Include="src\temp\StringExtensions.cs" />
     <Compile Include="src\temp\Temp.cs" />
     <EmbeddedResource Include="src\forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
@@ -153,6 +152,7 @@
     <Content Include="src\rsc\sql\GameListar.sql" />
     <Content Include="src\rsc\sql\GameExcluir.sql" />
     <Content Include="src\rsc\sql\GameIncluir.sql" />
+    <Content Include="src\temp\ToDo.txt" />
     <ContentWithTargetPath Include="src\rsc\dll64\unmanaged\SQLite.Interop.dll">
       <TargetPath>SQLite.Interop.dll</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -178,7 +178,6 @@
   <ItemGroup>
     <Folder Include="src\rsc\dll32\referenced\" />
     <Folder Include="src\rsc\dll32\unmanaged\" />
-    <Folder Include="src\rsc\json\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

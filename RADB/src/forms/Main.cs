@@ -11,6 +11,9 @@ using System.Drawing;
 using Newtonsoft.Json.Linq;
 using RADB.Properties;
 using GNX;
+using System.Reflection;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace RADB
 {
@@ -202,8 +205,13 @@ namespace RADB
         {
             if (ConsoleBind.NotNull())
             {
+                //Update Console
+                ListBind<Game> list = (ListBind<Game>)dgvGames.DataSource;
+                var NumGames = list.Sum(g => (g.NumAchievements > 0).ToInt());
+                var TotalGames = list.Count();
+
                 lblConsoleName.Text = ConsoleBind.Name;
-                lblConsoleGamesTotal.Text = ConsoleBind.NumGames + " of " + ConsoleBind.TotalGames + " Games";
+                lblConsoleGamesTotal.Text = NumGames + " of " + TotalGames + " Games";
             }
         }
 
@@ -225,8 +233,6 @@ namespace RADB
             {
                 ConsoleBind = ConsoleSelected;
 
-                UpdateConsoleLabels();
-
                 lblUpdateGameList.Text = string.Empty;
                 lblProgressGameList.Text = string.Empty;
                 pgbGameList.Value = 0;
@@ -241,6 +247,8 @@ namespace RADB
                 {
                     btnUpdateGameList_Click(null, null);
                 }
+
+                UpdateConsoleLabels();
             }
 
             tabMain.SelectedTab = tabGames;
@@ -306,15 +314,12 @@ namespace RADB
             //Load Games
             await LoadGames();
 
-            //Update Console
+            UpdateConsoleLabels();
+
+            //Update ConsoleBind
             ListBind<Game> list = (ListBind<Game>)dgvGames.DataSource;
             ConsoleBind.NumGames = list.Sum(g => (g.NumAchievements > 0).ToInt());
             ConsoleBind.TotalGames = list.Count();
-
-            UpdateConsoleLabels();
-
-            //dgvGames.Enabled = true;
-            //dgvGames.Focus();
 
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + ConsoleBind.Name + " GameList Updated!" + Environment.NewLine + lblOutput.Text;
         }
@@ -333,10 +338,8 @@ namespace RADB
             lblInfoGenre.Text = GameBind.Genre;
             lblInfoReleased.Text = GameBind.Released;
 
-            picInfoTitle.Image = GameBind.ImageTitleBitmap;
-            picInfoTitle.Size = GameBind.ImageTitlePicture.Scale(picInfoTitle.MaximumSize);
-            picInfoInGame.Image = GameBind.ImageIngameBitmap;
-            picInfoInGame.Size = GameBind.ImageIngamePicture.Scale(picInfoInGame.MaximumSize);
+            picInfoTitle.ScaleTo(GameBind.ImageTitleBitmap);
+            picInfoInGame.ScaleTo(GameBind.ImageIngameBitmap);
 
             FillAchievements(GameBind);
 
@@ -416,6 +419,7 @@ namespace RADB
 
             LoadGamesIcon();
             dgvGames.Refresh();
+            UpdateConsoleLabels();
         }
 
         private void txtSearchGames_KeyDown(object sender, KeyEventArgs e)
@@ -464,6 +468,8 @@ namespace RADB
             JObject resultInfo = Browser.ToJObject(FileGameInfoExtended);
             Game gameInfo = resultInfo.ToObject<Game>();
 
+            RA.SetImageTitleBitmap(gameInfo);
+
             gameInfo.Icon = gameInfo.Icon.Replace(@"/Images/", "");
             gameInfo.Icon = gameInfo.Icon.Replace(@"/Images/", "");
 
@@ -481,7 +487,7 @@ namespace RADB
 
             List<DownloadFile> dlFiles = new List<DownloadFile>() {
                 new DownloadFile(RA.URL_Images + gameInfo.Icon, RA.IconPath(gameInfo)),
-                new DownloadFile(RA.URL_Images + gameInfo.ImageTitle, gameInfo.ImageTitlePath),
+                new DownloadFile(RA.URL_Images + gameInfo.ImageTitle, RA.ImageTitlePath(gameInfo)),
                 new DownloadFile(RA.URL_Images + gameInfo.ImageIngame, gameInfo.ImageIngamePath),
             };
 
@@ -493,13 +499,14 @@ namespace RADB
             GameBind.ImageIngame = gameInfo.ImageIngame;
 
             picInfoIcon.Image = GameBind.IconBitmap;
-            picInfoTitle.Image = GameBind.ImageTitleBitmap;
-            picInfoTitle.Size = GameBind.ImageTitlePicture.Scale(picInfoTitle.MaximumSize);
-            picInfoInGame.Image = GameBind.ImageIngameBitmap;
-            picInfoInGame.Size = GameBind.ImageIngamePicture.Scale(picInfoInGame.MaximumSize);
+
+            picInfoTitle.ScaleTo(GameBind.ImageTitleBitmap);
+            //picInfoTitle.Size = GameBind.ImageTitlePicture.Scale(picInfoTitle.MaximumSize);
+            picInfoInGame.ScaleTo(GameBind.ImageIngameBitmap);
+            //picInfoInGame.Size = GameBind.ImageIngamePicture.Scale(picInfoInGame.MaximumSize);
 
             GameBind.SetAchievements(resultInfo["Achievements"]);
-            FillAchievements(GameBind);
+            //FillAchievements(GameBind);
 
             dgvGames.Refresh();
             pnlInfoScroll.Focus();
