@@ -11,9 +11,8 @@ using System.Drawing;
 using Newtonsoft.Json.Linq;
 using RADB.Properties;
 using GNX;
-using System.Reflection;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using PhotoSauce.MagicScaler;
 
 namespace RADB
 {
@@ -607,7 +606,40 @@ namespace RADB
 
         private async void btnDownloadBadges_Click(object sender, EventArgs e)
         {
-            await RA.DownloadBadges(1);
+            //await RA.DownloadBadges(1);
+
+            var file = AppDomain.CurrentDomain.BaseDirectory + @"\Data\ImageInGame\4\025272.png";
+            var file2 = @"Data\ImageInGame\4\025272_RS2.png";
+            var file3 = AppDomain.CurrentDomain.BaseDirectory + @"\Data\ImageInGame\4\025272_RS2_NEW.png";
+
+            await Task.Run(() =>
+            {
+                using (var pipeline = MagicImageProcessor.BuildPipeline(file, new ProcessImageSettings() { Width = 200 }))
+                {
+                    using (var outfile = File.Open(file2, FileMode.OpenOrCreate))
+                    {
+                        pipeline.WriteOutput(outfile);
+                        outfile.Close();
+                        outfile.Dispose();
+                    }
+                    pipeline.Dispose();
+                }
+
+
+                var b = new Bitmap(500, 500);
+                using (Graphics g = Graphics.FromImage(b))
+                {
+                    g.Clear(Color.White);
+
+                    Bitmap image = new Bitmap(file2);
+                    g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height));
+                    image.Dispose();
+                }
+                b.Save(file3, ImageFormat.Png);
+
+                var pic = new Picture(file3, PictureFormat.Png);
+                pic.Compress();
+            });
         }
     }
 }

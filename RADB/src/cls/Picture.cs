@@ -107,10 +107,11 @@ namespace RADB
             Bitmap = bitmap;
         }
 
-        public Picture(string fileName)
+        public Picture(string fileName, PictureFormat format = PictureFormat.Jpg)
         {
             DefaultValues();
             Path = fileName;
+            FormatEnum = format;
 
             try
             {
@@ -197,11 +198,11 @@ namespace RADB
 
             if (compress)
             {
-                CompressCMD();
+                Compress();
             }
         }
 
-        private void CompressCMD()
+        public void Compress()
         {
             byte[] exeResource = new byte[0];
             string exeFile = FolderExe;
