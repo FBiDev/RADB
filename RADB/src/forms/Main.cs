@@ -608,22 +608,16 @@ namespace RADB
         {
             //await RA.DownloadBadges(1);
 
-            var file = AppDomain.CurrentDomain.BaseDirectory + @"\Data\ImageInGame\4\025272.png";
-            var file2 = @"Data\ImageInGame\4\025272_RS2.png";
-            var file3 = AppDomain.CurrentDomain.BaseDirectory + @"\Data\ImageInGame\4\025272_RS2_NEW.png";
+            var file = AppDomain.CurrentDomain.BaseDirectory + @"\Data\ImageInGame\12\mega-man-legends-ps1.png";
+            var file2 = @"Data\ImageInGame\12\mega-man-legends-ps1_RS2.png";
+            var file3 = AppDomain.CurrentDomain.BaseDirectory + @"\Data\ImageInGame\12\mega-man-legends-ps1_RS2_NEW.png";
 
             await Task.Run(() =>
             {
-                using (var pipeline = MagicImageProcessor.BuildPipeline(file, new ProcessImageSettings() { Width = 200 }))
-                {
-                    using (var outfile = File.Open(file2, FileMode.OpenOrCreate))
-                    {
-                        pipeline.WriteOutput(outfile);
-                        outfile.Close();
-                        outfile.Dispose();
-                    }
-                    pipeline.Dispose();
-                }
+                //var Encoder = new JpegEncoderOptions(98, ChromaSubsampleMode.Subsample444, true);
+                var Encoder = new PngEncoderOptions(PngFilter.None, false);
+
+                MagicImageProcessor.ProcessImage(file, file2, new ProcessImageSettings { EncoderOptions = Encoder });
 
 
                 var b = new Bitmap(500, 500);
@@ -637,7 +631,7 @@ namespace RADB
                 }
                 b.Save(file3, ImageFormat.Png);
 
-                var pic = new Picture(file3, PictureFormat.Png);
+                var pic = new Picture(file2, PictureFormat.Png);
                 pic.Compress();
             });
         }
