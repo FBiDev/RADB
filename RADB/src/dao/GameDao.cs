@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 //
 using RADB.Properties;
 using GNX;
-using System.Threading;
 
 namespace RADB
 {
@@ -25,12 +24,12 @@ namespace RADB
                     Title = row.Value<string>("Title"),
                     ConsoleID = row.Value<int>("ConsoleID"),
                     ConsoleName = row.Value<string>("ConsoleName"),
+                    ImageIcon = row.Value<string>("ImageIcon"),
                     NumAchievements = row.Value<int>("NumAchievements"),
-                    NumLeaderboards = row.Value<int>("NumLeaderboards"),
                     Points = row.Value<int>("Points"),
+                    NumLeaderboards = row.Value<int>("NumLeaderboards"),
                     DateModified = row.ValueNullable<DateTime>("DateModified"),
                     ForumTopicID = row.ValueNullable<int>("ForumTopicID"),
-                    Icon = row.Value<string>("Icon"),
                 });
             }
             return list;
@@ -45,7 +44,7 @@ namespace RADB
                 new cSqlParameter("@ID", obj.ID),
                 new cSqlParameter("@Title", obj.Title),
                 new cSqlParameter("@ConsoleID", obj.ConsoleID),
-                new cSqlParameter("@Icon", obj.Icon),
+                new cSqlParameter("@ImageIcon", obj.ImageIcon),
             };
         }
         #endregion
@@ -58,12 +57,12 @@ namespace RADB
                 new cSqlParameter("@ID", obj.ID),
                 new cSqlParameter("@Title", obj.Title),
                 new cSqlParameter("@ConsoleID", obj.ConsoleID),
+                new cSqlParameter("@ImageIcon", obj.ImageIcon),
                 new cSqlParameter("@NumAchievements", obj.NumAchievements),
                 new cSqlParameter("@Points", obj.Points),
                 new cSqlParameter("@NumLeaderboards", obj.NumLeaderboards),
                 new cSqlParameter("@DateModified", obj.DateModified),
                 new cSqlParameter("@ForumTopicID", obj.ForumTopicID),
-                new cSqlParameter("@Icon", obj.Icon),
             };
         }
         #endregion
@@ -129,7 +128,7 @@ namespace RADB
             {
                 //Monta SQL
                 string sql = "INSERT INTO GameData " +
-                                "(ID, Title, ConsoleID, NumAchievements, Points, NumLeaderboards, DateModified, ForumTopicID, Icon)" +
+                                "(ID, Title, ConsoleID, NumAchievements, Points, NumLeaderboards, DateModified, ForumTopicID, ImageIcon)" +
                             " VALUES " + Environment.NewLine;
 
                 var parametros = new List<cSqlParameter>();
@@ -145,7 +144,7 @@ namespace RADB
                             ", " + i.NumLeaderboards +
                             ", " + i.DateModified.ToDB() + "" +
                             ", " + i.ForumTopicID.ToDB() +
-                            ", '" + i.Icon + "')";
+                            ", '" + i.ImageIcon + "')";
 
                     index++;
                     if (index < list.Count) { sql += "," + Environment.NewLine; }

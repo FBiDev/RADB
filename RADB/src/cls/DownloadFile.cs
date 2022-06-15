@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 
 namespace RADB
 {
@@ -9,6 +10,8 @@ namespace RADB
         public string URL { get; set; }
         public string Path { get; set; }
         public string Name { get; set; }
+        public string Extension { get; set; }
+        //public Bitmap Image { get; set; }
 
         public long BytesReceived { get; set; }
         public long TotalBytesToReceive { get; set; }
@@ -19,6 +22,12 @@ namespace RADB
             URL = url;
             Path = path;
             Name = Path.Split(new string[] { @"\" }, StringSplitOptions.None).Last().ToString();
+            Extension = Name.Split(new string[] { @"." }, StringSplitOptions.None).Last().ToString().ToLower();
+
+            if (Extension == "png" || Extension == "jpg")
+            {
+                //Image = Picture.Create(Path).Bitmap;
+            }
         }
 
         public bool Equals(DownloadFile other)

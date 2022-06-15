@@ -3,21 +3,21 @@ INSERT INTO GameData (
 	  ID 
 	, Title 
 	, ConsoleID 
+	, ImageIcon 
 	, NumAchievements 
 	, Points 
 	, NumLeaderboards 
 	, DateModified 
 	, ForumTopicID 
-	, Icon 
 	) VALUES ( 
 	  @ID 
 	, @Title 
 	, @ConsoleID 
+	, @ImageIcon 
 	, @NumAchievements 
 	, @Points 
 	, @NumLeaderboards 
 	, @DateModified 
 	, @ForumTopicID 
-	, @Icon 
 );
 --

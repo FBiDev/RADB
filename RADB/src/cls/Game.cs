@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 //
-using System.IO;
 using System.Drawing;
-using System.Globalization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 //
 using GNX;
@@ -15,7 +11,6 @@ namespace RADB
 {
     public class Game
     {
-        //GameInfo
         public int ID { get; set; }
         public string Title { get; set; }
         public int ConsoleID { get; set; }
@@ -26,107 +21,22 @@ namespace RADB
         public DateTime? DateModified { get; set; }
         public int? ForumTopicID { get; set; }
 
-        [JsonProperty("ImageIcon")]
-        public string Icon { get; set; }
-        public Bitmap IconBitmap { get; set; }
-
-        //GameInfoExtended
-        public string Developer { get; set; }
-        public string Publisher { get; set; }
-        public string Genre { get; set; }
-
-        #region _ImageTitle
-        private string _ImageTitle = string.Empty;
-        public string ImageTitle
+        #region _ImageIcon_
+        private string _ImageIcon { get; set; }
+        //[JsonProperty("ImageIcon")]
+        public string ImageIcon { get { return _ImageIcon; } set { _ImageIcon = value.Replace(@"/Images/", ""); } }
+        public DownloadFile ImageIconFile { get { return new DownloadFile(RA.URL_Images + ImageIcon, Folder.Icons(ConsoleID) + ImageIcon); } }
+        public Bitmap ImageIconBitmap { get; set; }
+        public void SetImageIconBitmap()
         {
-            get { return _ImageTitle; }
-            set
-            {
-                _ImageTitle = value.Replace(@"/Images/", "");
-            }
+            if (ImageIconBitmap != RA.DefaultIcon) { return; }
+            ImageIconBitmap = Picture.Create(ImageIconFile.Path, RA.ErrorIcon).Bitmap;
         }
-        public Bitmap ImageTitleBitmap { get; set; }
         #endregion
-
-        #region _ImageIngame
-        private string _ImageIngame = string.Empty;
-        public string ImageIngame
-        {
-            get { return _ImageIngame; }
-            set
-            {
-                _ImageIngame = value.Replace(@"/Images/", "");
-                if (File.Exists(ImageIngamePath) && new FileInfo(ImageIngamePath).Length > 0)
-                {
-                    ImageIngamePicture = new Picture(ImageIngamePath);
-                    ImageIngameBitmap = ImageIngamePicture.Bitmap;
-                }
-            }
-        }
-        public string ImageIngamePath { get { return string.IsNullOrWhiteSpace(ImageIngame) ? string.Empty : Folder.ImageIngame(ConsoleID) + ImageIngame; } }
-        public Bitmap ImageIngameBitmap { get; set; }
-        public Picture ImageIngamePicture = null;
-        #endregion
-
-        public string ImageBoxArt { get; set; }
-        public string Flags { get; set; }
-
-        public string Released { get; set; }
-        public DateTime? ReleasedDate
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(Released)) return null;
-
-                DateTime d;
-
-                if (DateTime.TryParse(Released, out d)) { return d; }
-                if (DateTime.TryParseExact(Released, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out d)) { return d; }
-
-                return d;
-            }
-        }
-
-        public bool IsFinal { get; set; }
-        public int NumDistinctPlayersCasual { get; set; }
-        public int NumDistinctPlayersHardcore { get; set; }
-        public string RichPresencePatch { get; set; }
-
-        public List<Achievement> AchievementsList { get; set; }
 
         public Game()
         {
-            //AchievementsList = new List<Achievement>();
-            IconBitmap = RA.DefaultIcon;
-
-            ImageTitleBitmap = RA.DefaultTitleImage;
-
-            ImageIngamePicture = RA.DefaultIngameImage;
-            ImageIngameBitmap = ImageIngamePicture.Bitmap;
-        }
-
-        public void SetAchievements(JToken result)
-        {
-            if (AchievementsList.IsNull()) { return; }
-
-            foreach (JProperty cheevo in result)
-            {
-                AchievementsList.Add(JsonConvert.DeserializeObject<Achievement>(cheevo.Value.ToString()));
-            }
-
-            AchievementsList.ForEach(c => { c.GameID = ID; c.ConsoleID = ConsoleID; });
-        }
-
-        public List<string> AchievementsFiles()
-        {
-            List<string> files = new List<string>();
-            AchievementsList.ForEach(c => { files.Add(c.BadgeFile()); });
-            return files;
-        }
-
-        public static string BadgesMerged(int consoleID = 0, string gameTitle = "")
-        {
-            return Folder.Temp + consoleID + "_" + gameTitle + "_Badges";
+            ImageIconBitmap = RA.DefaultIcon;
         }
 
         public static string IconsMerged(string consoleName = "")

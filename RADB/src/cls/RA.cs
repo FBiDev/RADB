@@ -30,7 +30,8 @@ namespace RADB
         public static Bitmap ErrorIcon = Resources.notfound;
 
         public static Bitmap DefaultTitleImage = new Picture(200, 150).Bitmap;
-        public static Picture DefaultIngameImage = new Picture(200, 150);
+        public static Bitmap DefaultIngameImage = new Picture(200, 150).Bitmap;
+        public static Bitmap DefaultBoxArtImage = new Picture(200, 150).Bitmap;
 
         private string API_URL = "https://retroachievements.org/API/";
         private string API_UserName;
@@ -56,7 +57,7 @@ namespace RADB
         #region _Consoles
         public string ConsolesPath()
         {
-            return Folder.Consoles + "Consoles.json";
+            return Folder.Console + "Consoles.json";
         }
 
         public async Task DownloadConsoles(Download dlConsoles)
@@ -78,67 +79,85 @@ namespace RADB
         }
         #endregion
 
-        #region _Games
-        public string GamesPath(string consoleName)
+        #region _GameList
+        public string GameListPath(string consoleName)
         {
-            return (Folder.Consoles + consoleName + " GameList.json").Replace("/", "-");
+            return (Folder.GameData + consoleName + ".json").Replace("/", "-");
         }
 
-        public async Task DownloadGames(Download dlGames, Console console)
+        public async Task DownloadGameList(Download dlGames, Console console)
         {
-            dlGames.File = new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID), GamesPath(console.Name));
+            dlGames.File = new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID), GameListPath(console.Name));
             await (dlGames.Start());
 
             await Game.Excluir(console.ID);
-            await Game.IncluirLista(await DeserializeGames(console.Name));
+            await Game.IncluirLista(await DeserializeGameList(console.Name));
         }
 
-        private Task<List<Game>> DeserializeGames(string consoleName)
+        private Task<List<Game>> DeserializeGameList(string consoleName)
         {
             return Task<List<Game>>.Run(() =>
             {
-                List<Game> list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(GamesPath(consoleName)));
-                list.ForEach(g => { g.Icon = g.Icon.Replace(@"/Images/", ""); });
+                List<Game> list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(GameListPath(consoleName)));
                 return list;
             });
-        }
-
-        public string IconPath(Game g)
-        {
-            return Folder.Icons(g.ConsoleID) + g.Icon;
-        }
-
-        public void SetIconBitmap(Game g)
-        {
-            if (g.IconBitmap == DefaultIcon)
-            {
-                g.IconBitmap = Picture.Create(IconPath(g), ErrorIcon).Bitmap;
-            }
-        }
-
-        private DownloadFile IconFile(Game g)
-        {
-            return new DownloadFile(URL_Images + g.Icon, IconPath(g));
         }
 
         public async Task DownloadGamesIcon(Download dlGameIcons, Console console)
         {
             List<Game> games = await Game.Listar(console.ID);
-            dlGameIcons.Files = games.Select(g => IconFile(g)).ToList();
+            dlGameIcons.Files = games.Select(g => g.ImageIconFile).ToList();
             await (dlGameIcons.Start());
         }
+        #endregion
 
-        public string ImageTitlePath(Game g)
+        #region _GameExtend
+        public string GameExtendPath(Game game)
         {
-            return string.IsNullOrWhiteSpace(g.ImageTitle) ? string.Empty : Folder.ImageTitle(g.ConsoleID) + g.ImageTitle;
+            return (Folder.GameDataExtend(game.ConsoleID) + game.ID + ".json");
         }
 
-        public void SetImageTitleBitmap(Game g)
+        public async Task DownloadGameExtend(Download dlGameExtend, Game game)
         {
-            if (g.ImageTitleBitmap == DefaultTitleImage)
+            dlGameExtend.File = new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), GameExtendPath(game));
+            await (dlGameExtend.Start());
+
+            GameExtend obj = (await DeserializeGameExtend(game));
+            obj.ID = game.ID;
+            obj.ConsoleID = game.ConsoleID;
+            await obj.Excluir();
+            obj.Incluir();
+        }
+
+        private Task<GameExtend> DeserializeGameExtend(Game game)
+        {
+            return Task<GameExtend>.Run(() =>
             {
-                g.ImageTitleBitmap = Picture.Create(ImageTitlePath(g), ErrorIcon).Bitmap;
-            }
+                string AllText = File.ReadAllText(GameExtendPath(game));
+                string gameData = AllText.GetBetween("{", ",\"Achievements\":{");
+                string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
+                gameData = "{" + gameData + "}";
+                cheevos = "{" + cheevos + "}";
+
+                GameExtend obj = JsonConvert.DeserializeObject<GameExtend>(gameData);
+
+                JToken jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
+
+                obj.SetAchievements(jcheevos);
+
+                return obj;
+            });
+        }
+
+        public async Task DownloadGameExtendImages(Download dlGameExtendImages, Game game)
+        {
+            GameExtend gamex = await GameExtend.Listar(game.ID);
+            dlGameExtendImages.Files = new List<DownloadFile>() {
+                gamex.ImageTitleFile,
+                gamex.ImageIngameFile,
+                gamex.ImageBoxArtFile,
+            };
+            await (dlGameExtendImages.Start());
         }
         #endregion
 
@@ -148,7 +167,7 @@ namespace RADB
         }
         public string FileGameInfoExtended(int consoleID, int gameID)
         {
-            return Folder.GameInfoExtendConsole(consoleID) + gameID + ".json";
+            return Folder.GameDataExtend(consoleID) + gameID + ".json";
         }
 
         public async Task<UserProgress> GetUserProgress(int gameID)
@@ -168,14 +187,13 @@ namespace RADB
         public static string API_GameExtended = "API_GetGameExtended.php";
 
         //JSON
-        public static string JSN_GameInfo(int consoleID, int gameID) { return Folder.GameInfoConsole(consoleID) + gameID + ".json"; }
-        public static string JSN_GameInfoExtend(int consoleID, int gameID) { return Folder.GameInfoExtendConsole(consoleID) + gameID + ".json"; }
+        public static string JSN_GameInfoExtend(int consoleID, int gameID) { return Folder.GameDataExtend(consoleID) + gameID + ".json"; }
 
-        public async Task<Game> GetGameInfoExtended(int gameID)
+        public async Task<GameExtend> GetGameInfoExtended(int gameID)
         {
             if (gameID <= 0) { return null; }
 
-            string fileName = Folder.GameInfoExtend + 1 + @"\" + gameID + ".json";
+            string fileName = Folder.GameDataExtend(1) + gameID + ".json";
             //JObject result = Browser.ToJObject(API_URL("API_GetGameExtended.php", "&i=", gameID.ToString()));
             Download dl = new Download()
             {
@@ -191,7 +209,7 @@ namespace RADB
             {
                 JObject result = Browser.ToJObject(fileName);
 
-                Game game = result.ToObject<Game>();
+                GameExtend game = result.ToObject<GameExtend>();
                 JToken a = result["Achievements"];
                 game.SetAchievements(result["Achievements"]);
                 return game;
@@ -209,7 +227,7 @@ namespace RADB
             int cID = 58;
             if (Main.ConsoleBind.NotNull()) { cID = Main.ConsoleBind.ID; }
             List<Game> Games = await Game.Listar(cID);
-            List<DownloadFile> gFiles = new List<DownloadFile>(Games.Where(a => a.NumAchievements > 0).Select(g => IconFile(g)));
+            List<DownloadFile> gFiles = new List<DownloadFile>(Games.Where(a => a.NumAchievements > 0).Select(g => g.ImageIconFile));
 
             //var query = gCheevos.GroupBy(x => new { x.BadgeURL, x.GameID }).Where(g => g.Count() > 1)
             //  .Select(y => new { Element = y.Key, Counter = y.Count() })

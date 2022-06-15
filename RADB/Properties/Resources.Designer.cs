@@ -147,26 +147,107 @@ namespace RADB.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to --
+        ///DELETE 
+        ///FROM GameDataExtend 
+        ///WHERE 1 = 1 
+        ///	AND (ID = @ID 
+        ///		OR (@ID = 0 OR @ID IS NULL)) 
+        ///	AND (ConsoleID = @ConsoleID 
+        ///		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
+        ///;
+        ///--.
+        /// </summary>
+        internal static string GameExtendExcluir {
+            get {
+                return ResourceManager.GetString("GameExtendExcluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///INSERT INTO GameDataExtend ( 
+        ///	  ID
+        ///	, Developer 
+        ///	, Publisher 
+        ///	, Genre 
+        ///	, Released 
+        ///	, ImageTitle 
+        ///	, ImageIngame 
+        ///	, ImageBoxArt 
+        ///	) VALUES ( 
+        ///	  @ID 
+        ///	, @Developer 
+        ///	, @Publisher 
+        ///	, @Genre 
+        ///	, @Released 
+        ///	, @ImageTitle 
+        ///	, @ImageIngame 
+        ///	, @ImageBoxArt 
+        ///);
+        ///--.
+        /// </summary>
+        internal static string GameExtendIncluir {
+            get {
+                return ResourceManager.GetString("GameExtendIncluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///SELECT 
+        ///	  g.ID 
+        ///	, g.Title 
+        ///	, g.ConsoleID 
+        ///	, c.Name as ConsoleName 
+        ///	, g.ImageIcon
+        ///	, g.NumAchievements 
+        ///	, g.Points 
+        ///	, g.NumLeaderboards 
+        ///	, g.DateModified 
+        ///	, g.ForumTopicID 
+        ///	, gx.Developer 
+        ///	, gx.Publisher 
+        ///	, gx.Genre 
+        ///	, gx.Released 
+        ///	, gx.ImageTitle 
+        ///	, gx.ImageIngame 
+        ///	, gx.ImageBoxArt 
+        ///FROM GameDataExtend AS gx 
+        ///	LEFT JOIN GameData AS g ON g.ID = gx.ID 
+        ///	LEFT JOIN Console AS c ON c.ID = g.ConsoleID 
+        ///WHERE 1 = 1 
+        ///	AND (g.ID = @ID 
+        ///		OR (@ID = 0 OR @ID IS NULL)) 
+        ///	AND  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GameExtendListar {
+            get {
+                return ResourceManager.GetString("GameExtendListar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
         ///INSERT INTO GameData ( 
         ///	  ID 
         ///	, Title 
         ///	, ConsoleID 
+        ///	, ImageIcon 
         ///	, NumAchievements 
         ///	, Points 
         ///	, NumLeaderboards 
         ///	, DateModified 
         ///	, ForumTopicID 
-        ///	, Icon 
         ///	) VALUES ( 
         ///	  @ID 
         ///	, @Title 
         ///	, @ConsoleID 
+        ///	, @ImageIcon 
         ///	, @NumAchievements 
         ///	, @Points 
         ///	, @NumLeaderboards 
         ///	, @DateModified 
         ///	, @ForumTopicID 
-        ///	, @Icon 
         ///);
         ///--.
         /// </summary>
@@ -183,12 +264,12 @@ namespace RADB.Properties {
         ///	, Title 
         ///	, ConsoleID 
         ///	, C.Name as ConsoleName 
+        ///	, ImageIcon 
         ///	, NumAchievements 
         ///	, Points 
         ///	, NumLeaderboards 
         ///	, DateModified 
         ///	, ForumTopicID 
-        ///	, Icon 
         ///FROM GameData AS G 
         ///	LEFT JOIN Console as C on C.ID=G.ConsoleID 
         ///WHERE 1 = 1 

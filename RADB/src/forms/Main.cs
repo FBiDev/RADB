@@ -13,6 +13,7 @@ using RADB.Properties;
 using GNX;
 using System.Drawing.Imaging;
 using PhotoSauce.MagicScaler;
+using Newtonsoft.Json;
 
 namespace RADB
 {
@@ -23,11 +24,14 @@ namespace RADB
 
         public static Console ConsoleBind = null;
         private Game GameBind = null;
+        private GameExtend GameExtendBind = null;
 
         private Download dlConsoles;
         private Download dlGames;
-        private Download dlGameInfo;
         private Download dlGamesIcon;
+
+        private Download dlGameExtend;
+        private Download dlGameExtendImages;
 
         public ListBind<Game> lstGames = new ListBind<Game>();
         public ListBind<Game> lstGamesSearch = new ListBind<Game>();
@@ -59,6 +63,9 @@ namespace RADB
             dgvGames.MouseWheel += dgvGames_MouseWheel;
             dgvGames.Scroll += dgvGames_Scroll;
             dgvGames.Sorted += dgvGames_Sorted;
+
+            dgvAchievements.AutoGenerateColumns = false;
+            dgvAchievements.DataSourceChanged += dgvAchievements_DataSourceChanged;
 
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
             txtSearchGames.KeyDown += txtSearchGames_KeyDown;
@@ -103,9 +110,17 @@ namespace RADB
                 LabelTimeName = lblUpdateGameList.Name,
             };
 
-            dlGameInfo = new Download
+            dlGameExtend = new Download
             {
                 Overwrite = true,
+                ProgressBarName = pgbInfo.Name,
+                LabelBytesName = lblProgressInfo.Name,
+                LabelTimeName = lblUpdateInfo.Name,
+            };
+
+            dlGameExtendImages = new Download
+            {
+                Overwrite = false,
                 ProgressBarName = pgbInfo.Name,
                 LabelBytesName = lblProgressInfo.Name,
                 LabelTimeName = lblUpdateInfo.Name,
@@ -269,7 +284,7 @@ namespace RADB
             if (enable)
             {
                 lblNotFoundGameList.Visible = (dgvGames.RowCount == 0);
-                lblUpdateGameList.Text = Archive.LastUpdate(RA.GamesPath(ConsoleBind.Name));
+                lblUpdateGameList.Text = Archive.LastUpdate(RA.GameListPath(ConsoleBind.Name));
             }
             else
             {
@@ -304,7 +319,7 @@ namespace RADB
 
             //Download GameList
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
-            await RA.DownloadGames(dlGames, ConsoleBind);
+            await RA.DownloadGameList(dlGames, ConsoleBind);
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
 
             //Download game icons
@@ -323,24 +338,20 @@ namespace RADB
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + ConsoleBind.Name + " GameList Updated!" + Environment.NewLine + lblOutput.Text;
         }
 
-        private void dgvGames_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvGames_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowHeader()) return;
 
             GameBind = dgv_SelectionChanged<Game>(sender);
 
-            lblInfoName.Text = GameBind.Title + " (" + GameBind.ConsoleName + ")";
+            LoadGameExtendBase();
+            await LoadGameExtend();
 
-            picInfoIcon.Image = GameBind.IconBitmap;
-            lblInfoDeveloper.Text = GameBind.Developer;
-            lblInfoPublisher.Text = GameBind.Publisher;
-            lblInfoGenre.Text = GameBind.Genre;
-            lblInfoReleased.Text = GameBind.Released;
-
-            picInfoTitle.ScaleTo(GameBind.ImageTitleBitmap);
-            picInfoInGame.ScaleTo(GameBind.ImageIngameBitmap);
-
-            FillAchievements(GameBind);
+            //Update GameExtend
+            if (GameExtendBind.ID == 0)
+            {
+                btnUpdateInfo_Click(null, null);
+            }
 
             tabMain.SelectedTab = tabGameInfo;
         }
@@ -390,7 +401,7 @@ namespace RADB
                         if (i >= list.Count) { return; }
 
                         Game g = list[i];
-                        RA.SetIconBitmap(g);
+                        g.SetImageIconBitmap();
                     }
                 });
             }
@@ -431,7 +442,63 @@ namespace RADB
         #endregion
 
         #region GameInfo
-        private void FillAchievements(Game obj)
+        private void LoadGameExtendBase()
+        {
+            if (GameBind.IsNull()) { return; }
+
+            lblInfoName.Text = GameBind.Title + " (" + GameBind.ConsoleName + ")";
+            picInfoIcon.Image = GameBind.ImageIconBitmap;
+        }
+
+        private async Task LoadGameExtend()
+        {
+            if (GameBind.IsNull()) { return; }
+
+            GameExtendBind = await GameExtend.Listar(GameBind.ID);
+
+            lblInfoDeveloper.Text = GameExtendBind.Developer;
+            lblInfoPublisher.Text = GameExtendBind.Publisher;
+            lblInfoGenre.Text = GameExtendBind.Genre;
+            lblInfoReleased.Text = GameExtendBind.Released;
+
+            GameExtendBind.SetImagesBitmap();
+
+            picInfoTitle.ScaleTo(GameExtendBind.ImageTitleBitmap);
+            picInfoInGame.ScaleTo(GameExtendBind.ImageIngameBitmap);
+            picInfoBoxArt.ScaleTo(GameExtendBind.ImageBoxArtBitmap);
+
+            //gx.SetAchievements(resultInfo["Achievements"]);
+            string AllText = File.ReadAllText(RA.GameExtendPath(GameBind));
+            string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
+            cheevos = "{" + cheevos + "}";
+
+            JToken jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
+
+            GameExtendBind.SetAchievements(jcheevos);
+            dgvAchievements.DataSource = new ListBind<Achievement>(GameExtendBind.AchievementsList);
+            //FillAchievements(GameExtendBind);
+
+            pnlInfoScroll.Focus();
+        }
+
+        private async void btnUpdateInfo_Click(object sender, EventArgs e)
+        {
+            //Download GameExtend
+            if (GameBind == null) { return; }
+
+            //Download GameExtend
+            await RA.DownloadGameExtend(dlGameExtend, GameBind);
+
+            //Download game images
+            await RA.DownloadGameExtendImages(dlGameExtendImages, GameBind);
+
+            //Load Game
+            await LoadGameExtend();
+
+            lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] Game " + GameBind.ID + " Updated!" + Environment.NewLine + lblOutput.Text;
+        }
+
+        private void FillAchievements(GameExtend obj)
         {
             int acLocation = 0;
             int size = 32;
@@ -453,62 +520,6 @@ namespace RADB
 
                 acLocation += p.Height + 5;
             }
-        }
-        private async void btnUpdateInfo_Click(object sender, EventArgs e)
-        {
-            //Download GameInfo Extend
-            if (GameBind == null) { return; }
-
-            dlGameInfo.File = RA.DownloadGameInfoExtended(GameBind);
-            await dlGameInfo.Start();
-
-            string FileGameInfoExtended = dlGameInfo.File.Path;
-            lblUpdateInfo.Text = Archive.LastUpdate(FileGameInfoExtended).ToString();
-            JObject resultInfo = Browser.ToJObject(FileGameInfoExtended);
-            Game gameInfo = resultInfo.ToObject<Game>();
-
-            RA.SetImageTitleBitmap(gameInfo);
-
-            gameInfo.Icon = gameInfo.Icon.Replace(@"/Images/", "");
-            gameInfo.Icon = gameInfo.Icon.Replace(@"/Images/", "");
-
-            GameBind.Developer = gameInfo.Developer;
-            GameBind.Publisher = gameInfo.Publisher;
-            GameBind.Genre = gameInfo.Genre;
-            GameBind.Released = gameInfo.Released;
-
-            lblInfoName.Text = GameBind.Title + " (" + GameBind.ConsoleName + ")";
-
-            lblInfoDeveloper.Text = GameBind.Developer;
-            lblInfoPublisher.Text = GameBind.Publisher;
-            lblInfoGenre.Text = GameBind.Genre;
-            lblInfoReleased.Text = GameBind.Released;
-
-            List<DownloadFile> dlFiles = new List<DownloadFile>() {
-                new DownloadFile(RA.URL_Images + gameInfo.Icon, RA.IconPath(gameInfo)),
-                new DownloadFile(RA.URL_Images + gameInfo.ImageTitle, RA.ImageTitlePath(gameInfo)),
-                new DownloadFile(RA.URL_Images + gameInfo.ImageIngame, gameInfo.ImageIngamePath),
-            };
-
-            dlGameInfo.Files = dlFiles;
-            await dlGameInfo.Start();
-
-            GameBind.Icon = gameInfo.Icon;
-            GameBind.ImageTitle = gameInfo.ImageTitle;
-            GameBind.ImageIngame = gameInfo.ImageIngame;
-
-            picInfoIcon.Image = GameBind.IconBitmap;
-
-            picInfoTitle.ScaleTo(GameBind.ImageTitleBitmap);
-            //picInfoTitle.Size = GameBind.ImageTitlePicture.Scale(picInfoTitle.MaximumSize);
-            picInfoInGame.ScaleTo(GameBind.ImageIngameBitmap);
-            //picInfoInGame.Size = GameBind.ImageIngamePicture.Scale(picInfoInGame.MaximumSize);
-
-            GameBind.SetAchievements(resultInfo["Achievements"]);
-            //FillAchievements(GameBind);
-
-            dgvGames.Refresh();
-            pnlInfoScroll.Focus();
         }
         #endregion
 
@@ -586,6 +597,18 @@ namespace RADB
             return null;
         }
 
+        private void dgvAchievements_DataSourceChanged(object sender, EventArgs e)
+        {
+            var height = 34;
+            //foreach (DataGridViewRow dr in dgvAchievements.Rows)
+            //{
+            //    height += dr.Height;
+            //}
+
+            dgvAchievements.Height = height * dgvAchievements.RowCount;
+        }
+
+
         private async void btnUserCheevos_Click(object sender, EventArgs e)
         {
             if (GameBind.IsNull()) return;
@@ -594,7 +617,7 @@ namespace RADB
             {
                 lblUserCheevos.Text = await Task<string>.Run(async () =>
                 {
-                    picUserCheevos.Image = GameBind.IconBitmap;
+                    picUserCheevos.Image = GameBind.ImageIconBitmap;
                     UserProgress user = await RA.GetUserProgress(GameBind.ID);
                     return user.NumAchieved + " / " + GameBind.NumAchievements;
                 });
@@ -608,31 +631,46 @@ namespace RADB
         {
             //await RA.DownloadBadges(1);
 
-            var file = AppDomain.CurrentDomain.BaseDirectory + @"\Data\ImageInGame\12\mega-man-legends-ps1.png";
-            var file2 = @"Data\ImageInGame\12\mega-man-legends-ps1_RS2.png";
-            var file3 = AppDomain.CurrentDomain.BaseDirectory + @"\Data\ImageInGame\12\mega-man-legends-ps1_RS2_NEW.png";
+            var file = @"Data\Temp\W2.png";
+            var file2 = @"Data\Temp\W2_RS2.png";
+            var file3 = @"Data\Temp\W2_RS2_NEW.png";
 
-            await Task.Run(() =>
+            var file4 = @"Data\Temp\W2_RS0.png";
+
+            var otp = await Task.Run(() =>
             {
                 //var Encoder = new JpegEncoderOptions(98, ChromaSubsampleMode.Subsample444, true);
                 var Encoder = new PngEncoderOptions(PngFilter.None, false);
+                CropScaleMode rs = CropScaleMode.Stretch;
 
-                MagicImageProcessor.ProcessImage(file, file2, new ProcessImageSettings { EncoderOptions = Encoder });
+                MagicImageProcessor.ProcessImage(file, file2, new ProcessImageSettings
+                {
+                    Width = 96,
+                    Height = 96,
+                    ResizeMode = rs,
+                    EncoderOptions = Encoder,
+                });
 
 
-                var b = new Bitmap(500, 500);
+                var b = new Bitmap(96 * 2, 96 * 2);
                 using (Graphics g = Graphics.FromImage(b))
                 {
                     g.Clear(Color.White);
 
-                    Bitmap image = new Bitmap(file2);
-                    g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height));
-                    image.Dispose();
+                    Bitmap image1 = new Bitmap(file);
+                    Bitmap image2 = new Bitmap(file2);
+                    Bitmap image4 = new Bitmap(file4);
+                    g.DrawImage(image1, new Rectangle(0, 0, image1.Width, image1.Height));
+                    g.DrawImage(image2, new Rectangle(0, image1.Height, image2.Width, image2.Height));
+                    g.DrawImage(image4, new Rectangle(image2.Width, image1.Height, image4.Width, image4.Height));
+                    image1.Dispose();
+                    image2.Dispose();
+                    image4.Dispose();
                 }
                 b.Save(file3, ImageFormat.Png);
 
                 var pic = new Picture(file2, PictureFormat.Png);
-                pic.Compress();
+                return pic.Compress();
             });
         }
     }

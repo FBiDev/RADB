@@ -8,119 +8,65 @@ namespace RADB
 {
     public static class Folder
     {
+        private static string Base { get { return @"Data\"; } }
+        private static string Images { get { return Base + @"Images\"; } }
+        private static string Json { get { return Base + @"Json\"; } }
+        private static string GameDataExtendBase { get { return Json + @"GameDataExtend\"; } }
+
+        public static string Temp { get { return Base + @"Temp\"; } }
+        public static string Console { get { return Json + @"Console\"; } }
+        public static string GameData { get { return Json + @"GameData\"; } }
+
         public static void CreateFolders()
         {
             Directory.CreateDirectory(Base);
-
-            Directory.CreateDirectory(GameInfoExtend);
-            Directory.CreateDirectory(Consoles);
-            Directory.CreateDirectory(IconsBase);
+            Directory.CreateDirectory(Images);
+            Directory.CreateDirectory(Json);
+            Directory.CreateDirectory(GameDataExtendBase);
 
             Directory.CreateDirectory(Temp);
+            Directory.CreateDirectory(Console);
+            Directory.CreateDirectory(GameData);
         }
 
-        public static string Base
+        public static string GameDataExtend(int consoleID)
         {
-            get
-            {
-                return @"Data\";
-            }
-        }
-
-        public static string GameInfo
-        {
-            get
-            {
-                return Base + @"Game\";
-            }
-        }
-
-        public static string GameInfoExtend
-        {
-            get
-            {
-                return Base + @"GameInfoExtend\";
-            }
-        }
-
-        public static string Consoles
-        {
-            get
-            {
-                return Base + @"GameList\";
-            }
-        }
-
-        public static string IconsBase
-        {
-            get
-            {
-                return Base + @"Icons\";
-            }
-        }
-
-        public static string Titles
-        {
-            get
-            {
-                return Base + @"ImageTitle\";
-            }
-        }
-
-        public static string InGame
-        {
-            get
-            {
-                return Base + @"ImageInGame\";
-            }
-        }
-
-        public static string Temp
-        {
-            get
-            {
-                return Base + @"Temp\";
-            }
-        }
-
-        public static string Achievements(int consoleID, int gameID)
-        {
-            string folder = Base + @"Achievements\" + consoleID + @"\" + gameID + @"\";
+            string folder = GameDataExtendBase + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }
 
         public static string Icons(int consoleID)
         {
-            string folder = IconsBase + consoleID + @"\";
+            string folder = Images + @"Icons\" + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }
 
-        public static string ImageTitle(int consoleID)
+        public static string Titles(int consoleID)
         {
-            string folder = Titles + consoleID + @"\";
+            string folder = Images + @"Titles\" + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }
 
-        public static string ImageIngame(int consoleID)
+        public static string Ingame(int consoleID)
         {
-            string folder = InGame + consoleID + @"\";
+            string folder = Images + @"Ingame\" + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }
 
-        public static string GameInfoConsole(int consoleID)
+        public static string BoxArt(int consoleID)
         {
-            string folder = GameInfo + consoleID + @"\";
+            string folder = Images + @"BoxArt\" + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }
 
-        public static string GameInfoExtendConsole(int consoleID)
+        public static string Achievements(int consoleID, int gameID)
         {
-            string folder = GameInfoExtend + consoleID + @"\";
+            string folder = Base + @"Achievements\" + consoleID + @"\" + gameID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }

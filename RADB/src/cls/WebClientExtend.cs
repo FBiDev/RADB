@@ -132,12 +132,10 @@ namespace RADB
                         using (GZipStream decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
                         {
                             decompressionStream.CopyTo(decompressedFileStream);
-
-                            //GZipSize = originalFileStream.Length;
-                            //GZipSizeUncompressed = decompressedFileStream.Length;
                         }
                     }
                 }
+                File.Delete(gzName);
             }
 
             base.OnDownloadFileCompleted(e);

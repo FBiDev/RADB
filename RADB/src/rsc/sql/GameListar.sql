@@ -1,22 +1,22 @@
 ﻿--
 SELECT
-	  G.ID 
+	  g.ID 
 	, Title 
 	, ConsoleID 
-	, C.Name as ConsoleName 
+	, C.Name AS ConsoleName 
+	, ImageIcon 
 	, NumAchievements 
 	, Points 
 	, NumLeaderboards 
 	, DateModified 
 	, ForumTopicID 
-	, Icon 
-FROM GameData AS G 
-	LEFT JOIN Console as C on C.ID=G.ConsoleID 
+FROM GameData AS g 
+	LEFT JOIN Console AS c ON c.ID = g.ConsoleID 
 WHERE 1 = 1 
-	AND (G.ID = @ID 
+	AND (g.ID = @ID 
 		OR (@ID = 0 OR @ID IS NULL)) 
-	AND (G.Title LIKE '%'+@Title+'%' 
+	AND (g.Title LIKE '%'+@Title+'%' 
 		OR (@Title = '' OR @Title IS NULL)) 
-	AND (G.ConsoleID = @ConsoleID 
+	AND (g.ConsoleID = @ConsoleID 
 		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
 	

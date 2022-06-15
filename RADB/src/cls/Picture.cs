@@ -202,7 +202,7 @@ namespace RADB
             }
         }
 
-        public void Compress()
+        public string Compress()
         {
             byte[] exeResource = new byte[0];
             string exeFile = FolderExe;
@@ -226,9 +226,12 @@ namespace RADB
             {
                 exeNewFile.Write(exeResource, 0, exeResource.Length);
             }
-            Cmd.Execute(exeCmd);
+
+            string output = CMD.Execute(exeCmd);
 
             File.Delete(exeFile);
+
+            return output;
         }
         #endregion
 

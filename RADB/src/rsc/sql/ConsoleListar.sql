@@ -9,7 +9,7 @@ FROM Company AS c
 	LEFT JOIN CompanyItems AS ci ON ci.CompanyID = c.ID 
 		--AND ci.Active = 1 
 	LEFT JOIN Console AS co ON co.ID = ci.ConsoleID 
-	LEFT JOIN GameData AS g on g.ConsoleID = co.ID OR co.Name IS NULL 
+	LEFT JOIN GameData AS g ON g.ConsoleID = co.ID OR co.Name IS NULL 
 WHERE 1 = 1 
 	AND co.Name IS NULL AND @ID = 0 
 	OR ci.Active = 1 

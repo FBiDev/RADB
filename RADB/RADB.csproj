@@ -84,6 +84,7 @@
     <Compile Include="src\cfg\Config.cs" />
     <Compile Include="src\cls\Console.cs" />
     <Compile Include="src\cls\Browser.cs" />
+    <Compile Include="src\cls\GameExtend.cs" />
     <Compile Include="src\cls\UserProgress.cs" />
     <Compile Include="src\cls\WebClientExtend.cs">
       <SubType>Component</SubType>
@@ -95,6 +96,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="src\dao\ConsoleDao.cs" />
+    <Compile Include="src\dao\GameExtendDao.cs" />
     <Compile Include="src\dao\GameDao.cs" />
     <Compile Include="src\forms\Main.cs">
       <SubType>Form</SubType>
@@ -155,6 +157,9 @@
     <Content Include="src\rsc\sql\ConsoleListar.sql" />
     <Content Include="src\rsc\sql\ConsoleIncluir.sql" />
     <Content Include="src\rsc\sql\ConsoleExcluir.sql" />
+    <Content Include="src\rsc\sql\GameExtendExcluir.sql" />
+    <Content Include="src\rsc\sql\GameExtendIncluir.sql" />
+    <Content Include="src\rsc\sql\GameExtendListar.sql" />
     <Content Include="src\rsc\sql\GameDuplicateForumTopicID.sql" />
     <Content Include="src\rsc\sql\GameListar.sql" />
     <Content Include="src\rsc\sql\GameExcluir.sql" />
