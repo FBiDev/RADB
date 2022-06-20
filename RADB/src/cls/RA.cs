@@ -82,6 +82,7 @@ namespace RADB
         #region _GameList
         public string GameListPath(string consoleName)
         {
+            if (string.IsNullOrWhiteSpace(consoleName)) { consoleName = "_AllGameLists"; }
             return (Folder.GameData + consoleName + ".json").Replace("/", "-");
         }
 
@@ -134,7 +135,7 @@ namespace RADB
             return Task<GameExtend>.Run(() =>
             {
                 string AllText = File.ReadAllText(GameExtendPath(game));
-                string gameData = AllText.GetBetween("{", ",\"Achievements\":{");
+                string gameData = AllText.GetBetween("{", ",\"Achievements\":");
                 string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
                 gameData = "{" + gameData + "}";
                 cheevos = "{" + cheevos + "}";

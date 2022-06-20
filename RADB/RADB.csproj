@@ -115,6 +115,9 @@
     <Compile Include="src\cls\Achievement.cs" />
     <Compile Include="src\cls\Picture.cs" />
     <Compile Include="src\cls\RA.cs" />
+    <Compile Include="src\temp\PanelNoScrollOnFocus.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="src\temp\Temp.cs" />
     <EmbeddedResource Include="src\forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

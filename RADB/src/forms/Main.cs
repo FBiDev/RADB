@@ -354,6 +354,11 @@ namespace RADB
             }
 
             tabMain.SelectedTab = tabGameInfo;
+
+            dgvAchievements.Focus();
+
+            pnlInfoScroll.AutoScrollPosition = new Point(pnlInfoScroll.AutoScrollPosition.X, 0);
+            pnlInfoScroll.VerticalScroll.Value = 0;
         }
 
         private void dgvGames_Scroll(object sender, ScrollEventArgs e)
@@ -467,18 +472,21 @@ namespace RADB
             picInfoInGame.ScaleTo(GameExtendBind.ImageIngameBitmap);
             picInfoBoxArt.ScaleTo(GameExtendBind.ImageBoxArtBitmap);
 
-            //gx.SetAchievements(resultInfo["Achievements"]);
-            string AllText = File.ReadAllText(RA.GameExtendPath(GameBind));
-            string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
-            cheevos = "{" + cheevos + "}";
+            ListBind<Achievement> lstCheevos = new ListBind<Achievement>();
+            dgvAchievements.DataSource = lstCheevos;
+            if (File.Exists(RA.GameExtendPath(GameBind)))
+            {
+                //gx.SetAchievements(resultInfo["Achievements"]);
+                string AllText = File.ReadAllText(RA.GameExtendPath(GameBind));
+                string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
+                cheevos = "{" + cheevos + "}";
 
-            JToken jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
+                JToken jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
 
-            GameExtendBind.SetAchievements(jcheevos);
-            dgvAchievements.DataSource = new ListBind<Achievement>(GameExtendBind.AchievementsList);
-            //FillAchievements(GameExtendBind);
-
-            pnlInfoScroll.Focus();
+                GameExtendBind.SetAchievements(jcheevos);
+                lstCheevos = new ListBind<Achievement>(GameExtendBind.AchievementsList);
+                dgvAchievements.DataSource = lstCheevos;
+            }
         }
 
         private async void btnUpdateInfo_Click(object sender, EventArgs e)
@@ -496,30 +504,6 @@ namespace RADB
             await LoadGameExtend();
 
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] Game " + GameBind.ID + " Updated!" + Environment.NewLine + lblOutput.Text;
-        }
-
-        private void FillAchievements(GameExtend obj)
-        {
-            int acLocation = 0;
-            int size = 32;
-            pnlAchievements.Controls.Clear();
-
-            if (obj.AchievementsList.IsNull()) { return; }
-
-            foreach (var ac in obj.AchievementsList)
-            {
-                Panel p = new Panel() { Height = size, Width = pnlAchievements.Width - 17, Location = new Point(0, acLocation) };
-                PictureBox pic = new PictureBox() { Width = size, Height = size, Image = new Picture(size, size).Bitmap };
-                p.Controls.Add(pic);
-                Label title = new Label() { AutoSize = true, Text = ac.Title + " (" + ac.Points + ")" + " (" + ac.TrueRatio + ")", Location = new Point(pic.Width + 5, 0) };
-                p.Controls.Add(title);
-                Label description = new Label() { AutoSize = true, Text = ac.Description, Location = new Point(pic.Width + 5, 18) };
-                p.Controls.Add(description);
-
-                pnlAchievements.Controls.Add(p);
-
-                acLocation += p.Height + 5;
-            }
         }
         #endregion
 
@@ -599,15 +583,10 @@ namespace RADB
 
         private void dgvAchievements_DataSourceChanged(object sender, EventArgs e)
         {
-            var height = 34;
-            //foreach (DataGridViewRow dr in dgvAchievements.Rows)
-            //{
-            //    height += dr.Height;
-            //}
-
-            dgvAchievements.Height = height * dgvAchievements.RowCount;
+            var height = dgvAchievements.RowTemplate.Height;
+            gpbInfoAchievements.Height = (height * dgvAchievements.RowCount) + 25 + 30;
+            dgvAchievements.Height = (height * dgvAchievements.RowCount) + 30;
         }
-
 
         private async void btnUserCheevos_Click(object sender, EventArgs e)
         {
@@ -619,10 +598,10 @@ namespace RADB
                 {
                     picUserCheevos.Image = GameBind.ImageIconBitmap;
                     UserProgress user = await RA.GetUserProgress(GameBind.ID);
-                    return user.NumAchieved + " / " + GameBind.NumAchievements;
+                    return user.NumAchievedHardcore + " / " + GameBind.NumAchievements;
                 });
 
-                await Task.Run(() => { Thread.Sleep(5000); });
+                await Task.Run(() => { Thread.Sleep(1000); });
 
             } while (chkUserCheevos.Checked);
         }

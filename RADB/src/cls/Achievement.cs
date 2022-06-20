@@ -11,6 +11,13 @@ namespace RADB
         public int ConsoleID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public string DescriptionComplete
+        {
+            get
+            {
+                return Title + Environment.NewLine + Description;
+            }
+        }
         public int Points { get; set; }
         public string BadgeName { get; set; }
         public int DisplayOrder { get; set; }
