@@ -1,9 +1,9 @@
 ﻿
 -X Update Game Count on Search
 -X Resize Game Images in Info Tab
--  Clean Game Class
+-X Clean Game Class
+-X  Game Extend
 -  Achievements
--  Game Extend Info
 -  User Info
 -  User Progress
 -  User Awards

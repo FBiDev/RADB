@@ -24,10 +24,10 @@ namespace RADB
             Name = Path.Split(new string[] { @"\" }, StringSplitOptions.None).Last().ToString();
             Extension = Name.Split(new string[] { @"." }, StringSplitOptions.None).Last().ToString().ToLower();
 
-            if (Extension == "png" || Extension == "jpg")
-            {
-                //Image = Picture.Create(Path).Bitmap;
-            }
+            //if (Extension == "png" || Extension == "jpg")
+            //{
+            //Image = Picture.Create(Path).Bitmap;
+            //}
         }
 
         public bool Equals(DownloadFile other)

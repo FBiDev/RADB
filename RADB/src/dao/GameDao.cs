@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Linq;
 using System.Data;
 using System.Threading.Tasks;
@@ -131,24 +132,26 @@ namespace RADB
                                 "(ID, Title, ConsoleID, NumAchievements, Points, NumLeaderboards, DateModified, ForumTopicID, ImageIcon)" +
                             " VALUES " + Environment.NewLine;
 
-                var parametros = new List<cSqlParameter>();
-
+                StringBuilder s = new StringBuilder();
                 int index = 0;
                 foreach (var i in list)
                 {
-                    sql += "(" + i.ID +
+                    s.Append("(" + i.ID +
                             ",'" + i.Title.Replace("'", "''") + "'" +
                             ", " + i.ConsoleID +
                             ", " + i.NumAchievements +
                             ", " + i.Points +
                             ", " + i.NumLeaderboards +
-                            ", " + i.DateModified.ToDB() + "" +
+                            ", " + i.DateModified.ToDB() +
                             ", " + i.ForumTopicID.ToDB() +
-                            ", '" + i.ImageIcon + "')";
+                            ", '" + i.ImageIcon + "')");
 
                     index++;
-                    if (index < list.Count) { sql += "," + Environment.NewLine; }
+                    if (index < list.Count) { s.Append("," + Environment.NewLine); }
                 }
+                sql += s.ToString();
+
+                var parametros = new List<cSqlParameter>();
 
                 return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
             });

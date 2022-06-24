@@ -62,7 +62,7 @@ namespace RADB
 
         public async Task DownloadConsoles(Download dlConsoles)
         {
-            dlConsoles.File = new DownloadFile(GetURL("API_GetConsoleIDs.php"), ConsolesPath());
+            dlConsoles.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetConsoleIDs.php"), ConsolesPath()) };
             await dlConsoles.Start();
 
             await Console.Excluir();
@@ -88,11 +88,12 @@ namespace RADB
 
         public async Task DownloadGameList(Download dlGames, Console console)
         {
-            dlGames.File = new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID), GameListPath(console.Name));
+            dlGames.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID), GameListPath(console.Name)) };
             await (dlGames.Start());
 
             await Game.Excluir(console.ID);
-            await Game.IncluirLista(await DeserializeGameList(console.Name));
+            List<Game> list = await DeserializeGameList(console.Name);
+            await Game.IncluirLista(list);
         }
 
         private Task<List<Game>> DeserializeGameList(string consoleName)
@@ -106,8 +107,12 @@ namespace RADB
 
         public async Task DownloadGamesIcon(Download dlGameIcons, Console console)
         {
+            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             List<Game> games = await Game.Listar(console.ID);
+            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
+            TimeSpan ini1 = new TimeSpan(DateTime.Now.Ticks);
             dlGameIcons.Files = games.Select(g => g.ImageIconFile).ToList();
+            TimeSpan fim1 = new TimeSpan(DateTime.Now.Ticks) - ini1;
             await (dlGameIcons.Start());
         }
         #endregion
@@ -120,7 +125,7 @@ namespace RADB
 
         public async Task DownloadGameExtend(Download dlGameExtend, Game game)
         {
-            dlGameExtend.File = new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), GameExtendPath(game));
+            dlGameExtend.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), GameExtendPath(game)) };
             await (dlGameExtend.Start());
 
             GameExtend obj = (await DeserializeGameExtend(game));
@@ -200,9 +205,9 @@ namespace RADB
             {
                 Overwrite = false,
                 Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + gameID.ToString()), fileName) },
-                ProgressBarName = "pgbUpdates",
-                LabelBytesName = "lblUpdateProgress",
-                LabelTimeName = "lblUpdateConsoles",
+                //ProgressBarName = "pgbUpdates",
+                //LabelBytesName = "lblUpdateProgress",
+                //LabelTimeName = "lblUpdateConsoles",
             };
             await dl.Start();
 
@@ -243,9 +248,9 @@ namespace RADB
             {
                 Files = gFiles,
                 Overwrite = false,
-                ProgressBarName = "pgbUpdates",
-                LabelBytesName = "lblUpdateProgress",
-                LabelTimeName = "lblUpdateConsoles",
+                //ProgressBarName = "pgbUpdates",
+                //LabelBytesName = "lblUpdateProgress",
+                //LabelTimeName = "lblUpdateConsoles",
             };
             await dlGameBadges.Start();
 

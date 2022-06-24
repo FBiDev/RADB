@@ -84,46 +84,118 @@ namespace RADB
             Folder.CreateFolders();
         }
 
+        private void BarStart(ProgressBar bar, ProgressBarStyle style = ProgressBarStyle.Continuous, int maximum = 100)
+        {
+            bar.Maximum = maximum;
+            bar.Value = 0;
+            bar.MarqueeAnimationSpeed = 50;
+            bar.Style = style;
+        }
+
+        private void BarStop(ProgressBar bar)
+        {
+            if (bar.Style == ProgressBarStyle.Marquee)
+            {
+                //bar.MarqueeAnimationSpeed = 0;
+                bar.Style = ProgressBarStyle.Continuous;
+            }
+
+            //Hack for Win7
+            bar.Maximum++;
+            bar.Value = bar.Maximum;
+            bar.Value--;
+            bar.Maximum--;
+        }
+
+
+        private void DownloadChanged(Download download, Label resultLabel, ProgressBar resultBar, Label resultTime)
+        {
+            resultLabel.InvokeIfRequired(() =>
+            {
+                resultLabel.Text = download.Result;
+            });
+
+            switch (download.Status)
+            {
+                case Download.DownloadStatus.Connecting:
+
+                    resultBar.InvokeIfRequired(() =>
+                    {
+                        BarStart(resultBar, ProgressBarStyle.Marquee);
+                    });
+                    break;
+                case Download.DownloadStatus.ProgressChanged:
+                    resultBar.InvokeIfRequired(() =>
+                    {
+                        resultBar.Value = download.Percentage;
+                        resultBar.Style = (download.BytesToReceive == -1 ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous);
+                    });
+                    break;
+                case Download.DownloadStatus.FileDownloaded:
+                    break;
+                case Download.DownloadStatus.NextFiles:
+                    break;
+                case Download.DownloadStatus.Completed:
+                    resultTime.InvokeIfRequired(() =>
+                    {
+                        resultTime.Text = download.TimeCompleted.ToString();
+                    });
+                    resultBar.InvokeIfRequired(() =>
+                    {
+                        BarStop(resultBar);
+                    });
+                    break;
+                case Download.DownloadStatus.Stopped:
+                    resultBar.InvokeIfRequired(() =>
+                    {
+                        BarStop(resultBar);
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private async void RADB_Shown(object sender, EventArgs e)
         {
             dlConsoles = new Download
             {
                 Overwrite = true,
-                ProgressBarName = pgbConsoles.Name,
-                LabelBytesName = lblProgressConsoles.Name,
-                LabelTimeName = lblUpdateConsoles.Name,
+                //ProgressBarName = pgbConsoles.Name,
+                //LabelBytesName = lblProgressConsoles.Name,
+                //LabelTimeName = lblUpdateConsoles.Name,
             };
 
             dlGames = new Download
             {
                 Overwrite = true,
-                ProgressBarName = pgbGameList.Name,
-                LabelBytesName = lblProgressGameList.Name,
-                LabelTimeName = lblUpdateGameList.Name,
             };
+
+            dlGames.ProgressChanged += () =>
+                DownloadChanged(dlGames, lblProgressGameList, pgbGameList, lblUpdateGameList);
 
             dlGamesIcon = new Download()
             {
                 Overwrite = false,
-                ProgressBarName = pgbGameList.Name,
-                LabelBytesName = lblProgressGameList.Name,
-                LabelTimeName = lblUpdateGameList.Name,
             };
+
+            dlGamesIcon.ProgressChanged += () =>
+                DownloadChanged(dlGamesIcon, lblProgressGameList, pgbGameList, lblUpdateGameList);
 
             dlGameExtend = new Download
             {
                 Overwrite = true,
-                ProgressBarName = pgbInfo.Name,
-                LabelBytesName = lblProgressInfo.Name,
-                LabelTimeName = lblUpdateInfo.Name,
+                //ProgressBarName = pgbInfo.Name,
+                //LabelBytesName = lblProgressInfo.Name,
+                //LabelTimeName = lblUpdateInfo.Name,
             };
 
             dlGameExtendImages = new Download
             {
                 Overwrite = false,
-                ProgressBarName = pgbInfo.Name,
-                LabelBytesName = lblProgressInfo.Name,
-                LabelTimeName = lblUpdateInfo.Name,
+                //ProgressBarName = pgbInfo.Name,
+                //LabelBytesName = lblProgressInfo.Name,
+                //LabelTimeName = lblUpdateInfo.Name,
             };
 
             await LoadConsoles();
@@ -284,7 +356,7 @@ namespace RADB
             if (enable)
             {
                 lblNotFoundGameList.Visible = (dgvGames.RowCount == 0);
-                lblUpdateGameList.Text = Archive.LastUpdate(RA.GameListPath(ConsoleBind.Name));
+                //lblUpdateGameList.Text = Archive.LastUpdate(RA.GameListPath(ConsoleBind.Name));
             }
             else
             {
@@ -323,10 +395,14 @@ namespace RADB
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
 
             //Download game icons
+            TimeSpan ini1 = new TimeSpan(DateTime.Now.Ticks);
             await RA.DownloadGamesIcon(dlGamesIcon, ConsoleBind);
+            TimeSpan fim1 = new TimeSpan(DateTime.Now.Ticks) - ini1;
 
             //Load Games
+            TimeSpan ini2 = new TimeSpan(DateTime.Now.Ticks);
             await LoadGames();
+            TimeSpan fim2 = new TimeSpan(DateTime.Now.Ticks) - ini2;
 
             UpdateConsoleLabels();
 

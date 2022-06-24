@@ -2,191 +2,166 @@
 using System.Collections.Generic;
 using System.Linq;
 //
+using System.IO;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace RADB
 {
     public class Download
     {
         public List<DownloadFile> Files { get; set; }
-        public DownloadFile File
-        {
-            get
-            {
-                if (Files.Count > 0)
-                {
-                    return Files[0];
-                }
-                return null;
-            }
-            set
-            {
-                Files = new List<DownloadFile>() { value };
-            }
-        }
+        public List<DownloadFile> FilesToDownload { get; set; }
         public int FilesCompleted { get; set; }
         public bool Overwrite { get; set; }
-        public TimeSpan ElapsedTime { get; set; }
+
+        public DateTime TimeStart { get; set; }
+        public DateTime TimeCompleted { get; set; }
+        public TimeSpan TimeElapsed { get; set; }
 
         public long BytesReceived { get; set; }
-        public long TotalBytesToReceive { get; set; }
-        public float ProgressPercentage { get; set; }
+        public long BytesToReceive { get; set; }
+        public int Percentage { get; set; }
 
-        public T FindControl<T>(string controlName) where T : Control, new()
+        public string Result { get; set; }
+        public event Action ProgressChanged = delegate { };
+        public DownloadStatus Status { get; set; }
+
+        public enum DownloadStatus
         {
-            var c = FormObj.Controls.Find(controlName, true) as Control[];
-            var b = c.Count() == 0 ? new T() : (T)c.First();
-            return b;
-        }
-
-        public ProgressBar ProgressBar { get; set; }
-        public string ProgressBarName { set { ProgressBar = FindControl<ProgressBar>(value); } }
-
-        public Label LabelBytes { get; set; }
-        public string LabelBytesName { set { LabelBytes = FindControl<Label>(value); } }
-
-        public Label LabelTime { get; set; }
-        public string LabelTimeName { set { LabelTime = FindControl<Label>(value); } }
-
-        private ToolTip Tip { get; set; }
-
-        public string URL { get; set; }
-        public string FileName { get; set; }
-        public Form FormObj { get; set; }
-        public string FormName { set { FormObj = Application.OpenForms[value]; } }
-
-        public Download(string URL, string fileName)
-        {
-            Files = new List<DownloadFile>() { new DownloadFile(URL, fileName) };
-            Overwrite = true;
-            FormObj = Application.OpenForms[0];
+            Connecting,
+            ProgressChanged,
+            FileDownloaded,
+            NextFiles,
+            Completed,
+            Stopped,
         }
 
         public Download()
         {
-            Files = new List<DownloadFile>();
             Overwrite = true;
-            FormObj = Application.OpenForms[0];
+            Files = new List<DownloadFile>();
+            FilesToDownload = new List<DownloadFile>();
         }
 
-        //private readonly SemaphoreSlim _mutex = new SemaphoreSlim(3);
         public async Task Start()
         {
-            List<Task> Tasks = new List<Task>();
-            FilesCompleted = 0;
+            TimeStart = DateTime.Now;
+            TimeCompleted = TimeStart;
+            TimeElapsed = default(TimeSpan);
 
+            List<Task> Tasks = new List<Task>();
             //Remove Files with same URL
             Files = Files.Distinct().ToList();
-            int TotalFilesToDownload = Files.Count;
+            FilesCompleted = 0;
 
-            BarStart(ProgressBar, ProgressBarStyle.Marquee);
-            //Tip.RemoveAll();
-            LabelBytes.Text = "Connecting...";
-            TimeSpan initialTime = new TimeSpan(DateTime.Now.Ticks);
+            BytesReceived = 0;
+            BytesToReceive = 0;
+            Percentage = 0;
+
+            Result = "Connecting...";
+
+            Status = DownloadStatus.Connecting;
+            ProgressChanged();
+
+            //Add files that not already downloaded
+            FilesToDownload.Clear();
 
             foreach (DownloadFile file in Files)
             {
-                //File.Exists(file.Path) && Archive.IsFileLocked(file.Path) ||
-                if (System.IO.File.Exists(file.Path) && new System.IO.FileInfo(file.Path).Length > 0 && Overwrite == false)
-                { TotalFilesToDownload--; continue; }
-
-                try
+                if (File.Exists(file.Path) == false || new FileInfo(file.Path).Length == 0 || Overwrite == true)
                 {
-                    //await _mutex.WaitAsync();
-                    using (var client = new WebClientExtend())
-                    {
-                        client.DownloadProgressChanged += (sender, args) =>
-                        {
-                            file.BytesReceived = args.BytesReceived;
-                            file.TotalBytesToReceive = args.TotalBytesToReceive;
-                            file.ProgressPercentage = args.ProgressPercentage;
-
-                            BytesReceived = 0;
-                            TotalBytesToReceive = 0;
-                            ProgressPercentage = 0;
-
-                            Files.ForEach(f =>
-                            {
-                                BytesReceived += f.BytesReceived;
-                                TotalBytesToReceive += f.TotalBytesToReceive;
-                                ProgressPercentage += (f.ProgressPercentage / TotalFilesToDownload);
-                                //if (TotalBytesToReceive > 0) { ProgressPercentage = (float)((float)(BytesReceived / TotalBytesToReceive) * 100); }
-                            });
-
-                            LabelBytes.Text = "Downloaded " + DownloadedProgress(BytesReceived, TotalBytesToReceive);
-
-                            ProgressBar.Value = ProgressPercentage > 100 ? 100 : (int)(Math.Ceiling(ProgressPercentage));
-
-                            //Tip.SetToolTip(ProgressBar, (TotalBytesToReceive == -1 ? "?" : ProgressBar.Value.ToString()) + " %");
-                            ProgressBar.Style = (TotalBytesToReceive == -1 ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous);
-                        };
-
-                        client.DownloadFileCompleted += (sender, args) =>
-                        {
-                            FilesCompleted++;
-                            LabelBytes.Text += " (" + FilesCompleted + "/" + TotalFilesToDownload + ")";
-                            //Downloaded All Files
-                            if (FilesCompleted == TotalFilesToDownload)
-                            {
-                                LabelTime.Text = DateTime.Now.ToString();
-                                BarStop(ProgressBar);
-                                ElapsedTime = new TimeSpan(DateTime.Now.Ticks) - initialTime;
-                            }
-                        };
-
-                        Tasks.Add(client.DownloadFileTaskAsync(new Uri(file.URL), file.Path));
-                        if (Tasks.Count == Browser.MaxConnections)
-                        {
-                            LabelBytes.Text = "Connecting...";
-                            await Task.WhenAll(Tasks);
-                            Tasks.Clear();
-                        }
-                    }
+                    FilesToDownload.Add(file);
                 }
-                finally
+            }
+
+            int FilesTotal = FilesToDownload.Count;
+
+            foreach (DownloadFile file in FilesToDownload)
+            {
+                if (file == null) { continue; }
+
+                using (var client = new WebClientExtend())
                 {
-                    //_mutex.Release();
+                    string progressBytes = string.Empty;
+
+                    client.DownloadProgressChanged += (sender, args) =>
+                    {
+                        file.BytesReceived = args.BytesReceived;
+                        file.TotalBytesToReceive = args.TotalBytesToReceive;
+                        file.ProgressPercentage = args.ProgressPercentage;
+
+                        BytesReceived = 0;
+                        BytesToReceive = 0;
+                        float ProgressPercentage = 0;
+
+                        FilesToDownload.ForEach(f =>
+                        {
+                            BytesReceived += f.BytesReceived;
+                            BytesToReceive += f.TotalBytesToReceive;
+                            ProgressPercentage += (f.ProgressPercentage / FilesTotal);
+                        });
+
+                        progressBytes = "Downloaded " + DownloadedProgress(BytesReceived, BytesToReceive);
+                        Result = progressBytes;
+                        Percentage = ProgressPercentage > 100 ? 100 : (int)(Math.Ceiling(ProgressPercentage));
+
+                        Status = DownloadStatus.ProgressChanged;
+                        ProgressChanged();
+                    };
+
+                    client.DownloadFileCompleted += (sender, args) =>
+                    {
+                        FilesCompleted++;
+                        Result = progressBytes + " (" + FilesCompleted + "/" + FilesTotal + ")";
+
+                        Status = DownloadStatus.FileDownloaded;
+                        ProgressChanged();
+
+                        //Downloaded All Files
+                        if (FilesCompleted == FilesTotal)
+                        {
+                            TimeElapsed = new TimeSpan(DateTime.Now.Ticks - TimeStart.Ticks);
+                            TimeCompleted = DateTime.Now;
+
+                            Status = DownloadStatus.Completed;
+                            ProgressChanged();
+                        }
+                    };
+
+                    Tasks.Add(client.DownloadFileTaskAsync(new Uri(file.URL), file.Path));
+
+                    if (Tasks.Count == Browser.MaxConnections)
+                    {
+                        Result = "Connecting...";
+
+                        Status = DownloadStatus.NextFiles;
+                        ProgressChanged();
+
+                        await Task.WhenAll(Tasks);
+                        Tasks.Clear();
+                    }
                 }
             }
 
             try
             {
-                await Task.WhenAll(Tasks);
-            }
-            catch (Exception e) { MessageBox.Show(e.Message); }
+                await Task.WhenAll(Tasks.Where(i => i != null));
 
-            BarStop(ProgressBar);
-            LabelBytes.Text = LabelBytes.Text == "Connecting..." ? "Files already exist" : LabelBytes.Text;
+                Result = Result == "Connecting..." ? "Files already exist" : Result;
+
+                Status = DownloadStatus.Stopped;
+                ProgressChanged();
+            }
+            catch (Exception ex)
+            {
+                var error = ex.Message;
+            }
         }
 
         private string DownloadedProgress(double bytesIn, double bytesTotal)
         {
             if (bytesTotal == -1) { return Archive.CalculateSize(bytesIn); }
             return Archive.CalculateSize(bytesIn) + " of " + Archive.CalculateSize(bytesTotal);
-        }
-
-        private void BarStart(ProgressBar bar, ProgressBarStyle style = ProgressBarStyle.Continuous, int maximum = 100)
-        {
-            bar.Maximum = maximum;
-            bar.Value = 0;
-            bar.MarqueeAnimationSpeed = 50;
-            bar.Style = style;
-        }
-
-        private void BarStop(ProgressBar bar)
-        {
-            if (bar.Style == ProgressBarStyle.Marquee)
-            {
-                //bar.MarqueeAnimationSpeed = 0;
-                bar.Style = ProgressBarStyle.Continuous;
-            }
-
-            //Hack for Win7
-            bar.Maximum++;
-            bar.Value = bar.Maximum;
-            bar.Value--;
-            bar.Maximum--;
         }
     }
 }
