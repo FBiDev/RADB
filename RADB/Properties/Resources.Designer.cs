@@ -107,9 +107,9 @@ namespace RADB.Properties {
         ///	LEFT JOIN CompanyItems AS ci ON ci.CompanyID = c.ID 
         ///		--AND ci.Active = 1 
         ///	LEFT JOIN Console AS co ON co.ID = ci.ConsoleID 
-        ///	LEFT JOIN GameData AS g on g.ConsoleID = co.ID OR co.Name IS NULL 
+        ///	LEFT JOIN GameData AS g ON g.ConsoleID = co.ID OR co.Name IS NULL 
         ///WHERE 1 = 1 
-        ///	AND co.Name IS NULL AND @ID = 0  [rest of string was truncated]&quot;;.
+        ///	AND g.ConsoleID &lt;&gt;100 AND g.Cons [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ConsoleListar {
             get {
@@ -166,7 +166,8 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized string similar to --
         ///INSERT INTO GameDataExtend ( 
-        ///	  ID
+        ///	  ID 
+        ///	, ConsoleID 
         ///	, Developer 
         ///	, Publisher 
         ///	, Genre 
@@ -176,6 +177,7 @@ namespace RADB.Properties {
         ///	, ImageBoxArt 
         ///	) VALUES ( 
         ///	  @ID 
+        ///	, @ConsoleID 
         ///	, @Developer 
         ///	, @Publisher 
         ///	, @Genre 
@@ -198,7 +200,7 @@ namespace RADB.Properties {
         ///	  g.ID 
         ///	, g.Title 
         ///	, g.ConsoleID 
-        ///	, c.Name as ConsoleName 
+        ///	, c.Name AS ConsoleName 
         ///	, g.ImageIcon
         ///	, g.NumAchievements 
         ///	, g.Points 
@@ -260,30 +262,41 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized string similar to --
         ///SELECT
-        ///	  G.ID 
+        ///	  g.ID 
         ///	, Title 
         ///	, ConsoleID 
-        ///	, C.Name as ConsoleName 
+        ///	, C.Name AS ConsoleName 
         ///	, ImageIcon 
         ///	, NumAchievements 
         ///	, Points 
         ///	, NumLeaderboards 
         ///	, DateModified 
         ///	, ForumTopicID 
-        ///FROM GameData AS G 
-        ///	LEFT JOIN Console as C on C.ID=G.ConsoleID 
+        ///FROM GameData AS g 
+        ///	LEFT JOIN Console AS c ON c.ID = g.ConsoleID 
         ///WHERE 1 = 1 
-        ///	AND (G.ID = @ID 
+        ///	AND c.ID &lt;&gt; 100 AND c.ID &lt;&gt; 101 
+        ///	AND (g.ID = @ID 
         ///		OR (@ID = 0 OR @ID IS NULL)) 
-        ///	AND (G.Title LIKE &apos;%&apos;+@Title+&apos;%&apos; 
+        ///	AND (g.Title LIKE &apos;%&apos;+@Title+&apos;%&apos; 
         ///		OR (@Title = &apos;&apos; OR @Title IS NULL)) 
-        ///	AND (G.ConsoleID = @ConsoleID 
+        ///	AND (g.ConsoleID = @ConsoleID 
         ///		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
         ///	.
         /// </summary>
         internal static string GameListar {
             get {
                 return ResourceManager.GetString("GameListar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap iconForm {
+            get {
+                object obj = ResourceManager.GetObject("iconForm", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

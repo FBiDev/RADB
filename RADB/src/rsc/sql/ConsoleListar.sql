@@ -2,17 +2,21 @@
 SELECT 
 	 co.ID 
 	, c.Name AS Company 
-	,(CASE WHEN ci.ConsoleNameComplete IS NULL THEN co.Name ELSE ci.ConsoleNameComplete END) AS Name 
+	,(CASE WHEN ci.ConsoleNameComplete IS NULL THEN 
+		CASE WHEN co.Name IS NULL THEN c.Name ELSE co.Name END 
+	  ELSE ci.ConsoleNameComplete END) AS Name 
 	, SUM(CASE WHEN g.NumAchievements > 0 THEN 1 ELSE 0 END) NumGames 
 	, Count(g.ID) AS TotalGames 
 FROM Company AS c 
 	LEFT JOIN CompanyItems AS ci ON ci.CompanyID = c.ID 
 		--AND ci.Active = 1 
 	LEFT JOIN Console AS co ON co.ID = ci.ConsoleID 
-	LEFT JOIN GameData AS g ON g.ConsoleID = co.ID OR co.Name IS NULL 
+	LEFT JOIN GameData AS g ON (g.ConsoleID = co.ID OR co.Name IS NULL) 
+		AND g.ConsoleID <> 100 AND g.ConsoleID <> 101 
 WHERE 1 = 1 
 	AND co.Name IS NULL AND @ID = 0 
 	OR ci.Active = 1 
+
 	AND (co.ID = @ID 
 		OR (@ID = 0 OR @ID IS NULL)) 
 	AND (co.Name LIKE '%' + @Name + '%' 

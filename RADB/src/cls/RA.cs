@@ -82,7 +82,6 @@ namespace RADB
         #region _GameList
         public string GameListPath(string consoleName)
         {
-            if (string.IsNullOrWhiteSpace(consoleName)) { consoleName = "_AllGameLists"; }
             return (Folder.GameData + consoleName + ".json").Replace("/", "-");
         }
 

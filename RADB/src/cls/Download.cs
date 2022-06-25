@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Linq;
 //
 using System.IO;
@@ -58,7 +59,8 @@ namespace RADB
             BytesToReceive = 0;
             Percentage = 0;
 
-            Result = "Connecting...";
+            string connecting = "Connecting..." + Environment.NewLine;
+            Result = connecting;
 
             Status = DownloadStatus.Connecting;
             ProgressChanged();
@@ -75,6 +77,8 @@ namespace RADB
             }
 
             int FilesTotal = FilesToDownload.Count;
+            string progressBytes = string.Empty;
+            string progressFiles = string.Empty;
 
             foreach (DownloadFile file in FilesToDownload)
             {
@@ -82,8 +86,6 @@ namespace RADB
 
                 using (var client = new WebClientExtend())
                 {
-                    string progressBytes = string.Empty;
-
                     client.DownloadProgressChanged += (sender, args) =>
                     {
                         file.BytesReceived = args.BytesReceived;
@@ -101,9 +103,10 @@ namespace RADB
                             ProgressPercentage += (f.ProgressPercentage / FilesTotal);
                         });
 
-                        progressBytes = "Downloaded " + DownloadedProgress(BytesReceived, BytesToReceive);
-                        Result = progressBytes;
                         Percentage = ProgressPercentage > 100 ? 100 : (int)(Math.Ceiling(ProgressPercentage));
+
+                        progressBytes = "Downloaded " + DownloadedProgress(BytesReceived, BytesToReceive);
+                        Result = progressBytes + progressFiles;
 
                         Status = DownloadStatus.ProgressChanged;
                         ProgressChanged();
@@ -112,7 +115,9 @@ namespace RADB
                     client.DownloadFileCompleted += (sender, args) =>
                     {
                         FilesCompleted++;
-                        Result = progressBytes + " (" + FilesCompleted + "/" + FilesTotal + ")";
+
+                        progressFiles = " (" + FilesCompleted + "/" + FilesTotal + ")";
+                        Result = progressBytes + progressFiles;
 
                         Status = DownloadStatus.FileDownloaded;
                         ProgressChanged();
@@ -132,8 +137,6 @@ namespace RADB
 
                     if (Tasks.Count == Browser.MaxConnections)
                     {
-                        Result = "Connecting...";
-
                         Status = DownloadStatus.NextFiles;
                         ProgressChanged();
 
@@ -147,7 +150,7 @@ namespace RADB
             {
                 await Task.WhenAll(Tasks.Where(i => i != null));
 
-                Result = Result == "Connecting..." ? "Files already exist" : Result;
+                Result = Result == connecting ? "Files already exist" : Result;
 
                 Status = DownloadStatus.Stopped;
                 ProgressChanged();

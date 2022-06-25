@@ -39,7 +39,7 @@ namespace RADB
         public Main()
         {
             InitializeComponent();
-            Icon = GNX.cConvert.ToIco(Resources.favicon, new Size(250, 250));
+            Icon = GNX.cConvert.ToIco(Resources.iconForm, new Size(250, 250));
 
             Shown += RADB_Shown;
             Resize += Main_Resize;
@@ -411,7 +411,7 @@ namespace RADB
             ConsoleBind.NumGames = list.Sum(g => (g.NumAchievements > 0).ToInt());
             ConsoleBind.TotalGames = list.Count();
 
-            lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + ConsoleBind.Name + " GameList Updated!" + Environment.NewLine + lblOutput.Text;
+            lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + ConsoleBind.Name + " Updated!" + Environment.NewLine + lblOutput.Text;
         }
 
         private async void dgvGames_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

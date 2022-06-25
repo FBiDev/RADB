@@ -138,12 +138,12 @@
             this.picInfoTitle = new System.Windows.Forms.PictureBox();
             this.gpbInfoAchievements = new System.Windows.Forms.GroupBox();
             this.dgvAchievements = new GNX.FlatDataGrid();
-            this.btnUpdateInfo = new RADB.FlatButtonA();
-            this.btnUserCheevos = new RADB.FlatButtonA();
             this.aOrder = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aIcon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnUpdateInfo = new RADB.FlatButtonA();
+            this.btnUserCheevos = new RADB.FlatButtonA();
             this.tabMain.SuspendLayout();
             this.tabConsoles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderConsole)).BeginInit();
@@ -402,8 +402,9 @@
             this.lblProgressConsoles.AutoSize = true;
             this.lblProgressConsoles.BackColor = System.Drawing.Color.Snow;
             this.lblProgressConsoles.Location = new System.Drawing.Point(421, 8);
+            this.lblProgressConsoles.MinimumSize = new System.Drawing.Size(110, 0);
             this.lblProgressConsoles.Name = "lblProgressConsoles";
-            this.lblProgressConsoles.Size = new System.Drawing.Size(58, 13);
+            this.lblProgressConsoles.Size = new System.Drawing.Size(110, 13);
             this.lblProgressConsoles.TabIndex = 31;
             this.lblProgressConsoles.Text = "lblProgress";
             // 
@@ -1197,33 +1198,6 @@
             this.dgvAchievements.Size = new System.Drawing.Size(545, 130);
             this.dgvAchievements.TabIndex = 0;
             // 
-            // btnUpdateInfo
-            // 
-            this.btnUpdateInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnUpdateInfo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.btnUpdateInfo.FlatAppearance.BorderSize = 0;
-            this.btnUpdateInfo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.btnUpdateInfo.Location = new System.Drawing.Point(5, 3);
-            this.btnUpdateInfo.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
-            this.btnUpdateInfo.Name = "btnUpdateInfo";
-            this.btnUpdateInfo.Size = new System.Drawing.Size(144, 23);
-            this.btnUpdateInfo.TabIndex = 35;
-            this.btnUpdateInfo.Text = "Update Info";
-            this.btnUpdateInfo.Click += new System.EventHandler(this.btnUpdateInfo_Click);
-            // 
-            // btnUserCheevos
-            // 
-            this.btnUserCheevos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnUserCheevos.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.btnUserCheevos.FlatAppearance.BorderSize = 0;
-            this.btnUserCheevos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.btnUserCheevos.Location = new System.Drawing.Point(400, 183);
-            this.btnUserCheevos.Name = "btnUserCheevos";
-            this.btnUserCheevos.Size = new System.Drawing.Size(165, 23);
-            this.btnUserCheevos.TabIndex = 28;
-            this.btnUserCheevos.Text = "UserCheevos";
-            this.btnUserCheevos.Click += new System.EventHandler(this.btnUserCheevos_Click);
-            // 
             // aOrder
             // 
             this.aOrder.DataPropertyName = "DisplayOrder";
@@ -1265,6 +1239,33 @@
             this.aPoints.ReadOnly = true;
             this.aPoints.Width = 64;
             // 
+            // btnUpdateInfo
+            // 
+            this.btnUpdateInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnUpdateInfo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.btnUpdateInfo.FlatAppearance.BorderSize = 0;
+            this.btnUpdateInfo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.btnUpdateInfo.Location = new System.Drawing.Point(5, 3);
+            this.btnUpdateInfo.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            this.btnUpdateInfo.Name = "btnUpdateInfo";
+            this.btnUpdateInfo.Size = new System.Drawing.Size(144, 23);
+            this.btnUpdateInfo.TabIndex = 35;
+            this.btnUpdateInfo.Text = "Update Info";
+            this.btnUpdateInfo.Click += new System.EventHandler(this.btnUpdateInfo_Click);
+            // 
+            // btnUserCheevos
+            // 
+            this.btnUserCheevos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnUserCheevos.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.btnUserCheevos.FlatAppearance.BorderSize = 0;
+            this.btnUserCheevos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.btnUserCheevos.Location = new System.Drawing.Point(400, 183);
+            this.btnUserCheevos.Name = "btnUserCheevos";
+            this.btnUserCheevos.Size = new System.Drawing.Size(165, 23);
+            this.btnUserCheevos.TabIndex = 28;
+            this.btnUserCheevos.Text = "UserCheevos";
+            this.btnUserCheevos.Click += new System.EventHandler(this.btnUserCheevos_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1275,7 +1276,7 @@
             this.DoubleBuffered = true;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "RA DataBase";
+            this.Text = "DataBase";
             this.tabMain.ResumeLayout(false);
             this.tabConsoles.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderConsole)).EndInit();
