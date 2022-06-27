@@ -161,42 +161,42 @@ namespace RADB
             dlConsoles = new Download
             {
                 Overwrite = true,
-                //ProgressBarName = pgbConsoles.Name,
-                //LabelBytesName = lblProgressConsoles.Name,
-                //LabelTimeName = lblUpdateConsoles.Name,
+                FolderBase = Folder.Console,
             };
+            dlConsoles.ProgressChanged += () =>
+                DownloadChanged(dlConsoles, lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
 
             dlGames = new Download
             {
                 Overwrite = true,
+                FolderBase = Folder.GameData,
             };
-
             dlGames.ProgressChanged += () =>
                 DownloadChanged(dlGames, lblProgressGameList, pgbGameList, lblUpdateGameList);
 
             dlGamesIcon = new Download()
             {
                 Overwrite = false,
+                FolderBase = Folder.IconsBase,
             };
-
             dlGamesIcon.ProgressChanged += () =>
                 DownloadChanged(dlGamesIcon, lblProgressGameList, pgbGameList, lblUpdateGameList);
 
             dlGameExtend = new Download
             {
                 Overwrite = true,
-                //ProgressBarName = pgbInfo.Name,
-                //LabelBytesName = lblProgressInfo.Name,
-                //LabelTimeName = lblUpdateInfo.Name,
+                FolderBase = Folder.GameDataExtendBase,
             };
+            dlGameExtend.ProgressChanged += () =>
+                DownloadChanged(dlGameExtend, lblProgressInfo, pgbInfo, lblUpdateInfo);
 
             dlGameExtendImages = new Download
             {
                 Overwrite = false,
-                //ProgressBarName = pgbInfo.Name,
-                //LabelBytesName = lblProgressInfo.Name,
-                //LabelTimeName = lblUpdateInfo.Name,
+                FolderBase = Folder.Images,
             };
+            dlGameExtendImages.ProgressChanged += () =>
+                DownloadChanged(dlGameExtendImages, lblProgressInfo, pgbInfo, lblUpdateInfo);
 
             await LoadConsoles();
             await LoadGames();
@@ -270,7 +270,6 @@ namespace RADB
             if (enable)
             {
                 lblNotFoundConsoles.Visible = (dgvConsoles.RowCount == 0);
-                lblUpdateConsoles.Text = Archive.LastUpdate(RA.ConsolesPath());
             }
             else
             {
@@ -356,7 +355,6 @@ namespace RADB
             if (enable)
             {
                 lblNotFoundGameList.Visible = (dgvGames.RowCount == 0);
-                //lblUpdateGameList.Text = Archive.LastUpdate(RA.GameListPath(ConsoleBind.Name));
             }
             else
             {
@@ -402,10 +400,9 @@ namespace RADB
             //Load Games
             TimeSpan ini2 = new TimeSpan(DateTime.Now.Ticks);
             await LoadGames();
-            TimeSpan fim2 = new TimeSpan(DateTime.Now.Ticks) - ini2;
 
             UpdateConsoleLabels();
-
+            TimeSpan fim2 = new TimeSpan(DateTime.Now.Ticks) - ini2;
             //Update ConsoleBind
             ListBind<Game> list = (ListBind<Game>)dgvGames.DataSource;
             ConsoleBind.NumGames = list.Sum(g => (g.NumAchievements > 0).ToInt());

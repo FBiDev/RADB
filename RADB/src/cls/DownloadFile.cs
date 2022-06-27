@@ -9,6 +9,7 @@ namespace RADB
     {
         public string URL { get; set; }
         public string Path { get; set; }
+        public string PathID { get; set; }
         public string Name { get; set; }
         public string Extension { get; set; }
         //public Bitmap Image { get; set; }
@@ -21,9 +22,11 @@ namespace RADB
         {
             URL = url;
             Path = path;
-            Name = Path.Split(new string[] { @"\" }, StringSplitOptions.None).Last().ToString();
+            string[] pathSplit = Path.Split(new string[] { @"\" }, StringSplitOptions.None);
+            Name = pathSplit.Last().ToString();
             Extension = Name.Split(new string[] { @"." }, StringSplitOptions.None).Last().ToString().ToLower();
 
+            //PathID += @"\" + Name;
             //if (Extension == "png" || Extension == "jpg")
             //{
             //Image = Picture.Create(Path).Bitmap;

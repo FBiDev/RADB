@@ -18,7 +18,7 @@ namespace RADB
         public static string RelativePath(string fileName)
         {
             FileInfo info = new FileInfo(fileName);
-            string path = info.DirectoryName.Replace(AppDomain.CurrentDomain.BaseDirectory, "") + "\\";
+            string path = ".\\" + info.DirectoryName.Replace(AppDomain.CurrentDomain.BaseDirectory, "") + "\\";
             return path;
         }
 

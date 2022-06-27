@@ -8,14 +8,16 @@ namespace RADB
 {
     public static class Folder
     {
-        private static string Base { get { return @"Data\"; } }
-        private static string Images { get { return Base + @"Images\"; } }
+        public static string Base { get { return @".\Data\"; } }
+        public static string Images { get { return Base + @"Images\"; } }
         private static string Json { get { return Base + @"Json\"; } }
-        private static string GameDataExtendBase { get { return Json + @"GameDataExtend\"; } }
 
         public static string Temp { get { return Base + @"Temp\"; } }
         public static string Console { get { return Json + @"Console\"; } }
         public static string GameData { get { return Json + @"GameData\"; } }
+        public static string GameDataExtendBase { get { return Json + @"GameDataExtend\"; } }
+
+        public static string IconsBase { get { return Images + @"Icons\"; } }
 
         public static void CreateFolders()
         {
@@ -27,6 +29,8 @@ namespace RADB
             Directory.CreateDirectory(Temp);
             Directory.CreateDirectory(Console);
             Directory.CreateDirectory(GameData);
+
+            Directory.CreateDirectory(IconsBase);
         }
 
         public static string GameDataExtend(int consoleID)
@@ -38,7 +42,7 @@ namespace RADB
 
         public static string Icons(int consoleID)
         {
-            string folder = Images + @"Icons\" + consoleID + @"\";
+            string folder = IconsBase + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }

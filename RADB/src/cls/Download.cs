@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 //
 using System.IO;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace RADB
 {
     public class Download
     {
+        public string FolderBase { get; set; }
         public List<DownloadFile> Files { get; set; }
         public List<DownloadFile> FilesToDownload { get; set; }
         public int FilesCompleted { get; set; }
@@ -44,8 +47,16 @@ namespace RADB
             FilesToDownload = new List<DownloadFile>();
         }
 
+        [DllImport("shlwapi.dll", EntryPoint = "PathFileExistsW", SetLastError = true, CharSet = CharSet.Unicode)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool _PathFileExists([MarshalAs(UnmanagedType.LPWStr)]string pszPath);
+
+        public bool PathFileExists(string fileName) { return _PathFileExists(fileName); }
+
         public async Task Start()
         {
+            if (string.IsNullOrWhiteSpace(FolderBase)) { FolderBase = @".\"; }
+
             TimeStart = DateTime.Now;
             TimeCompleted = TimeStart;
             TimeElapsed = default(TimeSpan);
@@ -65,15 +76,41 @@ namespace RADB
             Status = DownloadStatus.Connecting;
             ProgressChanged();
 
-            //Add files that not already downloaded
             FilesToDownload.Clear();
 
-            foreach (DownloadFile file in Files)
+            if (Overwrite == false)
             {
-                if (File.Exists(file.Path) == false || new FileInfo(file.Path).Length == 0 || Overwrite == true)
+                DirectoryInfo di = new DirectoryInfo(FolderBase);
+                IEnumerable<string> physicalFiles = di.GetFiles("*.*", SearchOption.AllDirectories)
+                                    .Where(fs => fs.Length > 0)
+                                    .Select(f => Archive.RelativePath(f.FullName) + Path.GetFileName(f.Name));
+
+                var fileNames = Files.Select(f => f.Path);
+
+                var setOfFiles = new HashSet<string>(physicalFiles);
+                var notPresent = (from name in fileNames
+                                  where setOfFiles.Contains(name) == false
+                                  select name).ToList();
+
+                notPresent.Sort();
+                Files = Files.OrderBy(f => f.Path).ToList();
+
+                //Add files that not already downloaded
+                foreach (DownloadFile file in Files)
                 {
-                    FilesToDownload.Add(file);
+                    foreach (string nt in notPresent)
+                    {
+                        if (file.Path.Equals(nt))
+                        {
+                            FilesToDownload.Add(file);
+                            break;
+                        }
+                    }
                 }
+            }
+            else
+            {
+                FilesToDownload.AddRange(Files);
             }
 
             int FilesTotal = FilesToDownload.Count;
@@ -96,12 +133,14 @@ namespace RADB
                         BytesToReceive = 0;
                         float ProgressPercentage = 0;
 
-                        FilesToDownload.ForEach(f =>
+                        foreach (DownloadFile f in FilesToDownload)
                         {
                             BytesReceived += f.BytesReceived;
                             BytesToReceive += f.TotalBytesToReceive;
                             ProgressPercentage += (f.ProgressPercentage / FilesTotal);
-                        });
+                        }
+
+                        if (BytesToReceive < -1) { BytesToReceive = -1; }
 
                         Percentage = ProgressPercentage > 100 ? 100 : (int)(Math.Ceiling(ProgressPercentage));
 
@@ -114,23 +153,26 @@ namespace RADB
 
                     client.DownloadFileCompleted += (sender, args) =>
                     {
-                        FilesCompleted++;
-
-                        progressFiles = " (" + FilesCompleted + "/" + FilesTotal + ")";
-                        Result = progressBytes + progressFiles;
-
-                        Status = DownloadStatus.FileDownloaded;
-                        ProgressChanged();
-
                         //Downloaded All Files
-                        if (FilesCompleted == FilesTotal)
+                        if (Percentage == 100)
                         {
+                            FilesCompleted = FilesTotal;
+
                             TimeElapsed = new TimeSpan(DateTime.Now.Ticks - TimeStart.Ticks);
                             TimeCompleted = DateTime.Now;
 
                             Status = DownloadStatus.Completed;
-                            ProgressChanged();
                         }
+                        else
+                        {
+                            FilesCompleted++;
+                            Status = DownloadStatus.FileDownloaded;
+                        }
+
+                        progressFiles = " (" + FilesCompleted + "/" + FilesTotal + ")";
+                        Result = progressBytes + progressFiles;
+
+                        ProgressChanged();
                     };
 
                     Tasks.Add(client.DownloadFileTaskAsync(new Uri(file.URL), file.Path));
@@ -150,10 +192,12 @@ namespace RADB
             {
                 await Task.WhenAll(Tasks.Where(i => i != null));
 
-                Result = Result == connecting ? "Files already exist" : Result;
-
-                Status = DownloadStatus.Stopped;
-                ProgressChanged();
+                if (Status != DownloadStatus.Completed)
+                {
+                    Status = DownloadStatus.Stopped;
+                    Result = Result == connecting ? "Files already exist" : Result;
+                    ProgressChanged();
+                }
             }
             catch (Exception ex)
             {
@@ -163,7 +207,7 @@ namespace RADB
 
         private string DownloadedProgress(double bytesIn, double bytesTotal)
         {
-            if (bytesTotal == -1) { return Archive.CalculateSize(bytesIn); }
+            if (bytesTotal <= 0) { return Archive.CalculateSize(bytesIn); }
             return Archive.CalculateSize(bytesIn) + " of " + Archive.CalculateSize(bytesTotal);
         }
     }

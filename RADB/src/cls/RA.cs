@@ -87,12 +87,15 @@ namespace RADB
 
         public async Task DownloadGameList(Download dlGames, Console console)
         {
-            dlGames.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID), GameListPath(console.Name)) };
-            await (dlGames.Start());
+            await Task.Run(async () =>
+            {
+                dlGames.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID), GameListPath(console.Name)) };
+                await dlGames.Start();
 
-            await Game.Excluir(console.ID);
-            List<Game> list = await DeserializeGameList(console.Name);
-            await Game.IncluirLista(list);
+                await Game.Excluir(console.ID);
+                List<Game> list = await DeserializeGameList(console.Name);
+                await Game.IncluirLista(list);
+            });
         }
 
         private Task<List<Game>> DeserializeGameList(string consoleName)
@@ -106,13 +109,12 @@ namespace RADB
 
         public async Task DownloadGamesIcon(Download dlGameIcons, Console console)
         {
-            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
-            List<Game> games = await Game.Listar(console.ID);
-            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
-            TimeSpan ini1 = new TimeSpan(DateTime.Now.Ticks);
-            dlGameIcons.Files = games.Select(g => g.ImageIconFile).ToList();
-            TimeSpan fim1 = new TimeSpan(DateTime.Now.Ticks) - ini1;
-            await (dlGameIcons.Start());
+            await Task.Run(async () =>
+            {
+                List<Game> games = await Game.Listar(console.ID);
+                dlGameIcons.Files = games.Select(g => g.ImageIconFile).ToList();
+                await (dlGameIcons.Start());
+            });
         }
         #endregion
 
