@@ -10,7 +10,7 @@ namespace RADB
     {
         public static CultureID idioma = CultureID.Brazil_Portuguese;
         public static bool umaExecucao = true;
-        public const string sistema = "RADB";
+        public const string sistema = "RADatabase";
         public static bool Loaded { get; set; }
 
         public static void Start()

@@ -20,11 +20,6 @@ namespace RADB
 
         public static void InvokeIfRequired(this Control control, MethodInvoker action)
         {
-            while (!control.Visible)
-            {
-                System.Threading.Thread.Sleep(50);
-            }
-
             if (control.InvokeRequired)
             {
                 control.Invoke(action);

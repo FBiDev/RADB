@@ -39,8 +39,8 @@ namespace RADB
 
         public RA()
         {
-            API_UserName = "FBiDev";
-            API_Key = "uBuG840fXTyKSQvS8MFKX5d40fOelJ29";
+            API_UserName = "RADatabase";
+            API_Key = "GRaWk9onm4B0LSWSFaDt5a2dQE3N8Yme";
         }
 
         private string AuthQS()
