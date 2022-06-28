@@ -124,6 +124,10 @@
             this.picInfoTitle = new System.Windows.Forms.PictureBox();
             this.gpbInfoAchievements = new System.Windows.Forms.GroupBox();
             this.dgvAchievements = new GNX.FlatDataGrid();
+            this.aOrder = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.aIcon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.aDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.aPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblInfoName = new System.Windows.Forms.Label();
             this.pnlDownloadInfo = new System.Windows.Forms.Panel();
             this.btnUpdateInfo = new RADB.FlatButtonA();
@@ -140,10 +144,7 @@
             this.Ttip = new System.Windows.Forms.ToolTip(this.components);
             this.lblOutput = new System.Windows.Forms.Label();
             this.pnlOutput = new System.Windows.Forms.Panel();
-            this.aOrder = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.aIcon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.aDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.aPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtUsernameCheevos = new RADB.FlatTextBoxA();
             this.tabMain.SuspendLayout();
             this.tabConsoles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderConsole)).BeginInit();
@@ -1038,6 +1039,48 @@
             this.dgvAchievements.Size = new System.Drawing.Size(545, 130);
             this.dgvAchievements.TabIndex = 0;
             // 
+            // aOrder
+            // 
+            this.aOrder.DataPropertyName = "DisplayOrder";
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.aOrder.DefaultCellStyle = dataGridViewCellStyle18;
+            this.aOrder.HeaderText = "Order";
+            this.aOrder.Name = "aOrder";
+            this.aOrder.ReadOnly = true;
+            this.aOrder.Width = 62;
+            // 
+            // aIcon
+            // 
+            this.aIcon.DataPropertyName = "DisplayOrder";
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.aIcon.DefaultCellStyle = dataGridViewCellStyle19;
+            this.aIcon.HeaderText = "Icon";
+            this.aIcon.Name = "aIcon";
+            this.aIcon.ReadOnly = true;
+            this.aIcon.Visible = false;
+            this.aIcon.Width = 72;
+            // 
+            // aDescription
+            // 
+            this.aDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.aDescription.DataPropertyName = "DescriptionComplete";
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.aDescription.DefaultCellStyle = dataGridViewCellStyle20;
+            this.aDescription.HeaderText = "Description";
+            this.aDescription.Name = "aDescription";
+            this.aDescription.ReadOnly = true;
+            // 
+            // aPoints
+            // 
+            this.aPoints.DataPropertyName = "Points";
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.aPoints.DefaultCellStyle = dataGridViewCellStyle21;
+            this.aPoints.HeaderText = "Points";
+            this.aPoints.Name = "aPoints";
+            this.aPoints.ReadOnly = true;
+            this.aPoints.Width = 64;
+            // 
             // lblInfoName
             // 
             this.lblInfoName.AutoSize = true;
@@ -1105,6 +1148,7 @@
             // 
             // tabTemp
             // 
+            this.tabTemp.Controls.Add(this.txtUsernameCheevos);
             this.tabTemp.Controls.Add(this.chkUserCheevos);
             this.tabTemp.Controls.Add(this.panel1);
             this.tabTemp.Controls.Add(this.lblConsoles);
@@ -1225,47 +1269,13 @@
             this.pnlOutput.Size = new System.Drawing.Size(898, 66);
             this.pnlOutput.TabIndex = 30;
             // 
-            // aOrder
+            // txtUsernameCheevos
             // 
-            this.aOrder.DataPropertyName = "DisplayOrder";
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.aOrder.DefaultCellStyle = dataGridViewCellStyle18;
-            this.aOrder.HeaderText = "Order";
-            this.aOrder.Name = "aOrder";
-            this.aOrder.ReadOnly = true;
-            this.aOrder.Width = 62;
-            // 
-            // aIcon
-            // 
-            this.aIcon.DataPropertyName = "DisplayOrder";
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.aIcon.DefaultCellStyle = dataGridViewCellStyle19;
-            this.aIcon.HeaderText = "Icon";
-            this.aIcon.Name = "aIcon";
-            this.aIcon.ReadOnly = true;
-            this.aIcon.Visible = false;
-            this.aIcon.Width = 72;
-            // 
-            // aDescription
-            // 
-            this.aDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.aDescription.DataPropertyName = "DescriptionComplete";
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.aDescription.DefaultCellStyle = dataGridViewCellStyle20;
-            this.aDescription.HeaderText = "Description";
-            this.aDescription.Name = "aDescription";
-            this.aDescription.ReadOnly = true;
-            // 
-            // aPoints
-            // 
-            this.aPoints.DataPropertyName = "Points";
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.aPoints.DefaultCellStyle = dataGridViewCellStyle21;
-            this.aPoints.HeaderText = "Points";
-            this.aPoints.Name = "aPoints";
-            this.aPoints.ReadOnly = true;
-            this.aPoints.Width = 64;
+            this.txtUsernameCheevos.LabelText = "Username";
+            this.txtUsernameCheevos.Location = new System.Drawing.Point(400, 212);
+            this.txtUsernameCheevos.Name = "txtUsernameCheevos";
+            this.txtUsernameCheevos.Size = new System.Drawing.Size(221, 34);
+            this.txtUsernameCheevos.TabIndex = 30;
             // 
             // Main
             // 
@@ -1412,6 +1422,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn aIcon;
         private System.Windows.Forms.DataGridViewTextBoxColumn aDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn aPoints;
+        private FlatTextBoxA txtUsernameCheevos;
     }
 }
 

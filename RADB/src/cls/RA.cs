@@ -177,9 +177,9 @@ namespace RADB
             return Folder.GameDataExtend(consoleID) + gameID + ".json";
         }
 
-        public async Task<UserProgress> GetUserProgress(int gameID)
+        public async Task<UserProgress> GetUserProgress(string username, int gameID)
         {
-            string userData = await Browser.DownloadString(GetURL("API_GetUserProgress.php", "u=" + API_UserName + "&i=" + gameID));
+            string userData = await Browser.DownloadString(GetURL("API_GetUserProgress.php", "u=" + username + "&i=" + gameID));
             userData = userData.GetBetween(":{", "}}");
             userData = "{" + userData + "}";
 

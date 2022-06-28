@@ -670,7 +670,7 @@ namespace RADB
                 lblUserCheevos.Text = await Task<string>.Run(async () =>
                 {
                     picUserCheevos.Image = GameBind.ImageIconBitmap;
-                    UserProgress user = await RA.GetUserProgress(GameBind.ID);
+                    UserProgress user = await RA.GetUserProgress(txtUsernameCheevos.Text, GameBind.ID);
                     return user.NumAchievedHardcore + " / " + GameBind.NumAchievements;
                 });
 
