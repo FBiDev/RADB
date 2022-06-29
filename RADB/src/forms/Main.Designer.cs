@@ -53,28 +53,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.txtID = new System.Windows.Forms.TextBox();
-            this.lblID = new System.Windows.Forms.Label();
-            this.txtURL = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblUser = new System.Windows.Forms.Label();
-            this.txtUser = new System.Windows.Forms.TextBox();
-            this.lblCount = new System.Windows.Forms.Label();
-            this.txtCount = new System.Windows.Forms.TextBox();
-            this.lblOffset = new System.Windows.Forms.Label();
-            this.txtOffset = new System.Windows.Forms.TextBox();
-            this.dtpDate1 = new System.Windows.Forms.DateTimePicker();
-            this.lblDate1 = new System.Windows.Forms.Label();
-            this.lblDate2 = new System.Windows.Forms.Label();
-            this.dtpDate2 = new System.Windows.Forms.DateTimePicker();
-            this.btnDownloadBadges = new System.Windows.Forms.Button();
-            this.lblConsoles = new System.Windows.Forms.Label();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabConsoles = new System.Windows.Forms.TabPage();
             this.lblNotFoundConsoles = new System.Windows.Forms.Label();
             this.picLoaderConsole = new System.Windows.Forms.PictureBox();
             this.pnlDownloadConsoles = new System.Windows.Forms.Panel();
-            this.btnUpdateConsoles = new RADB.FlatButtonA();
             this.lblUpdateConsoles = new System.Windows.Forms.Label();
             this.pgbConsoles = new System.Windows.Forms.ProgressBar();
             this.lblProgressConsoles = new System.Windows.Forms.Label();
@@ -88,11 +71,9 @@
             this.lblNotFoundGameList = new System.Windows.Forms.Label();
             this.picLoaderGameList = new System.Windows.Forms.PictureBox();
             this.pnlGamesConsoleName = new System.Windows.Forms.Panel();
-            this.txtSearchGames = new RADB.FlatTextBoxA();
             this.lblConsoleGamesTotal = new System.Windows.Forms.Label();
             this.lblConsoleName = new System.Windows.Forms.Label();
             this.pnlDownloadGameList = new System.Windows.Forms.Panel();
-            this.btnUpdateGameList = new RADB.FlatButtonA();
             this.lblUpdateGameList = new System.Windows.Forms.Label();
             this.pgbGameList = new System.Windows.Forms.ProgressBar();
             this.lblProgressGameList = new System.Windows.Forms.Label();
@@ -105,6 +86,29 @@
             this.cNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGameInfo = new System.Windows.Forms.TabPage();
+            this.lblInfoName = new System.Windows.Forms.Label();
+            this.pnlDownloadInfo = new System.Windows.Forms.Panel();
+            this.lblUpdateInfo = new System.Windows.Forms.Label();
+            this.pgbInfo = new System.Windows.Forms.ProgressBar();
+            this.lblProgressInfo = new System.Windows.Forms.Label();
+            this.tabUserInfo = new System.Windows.Forms.TabPage();
+            this.chkUserCheevos = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblCheevos = new System.Windows.Forms.Label();
+            this.lblUserCheevos = new System.Windows.Forms.Label();
+            this.picUserCheevos = new System.Windows.Forms.PictureBox();
+            this.Ttip = new System.Windows.Forms.ToolTip(this.components);
+            this.lblOutput = new System.Windows.Forms.Label();
+            this.pnlOutput = new System.Windows.Forms.Panel();
+            this.tabAbout = new System.Windows.Forms.TabPage();
+            this.lblAbUserpage = new System.Windows.Forms.LinkLabel();
+            this.lblAbYear = new System.Windows.Forms.Label();
+            this.lblAbTitle = new System.Windows.Forms.Label();
+            this.lblAbUsername = new System.Windows.Forms.Label();
+            this.lblCheevoLoopUpdate = new System.Windows.Forms.Label();
+            this.btnUpdateConsoles = new RADB.FlatButtonA();
+            this.txtSearchGames = new RADB.FlatTextBoxA();
+            this.btnUpdateGameList = new RADB.FlatButtonA();
             this.pnlInfoScroll = new RADB.PanelNoScrollOnFocus();
             this.picInfoBoxArt = new System.Windows.Forms.PictureBox();
             this.gpbInfo = new System.Windows.Forms.GroupBox();
@@ -128,23 +132,26 @@
             this.aIcon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblInfoName = new System.Windows.Forms.Label();
-            this.pnlDownloadInfo = new System.Windows.Forms.Panel();
             this.btnUpdateInfo = new RADB.FlatButtonA();
-            this.lblUpdateInfo = new System.Windows.Forms.Label();
-            this.pgbInfo = new System.Windows.Forms.ProgressBar();
-            this.lblProgressInfo = new System.Windows.Forms.Label();
-            this.tabTemp = new System.Windows.Forms.TabPage();
-            this.chkUserCheevos = new System.Windows.Forms.CheckBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lblCheevos = new System.Windows.Forms.Label();
-            this.lblUserCheevos = new System.Windows.Forms.Label();
-            this.picUserCheevos = new System.Windows.Forms.PictureBox();
-            this.btnUserCheevos = new RADB.FlatButtonA();
-            this.Ttip = new System.Windows.Forms.ToolTip(this.components);
-            this.lblOutput = new System.Windows.Forms.Label();
-            this.pnlOutput = new System.Windows.Forms.Panel();
             this.txtUsernameCheevos = new RADB.FlatTextBoxA();
+            this.btnUserCheevos = new RADB.FlatButtonA();
+            this.tabTests = new System.Windows.Forms.TabPage();
+            this.lblConsoles = new System.Windows.Forms.Label();
+            this.btnDownloadBadges = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtURL = new System.Windows.Forms.TextBox();
+            this.lblUser = new System.Windows.Forms.Label();
+            this.txtUser = new System.Windows.Forms.TextBox();
+            this.lblDate2 = new System.Windows.Forms.Label();
+            this.lblID = new System.Windows.Forms.Label();
+            this.dtpDate2 = new System.Windows.Forms.DateTimePicker();
+            this.txtID = new System.Windows.Forms.TextBox();
+            this.lblCount = new System.Windows.Forms.Label();
+            this.lblOffset = new System.Windows.Forms.Label();
+            this.txtCount = new System.Windows.Forms.TextBox();
+            this.lblDate1 = new System.Windows.Forms.Label();
+            this.txtOffset = new System.Windows.Forms.TextBox();
+            this.dtpDate1 = new System.Windows.Forms.DateTimePicker();
             this.tabMain.SuspendLayout();
             this.tabConsoles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderConsole)).BeginInit();
@@ -156,6 +163,12 @@
             this.pnlDownloadGameList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGames)).BeginInit();
             this.tabGameInfo.SuspendLayout();
+            this.pnlDownloadInfo.SuspendLayout();
+            this.tabUserInfo.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picUserCheevos)).BeginInit();
+            this.pnlOutput.SuspendLayout();
+            this.tabAbout.SuspendLayout();
             this.pnlInfoScroll.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoBoxArt)).BeginInit();
             this.gpbInfo.SuspendLayout();
@@ -167,150 +180,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.picInfoTitle)).BeginInit();
             this.gpbInfoAchievements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAchievements)).BeginInit();
-            this.pnlDownloadInfo.SuspendLayout();
-            this.tabTemp.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picUserCheevos)).BeginInit();
-            this.pnlOutput.SuspendLayout();
+            this.tabTests.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // txtID
-            // 
-            this.txtID.Location = new System.Drawing.Point(36, 20);
-            this.txtID.Name = "txtID";
-            this.txtID.Size = new System.Drawing.Size(92, 20);
-            this.txtID.TabIndex = 2;
-            // 
-            // lblID
-            // 
-            this.lblID.AutoSize = true;
-            this.lblID.Location = new System.Drawing.Point(33, 4);
-            this.lblID.Name = "lblID";
-            this.lblID.Size = new System.Drawing.Size(18, 13);
-            this.lblID.TabIndex = 3;
-            this.lblID.Text = "ID";
-            // 
-            // txtURL
-            // 
-            this.txtURL.Location = new System.Drawing.Point(6, 185);
-            this.txtURL.Name = "txtURL";
-            this.txtURL.Size = new System.Drawing.Size(190, 20);
-            this.txtURL.TabIndex = 6;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 169);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "URL";
-            // 
-            // lblUser
-            // 
-            this.lblUser.AutoSize = true;
-            this.lblUser.Location = new System.Drawing.Point(131, 4);
-            this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(29, 13);
-            this.lblUser.TabIndex = 12;
-            this.lblUser.Text = "User";
-            // 
-            // txtUser
-            // 
-            this.txtUser.Location = new System.Drawing.Point(134, 20);
-            this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(92, 20);
-            this.txtUser.TabIndex = 11;
-            // 
-            // lblCount
-            // 
-            this.lblCount.AutoSize = true;
-            this.lblCount.Location = new System.Drawing.Point(232, 4);
-            this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(35, 13);
-            this.lblCount.TabIndex = 14;
-            this.lblCount.Text = "Count";
-            // 
-            // txtCount
-            // 
-            this.txtCount.Location = new System.Drawing.Point(235, 20);
-            this.txtCount.Name = "txtCount";
-            this.txtCount.Size = new System.Drawing.Size(92, 20);
-            this.txtCount.TabIndex = 13;
-            // 
-            // lblOffset
-            // 
-            this.lblOffset.AutoSize = true;
-            this.lblOffset.Location = new System.Drawing.Point(330, 4);
-            this.lblOffset.Name = "lblOffset";
-            this.lblOffset.Size = new System.Drawing.Size(35, 13);
-            this.lblOffset.TabIndex = 16;
-            this.lblOffset.Text = "Offset";
-            // 
-            // txtOffset
-            // 
-            this.txtOffset.Location = new System.Drawing.Point(333, 20);
-            this.txtOffset.Name = "txtOffset";
-            this.txtOffset.Size = new System.Drawing.Size(92, 20);
-            this.txtOffset.TabIndex = 15;
-            // 
-            // dtpDate1
-            // 
-            this.dtpDate1.CustomFormat = "dd/MM/yyyy";
-            this.dtpDate1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDate1.Location = new System.Drawing.Point(431, 20);
-            this.dtpDate1.MinDate = new System.DateTime(1950, 1, 1, 0, 0, 0, 0);
-            this.dtpDate1.Name = "dtpDate1";
-            this.dtpDate1.Size = new System.Drawing.Size(92, 20);
-            this.dtpDate1.TabIndex = 17;
-            this.dtpDate1.Value = new System.DateTime(1990, 1, 1, 0, 0, 0, 0);
-            // 
-            // lblDate1
-            // 
-            this.lblDate1.AutoSize = true;
-            this.lblDate1.Location = new System.Drawing.Point(428, 4);
-            this.lblDate1.Name = "lblDate1";
-            this.lblDate1.Size = new System.Drawing.Size(55, 13);
-            this.lblDate1.TabIndex = 18;
-            this.lblDate1.Text = "Date Start";
-            // 
-            // lblDate2
-            // 
-            this.lblDate2.AutoSize = true;
-            this.lblDate2.Location = new System.Drawing.Point(526, 4);
-            this.lblDate2.Name = "lblDate2";
-            this.lblDate2.Size = new System.Drawing.Size(52, 13);
-            this.lblDate2.TabIndex = 20;
-            this.lblDate2.Text = "Date End";
-            // 
-            // dtpDate2
-            // 
-            this.dtpDate2.CustomFormat = "dd/MM/yyyy";
-            this.dtpDate2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDate2.Location = new System.Drawing.Point(529, 20);
-            this.dtpDate2.MinDate = new System.DateTime(1950, 1, 1, 0, 0, 0, 0);
-            this.dtpDate2.Name = "dtpDate2";
-            this.dtpDate2.Size = new System.Drawing.Size(92, 20);
-            this.dtpDate2.TabIndex = 19;
-            this.dtpDate2.Value = new System.DateTime(1990, 1, 1, 0, 0, 0, 0);
-            // 
-            // btnDownloadBadges
-            // 
-            this.btnDownloadBadges.Location = new System.Drawing.Point(36, 46);
-            this.btnDownloadBadges.Name = "btnDownloadBadges";
-            this.btnDownloadBadges.Size = new System.Drawing.Size(190, 23);
-            this.btnDownloadBadges.TabIndex = 21;
-            this.btnDownloadBadges.Text = "Download Badges";
-            this.btnDownloadBadges.UseVisualStyleBackColor = true;
-            // 
-            // lblConsoles
-            // 
-            this.lblConsoles.AutoSize = true;
-            this.lblConsoles.Location = new System.Drawing.Point(232, 30);
-            this.lblConsoles.Name = "lblConsoles";
-            this.lblConsoles.Size = new System.Drawing.Size(50, 13);
-            this.lblConsoles.TabIndex = 26;
-            this.lblConsoles.Text = "Consoles";
             // 
             // tabMain
             // 
@@ -320,7 +191,9 @@
             this.tabMain.Controls.Add(this.tabConsoles);
             this.tabMain.Controls.Add(this.tabGames);
             this.tabMain.Controls.Add(this.tabGameInfo);
-            this.tabMain.Controls.Add(this.tabTemp);
+            this.tabMain.Controls.Add(this.tabUserInfo);
+            this.tabMain.Controls.Add(this.tabTests);
+            this.tabMain.Controls.Add(this.tabAbout);
             this.tabMain.Location = new System.Drawing.Point(12, 12);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
@@ -379,20 +252,6 @@
             this.pnlDownloadConsoles.Name = "pnlDownloadConsoles";
             this.pnlDownloadConsoles.Size = new System.Drawing.Size(886, 31);
             this.pnlDownloadConsoles.TabIndex = 0;
-            // 
-            // btnUpdateConsoles
-            // 
-            this.btnUpdateConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnUpdateConsoles.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.btnUpdateConsoles.FlatAppearance.BorderSize = 0;
-            this.btnUpdateConsoles.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.btnUpdateConsoles.Location = new System.Drawing.Point(5, 3);
-            this.btnUpdateConsoles.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
-            this.btnUpdateConsoles.Name = "btnUpdateConsoles";
-            this.btnUpdateConsoles.Size = new System.Drawing.Size(144, 23);
-            this.btnUpdateConsoles.TabIndex = 36;
-            this.btnUpdateConsoles.Text = "Update Consoles";
-            this.btnUpdateConsoles.Click += new System.EventHandler(this.btnUpdateConsoles_Click);
             // 
             // lblUpdateConsoles
             // 
@@ -565,15 +424,6 @@
             this.pnlGamesConsoleName.Size = new System.Drawing.Size(880, 42);
             this.pnlGamesConsoleName.TabIndex = 6;
             // 
-            // txtSearchGames
-            // 
-            this.txtSearchGames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearchGames.LabelText = "Search Game";
-            this.txtSearchGames.Location = new System.Drawing.Point(683, 3);
-            this.txtSearchGames.Name = "txtSearchGames";
-            this.txtSearchGames.Size = new System.Drawing.Size(192, 34);
-            this.txtSearchGames.TabIndex = 2;
-            // 
             // lblConsoleGamesTotal
             // 
             this.lblConsoleGamesTotal.AutoSize = true;
@@ -609,20 +459,6 @@
             this.pnlDownloadGameList.Name = "pnlDownloadGameList";
             this.pnlDownloadGameList.Size = new System.Drawing.Size(886, 31);
             this.pnlDownloadGameList.TabIndex = 0;
-            // 
-            // btnUpdateGameList
-            // 
-            this.btnUpdateGameList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnUpdateGameList.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.btnUpdateGameList.FlatAppearance.BorderSize = 0;
-            this.btnUpdateGameList.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.btnUpdateGameList.Location = new System.Drawing.Point(5, 3);
-            this.btnUpdateGameList.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
-            this.btnUpdateGameList.Name = "btnUpdateGameList";
-            this.btnUpdateGameList.Size = new System.Drawing.Size(144, 23);
-            this.btnUpdateGameList.TabIndex = 35;
-            this.btnUpdateGameList.Text = "Update Games";
-            this.btnUpdateGameList.Click += new System.EventHandler(this.btnUpdateGameList_Click);
             // 
             // lblUpdateGameList
             // 
@@ -790,6 +626,251 @@
             this.tabGameInfo.TabIndex = 1;
             this.tabGameInfo.Text = "GameInfo";
             this.tabGameInfo.UseVisualStyleBackColor = true;
+            // 
+            // lblInfoName
+            // 
+            this.lblInfoName.AutoSize = true;
+            this.lblInfoName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInfoName.Location = new System.Drawing.Point(6, 34);
+            this.lblInfoName.Name = "lblInfoName";
+            this.lblInfoName.Size = new System.Drawing.Size(61, 24);
+            this.lblInfoName.TabIndex = 3;
+            this.lblInfoName.Text = "Name";
+            // 
+            // pnlDownloadInfo
+            // 
+            this.pnlDownloadInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlDownloadInfo.Controls.Add(this.btnUpdateInfo);
+            this.pnlDownloadInfo.Controls.Add(this.lblUpdateInfo);
+            this.pnlDownloadInfo.Controls.Add(this.pgbInfo);
+            this.pnlDownloadInfo.Controls.Add(this.lblProgressInfo);
+            this.pnlDownloadInfo.Location = new System.Drawing.Point(0, 0);
+            this.pnlDownloadInfo.Name = "pnlDownloadInfo";
+            this.pnlDownloadInfo.Size = new System.Drawing.Size(886, 31);
+            this.pnlDownloadInfo.TabIndex = 7;
+            // 
+            // lblUpdateInfo
+            // 
+            this.lblUpdateInfo.Location = new System.Drawing.Point(155, 8);
+            this.lblUpdateInfo.Name = "lblUpdateInfo";
+            this.lblUpdateInfo.Size = new System.Drawing.Size(110, 13);
+            this.lblUpdateInfo.TabIndex = 34;
+            this.lblUpdateInfo.Text = "00/00/0000 00:00:00";
+            this.lblUpdateInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pgbInfo
+            // 
+            this.pgbInfo.Location = new System.Drawing.Point(271, 3);
+            this.pgbInfo.MarqueeAnimationSpeed = 0;
+            this.pgbInfo.Name = "pgbInfo";
+            this.pgbInfo.Size = new System.Drawing.Size(144, 21);
+            this.pgbInfo.Step = 1;
+            this.pgbInfo.TabIndex = 31;
+            // 
+            // lblProgressInfo
+            // 
+            this.lblProgressInfo.AutoSize = true;
+            this.lblProgressInfo.BackColor = System.Drawing.Color.Snow;
+            this.lblProgressInfo.Location = new System.Drawing.Point(421, 8);
+            this.lblProgressInfo.Name = "lblProgressInfo";
+            this.lblProgressInfo.Size = new System.Drawing.Size(58, 13);
+            this.lblProgressInfo.TabIndex = 33;
+            this.lblProgressInfo.Text = "lblProgress";
+            // 
+            // tabUserInfo
+            // 
+            this.tabUserInfo.Controls.Add(this.lblCheevoLoopUpdate);
+            this.tabUserInfo.Controls.Add(this.txtUsernameCheevos);
+            this.tabUserInfo.Controls.Add(this.chkUserCheevos);
+            this.tabUserInfo.Controls.Add(this.panel1);
+            this.tabUserInfo.Controls.Add(this.btnUserCheevos);
+            this.tabUserInfo.Location = new System.Drawing.Point(4, 22);
+            this.tabUserInfo.Name = "tabUserInfo";
+            this.tabUserInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUserInfo.Size = new System.Drawing.Size(892, 526);
+            this.tabUserInfo.TabIndex = 3;
+            this.tabUserInfo.Text = "UserInfo";
+            this.tabUserInfo.UseVisualStyleBackColor = true;
+            // 
+            // chkUserCheevos
+            // 
+            this.chkUserCheevos.AutoSize = true;
+            this.chkUserCheevos.Location = new System.Drawing.Point(571, 227);
+            this.chkUserCheevos.Name = "chkUserCheevos";
+            this.chkUserCheevos.Size = new System.Drawing.Size(50, 17);
+            this.chkUserCheevos.TabIndex = 29;
+            this.chkUserCheevos.Text = "Loop";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.lblCheevos);
+            this.panel1.Controls.Add(this.lblUserCheevos);
+            this.panel1.Controls.Add(this.picUserCheevos);
+            this.panel1.Location = new System.Drawing.Point(400, 105);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(221, 72);
+            this.panel1.TabIndex = 27;
+            // 
+            // lblCheevos
+            // 
+            this.lblCheevos.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCheevos.ForeColor = System.Drawing.Color.White;
+            this.lblCheevos.Location = new System.Drawing.Point(60, 45);
+            this.lblCheevos.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
+            this.lblCheevos.Name = "lblCheevos";
+            this.lblCheevos.Size = new System.Drawing.Size(156, 20);
+            this.lblCheevos.TabIndex = 2;
+            this.lblCheevos.Text = "Achievements";
+            this.lblCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblUserCheevos
+            // 
+            this.lblUserCheevos.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserCheevos.ForeColor = System.Drawing.Color.White;
+            this.lblUserCheevos.Location = new System.Drawing.Point(60, 6);
+            this.lblUserCheevos.Name = "lblUserCheevos";
+            this.lblUserCheevos.Size = new System.Drawing.Size(156, 48);
+            this.lblUserCheevos.TabIndex = 1;
+            this.lblUserCheevos.Text = "11/24";
+            this.lblUserCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // picUserCheevos
+            // 
+            this.picUserCheevos.Location = new System.Drawing.Point(11, 11);
+            this.picUserCheevos.Margin = new System.Windows.Forms.Padding(6);
+            this.picUserCheevos.Name = "picUserCheevos";
+            this.picUserCheevos.Size = new System.Drawing.Size(48, 48);
+            this.picUserCheevos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picUserCheevos.TabIndex = 0;
+            this.picUserCheevos.TabStop = false;
+            // 
+            // lblOutput
+            // 
+            this.lblOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblOutput.AutoSize = true;
+            this.lblOutput.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOutput.Location = new System.Drawing.Point(0, 0);
+            this.lblOutput.Name = "lblOutput";
+            this.lblOutput.Size = new System.Drawing.Size(16, 15);
+            this.lblOutput.TabIndex = 29;
+            this.lblOutput.Text = "   ";
+            // 
+            // pnlOutput
+            // 
+            this.pnlOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlOutput.AutoScroll = true;
+            this.pnlOutput.BackColor = System.Drawing.Color.White;
+            this.pnlOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlOutput.Controls.Add(this.lblOutput);
+            this.pnlOutput.Location = new System.Drawing.Point(12, 570);
+            this.pnlOutput.Name = "pnlOutput";
+            this.pnlOutput.Size = new System.Drawing.Size(898, 66);
+            this.pnlOutput.TabIndex = 30;
+            // 
+            // tabAbout
+            // 
+            this.tabAbout.Controls.Add(this.lblAbUsername);
+            this.tabAbout.Controls.Add(this.lblAbTitle);
+            this.tabAbout.Controls.Add(this.lblAbYear);
+            this.tabAbout.Controls.Add(this.lblAbUserpage);
+            this.tabAbout.Location = new System.Drawing.Point(4, 22);
+            this.tabAbout.Name = "tabAbout";
+            this.tabAbout.Size = new System.Drawing.Size(892, 526);
+            this.tabAbout.TabIndex = 4;
+            this.tabAbout.Text = "About";
+            this.tabAbout.UseVisualStyleBackColor = true;
+            // 
+            // lblAbUserpage
+            // 
+            this.lblAbUserpage.AutoSize = true;
+            this.lblAbUserpage.Location = new System.Drawing.Point(336, 176);
+            this.lblAbUserpage.Name = "lblAbUserpage";
+            this.lblAbUserpage.Size = new System.Drawing.Size(213, 13);
+            this.lblAbUserpage.TabIndex = 0;
+            this.lblAbUserpage.TabStop = true;
+            this.lblAbUserpage.Text = "https://retroachievements.org/user/FBiDev";
+            this.lblAbUserpage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblAbUserpage_LinkClicked);
+            // 
+            // lblAbYear
+            // 
+            this.lblAbYear.AutoSize = true;
+            this.lblAbYear.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAbYear.Location = new System.Drawing.Point(413, 104);
+            this.lblAbYear.Name = "lblAbYear";
+            this.lblAbYear.Size = new System.Drawing.Size(46, 21);
+            this.lblAbYear.TabIndex = 1;
+            this.lblAbYear.Text = "2022";
+            // 
+            // lblAbTitle
+            // 
+            this.lblAbTitle.AutoSize = true;
+            this.lblAbTitle.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAbTitle.Location = new System.Drawing.Point(353, 62);
+            this.lblAbTitle.Name = "lblAbTitle";
+            this.lblAbTitle.Size = new System.Drawing.Size(173, 30);
+            this.lblAbTitle.TabIndex = 2;
+            this.lblAbTitle.Text = "RA Database 0.1";
+            // 
+            // lblAbUsername
+            // 
+            this.lblAbUsername.AutoSize = true;
+            this.lblAbUsername.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAbUsername.Location = new System.Drawing.Point(374, 138);
+            this.lblAbUsername.Name = "lblAbUsername";
+            this.lblAbUsername.Size = new System.Drawing.Size(122, 21);
+            this.lblAbUsername.TabIndex = 3;
+            this.lblAbUsername.Text = "Made by FBiDev";
+            // 
+            // lblCheevoLoopUpdate
+            // 
+            this.lblCheevoLoopUpdate.BackColor = System.Drawing.Color.Transparent;
+            this.lblCheevoLoopUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblCheevoLoopUpdate.Location = new System.Drawing.Point(552, 228);
+            this.lblCheevoLoopUpdate.Name = "lblCheevoLoopUpdate";
+            this.lblCheevoLoopUpdate.Size = new System.Drawing.Size(13, 13);
+            this.lblCheevoLoopUpdate.TabIndex = 31;
+            // 
+            // btnUpdateConsoles
+            // 
+            this.btnUpdateConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnUpdateConsoles.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.btnUpdateConsoles.FlatAppearance.BorderSize = 0;
+            this.btnUpdateConsoles.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.btnUpdateConsoles.Location = new System.Drawing.Point(5, 3);
+            this.btnUpdateConsoles.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            this.btnUpdateConsoles.Name = "btnUpdateConsoles";
+            this.btnUpdateConsoles.Size = new System.Drawing.Size(144, 23);
+            this.btnUpdateConsoles.TabIndex = 36;
+            this.btnUpdateConsoles.Text = "Update Consoles";
+            this.btnUpdateConsoles.Click += new System.EventHandler(this.btnUpdateConsoles_Click);
+            // 
+            // txtSearchGames
+            // 
+            this.txtSearchGames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearchGames.LabelText = "Search Game";
+            this.txtSearchGames.Location = new System.Drawing.Point(683, 3);
+            this.txtSearchGames.Name = "txtSearchGames";
+            this.txtSearchGames.Size = new System.Drawing.Size(192, 34);
+            this.txtSearchGames.TabIndex = 2;
+            // 
+            // btnUpdateGameList
+            // 
+            this.btnUpdateGameList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnUpdateGameList.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.btnUpdateGameList.FlatAppearance.BorderSize = 0;
+            this.btnUpdateGameList.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.btnUpdateGameList.Location = new System.Drawing.Point(5, 3);
+            this.btnUpdateGameList.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            this.btnUpdateGameList.Name = "btnUpdateGameList";
+            this.btnUpdateGameList.Size = new System.Drawing.Size(144, 23);
+            this.btnUpdateGameList.TabIndex = 35;
+            this.btnUpdateGameList.Text = "Update Games";
+            this.btnUpdateGameList.Click += new System.EventHandler(this.btnUpdateGameList_Click);
             // 
             // pnlInfoScroll
             // 
@@ -1081,29 +1162,6 @@
             this.aPoints.ReadOnly = true;
             this.aPoints.Width = 64;
             // 
-            // lblInfoName
-            // 
-            this.lblInfoName.AutoSize = true;
-            this.lblInfoName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInfoName.Location = new System.Drawing.Point(6, 34);
-            this.lblInfoName.Name = "lblInfoName";
-            this.lblInfoName.Size = new System.Drawing.Size(61, 24);
-            this.lblInfoName.TabIndex = 3;
-            this.lblInfoName.Text = "Name";
-            // 
-            // pnlDownloadInfo
-            // 
-            this.pnlDownloadInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlDownloadInfo.Controls.Add(this.btnUpdateInfo);
-            this.pnlDownloadInfo.Controls.Add(this.lblUpdateInfo);
-            this.pnlDownloadInfo.Controls.Add(this.pgbInfo);
-            this.pnlDownloadInfo.Controls.Add(this.lblProgressInfo);
-            this.pnlDownloadInfo.Location = new System.Drawing.Point(0, 0);
-            this.pnlDownloadInfo.Name = "pnlDownloadInfo";
-            this.pnlDownloadInfo.Size = new System.Drawing.Size(886, 31);
-            this.pnlDownloadInfo.TabIndex = 7;
-            // 
             // btnUpdateInfo
             // 
             this.btnUpdateInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
@@ -1118,118 +1176,13 @@
             this.btnUpdateInfo.Text = "Update Info";
             this.btnUpdateInfo.Click += new System.EventHandler(this.btnUpdateInfo_Click);
             // 
-            // lblUpdateInfo
+            // txtUsernameCheevos
             // 
-            this.lblUpdateInfo.Location = new System.Drawing.Point(155, 8);
-            this.lblUpdateInfo.Name = "lblUpdateInfo";
-            this.lblUpdateInfo.Size = new System.Drawing.Size(110, 13);
-            this.lblUpdateInfo.TabIndex = 34;
-            this.lblUpdateInfo.Text = "00/00/0000 00:00:00";
-            this.lblUpdateInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pgbInfo
-            // 
-            this.pgbInfo.Location = new System.Drawing.Point(271, 3);
-            this.pgbInfo.MarqueeAnimationSpeed = 0;
-            this.pgbInfo.Name = "pgbInfo";
-            this.pgbInfo.Size = new System.Drawing.Size(144, 21);
-            this.pgbInfo.Step = 1;
-            this.pgbInfo.TabIndex = 31;
-            // 
-            // lblProgressInfo
-            // 
-            this.lblProgressInfo.AutoSize = true;
-            this.lblProgressInfo.BackColor = System.Drawing.Color.Snow;
-            this.lblProgressInfo.Location = new System.Drawing.Point(421, 8);
-            this.lblProgressInfo.Name = "lblProgressInfo";
-            this.lblProgressInfo.Size = new System.Drawing.Size(58, 13);
-            this.lblProgressInfo.TabIndex = 33;
-            this.lblProgressInfo.Text = "lblProgress";
-            // 
-            // tabTemp
-            // 
-            this.tabTemp.Controls.Add(this.txtUsernameCheevos);
-            this.tabTemp.Controls.Add(this.chkUserCheevos);
-            this.tabTemp.Controls.Add(this.panel1);
-            this.tabTemp.Controls.Add(this.lblConsoles);
-            this.tabTemp.Controls.Add(this.btnDownloadBadges);
-            this.tabTemp.Controls.Add(this.label2);
-            this.tabTemp.Controls.Add(this.txtURL);
-            this.tabTemp.Controls.Add(this.lblUser);
-            this.tabTemp.Controls.Add(this.txtUser);
-            this.tabTemp.Controls.Add(this.lblDate2);
-            this.tabTemp.Controls.Add(this.lblID);
-            this.tabTemp.Controls.Add(this.dtpDate2);
-            this.tabTemp.Controls.Add(this.txtID);
-            this.tabTemp.Controls.Add(this.lblCount);
-            this.tabTemp.Controls.Add(this.lblOffset);
-            this.tabTemp.Controls.Add(this.txtCount);
-            this.tabTemp.Controls.Add(this.lblDate1);
-            this.tabTemp.Controls.Add(this.txtOffset);
-            this.tabTemp.Controls.Add(this.dtpDate1);
-            this.tabTemp.Controls.Add(this.btnUserCheevos);
-            this.tabTemp.Location = new System.Drawing.Point(4, 22);
-            this.tabTemp.Name = "tabTemp";
-            this.tabTemp.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTemp.Size = new System.Drawing.Size(892, 526);
-            this.tabTemp.TabIndex = 3;
-            this.tabTemp.Text = "Temp";
-            this.tabTemp.UseVisualStyleBackColor = true;
-            // 
-            // chkUserCheevos
-            // 
-            this.chkUserCheevos.AutoSize = true;
-            this.chkUserCheevos.Location = new System.Drawing.Point(571, 187);
-            this.chkUserCheevos.Name = "chkUserCheevos";
-            this.chkUserCheevos.Size = new System.Drawing.Size(50, 17);
-            this.chkUserCheevos.TabIndex = 29;
-            this.chkUserCheevos.Text = "Loop";
-            this.chkUserCheevos.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Black;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.lblCheevos);
-            this.panel1.Controls.Add(this.lblUserCheevos);
-            this.panel1.Controls.Add(this.picUserCheevos);
-            this.panel1.Location = new System.Drawing.Point(400, 105);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(221, 72);
-            this.panel1.TabIndex = 27;
-            // 
-            // lblCheevos
-            // 
-            this.lblCheevos.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCheevos.ForeColor = System.Drawing.Color.White;
-            this.lblCheevos.Location = new System.Drawing.Point(60, 45);
-            this.lblCheevos.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
-            this.lblCheevos.Name = "lblCheevos";
-            this.lblCheevos.Size = new System.Drawing.Size(156, 20);
-            this.lblCheevos.TabIndex = 2;
-            this.lblCheevos.Text = "Achievements";
-            this.lblCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblUserCheevos
-            // 
-            this.lblUserCheevos.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserCheevos.ForeColor = System.Drawing.Color.White;
-            this.lblUserCheevos.Location = new System.Drawing.Point(60, 6);
-            this.lblUserCheevos.Name = "lblUserCheevos";
-            this.lblUserCheevos.Size = new System.Drawing.Size(156, 48);
-            this.lblUserCheevos.TabIndex = 1;
-            this.lblUserCheevos.Text = "11/24";
-            this.lblUserCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // picUserCheevos
-            // 
-            this.picUserCheevos.Location = new System.Drawing.Point(11, 11);
-            this.picUserCheevos.Margin = new System.Windows.Forms.Padding(6);
-            this.picUserCheevos.Name = "picUserCheevos";
-            this.picUserCheevos.Size = new System.Drawing.Size(48, 48);
-            this.picUserCheevos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picUserCheevos.TabIndex = 0;
-            this.picUserCheevos.TabStop = false;
+            this.txtUsernameCheevos.LabelText = "Username";
+            this.txtUsernameCheevos.Location = new System.Drawing.Point(400, 183);
+            this.txtUsernameCheevos.Name = "txtUsernameCheevos";
+            this.txtUsernameCheevos.Size = new System.Drawing.Size(221, 34);
+            this.txtUsernameCheevos.TabIndex = 30;
             // 
             // btnUserCheevos
             // 
@@ -1237,45 +1190,175 @@
             this.btnUserCheevos.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.btnUserCheevos.FlatAppearance.BorderSize = 0;
             this.btnUserCheevos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.btnUserCheevos.Location = new System.Drawing.Point(400, 183);
+            this.btnUserCheevos.Location = new System.Drawing.Point(400, 223);
             this.btnUserCheevos.Name = "btnUserCheevos";
-            this.btnUserCheevos.Size = new System.Drawing.Size(165, 23);
+            this.btnUserCheevos.Size = new System.Drawing.Size(146, 23);
             this.btnUserCheevos.TabIndex = 28;
-            this.btnUserCheevos.Text = "UserCheevos";
+            this.btnUserCheevos.Text = "Get User Achievements";
             this.btnUserCheevos.Click += new System.EventHandler(this.btnUserCheevos_Click);
             // 
-            // lblOutput
+            // tabTests
             // 
-            this.lblOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblOutput.AutoSize = true;
-            this.lblOutput.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOutput.Location = new System.Drawing.Point(0, 0);
-            this.lblOutput.Name = "lblOutput";
-            this.lblOutput.Size = new System.Drawing.Size(16, 15);
-            this.lblOutput.TabIndex = 29;
-            this.lblOutput.Text = "   ";
+            this.tabTests.Controls.Add(this.lblConsoles);
+            this.tabTests.Controls.Add(this.btnDownloadBadges);
+            this.tabTests.Controls.Add(this.label2);
+            this.tabTests.Controls.Add(this.txtURL);
+            this.tabTests.Controls.Add(this.lblUser);
+            this.tabTests.Controls.Add(this.txtUser);
+            this.tabTests.Controls.Add(this.lblDate2);
+            this.tabTests.Controls.Add(this.lblID);
+            this.tabTests.Controls.Add(this.dtpDate2);
+            this.tabTests.Controls.Add(this.txtID);
+            this.tabTests.Controls.Add(this.lblCount);
+            this.tabTests.Controls.Add(this.lblOffset);
+            this.tabTests.Controls.Add(this.txtCount);
+            this.tabTests.Controls.Add(this.lblDate1);
+            this.tabTests.Controls.Add(this.txtOffset);
+            this.tabTests.Controls.Add(this.dtpDate1);
+            this.tabTests.Location = new System.Drawing.Point(4, 22);
+            this.tabTests.Name = "tabTests";
+            this.tabTests.Size = new System.Drawing.Size(892, 526);
+            this.tabTests.TabIndex = 5;
+            this.tabTests.Text = "Tests";
+            this.tabTests.UseVisualStyleBackColor = true;
             // 
-            // pnlOutput
+            // lblConsoles
             // 
-            this.pnlOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlOutput.AutoScroll = true;
-            this.pnlOutput.BackColor = System.Drawing.Color.White;
-            this.pnlOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlOutput.Controls.Add(this.lblOutput);
-            this.pnlOutput.Location = new System.Drawing.Point(12, 570);
-            this.pnlOutput.Name = "pnlOutput";
-            this.pnlOutput.Size = new System.Drawing.Size(898, 66);
-            this.pnlOutput.TabIndex = 30;
+            this.lblConsoles.AutoSize = true;
+            this.lblConsoles.Location = new System.Drawing.Point(229, 29);
+            this.lblConsoles.Name = "lblConsoles";
+            this.lblConsoles.Size = new System.Drawing.Size(50, 13);
+            this.lblConsoles.TabIndex = 42;
+            this.lblConsoles.Text = "Consoles";
             // 
-            // txtUsernameCheevos
+            // btnDownloadBadges
             // 
-            this.txtUsernameCheevos.LabelText = "Username";
-            this.txtUsernameCheevos.Location = new System.Drawing.Point(400, 212);
-            this.txtUsernameCheevos.Name = "txtUsernameCheevos";
-            this.txtUsernameCheevos.Size = new System.Drawing.Size(221, 34);
-            this.txtUsernameCheevos.TabIndex = 30;
+            this.btnDownloadBadges.Location = new System.Drawing.Point(33, 45);
+            this.btnDownloadBadges.Name = "btnDownloadBadges";
+            this.btnDownloadBadges.Size = new System.Drawing.Size(190, 23);
+            this.btnDownloadBadges.TabIndex = 41;
+            this.btnDownloadBadges.Text = "Download Badges";
+            this.btnDownloadBadges.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 168);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.TabIndex = 30;
+            this.label2.Text = "URL";
+            // 
+            // txtURL
+            // 
+            this.txtURL.Location = new System.Drawing.Point(3, 184);
+            this.txtURL.Name = "txtURL";
+            this.txtURL.Size = new System.Drawing.Size(190, 20);
+            this.txtURL.TabIndex = 29;
+            // 
+            // lblUser
+            // 
+            this.lblUser.AutoSize = true;
+            this.lblUser.Location = new System.Drawing.Point(128, 3);
+            this.lblUser.Name = "lblUser";
+            this.lblUser.Size = new System.Drawing.Size(29, 13);
+            this.lblUser.TabIndex = 32;
+            this.lblUser.Text = "User";
+            // 
+            // txtUser
+            // 
+            this.txtUser.Location = new System.Drawing.Point(131, 19);
+            this.txtUser.Name = "txtUser";
+            this.txtUser.Size = new System.Drawing.Size(92, 20);
+            this.txtUser.TabIndex = 31;
+            // 
+            // lblDate2
+            // 
+            this.lblDate2.AutoSize = true;
+            this.lblDate2.Location = new System.Drawing.Point(523, 3);
+            this.lblDate2.Name = "lblDate2";
+            this.lblDate2.Size = new System.Drawing.Size(52, 13);
+            this.lblDate2.TabIndex = 40;
+            this.lblDate2.Text = "Date End";
+            // 
+            // lblID
+            // 
+            this.lblID.AutoSize = true;
+            this.lblID.Location = new System.Drawing.Point(30, 3);
+            this.lblID.Name = "lblID";
+            this.lblID.Size = new System.Drawing.Size(18, 13);
+            this.lblID.TabIndex = 28;
+            this.lblID.Text = "ID";
+            // 
+            // dtpDate2
+            // 
+            this.dtpDate2.CustomFormat = "dd/MM/yyyy";
+            this.dtpDate2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDate2.Location = new System.Drawing.Point(526, 19);
+            this.dtpDate2.MinDate = new System.DateTime(1950, 1, 1, 0, 0, 0, 0);
+            this.dtpDate2.Name = "dtpDate2";
+            this.dtpDate2.Size = new System.Drawing.Size(92, 20);
+            this.dtpDate2.TabIndex = 39;
+            this.dtpDate2.Value = new System.DateTime(1990, 1, 1, 0, 0, 0, 0);
+            // 
+            // txtID
+            // 
+            this.txtID.Location = new System.Drawing.Point(33, 19);
+            this.txtID.Name = "txtID";
+            this.txtID.Size = new System.Drawing.Size(92, 20);
+            this.txtID.TabIndex = 27;
+            // 
+            // lblCount
+            // 
+            this.lblCount.AutoSize = true;
+            this.lblCount.Location = new System.Drawing.Point(229, 3);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new System.Drawing.Size(35, 13);
+            this.lblCount.TabIndex = 34;
+            this.lblCount.Text = "Count";
+            // 
+            // lblOffset
+            // 
+            this.lblOffset.AutoSize = true;
+            this.lblOffset.Location = new System.Drawing.Point(327, 3);
+            this.lblOffset.Name = "lblOffset";
+            this.lblOffset.Size = new System.Drawing.Size(35, 13);
+            this.lblOffset.TabIndex = 36;
+            this.lblOffset.Text = "Offset";
+            // 
+            // txtCount
+            // 
+            this.txtCount.Location = new System.Drawing.Point(232, 19);
+            this.txtCount.Name = "txtCount";
+            this.txtCount.Size = new System.Drawing.Size(92, 20);
+            this.txtCount.TabIndex = 33;
+            // 
+            // lblDate1
+            // 
+            this.lblDate1.AutoSize = true;
+            this.lblDate1.Location = new System.Drawing.Point(425, 3);
+            this.lblDate1.Name = "lblDate1";
+            this.lblDate1.Size = new System.Drawing.Size(55, 13);
+            this.lblDate1.TabIndex = 38;
+            this.lblDate1.Text = "Date Start";
+            // 
+            // txtOffset
+            // 
+            this.txtOffset.Location = new System.Drawing.Point(330, 19);
+            this.txtOffset.Name = "txtOffset";
+            this.txtOffset.Size = new System.Drawing.Size(92, 20);
+            this.txtOffset.TabIndex = 35;
+            // 
+            // dtpDate1
+            // 
+            this.dtpDate1.CustomFormat = "dd/MM/yyyy";
+            this.dtpDate1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDate1.Location = new System.Drawing.Point(428, 19);
+            this.dtpDate1.MinDate = new System.DateTime(1950, 1, 1, 0, 0, 0, 0);
+            this.dtpDate1.Name = "dtpDate1";
+            this.dtpDate1.Size = new System.Drawing.Size(92, 20);
+            this.dtpDate1.TabIndex = 37;
+            this.dtpDate1.Value = new System.DateTime(1990, 1, 1, 0, 0, 0, 0);
             // 
             // Main
             // 
@@ -1303,6 +1386,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvGames)).EndInit();
             this.tabGameInfo.ResumeLayout(false);
             this.tabGameInfo.PerformLayout();
+            this.pnlDownloadInfo.ResumeLayout(false);
+            this.pnlDownloadInfo.PerformLayout();
+            this.tabUserInfo.ResumeLayout(false);
+            this.tabUserInfo.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picUserCheevos)).EndInit();
+            this.pnlOutput.ResumeLayout(false);
+            this.pnlOutput.PerformLayout();
+            this.tabAbout.ResumeLayout(false);
+            this.tabAbout.PerformLayout();
             this.pnlInfoScroll.ResumeLayout(false);
             this.pnlInfoScroll.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoBoxArt)).EndInit();
@@ -1317,36 +1410,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.picInfoTitle)).EndInit();
             this.gpbInfoAchievements.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAchievements)).EndInit();
-            this.pnlDownloadInfo.ResumeLayout(false);
-            this.pnlDownloadInfo.PerformLayout();
-            this.tabTemp.ResumeLayout(false);
-            this.tabTemp.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picUserCheevos)).EndInit();
-            this.pnlOutput.ResumeLayout(false);
-            this.pnlOutput.PerformLayout();
+            this.tabTests.ResumeLayout(false);
+            this.tabTests.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtID;
-        private System.Windows.Forms.Label lblID;
-        private System.Windows.Forms.TextBox txtURL;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label lblUser;
-        private System.Windows.Forms.TextBox txtUser;
-        private System.Windows.Forms.Label lblCount;
-        private System.Windows.Forms.TextBox txtCount;
-        private System.Windows.Forms.Label lblOffset;
-        private System.Windows.Forms.TextBox txtOffset;
-        private System.Windows.Forms.DateTimePicker dtpDate1;
-        private System.Windows.Forms.Label lblDate1;
-        private System.Windows.Forms.Label lblDate2;
-        private System.Windows.Forms.DateTimePicker dtpDate2;
-        private System.Windows.Forms.Button btnDownloadBadges;
-        private System.Windows.Forms.Label lblConsoles;
         private System.Windows.Forms.TabControl tabMain;
         private System.Windows.Forms.TabPage tabConsoles;
         private System.Windows.Forms.TabPage tabGameInfo;
@@ -1360,7 +1431,7 @@
         private System.Windows.Forms.ProgressBar pgbGameList;
         private System.Windows.Forms.Label lblUpdateGameList;
         private System.Windows.Forms.Label lblProgressGameList;
-        private System.Windows.Forms.TabPage tabTemp;
+        private System.Windows.Forms.TabPage tabUserInfo;
         private System.Windows.Forms.Label lblInfoName;
         private System.Windows.Forms.PictureBox picInfoIcon;
         private System.Windows.Forms.GroupBox gpbInfo;
@@ -1423,6 +1494,29 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn aDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn aPoints;
         private FlatTextBoxA txtUsernameCheevos;
+        private System.Windows.Forms.TabPage tabAbout;
+        private System.Windows.Forms.Label lblAbUsername;
+        private System.Windows.Forms.Label lblAbTitle;
+        private System.Windows.Forms.Label lblAbYear;
+        private System.Windows.Forms.LinkLabel lblAbUserpage;
+        private System.Windows.Forms.Label lblCheevoLoopUpdate;
+        private System.Windows.Forms.TabPage tabTests;
+        private System.Windows.Forms.Label lblConsoles;
+        private System.Windows.Forms.Button btnDownloadBadges;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtURL;
+        private System.Windows.Forms.Label lblUser;
+        private System.Windows.Forms.TextBox txtUser;
+        private System.Windows.Forms.Label lblDate2;
+        private System.Windows.Forms.Label lblID;
+        private System.Windows.Forms.DateTimePicker dtpDate2;
+        private System.Windows.Forms.TextBox txtID;
+        private System.Windows.Forms.Label lblCount;
+        private System.Windows.Forms.Label lblOffset;
+        private System.Windows.Forms.TextBox txtCount;
+        private System.Windows.Forms.Label lblDate1;
+        private System.Windows.Forms.TextBox txtOffset;
+        private System.Windows.Forms.DateTimePicker dtpDate1;
     }
 }
 

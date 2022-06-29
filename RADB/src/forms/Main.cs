@@ -661,22 +661,34 @@ namespace RADB
             dgvAchievements.Height = (height * dgvAchievements.RowCount) + 30;
         }
 
+        private bool UserCheevosIsRunning = false;
         private async void btnUserCheevos_Click(object sender, EventArgs e)
         {
-            if (GameBind.IsNull()) return;
+            if (GameBind.IsNull())
+            {
+                MessageBox.Show("Select a Game in Games Tab First");
+                return;
+            }
+
+            if (UserCheevosIsRunning) { return; };
+
+            UserCheevosIsRunning = true;
 
             do
             {
+                lblCheevoLoopUpdate.BackColor = Color.LightGreen;
                 lblUserCheevos.Text = await Task<string>.Run(async () =>
                 {
                     picUserCheevos.Image = GameBind.ImageIconBitmap;
                     UserProgress user = await RA.GetUserProgress(txtUsernameCheevos.Text, GameBind.ID);
                     return user.NumAchievedHardcore + " / " + GameBind.NumAchievements;
                 });
-
-                await Task.Run(() => { Thread.Sleep(1000); });
+                lblCheevoLoopUpdate.BackColor = Color.Transparent;
+                await Task.Run(() => { Thread.Sleep(2000); });
 
             } while (chkUserCheevos.Checked);
+
+            UserCheevosIsRunning = false;
         }
 
         private async void btnDownloadBadges_Click(object sender, EventArgs e)
@@ -724,6 +736,11 @@ namespace RADB
                 var pic = new Picture(file2, PictureFormat.Png);
                 return pic.Compress();
             });
+        }
+
+        private void lblAbUserpage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(((LinkLabel)sender).Text);
         }
     }
 }
