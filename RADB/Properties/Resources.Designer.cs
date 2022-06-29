@@ -100,16 +100,16 @@ namespace RADB.Properties {
         ///SELECT 
         ///	 co.ID 
         ///	, c.Name AS Company 
-        ///	,(CASE WHEN ci.ConsoleNameComplete IS NULL THEN co.Name ELSE ci.ConsoleNameComplete END) AS Name 
+        ///	,(CASE WHEN ci.ConsoleNameComplete IS NULL THEN 
+        ///		CASE WHEN co.Name IS NULL THEN c.Name ELSE co.Name END 
+        ///	  ELSE ci.ConsoleNameComplete END) AS Name 
         ///	, SUM(CASE WHEN g.NumAchievements &gt; 0 THEN 1 ELSE 0 END) NumGames 
         ///	, Count(g.ID) AS TotalGames 
         ///FROM Company AS c 
         ///	LEFT JOIN CompanyItems AS ci ON ci.CompanyID = c.ID 
         ///		--AND ci.Active = 1 
         ///	LEFT JOIN Console AS co ON co.ID = ci.ConsoleID 
-        ///	LEFT JOIN GameData AS g ON g.ConsoleID = co.ID OR co.Name IS NULL 
-        ///WHERE 1 = 1 
-        ///	AND g.ConsoleID &lt;&gt;100 AND g.Cons [rest of string was truncated]&quot;;.
+        ///	LEFT JOIN GameData AS g ON (g.ConsoleID = co.ID OR co.Name  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ConsoleListar {
             get {
@@ -123,6 +123,16 @@ namespace RADB.Properties {
         internal static System.Drawing.Bitmap favicon {
             get {
                 object obj = ResourceManager.GetObject("favicon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fbidev {
+            get {
+                object obj = ResourceManager.GetObject("fbidev", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

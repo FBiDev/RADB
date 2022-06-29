@@ -328,7 +328,7 @@ namespace RADB
                 await LoadGames();
 
                 //Update GameList
-                if (lstGames.Count == 0)
+                if (lstGames.Count == 0 || ConsoleBind.ID == 0 && !File.Exists(Folder.GameData + ConsoleBind.Name + ".json"))
                 {
                     btnUpdateGameList_Click(null, null);
                 }
@@ -374,6 +374,9 @@ namespace RADB
             lstGamesSearch.AddRange(lstGames);
 
             dgvGames.DataSource = lstGamesSearch;
+
+            //Show console Column if is in All Games
+            dgvGames.Columns["gConsole"].Visible = ConsoleBind.ID == 0;
 
             EnablePanelGames(true);
             dgvGames.Focus();

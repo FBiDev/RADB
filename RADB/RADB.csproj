@@ -162,6 +162,7 @@
     <Content Include="src\rsc\exe\pngcrush_1_8_11_w64.exe" />
     <Content Include="src\rsc\image\favicon.ico" />
     <Content Include="src\rsc\image\favicon.png" />
+    <Content Include="src\rsc\image\fbidev.png" />
     <Content Include="src\rsc\image\iconForm.png" />
     <Content Include="src\rsc\image\loader.gif" />
     <Content Include="src\rsc\image\notfound.png" />

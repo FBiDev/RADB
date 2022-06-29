@@ -163,4 +163,7 @@
   <data name="iconForm" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\src\rsc\image\iconform.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="fbidev" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\image\fbidev.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
