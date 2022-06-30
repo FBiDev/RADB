@@ -668,6 +668,7 @@ namespace RADB
         }
 
         private bool UserCheevosIsRunning = false;
+        private static UserProgress LastUser = new UserProgress();
         private async void btnUserCheevos_Click(object sender, EventArgs e)
         {
             if (GameBind.IsNull())
@@ -675,29 +676,36 @@ namespace RADB
                 MessageBox.Show("Select a Game in Games Tab First");
                 return;
             }
-
             if (UserCheevosIsRunning) { return; };
 
             UserCheevosIsRunning = true;
+            lblUserCheevos.Text = string.Empty;
 
-            picUserCheevos.Image = GameBind.ImageIconBitmap;
+            do
+            {
+                UserProgress user = await RA.GetUserProgress(txtUsernameCheevos.Text, GameBind.ID);
+                picUserCheevos.Image = GameBind.ImageIconBitmap;
+                lblUserCheevos.Text = user.NumAchieved + " / " + GameBind.NumAchievements;
 
-            //do
-            //{
-            lblCheevoLoopUpdate.BackColor = Color.LightGreen;
+                if (user.SameProgress(LastUser))
+                {
+                    lblCheevoLoopUpdate.BackColor = Color.Orange;
+                }
+                else
+                {
+                    lblCheevoLoopUpdate.BackColor = Color.LightGreen;
+                    LastUser = user;
+                }
 
-            UserProgress user = await RA.GetUserProgress(txtUsernameCheevos.Text, GameBind.ID);
-            lblUserCheevos.Text = user.NumAchieved + " / " + GameBind.NumAchievements;
+                await Task.Run(() => { Thread.Sleep(500); });
 
-            lblCheevoLoopUpdate.BackColor = Color.Transparent;
+                lblCheevoLoopUpdate.BackColor = Color.Transparent;
 
-            await Task.Run(() => { Thread.Sleep(3000); });
+                await Task.Run(() => { Thread.Sleep(2500); });
 
-            //} while (chkUserCheevos.Checked);
+            } while (chkUserCheevos.Checked);
 
             UserCheevosIsRunning = false;
-
-            if (chkUserCheevos.Checked) btnUserCheevos_Click(null, null);
         }
 
         private async void btnDownloadBadges_Click(object sender, EventArgs e)

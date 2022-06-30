@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Text;
 
 namespace RADB
 {
@@ -41,35 +42,29 @@ namespace RADB
             ServicePointManager.DefaultConnectionLimit = 128;
 
             var j = JsonConvert.DeserializeObject<JObject>("{\"LoadJsonDLL\":\"...\"}");
+            WebClientExtend client = new WebClientExtend();
         }
 
-        public async static Task<string> DownloadData(string url)
+        public async static Task<string> Download(string url)
         {
             return await Task<string>.Run(() =>
             {
-                using (var client = new WebClientExtend())
+                string data = string.Empty;
+
+                using (WebClientExtend client = new WebClientExtend())
                 {
-                    client.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
-                    client.Headers.Add("Cache-Control", "max-age=0");
+                    url = url + "&random=" + new Random().Next();
 
-                    byte[] data = client.DownloadData(url + "&rn=" + new Random());
-                    return client.Encoding.GetString(data);
+                    var dataBytes = client.DownloadData(url);
+                    data = Encoding.UTF8.GetString(dataBytes);
+
+                    if (client.HeaderExist("X-Cache") && client.ResponseHeaders["X-Cache"] != "HIT")
+                    {
+                        var a = 1;
+                    }
                 }
-            });
-        }
 
-        public async static Task<string> DownloadString(string url)
-        {
-            return await Task<string>.Run(() =>
-            {
-                using (var client = new WebClientExtend() { GZipEnable = false })
-                {
-                    client.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
-                    client.Headers.Add("Cache-Control", "max-age=0");
-
-                    string data = client.DownloadString(url + "&rn=" + new Random());
-                    return data;
-                }
+                return data;
             });
         }
 

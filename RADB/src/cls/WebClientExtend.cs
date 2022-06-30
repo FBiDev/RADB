@@ -18,12 +18,21 @@ namespace RADB
         {
             get
             {
-                if (ResponseHeaders != null && ResponseHeaders.AllKeys.Contains("Content-Encoding"))
+                if (HeaderExist("Content-Encoding"))
                 {
                     return ResponseHeaders[HttpResponseHeader.ContentEncoding] == "gzip";
                 }
                 return false;
             }
+        }
+
+        public bool HeaderExist(string headerName)
+        {
+            if (ResponseHeaders != null && ResponseHeaders.AllKeys.Contains(headerName))
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool _GZipEnable { get; set; }
@@ -52,7 +61,7 @@ namespace RADB
         public WebClientExtend()
             : base()
         {
-            Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate, br";
+            GZipEnable = true;
 
             Encoding = Encoding.UTF8;
             Proxy = Browser.Proxy;
@@ -69,9 +78,27 @@ namespace RADB
             return base.DownloadFileTaskAsync(address, fileName);
         }
 
+        public new string DownloadString(string address)
+        {
+            return this.Encoding.GetString(DownloadData(address));
+        }
+
         public new byte[] DownloadData(string address)
         {
-            var data = base.DownloadData(address);
+            HttpWebResponse response = null;
+            byte[] data = new byte[0];
+
+            try
+            {
+                Error = false;
+                data = base.DownloadData(address);
+            }
+            catch (WebException we)
+            {
+                Error = true;
+                response = we.Response as HttpWebResponse;
+                MessageBox.Show("Download Error: \r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription);
+            }
 
             GetGZipSize(data);
 
@@ -86,6 +113,10 @@ namespace RADB
         protected override WebRequest GetWebRequest(Uri address)
         {
             HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
+
+            //request.KeepAlive = false;
+            //request.IfModifiedSince = DateTime.UtcNow;
+
             if (FileDownloaded == null)
             {
                 //request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
@@ -105,12 +136,13 @@ namespace RADB
             HttpWebResponse response = null;
             try
             {
+                Error = false;
                 response = base.GetWebResponse(request, result) as HttpWebResponse;
             }
             catch (WebException we)
             {
-                response = we.Response as HttpWebResponse;
                 Error = true;
+                response = we.Response as HttpWebResponse;
                 MessageBox.Show("Error to download: " + FileDownloaded + "\r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription);
             }
 

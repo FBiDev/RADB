@@ -20,6 +20,10 @@ namespace RADB
     public class RA
     {
         #region _Main
+        private string API_URL = "https://retroachievements.org/API/";
+        private string API_UserName;
+        private string API_Key;
+
         //URLs
         public static string URL_Images = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Images/";
         public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
@@ -32,10 +36,6 @@ namespace RADB
         public static Bitmap DefaultTitleImage = new Picture(200, 150).Bitmap;
         public static Bitmap DefaultIngameImage = new Picture(200, 150).Bitmap;
         public static Bitmap DefaultBoxArtImage = new Picture(200, 150).Bitmap;
-
-        private string API_URL = "https://retroachievements.org/API/";
-        private string API_UserName;
-        private string API_Key;
 
         public RA()
         {
@@ -126,14 +126,17 @@ namespace RADB
 
         public async Task DownloadGameExtend(Download dlGameExtend, Game game)
         {
-            dlGameExtend.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), GameExtendPath(game)) };
-            await (dlGameExtend.Start());
+            await Task.Run(async () =>
+            {
+                dlGameExtend.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), GameExtendPath(game)) };
+                await (dlGameExtend.Start());
 
-            GameExtend obj = (await DeserializeGameExtend(game));
-            obj.ID = game.ID;
-            obj.ConsoleID = game.ConsoleID;
-            await obj.Excluir();
-            obj.Incluir();
+                GameExtend obj = (await DeserializeGameExtend(game));
+                obj.ID = game.ID;
+                obj.ConsoleID = game.ConsoleID;
+                await obj.Excluir();
+                obj.Incluir();
+            });
         }
 
         private Task<GameExtend> DeserializeGameExtend(Game game)
@@ -158,30 +161,25 @@ namespace RADB
 
         public async Task DownloadGameExtendImages(Download dlGameExtendImages, Game game)
         {
-            GameExtend gamex = await GameExtend.Listar(game.ID);
-            dlGameExtendImages.Files = new List<DownloadFile>() {
-                gamex.ImageTitleFile,
-                gamex.ImageIngameFile,
-                gamex.ImageBoxArtFile,
-            };
-            await (dlGameExtendImages.Start());
+            await Task.Run(async () =>
+            {
+                GameExtend gamex = await GameExtend.Listar(game.ID);
+                dlGameExtendImages.Files = new List<DownloadFile>() {
+                    gamex.ImageTitleFile,
+                    gamex.ImageIngameFile,
+                    gamex.ImageBoxArtFile,
+                };
+                await (dlGameExtendImages.Start());
+            });
         }
         #endregion
 
-        public DownloadFile DownloadGameInfoExtended(Game game)
-        {
-            return new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), JSN_GameInfoExtend(game.ConsoleID, game.ID));
-        }
-        public string FileGameInfoExtended(int consoleID, int gameID)
-        {
-            return Folder.GameDataExtend(consoleID) + gameID + ".json";
-        }
-
+        #region _UserInfo
         public async Task<UserProgress> GetUserProgress(string username, int gameID)
         {
             return await Task.Run(async () =>
             {
-                string userData = await Browser.DownloadString(GetURL("API_GetUserProgress.php", "u=" + username + "&i=" + gameID));
+                string userData = await Browser.Download(GetURL("API_GetUserProgress.php", "u=" + username + "&i=" + gameID));
                 userData = userData.GetBetween(":{", "}}");
                 userData = "{" + userData + "}";
 
@@ -189,9 +187,22 @@ namespace RADB
                 if (string.IsNullOrWhiteSpace(userData) == false)
                 {
                     user = JsonConvert.DeserializeObject<UserProgress>(userData);
+                    user.UserName = username;
+                    user.GameID = gameID;
                 }
                 return user;
             });
+        }
+        #endregion
+
+        public DownloadFile DownloadGameInfoExtended(Game game)
+        {
+            return new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), JSN_GameInfoExtend(game.ConsoleID, game.ID));
+        }
+
+        public string FileGameInfoExtended(int consoleID, int gameID)
+        {
+            return Folder.GameDataExtend(consoleID) + gameID + ".json";
         }
 
         public static string API_GameExtended = "API_GetGameExtended.php";
