@@ -690,7 +690,8 @@ namespace RADB
                     return user.NumAchievedHardcore + " / " + GameBind.NumAchievements;
                 });
                 lblCheevoLoopUpdate.BackColor = Color.Transparent;
-                await Task.Run(() => { Thread.Sleep(2000); });
+
+                await Task.Run(() => { Thread.Sleep(3000); });
 
             } while (chkUserCheevos.Checked);
 
