@@ -179,16 +179,19 @@ namespace RADB
 
         public async Task<UserProgress> GetUserProgress(string username, int gameID)
         {
-            string userData = await Browser.DownloadString(GetURL("API_GetUserProgress.php", "u=" + username + "&i=" + gameID));
-            userData = userData.GetBetween(":{", "}}");
-            userData = "{" + userData + "}";
-
-            UserProgress user = null;
-            if (string.IsNullOrWhiteSpace(userData) == false)
+            return await Task.Run(async () =>
             {
-                user = JsonConvert.DeserializeObject<UserProgress>(userData);
-            }
-            return user;
+                string userData = await Browser.DownloadString(GetURL("API_GetUserProgress.php", "u=" + username + "&i=" + gameID));
+                userData = userData.GetBetween(":{", "}}");
+                userData = "{" + userData + "}";
+
+                UserProgress user = null;
+                if (string.IsNullOrWhiteSpace(userData) == false)
+                {
+                    user = JsonConvert.DeserializeObject<UserProgress>(userData);
+                }
+                return user;
+            });
         }
 
         public static string API_GameExtended = "API_GetGameExtended.php";

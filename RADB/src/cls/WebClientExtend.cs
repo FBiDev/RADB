@@ -25,6 +25,24 @@ namespace RADB
                 return false;
             }
         }
+
+        private bool _GZipEnable { get; set; }
+        public bool GZipEnable
+        {
+            get { return _GZipEnable; }
+            set
+            {
+                _GZipEnable = value;
+                if (_GZipEnable)
+                {
+                    Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate, br";
+                }
+                else
+                {
+                    Headers[HttpRequestHeader.AcceptEncoding] = "";
+                }
+            }
+        }
         private string GZipExtension { get { return ".gz"; } }
         private long GZipSize { get; set; }
         private long GZipSizeUncompressed { get; set; }
@@ -35,6 +53,7 @@ namespace RADB
             : base()
         {
             Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate, br";
+
             Encoding = Encoding.UTF8;
             Proxy = Browser.Proxy;
         }

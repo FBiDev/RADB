@@ -680,22 +680,24 @@ namespace RADB
 
             UserCheevosIsRunning = true;
 
-            do
-            {
-                lblCheevoLoopUpdate.BackColor = Color.LightGreen;
-                lblUserCheevos.Text = await Task<string>.Run(async () =>
-                {
-                    picUserCheevos.Image = GameBind.ImageIconBitmap;
-                    UserProgress user = await RA.GetUserProgress(txtUsernameCheevos.Text, GameBind.ID);
-                    return user.NumAchievedHardcore + " / " + GameBind.NumAchievements;
-                });
-                lblCheevoLoopUpdate.BackColor = Color.Transparent;
+            picUserCheevos.Image = GameBind.ImageIconBitmap;
 
-                await Task.Run(() => { Thread.Sleep(3000); });
+            //do
+            //{
+            lblCheevoLoopUpdate.BackColor = Color.LightGreen;
 
-            } while (chkUserCheevos.Checked);
+            UserProgress user = await RA.GetUserProgress(txtUsernameCheevos.Text, GameBind.ID);
+            lblUserCheevos.Text = user.NumAchieved + " / " + GameBind.NumAchievements;
+
+            lblCheevoLoopUpdate.BackColor = Color.Transparent;
+
+            await Task.Run(() => { Thread.Sleep(3000); });
+
+            //} while (chkUserCheevos.Checked);
 
             UserCheevosIsRunning = false;
+
+            if (chkUserCheevos.Checked) btnUserCheevos_Click(null, null);
         }
 
         private async void btnDownloadBadges_Click(object sender, EventArgs e)

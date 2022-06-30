@@ -43,14 +43,32 @@ namespace RADB
             var j = JsonConvert.DeserializeObject<JObject>("{\"LoadJsonDLL\":\"...\"}");
         }
 
-        public static Task<string> DownloadString(string url)
+        public async static Task<string> DownloadData(string url)
         {
-            return Task<string>.Run(() =>
+            return await Task<string>.Run(() =>
             {
                 using (var client = new WebClientExtend())
                 {
-                    byte[] data = client.DownloadData(url);
+                    client.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+                    client.Headers.Add("Cache-Control", "max-age=0");
+
+                    byte[] data = client.DownloadData(url + "&rn=" + new Random());
                     return client.Encoding.GetString(data);
+                }
+            });
+        }
+
+        public async static Task<string> DownloadString(string url)
+        {
+            return await Task<string>.Run(() =>
+            {
+                using (var client = new WebClientExtend() { GZipEnable = false })
+                {
+                    client.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+                    client.Headers.Add("Cache-Control", "max-age=0");
+
+                    string data = client.DownloadString(url + "&rn=" + new Random());
+                    return data;
                 }
             });
         }
