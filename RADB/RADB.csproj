@@ -99,6 +99,9 @@
     <Compile Include="src\custom\FlatTextBoxA.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="src\custom\PictureBoxInterpolated.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="src\dao\ConsoleDao.cs" />
     <Compile Include="src\dao\GameExtendDao.cs" />
     <Compile Include="src\dao\GameDao.cs" />

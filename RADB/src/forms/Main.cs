@@ -10,10 +10,11 @@ using System.Drawing;
 //
 using Newtonsoft.Json.Linq;
 using RADB.Properties;
-using GNX;
 using System.Drawing.Imaging;
 using PhotoSauce.MagicScaler;
 using Newtonsoft.Json;
+using System.Drawing.Drawing2D;
+using GNX;
 
 namespace RADB
 {
@@ -63,6 +64,8 @@ namespace RADB
             dgvGames.MouseWheel += dgvGames_MouseWheel;
             dgvGames.Scroll += dgvGames_Scroll;
             dgvGames.Sorted += dgvGames_Sorted;
+
+            dgvGames.CellPainting += dgvGames_CellPainting;
 
             dgvAchievements.AutoGenerateColumns = false;
             dgvAchievements.DataSourceChanged += dgvAchievements_DataSourceChanged;
@@ -744,6 +747,17 @@ namespace RADB
         private void lblAbUserpage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(((LinkLabel)sender).Text);
+        }
+
+        void dgvGames_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            e.Graphics.InterpolationMode = InterpolationMode.Default;
+
+            if (e.ColumnIndex == 1 && e.RowIndex != -1)
+            {
+                e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                //e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            }
         }
     }
 }
