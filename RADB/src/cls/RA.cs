@@ -179,7 +179,7 @@ namespace RADB
         {
             return await Task.Run(async () =>
             {
-                string userData = await Browser.Download(GetURL("API_GetUserProgress.php", "u=" + username + "&i=" + gameID));
+                string userData = await Browser.DownloadString(GetURL("API_GetUserProgress.php", "u=" + username + "&i=" + gameID), true);
                 userData = userData.GetBetween(":{", "}}");
                 userData = "{" + userData + "}";
 

@@ -679,6 +679,7 @@ namespace RADB
             if (UserCheevosIsRunning) { return; };
 
             UserCheevosIsRunning = true;
+            btnUserCheevos.Enabled = false;
             lblUserCheevos.Text = string.Empty;
 
             do
@@ -706,6 +707,7 @@ namespace RADB
             } while (chkUserCheevos.Checked);
 
             UserCheevosIsRunning = false;
+            btnUserCheevos.Enabled = true;
         }
 
         private async void btnDownloadBadges_Click(object sender, EventArgs e)

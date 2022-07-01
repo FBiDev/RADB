@@ -9,6 +9,7 @@ using System.IO.Compression;
 using System.ComponentModel;
 using System.Net;
 using System.Windows.Forms;
+using GNX;
 
 namespace RADB
 {
@@ -28,7 +29,7 @@ namespace RADB
 
         public bool HeaderExist(string headerName)
         {
-            if (ResponseHeaders != null && ResponseHeaders.AllKeys.Contains(headerName))
+            if (ResponseHeaders != null && ResponseHeaders.AllKeys.Contains(headerName, StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
@@ -80,7 +81,32 @@ namespace RADB
 
         public new string DownloadString(string address)
         {
-            return this.Encoding.GetString(DownloadData(address));
+            byte[] data = DownloadData(address);
+            string msg = string.Empty;
+
+            if (ResponseHeaders == null) { return msg; }
+
+            string ContentType = this.ResponseHeaders[HttpResponseHeader.ContentType];
+
+            if (ContentType.IndexOf("ISO-8859-1", 0, StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                Encoding iso = Encoding.GetEncoding("ISO-8859-1");
+                Encoding utf8 = Encoding.UTF8;
+
+                byte[] isoBytes = data;
+                byte[] utfBytes = Encoding.Convert(iso, utf8, isoBytes);
+                msg = utf8.GetString(utfBytes);
+            }
+            else if (ContentType.IndexOf("image/", 0, StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                msg = "data:" + ContentType + ";base64," + Convert.ToBase64String(data);
+            }
+            else
+            {
+                msg = Encoding.GetString(data);
+            }
+
+            return msg;
         }
 
         public new byte[] DownloadData(string address)
@@ -96,14 +122,20 @@ namespace RADB
             catch (WebException we)
             {
                 Error = true;
-                response = we.Response as HttpWebResponse;
-                MessageBox.Show("Download Error: \r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription);
+                if (we.Response == null)
+                {
+                    MessageBox.Show("Download Error: \r\n\r\n" + "Status: " + we.Status + "\r\n\r\n" + we.Message + "\r\n\r\n" + we.InnerException.Message);
+                }
+                else
+                {
+                    response = we.Response as HttpWebResponse;
+                    MessageBox.Show("Download Error: \r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription);
+                }
             }
-
-            GetGZipSize(data);
 
             if (GZipContent)
             {
+                GetGZipSize(data);
                 //string base64 = Convert.ToBase64String(data);
                 data = DecodeGZip(data);
             }

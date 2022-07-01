@@ -42,10 +42,10 @@ namespace RADB
             ServicePointManager.DefaultConnectionLimit = 128;
 
             var j = JsonConvert.DeserializeObject<JObject>("{\"LoadJsonDLL\":\"...\"}");
-            WebClientExtend client = new WebClientExtend();
         }
 
-        public async static Task<string> Download(string url)
+        private static Random rand = new Random();
+        public async static Task<string> DownloadString(string url, bool addRandomNumber = false)
         {
             return await Task<string>.Run(() =>
             {
@@ -53,15 +53,15 @@ namespace RADB
 
                 using (WebClientExtend client = new WebClientExtend())
                 {
-                    url = url + "&random=" + new Random().Next();
-
-                    var dataBytes = client.DownloadData(url);
-                    data = Encoding.UTF8.GetString(dataBytes);
-
-                    if (client.HeaderExist("X-Cache") && client.ResponseHeaders["X-Cache"] != "HIT")
+                    if (addRandomNumber)
                     {
-                        var a = 1;
+                        url = url + "&random=" + rand.Next();
                     }
+
+                    data = client.DownloadString(url);
+
+                    //if (client.HeaderExist("X-Cache") && client.ResponseHeaders["X-Cache"] != "HIT")
+                    //{ var a = 1; }
                 }
 
                 return data;
