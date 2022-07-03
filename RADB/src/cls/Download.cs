@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 //
 using System.IO;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace RADB
 {
@@ -23,7 +23,7 @@ namespace RADB
         public TimeSpan TimeElapsed { get; set; }
 
         public long BytesReceived { get; set; }
-        public long BytesToReceive { get; set; }
+        public long TotalBytesToReceive { get; set; }
         public int Percentage { get; set; }
 
         public string Result { get; set; }
@@ -47,12 +47,6 @@ namespace RADB
             FilesToDownload = new List<DownloadFile>();
         }
 
-        [DllImport("shlwapi.dll", EntryPoint = "PathFileExistsW", SetLastError = true, CharSet = CharSet.Unicode)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _PathFileExists([MarshalAs(UnmanagedType.LPWStr)]string pszPath);
-
-        public bool PathFileExists(string fileName) { return _PathFileExists(fileName); }
-
         public async Task Start()
         {
             if (string.IsNullOrWhiteSpace(FolderBase)) { FolderBase = @".\"; }
@@ -67,7 +61,7 @@ namespace RADB
             FilesCompleted = 0;
 
             BytesReceived = 0;
-            BytesToReceive = 0;
+            TotalBytesToReceive = 0;
             Percentage = 0;
 
             string connecting = "Connecting..." + Environment.NewLine;
@@ -114,8 +108,6 @@ namespace RADB
             }
 
             int FilesTotal = FilesToDownload.Count;
-            string progressBytes = string.Empty;
-            string progressFiles = string.Empty;
 
             foreach (DownloadFile file in FilesToDownload)
             {
@@ -125,27 +117,29 @@ namespace RADB
                 {
                     client.DownloadProgressChanged += (sender, args) =>
                     {
-                        file.BytesReceived = args.BytesReceived;
-                        file.TotalBytesToReceive = args.TotalBytesToReceive;
-                        file.ProgressPercentage = args.ProgressPercentage;
+                        if (args.TotalBytesToReceive > 0 && args.TotalBytesToReceive > file.TotalBytesToReceive)
+                        {
+                            TotalBytesToReceive += (args.TotalBytesToReceive - file.TotalBytesToReceive);
+                            file.TotalBytesToReceive = args.TotalBytesToReceive;
+                        }
 
-                        BytesReceived = 0;
-                        BytesToReceive = 0;
+                        if (args.BytesReceived > 0 && args.BytesReceived > file.BytesReceived)
+                        {
+                            BytesReceived += (args.BytesReceived - file.BytesReceived);
+                            file.BytesReceived = args.BytesReceived;
+                        }
+
                         float ProgressPercentage = 0;
+                        file.ProgressPercentage = args.ProgressPercentage;
 
                         foreach (DownloadFile f in FilesToDownload)
                         {
-                            BytesReceived += f.BytesReceived;
-                            BytesToReceive += f.TotalBytesToReceive;
                             ProgressPercentage += (f.ProgressPercentage / FilesTotal);
                         }
 
-                        if (BytesToReceive < -1) { BytesToReceive = -1; }
-
                         Percentage = ProgressPercentage > 100 ? 100 : (int)(Math.Ceiling(ProgressPercentage));
 
-                        progressBytes = "Downloaded " + DownloadedProgress(BytesReceived, BytesToReceive);
-                        Result = progressBytes + progressFiles;
+                        CalculateResult();
 
                         Status = DownloadStatus.ProgressChanged;
                         ProgressChanged();
@@ -153,26 +147,18 @@ namespace RADB
 
                     client.DownloadFileCompleted += (sender, args) =>
                     {
+                        FilesCompleted++;
+                        Status = DownloadStatus.FileDownloaded;
+
                         //Downloaded All Files
                         if (Percentage == 100)
                         {
-                            FilesCompleted = FilesTotal;
-
-                            TimeElapsed = new TimeSpan(DateTime.Now.Ticks - TimeStart.Ticks);
-                            TimeCompleted = DateTime.Now;
-
                             Status = DownloadStatus.Completed;
                         }
                         else
                         {
-                            FilesCompleted++;
-                            Status = DownloadStatus.FileDownloaded;
+                            CalculateResult();
                         }
-
-                        progressFiles = " (" + FilesCompleted + "/" + FilesTotal + ")";
-                        Result = progressBytes + progressFiles;
-
-                        ProgressChanged();
                     };
 
                     Tasks.Add(client.DownloadFileTaskAsync(new Uri(file.URL), file.Path));
@@ -192,12 +178,30 @@ namespace RADB
             {
                 await Task.WhenAll(Tasks.Where(i => i != null));
 
-                if (Status != DownloadStatus.Completed)
+                if (Percentage == 100)
+                {
+                    BytesReceived = 0;
+                    TotalBytesToReceive = 0;
+                    foreach (DownloadFile f in FilesToDownload)
+                    {
+                        BytesReceived += f.BytesReceived;
+                        TotalBytesToReceive += f.TotalBytesToReceive;
+                    }
+
+                    FilesCompleted = FilesTotal;
+
+                    TimeElapsed = new TimeSpan(DateTime.Now.Ticks - TimeStart.Ticks);
+                    TimeCompleted = DateTime.Now;
+
+                    CalculateResult();
+                }
+                else
                 {
                     Status = DownloadStatus.Stopped;
                     Result = Result == connecting ? "Files already exist" : Result;
-                    ProgressChanged();
                 }
+
+                ProgressChanged();
             }
             catch (Exception ex)
             {
@@ -205,10 +209,103 @@ namespace RADB
             }
         }
 
+        private void CalculateResult()
+        {
+            int FilesTotal = FilesToDownload.Count;
+            string progressBytes = string.Empty;
+            string progressFiles = string.Empty;
+
+            progressBytes = "Downloaded " + DownloadedProgress(BytesReceived, TotalBytesToReceive);
+            progressFiles = " (" + FilesCompleted + "/" + FilesTotal + ")";
+            Result = progressBytes + progressFiles;
+        }
+
         private string DownloadedProgress(double bytesIn, double bytesTotal)
         {
-            if (bytesTotal <= 0) { return Archive.CalculateSize(bytesIn); }
-            return Archive.CalculateSize(bytesIn) + " of " + Archive.CalculateSize(bytesTotal);
+            string bytesProgress = Archive.CalculateSize(bytesIn);
+            double bytesCalc = bytesTotal <= 0 ? bytesIn : bytesTotal;
+            bytesProgress += " of " + Archive.CalculateSize(bytesCalc);
+
+            return bytesProgress;
+        }
+
+        //==========
+        //===Desktop
+        //==========
+        public void SetControls(Label resultLabel, ProgressBar resultBar, Label resultTime)
+        {
+            this.ProgressChanged += () => DownloadChanged(resultLabel, resultBar, resultTime);
+        }
+
+        private void DownloadChanged(Label resultLabel, ProgressBar resultBar, Label resultTime)
+        {
+            resultLabel.InvokeIfRequired(() =>
+            {
+                resultLabel.Text = this.Result;
+            });
+
+            switch (this.Status)
+            {
+                case Download.DownloadStatus.Connecting:
+
+                    resultBar.InvokeIfRequired(() =>
+                    {
+                        BarStart(resultBar, ProgressBarStyle.Marquee);
+                    });
+                    break;
+                case Download.DownloadStatus.ProgressChanged:
+                    resultBar.InvokeIfRequired(() =>
+                    {
+                        resultBar.Value = this.Percentage;
+                        resultBar.Style = (this.TotalBytesToReceive == -1 ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous);
+                    });
+                    break;
+                case Download.DownloadStatus.FileDownloaded:
+                    break;
+                case Download.DownloadStatus.NextFiles:
+                    break;
+                case Download.DownloadStatus.Completed:
+                    resultTime.InvokeIfRequired(() =>
+                    {
+                        resultTime.Text = this.TimeCompleted.ToString();
+                    });
+                    resultBar.InvokeIfRequired(() =>
+                    {
+                        BarStop(resultBar);
+                    });
+                    break;
+                case Download.DownloadStatus.Stopped:
+                    resultBar.InvokeIfRequired(() =>
+                    {
+                        BarStop(resultBar);
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void BarStart(ProgressBar bar, ProgressBarStyle style = ProgressBarStyle.Continuous, int maximum = 100)
+        {
+            bar.Maximum = maximum;
+            bar.Value = 0;
+            bar.MarqueeAnimationSpeed = 50;
+            bar.Style = style;
+        }
+
+        private void BarStop(ProgressBar bar)
+        {
+            if (bar.Style == ProgressBarStyle.Marquee)
+            {
+                //bar.MarqueeAnimationSpeed = 0;
+                bar.Style = ProgressBarStyle.Continuous;
+            }
+
+            //Hack for Win7
+            bar.Maximum++;
+            bar.Value = bar.Maximum;
+            bar.Value--;
+            bar.Maximum--;
         }
     }
 }

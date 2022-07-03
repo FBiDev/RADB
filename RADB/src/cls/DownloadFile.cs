@@ -12,7 +12,6 @@ namespace RADB
         public string PathID { get; set; }
         public string Name { get; set; }
         public string Extension { get; set; }
-        //public Bitmap Image { get; set; }
 
         public long BytesReceived { get; set; }
         public long TotalBytesToReceive { get; set; }
@@ -23,14 +22,9 @@ namespace RADB
             URL = url;
             Path = path;
             string[] pathSplit = Path.Split(new string[] { @"\" }, StringSplitOptions.None);
-            Name = pathSplit.Last().ToString();
-            Extension = Name.Split(new string[] { @"." }, StringSplitOptions.None).Last().ToString().ToLower();
 
-            //PathID += @"\" + Name;
-            //if (Extension == "png" || Extension == "jpg")
-            //{
-            //Image = Picture.Create(Path).Bitmap;
-            //}
+            Name = pathSplit.Last();
+            Extension = Name.Split(new string[] { @"." }, StringSplitOptions.None).Last().ToLower();
         }
 
         public bool Equals(DownloadFile other)

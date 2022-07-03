@@ -1,19 +1,21 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
+using System.Text;
+using System.Threading.Tasks;
 //
+using System.Windows.Forms;
 using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Drawing;
-//
-using Newtonsoft.Json.Linq;
-using RADB.Properties;
 using System.Drawing.Imaging;
-using PhotoSauce.MagicScaler;
-using Newtonsoft.Json;
 using System.Drawing.Drawing2D;
+//
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using PhotoSauce.MagicScaler;
+using RADB.Properties;
 using GNX;
 
 namespace RADB
@@ -27,13 +29,6 @@ namespace RADB
         private Game GameBind = null;
         private GameExtend GameExtendBind = null;
 
-        private Download dlConsoles;
-        private Download dlGames;
-        private Download dlGamesIcon;
-
-        private Download dlGameExtend;
-        private Download dlGameExtendImages;
-
         public ListBind<Game> lstGames = new ListBind<Game>();
         public ListBind<Game> lstGamesSearch = new ListBind<Game>();
 
@@ -42,7 +37,8 @@ namespace RADB
             InitializeComponent();
             Icon = GNX.cConvert.ToIco(Resources.iconForm, new Size(250, 250));
 
-            Shown += RADB_Shown;
+            Load += Main_Load;
+            Shown += Main_Shown;
             Resize += Main_Resize;
 
             //KeyPreview = true;
@@ -87,119 +83,18 @@ namespace RADB
             Folder.CreateFolders();
         }
 
-        private void BarStart(ProgressBar bar, ProgressBarStyle style = ProgressBarStyle.Continuous, int maximum = 100)
+        void Main_Load(object sender, EventArgs e)
         {
-            bar.Maximum = maximum;
-            bar.Value = 0;
-            bar.MarqueeAnimationSpeed = 50;
-            bar.Style = style;
+            var j = JsonConvert.DeserializeObject<JObject>("{\"LoadJsonDLL\":\"...\"}");
         }
 
-        private void BarStop(ProgressBar bar)
+        private async void Main_Shown(object sender, EventArgs e)
         {
-            if (bar.Style == ProgressBarStyle.Marquee)
-            {
-                //bar.MarqueeAnimationSpeed = 0;
-                bar.Style = ProgressBarStyle.Continuous;
-            }
-
-            //Hack for Win7
-            bar.Maximum++;
-            bar.Value = bar.Maximum;
-            bar.Value--;
-            bar.Maximum--;
-        }
-
-
-        private void DownloadChanged(Download download, Label resultLabel, ProgressBar resultBar, Label resultTime)
-        {
-            resultLabel.InvokeIfRequired(() =>
-            {
-                resultLabel.Text = download.Result;
-            });
-
-            switch (download.Status)
-            {
-                case Download.DownloadStatus.Connecting:
-
-                    resultBar.InvokeIfRequired(() =>
-                    {
-                        BarStart(resultBar, ProgressBarStyle.Marquee);
-                    });
-                    break;
-                case Download.DownloadStatus.ProgressChanged:
-                    resultBar.InvokeIfRequired(() =>
-                    {
-                        resultBar.Value = download.Percentage;
-                        resultBar.Style = (download.BytesToReceive == -1 ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous);
-                    });
-                    break;
-                case Download.DownloadStatus.FileDownloaded:
-                    break;
-                case Download.DownloadStatus.NextFiles:
-                    break;
-                case Download.DownloadStatus.Completed:
-                    resultTime.InvokeIfRequired(() =>
-                    {
-                        resultTime.Text = download.TimeCompleted.ToString();
-                    });
-                    resultBar.InvokeIfRequired(() =>
-                    {
-                        BarStop(resultBar);
-                    });
-                    break;
-                case Download.DownloadStatus.Stopped:
-                    resultBar.InvokeIfRequired(() =>
-                    {
-                        BarStop(resultBar);
-                    });
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private async void RADB_Shown(object sender, EventArgs e)
-        {
-            dlConsoles = new Download
-            {
-                Overwrite = true,
-                FolderBase = Folder.Console,
-            };
-            dlConsoles.ProgressChanged += () =>
-                DownloadChanged(dlConsoles, lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
-
-            dlGames = new Download
-            {
-                Overwrite = true,
-                FolderBase = Folder.GameData,
-            };
-            dlGames.ProgressChanged += () =>
-                DownloadChanged(dlGames, lblProgressGameList, pgbGameList, lblUpdateGameList);
-
-            dlGamesIcon = new Download()
-            {
-                Overwrite = false,
-                FolderBase = Folder.IconsBase,
-            };
-            dlGamesIcon.ProgressChanged += () =>
-                DownloadChanged(dlGamesIcon, lblProgressGameList, pgbGameList, lblUpdateGameList);
-
-            dlGameExtend = new Download
-            {
-                Overwrite = true,
-                FolderBase = Folder.GameDataExtendBase,
-            };
-            dlGameExtend.ProgressChanged += () =>
-                DownloadChanged(dlGameExtend, lblProgressInfo, pgbInfo, lblUpdateInfo);
-
-            dlGameExtendImages = new Download
-            {
-                Overwrite = false,
-                FolderBase = Folder.Images,
-            };
-            dlGameExtendImages.ProgressChanged += () =>
-                DownloadChanged(dlGameExtendImages, lblProgressInfo, pgbInfo, lblUpdateInfo);
+            Browser.dlConsoles.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
+            Browser.dlGames.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
+            Browser.dlGamesIcon.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
+            Browser.dlGameExtend.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
+            Browser.dlGameExtendImages.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
 
             await LoadConsoles();
             await LoadGames();
@@ -306,7 +201,7 @@ namespace RADB
         private async void btnUpdateConsoles_Click(object sender, EventArgs e)
         {
             EnablePanelConsoles(false);
-            await RA.DownloadConsoles(dlConsoles);
+            await RA.DownloadConsoles();
             await LoadConsoles();
 
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + "Consoles Updated!" + Environment.NewLine + lblOutput.Text;
@@ -395,12 +290,12 @@ namespace RADB
 
             //Download GameList
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
-            await RA.DownloadGameList(dlGames, ConsoleBind);
+            await RA.DownloadGameList(ConsoleBind);
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
 
             //Download game icons
             TimeSpan ini1 = new TimeSpan(DateTime.Now.Ticks);
-            await RA.DownloadGamesIcon(dlGamesIcon, ConsoleBind);
+            await RA.DownloadGamesIcon(ConsoleBind);
             TimeSpan fim1 = new TimeSpan(DateTime.Now.Ticks) - ini1;
 
             //Load Games
@@ -574,10 +469,10 @@ namespace RADB
             if (GameBind == null) { return; }
 
             //Download GameExtend
-            await RA.DownloadGameExtend(dlGameExtend, GameBind);
+            await RA.DownloadGameExtend(GameBind);
 
             //Download game images
-            await RA.DownloadGameExtendImages(dlGameExtendImages, GameBind);
+            await RA.DownloadGameExtendImages(GameBind);
 
             //Load Game
             await LoadGameExtend();

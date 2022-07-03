@@ -1,19 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 //
 using System.IO;
-using System.Threading.Tasks;
+using System.Drawing;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using GNX;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Drawing;
-using System.Security.Cryptography;
-using System.Collections;
-using System.Windows.Forms;
 using RADB.Properties;
+using GNX;
 
 namespace RADB
 {
@@ -60,10 +58,10 @@ namespace RADB
             return Folder.Console + "Consoles.json";
         }
 
-        public async Task DownloadConsoles(Download dlConsoles)
+        public async Task DownloadConsoles()
         {
-            dlConsoles.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetConsoleIDs.php"), ConsolesPath()) };
-            await dlConsoles.Start();
+            Browser.dlConsoles.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetConsoleIDs.php"), ConsolesPath()) };
+            await Browser.dlConsoles.Start();
 
             await Console.Excluir();
             await Console.IncluirLista(await DeserializeConsoles());
@@ -85,12 +83,12 @@ namespace RADB
             return (Folder.GameData + consoleName + ".json").Replace("/", "-");
         }
 
-        public async Task DownloadGameList(Download dlGames, Console console)
+        public async Task DownloadGameList(Console console)
         {
             await Task.Run(async () =>
             {
-                dlGames.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID), GameListPath(console.Name)) };
-                await dlGames.Start();
+                Browser.dlGames.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID), GameListPath(console.Name)) };
+                await Browser.dlGames.Start();
 
                 await Game.Excluir(console.ID);
                 List<Game> list = await DeserializeGameList(console.Name);
@@ -107,13 +105,13 @@ namespace RADB
             });
         }
 
-        public async Task DownloadGamesIcon(Download dlGameIcons, Console console)
+        public async Task DownloadGamesIcon(Console console)
         {
             await Task.Run(async () =>
             {
                 List<Game> games = await Game.Listar(console.ID);
-                dlGameIcons.Files = games.Select(g => g.ImageIconFile).ToList();
-                await (dlGameIcons.Start());
+                Browser.dlGamesIcon.Files = games.Select(g => g.ImageIconFile).ToList();
+                await (Browser.dlGamesIcon.Start());
             });
         }
         #endregion
@@ -124,12 +122,12 @@ namespace RADB
             return (Folder.GameDataExtend(game.ConsoleID) + game.ID + ".json");
         }
 
-        public async Task DownloadGameExtend(Download dlGameExtend, Game game)
+        public async Task DownloadGameExtend(Game game)
         {
             await Task.Run(async () =>
             {
-                dlGameExtend.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), GameExtendPath(game)) };
-                await (dlGameExtend.Start());
+                Browser.dlGameExtend.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), GameExtendPath(game)) };
+                await (Browser.dlGameExtend.Start());
 
                 GameExtend obj = (await DeserializeGameExtend(game));
                 obj.ID = game.ID;
@@ -159,17 +157,17 @@ namespace RADB
             });
         }
 
-        public async Task DownloadGameExtendImages(Download dlGameExtendImages, Game game)
+        public async Task DownloadGameExtendImages(Game game)
         {
             await Task.Run(async () =>
             {
                 GameExtend gamex = await GameExtend.Listar(game.ID);
-                dlGameExtendImages.Files = new List<DownloadFile>() {
+                Browser.dlGameExtendImages.Files = new List<DownloadFile>() {
                     gamex.ImageTitleFile,
                     gamex.ImageIngameFile,
                     gamex.ImageBoxArtFile,
                 };
-                await (dlGameExtendImages.Start());
+                await (Browser.dlGameExtendImages.Start());
             });
         }
         #endregion
@@ -194,49 +192,6 @@ namespace RADB
             });
         }
         #endregion
-
-        public DownloadFile DownloadGameInfoExtended(Game game)
-        {
-            return new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), JSN_GameInfoExtend(game.ConsoleID, game.ID));
-        }
-
-        public string FileGameInfoExtended(int consoleID, int gameID)
-        {
-            return Folder.GameDataExtend(consoleID) + gameID + ".json";
-        }
-
-        public static string API_GameExtended = "API_GetGameExtended.php";
-
-        //JSON
-        public static string JSN_GameInfoExtend(int consoleID, int gameID) { return Folder.GameDataExtend(consoleID) + gameID + ".json"; }
-
-        public async Task<GameExtend> GetGameInfoExtended(int gameID)
-        {
-            if (gameID <= 0) { return null; }
-
-            string fileName = Folder.GameDataExtend(1) + gameID + ".json";
-            //JObject result = Browser.ToJObject(API_URL("API_GetGameExtended.php", "&i=", gameID.ToString()));
-            Download dl = new Download()
-            {
-                Overwrite = false,
-                Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + gameID.ToString()), fileName) },
-                //ProgressBarName = "pgbUpdates",
-                //LabelBytesName = "lblUpdateProgress",
-                //LabelTimeName = "lblUpdateConsoles",
-            };
-            await dl.Start();
-
-            return await Task.Run(() =>
-            {
-                JObject result = Browser.ToJObject(fileName);
-
-                GameExtend game = result.ToObject<GameExtend>();
-                JToken a = result["Achievements"];
-                game.SetAchievements(result["Achievements"]);
-                return game;
-            });
-            //return new Game();
-        }
 
         public async Task DownloadBadges(int gameID)
         {

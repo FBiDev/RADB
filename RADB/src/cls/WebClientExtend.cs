@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-//
 using System.Text;
 using System.Threading.Tasks;
+//
 using System.IO;
 using System.IO.Compression;
 using System.ComponentModel;
 using System.Net;
-using System.Windows.Forms;
 using GNX;
 
 namespace RADB
@@ -56,8 +56,11 @@ namespace RADB
         private string GZipExtension { get { return ".gz"; } }
         private long GZipSize { get; set; }
         private long GZipSizeUncompressed { get; set; }
-        private string FileDownloaded;
-        private bool Error;
+        public DownloadFile FileDownloaded;
+
+        private bool _Error;
+        public bool Error { get { return _Error; } }
+        public string ErrorMessage;
 
         public WebClientExtend()
             : base()
@@ -75,14 +78,16 @@ namespace RADB
 
         public new Task DownloadFileTaskAsync(Uri address, string fileName)
         {
-            FileDownloaded = fileName;
+            FileDownloaded = new DownloadFile(address.ToString(), fileName);
             return base.DownloadFileTaskAsync(address, fileName);
         }
 
-        public new string DownloadString(string address)
+        public async new Task<string> DownloadString(string address)
         {
-            byte[] data = DownloadData(address);
             string msg = string.Empty;
+            byte[] data = await DownloadData(address);
+
+            if (_Error) { return msg; }
 
             if (ResponseHeaders == null) { return msg; }
 
@@ -109,27 +114,29 @@ namespace RADB
             return msg;
         }
 
-        public new byte[] DownloadData(string address)
+        public async new Task<byte[]> DownloadData(string address)
         {
             HttpWebResponse response = null;
             byte[] data = new byte[0];
 
             try
             {
-                Error = false;
-                data = base.DownloadData(address);
+                _Error = false;
+                data = await base.DownloadDataTaskAsync(new Uri(address));
             }
             catch (WebException we)
             {
-                Error = true;
+                if (_Error) { return data; }
+
+                _Error = true;
                 if (we.Response == null)
                 {
-                    MessageBox.Show("Download Error: \r\n\r\n" + "Status: " + we.Status + "\r\n\r\n" + we.Message + "\r\n\r\n" + we.InnerException.Message);
+                    ErrorMessage = "Download Error: \r\n\r\n" + "Status: " + we.Status + "\r\n\r\n" + we.Message + "\r\n\r\n" + we.InnerException.Message;
                 }
                 else
                 {
                     response = we.Response as HttpWebResponse;
-                    MessageBox.Show("Download Error: \r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription);
+                    ErrorMessage = "Download Error: \r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription;
                 }
             }
 
@@ -145,9 +152,6 @@ namespace RADB
         protected override WebRequest GetWebRequest(Uri address)
         {
             HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
-
-            //request.KeepAlive = false;
-            //request.IfModifiedSince = DateTime.UtcNow;
 
             if (FileDownloaded == null)
             {
@@ -168,31 +172,51 @@ namespace RADB
             HttpWebResponse response = null;
             try
             {
-                Error = false;
+                _Error = false;
                 response = base.GetWebResponse(request, result) as HttpWebResponse;
             }
             catch (WebException we)
             {
-                Error = true;
-                response = we.Response as HttpWebResponse;
-                MessageBox.Show("Error to download: " + FileDownloaded + "\r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription);
+                _Error = true;
+                if (we.Response == null)
+                {
+                    ErrorMessage = "Download Error: \r\n\r\n" + "Status: " + we.Status + "\r\n\r\n" + we.Message;
+                }
+                else
+                {
+                    response = we.Response as HttpWebResponse;
+                    var fileURL = FileDownloaded == null ? response.ResponseUri.AbsoluteUri : FileDownloaded.URL;
+                    ErrorMessage = "Error to download: " + fileURL + "\r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription;
+                }
             }
 
             return response;
         }
 
+        protected override void OnDownloadProgressChanged(DownloadProgressChangedEventArgs e)
+        {
+            if (FileDownloaded != null)
+            {
+                FileDownloaded.BytesReceived = e.BytesReceived;
+                FileDownloaded.TotalBytesToReceive = e.TotalBytesToReceive;
+                FileDownloaded.ProgressPercentage = e.ProgressPercentage;
+            }
+
+            base.OnDownloadProgressChanged(e);
+        }
+
         protected override void OnDownloadFileCompleted(AsyncCompletedEventArgs e)
         {
-            if (Error)
+            if (_Error)
             {
-                File.Delete(FileDownloaded);
+                File.Delete(FileDownloaded.Path);
                 base.OnDownloadFileCompleted(e);
                 return;
             }
 
             if (GZipContent)
             {
-                FileInfo fileToDecompress = new FileInfo(FileDownloaded);
+                FileInfo fileToDecompress = new FileInfo(FileDownloaded.Path);
 
                 string oldName = fileToDecompress.FullName;
                 //string NoExtensionName = oldName.Remove(oldName.Length - fileToDecompress.Extension.Length);

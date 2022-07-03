@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-//
-using System.Threading.Tasks;
-using System.IO;
-using System.Net;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Text;
+using System.Threading.Tasks;
+//
+using System.Net;
+using System.Windows.Forms;
 
 namespace RADB
 {
@@ -35,19 +34,24 @@ namespace RADB
             }
         }
 
+        //===Downloads
+        public static Download dlConsoles = new Download { Overwrite = true, FolderBase = Folder.Console, };
+        public static Download dlGames = new Download { Overwrite = true, FolderBase = Folder.GameData, };
+        public static Download dlGamesIcon = new Download() { Overwrite = false, FolderBase = Folder.IconsBase, };
+        public static Download dlGameExtend = new Download { Overwrite = true, FolderBase = Folder.GameDataExtendBase, };
+        public static Download dlGameExtendImages = new Download { Overwrite = false, FolderBase = Folder.Images, };
+
         public static void Load()
         {
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.DefaultConnectionLimit = 128;
-
-            var j = JsonConvert.DeserializeObject<JObject>("{\"LoadJsonDLL\":\"...\"}");
         }
 
         private static Random rand = new Random();
         public async static Task<string> DownloadString(string url, bool addRandomNumber = false)
         {
-            return await Task<string>.Run(() =>
+            return await Task<string>.Run(async () =>
             {
                 string data = string.Empty;
 
@@ -55,37 +59,24 @@ namespace RADB
                 {
                     if (addRandomNumber)
                     {
-                        url = url + "&random=" + rand.Next();
+                        if (url.IndexOf("?") < 0)
+                        { url += "?"; }
+                        else { url += "&"; }
+
+                        url += "random=" + rand.Next();
                     }
 
-                    data = client.DownloadString(url);
-
+                    data = await client.DownloadString(url);
+                    if (client.Error)
+                    {
+                        MessageBox.Show(client.ErrorMessage);
+                    }
                     //if (client.HeaderExist("X-Cache") && client.ResponseHeaders["X-Cache"] != "HIT")
                     //{ var a = 1; }
                 }
 
                 return data;
             });
-        }
-
-        public static JObject ToJObject(string path)
-        {
-            if (string.IsNullOrWhiteSpace(path)) { return new JObject(); }
-
-            string content = path;
-            if (path.IndexOf("http://") >= 0 || path.IndexOf("https://") >= 0)
-            {
-                //content = DownloadString(path);
-            }
-            else
-            {
-                using (StreamReader file = new StreamReader(path))
-                {
-                    content = file.ReadToEnd();
-                }
-            }
-            JObject result = JsonConvert.DeserializeObject<JObject>(content);
-            return result;
         }
     }
 }
