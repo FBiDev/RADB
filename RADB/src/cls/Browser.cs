@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,11 +42,13 @@ namespace RADB
         public static Download dlGameExtend = new Download { Overwrite = true, FolderBase = Folder.GameDataExtendBase, };
         public static Download dlGameExtendImages = new Download { Overwrite = false, FolderBase = Folder.Images, };
 
-        public static void Load()
+        public async static void Load()
         {
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.DefaultConnectionLimit = 128;
+
+            //var html = await DownloadString("https://retroachievements.org/controlpanel.php");
         }
 
         private static Random rand = new Random();
@@ -65,8 +68,17 @@ namespace RADB
 
                         url += "random=" + rand.Next();
                     }
+                    //client.Credentials = new NetworkCredential("FBiDev", "Ret1248!");
+
+                    var values = new NameValueCollection
+                    {
+                        { "u", "FBiDev" },
+                        { "p", "Ret1248!" },
+                    };
+                    //client.UploadValues("https://retroachievements.org/request/auth/login.php", values);
 
                     data = await client.DownloadString(url);
+                    //var aa = await client.DownloadString("https://retroachievements.org/setRequestList.php?u=FBiDev");
                     if (client.Error)
                     {
                         MessageBox.Show(client.ErrorMessage);

@@ -62,6 +62,8 @@ namespace RADB
         public bool Error { get { return _Error; } }
         public string ErrorMessage;
 
+        public CookieContainer CookieContainer { get; private set; }
+
         public WebClientExtend()
             : base()
         {
@@ -69,6 +71,8 @@ namespace RADB
 
             Encoding = Encoding.UTF8;
             Proxy = Browser.Proxy;
+
+            CookieContainer = new CookieContainer();
         }
 
         public new Task DownloadFileTaskAsync(string address, string fileName)
@@ -152,6 +156,7 @@ namespace RADB
         protected override WebRequest GetWebRequest(Uri address)
         {
             HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
+            request.CookieContainer = CookieContainer;
 
             if (FileDownloaded == null)
             {
