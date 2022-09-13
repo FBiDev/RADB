@@ -12,6 +12,7 @@ namespace RADB
         public static bool umaExecucao = true;
         public const string sistema = "RADatabase";
         public static bool Loaded { get; set; }
+        public static bool DarkMode { get; set; }
 
         public static void Start()
         {
@@ -20,6 +21,7 @@ namespace RADB
 
             //Carregar Config
             Banco.ConfigLoaded = Loaded = CarregarXML();
+            DarkMode = true;
 
             //Carregar BaseSistema
             Banco.Carregar("", "");

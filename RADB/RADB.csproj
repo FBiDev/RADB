@@ -96,6 +96,12 @@
     <Compile Include="src\custom\FlatButtonA.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="src\custom\FlatDataGridA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\custom\FlatDataGridA.Designer.cs">
+      <DependentUpon>FlatDataGridA.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\custom\FlatTextBoxA.cs">
       <SubType>UserControl</SubType>
     </Compile>

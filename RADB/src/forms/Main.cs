@@ -32,6 +32,8 @@ namespace RADB
         public ListBind<Game> lstGames = new ListBind<Game>();
         public ListBind<Game> lstGamesSearch = new ListBind<Game>();
 
+        private bool WithoutAchievements = true;
+
         public Main()
         {
             InitializeComponent();
@@ -40,6 +42,27 @@ namespace RADB
             Load += Main_Load;
             Shown += Main_Shown;
             Resize += Main_Resize;
+
+            if (Config.DarkMode)
+            {
+                this.BackColor = ColorTranslator.FromHtml("#F4F4F4");
+                //pnlOutput.BackColor = ColorTranslator.FromHtml("#F4F4F4");
+                //pnlOutput.BorderColor = ColorTranslator.FromHtml("#A0A0A0");
+
+                tabMain.myBackColor = ColorTranslator.FromHtml("#F4F4F4");
+                foreach (TabPage tab in tabMain.TabPages)
+                {
+                    tab.BackColor = Color.Transparent;
+                }
+                //tabMain.myBorderColor = ColorTranslator.FromHtml("#6D7AE0");
+                //dgvConsoles.BackgroundColor = ColorTranslator.FromHtml("#F4F4F4");
+            }
+            else
+            {
+                this.BackColor = SystemColors.Control;
+                pnlOutput.BackColor = Color.White;
+                //pnlOutput.BorderColor = ColorTranslator.FromHtml("#A0A0A0");
+            }
 
             //KeyPreview = true;
             //KeyDown += Main_KeyDown;
@@ -190,11 +213,25 @@ namespace RADB
             {
                 //Update Console
                 ListBind<Game> list = (ListBind<Game>)dgvGames.DataSource;
-                var NumGames = list.Sum(g => (g.NumAchievements > 0).ToInt());
-                var TotalGames = list.Count();
-
+                var numGames = list.Sum(g => (g.NumAchievements > 0).ToInt());
+                var totalGames = list.Count();
                 lblConsoleName.Text = ConsoleBind.Name;
-                lblConsoleGamesTotal.Text = NumGames + " of " + TotalGames + " Games";
+                lblConsoleGamesTotal.Text = numGames + " of " + totalGames + " Games";
+
+                var protoSrc = "~Prototype~";
+                var protos = list.Sum(g => (g.Title.IndexOf(protoSrc) >= 0 && g.NumAchievements > 0).ToInt());
+                var protosTotal = list.Sum(g => (g.Title.IndexOf(protoSrc) >= 0).ToInt());
+                lblConsoleGamesPrototype.Text = protos + " of " + protosTotal + " Prototypes";
+
+                var demoSrc = "~Demo~";
+                var demos = list.Sum(g => (g.Title.IndexOf(demoSrc) >= 0 && g.NumAchievements > 0).ToInt());
+                var demosTotal = list.Sum(g => (g.Title.IndexOf(demoSrc) >= 0).ToInt());
+                lblConsoleGamesDemo.Text = demos + " of " + demosTotal + " Demos";
+
+                var unlicensedSrc = "~Unlicensed~";
+                var unlicenseds = list.Sum(g => (g.Title.IndexOf(unlicensedSrc) >= 0 && g.NumAchievements > 0).ToInt());
+                var unlicensedsTotal = list.Sum(g => (g.Title.IndexOf(unlicensedSrc) >= 0).ToInt());
+                lblConsoleGamesUnlicensed.Text = unlicenseds + " of " + unlicensedsTotal + " Unlicenseds";
             }
         }
 
@@ -271,10 +308,12 @@ namespace RADB
             //lstGamesSearch.Clear();
             lstGamesSearch.AddRange(lstGames);
 
-            dgvGames.DataSource = lstGamesSearch;
+            //dgvGames.DataSource = lstGamesSearch;
 
             //Show console Column if is in All Games
             dgvGames.Columns["gConsole"].Visible = ConsoleBind.ID == 0;
+
+            txtSearchGames_TextChanged(null, null);
 
             EnablePanelGames(true);
             dgvGames.Focus();
@@ -401,7 +440,14 @@ namespace RADB
 
                 if (title)
                 {
-                    newSearch.Add(obj);
+                    if (WithoutAchievements == false && obj.NumAchievements > 0)
+                    {
+                        newSearch.Add(obj);
+                    }
+                    else if (WithoutAchievements)
+                    {
+                        newSearch.Add(obj);
+                    }
                 }
             }
             dgvGames.DataSource = newSearch;
@@ -666,6 +712,13 @@ namespace RADB
                 e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 //e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             }
+        }
+
+        private void chkWithoutAchievements_CheckedChanged(object sender, EventArgs e)
+        {
+            WithoutAchievements = ((CheckBox)sender).Checked;
+            txtSearchGames_TextChanged(null, null);
+            dgvGames.Focus();
         }
     }
 }
