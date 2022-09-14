@@ -32,8 +32,6 @@ namespace RADB
         public ListBind<Game> lstGames = new ListBind<Game>();
         public ListBind<Game> lstGamesSearch = new ListBind<Game>();
 
-        private bool WithoutAchievements = true;
-
         public Main()
         {
             InitializeComponent();
@@ -91,6 +89,14 @@ namespace RADB
 
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
             txtSearchGames.KeyDown += txtSearchGames_KeyDown;
+
+            chkWithoutAchievements.CheckedChanged += chkUpdateDataGrid;
+            chkOfficial.CheckedChanged += chkUpdateDataGrid;
+            chkPrototype.CheckedChanged += chkUpdateDataGrid;
+            chkUnlicensed.CheckedChanged += chkUpdateDataGrid;
+            chkDemo.CheckedChanged += chkUpdateDataGrid;
+            chkHack.CheckedChanged += chkUpdateDataGrid;
+            chkHomebrew.CheckedChanged += chkUpdateDataGrid;
 
             btnDownloadBadges.Click += btnDownloadBadges_Click;
 
@@ -212,26 +218,10 @@ namespace RADB
             if (ConsoleBind.NotNull())
             {
                 //Update Console
-                ListBind<Game> list = (ListBind<Game>)dgvGames.DataSource;
-                var numGames = list.Sum(g => (g.NumAchievements > 0).ToInt());
-                var totalGames = list.Count();
+                var numGames = lstGamesSearch.Sum(g => (g.NumAchievements > 0).ToInt());
+                var totalGames = lstGamesSearch.Count();
                 lblConsoleName.Text = ConsoleBind.Name;
                 lblConsoleGamesTotal.Text = numGames + " of " + totalGames + " Games";
-
-                var protoSrc = "~Prototype~";
-                var protos = list.Sum(g => (g.Title.IndexOf(protoSrc) >= 0 && g.NumAchievements > 0).ToInt());
-                var protosTotal = list.Sum(g => (g.Title.IndexOf(protoSrc) >= 0).ToInt());
-                lblConsoleGamesPrototype.Text = protos + " of " + protosTotal + " Prototypes";
-
-                var demoSrc = "~Demo~";
-                var demos = list.Sum(g => (g.Title.IndexOf(demoSrc) >= 0 && g.NumAchievements > 0).ToInt());
-                var demosTotal = list.Sum(g => (g.Title.IndexOf(demoSrc) >= 0).ToInt());
-                lblConsoleGamesDemo.Text = demos + " of " + demosTotal + " Demos";
-
-                var unlicensedSrc = "~Unlicensed~";
-                var unlicenseds = list.Sum(g => (g.Title.IndexOf(unlicensedSrc) >= 0 && g.NumAchievements > 0).ToInt());
-                var unlicensedsTotal = list.Sum(g => (g.Title.IndexOf(unlicensedSrc) >= 0).ToInt());
-                lblConsoleGamesUnlicensed.Text = unlicenseds + " of " + unlicensedsTotal + " Unlicenseds";
             }
         }
 
@@ -279,7 +269,7 @@ namespace RADB
         private void EnablePanelGames(bool enable)
         {
             pnlDownloadGameList.Enabled = enable;
-            txtSearchGames.Enabled = enable;
+            pnlGamesConsoleName.Enabled = enable;
 
             lblNotFoundGameList.Visible = false;
             picLoaderGameList.Visible = !enable;
@@ -344,9 +334,8 @@ namespace RADB
             UpdateConsoleLabels();
             TimeSpan fim2 = new TimeSpan(DateTime.Now.Ticks) - ini2;
             //Update ConsoleBind
-            ListBind<Game> list = (ListBind<Game>)dgvGames.DataSource;
-            ConsoleBind.NumGames = list.Sum(g => (g.NumAchievements > 0).ToInt());
-            ConsoleBind.TotalGames = list.Count();
+            ConsoleBind.NumGames = lstGames.Sum(g => (g.NumAchievements > 0).ToInt());
+            ConsoleBind.TotalGames = lstGames.Count();
 
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + ConsoleBind.Name + " Updated!" + Environment.NewLine + lblOutput.Text;
         }
@@ -437,24 +426,52 @@ namespace RADB
                 bool title;
 
                 title = (obj.Title != null && (obj.Title.IndexOf(txtSearchGames.Text, StringComparison.CurrentCultureIgnoreCase) > -1));
+                bool noCheevos = !chkWithoutAchievements.Checked && obj.NumAchievements == 0;
 
-                if (title)
+                bool official = chkOfficial.Checked
+                    && obj.Title.IndexOf("~Prototype~") == -1
+                    && obj.Title.IndexOf("~Unlicensed~") == -1
+                    && obj.Title.IndexOf("~Demo~") == -1
+                    && obj.Title.IndexOf("~Hack~") == -1
+                    && obj.Title.IndexOf("~Homebrew~") == -1;
+
+                bool proto = chkPrototype.Checked && obj.Title.IndexOf("~Prototype~") >= 0;
+                bool unl = chkUnlicensed.Checked && obj.Title.IndexOf("~Unlicensed~") >= 0;
+                bool demo = chkDemo.Checked && obj.Title.IndexOf("~Demo~") >= 0;
+                bool hack = chkHack.Checked && obj.Title.IndexOf("~Hack~") >= 0;
+                bool homebrew = chkHomebrew.Checked && obj.Title.IndexOf("~Homebrew~") >= 0;
+
+                if (title && !noCheevos)
                 {
-                    if (WithoutAchievements == false && obj.NumAchievements > 0)
-                    {
-                        newSearch.Add(obj);
-                    }
-                    else if (WithoutAchievements)
+                    if (official || proto || unl || demo || hack || homebrew)
                     {
                         newSearch.Add(obj);
                     }
                 }
             }
+
+            int scrollPosition = dgvGames.FirstDisplayedScrollingRowIndex;
             dgvGames.DataSource = newSearch;
+            lstGamesSearch = newSearch;
+
+            bool maintainScroll = false;
+            if (maintainScroll)
+            {
+                if (dgvGames.RowCount > 0 && scrollPosition > -1)
+                {
+                    if (scrollPosition > dgvGames.RowCount)
+                        dgvGames.FirstDisplayedScrollingRowIndex = dgvGames.RowCount - 1;
+                    else
+                        dgvGames.FirstDisplayedScrollingRowIndex = scrollPosition;
+                }
+                //txtSearchGames.Focus();
+            }
 
             LoadGamesIcon();
             dgvGames.Refresh();
             UpdateConsoleLabels();
+
+            EnablePanelGames(true);
         }
 
         private void txtSearchGames_KeyDown(object sender, KeyEventArgs e)
@@ -698,11 +715,6 @@ namespace RADB
             });
         }
 
-        private void lblAbUserpage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start(((LinkLabel)sender).Text);
-        }
-
         void dgvGames_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             e.Graphics.InterpolationMode = InterpolationMode.Default;
@@ -714,11 +726,15 @@ namespace RADB
             }
         }
 
-        private void chkWithoutAchievements_CheckedChanged(object sender, EventArgs e)
+        private void chkUpdateDataGrid(object sender, EventArgs e)
         {
-            WithoutAchievements = ((CheckBox)sender).Checked;
             txtSearchGames_TextChanged(null, null);
             dgvGames.Focus();
+        }
+
+        private void btnRaProfile_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://retroachievements.org/user/FBiDev");
         }
     }
 }

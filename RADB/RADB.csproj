@@ -93,6 +93,12 @@
     <Compile Include="src\cls\WebClientExtend.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="src\custom\CheckBoxBlueA.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\custom\CheckBoxBlueA.Designer.cs">
+      <DependentUpon>CheckBoxBlueA.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\custom\FlatButtonA.cs">
       <SubType>Component</SubType>
     </Compile>
