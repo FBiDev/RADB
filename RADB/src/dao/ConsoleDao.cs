@@ -23,7 +23,7 @@ namespace RADB
                 {
                     ID = row.Value<int>("ID"),
                     Company = row.Value<string>("Company"),
-                    Name = row.Value<string>("Name"),
+                    Name = row.Value<string>("CName"),
                     NumGames = row.Value<int>("NumGames"),
                     TotalGames = row.Value<int>("TotalGames"),
                 });
