@@ -454,17 +454,20 @@ namespace RADB
             dgvGames.DataSource = newSearch;
             lstGamesSearch = newSearch;
 
-            bool maintainScroll = false;
+            bool maintainScroll = true;
             if (maintainScroll)
             {
+                bool txtFocus = txtSearchGames.Focused;
+
                 if (dgvGames.RowCount > 0 && scrollPosition > -1)
                 {
-                    if (scrollPosition > dgvGames.RowCount)
+                    if (scrollPosition >= dgvGames.RowCount)
                         dgvGames.FirstDisplayedScrollingRowIndex = dgvGames.RowCount - 1;
                     else
                         dgvGames.FirstDisplayedScrollingRowIndex = scrollPosition;
                 }
-                //txtSearchGames.Focus();
+
+                if (txtFocus) { txtSearchGames.Focus(); }
             }
 
             LoadGamesIcon();
