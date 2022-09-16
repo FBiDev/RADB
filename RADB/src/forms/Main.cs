@@ -32,6 +32,10 @@ namespace RADB
         public ListBind<Game> lstGames = new ListBind<Game>();
         public ListBind<Game> lstGamesSearch = new ListBind<Game>();
 
+        public ListBind<Game> lstGamesHidden = new ListBind<Game>();
+
+        public List<DataGridView> lstDgvGames = new List<DataGridView>();
+
         public Main()
         {
             InitializeComponent();
@@ -84,6 +88,8 @@ namespace RADB
 
             dgvGames.CellPainting += dgvGames_CellPainting;
 
+            dgvHiddenGames.AutoGenerateColumns = false;
+
             dgvAchievements.AutoGenerateColumns = false;
             dgvAchievements.DataSourceChanged += dgvAchievements_DataSourceChanged;
 
@@ -125,8 +131,13 @@ namespace RADB
             Browser.dlGameExtend.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
             Browser.dlGameExtendImages.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
 
+            lstDgvGames.Add(dgvGames);
+            lstDgvGames.Add(dgvHiddenGames);
+
             await LoadConsoles();
             await LoadGames();
+            await LoadGamesHidden();
+
             //TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             //TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
         }
@@ -161,20 +172,25 @@ namespace RADB
         {
             TabControl tab = (sender as TabControl);
 
+            if (tab.SelectedTab == tabConsoles)
+            {
+                dgvConsoles.Focus(); return;
+            }
+
             if (tab.SelectedTab == tabGames)
             {
                 pnlGamesConsoleName.Visible = !ConsoleBind.IsNull();
                 dgvGames.Focus(); return;
             }
 
-            if (tab.SelectedTab == tabConsoles)
-            {
-                dgvConsoles.Focus(); return;
-            }
-
             if (tab.SelectedTab == tabGameInfo)
             {
                 pnlInfoScroll.Focus(); return;
+            }
+
+            if (tab.SelectedTab == tabHiddenGames)
+            {
+                dgvHiddenGames.Focus(); return;
             }
         }
 
@@ -311,6 +327,14 @@ namespace RADB
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
         }
 
+        private async Task LoadGamesHidden()
+        {
+            lstGamesHidden = await Game.ListarHiddenBind();
+            dgvHiddenGames.DataSource = lstGamesHidden;
+            LoadGamesIcon();
+            dgvHiddenGames.Refresh();
+        }
+
         private async void btnUpdateGameList_Click(object sender, EventArgs e)
         {
             if (ConsoleBind.IsNull()) { MessageBox.Show("No Console Selected"); return; }
@@ -390,30 +414,33 @@ namespace RADB
 
         private async void LoadGamesIcon()
         {
-            try
+            foreach (DataGridView dgv in lstDgvGames)
             {
-                await Task.Run(() =>
+                try
                 {
-                    if (dgvGames.DataSource.IsNull()) { return; }
-
-                    ListBind<Game> list = (ListBind<Game>)(dgvGames.DataSource);
-
-                    int index = dgvGames.FirstDisplayedScrollingRowIndex;
-                    if (list.Count == 0 || index < 0) { return; }
-
-                    double nItems = Math.Ceiling((float)((float)(this.Size.Height - 293) / 37)) + 3;
-
-                    for (int i = index; i < index + nItems; i++)
+                    await Task.Run(() =>
                     {
-                        if (i >= list.Count) { return; }
+                        if (dgv.DataSource.IsNull()) { return; }
 
-                        Game g = list[i];
-                        g.SetImageIconBitmap();
-                    }
-                });
+                        ListBind<Game> list = (ListBind<Game>)(dgv.DataSource);
+
+                        int index = dgv.FirstDisplayedScrollingRowIndex;
+                        if (list.Count == 0 || index < 0) { return; }
+
+                        double nItems = Math.Ceiling((float)((float)(this.Size.Height - 293) / 37)) + 3;
+
+                        for (int i = index; i < index + nItems; i++)
+                        {
+                            if (i >= list.Count) { return; }
+
+                            Game g = list[i];
+                            g.SetImageIconBitmap();
+                        }
+                    });
+                }
+                catch (Exception) { }
+                dgv.Refresh();
             }
-            catch (Exception) { }
-            dgvGames.Refresh();
         }
 
         private void txtSearchGames_TextChanged(object sender, EventArgs e)
@@ -738,6 +765,68 @@ namespace RADB
         private void btnRaProfile_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://retroachievements.org/user/FBiDev");
+        }
+
+        private async void cmnHideGame_Click(object sender, EventArgs e)
+        {
+            Game game = dgv_SelectionChanged<Game>(dgvGames);
+
+            if (GameDao.IncluirHidden(game))
+            {
+                CurrencyManager cMnger = (CurrencyManager)BindingContext[dgvGames.DataSource];
+                cMnger.SuspendBinding();
+                dgvGames.SelectedRows[0].Visible = false;
+                cMnger.ResumeBinding();
+
+                await LoadGamesHidden();
+            }
+        }
+
+        private void dgvGames_MouseDown(object sender, MouseEventArgs e)
+        {
+            FlatDataGridA dgv = ((FlatDataGridA)sender);
+            int index = dgv.HitTest(e.X, e.Y).RowIndex;
+
+            if (index > -1 && e.Button == MouseButtons.Right)
+            {
+                dgv.ClearSelection();
+                dgv.CurrentCell = dgv.Rows[index].Cells[0];
+                ctmGames.Show(MousePosition);
+            }
+        }
+
+        private void dgvHiddenGames_MouseDown(object sender, MouseEventArgs e)
+        {
+            DataGridView dgv = ((DataGridView)sender);
+            int index = dgv.HitTest(e.X, e.Y).RowIndex;
+
+            if (index > -1 && e.Button == MouseButtons.Right)
+            {
+                dgv.ClearSelection();
+                dgv.CurrentCell = dgv.Rows[index].Cells[0];
+                ctmHiddenGames.Show(MousePosition);
+            }
+        }
+
+        private async void cmnRemoveGame_Click(object sender, EventArgs e)
+        {
+            Game game = dgv_SelectionChanged<Game>(dgvHiddenGames);
+
+            if (await GameDao.ExcluirHidden(game))
+            {
+                lstGamesHidden.Remove(game);
+                if(ConsoleBind.ID == game.ConsoleID)
+                {
+                    ((ListBind<Game>)dgvGames.DataSource).Add(game);
+                    dgvGames.Refresh();
+                }
+                //CurrencyManager cMnger = (CurrencyManager)BindingContext[dgvGames.DataSource];
+                //cMnger.SuspendBinding();
+                //dgvGames.SelectedRows[0].Visible = false;
+                //cMnger.ResumeBinding();
+
+                //await LoadGamesHidden();
+            }
         }
     }
 }

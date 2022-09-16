@@ -102,14 +102,14 @@ namespace RADB.Properties {
         ///	, c.Name AS Company 
         ///	,(CASE WHEN ci.ConsoleNameComplete IS NULL THEN 
         ///		CASE WHEN co.Name IS NULL THEN c.Name ELSE co.Name END 
-        ///	  ELSE ci.ConsoleNameComplete END) AS Name 
+        ///	  ELSE ci.ConsoleNameComplete END) AS CName 
         ///	, SUM(CASE WHEN g.NumAchievements &gt; 0 THEN 1 ELSE 0 END) NumGames 
         ///	, Count(g.ID) AS TotalGames 
         ///FROM Company AS c 
         ///	LEFT JOIN CompanyItems AS ci ON ci.CompanyID = c.ID 
         ///		--AND ci.Active = 1 
         ///	LEFT JOIN Console AS co ON co.ID = ci.ConsoleID 
-        ///	LEFT JOIN GameData AS g ON (g.ConsoleID = co.ID OR co.Name  [rest of string was truncated]&quot;;.
+        ///	LEFT JOIN GameData AS g ON (g.ConsoleID = co.ID OR co.Name [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ConsoleListar {
             get {
@@ -240,6 +240,39 @@ namespace RADB.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to --
+        ///DELETE 
+        ///FROM HiddenGame 
+        ///WHERE 1 = 1 
+        ///	AND (ID = @ID 
+        ///		OR (@ID = 0 OR @ID IS NULL)) 
+        ///	AND (ConsoleID = @ConsoleID 
+        ///		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
+        ///;
+        ///--.
+        /// </summary>
+        internal static string GameHiddenExcluir {
+            get {
+                return ResourceManager.GetString("GameHiddenExcluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///INSERT INTO HiddenGame ( 
+        ///	  ID 
+        ///	) VALUES ( 
+        ///	  @ID
+        ///);
+        ///--.
+        /// </summary>
+        internal static string GameHiddenIncluir {
+            get {
+                return ResourceManager.GetString("GameHiddenIncluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
         ///INSERT INTO GameData ( 
         ///	  ID 
         ///	, Title 
@@ -283,20 +316,45 @@ namespace RADB.Properties {
         ///	, DateModified 
         ///	, ForumTopicID 
         ///FROM GameData AS g 
-        ///	LEFT JOIN Console AS c ON c.ID = g.ConsoleID 
+        ///	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
         ///WHERE 1 = 1 
+        ///	AND g.id NOT IN( SELECT ID FROM HiddenGame ) 
         ///	AND c.ID &lt;&gt; 100 AND c.ID &lt;&gt; 101 
         ///	AND (g.ID = @ID 
         ///		OR (@ID = 0 OR @ID IS NULL)) 
         ///	AND (g.Title LIKE &apos;%&apos;+@Title+&apos;%&apos; 
         ///		OR (@Title = &apos;&apos; OR @Title IS NULL)) 
         ///	AND (g.ConsoleID = @ConsoleID 
-        ///		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
-        ///	.
+        ///		OR [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GameListar {
             get {
                 return ResourceManager.GetString("GameListar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///SELECT
+        ///	  g.ID 
+        ///	, Title 
+        ///	, ConsoleID 
+        ///	, C.Name AS ConsoleName 
+        ///	, ImageIcon 
+        ///	, NumAchievements 
+        ///	, Points 
+        ///	, NumLeaderboards 
+        ///	, DateModified 
+        ///	, ForumTopicID 
+        ///FROM GameData AS g 
+        ///	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
+        ///	INNER JOIN HiddenGame AS gh ON gh.ID = g.ID 
+        ///WHERE 1 = 1 
+        ///	.
+        /// </summary>
+        internal static string GameListarHidden {
+            get {
+                return ResourceManager.GetString("GameListarHidden", resourceCulture);
             }
         }
         
