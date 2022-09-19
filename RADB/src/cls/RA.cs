@@ -12,6 +12,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RADB.Properties;
 using GNX;
+using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace RADB
 {
@@ -196,14 +198,35 @@ namespace RADB
         public async Task DownloadBadges(int gameID)
         {
             if (Main.ConsoleBind.IsNull()) { MessageBox.Show("No Console Selected"); return; }
+            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
 
             //int FilesDownloaded = 0;
 
             //Get ManyGames
             int cID = 58;
-            if (Main.ConsoleBind.NotNull()) { cID = Main.ConsoleBind.ID; }
-            List<Game> Games = await Game.Listar(cID);
-            List<DownloadFile> gFiles = new List<DownloadFile>(Games.Where(a => a.NumAchievements > 0).Select(g => g.ImageIconFile));
+            if (Main.ConsoleBind.NotNull() && Main.ConsoleBind.ID > 0) { cID = Main.ConsoleBind.ID; }
+
+            //List<Game> Games = (await Game.Listar(cID)).Where(a => a.NumAchievements > 0).ToList();
+
+
+            List<Game> gs = (await Game.Listar(cID)).Where(a =>
+            {
+                //return true;
+                //return a.NumAchievements > 0;
+                return a.NumAchievements > 0
+                    && new Picture(a.ImageIconFile.Path).Bitmap.Size != GameIconSize;
+
+            }).ToList();
+            //IEnumerable<DownloadFile> gFiles = gs.Select(g => g.ImageIconFile);
+            await DownloadGamesIcon(Main.ConsoleBind);
+            //int FilesDownloaded = Browser.dlGamesIcon.FilesCompleted;
+
+            //var aFiles = gs.Select(g => g.ImageIconFile.Path).ToList();
+            var aFiles = Archive.RemoveDuplicates(gs.Select(g => g.ImageIconFile.Path)).ToList();
+
+
+
+
 
             //var query = gCheevos.GroupBy(x => new { x.BadgeURL, x.GameID }).Where(g => g.Count() > 1)
             //  .Select(y => new { Element = y.Key, Counter = y.Count() })
@@ -214,25 +237,34 @@ namespace RADB
             //Game gameX = await GetGameInfoExtended(gameID);
             //gFiles = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
             //gFiles = new List<DownloadFile>() { new DownloadFile("https://dl18.cdromance.com/download.php?file=Megaman_Powered_Up_USA_PSP-DMU.7z&id=251&platform=psp&key=6299971769", "MM.7z") };
-            Download dlGameBadges = new Download()
-            {
-                Files = gFiles,
-                Overwrite = false,
-                //ProgressBarName = "pgbUpdates",
-                //LabelBytesName = "lblUpdateProgress",
-                //LabelTimeName = "lblUpdateConsoles",
-            };
-            await dlGameBadges.Start();
+            //Browser.dlGamesIcon = new Download()
+            //{
+            //    Files = gFiles,
+            //    Overwrite = false,
+            //};
+            //await dlGamesIcon.Start();
 
-            int FilesDownloaded = dlGameBadges.FilesCompleted;
 
-            List<string> afiles = Archive.RemoveDuplicates(gFiles.Select(f => f.Path).ToList());
-            if (afiles.Count > 0)
+
+
+            //List<string> afiles = Archive.RemoveDuplicates(gFiles.Select(f => f.Path).ToList());
+            //afiles = Archive.RemoveImageSize(afiles, GameIconSize);
+
+            if (gs.Any())
             {
-                Picture pic = new Picture(afiles, true, 11, GameIconSize, false);
+                Picture pic = new Picture(aFiles, true, 11, GameIconSize, false);
                 pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Png, false);
+
+                Archive.SaveListToFile(gs, aFiles, Main.ConsoleBind.Name + "_IDs.txt");
+                Process.Start(@"" + pic.Path);
+            }
+            else
+            {
+                MessageBox.Show("No Icons Found");
             }
 
+            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
+            MessageBox.Show(fim0.TotalSeconds + "s");
             return;
         }
     }

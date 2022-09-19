@@ -4,6 +4,7 @@ using System.Linq;
 //
 using System.IO;
 using System.Security.Cryptography;
+using System.Drawing;
 
 namespace RADB
 {
@@ -22,7 +23,7 @@ namespace RADB
             return path;
         }
 
-        public static List<string> RemoveDuplicates(List<string> list)
+        public static IEnumerable<string> RemoveDuplicates(IEnumerable<string> list)
         {
             var files = list.Select(f =>
             {
@@ -30,19 +31,46 @@ namespace RADB
                 {
                     //var crc32 = BitConverter.ToString(CRC32.Create().ComputeHash(fs));
                     //fs.Position = 0;
-                    var sha1 = BitConverter.ToString(SHA1.Create().ComputeHash(fs));
+                    var md5 = BitConverter.ToString(MD5.Create().ComputeHash(fs));
 
                     return new
                     {
                         FileName = f,
-                        //CRC32 = crc32,
-                        FileHash = sha1,
+                        MD5 = md5,
+                        //FileHash = sha1,
                     };
                 }
+            });
+
+            files = files.Distinct();
+            return files.Select(f => f.FileName);
+        }
+
+        public static List<string> RemoveImageSize(List<string> list, Size size)
+        {
+            List<string> files = list.Where(f =>
+            {
+                Picture pic = new Picture(f);
+
+                return pic.Bitmap.Size != size;
             }).ToList();
 
-            files = files.Distinct().ToList();
-            return files.Select(f => f.FileName).ToList();
+            return files;
+        }
+
+        public static void SaveListToFile(List<Game> games, List<string> list, string fileName)
+        {
+            using (StreamWriter sw = File.CreateText(Folder.Temp + fileName.Replace("/", "-")))
+            {
+                foreach (string item in list)
+                {
+                    string imageName = item.Split('\\').Last();
+                    Game game = games.Where(g => g.ImageIcon == imageName).FirstOrDefault();
+                    string GameID = game.ID.ToString().PadLeft(5) + " => " + game.Title;
+                    sw.WriteLine(imageName + " => " + GameID);
+                    //sw.WriteLine(imageName);
+                }
+            }
         }
 
         public static string CalculateSize(double _bytes)

@@ -704,8 +704,8 @@ namespace RADB
 
         private async void btnDownloadBadges_Click(object sender, EventArgs e)
         {
-            //await RA.DownloadBadges(1);
-
+            await RA.DownloadBadges(1);
+            return;
             var file = @"Data\Temp\W2.png";
             var file2 = @"Data\Temp\W2_RS2.png";
             var file3 = @"Data\Temp\W2_RS2_NEW.png";
