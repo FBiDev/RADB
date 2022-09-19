@@ -89,6 +89,10 @@ namespace RADB
             dgvGames.CellPainting += dgvGames_CellPainting;
 
             dgvHiddenGames.AutoGenerateColumns = false;
+            dgvHiddenGames.CellDoubleClick += dgvGames_CellDoubleClick;
+            dgvHiddenGames.MouseWheel += dgvGames_MouseWheel;
+            dgvHiddenGames.Scroll += dgvGames_Scroll;
+            dgvHiddenGames.Sorted += dgvGames_Sorted;
 
             dgvAchievements.AutoGenerateColumns = false;
             dgvAchievements.DataSourceChanged += dgvAchievements_DataSourceChanged;
@@ -392,7 +396,7 @@ namespace RADB
             if (wheel > 0 && wheel < 3) { wheel++; return; }
             wheel = 0;
 
-            dgvGames.Focus();
+            ((DataGridView)sender).Focus();
             LoadGamesIcon();
         }
 
@@ -478,8 +482,8 @@ namespace RADB
             }
 
             int scrollPosition = dgvGames.FirstDisplayedScrollingRowIndex;
-            dgvGames.DataSource = newSearch;
             lstGamesSearch = newSearch;
+            dgvGames.DataSource = lstGamesSearch;
 
             bool maintainScroll = true;
             if (maintainScroll)
@@ -767,21 +771,6 @@ namespace RADB
             System.Diagnostics.Process.Start("https://retroachievements.org/user/FBiDev");
         }
 
-        private async void cmnHideGame_Click(object sender, EventArgs e)
-        {
-            Game game = dgv_SelectionChanged<Game>(dgvGames);
-
-            if (GameDao.IncluirHidden(game))
-            {
-                CurrencyManager cMnger = (CurrencyManager)BindingContext[dgvGames.DataSource];
-                cMnger.SuspendBinding();
-                dgvGames.SelectedRows[0].Visible = false;
-                cMnger.ResumeBinding();
-
-                await LoadGamesHidden();
-            }
-        }
-
         private void dgvGames_MouseDown(object sender, MouseEventArgs e)
         {
             FlatDataGridA dgv = ((FlatDataGridA)sender);
@@ -808,24 +797,44 @@ namespace RADB
             }
         }
 
-        private async void cmnRemoveGame_Click(object sender, EventArgs e)
+        private async void cmnHideGame_MouseDown(object sender, MouseEventArgs e)
         {
-            Game game = dgv_SelectionChanged<Game>(dgvHiddenGames);
+            if (e.Button != MouseButtons.Left) return;
 
-            if (await GameDao.ExcluirHidden(game))
+            Game game = dgv_SelectionChanged<Game>(dgvGames);
+
+            if (GameDao.IncluirHidden(game))
             {
-                lstGamesHidden.Remove(game);
-                if(ConsoleBind.ID == game.ConsoleID)
-                {
-                    ((ListBind<Game>)dgvGames.DataSource).Add(game);
-                    dgvGames.Refresh();
-                }
                 //CurrencyManager cMnger = (CurrencyManager)BindingContext[dgvGames.DataSource];
                 //cMnger.SuspendBinding();
                 //dgvGames.SelectedRows[0].Visible = false;
                 //cMnger.ResumeBinding();
 
+                lstGames.Remove(game);
+                lstGamesSearch.Remove(game);
+                lstGamesHidden.Insert(0, game);
+                //await LoadGames();
                 //await LoadGamesHidden();
+            }
+        }
+
+        private async void cmnRemoveGame_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            Game game = dgv_SelectionChanged<Game>(dgvHiddenGames);
+
+            if (await GameDao.ExcluirHidden(game))
+            {
+                lstGamesHidden.Remove(game);
+                if (ConsoleBind.NotNull() && ConsoleBind.ID == game.ConsoleID)
+                {
+                    //await LoadGames();
+                    lstGames.Insert(0, game);
+                    lstGamesSearch.Insert(0, game);
+                    //lstGamesSearch = new ListBind<Game>(lstGamesSearch.OrderBy(g => g.NumAchievements == 0).ThenBy(g => g.Title).ToList());
+                    //dgvGames.DataSource = lstGamesSearch;
+                }
             }
         }
     }
