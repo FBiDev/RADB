@@ -197,14 +197,14 @@ namespace RADB
 
         public async Task DownloadBadges(int gameID)
         {
-            if (Main.ConsoleBind.IsNull()) { MessageBox.Show("No Console Selected"); return; }
+            if (Main.ConsoleBind.IsNull() || Main.ConsoleBind.ID == 0) { MessageBox.Show("No Console Selected"); return; }
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
 
             //int FilesDownloaded = 0;
 
             //Get ManyGames
-            int cID = 58;
-            if (Main.ConsoleBind.NotNull() && Main.ConsoleBind.ID > 0) { cID = Main.ConsoleBind.ID; }
+            int cID = 1;
+            if (Main.ConsoleBind.NotNull()) { cID = Main.ConsoleBind.ID; }
 
             //List<Game> Games = (await Game.Listar(cID)).Where(a => a.NumAchievements > 0).ToList();
 
