@@ -13,12 +13,8 @@ SELECT
 FROM GameData AS g 
 	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
 WHERE 1 = 1 
-	AND g.id NOT IN( SELECT ID FROM GameToHide ) 
+	AND NumAchievements > 0 
 	AND c.ID <> 100 AND c.ID <> 101 
-	AND (g.ID = @ID 
-		OR (@ID = 0 OR @ID IS NULL)) 
-	AND (g.Title LIKE '%'+@Title+'%' 
-		OR (@Title = '' OR @Title IS NULL)) 
 	AND (g.ConsoleID = @ConsoleID 
 		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
 	

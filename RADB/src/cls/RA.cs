@@ -29,6 +29,7 @@ namespace RADB
         public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
 
         private static Size GameIconSize { get { return new Size(96, 96); } }
+        private static Size GameBadgesSize { get { return new Size(64, 64); } }
 
         public static Bitmap DefaultIcon = new Picture(GameIconSize).Bitmap;
         public static Bitmap ErrorIcon = Resources.notfound;
@@ -124,11 +125,12 @@ namespace RADB
             return (Folder.GameDataExtend(game.ConsoleID) + game.ID + ".json");
         }
 
-        public async Task DownloadGameExtend(Game game)
+        public Task<GameExtend> DownloadGameExtend(Game game)
         {
-            await Task.Run(async () =>
+            return Task<GameExtend>.Run(async () =>
             {
                 Browser.dlGameExtend.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), GameExtendPath(game)) };
+
                 await (Browser.dlGameExtend.Start());
 
                 GameExtend obj = (await DeserializeGameExtend(game));
@@ -136,6 +138,7 @@ namespace RADB
                 obj.ConsoleID = game.ConsoleID;
                 await obj.Excluir();
                 obj.Incluir();
+                return obj;
             });
         }
 
@@ -197,7 +200,7 @@ namespace RADB
 
         public async Task DownloadBadges(int gameID)
         {
-            if (Main.ConsoleBind.IsNull() || Main.ConsoleBind.ID == 0) { MessageBox.Show("No Console Selected"); return; }
+            if (Main.ConsoleBind.IsNull()) { MessageBox.Show("No Console Selected"); return; }
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
 
             //int FilesDownloaded = 0;
@@ -206,23 +209,14 @@ namespace RADB
             int cID = 1;
             if (Main.ConsoleBind.NotNull()) { cID = Main.ConsoleBind.ID; }
 
-            //List<Game> Games = (await Game.Listar(cID)).Where(a => a.NumAchievements > 0).ToList();
-
-
-            List<Game> gs = (await Game.Listar(cID)).Where(a =>
-            {
-                //return true;
-                //return a.NumAchievements > 0;
-                return a.NumAchievements > 0
-                    && new Picture(a.ImageIconFile.Path).Bitmap.Size != GameIconSize;
-
-            }).ToList();
-            //IEnumerable<DownloadFile> gFiles = gs.Select(g => g.ImageIconFile);
-            await DownloadGamesIcon(Main.ConsoleBind);
+            //await DownloadGamesIcon(Main.ConsoleBind);
             //int FilesDownloaded = Browser.dlGamesIcon.FilesCompleted;
-
+            //var gs = (await Game.Listar(cID)).Where(g => g.NumAchievements > 0).ToList();
             //var aFiles = gs.Select(g => g.ImageIconFile.Path).ToList();
-            var aFiles = Archive.RemoveDuplicates(gs.Select(g => g.ImageIconFile.Path)).ToList();
+            //aFiles = Archive.RemoveImageSize(aFiles, GameIconSize);
+            //aFiles = Archive.RemoveDuplicates(aFiles);
+
+
 
 
 
@@ -234,36 +228,40 @@ namespace RADB
 
             //var queryTotal = gCheevos.Count - (query.Select(x => x.Counter).Sum() - query.Count);
 
-            //Game gameX = await GetGameInfoExtended(gameID);
-            //gFiles = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
+            Game game = (await Game.Listar(new Game { ID = gameID })).FirstOrDefault();
+            GameExtend gameX = await DownloadGameExtend(game);
+            //GameExtend gameX = await DeserializeGameExtend(new Game { ID = gameID });
+            var gFiles = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
             //gFiles = new List<DownloadFile>() { new DownloadFile("https://dl18.cdromance.com/download.php?file=Megaman_Powered_Up_USA_PSP-DMU.7z&id=251&platform=psp&key=6299971769", "MM.7z") };
-            //Browser.dlGamesIcon = new Download()
-            //{
-            //    Files = gFiles,
-            //    Overwrite = false,
-            //};
-            //await dlGamesIcon.Start();
+            Browser.dlGamesBadges.Files = gFiles;
 
-
+            await Browser.dlGamesBadges.Start();
+            var aFiles = gFiles.Select(a => a.Path).ToList();
+            aFiles = Archive.RemoveDuplicates(aFiles);
 
 
             //List<string> afiles = Archive.RemoveDuplicates(gFiles.Select(f => f.Path).ToList());
             //afiles = Archive.RemoveImageSize(afiles, GameIconSize);
 
-            if (gs.Any())
+            if (aFiles.Any())
             {
-                Picture pic = new Picture(aFiles, true, 11, GameIconSize, false);
-                pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Png, false);
+                //Picture pic = new Picture(aFiles, true, 11, GameIconSize, false);
+                //pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Png, false);
+                Picture pic = new Picture(aFiles, true, 11, GameBadgesSize, false);
+                pic.Save(GameExtend.BadgesMerged(game.ConsoleID, game.Title), PictureFormat.Png, true);
 
-                Archive.SaveListToFile(gs, aFiles, Main.ConsoleBind.Name + "_IDs.txt");
+
+                //Archive.SaveListToFile(gs, aFiles, Main.ConsoleBind.Name + "_IDs.txt");
                 Process.Start(@"" + pic.Path);
             }
-            else
+
+            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
+
+            if (aFiles.Empty())
             {
                 MessageBox.Show("No Icons Found");
             }
 
-            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
             MessageBox.Show(fim0.TotalSeconds + "s");
             return;
         }

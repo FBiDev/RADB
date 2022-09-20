@@ -333,9 +333,10 @@ namespace RADB
 
         private async Task LoadGamesHidden()
         {
-            lstGamesHidden = await Game.ListarHiddenBind();
+            lstGamesHidden = await Game.ToHideListarBind();
             dgvHiddenGames.DataSource = lstGamesHidden;
             LoadGamesIcon();
+            lblNotFoundGameHide.Visible = lstGamesHidden.Empty();
             dgvHiddenGames.Refresh();
         }
 
@@ -704,7 +705,7 @@ namespace RADB
 
         private async void btnDownloadBadges_Click(object sender, EventArgs e)
         {
-            await RA.DownloadBadges(1);
+            await RA.DownloadBadges(GameBind.ID);
             return;
             var file = @"Data\Temp\W2.png";
             var file2 = @"Data\Temp\W2_RS2.png";
@@ -773,18 +774,15 @@ namespace RADB
 
         private void dgvGames_MouseDown(object sender, MouseEventArgs e)
         {
-            FlatDataGridA dgv = ((FlatDataGridA)sender);
-            int index = dgv.HitTest(e.X, e.Y).RowIndex;
-
-            if (index > -1 && e.Button == MouseButtons.Right)
-            {
-                dgv.ClearSelection();
-                dgv.CurrentCell = dgv.Rows[index].Cells[0];
-                ctmGames.Show(MousePosition);
-            }
+            dgvShowContextMenu(sender, e, mnuGames);
         }
 
         private void dgvHiddenGames_MouseDown(object sender, MouseEventArgs e)
+        {
+            dgvShowContextMenu(sender, e, ctmHiddenGames);
+        }
+
+        private void dgvShowContextMenu(object sender, MouseEventArgs e, ContextMenuStrip menu)
         {
             DataGridView dgv = ((DataGridView)sender);
             int index = dgv.HitTest(e.X, e.Y).RowIndex;
@@ -793,17 +791,17 @@ namespace RADB
             {
                 dgv.ClearSelection();
                 dgv.CurrentCell = dgv.Rows[index].Cells[0];
-                ctmHiddenGames.Show(MousePosition);
+                menu.Show(MousePosition);
             }
         }
 
-        private async void cmnHideGame_MouseDown(object sender, MouseEventArgs e)
+        private async void mniGameToHide_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
             Game game = dgv_SelectionChanged<Game>(dgvGames);
 
-            if (GameDao.IncluirHidden(game))
+            if (await Game.ToHideIncluir(game))
             {
                 //CurrencyManager cMnger = (CurrencyManager)BindingContext[dgvGames.DataSource];
                 //cMnger.SuspendBinding();
@@ -813,10 +811,13 @@ namespace RADB
                 lstGames.Remove(game);
                 lstGamesSearch.Remove(game);
                 lstGamesHidden.Insert(0, game);
-                //await LoadGames();
-                //await LoadGamesHidden();
+
+                LoadGamesIcon();
+                lblNotFoundGameHide.Visible = lstGamesHidden.Empty();
             }
         }
+
+
 
         private async void cmnRemoveGame_MouseDown(object sender, MouseEventArgs e)
         {
@@ -824,18 +825,27 @@ namespace RADB
 
             Game game = dgv_SelectionChanged<Game>(dgvHiddenGames);
 
-            if (await GameDao.ExcluirHidden(game))
+            if (await Game.ToHideExcluir(game))
             {
                 lstGamesHidden.Remove(game);
                 if (ConsoleBind.NotNull() && ConsoleBind.ID == game.ConsoleID)
                 {
-                    //await LoadGames();
                     lstGames.Insert(0, game);
                     lstGamesSearch.Insert(0, game);
-                    //lstGamesSearch = new ListBind<Game>(lstGamesSearch.OrderBy(g => g.NumAchievements == 0).ThenBy(g => g.Title).ToList());
-                    //dgvGames.DataSource = lstGamesSearch;
                 }
+
+                LoadGamesIcon();
+                lblNotFoundGameHide.Visible = lstGamesHidden.Empty();
             }
+        }
+
+        private async void mniGameBadgesMerge_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            Game game = dgv_SelectionChanged<Game>(dgvGames);
+
+            await RA.DownloadBadges(game.ID);
         }
     }
 }

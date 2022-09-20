@@ -240,39 +240,6 @@ namespace RADB.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to --
-        ///DELETE 
-        ///FROM HiddenGame 
-        ///WHERE 1 = 1 
-        ///	AND (ID = @ID 
-        ///		OR (@ID = 0 OR @ID IS NULL)) 
-        ///	AND (ConsoleID = @ConsoleID 
-        ///		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
-        ///;
-        ///--.
-        /// </summary>
-        internal static string GameHiddenExcluir {
-            get {
-                return ResourceManager.GetString("GameHiddenExcluir", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to --
-        ///INSERT INTO HiddenGame ( 
-        ///	  ID 
-        ///	) VALUES ( 
-        ///	  @ID
-        ///);
-        ///--.
-        /// </summary>
-        internal static string GameHiddenIncluir {
-            get {
-                return ResourceManager.GetString("GameHiddenIncluir", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to --
         ///INSERT INTO GameData ( 
         ///	  ID 
         ///	, Title 
@@ -335,6 +302,37 @@ namespace RADB.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to --
+        ///DELETE 
+        ///FROM GameToHide 
+        ///WHERE 1 = 1 
+        ///	AND (ID = @ID 
+        ///		OR (@ID = 0 OR @ID IS NULL)) 
+        ///;
+        ///--.
+        /// </summary>
+        internal static string GameToHideExcluir {
+            get {
+                return ResourceManager.GetString("GameToHideExcluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///INSERT INTO GameToHide ( 
+        ///	  ID 
+        ///	) VALUES ( 
+        ///	  @ID
+        ///);
+        ///--.
+        /// </summary>
+        internal static string GameToHideIncluir {
+            get {
+                return ResourceManager.GetString("GameToHideIncluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
         ///SELECT
         ///	  g.ID 
         ///	, Title 
@@ -348,13 +346,13 @@ namespace RADB.Properties {
         ///	, ForumTopicID 
         ///FROM GameData AS g 
         ///	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
-        ///	INNER JOIN HiddenGame AS gh ON gh.ID = g.ID 
+        ///	INNER JOIN GameToHide AS gh ON gh.ID = g.ID 
         ///WHERE 1 = 1 
         ///	.
         /// </summary>
-        internal static string GameListarHidden {
+        internal static string GameToHideListar {
             get {
-                return ResourceManager.GetString("GameListarHidden", resourceCulture);
+                return ResourceManager.GetString("GameToHideListar", resourceCulture);
             }
         }
         

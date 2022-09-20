@@ -18,6 +18,7 @@ namespace RADB
         public static string GameDataExtendBase { get { return Json + @"GameDataExtend\"; } }
 
         public static string IconsBase { get { return Images + @"Icons\"; } }
+        public static string BadgesBase { get { return Images + @"Achievements\"; } }
 
         public static void CreateFolders()
         {
@@ -31,6 +32,7 @@ namespace RADB
             Directory.CreateDirectory(GameData);
 
             Directory.CreateDirectory(IconsBase);
+            Directory.CreateDirectory(BadgesBase);
         }
 
         public static string GameDataExtend(int consoleID)
@@ -70,7 +72,7 @@ namespace RADB
 
         public static string Achievements(int consoleID, int gameID)
         {
-            string folder = Base + @"Achievements\" + consoleID + @"\" + gameID + @"\";
+            string folder = Images + @"Achievements\" + consoleID + @"\" + gameID + @"\";
             Directory.CreateDirectory(folder);
             return folder;
         }

@@ -23,7 +23,7 @@ namespace RADB
             return path;
         }
 
-        public static IEnumerable<string> RemoveDuplicates(IEnumerable<string> list)
+        public static List<string> RemoveDuplicates(List<string> list)
         {
             var files = list.Select(f =>
             {
@@ -43,19 +43,19 @@ namespace RADB
             });
 
             files = files.Distinct();
-            return files.Select(f => f.FileName);
+            return files.Select(f => f.FileName).ToList();
         }
 
         public static List<string> RemoveImageSize(List<string> list, Size size)
         {
-            List<string> files = list.Where(f =>
+            var files = list.Where(f =>
             {
                 Picture pic = new Picture(f);
 
                 return pic.Bitmap.Size != size;
-            }).ToList();
+            });
 
-            return files;
+            return files.ToList();
         }
 
         public static void SaveListToFile(List<Game> games, List<string> list, string fileName)
@@ -68,7 +68,6 @@ namespace RADB
                     Game game = games.Where(g => g.ImageIcon == imageName).FirstOrDefault();
                     string GameID = game.ID.ToString().PadLeft(5) + " => " + game.Title;
                     sw.WriteLine(imageName + " => " + GameID);
-                    //sw.WriteLine(imageName);
                 }
             }
         }

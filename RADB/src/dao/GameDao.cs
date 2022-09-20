@@ -110,17 +110,6 @@ namespace RADB
 
             return new ListBind<Game>(GameList);
         }
-
-        public static Task<List<Game>> ListarHidden()
-        {
-            return Task<List<Game>>.Run(() =>
-            {
-                //Monta SQL
-                string sql = Resources.GameListarHidden;
-
-                return Carregar<List<Game>>(Banco.ExecutarSelect(sql, new List<cSqlParameter> { }));
-            });
-        }
         #endregion
 
         #region " _Incluir "
@@ -128,16 +117,6 @@ namespace RADB
         {
             //Monta SQL
             string sql = Resources.GameIncluir;
-
-            var parametros = MontarParametros(obj);
-
-            return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
-        }
-
-        public static bool IncluirHidden(Game obj)
-        {
-            //Monta SQL
-            string sql = Resources.GameHiddenIncluir;
 
             var parametros = MontarParametros(obj);
 
@@ -195,12 +174,38 @@ namespace RADB
                 return Banco.Executar(sql, MovimentoLog.Exclusão, parametros).AffectedRows > 0;
             });
         }
+        #endregion
 
-        public static Task<bool> ExcluirHidden(Game obj)
+        #region ToHide
+        public static Task<List<Game>> ToHideListar()
+        {
+            return Task<List<Game>>.Run(() =>
+            {
+                //Monta SQL
+                string sql = Resources.GameToHideListar;
+
+                return Carregar<List<Game>>(Banco.ExecutarSelect(sql, new List<cSqlParameter> { }));
+            });
+        }
+
+        public static Task<bool> ToHideIncluir(Game obj)
         {
             return Task<bool>.Run(() =>
             {
-                string sql = Resources.GameHiddenExcluir;
+                //Monta SQL
+                string sql = Resources.GameToHideIncluir;
+
+                var parametros = MontarParametros(obj);
+
+                return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
+            });
+        }
+
+        public static Task<bool> ToHideExcluir(Game obj)
+        {
+            return Task<bool>.Run(() =>
+            {
+                string sql = Resources.GameToHideExcluir;
 
                 var parametros = new List<cSqlParameter> 
                 {

@@ -166,13 +166,13 @@
   <data name="fbidev" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\src\rsc\image\fbidev.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GameHiddenExcluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gamehiddenexcluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="GameToHideExcluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gametohideexcluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="GameHiddenIncluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gamehiddenincluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="GameToHideIncluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gametohideincluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="GameListarHidden" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gamelistarhidden.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="GameToHideListar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gametohidelistar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>
