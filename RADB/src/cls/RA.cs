@@ -209,10 +209,10 @@ namespace RADB
             int cID = 1;
             if (Main.ConsoleBind.NotNull()) { cID = Main.ConsoleBind.ID; }
 
-            //await DownloadGamesIcon(Main.ConsoleBind);
-            //int FilesDownloaded = Browser.dlGamesIcon.FilesCompleted;
-            //var gs = (await Game.Listar(cID)).Where(g => g.NumAchievements > 0).ToList();
-            //var aFiles = gs.Select(g => g.ImageIconFile.Path).ToList();
+            await DownloadGamesIcon(Main.ConsoleBind);
+            int FilesDownloaded = Browser.dlGamesIcon.FilesCompleted;
+            var gs = (await Game.Listar(cID)).Where(g => g.NumAchievements > 0).ToList();
+            var aFiles = gs.Select(g => g.ImageIconFile.Path).ToList();
             //aFiles = Archive.RemoveImageSize(aFiles, GameIconSize);
             //aFiles = Archive.RemoveDuplicates(aFiles);
 
@@ -225,33 +225,25 @@ namespace RADB
             //var query = gCheevos.GroupBy(x => new { x.BadgeURL, x.GameID }).Where(g => g.Count() > 1)
             //  .Select(y => new { Element = y.Key, Counter = y.Count() })
             //  .ToList().OrderBy(x => x.Element.BadgeURL).ToList();
-
             //var queryTotal = gCheevos.Count - (query.Select(x => x.Counter).Sum() - query.Count);
 
-            Game game = (await Game.Listar(new Game { ID = gameID })).FirstOrDefault();
-            GameExtend gameX = await DownloadGameExtend(game);
-            //GameExtend gameX = await DeserializeGameExtend(new Game { ID = gameID });
-            var gFiles = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
-            //gFiles = new List<DownloadFile>() { new DownloadFile("https://dl18.cdromance.com/download.php?file=Megaman_Powered_Up_USA_PSP-DMU.7z&id=251&platform=psp&key=6299971769", "MM.7z") };
-            Browser.dlGamesBadges.Files = gFiles;
+            //Game game = (await Game.Listar(new Game { ID = gameID })).FirstOrDefault();
+            //GameExtend gameX = await DownloadGameExtend(game);
+            //var gFiles = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
+            //Browser.dlGamesBadges.Files = gFiles;
 
-            await Browser.dlGamesBadges.Start();
-            var aFiles = gFiles.Select(a => a.Path).ToList();
-            aFiles = Archive.RemoveDuplicates(aFiles);
-
-
-            //List<string> afiles = Archive.RemoveDuplicates(gFiles.Select(f => f.Path).ToList());
-            //afiles = Archive.RemoveImageSize(afiles, GameIconSize);
+            //await Browser.dlGamesBadges.Start();
+            //var aFiles = gFiles.Select(a => a.Path).ToList();
+            //aFiles = Archive.RemoveDuplicates(aFiles);
 
             if (aFiles.Any())
             {
-                //Picture pic = new Picture(aFiles, true, 11, GameIconSize, false);
-                //pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Png, false);
-                Picture pic = new Picture(aFiles, true, 11, GameBadgesSize, false);
-                pic.Save(GameExtend.BadgesMerged(game.ConsoleID, game.Title), PictureFormat.Png, true);
+                Picture pic = new Picture(aFiles, true, 11, GameIconSize, false);
+                pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Png, false);
+                //Picture pic = new Picture(aFiles, true, 11, GameBadgesSize, false);
+                //pic.Save(GameExtend.BadgesMerged(game.ConsoleID, game.Title), PictureFormat.Png, true);
 
-
-                //Archive.SaveListToFile(gs, aFiles, Main.ConsoleBind.Name + "_IDs.txt");
+                Archive.SaveListToFile(gs, aFiles, Main.ConsoleBind.Name + "_IDs.txt");
                 Process.Start(@"" + pic.Path);
             }
 
