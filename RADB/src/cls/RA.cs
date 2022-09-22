@@ -14,6 +14,7 @@ using RADB.Properties;
 using GNX;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using System.Management;
 
 namespace RADB
 {
@@ -125,13 +126,13 @@ namespace RADB
             return (Folder.GameDataExtend(game.ConsoleID) + game.ID + ".json");
         }
 
-        public Task<GameExtend> DownloadGameExtend(Game game)
+        public Task<GameExtend> DownloadGameExtend(Game game, Download dlExtend)
         {
             return Task<GameExtend>.Run(async () =>
             {
-                Browser.dlGameExtend.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), GameExtendPath(game)) };
+                dlExtend.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), GameExtendPath(game)) };
 
-                await (Browser.dlGameExtend.Start());
+                await (dlExtend.Start());
 
                 GameExtend obj = (await DeserializeGameExtend(game));
                 obj.ID = game.ID;
@@ -198,29 +199,9 @@ namespace RADB
         }
         #endregion
 
-        public async Task DownloadBadges(int gameID)
+        public async Task MergeGameBadges(Game game)
         {
-            if (Main.ConsoleBind.IsNull()) { MessageBox.Show("No Console Selected"); return; }
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
-
-            //int FilesDownloaded = 0;
-
-            //Get ManyGames
-            int cID = 1;
-            if (Main.ConsoleBind.NotNull()) { cID = Main.ConsoleBind.ID; }
-
-            await DownloadGamesIcon(Main.ConsoleBind);
-            int FilesDownloaded = Browser.dlGamesIcon.FilesCompleted;
-            var gs = (await Game.Listar(cID)).Where(g => g.NumAchievements > 0).ToList();
-            var aFiles = gs.Select(g => g.ImageIconFile.Path).ToList();
-            //aFiles = Archive.RemoveImageSize(aFiles, GameIconSize);
-            //aFiles = Archive.RemoveDuplicates(aFiles);
-
-
-
-
-
-
 
             //var query = gCheevos.GroupBy(x => new { x.BadgeURL, x.GameID }).Where(g => g.Count() > 1)
             //  .Select(y => new { Element = y.Key, Counter = y.Count() })
@@ -228,23 +209,59 @@ namespace RADB
             //var queryTotal = gCheevos.Count - (query.Select(x => x.Counter).Sum() - query.Count);
 
             //Game game = (await Game.Listar(new Game { ID = gameID })).FirstOrDefault();
-            //GameExtend gameX = await DownloadGameExtend(game);
-            //var gFiles = gameX.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
-            //Browser.dlGamesBadges.Files = gFiles;
+            GameExtend gameExtend = await DownloadGameExtend(game, Browser.dlGames);
+            var badgeFiles = gameExtend.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
+            Browser.dlGamesBadges.Files = badgeFiles;
 
-            //await Browser.dlGamesBadges.Start();
-            //var aFiles = gFiles.Select(a => a.Path).ToList();
-            //aFiles = Archive.RemoveDuplicates(aFiles);
+            await Browser.dlGamesBadges.Start();
+            var badgeNames = badgeFiles.Select(a => a.Path).ToList();
+            badgeNames = Archive.RemoveDuplicates(badgeNames);
+
+            if (badgeNames.Any())
+            {
+                Picture pic = new Picture(badgeNames, true, 11, GameBadgesSize, false);
+                pic.Save(GameExtend.BadgesMerged(game.ConsoleID, game.Title), PictureFormat.Png, false);
+
+                Archive.SaveGameBadges(game, badgeNames, GameExtend.BadgesMerged(game.ConsoleID, game.Title) + ".txt");
+
+                cForm.Open<frmImageViewer>();
+                frmImageViewer f = cForm.Get<frmImageViewer>();
+                f.SetImage(pic.Path);
+            }
+
+            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
+
+            if (badgeNames.Empty())
+            {
+                MessageBox.Show("No Icons Found");
+            }
+
+            //MessageBox.Show("Badges merged in: " + fim0.TotalSeconds + "s");
+        }
+
+        public async Task MergeGamesIcon(Console console)
+        {
+            if (console.IsNull()) { MessageBox.Show("No Console Selected"); return; }
+
+            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
+
+            await DownloadGamesIcon(console);
+            int FilesDownloaded = Browser.dlGamesIcon.FilesCompleted;
+            var gs = (await Game.Listar(console.ID)).Where(g => g.NumAchievements > 0).ToList();
+            var aFiles = gs.Select(g => g.ImageIconFile.Path).ToList();
+            aFiles = Archive.RemoveImageSize(aFiles, GameIconSize);
+            aFiles = Archive.RemoveDuplicates(aFiles);
 
             if (aFiles.Any())
             {
                 Picture pic = new Picture(aFiles, true, 11, GameIconSize, false);
-                pic.Save(Game.IconsMerged(Main.ConsoleBind.Name), PictureFormat.Png, false);
-                //Picture pic = new Picture(aFiles, true, 11, GameBadgesSize, false);
-                //pic.Save(GameExtend.BadgesMerged(game.ConsoleID, game.Title), PictureFormat.Png, true);
+                pic.Save(Game.IconsMerged(console.Name), PictureFormat.Png, false);
 
-                Archive.SaveListToFile(gs, aFiles, Main.ConsoleBind.Name + "_IDs.txt");
-                Process.Start(@"" + pic.Path);
+                Archive.SaveGamesIcon(gs, aFiles, console.Name + "_IDs.txt");
+
+                cForm.Open<frmImageViewer>();
+                frmImageViewer f = cForm.Get<frmImageViewer>();
+                f.SetImage(pic.Path);
             }
 
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;

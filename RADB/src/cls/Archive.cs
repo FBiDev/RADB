@@ -23,6 +23,14 @@ namespace RADB
             return path;
         }
 
+        public static string MakeValidFileName(string name)
+        {
+            string invalidChars = System.Text.RegularExpressions.Regex.Escape(new string(System.IO.Path.GetInvalidFileNameChars()));
+            string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
+
+            return System.Text.RegularExpressions.Regex.Replace(name, invalidRegStr, "_");
+        }
+
         public static List<string> RemoveDuplicates(List<string> list)
         {
             var files = list.Select(f =>
@@ -58,7 +66,7 @@ namespace RADB
             return files.ToList();
         }
 
-        public static void SaveListToFile(List<Game> games, List<string> list, string fileName)
+        public static void SaveGamesIcon(List<Game> games, List<string> list, string fileName)
         {
             using (StreamWriter sw = File.CreateText(Folder.Temp + fileName.Replace("/", "-")))
             {
@@ -68,6 +76,21 @@ namespace RADB
                     Game game = games.Where(g => g.ImageIcon == imageName).FirstOrDefault();
                     string GameID = game.ID.ToString().PadLeft(5) + " => " + game.Title;
                     sw.WriteLine(imageName + " => " + GameID);
+                }
+            }
+        }
+
+        public static void SaveGameBadges(Game game, List<string> badges, string fileName)
+        {
+            using (StreamWriter sw = File.CreateText(fileName))
+            {
+                foreach (string item in badges)
+                {
+                    string console = game.ConsoleName + "(" + game.ConsoleID.ToString() + ")";
+                    string imageName = item.Split('\\').Last().PadLeft(12);
+                    string GameDesc = game.Title + "(" + game.ID.ToString() + ")";
+
+                    sw.WriteLine(imageName + " => " + console + " => " + GameDesc);
                 }
             }
         }

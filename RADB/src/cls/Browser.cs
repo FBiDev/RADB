@@ -39,7 +39,7 @@ namespace RADB
         public static Download dlConsoles = new Download { Overwrite = true, FolderBase = Folder.Console, };
         public static Download dlGames = new Download { Overwrite = true, FolderBase = Folder.GameData, };
         public static Download dlGamesIcon = new Download() { Overwrite = false, FolderBase = Folder.IconsBase, };
-        public static Download dlGamesBadges = new Download() { Overwrite = true, FolderBase = Folder.BadgesBase, };
+        public static Download dlGamesBadges = new Download() { Overwrite = false, FolderBase = Folder.BadgesBase, };
         public static Download dlGameExtend = new Download { Overwrite = true, FolderBase = Folder.GameDataExtendBase, };
         public static Download dlGameExtendImages = new Download { Overwrite = false, FolderBase = Folder.Images, };
 

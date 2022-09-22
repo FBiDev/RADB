@@ -80,8 +80,6 @@ namespace RADB
             return new ListBind<Game>(await GameDao.Listar(new Game() { ConsoleID = consoleID }));
         }
 
-
-
         public async static Task<ListBind<Game>> ToHideListarBind()
         {
             return new ListBind<Game>(await GameDao.ToHideListar());

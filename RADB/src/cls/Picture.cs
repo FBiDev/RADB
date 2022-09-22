@@ -149,7 +149,7 @@ namespace RADB
             return new Picture(fileName);
         }
 
-        private Bitmap FromFile(string filePath)
+        public Bitmap FromFile(string filePath)
         {
             var bytes = File.ReadAllBytes(filePath);
             var ms = new MemoryStream(bytes);

@@ -132,6 +132,7 @@ namespace RADB
             Browser.dlConsoles.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
             Browser.dlGames.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
             Browser.dlGamesIcon.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
+            Browser.dlGamesBadges.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
             Browser.dlGameExtend.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
             Browser.dlGameExtendImages.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
 
@@ -286,7 +287,7 @@ namespace RADB
         #endregion
 
         #region GameList
-        private void EnablePanelGames(bool enable)
+        private void EnablePanelGames(bool enable, bool resetDatagrid = true)
         {
             pnlDownloadGameList.Enabled = enable;
             pnlGamesConsoleName.Enabled = enable;
@@ -301,7 +302,7 @@ namespace RADB
             {
                 lblNotFoundGameList.Visible = (dgvGames.RowCount == 0);
             }
-            else
+            else if (resetDatagrid)
             {
                 dgvGames.DataSource = new ListBind<Game>();
             }
@@ -567,7 +568,7 @@ namespace RADB
             if (GameBind == null) { return; }
 
             //Download GameExtend
-            await RA.DownloadGameExtend(GameBind);
+            await RA.DownloadGameExtend(GameBind, Browser.dlGameExtend);
 
             //Download game images
             await RA.DownloadGameExtendImages(GameBind);
@@ -576,6 +577,8 @@ namespace RADB
             await LoadGameExtend();
 
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] Game " + GameBind.ID + " Updated!" + Environment.NewLine + lblOutput.Text;
+
+            pnlInfoScroll.Focus();
         }
         #endregion
 
@@ -705,7 +708,7 @@ namespace RADB
 
         private async void btnDownloadBadges_Click(object sender, EventArgs e)
         {
-            await RA.DownloadBadges(1);
+            await RA.MergeGamesIcon(ConsoleBind);
             return;
             var file = @"Data\Temp\W2.png";
             var file2 = @"Data\Temp\W2_RS2.png";
@@ -817,8 +820,6 @@ namespace RADB
             }
         }
 
-
-
         private async void cmnRemoveGame_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
@@ -845,7 +846,18 @@ namespace RADB
 
             Game game = dgv_SelectionChanged<Game>(dgvGames);
 
-            await RA.DownloadBadges(game.ID);
+            EnablePanelGames(false, false);
+            await RA.MergeGameBadges(game);
+            EnablePanelGames(true, false);
+        }
+
+        private async void mniMergeGamesIcon_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            ConsoleBind = dgv_SelectionChanged<Console>(dgvConsoles);
+            
+            await RA.MergeGamesIcon(ConsoleBind);
         }
     }
 }

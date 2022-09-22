@@ -104,7 +104,7 @@ namespace RADB
 
         public static string BadgesMerged(int consoleID = 0, string gameTitle = "")
         {
-            return Folder.Temp + consoleID + "_" + gameTitle + "_Badges";
+            return Folder.Temp + consoleID + "_" + Archive.MakeValidFileName(gameTitle) + "_Badges";
         }
 
         public bool Incluir()
