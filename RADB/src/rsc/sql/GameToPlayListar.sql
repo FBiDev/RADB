@@ -12,9 +12,6 @@ SELECT
 	, ForumTopicID 
 FROM GameData AS g 
 	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
+	INNER JOIN GameToPlay AS gh ON gh.ID = g.ID 
 WHERE 1 = 1 
-	AND NumAchievements > 0 
-	AND c.ID <> 100 AND c.ID <> 101 
-	AND (g.ConsoleID = @ConsoleID 
-		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
 	

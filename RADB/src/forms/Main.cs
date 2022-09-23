@@ -32,7 +32,8 @@ namespace RADB
         public ListBind<Game> lstGames = new ListBind<Game>();
         public ListBind<Game> lstGamesSearch = new ListBind<Game>();
 
-        public ListBind<Game> lstGamesHidden = new ListBind<Game>();
+        public ListBind<Game> lstGamesToHide = new ListBind<Game>();
+        public ListBind<Game> lstGamesToPlay = new ListBind<Game>();
 
         public List<DataGridView> lstDgvGames = new List<DataGridView>();
 
@@ -88,11 +89,17 @@ namespace RADB
 
             dgvGames.CellPainting += dgvGames_CellPainting;
 
-            dgvHiddenGames.AutoGenerateColumns = false;
-            dgvHiddenGames.CellDoubleClick += dgvGames_CellDoubleClick;
-            dgvHiddenGames.MouseWheel += dgvGames_MouseWheel;
-            dgvHiddenGames.Scroll += dgvGames_Scroll;
-            dgvHiddenGames.Sorted += dgvGames_Sorted;
+            dgvGamesToPlay.AutoGenerateColumns = false;
+            dgvGamesToPlay.CellDoubleClick += dgvGames_CellDoubleClick;
+            dgvGamesToPlay.MouseWheel += dgvGames_MouseWheel;
+            dgvGamesToPlay.Scroll += dgvGames_Scroll;
+            dgvGamesToPlay.Sorted += dgvGames_Sorted;
+
+            dgvGamesToHide.AutoGenerateColumns = false;
+            dgvGamesToHide.CellDoubleClick += dgvGames_CellDoubleClick;
+            dgvGamesToHide.MouseWheel += dgvGames_MouseWheel;
+            dgvGamesToHide.Scroll += dgvGames_Scroll;
+            dgvGamesToHide.Sorted += dgvGames_Sorted;
 
             dgvAchievements.AutoGenerateColumns = false;
             dgvAchievements.DataSourceChanged += dgvAchievements_DataSourceChanged;
@@ -107,8 +114,6 @@ namespace RADB
             chkDemo.CheckedChanged += chkUpdateDataGrid;
             chkHack.CheckedChanged += chkUpdateDataGrid;
             chkHomebrew.CheckedChanged += chkUpdateDataGrid;
-
-            btnDownloadBadges.Click += btnDownloadBadges_Click;
 
             //Reset placeholders
             lblProgressConsoles.Text = string.Empty;
@@ -130,18 +135,23 @@ namespace RADB
         private async void Main_Shown(object sender, EventArgs e)
         {
             Browser.dlConsoles.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
+            Browser.dlConsolesGamesIcon.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
+
             Browser.dlGames.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
             Browser.dlGamesIcon.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
             Browser.dlGamesBadges.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
+
             Browser.dlGameExtend.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
             Browser.dlGameExtendImages.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
 
             lstDgvGames.Add(dgvGames);
-            lstDgvGames.Add(dgvHiddenGames);
+            lstDgvGames.Add(dgvGamesToPlay);
+            lstDgvGames.Add(dgvGamesToHide);
 
             await LoadConsoles();
             await LoadGames();
-            await LoadGamesHidden();
+            await LoadGamesToHide();
+            await LoadGamesToPlay();
 
             //TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             //TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
@@ -188,14 +198,19 @@ namespace RADB
                 dgvGames.Focus(); return;
             }
 
+            if (tab.SelectedTab == tabGamesToPlay)
+            {
+                dgvGamesToPlay.Focus(); return;
+            }
+
+            if (tab.SelectedTab == tabGamesToHide)
+            {
+                dgvGamesToHide.Focus(); return;
+            }
+
             if (tab.SelectedTab == tabGameInfo)
             {
                 pnlInfoScroll.Focus(); return;
-            }
-
-            if (tab.SelectedTab == tabHiddenGames)
-            {
-                dgvHiddenGames.Focus(); return;
             }
         }
 
@@ -208,18 +223,20 @@ namespace RADB
         #endregion
 
         #region Consoles
-        private void EnablePanelConsoles(bool enable)
+        private void EnablePanelConsoles(bool enable, bool resetDatagrid = true)
         {
             pnlDownloadConsoles.Enabled = enable;
 
             lblNotFoundConsoles.Visible = false;
             picLoaderConsole.Visible = !enable;
 
+            if (resetDatagrid == false) { dgvConsoles.Enabled = enable; }
+
             if (enable)
             {
                 lblNotFoundConsoles.Visible = (dgvConsoles.RowCount == 0);
             }
-            else
+            else if (resetDatagrid)
             {
                 dgvConsoles.DataSource = new List<Console>();
             }
@@ -298,6 +315,8 @@ namespace RADB
             //Black color in last row
             //dgvGames.Visible = enable;
 
+            if (resetDatagrid == false) { dgvGames.Enabled = enable; }
+
             if (enable)
             {
                 lblNotFoundGameList.Visible = (dgvGames.RowCount == 0);
@@ -332,13 +351,22 @@ namespace RADB
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
         }
 
-        private async Task LoadGamesHidden()
+        private async Task LoadGamesToPlay()
         {
-            lstGamesHidden = await Game.ToHideListarBind();
-            dgvHiddenGames.DataSource = lstGamesHidden;
+            lstGamesToPlay = await Game.ToPlayListarBind();
+            dgvGamesToPlay.DataSource = lstGamesToPlay;
             LoadGamesIcon();
-            lblNotFoundGameHide.Visible = lstGamesHidden.Empty();
-            dgvHiddenGames.Refresh();
+            lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
+            dgvGamesToPlay.Refresh();
+        }
+
+        private async Task LoadGamesToHide()
+        {
+            lstGamesToHide = await Game.ToHideListarBind();
+            dgvGamesToHide.DataSource = lstGamesToHide;
+            LoadGamesIcon();
+            lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
+            dgvGamesToHide.Refresh();
         }
 
         private async void btnUpdateGameList_Click(object sender, EventArgs e)
@@ -354,7 +382,7 @@ namespace RADB
 
             //Download game icons
             TimeSpan ini1 = new TimeSpan(DateTime.Now.Ticks);
-            await RA.DownloadGamesIcon(ConsoleBind);
+            await RA.DownloadGamesIcon(ConsoleBind, Browser.dlGamesIcon);
             TimeSpan fim1 = new TimeSpan(DateTime.Now.Ticks) - ini1;
 
             //Load Games
@@ -565,7 +593,11 @@ namespace RADB
         private async void btnUpdateInfo_Click(object sender, EventArgs e)
         {
             //Download GameExtend
-            if (GameBind == null) { return; }
+            if (GameBind.IsNull())
+            {
+                MessageBox.Show("Select a Game in Games Tab First");
+                return;
+            }
 
             //Download GameExtend
             await RA.DownloadGameExtend(GameBind, Browser.dlGameExtend);
@@ -706,9 +738,9 @@ namespace RADB
             btnUserCheevos.Enabled = true;
         }
 
+        //TESTS to resize Image with PhotoSauce.MagicScaler
         private async void btnDownloadBadges_Click(object sender, EventArgs e)
         {
-            await RA.MergeGamesIcon(ConsoleBind);
             return;
             var file = @"Data\Temp\W2.png";
             var file2 = @"Data\Temp\W2_RS2.png";
@@ -775,14 +807,29 @@ namespace RADB
             System.Diagnostics.Process.Start("https://retroachievements.org/user/FBiDev");
         }
 
+        private void btnGamePage_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://retroachievements.org/game/" + GameBind.ID);
+        }
+
+        private void dgvConsoles_MouseDown(object sender, MouseEventArgs e)
+        {
+            dgvShowContextMenu(sender, e, mnuConsoles);
+        }
+
         private void dgvGames_MouseDown(object sender, MouseEventArgs e)
         {
             dgvShowContextMenu(sender, e, mnuGames);
         }
 
-        private void dgvHiddenGames_MouseDown(object sender, MouseEventArgs e)
+        private void dgvGamesToPlay_MouseDown(object sender, MouseEventArgs e)
         {
-            dgvShowContextMenu(sender, e, ctmHiddenGames);
+            dgvShowContextMenu(sender, e, mnuGamesToPlay);
+        }
+
+        private void dgvGamesToHide_MouseDown(object sender, MouseEventArgs e)
+        {
+            dgvShowContextMenu(sender, e, mnuGamesToHide);
         }
 
         private void dgvShowContextMenu(object sender, MouseEventArgs e, ContextMenuStrip menu)
@@ -798,7 +845,24 @@ namespace RADB
             }
         }
 
-        private async void mniGameToHide_MouseDown(object sender, MouseEventArgs e)
+        private async void mniPlayGame_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            Game game = dgv_SelectionChanged<Game>(dgvGames);
+
+            if (await Game.ToPlayIncluir(game))
+            {
+                lstGames.Remove(game);
+                lstGamesSearch.Remove(game);
+                lstGamesToPlay.Insert(0, game);
+
+                LoadGamesIcon();
+                lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
+            }
+        }
+
+        private async void mniHideGame_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
@@ -813,22 +877,22 @@ namespace RADB
 
                 lstGames.Remove(game);
                 lstGamesSearch.Remove(game);
-                lstGamesHidden.Insert(0, game);
+                lstGamesToHide.Insert(0, game);
 
                 LoadGamesIcon();
-                lblNotFoundGameHide.Visible = lstGamesHidden.Empty();
+                lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
             }
         }
 
-        private async void cmnRemoveGame_MouseDown(object sender, MouseEventArgs e)
+        private async void mniRemoveGameToPlay_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
-            Game game = dgv_SelectionChanged<Game>(dgvHiddenGames);
+            Game game = dgv_SelectionChanged<Game>(dgvGamesToPlay);
 
-            if (await Game.ToHideExcluir(game))
+            if (await Game.ToPlayExcluir(game))
             {
-                lstGamesHidden.Remove(game);
+                lstGamesToPlay.Remove(game);
                 if (ConsoleBind.NotNull() && ConsoleBind.ID == game.ConsoleID)
                 {
                     lstGames.Insert(0, game);
@@ -836,11 +900,31 @@ namespace RADB
                 }
 
                 LoadGamesIcon();
-                lblNotFoundGameHide.Visible = lstGamesHidden.Empty();
+                lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
             }
         }
 
-        private async void mniGameBadgesMerge_MouseDown(object sender, MouseEventArgs e)
+        private async void mniRemoveGameToHide_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            Game game = dgv_SelectionChanged<Game>(dgvGamesToHide);
+
+            if (await Game.ToHideExcluir(game))
+            {
+                lstGamesToHide.Remove(game);
+                if (ConsoleBind.NotNull() && ConsoleBind.ID == game.ConsoleID)
+                {
+                    lstGames.Insert(0, game);
+                    lstGamesSearch.Insert(0, game);
+                }
+
+                LoadGamesIcon();
+                lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
+            }
+        }
+
+        private async void mniMergeGameBadges_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
@@ -856,8 +940,23 @@ namespace RADB
             if (e.Button != MouseButtons.Left) return;
 
             ConsoleBind = dgv_SelectionChanged<Console>(dgvConsoles);
-            
+
+            EnablePanelConsoles(false, false);
             await RA.MergeGamesIcon(ConsoleBind);
+            EnablePanelConsoles(true, false);
         }
+
+        private async void mniMergeGamesIconBadSize_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            ConsoleBind = dgv_SelectionChanged<Console>(dgvConsoles);
+
+            EnablePanelConsoles(false, false);
+            await RA.MergeGamesIcon(ConsoleBind, true);
+            EnablePanelConsoles(true, false);
+        }
+
+
     }
 }

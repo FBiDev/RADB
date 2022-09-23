@@ -68,7 +68,7 @@ namespace RADB
 
         public static void SaveGamesIcon(List<Game> games, List<string> list, string fileName)
         {
-            using (StreamWriter sw = File.CreateText(Folder.Temp + fileName.Replace("/", "-")))
+            using (StreamWriter sw = File.CreateText(fileName))
             {
                 foreach (string item in list)
                 {
@@ -86,11 +86,9 @@ namespace RADB
             {
                 foreach (string item in badges)
                 {
-                    string console = game.ConsoleName + "(" + game.ConsoleID.ToString() + ")";
                     string imageName = item.Split('\\').Last().PadLeft(12);
-                    string GameDesc = game.Title + "(" + game.ID.ToString() + ")";
 
-                    sw.WriteLine(imageName + " => " + console + " => " + GameDesc);
+                    sw.WriteLine(imageName);
                 }
             }
         }

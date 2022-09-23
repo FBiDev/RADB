@@ -102,11 +102,6 @@ namespace RADB
             return files;
         }
 
-        public static string BadgesMerged(int consoleID = 0, string gameTitle = "")
-        {
-            return Folder.Temp + consoleID + "_" + Archive.MakeValidFileName(gameTitle) + "_Badges";
-        }
-
         public bool Incluir()
         {
             return GameExtendDao.Incluir(this);

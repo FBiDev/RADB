@@ -175,4 +175,13 @@
   <data name="GameToHideListar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\src\rsc\sql\gametohidelistar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="GameToPlayExcluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gametoplayexcluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GameToPlayIncluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gametoplayincluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GameToPlayListar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gametoplaylistar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

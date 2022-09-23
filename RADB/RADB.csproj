@@ -194,7 +194,9 @@
     <Content Include="src\rsc\sql\ConsoleListar.sql" />
     <Content Include="src\rsc\sql\ConsoleIncluir.sql" />
     <Content Include="src\rsc\sql\ConsoleExcluir.sql" />
-    <Content Include="src\rsc\sql\GameListarIcons.sql" />
+    <Content Include="src\rsc\sql\GameToPlayExcluir.sql" />
+    <Content Include="src\rsc\sql\GameToPlayIncluir.sql" />
+    <Content Include="src\rsc\sql\GameToPlayListar.sql" />
     <Content Include="src\rsc\sql\GameToHideExcluir.sql" />
     <Content Include="src\rsc\sql\GameToHideIncluir.sql" />
     <Content Include="src\rsc\sql\GameToHideListar.sql" />

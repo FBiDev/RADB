@@ -285,14 +285,13 @@ namespace RADB.Properties {
         ///FROM GameData AS g 
         ///	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
         ///WHERE 1 = 1 
-        ///	AND g.id NOT IN( SELECT ID FROM HiddenGame ) 
+        ///	AND g.id NOT IN( SELECT ID FROM GameToHide ) 
+        ///	AND g.id NOT IN( SELECT ID FROM GameToPlay ) 
         ///	AND c.ID &lt;&gt; 100 AND c.ID &lt;&gt; 101 
         ///	AND (g.ID = @ID 
         ///		OR (@ID = 0 OR @ID IS NULL)) 
         ///	AND (g.Title LIKE &apos;%&apos;+@Title+&apos;%&apos; 
-        ///		OR (@Title = &apos;&apos; OR @Title IS NULL)) 
-        ///	AND (g.ConsoleID = @ConsoleID 
-        ///		OR [rest of string was truncated]&quot;;.
+        ///		OR (@Title = &apos;&apos; OR @Title I [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GameListar {
             get {
@@ -353,6 +352,62 @@ namespace RADB.Properties {
         internal static string GameToHideListar {
             get {
                 return ResourceManager.GetString("GameToHideListar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///DELETE 
+        ///FROM GameToPlay 
+        ///WHERE 1 = 1 
+        ///	AND (ID = @ID 
+        ///		OR (@ID = 0 OR @ID IS NULL)) 
+        ///;
+        ///--.
+        /// </summary>
+        internal static string GameToPlayExcluir {
+            get {
+                return ResourceManager.GetString("GameToPlayExcluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///INSERT INTO GameToPlay ( 
+        ///	  ID 
+        ///	) VALUES ( 
+        ///	  @ID
+        ///);
+        ///--.
+        /// </summary>
+        internal static string GameToPlayIncluir {
+            get {
+                return ResourceManager.GetString("GameToPlayIncluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///SELECT
+        ///	  g.ID 
+        ///	, Title 
+        ///	, ConsoleID 
+        ///	, C.Name AS ConsoleName 
+        ///	, ImageIcon 
+        ///	, NumAchievements 
+        ///	, Points 
+        ///	, NumLeaderboards 
+        ///	, DateModified 
+        ///	, ForumTopicID 
+        ///FROM GameData AS g 
+        ///	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
+        ///	INNER JOIN GameToPlay AS gh ON gh.ID = g.ID 
+        ///WHERE 1 = 1 
+        ///	.
+        /// </summary>
+        internal static string GameToPlayListar {
+            get {
+                return ResourceManager.GetString("GameToPlayListar", resourceCulture);
             }
         }
         

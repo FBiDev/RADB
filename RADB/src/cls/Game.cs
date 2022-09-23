@@ -41,8 +41,12 @@ namespace RADB
 
         public static string IconsMerged(string consoleName = "")
         {
-            consoleName = consoleName.Replace("/", "-").Replace(" ", "-");
-            return Folder.Temp + consoleName + "_Icons";
+            return Folder.Temp + Archive.MakeValidFileName(consoleName) + "_Icons";
+        }
+
+        public string BadgesMerged()
+        {
+            return Folder.Temp + ConsoleName + "(" + ConsoleID + ")_" + Archive.MakeValidFileName(Title) + "(" + ID + ")_Badges";
         }
 
         public bool Incluir()
@@ -93,6 +97,21 @@ namespace RADB
         public async static Task<bool> ToHideExcluir(Game obj = null)
         {
             return await GameDao.ToHideExcluir(obj);
+        }
+
+        public async static Task<ListBind<Game>> ToPlayListarBind()
+        {
+            return new ListBind<Game>(await GameDao.ToPlayListar());
+        }
+
+        public async static Task<bool> ToPlayIncluir(Game obj = null)
+        {
+            return await GameDao.ToPlayIncluir(obj);
+        }
+
+        public async static Task<bool> ToPlayExcluir(Game obj = null)
+        {
+            return await GameDao.ToPlayExcluir(obj);
         }
     }
 }

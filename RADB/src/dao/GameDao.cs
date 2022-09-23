@@ -216,5 +216,46 @@ namespace RADB
             });
         }
         #endregion
+
+        #region ToPlay
+        public static Task<List<Game>> ToPlayListar()
+        {
+            return Task<List<Game>>.Run(() =>
+            {
+                //Monta SQL
+                string sql = Resources.GameToPlayListar;
+
+                return Carregar<List<Game>>(Banco.ExecutarSelect(sql, new List<cSqlParameter> { }));
+            });
+        }
+
+        public static Task<bool> ToPlayIncluir(Game obj)
+        {
+            return Task<bool>.Run(() =>
+            {
+                //Monta SQL
+                string sql = Resources.GameToPlayIncluir;
+
+                var parametros = MontarParametros(obj);
+
+                return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
+            });
+        }
+
+        public static Task<bool> ToPlayExcluir(Game obj)
+        {
+            return Task<bool>.Run(() =>
+            {
+                string sql = Resources.GameToPlayExcluir;
+
+                var parametros = new List<cSqlParameter> 
+                {
+                    new cSqlParameter("@ID", obj.ID),
+                };
+
+                return Banco.Executar(sql, MovimentoLog.Exclusão, parametros).AffectedRows > 0;
+            });
+        }
+        #endregion
     }
 }

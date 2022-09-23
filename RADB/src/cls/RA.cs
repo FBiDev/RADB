@@ -109,13 +109,16 @@ namespace RADB
             });
         }
 
-        public async Task DownloadGamesIcon(Console console)
+        public async Task DownloadGamesIcon(Console console, Download dl)
         {
+            var a = new Download();
+            a.Clone(dl);
+
             await Task.Run(async () =>
             {
                 List<Game> games = await Game.Listar(console.ID);
-                Browser.dlGamesIcon.Files = games.Select(g => g.ImageIconFile).ToList();
-                await (Browser.dlGamesIcon.Start());
+                dl.Files = games.Select(g => g.ImageIconFile).ToList();
+                await (dl.Start());
             });
         }
         #endregion
@@ -215,14 +218,22 @@ namespace RADB
 
             await Browser.dlGamesBadges.Start();
             var badgeNames = badgeFiles.Select(a => a.Path).ToList();
-            badgeNames = Archive.RemoveDuplicates(badgeNames);
+
+            await Task.Run(() =>
+            {
+                badgeNames = Archive.RemoveDuplicates(badgeNames);
+            });
 
             if (badgeNames.Any())
             {
-                Picture pic = new Picture(badgeNames, true, 11, GameBadgesSize, false);
-                pic.Save(GameExtend.BadgesMerged(game.ConsoleID, game.Title), PictureFormat.Png, false);
+                Picture pic = await Task.Run(() =>
+                {
+                    pic = new Picture(badgeNames, true, 11, GameBadgesSize, false);
+                    pic.Save(game.BadgesMerged(), PictureFormat.Png, false);
 
-                Archive.SaveGameBadges(game, badgeNames, GameExtend.BadgesMerged(game.ConsoleID, game.Title) + ".txt");
+                    Archive.SaveGameBadges(game, badgeNames, game.BadgesMerged() + ".txt");
+                    return pic;
+                });
 
                 cForm.Open<frmImageViewer>();
                 frmImageViewer f = cForm.Get<frmImageViewer>();
@@ -239,25 +250,33 @@ namespace RADB
             //MessageBox.Show("Badges merged in: " + fim0.TotalSeconds + "s");
         }
 
-        public async Task MergeGamesIcon(Console console)
+        public async Task MergeGamesIcon(Console console, bool getIncorrectSize = false)
         {
             if (console.IsNull()) { MessageBox.Show("No Console Selected"); return; }
 
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
 
-            await DownloadGamesIcon(console);
-            int FilesDownloaded = Browser.dlGamesIcon.FilesCompleted;
-            var gs = (await Game.Listar(console.ID)).Where(g => g.NumAchievements > 0).ToList();
-            var aFiles = gs.Select(g => g.ImageIconFile.Path).ToList();
-            aFiles = Archive.RemoveImageSize(aFiles, GameIconSize);
-            aFiles = Archive.RemoveDuplicates(aFiles);
+            await DownloadGamesIcon(console, Browser.dlConsolesGamesIcon);
+            var games = (await Game.Listar(console.ID)).Where(g => g.NumAchievements > 0).ToList();
+            var gamesIcon = games.Select(g => g.ImageIconFile.Path).ToList();
 
-            if (aFiles.Any())
+            await Task.Run(() =>
             {
-                Picture pic = new Picture(aFiles, true, 11, GameIconSize, false);
-                pic.Save(Game.IconsMerged(console.Name), PictureFormat.Png, false);
+                if (getIncorrectSize) { gamesIcon = Archive.RemoveImageSize(gamesIcon, GameIconSize); }
+                //gamesIcon = Archive.RemoveDuplicates(gamesIcon);
+            });
 
-                Archive.SaveGamesIcon(gs, aFiles, console.Name + "_IDs.txt");
+            if (gamesIcon.Any())
+            {
+                Picture pic = await Task.Run(() =>
+                {
+                    pic = new Picture(gamesIcon, true, 11, GameIconSize, false);
+                    pic.Save(Game.IconsMerged(console.Name), PictureFormat.Png, false);
+
+                    Archive.SaveGamesIcon(games, gamesIcon, Game.IconsMerged(console.Name) + ".txt");
+
+                    return pic;
+                });
 
                 cForm.Open<frmImageViewer>();
                 frmImageViewer f = cForm.Get<frmImageViewer>();
@@ -266,12 +285,12 @@ namespace RADB
 
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
 
-            if (aFiles.Empty())
+            if (gamesIcon.Empty())
             {
                 MessageBox.Show("No Icons Found");
             }
 
-            MessageBox.Show(fim0.TotalSeconds + "s");
+            //MessageBox.Show("Badges merged in: " + fim0.TotalSeconds + "s");
             return;
         }
     }
