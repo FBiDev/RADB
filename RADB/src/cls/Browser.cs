@@ -52,7 +52,7 @@ namespace RADB
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.DefaultConnectionLimit = 128;
 
-            //var html = await DownloadString("https://retroachievements.org/controlpanel.php");
+            //var html = await DownloadString("URL");
         }
 
         private static Random rand = new Random();
@@ -64,25 +64,16 @@ namespace RADB
 
                 using (WebClientExtend client = new WebClientExtend())
                 {
-                    if (addRandomNumber)
-                    {
-                        if (url.IndexOf("?") < 0)
-                        { url += "?"; }
-                        else { url += "&"; }
+                    url = addRandomNumber ? url +=
+                        (url.IndexOf("?") < 0 ? "?" : "&") + "random=" + rand.Next()
+                        : (url);
 
-                        url += "random=" + rand.Next();
-                    }
-                    //client.Credentials = new NetworkCredential("FBiDev", "Ret1248!");
-
-                    var values = new NameValueCollection
-                    {
-                        { "u", "FBiDev" },
-                        { "p", "Ret1248!" },
-                    };
-                    //client.UploadValues("https://retroachievements.org/request/auth/login.php", values);
+                    //var values = new NameValueCollection { { "u", "" }, { "p", "" }, };
+                    //client.UploadValues("URL", values);
+                    //var aa = await client.DownloadString("URL");
 
                     data = await client.DownloadString(url);
-                    //var aa = await client.DownloadString("https://retroachievements.org/setRequestList.php?u=FBiDev");
+
                     if (client.Error)
                     {
                         MessageBox.Show(client.ErrorMessage);

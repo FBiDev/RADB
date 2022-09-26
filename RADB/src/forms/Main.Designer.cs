@@ -195,7 +195,7 @@ namespace RADB
             this.aDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblInfoAchievements = new System.Windows.Forms.Label();
             this.btnUpdateInfo = new RADB.FlatButtonA();
             this.picUserCheevos = new RADB.PictureBoxInterpolated();
             this.txtUsernameCheevos = new RADB.FlatTextBoxA();
@@ -1597,7 +1597,7 @@ namespace RADB
             this.flowInfo.Margin = new System.Windows.Forms.Padding(0);
             this.flowInfo.MinimumSize = new System.Drawing.Size(563, 323);
             this.flowInfo.Name = "flowInfo";
-            this.flowInfo.Size = new System.Drawing.Size(563, 324);
+            this.flowInfo.Size = new System.Drawing.Size(563, 325);
             this.flowInfo.TabIndex = 19;
             // 
             // pnlInfoImages
@@ -1643,7 +1643,7 @@ namespace RADB
             this.gpbInfoAchievements.Location = new System.Drawing.Point(3, 171);
             this.gpbInfoAchievements.MinimumSize = new System.Drawing.Size(557, 54);
             this.gpbInfoAchievements.Name = "gpbInfoAchievements";
-            this.gpbInfoAchievements.Size = new System.Drawing.Size(557, 150);
+            this.gpbInfoAchievements.Size = new System.Drawing.Size(557, 151);
             this.gpbInfoAchievements.TabIndex = 5;
             this.gpbInfoAchievements.TabStop = false;
             this.gpbInfoAchievements.Text = "Achievements";
@@ -1654,10 +1654,10 @@ namespace RADB
             this.panel2.Controls.Add(this.btnGamePage);
             this.panel2.Controls.Add(this.dgvAchievements);
             this.panel2.Controls.Add(this.label6);
-            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.lblInfoAchievements);
             this.panel2.Location = new System.Drawing.Point(6, 19);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(548, 128);
+            this.panel2.Size = new System.Drawing.Size(548, 102);
             this.panel2.TabIndex = 37;
             // 
             // btnGamePage
@@ -1710,7 +1710,7 @@ namespace RADB
             this.dgvAchievements.RowTemplate.Height = 72;
             this.dgvAchievements.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvAchievements.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dgvAchievements.Size = new System.Drawing.Size(545, 84);
+            this.dgvAchievements.Size = new System.Drawing.Size(545, 58);
             this.dgvAchievements.TabIndex = 0;
             // 
             // aOrder
@@ -1766,16 +1766,16 @@ namespace RADB
             this.label6.Text = "Authors:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // lblInfoAchievements
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(108, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(165, 15);
-            this.label2.TabIndex = 35;
-            this.label2.Text = "79 Achievements = 397 points";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblInfoAchievements.AutoSize = true;
+            this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInfoAchievements.Location = new System.Drawing.Point(108, 6);
+            this.lblInfoAchievements.Name = "lblInfoAchievements";
+            this.lblInfoAchievements.Size = new System.Drawing.Size(165, 15);
+            this.lblInfoAchievements.TabIndex = 35;
+            this.lblInfoAchievements.Text = "79 Achievements = 397 points";
+            this.lblInfoAchievements.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnUpdateInfo
             // 
@@ -2031,7 +2031,7 @@ namespace RADB
         private System.Windows.Forms.ToolStripMenuItem mniPlayGame;
         private FlatButtonA btnGamePage;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblInfoAchievements;
         private System.Windows.Forms.Panel panel2;
     }
 }

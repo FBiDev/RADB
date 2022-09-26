@@ -89,6 +89,7 @@
     <Compile Include="src\cfg\Config.cs" />
     <Compile Include="src\cls\Console.cs" />
     <Compile Include="src\cls\Browser.cs" />
+    <Compile Include="src\cls\DownloadBase.cs" />
     <Compile Include="src\cls\GameExtend.cs" />
     <Compile Include="src\cls\UserProgress.cs" />
     <Compile Include="src\cls\WebClientExtend.cs">

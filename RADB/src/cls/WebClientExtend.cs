@@ -9,7 +9,6 @@ using System.IO;
 using System.IO.Compression;
 using System.ComponentModel;
 using System.Net;
-using GNX;
 
 namespace RADB
 {
@@ -29,7 +28,7 @@ namespace RADB
 
         public bool HeaderExist(string headerName)
         {
-            if (ResponseHeaders != null && ResponseHeaders.AllKeys.Contains(headerName, StringComparison.OrdinalIgnoreCase))
+            if (ResponseHeaders != null && Convert.ToBoolean(ResponseHeaders.AllKeys.Where(h => h.ToLower() == headerName.ToLower()).Count()))
             {
                 return true;
             }
@@ -82,7 +81,10 @@ namespace RADB
 
         public new Task DownloadFileTaskAsync(Uri address, string fileName)
         {
+            fileName = SetTempFile(fileName);
+
             FileDownloaded = new DownloadFile(address.ToString(), fileName);
+
             return base.DownloadFileTaskAsync(address, fileName);
         }
 
@@ -219,6 +221,8 @@ namespace RADB
                 return;
             }
 
+            RevertTempFile(FileDownloaded.Path);
+
             if (GZipContent)
             {
                 FileInfo fileToDecompress = new FileInfo(FileDownloaded.Path);
@@ -252,6 +256,23 @@ namespace RADB
 
             base.OnDownloadFileCompleted(e);
             return;
+        }
+
+        private string SetTempFile(string fileName)
+        {
+            return fileName + ".tmp";
+        }
+
+        private void RevertTempFile(string fileName)
+        {
+            string newFile = fileName.Substring(0, fileName.Length - 4);
+            FileDownloaded.Path = newFile;
+
+            if (File.Exists(newFile))
+            {
+                File.Delete(newFile);
+            }
+            File.Move(fileName, newFile);
         }
 
         private void GetGZipSize(byte[] data)

@@ -554,6 +554,8 @@ namespace RADB
 
             lblInfoName.Text = GameBind.Title + " (" + GameBind.ConsoleName + ")";
             picInfoIcon.Image = GameBind.ImageIconBitmap;
+
+            lblInfoAchievements.Text = GameBind.NumAchievements.ToString() + " Achievements = " + GameBind.Points + " points";
         }
 
         private async Task LoadGameExtend()

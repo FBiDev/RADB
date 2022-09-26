@@ -29,6 +29,13 @@ namespace RADB
         public static string URL_Images = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Images/";
         public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
 
+        public string API_Consoles { get { return GetURL("API_GetConsoleIDs.php"); } }
+        public string API_GameList(int consoleID) { return GetURL("API_GetGameList.php", "i=" + consoleID); }
+        public string API_GameExtend(int gameID) { return GetURL("API_GetGameExtended.php", "i=" + gameID); }
+        public string API_UserProgress(string userName, int gameID) { return GetURL("API_GetUserProgress.php", "u=" + userName + "&i=" + gameID); }
+
+
+
         private static Size GameIconSize { get { return new Size(96, 96); } }
         private static Size GameBadgesSize { get { return new Size(64, 64); } }
 
@@ -64,11 +71,13 @@ namespace RADB
 
         public async Task DownloadConsoles()
         {
-            Browser.dlConsoles.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetConsoleIDs.php"), ConsolesPath()) };
-            await Browser.dlConsoles.Start();
+            Browser.dlConsoles.Files = new List<DownloadFile> { new DownloadFile(API_Consoles, ConsolesPath()) };
 
-            await Console.Excluir();
-            await Console.IncluirLista(await DeserializeConsoles());
+            if (await Browser.dlConsoles.Start())
+            {
+                await Console.Excluir();
+                await Console.IncluirLista(await DeserializeConsoles());
+            }
         }
 
         private Task<List<Console>> DeserializeConsoles()
@@ -91,12 +100,14 @@ namespace RADB
         {
             await Task.Run(async () =>
             {
-                Browser.dlGames.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID), GameListPath(console.Name)) };
-                await Browser.dlGames.Start();
+                Browser.dlGames.Files = new List<DownloadFile> { new DownloadFile(API_GameList(console.ID), GameListPath(console.Name)) };
 
-                await Game.Excluir(console.ID);
-                List<Game> list = await DeserializeGameList(console.Name);
-                await Game.IncluirLista(list);
+                if (await Browser.dlGames.Start())
+                {
+                    await Game.Excluir(console.ID);
+                    List<Game> list = await DeserializeGameList(console.Name);
+                    await Game.IncluirLista(list);
+                }
             });
         }
 
@@ -133,16 +144,18 @@ namespace RADB
         {
             return Task<GameExtend>.Run(async () =>
             {
-                dlExtend.Files = new List<DownloadFile>() { new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID), GameExtendPath(game)) };
+                dlExtend.Files = new List<DownloadFile>() { new DownloadFile(API_GameExtend(game.ID), GameExtendPath(game)) };
 
-                await (dlExtend.Start());
-
-                GameExtend obj = (await DeserializeGameExtend(game));
-                obj.ID = game.ID;
-                obj.ConsoleID = game.ConsoleID;
-                await obj.Excluir();
-                obj.Incluir();
-                return obj;
+                if (await (dlExtend.Start()))
+                {
+                    GameExtend obj = (await DeserializeGameExtend(game));
+                    obj.ID = game.ID;
+                    obj.ConsoleID = game.ConsoleID;
+                    await obj.Excluir();
+                    obj.Incluir();
+                    return obj;
+                }
+                return null;
             });
         }
 
@@ -182,11 +195,11 @@ namespace RADB
         #endregion
 
         #region _UserInfo
-        public async Task<UserProgress> GetUserProgress(string username, int gameID)
+        public async Task<UserProgress> GetUserProgress(string userName, int gameID)
         {
             return await Task.Run(async () =>
             {
-                string userData = await Browser.DownloadString(GetURL("API_GetUserProgress.php", "u=" + username + "&i=" + gameID), true);
+                string userData = await Browser.DownloadString(API_UserProgress(userName, gameID), true);
                 userData = userData.GetBetween(":{", "}}");
                 userData = "{" + userData + "}";
 
@@ -194,7 +207,7 @@ namespace RADB
                 if (string.IsNullOrWhiteSpace(userData) == false)
                 {
                     user = JsonConvert.DeserializeObject<UserProgress>(userData);
-                    user.UserName = username;
+                    user.UserName = userName;
                     user.GameID = gameID;
                 }
                 return user;
