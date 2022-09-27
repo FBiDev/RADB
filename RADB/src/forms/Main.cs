@@ -555,7 +555,7 @@ namespace RADB
             lblInfoName.Text = GameBind.Title + " (" + GameBind.ConsoleName + ")";
             picInfoIcon.Image = GameBind.ImageIconBitmap;
 
-            lblInfoAchievements.Text = GameBind.NumAchievements.ToString() + " Achievements = " + GameBind.Points + " points";
+            lblInfoAchievements.Text = GameBind.NumAchievements.ToString() + " Achievements: " + GameBind.Points + " points";
         }
 
         private async Task LoadGameExtend()
@@ -692,9 +692,11 @@ namespace RADB
 
         private void dgvAchievements_DataSourceChanged(object sender, EventArgs e)
         {
+            //if (dgvAchievements.RowCount == 0) { return; }
+
             var height = dgvAchievements.RowTemplate.Height;
-            gpbInfoAchievements.Height = (height * dgvAchievements.RowCount) + 25 + 30;
-            dgvAchievements.Height = (height * dgvAchievements.RowCount) + 30;
+            dgvAchievements.Height = dgvAchievements.PreferredSize.Height;
+            gpbInfoAchievements.Height = dgvAchievements.Height + 60;
         }
 
         private bool UserCheevosIsRunning = false;

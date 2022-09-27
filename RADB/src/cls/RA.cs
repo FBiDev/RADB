@@ -122,12 +122,9 @@ namespace RADB
 
         public async Task DownloadGamesIcon(Console console, Download dl)
         {
-            var a = new Download();
-            a.Clone(dl);
-
             await Task.Run(async () =>
             {
-                List<Game> games = await Game.Listar(console.ID);
+                List<Game> games = await Game.Listar(console.ID, true);
                 dl.Files = games.Select(g => g.ImageIconFile).ToList();
                 await (dl.Start());
             });
@@ -270,7 +267,7 @@ namespace RADB
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
 
             await DownloadGamesIcon(console, Browser.dlConsolesGamesIcon);
-            var games = (await Game.Listar(console.ID)).Where(g => g.NumAchievements > 0).ToList();
+            var games = (await Game.Listar(console.ID, true)).Where(g => g.NumAchievements > 0).ToList();
             var gamesIcon = games.Select(g => g.ImageIconFile.Path).ToList();
 
             await Task.Run(() =>

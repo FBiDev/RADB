@@ -69,7 +69,7 @@ namespace RADB
         #endregion
 
         #region " _Listar "
-        public static Task<List<Game>> Listar(Game obj = null)
+        public static Task<List<Game>> Listar(Game obj = null, bool allTables = false)
         {
             return Task<List<Game>>.Run(() =>
             {
@@ -79,7 +79,10 @@ namespace RADB
                 string sql = Resources.GameListar;
                 sql += " ORDER BY NumAchievements=0, Title ASC ";
 
-                return Carregar<List<Game>>(Banco.ExecutarSelect(sql, MontarFiltros(obj)));
+                var parametros = MontarFiltros(obj);
+                parametros.Add(new cSqlParameter("@allTables", allTables));
+
+                return Carregar<List<Game>>(Banco.ExecutarSelect(sql, parametros));
             });
         }
 

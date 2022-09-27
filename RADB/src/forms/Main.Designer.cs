@@ -105,11 +105,12 @@ namespace RADB
             this.pgbInfo = new System.Windows.Forms.ProgressBar();
             this.lblProgressInfo = new System.Windows.Forms.Label();
             this.tabUserInfo = new System.Windows.Forms.TabPage();
-            this.lblCheevoLoopUpdate = new System.Windows.Forms.Label();
-            this.chkUserCheevos = new System.Windows.Forms.CheckBox();
+            this.gpbOverlay = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblCheevos = new System.Windows.Forms.Label();
             this.lblUserCheevos = new System.Windows.Forms.Label();
+            this.lblCheevoLoopUpdate = new System.Windows.Forms.Label();
+            this.chkUserCheevos = new System.Windows.Forms.CheckBox();
             this.tabAbout = new System.Windows.Forms.TabPage();
             this.picFBiDevIcon = new System.Windows.Forms.PictureBox();
             this.lblAbTitle = new System.Windows.Forms.Label();
@@ -187,14 +188,12 @@ namespace RADB
             this.picInfoInGame = new System.Windows.Forms.PictureBox();
             this.picInfoTitle = new System.Windows.Forms.PictureBox();
             this.gpbInfoAchievements = new System.Windows.Forms.GroupBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnGamePage = new RADB.FlatButtonA();
             this.dgvAchievements = new RADB.FlatDataGridA();
             this.aOrder = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aIcon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label6 = new System.Windows.Forms.Label();
+            this.btnGamePage = new RADB.FlatButtonA();
             this.lblInfoAchievements = new System.Windows.Forms.Label();
             this.btnUpdateInfo = new RADB.FlatButtonA();
             this.picUserCheevos = new RADB.PictureBoxInterpolated();
@@ -216,6 +215,7 @@ namespace RADB
             this.tabGameInfo.SuspendLayout();
             this.pnlDownloadInfo.SuspendLayout();
             this.tabUserInfo.SuspendLayout();
+            this.gpbOverlay.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picFBiDevIcon)).BeginInit();
@@ -237,7 +237,6 @@ namespace RADB
             ((System.ComponentModel.ISupportInitialize)(this.picInfoInGame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoTitle)).BeginInit();
             this.gpbInfoAchievements.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAchievements)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picUserCheevos)).BeginInit();
             this.SuspendLayout();
@@ -617,11 +616,7 @@ namespace RADB
             // tabUserInfo
             // 
             this.tabUserInfo.BackColor = System.Drawing.Color.Transparent;
-            this.tabUserInfo.Controls.Add(this.lblCheevoLoopUpdate);
-            this.tabUserInfo.Controls.Add(this.chkUserCheevos);
-            this.tabUserInfo.Controls.Add(this.panel1);
-            this.tabUserInfo.Controls.Add(this.txtUsernameCheevos);
-            this.tabUserInfo.Controls.Add(this.btnUserCheevos);
+            this.tabUserInfo.Controls.Add(this.gpbOverlay);
             this.tabUserInfo.Location = new System.Drawing.Point(4, 25);
             this.tabUserInfo.Name = "tabUserInfo";
             this.tabUserInfo.Padding = new System.Windows.Forms.Padding(3);
@@ -629,25 +624,19 @@ namespace RADB
             this.tabUserInfo.TabIndex = 3;
             this.tabUserInfo.Text = "User Info";
             // 
-            // lblCheevoLoopUpdate
+            // gpbOverlay
             // 
-            this.lblCheevoLoopUpdate.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblCheevoLoopUpdate.BackColor = System.Drawing.Color.Transparent;
-            this.lblCheevoLoopUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblCheevoLoopUpdate.Location = new System.Drawing.Point(489, 228);
-            this.lblCheevoLoopUpdate.Name = "lblCheevoLoopUpdate";
-            this.lblCheevoLoopUpdate.Size = new System.Drawing.Size(13, 13);
-            this.lblCheevoLoopUpdate.TabIndex = 31;
-            // 
-            // chkUserCheevos
-            // 
-            this.chkUserCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.chkUserCheevos.AutoSize = true;
-            this.chkUserCheevos.Location = new System.Drawing.Point(508, 227);
-            this.chkUserCheevos.Name = "chkUserCheevos";
-            this.chkUserCheevos.Size = new System.Drawing.Size(50, 17);
-            this.chkUserCheevos.TabIndex = 29;
-            this.chkUserCheevos.Text = "Loop";
+            this.gpbOverlay.Controls.Add(this.panel1);
+            this.gpbOverlay.Controls.Add(this.lblCheevoLoopUpdate);
+            this.gpbOverlay.Controls.Add(this.txtUsernameCheevos);
+            this.gpbOverlay.Controls.Add(this.chkUserCheevos);
+            this.gpbOverlay.Controls.Add(this.btnUserCheevos);
+            this.gpbOverlay.Location = new System.Drawing.Point(328, 105);
+            this.gpbOverlay.Name = "gpbOverlay";
+            this.gpbOverlay.Size = new System.Drawing.Size(233, 166);
+            this.gpbOverlay.TabIndex = 32;
+            this.gpbOverlay.TabStop = false;
+            this.gpbOverlay.Text = "Overlay";
             // 
             // panel1
             // 
@@ -657,7 +646,7 @@ namespace RADB
             this.panel1.Controls.Add(this.lblCheevos);
             this.panel1.Controls.Add(this.lblUserCheevos);
             this.panel1.Controls.Add(this.picUserCheevos);
-            this.panel1.Location = new System.Drawing.Point(337, 105);
+            this.panel1.Location = new System.Drawing.Point(6, 19);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(221, 72);
             this.panel1.TabIndex = 27;
@@ -684,6 +673,26 @@ namespace RADB
             this.lblUserCheevos.TabIndex = 1;
             this.lblUserCheevos.Text = "11/24";
             this.lblUserCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblCheevoLoopUpdate
+            // 
+            this.lblCheevoLoopUpdate.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblCheevoLoopUpdate.BackColor = System.Drawing.Color.Transparent;
+            this.lblCheevoLoopUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblCheevoLoopUpdate.Location = new System.Drawing.Point(158, 142);
+            this.lblCheevoLoopUpdate.Name = "lblCheevoLoopUpdate";
+            this.lblCheevoLoopUpdate.Size = new System.Drawing.Size(13, 13);
+            this.lblCheevoLoopUpdate.TabIndex = 31;
+            // 
+            // chkUserCheevos
+            // 
+            this.chkUserCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.chkUserCheevos.AutoSize = true;
+            this.chkUserCheevos.Location = new System.Drawing.Point(177, 141);
+            this.chkUserCheevos.Name = "chkUserCheevos";
+            this.chkUserCheevos.Size = new System.Drawing.Size(50, 17);
+            this.chkUserCheevos.TabIndex = 29;
+            this.chkUserCheevos.Text = "Loop";
             // 
             // tabAbout
             // 
@@ -1639,7 +1648,9 @@ namespace RADB
             // 
             this.gpbInfoAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gpbInfoAchievements.Controls.Add(this.panel2);
+            this.gpbInfoAchievements.Controls.Add(this.dgvAchievements);
+            this.gpbInfoAchievements.Controls.Add(this.btnGamePage);
+            this.gpbInfoAchievements.Controls.Add(this.lblInfoAchievements);
             this.gpbInfoAchievements.Location = new System.Drawing.Point(3, 171);
             this.gpbInfoAchievements.MinimumSize = new System.Drawing.Size(557, 54);
             this.gpbInfoAchievements.Name = "gpbInfoAchievements";
@@ -1648,34 +1659,11 @@ namespace RADB
             this.gpbInfoAchievements.TabStop = false;
             this.gpbInfoAchievements.Text = "Achievements";
             // 
-            // panel2
-            // 
-            this.panel2.AutoSize = true;
-            this.panel2.Controls.Add(this.btnGamePage);
-            this.panel2.Controls.Add(this.dgvAchievements);
-            this.panel2.Controls.Add(this.label6);
-            this.panel2.Controls.Add(this.lblInfoAchievements);
-            this.panel2.Location = new System.Drawing.Point(6, 19);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(548, 102);
-            this.panel2.TabIndex = 37;
-            // 
-            // btnGamePage
-            // 
-            this.btnGamePage.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.btnGamePage.FlatAppearance.BorderSize = 0;
-            this.btnGamePage.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.btnGamePage.Location = new System.Drawing.Point(5, 6);
-            this.btnGamePage.Name = "btnGamePage";
-            this.btnGamePage.Size = new System.Drawing.Size(96, 32);
-            this.btnGamePage.TabIndex = 6;
-            this.btnGamePage.Text = "Game Page";
-            this.btnGamePage.Click += new System.EventHandler(this.btnGamePage_Click);
-            // 
             // dgvAchievements
             // 
             dataGridViewCellStyle34.BackColor = System.Drawing.Color.White;
             this.dgvAchievements.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle34;
+            this.dgvAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.dgvAchievements.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             dataGridViewCellStyle35.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             dataGridViewCellStyle35.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1697,7 +1685,7 @@ namespace RADB
             dataGridViewCellStyle40.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvAchievements.DefaultCellStyle = dataGridViewCellStyle40;
-            this.dgvAchievements.Location = new System.Drawing.Point(0, 41);
+            this.dgvAchievements.Location = new System.Drawing.Point(6, 54);
             this.dgvAchievements.Name = "dgvAchievements";
             dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle41.BackColor = System.Drawing.Color.White;
@@ -1710,7 +1698,7 @@ namespace RADB
             this.dgvAchievements.RowTemplate.Height = 72;
             this.dgvAchievements.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvAchievements.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dgvAchievements.Size = new System.Drawing.Size(545, 58);
+            this.dgvAchievements.Size = new System.Drawing.Size(545, 30);
             this.dgvAchievements.TabIndex = 0;
             // 
             // aOrder
@@ -1755,26 +1743,27 @@ namespace RADB
             this.aPoints.ReadOnly = true;
             this.aPoints.Width = 64;
             // 
-            // label6
+            // btnGamePage
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(108, 23);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(52, 15);
-            this.label6.TabIndex = 36;
-            this.label6.Text = "Authors:";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnGamePage.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.btnGamePage.FlatAppearance.BorderSize = 0;
+            this.btnGamePage.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.btnGamePage.Location = new System.Drawing.Point(6, 19);
+            this.btnGamePage.Name = "btnGamePage";
+            this.btnGamePage.Size = new System.Drawing.Size(96, 32);
+            this.btnGamePage.TabIndex = 6;
+            this.btnGamePage.Text = "Game Page";
+            this.btnGamePage.Click += new System.EventHandler(this.btnGamePage_Click);
             // 
             // lblInfoAchievements
             // 
             this.lblInfoAchievements.AutoSize = true;
-            this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInfoAchievements.Location = new System.Drawing.Point(108, 6);
+            this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInfoAchievements.Location = new System.Drawing.Point(108, 23);
             this.lblInfoAchievements.Name = "lblInfoAchievements";
-            this.lblInfoAchievements.Size = new System.Drawing.Size(165, 15);
+            this.lblInfoAchievements.Size = new System.Drawing.Size(183, 21);
             this.lblInfoAchievements.TabIndex = 35;
-            this.lblInfoAchievements.Text = "79 Achievements = 397 points";
+            this.lblInfoAchievements.Text = "0 Achievements: 0 points";
             this.lblInfoAchievements.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnUpdateInfo
@@ -1806,9 +1795,9 @@ namespace RADB
             // 
             this.txtUsernameCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.txtUsernameCheevos.LabelText = "Username";
-            this.txtUsernameCheevos.Location = new System.Drawing.Point(337, 183);
+            this.txtUsernameCheevos.Location = new System.Drawing.Point(6, 97);
             this.txtUsernameCheevos.Name = "txtUsernameCheevos";
-            this.txtUsernameCheevos.Size = new System.Drawing.Size(222, 34);
+            this.txtUsernameCheevos.Size = new System.Drawing.Size(221, 34);
             this.txtUsernameCheevos.TabIndex = 30;
             // 
             // btnUserCheevos
@@ -1816,7 +1805,7 @@ namespace RADB
             this.btnUserCheevos.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.btnUserCheevos.FlatAppearance.BorderSize = 0;
             this.btnUserCheevos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.btnUserCheevos.Location = new System.Drawing.Point(337, 223);
+            this.btnUserCheevos.Location = new System.Drawing.Point(6, 137);
             this.btnUserCheevos.Name = "btnUserCheevos";
             this.btnUserCheevos.Size = new System.Drawing.Size(146, 23);
             this.btnUserCheevos.TabIndex = 28;
@@ -1867,7 +1856,8 @@ namespace RADB
             this.pnlDownloadInfo.ResumeLayout(false);
             this.pnlDownloadInfo.PerformLayout();
             this.tabUserInfo.ResumeLayout(false);
-            this.tabUserInfo.PerformLayout();
+            this.gpbOverlay.ResumeLayout(false);
+            this.gpbOverlay.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.tabAbout.ResumeLayout(false);
             this.tabAbout.PerformLayout();
@@ -1894,8 +1884,6 @@ namespace RADB
             ((System.ComponentModel.ISupportInitialize)(this.picInfoTitle)).EndInit();
             this.gpbInfoAchievements.ResumeLayout(false);
             this.gpbInfoAchievements.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAchievements)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picUserCheevos)).EndInit();
             this.ResumeLayout(false);
@@ -2030,9 +2018,8 @@ namespace RADB
         private System.Windows.Forms.ToolStripMenuItem mniRemoveGameToPlay;
         private System.Windows.Forms.ToolStripMenuItem mniPlayGame;
         private FlatButtonA btnGamePage;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblInfoAchievements;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.GroupBox gpbOverlay;
     }
 }
 

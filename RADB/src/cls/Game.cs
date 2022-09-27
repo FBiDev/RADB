@@ -69,9 +69,9 @@ namespace RADB
             return await GameDao.Excluir(new Game() { ConsoleID = ConsoleID });
         }
 
-        public async static Task<List<Game>> Listar(int consoleID)
+        public async static Task<List<Game>> Listar(int consoleID, bool allTables = false)
         {
-            return await GameDao.Listar(new Game() { ConsoleID = consoleID });
+            return await GameDao.Listar(new Game() { ConsoleID = consoleID }, allTables);
         }
 
         public async static Task<List<Game>> Listar(Game obj = null)
