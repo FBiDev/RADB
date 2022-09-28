@@ -54,6 +54,7 @@
             this.Controls.Add(this.picImage);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1101, 603);
             this.Name = "frmImageViewer";
             this.Text = "RA ImageViewer";

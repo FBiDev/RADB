@@ -88,6 +88,8 @@ namespace RADB
             dgvGames.Sorted += dgvGames_Sorted;
 
             dgvGames.CellPainting += dgvGames_CellPainting;
+            dgvGamesToPlay.CellPainting += dgvGames_CellPainting;
+            dgvGamesToHide.CellPainting += dgvGames_CellPainting;
 
             dgvGamesToPlay.AutoGenerateColumns = false;
             dgvGamesToPlay.CellDoubleClick += dgvGames_CellDoubleClick;
@@ -150,8 +152,8 @@ namespace RADB
 
             await LoadConsoles();
             await LoadGames();
-            await LoadGamesToHide();
             await LoadGamesToPlay();
+            await LoadGamesToHide();
 
             //TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             //TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
@@ -388,6 +390,8 @@ namespace RADB
             //Load Games
             TimeSpan ini2 = new TimeSpan(DateTime.Now.Ticks);
             await LoadGames();
+            await LoadGamesToPlay();
+            await LoadGamesToHide();
 
             UpdateConsoleLabels();
             TimeSpan fim2 = new TimeSpan(DateTime.Now.Ticks) - ini2;
@@ -853,7 +857,7 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            Game game = dgv_SelectionChanged<Game>(dgvGames);
+            var game = dgv_SelectionChanged<Game>(dgvGames);
 
             if (await Game.ToPlayIncluir(game))
             {
@@ -870,7 +874,7 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            Game game = dgv_SelectionChanged<Game>(dgvGames);
+            var game = dgv_SelectionChanged<Game>(dgvGames);
 
             if (await Game.ToHideIncluir(game))
             {
@@ -892,7 +896,7 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            Game game = dgv_SelectionChanged<Game>(dgvGamesToPlay);
+            var game = dgv_SelectionChanged<Game>(dgvGamesToPlay);
 
             if (await Game.ToPlayExcluir(game))
             {
@@ -912,7 +916,7 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            Game game = dgv_SelectionChanged<Game>(dgvGamesToHide);
+            var game = dgv_SelectionChanged<Game>(dgvGamesToHide);
 
             if (await Game.ToHideExcluir(game))
             {
@@ -932,7 +936,7 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            Game game = dgv_SelectionChanged<Game>(dgvGames);
+            var game = dgv_SelectionChanged<Game>(dgvGames);
 
             EnablePanelGames(false, false);
             await RA.MergeGameBadges(game);
@@ -943,10 +947,10 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            ConsoleBind = dgv_SelectionChanged<Console>(dgvConsoles);
+            var console = dgv_SelectionChanged<Console>(dgvConsoles);
 
             EnablePanelConsoles(false, false);
-            await RA.MergeGamesIcon(ConsoleBind);
+            await RA.MergeGamesIcon(console);
             EnablePanelConsoles(true, false);
         }
 
@@ -954,13 +958,17 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            ConsoleBind = dgv_SelectionChanged<Console>(dgvConsoles);
+            var console = dgv_SelectionChanged<Console>(dgvConsoles);
 
             EnablePanelConsoles(false, false);
-            await RA.MergeGamesIcon(ConsoleBind, true);
+            await RA.MergeGamesIcon(console, true);
             EnablePanelConsoles(true, false);
         }
 
-
+        private void btnGameFilters_Click(object sender, EventArgs e)
+        {
+            pnlFilters.Visible = !pnlFilters.Visible;
+            dgvGames.Focus();
+        }
     }
 }
