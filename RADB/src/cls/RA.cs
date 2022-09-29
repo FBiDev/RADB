@@ -8,33 +8,61 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
+//
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RADB.Properties;
 using GNX;
-using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Management;
 
 namespace RADB
 {
     public class RA
     {
         #region _Main
-        private string API_URL = "https://retroachievements.org/API/";
-        private string API_UserName;
-        private string API_Key;
+        //HOSTS
+        public static string HOST = "https://retroachievements.org/";
+
+        //https://s3-eu-west-1.amazonaws.com/
+        //http://media.retroachievements.org/Images/"
+        public static string IMAGE_HOST = "http://i.retroachievements.org/Images/";
+        public static string BADGE_HOST = "http://i.retroachievements.org/Badge/";
 
         //URLs
-        public static string URL_Images = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Images/";
-        public static string URL_Badges = "https://s3-eu-west-1.amazonaws.com/i.retroachievements.org/Badge/";
+        public static string Game_URL(int gameID) { return HOST + "game/" + gameID.ToString(); }
+        public static string User_URL(string userName) { return HOST + "user/" + userName; }
 
-        public string API_Consoles { get { return GetURL("API_GetConsoleIDs.php"); } }
-        public string API_GameList(int consoleID) { return GetURL("API_GetGameList.php", "i=" + consoleID); }
-        public string API_GameExtend(int gameID) { return GetURL("API_GetGameExtended.php", "i=" + gameID); }
-        public string API_UserProgress(string userName, int gameID) { return GetURL("API_GetUserProgress.php", "u=" + userName + "&i=" + gameID); }
+        //API
+        private string API_HOST = HOST + "API/";
+        private string API_UserName = "RADatabase";
+        private string API_Key = "GRaWk9onm4B0LSWSFaDt5a2dQE3N8Yme";
 
+        public DownloadFile API_Consoles()
+        {
+            return new DownloadFile(
+                GetURL("API_GetConsoleIDs.php"),
+                Folder.Console + "Consoles.json");
+        }
 
+        public DownloadFile API_GameList(Console console)
+        {
+            return new DownloadFile(
+                GetURL("API_GetGameList.php", "i=" + console.ID),
+                (Folder.GameData + console.Name + ".json").Replace("/", "-"));
+        }
+
+        public DownloadFile API_GameExtend(Game game)
+        {
+            return new DownloadFile(
+                GetURL("API_GetGameExtended.php", "i=" + game.ID),
+                (Folder.GameDataExtend(game.ConsoleID) + game.ID + ".json"));
+        }
+
+        public DownloadFile API_UserProgress(string userName, int gameID)
+        {
+            return new DownloadFile(
+                GetURL("API_GetUserProgress.php", "u=" + userName + "&i=" + gameID),
+                (Folder.User + "UserProgress.json"));
+        }
 
         private static Size GameIconSize { get { return new Size(96, 96); } }
         private static Size GameBadgesSize { get { return new Size(64, 64); } }
@@ -46,11 +74,7 @@ namespace RADB
         public static Bitmap DefaultIngameImage = new Picture(200, 150).Bitmap;
         public static Bitmap DefaultBoxArtImage = new Picture(200, 150).Bitmap;
 
-        public RA()
-        {
-            API_UserName = "RADatabase";
-            API_Key = "GRaWk9onm4B0LSWSFaDt5a2dQE3N8Yme";
-        }
+        public RA() { }
 
         private string AuthQS()
         {
@@ -59,19 +83,14 @@ namespace RADB
 
         private string GetURL(string target, string parames = "")
         {
-            return API_URL + target + AuthQS() + "&" + parames;
+            return API_HOST + target + AuthQS() + "&" + parames;
         }
         #endregion
 
         #region _Consoles
-        public string ConsolesPath()
-        {
-            return Folder.Console + "Consoles.json";
-        }
-
         public async Task DownloadConsoles()
         {
-            Browser.dlConsoles.Files = new List<DownloadFile> { new DownloadFile(API_Consoles, ConsolesPath()) };
+            Browser.dlConsoles.SetFile(API_Consoles());
 
             if (await Browser.dlConsoles.Start())
             {
@@ -84,38 +103,33 @@ namespace RADB
         {
             return Task<List<Console>>.Run(() =>
             {
-                List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(ConsolesPath()));
+                List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(API_Consoles().Path));
                 return consoles.OrderBy(x => x.ID).ToList();
             });
         }
         #endregion
 
         #region _GameList
-        public string GameListPath(string consoleName)
-        {
-            return (Folder.GameData + consoleName + ".json").Replace("/", "-");
-        }
-
         public async Task DownloadGameList(Console console)
         {
             await Task.Run(async () =>
             {
-                Browser.dlGames.Files = new List<DownloadFile> { new DownloadFile(API_GameList(console.ID), GameListPath(console.Name)) };
+                Browser.dlGames.SetFile(API_GameList(console));
 
                 if (await Browser.dlGames.Start())
                 {
                     await Game.Excluir(console.ID);
-                    List<Game> list = await DeserializeGameList(console.Name);
+                    List<Game> list = await DeserializeGameList(console);
                     await Game.IncluirLista(list);
                 }
             });
         }
 
-        private Task<List<Game>> DeserializeGameList(string consoleName)
+        private Task<List<Game>> DeserializeGameList(Console console)
         {
             return Task<List<Game>>.Run(() =>
             {
-                List<Game> list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(GameListPath(consoleName)));
+                List<Game> list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(API_GameList(console).Path));
                 return list;
             });
         }
@@ -132,16 +146,11 @@ namespace RADB
         #endregion
 
         #region _GameExtend
-        public string GameExtendPath(Game game)
-        {
-            return (Folder.GameDataExtend(game.ConsoleID) + game.ID + ".json");
-        }
-
         public Task<GameExtend> DownloadGameExtend(Game game, Download dlExtend)
         {
             return Task<GameExtend>.Run(async () =>
             {
-                dlExtend.Files = new List<DownloadFile>() { new DownloadFile(API_GameExtend(game.ID), GameExtendPath(game)) };
+                dlExtend.SetFile(API_GameExtend(game));
 
                 if (await (dlExtend.Start()))
                 {
@@ -160,7 +169,7 @@ namespace RADB
         {
             return Task<GameExtend>.Run(() =>
             {
-                string AllText = File.ReadAllText(GameExtendPath(game));
+                string AllText = File.ReadAllText(API_GameExtend(game).Path);
                 string gameData = AllText.GetBetween("{", ",\"Achievements\":");
                 string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
                 gameData = "{" + gameData + "}";
@@ -196,7 +205,7 @@ namespace RADB
         {
             return await Task.Run(async () =>
             {
-                string userData = await Browser.DownloadString(API_UserProgress(userName, gameID), true);
+                string userData = await Browser.DownloadString(API_UserProgress(userName, gameID).URL, true);
                 userData = userData.GetBetween(":{", "}}");
                 userData = "{" + userData + "}";
 

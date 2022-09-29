@@ -25,7 +25,7 @@ namespace RADB
         private string _ImageIcon { get; set; }
         //[JsonProperty("ImageIcon")]
         public string ImageIcon { get { return _ImageIcon; } set { _ImageIcon = value.Replace(@"/Images/", ""); } }
-        public DownloadFile ImageIconFile { get { return new DownloadFile(RA.URL_Images + ImageIcon, Folder.Icons(ConsoleID) + ImageIcon); } }
+        public DownloadFile ImageIconFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageIcon, Folder.Icons(ConsoleID) + ImageIcon); } }
         public Bitmap ImageIconBitmap { get; set; }
         public void SetImageIconBitmap()
         {

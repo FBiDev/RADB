@@ -25,17 +25,17 @@ namespace RADB
         #region _Images
         private string _ImageTitle { get; set; }
         public string ImageTitle { get { return _ImageTitle; } set { _ImageTitle = value.Replace(@"/Images/", ""); } }
-        public DownloadFile ImageTitleFile { get { return new DownloadFile(RA.URL_Images + ImageTitle, Folder.Titles(ConsoleID) + ImageTitle); } }
+        public DownloadFile ImageTitleFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageTitle, Folder.Titles(ConsoleID) + ImageTitle); } }
         public Bitmap ImageTitleBitmap { get; set; }
 
         private string _ImageIngame { get; set; }
         public string ImageIngame { get { return _ImageIngame; } set { _ImageIngame = value.Replace(@"/Images/", ""); } }
-        public DownloadFile ImageIngameFile { get { return new DownloadFile(RA.URL_Images + ImageIngame, Folder.Ingame(ConsoleID) + ImageIngame); } }
+        public DownloadFile ImageIngameFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageIngame, Folder.Ingame(ConsoleID) + ImageIngame); } }
         public Bitmap ImageIngameBitmap { get; set; }
 
         private string _ImageBoxArt { get; set; }
         public string ImageBoxArt { get { return _ImageBoxArt; } set { _ImageBoxArt = value.Replace(@"/Images/", ""); } }
-        public DownloadFile ImageBoxArtFile { get { return new DownloadFile(RA.URL_Images + ImageBoxArt, Folder.BoxArt(ConsoleID) + ImageBoxArt); } }
+        public DownloadFile ImageBoxArtFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageBoxArt, Folder.BoxArt(ConsoleID) + ImageBoxArt); } }
         public Bitmap ImageBoxArtBitmap { get; set; }
 
         public void SetImagesBitmap()

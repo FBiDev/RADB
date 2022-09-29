@@ -101,9 +101,6 @@
     <Compile Include="src\custom\CheckBoxBlueA.Designer.cs">
       <DependentUpon>CheckBoxBlueA.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\custom\CheckedComboBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="src\custom\FlatButtonA.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -152,9 +149,11 @@
     <Compile Include="src\temp\Temp.cs" />
     <EmbeddedResource Include="src\forms\ImageViewer.resx">
       <DependentUpon>ImageViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="src\forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

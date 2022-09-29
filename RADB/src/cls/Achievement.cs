@@ -42,7 +42,7 @@ namespace RADB
 
         public string BadgeURL()
         {
-            return RA.URL_Badges + BadgeName + BadgeFormatURL;
+            return RA.BADGE_HOST + BadgeName + BadgeFormatURL;
         }
     }
 }

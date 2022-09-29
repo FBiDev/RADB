@@ -13,6 +13,9 @@ namespace RADB
     {
         public string FolderBase { get; set; }
         public List<DownloadFile> Files { get; set; }
+
+        public void SetFile(DownloadFile file) { Files = new List<DownloadFile> { file }; }
+
         public List<DownloadFile> FilesToDownload { get; set; }
         public int FilesCompleted { get; set; }
         public bool Overwrite { get; set; }

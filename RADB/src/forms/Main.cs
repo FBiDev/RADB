@@ -581,10 +581,10 @@ namespace RADB
 
             ListBind<Achievement> lstCheevos = new ListBind<Achievement>();
             dgvAchievements.DataSource = lstCheevos;
-            if (File.Exists(RA.GameExtendPath(GameBind)))
+            if (File.Exists(RA.API_GameExtend(GameBind).Path))
             {
                 //gx.SetAchievements(resultInfo["Achievements"]);
-                string AllText = File.ReadAllText(RA.GameExtendPath(GameBind));
+                string AllText = File.ReadAllText(RA.API_GameExtend(GameBind).Path);
                 string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
                 cheevos = "{" + cheevos + "}";
 
@@ -812,12 +812,12 @@ namespace RADB
 
         private void btnRaProfile_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://retroachievements.org/user/FBiDev");
+            System.Diagnostics.Process.Start(RA.User_URL("FBiDev"));
         }
 
         private void btnGamePage_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://retroachievements.org/game/" + GameBind.ID);
+            System.Diagnostics.Process.Start(RA.Game_URL(GameBind.ID));
         }
 
         private void dgvConsoles_MouseDown(object sender, MouseEventArgs e)

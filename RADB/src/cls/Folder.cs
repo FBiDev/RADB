@@ -9,28 +9,30 @@ namespace RADB
     public static class Folder
     {
         public static string Base { get { return @".\Data\"; } }
-        public static string Images { get { return Base + @"Images\"; } }
+        public static string Temp { get { return Base + @"Temp\"; } }
         private static string Json { get { return Base + @"Json\"; } }
 
-        public static string Temp { get { return Base + @"Temp\"; } }
+        public static string User = Json + @"User\";
         public static string Console { get { return Json + @"Console\"; } }
         public static string GameData { get { return Json + @"GameData\"; } }
         public static string GameDataExtendBase { get { return Json + @"GameDataExtend\"; } }
 
+        public static string Images { get { return Base + @"Images\"; } }
         public static string IconsBase { get { return Images + @"Icons\"; } }
         public static string BadgesBase { get { return Images + @"Achievements\"; } }
 
         public static void CreateFolders()
         {
             Directory.CreateDirectory(Base);
-            Directory.CreateDirectory(Images);
-            Directory.CreateDirectory(Json);
-            Directory.CreateDirectory(GameDataExtendBase);
-
             Directory.CreateDirectory(Temp);
+            Directory.CreateDirectory(Json);
+
+            Directory.CreateDirectory(User);
             Directory.CreateDirectory(Console);
             Directory.CreateDirectory(GameData);
+            Directory.CreateDirectory(GameDataExtendBase);
 
+            Directory.CreateDirectory(Images);
             Directory.CreateDirectory(IconsBase);
             Directory.CreateDirectory(BadgesBase);
         }
