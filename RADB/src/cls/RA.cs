@@ -22,10 +22,9 @@ namespace RADB
         //HOSTS
         public static string HOST = "https://retroachievements.org/";
 
-        //https://s3-eu-west-1.amazonaws.com/
-        //http://media.retroachievements.org/Images/"
-        public static string IMAGE_HOST = "http://i.retroachievements.org/Images/";
-        public static string BADGE_HOST = "http://i.retroachievements.org/Badge/";
+        //https://s3-eu-west-1.amazonaws.com/i.retroachievements.org
+        public static string IMAGE_HOST = "http://media.retroachievements.org/Images/";
+        public static string BADGE_HOST = "http://media.retroachievements.org/Badge/";
 
         //URLs
         public static string Game_URL(int gameID) { return HOST + "game/" + gameID.ToString(); }
