@@ -17,10 +17,8 @@ WHERE 1 = 1
 	AND co.Name IS NULL AND @ID = 0 
 	OR ci.Active = 1 
 
-	AND (co.ID = @ID 
-		OR (@ID = 0 OR @ID IS NULL)) 
-	AND (co.Name LIKE '%' + @Name + '%' 
-		OR (@Name = '' OR @Name IS NULL)) 
+	AND (co.ID = @ID OR COALESCE(@ID, 0) = 0) 
+	AND (co.Name LIKE '%' + @Name + '%' OR COALESCE(@Name, '') = '') 
 GROUP BY co.ID 
 ORDER BY c.OrderNum, ci.OrderNum, LOWER(CName) 
 	

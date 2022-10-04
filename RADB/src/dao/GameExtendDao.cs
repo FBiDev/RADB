@@ -71,14 +71,14 @@ namespace RADB
         #endregion
 
         #region " _Listar "
-        public static Task<GameExtend> Listar(GameExtend obj = null)
+        public static Task<GameExtend> List(GameExtend obj = null)
         {
             return Task<GameExtend>.Run(() =>
             {
                 obj = obj ?? new GameExtend();
 
                 //Monta SQL
-                string sql = Resources.GameExtendListar;
+                string sql = Resources.GameExtendList;
 
                 List<GameExtend> list = Carregar<List<GameExtend>>(Banco.ExecutarSelect(sql, MontarFiltros(obj)));
                 if (list.Empty())
@@ -91,10 +91,10 @@ namespace RADB
         #endregion
 
         #region " _Incluir "
-        public static bool Incluir(GameExtend obj)
+        public static bool Insert(GameExtend obj)
         {
             //Monta SQL
-            string sql = Resources.GameExtendIncluir;
+            string sql = Resources.GameExtendInsert;
 
             var parametros = MontarParametros(obj);
 
@@ -103,11 +103,11 @@ namespace RADB
         #endregion
 
         #region " _Excluir "
-        public static Task<bool> Excluir(GameExtend obj)
+        public static Task<bool> Delete(GameExtend obj)
         {
             return Task<bool>.Run(() =>
             {
-                string sql = Resources.GameExtendExcluir;
+                string sql = Resources.GameExtendDelete;
 
                 var parametros = new List<cSqlParameter> 
                 {

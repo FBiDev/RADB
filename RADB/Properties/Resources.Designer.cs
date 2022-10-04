@@ -65,16 +65,14 @@ namespace RADB.Properties {
         ///DELETE 
         ///FROM Console 
         ///WHERE 1 = 1 
-        ///	AND (ID = @ID 
-        ///		OR (@ID = 0 OR @ID IS NULL)) 
-        ///	AND (Name LIKE &apos;%&apos;+@Name+&apos;%&apos; 
-        ///		OR (@Name = &apos;&apos; OR @Name IS NULL)) 
+        ///	AND (ID = @ID OR COALESCE(@ID, 0) = 0) 
+        ///	AND (Name LIKE &apos;%&apos;+@Name+&apos;%&apos; OR COALESCE(@Name, &apos;&apos;) = &apos;&apos;) 
         ///;
         ///--.
         /// </summary>
-        internal static string ConsoleExcluir {
+        internal static string ConsoleDelete {
             get {
-                return ResourceManager.GetString("ConsoleExcluir", resourceCulture);
+                return ResourceManager.GetString("ConsoleDelete", resourceCulture);
             }
         }
         
@@ -89,9 +87,9 @@ namespace RADB.Properties {
         ///);
         ///--.
         /// </summary>
-        internal static string ConsoleIncluir {
+        internal static string ConsoleInsert {
             get {
-                return ResourceManager.GetString("ConsoleIncluir", resourceCulture);
+                return ResourceManager.GetString("ConsoleInsert", resourceCulture);
             }
         }
         
@@ -111,9 +109,9 @@ namespace RADB.Properties {
         ///	LEFT JOIN Console AS co ON co.ID = ci.ConsoleID 
         ///	LEFT JOIN GameData AS g ON (g.ConsoleID = co.ID OR co.Name [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string ConsoleListar {
+        internal static string ConsoleList {
             get {
-                return ResourceManager.GetString("ConsoleListar", resourceCulture);
+                return ResourceManager.GetString("ConsoleList", resourceCulture);
             }
         }
         
@@ -142,16 +140,44 @@ namespace RADB.Properties {
         ///DELETE 
         ///FROM GameData 
         ///WHERE 1 = 1 
-        ///	AND (ID = @ID 
-        ///		OR (@ID = 0 OR @ID IS NULL)) 
-        ///	AND (ConsoleID = @ConsoleID 
-        ///		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
+        ///	AND (ID = @ID OR COALESCE(@ID, 0) = 0) 
+        ///	AND (ConsoleID = @ConsoleID OR COALESCE(@ConsoleID, 0) = 0) 
         ///;
         ///--.
         /// </summary>
-        internal static string GameExcluir {
+        internal static string GameDelete {
             get {
-                return ResourceManager.GetString("GameExcluir", resourceCulture);
+                return ResourceManager.GetString("GameDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///DELETE 
+        ///FROM GameToHide 
+        ///WHERE 1 = 1 
+        ///	AND (ID = @ID OR COALESCE(@ID, 0) = 0) 
+        ///;
+        ///--.
+        /// </summary>
+        internal static string GameDeleteFromHide {
+            get {
+                return ResourceManager.GetString("GameDeleteFromHide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///DELETE 
+        ///FROM GameToPlay 
+        ///WHERE 1 = 1 
+        ///	AND (ID = @ID OR COALESCE(@ID, 0) = 0) 
+        ///;
+        ///--.
+        /// </summary>
+        internal static string GameDeleteFromPlay {
+            get {
+                return ResourceManager.GetString("GameDeleteFromPlay", resourceCulture);
             }
         }
         
@@ -160,16 +186,14 @@ namespace RADB.Properties {
         ///DELETE 
         ///FROM GameDataExtend 
         ///WHERE 1 = 1 
-        ///	AND (ID = @ID 
-        ///		OR (@ID = 0 OR @ID IS NULL)) 
-        ///	AND (ConsoleID = @ConsoleID 
-        ///		OR (@ConsoleID = 0 OR @ConsoleID IS NULL)) 
+        ///	AND (ID = @ID OR COALESCE(@ID, 0) = 0) 
+        ///	AND (ConsoleID = @ConsoleID OR COALESCE(@ConsoleID, 0) = 0) 
         ///;
         ///--.
         /// </summary>
-        internal static string GameExtendExcluir {
+        internal static string GameExtendDelete {
             get {
-                return ResourceManager.GetString("GameExtendExcluir", resourceCulture);
+                return ResourceManager.GetString("GameExtendDelete", resourceCulture);
             }
         }
         
@@ -198,9 +222,9 @@ namespace RADB.Properties {
         ///);
         ///--.
         /// </summary>
-        internal static string GameExtendIncluir {
+        internal static string GameExtendInsert {
             get {
-                return ResourceManager.GetString("GameExtendIncluir", resourceCulture);
+                return ResourceManager.GetString("GameExtendInsert", resourceCulture);
             }
         }
         
@@ -211,7 +235,7 @@ namespace RADB.Properties {
         ///	, g.Title 
         ///	, g.ConsoleID 
         ///	, c.Name AS ConsoleName 
-        ///	, g.ImageIcon
+        ///	, g.ImageIcon 
         ///	, g.NumAchievements 
         ///	, g.Points 
         ///	, g.NumLeaderboards 
@@ -228,13 +252,12 @@ namespace RADB.Properties {
         ///	LEFT JOIN GameData AS g ON g.ID = gx.ID 
         ///	LEFT JOIN Console AS c ON c.ID = g.ConsoleID 
         ///WHERE 1 = 1 
-        ///	AND (g.ID = @ID 
-        ///		OR (@ID = 0 OR @ID IS NULL)) 
-        ///	AND  [rest of string was truncated]&quot;;.
+        ///	AND (g.ID = @ID OR COALESCE(@ID, 0) = 0) 
+        ///	AND (g.Cons [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string GameExtendListar {
+        internal static string GameExtendList {
             get {
-                return ResourceManager.GetString("GameExtendListar", resourceCulture);
+                return ResourceManager.GetString("GameExtendList", resourceCulture);
             }
         }
         
@@ -263,9 +286,39 @@ namespace RADB.Properties {
         ///);
         ///--.
         /// </summary>
-        internal static string GameIncluir {
+        internal static string GameInsert {
             get {
-                return ResourceManager.GetString("GameIncluir", resourceCulture);
+                return ResourceManager.GetString("GameInsert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///INSERT INTO GameToHide ( 
+        ///	  ID 
+        ///	) VALUES ( 
+        ///	  @ID 
+        ///);
+        ///--.
+        /// </summary>
+        internal static string GameInsertToHide {
+            get {
+                return ResourceManager.GetString("GameInsertToHide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///INSERT INTO GameToPlay ( 
+        ///	  ID 
+        ///	) VALUES ( 
+        ///	  @ID 
+        ///);
+        ///--.
+        /// </summary>
+        internal static string GameInsertToPlay {
+            get {
+                return ResourceManager.GetString("GameInsertToPlay", resourceCulture);
             }
         }
         
@@ -275,7 +328,7 @@ namespace RADB.Properties {
         ///	  g.ID 
         ///	, Title 
         ///	, ConsoleID 
-        ///	, C.Name AS ConsoleName 
+        ///	, c.Name AS ConsoleName 
         ///	, ImageIcon 
         ///	, NumAchievements 
         ///	, Points 
@@ -285,48 +338,12 @@ namespace RADB.Properties {
         ///FROM GameData AS g 
         ///	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
         ///WHERE 1 = 1 
-        ///	AND g.id NOT IN( SELECT ID FROM GameToHide ) 
-        ///	AND g.id NOT IN( SELECT ID FROM GameToPlay ) 
-        ///	AND c.ID &lt;&gt; 100 AND c.ID &lt;&gt; 101 
-        ///	AND (g.ID = @ID 
-        ///		OR (@ID = 0 OR @ID IS NULL)) 
-        ///	AND (g.Title LIKE &apos;%&apos;+@Title+&apos;%&apos; 
-        ///		OR (@Title = &apos;&apos; OR @Title I [rest of string was truncated]&quot;;.
+        ///	AND g.ID != (CASE WHEN @allTables = 1 THEN (SELECT -1) ELSE COALESCE((SELECT ID FROM GameToPlay AS p WHERE p.ID = g.ID), -1) END) 
+        ///	AND g.ID != (CASE WHEN @allTables = 1 THEN (SELECT -1) ELSE COALESCE((SELECT ID FROM GameToHide AS h WHERE h.ID =  [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string GameListar {
+        internal static string GameList {
             get {
-                return ResourceManager.GetString("GameListar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to --
-        ///DELETE 
-        ///FROM GameToHide 
-        ///WHERE 1 = 1 
-        ///	AND (ID = @ID 
-        ///		OR (@ID = 0 OR @ID IS NULL)) 
-        ///;
-        ///--.
-        /// </summary>
-        internal static string GameToHideExcluir {
-            get {
-                return ResourceManager.GetString("GameToHideExcluir", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to --
-        ///INSERT INTO GameToHide ( 
-        ///	  ID 
-        ///	) VALUES ( 
-        ///	  @ID
-        ///);
-        ///--.
-        /// </summary>
-        internal static string GameToHideIncluir {
-            get {
-                return ResourceManager.GetString("GameToHideIncluir", resourceCulture);
+                return ResourceManager.GetString("GameList", resourceCulture);
             }
         }
         
@@ -336,7 +353,7 @@ namespace RADB.Properties {
         ///	  g.ID 
         ///	, Title 
         ///	, ConsoleID 
-        ///	, C.Name AS ConsoleName 
+        ///	, c.Name AS ConsoleName 
         ///	, ImageIcon 
         ///	, NumAchievements 
         ///	, Points 
@@ -349,40 +366,9 @@ namespace RADB.Properties {
         ///WHERE 1 = 1 
         ///	.
         /// </summary>
-        internal static string GameToHideListar {
+        internal static string GameListToHide {
             get {
-                return ResourceManager.GetString("GameToHideListar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to --
-        ///DELETE 
-        ///FROM GameToPlay 
-        ///WHERE 1 = 1 
-        ///	AND (ID = @ID 
-        ///		OR (@ID = 0 OR @ID IS NULL)) 
-        ///;
-        ///--.
-        /// </summary>
-        internal static string GameToPlayExcluir {
-            get {
-                return ResourceManager.GetString("GameToPlayExcluir", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to --
-        ///INSERT INTO GameToPlay ( 
-        ///	  ID 
-        ///	) VALUES ( 
-        ///	  @ID
-        ///);
-        ///--.
-        /// </summary>
-        internal static string GameToPlayIncluir {
-            get {
-                return ResourceManager.GetString("GameToPlayIncluir", resourceCulture);
+                return ResourceManager.GetString("GameListToHide", resourceCulture);
             }
         }
         
@@ -392,7 +378,7 @@ namespace RADB.Properties {
         ///	  g.ID 
         ///	, Title 
         ///	, ConsoleID 
-        ///	, C.Name AS ConsoleName 
+        ///	, c.Name AS ConsoleName 
         ///	, ImageIcon 
         ///	, NumAchievements 
         ///	, Points 
@@ -405,9 +391,9 @@ namespace RADB.Properties {
         ///WHERE 1 = 1 
         ///	.
         /// </summary>
-        internal static string GameToPlayListar {
+        internal static string GameListToPlay {
             get {
-                return ResourceManager.GetString("GameToPlayListar", resourceCulture);
+                return ResourceManager.GetString("GameListToPlay", resourceCulture);
             }
         }
         

@@ -85,6 +85,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="src\cfg\Banco.cs" />
     <Compile Include="src\cfg\Config.cs" />
     <Compile Include="src\cls\Console.cs" />
@@ -157,14 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -194,22 +194,22 @@
     <Content Include="src\rsc\image\iconForm.png" />
     <Content Include="src\rsc\image\loader.gif" />
     <Content Include="src\rsc\image\notfound.png" />
-    <Content Include="src\rsc\sql\ConsoleListar.sql" />
-    <Content Include="src\rsc\sql\ConsoleIncluir.sql" />
-    <Content Include="src\rsc\sql\ConsoleExcluir.sql" />
-    <Content Include="src\rsc\sql\GameToPlayExcluir.sql" />
-    <Content Include="src\rsc\sql\GameToPlayIncluir.sql" />
-    <Content Include="src\rsc\sql\GameToPlayListar.sql" />
-    <Content Include="src\rsc\sql\GameToHideExcluir.sql" />
-    <Content Include="src\rsc\sql\GameToHideIncluir.sql" />
-    <Content Include="src\rsc\sql\GameToHideListar.sql" />
-    <Content Include="src\rsc\sql\GameExtendExcluir.sql" />
-    <Content Include="src\rsc\sql\GameExtendIncluir.sql" />
-    <Content Include="src\rsc\sql\GameExtendListar.sql" />
+    <Content Include="src\rsc\sql\ConsoleList.sql" />
+    <Content Include="src\rsc\sql\ConsoleInsert.sql" />
+    <Content Include="src\rsc\sql\ConsoleDelete.sql" />
+    <Content Include="src\rsc\sql\GameDeleteFromPlay.sql" />
+    <Content Include="src\rsc\sql\GameInsertToPlay.sql" />
+    <Content Include="src\rsc\sql\GameListToPlay.sql" />
+    <Content Include="src\rsc\sql\GameDeleteFromHide.sql" />
+    <Content Include="src\rsc\sql\GameInsertToHide.sql" />
+    <Content Include="src\rsc\sql\GameListToHide.sql" />
+    <Content Include="src\rsc\sql\GameExtendDelete.sql" />
+    <Content Include="src\rsc\sql\GameExtendInsert.sql" />
+    <Content Include="src\rsc\sql\GameExtendList.sql" />
     <Content Include="src\rsc\sql\GameDuplicateForumTopicID.sql" />
-    <Content Include="src\rsc\sql\GameListar.sql" />
-    <Content Include="src\rsc\sql\GameExcluir.sql" />
-    <Content Include="src\rsc\sql\GameIncluir.sql" />
+    <Content Include="src\rsc\sql\GameList.sql" />
+    <Content Include="src\rsc\sql\GameDelete.sql" />
+    <Content Include="src\rsc\sql\GameInsert.sql" />
     <Content Include="src\temp\ToDo.txt" />
     <ContentWithTargetPath Include="src\rsc\dll64\unmanaged\SQLite.Interop.dll">
       <TargetPath>SQLite.Interop.dll</TargetPath>

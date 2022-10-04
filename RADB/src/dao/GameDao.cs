@@ -69,14 +69,24 @@ namespace RADB
         #endregion
 
         #region " _Listar "
-        public static Task<List<Game>> Listar(Game obj = null, bool allTables = false)
+        public static async Task<List<Game>> Listar()
+        {
+            var obj = new Game();
+            return (await Pesquisar(obj, true));
+        }
+
+        public static async Task<Game> Buscar(int id)
+        {
+            var obj = new Game { ID = id };
+            return (await Pesquisar(obj, false)).FirstOrDefault();
+        }
+
+        public static Task<List<Game>> Pesquisar(Game obj, bool allTables)
         {
             return Task<List<Game>>.Run(() =>
             {
-                obj = obj ?? new Game();
-
                 //Monta SQL
-                string sql = Resources.GameListar;
+                string sql = Resources.GameList;
                 sql += " ORDER BY NumAchievements=0, Title ASC ";
 
                 var parametros = MontarFiltros(obj);
@@ -86,32 +96,32 @@ namespace RADB
             });
         }
 
-        public static ListBind<Game> OrdenarLista(List<Game> GameList)
+        public static ListBind<Game> OrdenarLista(List<Game> gameList)
         {
             List<string> prefixNotOffical = new List<string> { 
                         "~Demo~", "~Hack~", "~Homebrew~", "~Prototype~", "~Test Kit~", "~Unlicensed~", "~Z~" };
 
             //Get NotOffical
-            List<Game> LNotOffical = GameList.Where(x => prefixNotOffical.Any(y => x.Title.IndexOf(y) >= 0)).ToList();
+            List<Game> LNotOffical = gameList.Where(x => prefixNotOffical.Any(y => x.Title.IndexOf(y) >= 0)).ToList();
             //Remove NotOffical from Main List
-            GameList = GameList.Except(LNotOffical).ToList();
+            gameList = gameList.Except(LNotOffical).ToList();
             //Get Game with no cheevos from NotOffical
             List<Game> LNotOfficalNoCheevos = LNotOffical.Where(x => x.NumAchievements == 0).ToList();
             //Get Games Has Cheevos
             LNotOffical = LNotOffical.Where(x => x.NumAchievements > 0).ToList();
             //Get Game with no cheevos from Main List
-            List<Game> LNoCheevos = GameList.Where(x => x.NumAchievements == 0).ToList();
+            List<Game> LNoCheevos = gameList.Where(x => x.NumAchievements == 0).ToList();
             //Remove Games no Cheevos from Main List
-            GameList = GameList.Except(LNoCheevos).ToList();
+            gameList = gameList.Except(LNoCheevos).ToList();
 
             //TimeSpan fim = new TimeSpan(DateTime.Now.Ticks) - ini;
             //Join Ordered Lists
-            GameList = GameList.OrderBy(x => x.Title).ToList();
-            GameList.AddRange(LNotOffical.OrderBy(x => x.Title).ToList());
-            GameList.AddRange(LNoCheevos.OrderBy(x => x.Title).ToList());
-            GameList.AddRange(LNotOfficalNoCheevos.OrderBy(x => x.Title).ToList());
+            gameList = gameList.OrderBy(x => x.Title).ToList();
+            gameList.AddRange(LNotOffical.OrderBy(x => x.Title).ToList());
+            gameList.AddRange(LNoCheevos.OrderBy(x => x.Title).ToList());
+            gameList.AddRange(LNotOfficalNoCheevos.OrderBy(x => x.Title).ToList());
 
-            return new ListBind<Game>(GameList);
+            return new ListBind<Game>(gameList);
         }
         #endregion
 
@@ -119,7 +129,7 @@ namespace RADB
         public static bool Incluir(Game obj)
         {
             //Monta SQL
-            string sql = Resources.GameIncluir;
+            string sql = Resources.GameInsert;
 
             var parametros = MontarParametros(obj);
 
@@ -132,7 +142,8 @@ namespace RADB
             {
                 //Monta SQL
                 string sql = "INSERT INTO GameData " +
-                                "(ID, Title, ConsoleID, NumAchievements, Points, NumLeaderboards, DateModified, ForumTopicID, ImageIcon)" +
+                                "(ID, Title, ConsoleID, NumAchievements, Points, " +
+                                "NumLeaderboards, DateModified, ForumTopicID, ImageIcon)" +
                             " VALUES " + Environment.NewLine;
 
                 StringBuilder s = new StringBuilder();
@@ -162,11 +173,11 @@ namespace RADB
         #endregion
 
         #region " _Excluir "
-        public static Task<bool> Excluir(Game obj)
+        public static Task<bool> Delete(Game obj)
         {
             return Task<bool>.Run(() =>
             {
-                string sql = Resources.GameExcluir;
+                string sql = Resources.GameDelete;
 
                 var parametros = new List<cSqlParameter> 
                 {
@@ -180,23 +191,23 @@ namespace RADB
         #endregion
 
         #region ToHide
-        public static Task<List<Game>> ToHideListar()
+        public static Task<List<Game>> ListToHide()
         {
             return Task<List<Game>>.Run(() =>
             {
                 //Monta SQL
-                string sql = Resources.GameToHideListar;
+                string sql = Resources.GameListToHide;
 
                 return Carregar<List<Game>>(Banco.ExecutarSelect(sql, new List<cSqlParameter> { }));
             });
         }
 
-        public static Task<bool> ToHideIncluir(Game obj)
+        public static Task<bool> InsertToHide(Game obj)
         {
             return Task<bool>.Run(() =>
             {
                 //Monta SQL
-                string sql = Resources.GameToHideIncluir;
+                string sql = Resources.GameInsertToHide;
 
                 var parametros = MontarParametros(obj);
 
@@ -204,11 +215,11 @@ namespace RADB
             });
         }
 
-        public static Task<bool> ToHideExcluir(Game obj)
+        public static Task<bool> DeleteFromHide(Game obj)
         {
             return Task<bool>.Run(() =>
             {
-                string sql = Resources.GameToHideExcluir;
+                string sql = Resources.GameDeleteFromHide;
 
                 var parametros = new List<cSqlParameter> 
                 {
@@ -221,23 +232,23 @@ namespace RADB
         #endregion
 
         #region ToPlay
-        public static Task<List<Game>> ToPlayListar()
+        public static Task<List<Game>> ListToPlay()
         {
             return Task<List<Game>>.Run(() =>
             {
                 //Monta SQL
-                string sql = Resources.GameToPlayListar;
+                string sql = Resources.GameListToPlay;
 
                 return Carregar<List<Game>>(Banco.ExecutarSelect(sql, new List<cSqlParameter> { }));
             });
         }
 
-        public static Task<bool> ToPlayIncluir(Game obj)
+        public static Task<bool> InsertToPlay(Game obj)
         {
             return Task<bool>.Run(() =>
             {
                 //Monta SQL
-                string sql = Resources.GameToPlayIncluir;
+                string sql = Resources.GameInsertToPlay;
 
                 var parametros = MontarParametros(obj);
 
@@ -245,11 +256,11 @@ namespace RADB
             });
         }
 
-        public static Task<bool> ToPlayExcluir(Game obj)
+        public static Task<bool> DeleteFromPlay(Game obj)
         {
             return Task<bool>.Run(() =>
             {
-                string sql = Resources.GameToPlayExcluir;
+                string sql = Resources.GameDeleteFromPlay;
 
                 var parametros = new List<cSqlParameter> 
                 {

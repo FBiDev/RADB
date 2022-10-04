@@ -104,22 +104,22 @@ namespace RADB
 
         public bool Incluir()
         {
-            return GameExtendDao.Incluir(this);
+            return GameExtendDao.Insert(this);
         }
 
         public async Task<bool> Excluir()
         {
-            return await GameExtendDao.Excluir(this);
+            return await GameExtendDao.Delete(this);
         }
 
         public async static Task<GameExtend> Listar(int ID)
         {
-            return await GameExtendDao.Listar(new GameExtend() { ID = ID });
+            return await GameExtendDao.List(new GameExtend() { ID = ID });
         }
 
         public async static Task<GameExtend> Listar(GameExtend obj = null)
         {
-            return await GameExtendDao.Listar(obj);
+            return await GameExtendDao.List(obj);
         }
     }
 }

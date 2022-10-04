@@ -118,26 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ConsoleExcluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\consoleexcluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="ConsoleIncluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\consoleincluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="ConsoleListar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\consolelistar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="favicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\src\rsc\image\favicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="GameExcluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gameexcluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="GameIncluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gameincluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="GameListar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gamelistar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="jpegoptim_1_4_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\src\rsc\exe\jpegoptim_1.4.7.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -151,37 +133,55 @@
   <data name="notfound" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\src\rsc\image\notfound.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GameExtendListar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gameextendlistar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="GameExtendIncluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gameextendincluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="GameExtendExcluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gameextendexcluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="iconForm" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\src\rsc\image\iconform.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="fbidev" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\src\rsc\image\fbidev.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GameToHideExcluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gametohideexcluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="ConsoleDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\consoledelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="GameToHideIncluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gametohideincluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="ConsoleInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\consoleinsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="GameToHideListar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gametohidelistar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="ConsoleList" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\consolelist.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="GameToPlayExcluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gametoplayexcluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="GameDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gamedelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="GameToPlayIncluir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gametoplayincluir.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="GameDeleteFromHide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gamedeletefromhide.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="GameToPlayListar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\src\rsc\sql\gametoplaylistar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="GameDeleteFromPlay" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gamedeletefromplay.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GameExtendDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gameextenddelete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GameExtendInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gameextendinsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GameExtendList" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gameextendlist.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GameInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gameinsert.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GameInsertToHide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gameinserttohide.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GameInsertToPlay" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gameinserttoplay.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GameList" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gamelist.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GameListToHide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gamelisttohide.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GameListToPlay" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\src\rsc\sql\gamelisttoplay.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

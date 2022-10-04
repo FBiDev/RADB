@@ -137,7 +137,7 @@ namespace RADB
         {
             await Task.Run(async () =>
             {
-                List<Game> games = await Game.Listar(console.ID, true);
+                List<Game> games = await Game.Pesquisar(console.ID, true);
                 dl.Files = games.Select(g => g.ImageIconFile).ToList();
                 await (dl.Start());
             });
@@ -247,9 +247,9 @@ namespace RADB
                 Picture pic = await Task.Run(() =>
                 {
                     pic = new Picture(badgeNames, true, 11, GameBadgesSize, false);
-                    pic.Save(game.BadgesMerged(), PictureFormat.Png, false);
+                    pic.Save(game.BadgesMergedPath(), PictureFormat.Png, false);
 
-                    Archive.SaveGameBadges(game, badgeNames, game.BadgesMerged() + ".txt");
+                    Archive.SaveGameBadges(game, badgeNames, game.BadgesMergedPath() + ".txt");
                     return pic;
                 });
 
@@ -275,7 +275,7 @@ namespace RADB
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
 
             await DownloadGamesIcon(console, Browser.dlConsolesGamesIcon);
-            var games = (await Game.Listar(console.ID, true)).Where(g => g.NumAchievements > 0).ToList();
+            var games = (await Game.Pesquisar(console.ID, true)).Where(g => g.NumAchievements > 0).ToList();
             var gamesIcon = games.Select(g => g.ImageIconFile.Path).ToList();
 
             await Task.Run(() =>
@@ -289,9 +289,9 @@ namespace RADB
                 Picture pic = await Task.Run(() =>
                 {
                     pic = new Picture(gamesIcon, true, 11, GameIconSize, false);
-                    pic.Save(Game.IconsMerged(console.Name), PictureFormat.Png, false);
+                    pic.Save(Game.IconsMergedPath(console.Name), PictureFormat.Png, false);
 
-                    Archive.SaveGamesIcon(games, gamesIcon, Game.IconsMerged(console.Name) + ".txt");
+                    Archive.SaveGamesIcon(games, gamesIcon, Game.IconsMergedPath(console.Name) + ".txt");
 
                     return pic;
                 });

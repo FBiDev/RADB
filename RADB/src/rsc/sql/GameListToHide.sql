@@ -3,7 +3,7 @@ SELECT
 	  g.ID 
 	, Title 
 	, ConsoleID 
-	, C.Name AS ConsoleName 
+	, c.Name AS ConsoleName 
 	, ImageIcon 
 	, NumAchievements 
 	, Points 
@@ -12,6 +12,6 @@ SELECT
 	, ForumTopicID 
 FROM GameData AS g 
 	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
-	INNER JOIN GameToPlay AS gh ON gh.ID = g.ID 
+	INNER JOIN GameToHide AS gh ON gh.ID = g.ID 
 WHERE 1 = 1 
 	

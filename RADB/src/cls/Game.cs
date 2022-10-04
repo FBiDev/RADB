@@ -34,84 +34,87 @@ namespace RADB
         }
         #endregion
 
+        private GameDao Dao = new GameDao() { };
+
         public Game()
         {
             ImageIconBitmap = RA.DefaultIcon;
         }
 
-        public static string IconsMerged(string consoleName = "")
+        public static string IconsMergedPath(string consoleName = "")
         {
             return Folder.Temp + Archive.MakeValidFileName(consoleName) + "_Icons";
         }
 
-        public string BadgesMerged()
+        public string BadgesMergedPath()
         {
             return Folder.Temp + ConsoleName + "(" + ConsoleID + ")_" + Archive.MakeValidFileName(Title) + "(" + ID + ")_Badges";
         }
 
-        public bool Incluir()
-        {
-            return GameDao.Incluir(this);
-        }
+        //public bool Incluir()
+        //{
+        //    return GameDao.Incluir(this);
+        //}
 
         public async static Task<bool> IncluirLista(IList<Game> list)
         {
             return await GameDao.IncluirLista(list);
         }
 
-        public async Task<bool> Excluir()
-        {
-            return await GameDao.Excluir(this);
-        }
+        //public async Task<bool> Excluir()
+        //{
+        //    return await GameDao.Excluir(this);
+        //}
 
         public async static Task<bool> Excluir(int ConsoleID)
         {
-            return await GameDao.Excluir(new Game() { ConsoleID = ConsoleID });
+            return await GameDao.Delete(new Game() { ConsoleID = ConsoleID });
         }
 
-        public async static Task<List<Game>> Listar(int consoleID, bool allTables = false)
+        //public async static Task<List<Game>> Listar()
+        //{
+        //    return (await GameDao.Listar());
+        //}
+
+        //public async static Task<Game> Buscar(int id)
+        //{
+        //    return (await GameDao.Buscar(id));
+        //}
+
+        public async static Task<List<Game>> Pesquisar(int consoleID, bool allTables = false)
         {
-            return await GameDao.Listar(new Game() { ConsoleID = consoleID }, allTables);
+            var obj = new Game { ConsoleID = consoleID };
+            return (await GameDao.Pesquisar(obj, allTables));
         }
 
-        public async static Task<List<Game>> Listar(Game obj = null)
+        public async static Task<List<Game>> ListarToHide()
         {
-            return await GameDao.Listar(obj);
+            return (await GameDao.ListToHide());
         }
 
-        public async static Task<ListBind<Game>> ListarBind(int consoleID)
+        public async Task<bool> IncluirToHide()
         {
-            return new ListBind<Game>(await GameDao.Listar(new Game() { ConsoleID = consoleID }));
+            return await GameDao.InsertToHide(this);
         }
 
-        public async static Task<ListBind<Game>> ToHideListarBind()
+        public async Task<bool> ExcluirFromHide()
         {
-            return new ListBind<Game>(await GameDao.ToHideListar());
+            return await GameDao.DeleteFromHide(this);
         }
 
-        public async static Task<bool> ToHideIncluir(Game obj = null)
+        public async static Task<List<Game>> ListarToPlay()
         {
-            return await GameDao.ToHideIncluir(obj);
+            return (await GameDao.ListToPlay());
         }
 
-        public async static Task<bool> ToHideExcluir(Game obj = null)
+        public async Task<bool> IncluirToPlay()
         {
-            return await GameDao.ToHideExcluir(obj);
+            return await GameDao.InsertToPlay(this);
         }
 
-        public async static Task<ListBind<Game>> ToPlayListarBind()
+        public async Task<bool> ExcluirFromPlay()
         {
-            return new ListBind<Game>(await GameDao.ToPlayListar());
-        }
-
-        public async static Task<bool> ToPlayIncluir(Game obj = null)
-        {
-            return await GameDao.ToPlayIncluir(obj);
-        }
-
-        public async static Task<bool> ToPlayExcluir(Game obj = null)
-        {
-            return await GameDao.ToPlayExcluir(obj);
+            return await GameDao.DeleteFromPlay(this);
         }
     }
 }

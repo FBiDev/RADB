@@ -27,22 +27,22 @@ namespace RADB
 
         public async static Task<bool> Excluir()
         {
-            return await ConsoleDao.Excluir(new Console() { });
+            return await ConsoleDao.Delete(new Console() { });
         }
 
         public async static Task<List<Console>> Listar(int consoleID)
         {
-            return await ConsoleDao.Listar(new Console() { ID = consoleID });
+            return await ConsoleDao.List(new Console() { ID = consoleID });
         }
 
         public async static Task<List<Console>> Listar(Console obj = null)
         {
-            return await ConsoleDao.Listar(obj);
+            return await ConsoleDao.List(obj);
         }
 
         public async static Task<ListBind<Console>> ListarBind()
         {
-            return new ListBind<Console>(await ConsoleDao.Listar());
+            return new ListBind<Console>(await ConsoleDao.List());
         }
     }
 }

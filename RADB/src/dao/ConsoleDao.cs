@@ -55,14 +55,14 @@ namespace RADB
         #endregion
 
         #region " _Listar "
-        public static Task<List<Console>> Listar(Console obj = null)
+        public static Task<List<Console>> List(Console obj = null)
         {
             return Task<List<Console>>.Run(() =>
             {
                 obj = obj ?? new Console();
 
                 //Monta SQL
-                string sql = Resources.ConsoleListar;
+                string sql = Resources.ConsoleList;
                 //sql += " ORDER BY Name ASC ";
 
                 return Carregar<List<Console>>(Banco.ExecutarSelect(sql, MontarFiltros(obj)));
@@ -71,10 +71,10 @@ namespace RADB
         #endregion
 
         #region " _Incluir "
-        public static bool Incluir(Console obj)
+        public static bool Insert(Console obj)
         {
             //Monta SQL
-            string sql = Resources.ConsoleIncluir;
+            string sql = Resources.ConsoleInsert;
 
             var parametros = MontarParametros(obj);
 
@@ -111,11 +111,11 @@ namespace RADB
         #endregion
 
         #region " _Excluir "
-        public static Task<bool> Excluir(Console obj)
+        public static Task<bool> Delete(Console obj)
         {
             return Task<bool>.Run(() =>
             {
-                string sql = Resources.ConsoleExcluir;
+                string sql = Resources.ConsoleDelete;
 
                 var parametros = new List<cSqlParameter> 
                 {
