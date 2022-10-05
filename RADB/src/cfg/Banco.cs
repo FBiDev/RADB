@@ -34,7 +34,7 @@ namespace RADB
             return new DataTable();
         }
 
-        public static cSqlResult Executar(string sql, MovimentoLog movimento, List<cSqlParameter> parameters)
+        public static cSqlResult Executar(string sql, DbAction movimento, List<cSqlParameter> parameters)
         {
             if (ConfigLoaded) { return DB.Execute(sql, ((DbAction)movimento), parameters); }
             return new cSqlResult();

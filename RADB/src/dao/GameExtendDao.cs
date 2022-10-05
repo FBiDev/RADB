@@ -98,7 +98,7 @@ namespace RADB
 
             var parametros = MontarParametros(obj);
 
-            return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
+            return Banco.Executar(sql, DbAction.Insert, parametros).AffectedRows > 0;
         }
         #endregion
 
@@ -115,7 +115,7 @@ namespace RADB
                     new cSqlParameter("@ConsoleID", obj.ConsoleID),
                 };
 
-                return Banco.Executar(sql, MovimentoLog.Exclusão, parametros).AffectedRows > 0;
+                return Banco.Executar(sql, DbAction.Delete, parametros).AffectedRows > 0;
             });
         }
         #endregion

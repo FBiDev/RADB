@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-//
-using GNX;
 
 namespace RADB
 {
@@ -20,29 +20,19 @@ namespace RADB
             Company = Name = string.Empty;
         }
 
-        public async static Task<bool> IncluirLista(IList<Console> list)
+        public async static Task<bool> InsertList(IList<Console> list)
         {
-            return await ConsoleDao.IncluirLista(list);
+            return await ConsoleDao.InsertList(list);
         }
 
-        public async static Task<bool> Excluir()
+        public async Task<bool> Delete()
         {
-            return await ConsoleDao.Delete(new Console() { });
+            return await ConsoleDao.Delete(this);
         }
 
-        public async static Task<List<Console>> Listar(int consoleID)
+        public async static Task<List<Console>> List()
         {
-            return await ConsoleDao.List(new Console() { ID = consoleID });
-        }
-
-        public async static Task<List<Console>> Listar(Console obj = null)
-        {
-            return await ConsoleDao.List(obj);
-        }
-
-        public async static Task<ListBind<Console>> ListarBind()
-        {
-            return new ListBind<Console>(await ConsoleDao.List());
+            return await ConsoleDao.List();
         }
     }
 }

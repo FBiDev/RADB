@@ -2,19 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data;
+using System.Text;
 using System.Threading.Tasks;
 //
+using System.Data;
 using RADB.Properties;
 using GNX;
-using System.Text;
 
 namespace RADB
 {
     public class ConsoleDao
     {
-        #region " _Carregar "
-        private static T Carregar<T>(DataTable table) where T : IList, new()
+        #region " _Load "
+        private static T Load<T>(DataTable table) where T : IList, new()
         {
             T list = new T();
             foreach (DataRow row in table.Rows)
@@ -32,8 +32,8 @@ namespace RADB
         }
         #endregion
 
-        #region " _MontarFiltros "
-        private static List<cSqlParameter> MontarFiltros(Console obj)
+        #region " _MountFilters "
+        private static List<cSqlParameter> MountFilters(Console obj)
         {
             return new List<cSqlParameter>
             {
@@ -43,8 +43,8 @@ namespace RADB
         }
         #endregion
 
-        #region " _MontarParametros "
-        private static List<cSqlParameter> MontarParametros(Console obj)
+        #region " _MountParameters "
+        private static List<cSqlParameter> MountParameters(Console obj)
         {
             return new List<cSqlParameter>
             {
@@ -55,45 +55,41 @@ namespace RADB
         #endregion
 
         #region " _Listar "
-        public static Task<List<Console>> List(Console obj = null)
+        public static Task<List<Console>> List()
         {
             return Task<List<Console>>.Run(() =>
             {
-                obj = obj ?? new Console();
+                var obj = new Console();
 
-                //Monta SQL
                 string sql = Resources.ConsoleList;
-                //sql += " ORDER BY Name ASC ";
 
-                return Carregar<List<Console>>(Banco.ExecutarSelect(sql, MontarFiltros(obj)));
+                return Load<List<Console>>(Banco.ExecutarSelect(sql, MountFilters(obj)));
             });
         }
         #endregion
 
-        #region " _Incluir "
+        #region " _Insert "
         public static bool Insert(Console obj)
         {
-            //Monta SQL
             string sql = Resources.ConsoleInsert;
 
-            var parametros = MontarParametros(obj);
+            var parameters = MountParameters(obj);
 
-            return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
+            return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
         }
 
-        public static Task<bool> IncluirLista(IList<Console> list)
+        public static Task<bool> InsertList(IList<Console> list)
         {
             return Task<bool>.Run(() =>
             {
-                //Monta SQL
                 string sql = "INSERT INTO Console (ID, Name) VALUES " + Environment.NewLine; ;
 
-                var parametros = new List<cSqlParameter>();
+                var parameters = new List<cSqlParameter>();
 
                 int index = 0;
                 foreach (var i in list)
                 {
-                    parametros.AddRange(new List<cSqlParameter>
+                    parameters.AddRange(new List<cSqlParameter>
                     {
                         new cSqlParameter("@ID" + index, i.ID),
                         new cSqlParameter("@Name" + index, i.Name),
@@ -105,25 +101,25 @@ namespace RADB
                     if (index < list.Count) { sql += "," + Environment.NewLine; }
                 }
 
-                return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
+                return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
             });
         }
         #endregion
 
-        #region " _Excluir "
+        #region " _Delete "
         public static Task<bool> Delete(Console obj)
         {
             return Task<bool>.Run(() =>
             {
                 string sql = Resources.ConsoleDelete;
 
-                var parametros = new List<cSqlParameter> 
+                var parameters = new List<cSqlParameter> 
                 {
                     new cSqlParameter("@ID", obj.ID),
                     new cSqlParameter("@Name", obj.Name),
                 };
 
-                return Banco.Executar(sql, MovimentoLog.Exclusão, parametros).AffectedRows > 0;
+                return Banco.Executar(sql, DbAction.Delete, parameters).AffectedRows > 0;
             });
         }
         #endregion

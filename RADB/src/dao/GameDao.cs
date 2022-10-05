@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using System.Data;
+using System.Text;
 using System.Threading.Tasks;
 //
+using System.Data;
 using RADB.Properties;
 using GNX;
 
@@ -13,8 +13,8 @@ namespace RADB
 {
     public class GameDao
     {
-        #region " _Carregar "
-        private static T Carregar<T>(DataTable table) where T : IList, new()
+        #region " _Load "
+        private static T Load<T>(DataTable table) where T : IList, new()
         {
             T list = new T();
             foreach (DataRow row in table.Rows)
@@ -37,8 +37,8 @@ namespace RADB
         }
         #endregion
 
-        #region " _MontarFiltros "
-        private static List<cSqlParameter> MontarFiltros(Game obj)
+        #region " _MountFilters "
+        private static List<cSqlParameter> MountFilters(Game obj)
         {
             return new List<cSqlParameter>
             {
@@ -50,8 +50,8 @@ namespace RADB
         }
         #endregion
 
-        #region " _MontarParametros "
-        private static List<cSqlParameter> MontarParametros(Game obj)
+        #region " _MountParameters "
+        private static List<cSqlParameter> MountParameters(Game obj)
         {
             return new List<cSqlParameter>
             {
@@ -68,79 +68,76 @@ namespace RADB
         }
         #endregion
 
-        #region " _Listar "
-        public static async Task<List<Game>> Listar()
+        #region " _List "
+        public static async Task<List<Game>> List()
         {
             var obj = new Game();
-            return (await Pesquisar(obj, true));
+            return (await Search(obj, true));
         }
 
-        public static async Task<Game> Buscar(int id)
+        public static async Task<Game> Find(int id)
         {
             var obj = new Game { ID = id };
-            return (await Pesquisar(obj, false)).FirstOrDefault();
+            return (await Search(obj, false)).FirstOrDefault();
         }
 
-        public static Task<List<Game>> Pesquisar(Game obj, bool allTables)
+        public static Task<List<Game>> Search(Game obj, bool allTables)
         {
             return Task<List<Game>>.Run(() =>
             {
-                //Monta SQL
                 string sql = Resources.GameList;
                 sql += " ORDER BY NumAchievements=0, Title ASC ";
 
-                var parametros = MontarFiltros(obj);
-                parametros.Add(new cSqlParameter("@allTables", allTables));
+                var parameters = MountFilters(obj);
+                parameters.Add(new cSqlParameter("@allTables", allTables));
 
-                return Carregar<List<Game>>(Banco.ExecutarSelect(sql, parametros));
+                return Load<List<Game>>(Banco.ExecutarSelect(sql, parameters));
             });
         }
 
-        public static ListBind<Game> OrdenarLista(List<Game> gameList)
+        public static ListBind<Game> OrderList(List<Game> list)
         {
             List<string> prefixNotOffical = new List<string> { 
                         "~Demo~", "~Hack~", "~Homebrew~", "~Prototype~", "~Test Kit~", "~Unlicensed~", "~Z~" };
 
             //Get NotOffical
-            List<Game> LNotOffical = gameList.Where(x => prefixNotOffical.Any(y => x.Title.IndexOf(y) >= 0)).ToList();
+            List<Game> LNotOffical = list.Where(x => prefixNotOffical.Any(y => x.Title.IndexOf(y) >= 0)).ToList();
             //Remove NotOffical from Main List
-            gameList = gameList.Except(LNotOffical).ToList();
+            list = list.Except(LNotOffical).ToList();
             //Get Game with no cheevos from NotOffical
             List<Game> LNotOfficalNoCheevos = LNotOffical.Where(x => x.NumAchievements == 0).ToList();
             //Get Games Has Cheevos
             LNotOffical = LNotOffical.Where(x => x.NumAchievements > 0).ToList();
             //Get Game with no cheevos from Main List
-            List<Game> LNoCheevos = gameList.Where(x => x.NumAchievements == 0).ToList();
+            List<Game> LNoCheevos = list.Where(x => x.NumAchievements == 0).ToList();
             //Remove Games no Cheevos from Main List
-            gameList = gameList.Except(LNoCheevos).ToList();
+            list = list.Except(LNoCheevos).ToList();
 
             //TimeSpan fim = new TimeSpan(DateTime.Now.Ticks) - ini;
             //Join Ordered Lists
-            gameList = gameList.OrderBy(x => x.Title).ToList();
-            gameList.AddRange(LNotOffical.OrderBy(x => x.Title).ToList());
-            gameList.AddRange(LNoCheevos.OrderBy(x => x.Title).ToList());
-            gameList.AddRange(LNotOfficalNoCheevos.OrderBy(x => x.Title).ToList());
+            list = list.OrderBy(x => x.Title).ToList();
+            list.AddRange(LNotOffical.OrderBy(x => x.Title).ToList());
+            list.AddRange(LNoCheevos.OrderBy(x => x.Title).ToList());
+            list.AddRange(LNotOfficalNoCheevos.OrderBy(x => x.Title).ToList());
 
-            return new ListBind<Game>(gameList);
+            return new ListBind<Game>(list);
         }
         #endregion
 
-        #region " _Incluir "
-        public static bool Incluir(Game obj)
+        #region " _Insert "
+        public static bool Insert(Game obj)
         {
-            //Monta SQL
             string sql = Resources.GameInsert;
 
-            var parametros = MontarParametros(obj);
+            var parameters = MountParameters(obj);
 
-            return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
+            return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
         }
 
-        public static Task<bool> IncluirLista(IList<Game> list)
+        public static Task<bool> InsertList(IList<Game> list)
         {
             return Task<bool>.Run(() =>
             {
-                //Monta SQL
                 string sql = "INSERT INTO GameData " +
                                 "(ID, Title, ConsoleID, NumAchievements, Points, " +
                                 "NumLeaderboards, DateModified, ForumTopicID, ImageIcon)" +
@@ -165,27 +162,27 @@ namespace RADB
                 }
                 sql += s.ToString();
 
-                var parametros = new List<cSqlParameter>();
+                var parameters = new List<cSqlParameter>();
 
-                return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
+                return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
             });
         }
         #endregion
 
-        #region " _Excluir "
+        #region " _Delete "
         public static Task<bool> Delete(Game obj)
         {
             return Task<bool>.Run(() =>
             {
                 string sql = Resources.GameDelete;
 
-                var parametros = new List<cSqlParameter> 
+                var parameters = new List<cSqlParameter> 
                 {
                     new cSqlParameter("@ID", obj.ID),
                     new cSqlParameter("@ConsoleID", obj.ConsoleID),
                 };
 
-                return Banco.Executar(sql, MovimentoLog.Exclusão, parametros).AffectedRows > 0;
+                return Banco.Executar(sql, DbAction.Delete, parameters).AffectedRows > 0;
             });
         }
         #endregion
@@ -195,10 +192,9 @@ namespace RADB
         {
             return Task<List<Game>>.Run(() =>
             {
-                //Monta SQL
                 string sql = Resources.GameListToHide;
 
-                return Carregar<List<Game>>(Banco.ExecutarSelect(sql, new List<cSqlParameter> { }));
+                return Load<List<Game>>(Banco.ExecutarSelect(sql));
             });
         }
 
@@ -206,12 +202,11 @@ namespace RADB
         {
             return Task<bool>.Run(() =>
             {
-                //Monta SQL
                 string sql = Resources.GameInsertToHide;
 
-                var parametros = MontarParametros(obj);
+                var parameters = MountParameters(obj);
 
-                return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
+                return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
             });
         }
 
@@ -221,12 +216,12 @@ namespace RADB
             {
                 string sql = Resources.GameDeleteFromHide;
 
-                var parametros = new List<cSqlParameter> 
+                var parameters = new List<cSqlParameter> 
                 {
                     new cSqlParameter("@ID", obj.ID),
                 };
 
-                return Banco.Executar(sql, MovimentoLog.Exclusão, parametros).AffectedRows > 0;
+                return Banco.Executar(sql, DbAction.Delete, parameters).AffectedRows > 0;
             });
         }
         #endregion
@@ -236,10 +231,9 @@ namespace RADB
         {
             return Task<List<Game>>.Run(() =>
             {
-                //Monta SQL
                 string sql = Resources.GameListToPlay;
 
-                return Carregar<List<Game>>(Banco.ExecutarSelect(sql, new List<cSqlParameter> { }));
+                return Load<List<Game>>(Banco.ExecutarSelect(sql));
             });
         }
 
@@ -247,12 +241,11 @@ namespace RADB
         {
             return Task<bool>.Run(() =>
             {
-                //Monta SQL
                 string sql = Resources.GameInsertToPlay;
 
-                var parametros = MontarParametros(obj);
+                var parameters = MountParameters(obj);
 
-                return Banco.Executar(sql, MovimentoLog.Inclusão, parametros).AffectedRows > 0;
+                return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
             });
         }
 
@@ -262,12 +255,12 @@ namespace RADB
             {
                 string sql = Resources.GameDeleteFromPlay;
 
-                var parametros = new List<cSqlParameter> 
+                var parameters = new List<cSqlParameter> 
                 {
                     new cSqlParameter("@ID", obj.ID),
                 };
 
-                return Banco.Executar(sql, MovimentoLog.Exclusão, parametros).AffectedRows > 0;
+                return Banco.Executar(sql, DbAction.Delete, parameters).AffectedRows > 0;
             });
         }
         #endregion

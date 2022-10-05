@@ -93,8 +93,8 @@ namespace RADB
 
             if (await Browser.dlConsoles.Start())
             {
-                await Console.Excluir();
-                await Console.IncluirLista(await DeserializeConsoles());
+                await new Console().Delete();
+                await Console.InsertList(await DeserializeConsoles());
             }
         }
 
@@ -117,9 +117,9 @@ namespace RADB
 
                 if (await Browser.dlGames.Start())
                 {
-                    await Game.Excluir(console.ID);
+                    await Game.Delete(console.ID);
                     List<Game> list = await DeserializeGameList(console);
-                    await Game.IncluirLista(list);
+                    await Game.InsertList(list);
                 }
             });
         }
@@ -137,7 +137,7 @@ namespace RADB
         {
             await Task.Run(async () =>
             {
-                List<Game> games = await Game.Pesquisar(console.ID, true);
+                List<Game> games = await Game.Search(console.ID, true);
                 dl.Files = games.Select(g => g.ImageIconFile).ToList();
                 await (dl.Start());
             });
@@ -275,7 +275,7 @@ namespace RADB
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
 
             await DownloadGamesIcon(console, Browser.dlConsolesGamesIcon);
-            var games = (await Game.Pesquisar(console.ID, true)).Where(g => g.NumAchievements > 0).ToList();
+            var games = (await Game.Search(console.ID, true)).Where(g => g.NumAchievements > 0).ToList();
             var gamesIcon = games.Select(g => g.ImageIconFile.Path).ToList();
 
             await Task.Run(() =>

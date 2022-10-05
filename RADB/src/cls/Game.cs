@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-//
-using System.Drawing;
+using System.Text;
 using System.Threading.Tasks;
 //
-using GNX;
+using System.Drawing;
 
 namespace RADB
 {
@@ -34,8 +34,6 @@ namespace RADB
         }
         #endregion
 
-        private GameDao Dao = new GameDao() { };
-
         public Game()
         {
             ImageIconBitmap = RA.DefaultIcon;
@@ -51,68 +49,63 @@ namespace RADB
             return Folder.Temp + ConsoleName + "(" + ConsoleID + ")_" + Archive.MakeValidFileName(Title) + "(" + ID + ")_Badges";
         }
 
-        //public bool Incluir()
+        //public bool Insert()
         //{
-        //    return GameDao.Incluir(this);
+        //    return GameDao.Insert(this);
         //}
 
-        public async static Task<bool> IncluirLista(IList<Game> list)
+        public async static Task<bool> InsertList(IList<Game> list)
         {
-            return await GameDao.IncluirLista(list);
+            return await GameDao.InsertList(list);
         }
 
-        //public async Task<bool> Excluir()
-        //{
-        //    return await GameDao.Excluir(this);
-        //}
-
-        public async static Task<bool> Excluir(int ConsoleID)
+        public async static Task<bool> Delete(int ConsoleID)
         {
-            return await GameDao.Delete(new Game() { ConsoleID = ConsoleID });
+            return await GameDao.Delete(new Game { ConsoleID = ConsoleID });
         }
 
-        //public async static Task<List<Game>> Listar()
+        //public async static Task<List<Game>> List()
         //{
-        //    return (await GameDao.Listar());
+        //    return (await GameDao.List());
         //}
 
-        //public async static Task<Game> Buscar(int id)
+        //public async static Task<Game> Find(int id)
         //{
-        //    return (await GameDao.Buscar(id));
+        //    return (await GameDao.Find(id));
         //}
 
-        public async static Task<List<Game>> Pesquisar(int consoleID, bool allTables = false)
+        public async static Task<List<Game>> Search(int consoleID, bool allTables = false)
         {
             var obj = new Game { ConsoleID = consoleID };
-            return (await GameDao.Pesquisar(obj, allTables));
+            return (await GameDao.Search(obj, allTables));
         }
 
-        public async static Task<List<Game>> ListarToHide()
+        public async static Task<List<Game>> ListToHide()
         {
             return (await GameDao.ListToHide());
         }
 
-        public async Task<bool> IncluirToHide()
+        public async Task<bool> InsertToHide()
         {
             return await GameDao.InsertToHide(this);
         }
 
-        public async Task<bool> ExcluirFromHide()
+        public async Task<bool> DeleteFromHide()
         {
             return await GameDao.DeleteFromHide(this);
         }
 
-        public async static Task<List<Game>> ListarToPlay()
+        public async static Task<List<Game>> ListToPlay()
         {
-            return (await GameDao.ListToPlay());
+            return await GameDao.ListToPlay();
         }
 
-        public async Task<bool> IncluirToPlay()
+        public async Task<bool> InsertToPlay()
         {
             return await GameDao.InsertToPlay(this);
         }
 
-        public async Task<bool> ExcluirFromPlay()
+        public async Task<bool> DeleteFromPlay()
         {
             return await GameDao.DeleteFromPlay(this);
         }

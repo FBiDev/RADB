@@ -247,7 +247,7 @@ namespace RADB
         private async Task LoadConsoles()
         {
             EnablePanelConsoles(false);
-            dgvConsoles.DataSource = await Console.ListarBind();
+            dgvConsoles.DataSource = await Console.List();
 
             EnablePanelConsoles(true);
             dgvConsoles.Focus();
@@ -335,7 +335,7 @@ namespace RADB
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             EnablePanelGames(false);
 
-            lstGames = new ListBind<Game>(await Game.Pesquisar(ConsoleBind.ID));
+            lstGames = new ListBind<Game>(await Game.Search(ConsoleBind.ID));
             lstGamesSearch = new ListBind<Game>();
             //lstGamesSearch.Clear();
             lstGamesSearch.AddRange(lstGames);
@@ -355,7 +355,7 @@ namespace RADB
 
         private async Task LoadGamesToPlay()
         {
-            lstGamesToPlay = new ListBind<Game>(await Game.ListarToPlay());
+            lstGamesToPlay = new ListBind<Game>(await Game.ListToPlay());
             dgvGamesToPlay.DataSource = lstGamesToPlay;
             LoadGamesIcon();
             lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
@@ -364,7 +364,7 @@ namespace RADB
 
         private async Task LoadGamesToHide()
         {
-            lstGamesToHide = new ListBind<Game>(await Game.ListarToHide());
+            lstGamesToHide = new ListBind<Game>(await Game.ListToHide());
             dgvGamesToHide.DataSource = lstGamesToHide;
             LoadGamesIcon();
             lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
@@ -859,7 +859,7 @@ namespace RADB
 
             var game = dgv_SelectionChanged<Game>(dgvGames);
 
-            if (await game.IncluirToPlay())
+            if (await game.InsertToPlay())
             {
                 lstGames.Remove(game);
                 lstGamesSearch.Remove(game);
@@ -876,7 +876,7 @@ namespace RADB
 
             var game = dgv_SelectionChanged<Game>(dgvGames);
 
-            if (await game.IncluirToHide())
+            if (await game.InsertToHide())
             {
                 //CurrencyManager cMnger = (CurrencyManager)BindingContext[dgvGames.DataSource];
                 //cMnger.SuspendBinding();
@@ -898,7 +898,7 @@ namespace RADB
 
             var game = dgv_SelectionChanged<Game>(dgvGamesToPlay);
 
-            if (await game.ExcluirFromPlay())
+            if (await game.DeleteFromPlay())
             {
                 lstGamesToPlay.Remove(game);
                 if (ConsoleBind.NotNull() && ConsoleBind.ID == game.ConsoleID)
@@ -918,7 +918,7 @@ namespace RADB
 
             var game = dgv_SelectionChanged<Game>(dgvGamesToHide);
 
-            if (await game.ExcluirFromHide())
+            if (await game.DeleteFromHide())
             {
                 lstGamesToHide.Remove(game);
                 if (ConsoleBind.NotNull() && ConsoleBind.ID == game.ConsoleID)
