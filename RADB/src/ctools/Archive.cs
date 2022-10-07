@@ -73,7 +73,7 @@ namespace RADB
                 foreach (string item in list)
                 {
                     string imageName = item.Split('\\').Last();
-                    Game game = games.Where(g => g.ImageIcon == imageName).FirstOrDefault();
+                    Game game = games.Where(g => g.ImageIcon == imageName).FirstOrDefault() ?? new Game();
                     string GameID = game.ID.ToString().PadLeft(5) + " => " + game.Title;
                     sw.WriteLine(imageName + " => " + GameID);
                 }

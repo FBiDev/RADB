@@ -78,7 +78,7 @@ namespace RADB
         public static async Task<Game> Find(int id)
         {
             var obj = new Game { ID = id };
-            return (await Search(obj, false)).FirstOrDefault();
+            return (await Search(obj, false)).FirstOrNew();
         }
 
         public static Task<List<Game>> Search(Game obj, bool allTables)

@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data;
+using System.Text;
 using System.Threading.Tasks;
 //
+using System.Data;
 using RADB.Properties;
 using GNX;
 
@@ -12,8 +13,8 @@ namespace RADB
 {
     public class GameExtendDao
     {
-        #region " _Carregar "
-        private static T Carregar<T>(DataTable table) where T : IList, new()
+        #region " _Load "
+        private static T Load<T>(DataTable table) where T : IList, new()
         {
             T list = new T();
             foreach (DataRow row in table.Rows)
@@ -41,8 +42,8 @@ namespace RADB
         }
         #endregion
 
-        #region " _MontarFiltros "
-        private static List<cSqlParameter> MontarFiltros(GameExtend obj)
+        #region " _MountFilters "
+        private static List<cSqlParameter> MountFilters(GameExtend obj)
         {
             return new List<cSqlParameter>
             {
@@ -52,8 +53,8 @@ namespace RADB
         }
         #endregion
 
-        #region " _MontarParametros "
-        private static List<cSqlParameter> MontarParametros(GameExtend obj)
+        #region " _MountParameters "
+        private static List<cSqlParameter> MountParameters(GameExtend obj)
         {
             return new List<cSqlParameter>
             {
@@ -70,52 +71,59 @@ namespace RADB
         }
         #endregion
 
-        #region " _Listar "
-        public static Task<GameExtend> List(GameExtend obj = null)
+        #region " _List "
+        public async static Task<List<GameExtend>> List()
         {
-            return Task<GameExtend>.Run(() =>
-            {
-                obj = obj ?? new GameExtend();
+            var obj = new GameExtend();
+            return (await Search(obj));
+        }
 
-                //Monta SQL
+        public static async Task<GameExtend> Find(int gameID)
+        {
+            var obj = new GameExtend { ID = gameID };
+
+            return (await Search(obj)).FirstOrNew();
+        }
+
+        public static Task<List<GameExtend>> Search(GameExtend obj)
+        {
+            return Task<List<GameExtend>>.Run(() =>
+            {
                 string sql = Resources.GameExtendList;
 
-                List<GameExtend> list = Carregar<List<GameExtend>>(Banco.ExecutarSelect(sql, MontarFiltros(obj)));
-                if (list.Empty())
-                {
-                    return new GameExtend();
-                }
-                return list[0];
+                return Load<List<GameExtend>>(Banco.ExecutarSelect(sql, MountFilters(obj)));
             });
         }
         #endregion
 
-        #region " _Incluir "
-        public static bool Insert(GameExtend obj)
+        #region " _Insert "
+        public static Task<bool> Insert(GameExtend obj)
         {
-            //Monta SQL
-            string sql = Resources.GameExtendInsert;
+            return Task<bool>.Run(() =>
+            {
+                string sql = Resources.GameExtendInsert;
 
-            var parametros = MontarParametros(obj);
+                var parameters = MountParameters(obj);
 
-            return Banco.Executar(sql, DbAction.Insert, parametros).AffectedRows > 0;
+                return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
+            });
         }
         #endregion
 
-        #region " _Excluir "
+        #region " _Delete "
         public static Task<bool> Delete(GameExtend obj)
         {
             return Task<bool>.Run(() =>
             {
                 string sql = Resources.GameExtendDelete;
 
-                var parametros = new List<cSqlParameter> 
+                var parameters = new List<cSqlParameter> 
                 {
                     new cSqlParameter("@ID", obj.ID),
                     new cSqlParameter("@ConsoleID", obj.ConsoleID),
                 };
 
-                return Banco.Executar(sql, DbAction.Delete, parametros).AffectedRows > 0;
+                return Banco.Executar(sql, DbAction.Delete, parameters).AffectedRows > 0;
             });
         }
         #endregion

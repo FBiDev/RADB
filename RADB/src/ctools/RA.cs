@@ -156,8 +156,8 @@ namespace RADB
                     GameExtend obj = (await DeserializeGameExtend(game));
                     obj.ID = game.ID;
                     obj.ConsoleID = game.ConsoleID;
-                    await obj.Excluir();
-                    obj.Incluir();
+                    await obj.Delete();
+                    await obj.Insert();
                     return obj;
                 }
                 return null;
@@ -188,11 +188,11 @@ namespace RADB
         {
             await Task.Run(async () =>
             {
-                GameExtend gamex = await GameExtend.Listar(game.ID);
+                GameExtend gamex = await GameExtend.Find(game.ID);
                 Browser.dlGameExtendImages.Files = new List<DownloadFile>() {
                     gamex.ImageTitleFile,
                     gamex.ImageIngameFile,
-                    gamex.ImageBoxArtFile,
+                    //gamex.ImageBoxArtFile,
                 };
                 await (Browser.dlGameExtendImages.Start());
             });
@@ -229,7 +229,7 @@ namespace RADB
             //  .ToList().OrderBy(x => x.Element.BadgeURL).ToList();
             //var queryTotal = gCheevos.Count - (query.Select(x => x.Counter).Sum() - query.Count);
 
-            //Game game = (await Game.Listar(new Game { ID = gameID })).FirstOrDefault();
+            //Game game = (await Game.Listar(new Game { ID = gameID })).FirstOrNew();
             GameExtend gameExtend = await DownloadGameExtend(game, Browser.dlGames);
             var badgeFiles = gameExtend.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
             Browser.dlGamesBadges.Files = badgeFiles;

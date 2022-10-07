@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 //
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Globalization;
 //
 using Newtonsoft.Json;
@@ -102,24 +104,24 @@ namespace RADB
             return files;
         }
 
-        public bool Incluir()
+        public async Task<bool> Insert()
         {
-            return GameExtendDao.Insert(this);
+            return await GameExtendDao.Insert(this);
         }
 
-        public async Task<bool> Excluir()
+        public async Task<bool> Delete()
         {
             return await GameExtendDao.Delete(this);
         }
 
-        public async static Task<GameExtend> Listar(int ID)
+        public async static Task<List<GameExtend>> List()
         {
-            return await GameExtendDao.List(new GameExtend() { ID = ID });
+            return await GameExtendDao.List();
         }
 
-        public async static Task<GameExtend> Listar(GameExtend obj = null)
+        public async static Task<GameExtend> Find(int gameID)
         {
-            return await GameExtendDao.List(obj);
+            return await GameExtendDao.Find(gameID);
         }
     }
 }

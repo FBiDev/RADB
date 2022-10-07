@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+using System.Text;
 using System.Threading.Tasks;
+//
+using System.Threading;
 using System.Windows.Forms;
 
 namespace RADB
@@ -22,7 +25,7 @@ namespace RADB
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            GNX.cApp.SingleProcess(Config.umaExecucao, new Mutex(true, Config.sistema));
+            GNX.cApp.SingleProcess(Config.Singleton, new Mutex(true, Config.SystemName));
             Config.Start();
 
             Application.Run(new Main());

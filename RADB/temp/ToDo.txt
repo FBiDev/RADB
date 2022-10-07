@@ -7,3 +7,11 @@
 -  User Info
 -  User Progress
 -  User Awards
+
+- picInfoBoxArt
+	new RADB.PictureBoxInterpolated();
+	backcolor PaleTurquoise
+	location 569; 9
+	size 300; 283
+	maxSize 300; 283
+	sizeMode StretchImage

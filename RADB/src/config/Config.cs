@@ -1,22 +1,26 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Xml;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 //
+using System.Xml;
 using GNX;
 
 namespace RADB
 {
     public static class Config
     {
-        public static CultureID idioma = CultureID.Brazil_Portuguese;
-        public static bool umaExecucao = true;
-        public const string sistema = "RADatabase";
+        public static CultureID Language = CultureID.Brazil_Portuguese;
+        public static bool Singleton = true;
+        public const string SystemName = "RADatabase";
         public static bool Loaded { get; set; }
         public static bool DarkMode { get; set; }
 
         public static void Start()
         {
-            cApp.SetLanguage(idioma);
+            cApp.SetLanguage(Language);
             cApp.Start();
 
             //Carregar Config

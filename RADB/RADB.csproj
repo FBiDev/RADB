@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>src\rsc\image\favicon.ico</ApplicationIcon>
+    <ApplicationIcon>rsc\image\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GNX">
@@ -90,40 +90,40 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="src\cfg\Banco.cs" />
-    <Compile Include="src\cfg\Config.cs" />
-    <Compile Include="src\cls\Console.cs" />
-    <Compile Include="src\cls\Browser.cs" />
-    <Compile Include="src\cls\DownloadBase.cs" />
-    <Compile Include="src\cls\GameExtend.cs" />
-    <Compile Include="src\cls\UserProgress.cs" />
-    <Compile Include="src\cls\WebClientExtend.cs">
+    <Compile Include="src\config\Banco.cs" />
+    <Compile Include="src\config\Config.cs" />
+    <Compile Include="src\cmodel\Console.cs" />
+    <Compile Include="src\ctools\Browser.cs" />
+    <Compile Include="src\ctools\DownloadBase.cs" />
+    <Compile Include="src\cmodel\GameExtend.cs" />
+    <Compile Include="src\ctools\UserProgress.cs" />
+    <Compile Include="src\ctools\WebClientExtend.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom\CheckBoxBlueA.cs">
+    <Compile Include="src\custom_controls\CheckBoxBlueA.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\custom\CheckBoxBlueA.Designer.cs">
+    <Compile Include="src\custom_controls\CheckBoxBlueA.Designer.cs">
       <DependentUpon>CheckBoxBlueA.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\custom\FlatButtonA.cs">
+    <Compile Include="src\custom_controls\FlatButtonA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom\FlatDataGridA.cs">
+    <Compile Include="src\custom_controls\FlatDataGridA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom\FlatDataGridA.Designer.cs">
+    <Compile Include="src\custom_controls\FlatDataGridA.Designer.cs">
       <DependentUpon>FlatDataGridA.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\custom\FlatTextBoxA.cs">
+    <Compile Include="src\custom_controls\FlatTextBoxA.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\custom\PictureBoxInterpolated.cs">
+    <Compile Include="src\custom_controls\PictureBoxInterpolated.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\dao\ConsoleDao.cs" />
-    <Compile Include="src\dao\GameExtendDao.cs" />
-    <Compile Include="src\dao\GameDao.cs" />
+    <Compile Include="src\cdao\ConsoleDao.cs" />
+    <Compile Include="src\cdao\GameExtendDao.cs" />
+    <Compile Include="src\cdao\GameDao.cs" />
     <Compile Include="src\forms\ImageViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,22 +136,22 @@
     <Compile Include="src\forms\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\cls\Download.cs" />
-    <Compile Include="src\cls\Archive.cs" />
-    <Compile Include="src\cls\DownloadFile.cs" />
-    <Compile Include="src\temp\extensions.cs" />
-    <Compile Include="src\temp\FileUpdate.cs" />
-    <Compile Include="src\cls\Folder.cs" />
-    <Compile Include="src\cls\Game.cs" />
+    <Compile Include="src\ctools\Download.cs" />
+    <Compile Include="src\ctools\Archive.cs" />
+    <Compile Include="src\ctools\DownloadFile.cs" />
+    <Compile Include="temp\extensions.cs" />
+    <Compile Include="temp\FileUpdate.cs" />
+    <Compile Include="src\ctools\Folder.cs" />
+    <Compile Include="src\cmodel\Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\cls\Achievement.cs" />
-    <Compile Include="src\cls\Picture.cs" />
-    <Compile Include="src\cls\RA.cs" />
-    <Compile Include="src\temp\PanelNoScrollOnFocus.cs">
+    <Compile Include="src\cmodel\Achievement.cs" />
+    <Compile Include="src\ctools\Picture.cs" />
+    <Compile Include="src\ctools\RA.cs" />
+    <Compile Include="src\custom_controls\PanelNoScrollOnFocus.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\temp\Temp.cs" />
+    <Compile Include="temp\Temp.cs" />
     <EmbeddedResource Include="src\forms\ImageViewer.resx">
       <DependentUpon>ImageViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -174,7 +174,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <ContentWithTargetPath Include="src\rsc\db\database.db">
+    <ContentWithTargetPath Include="rsc\db\database.db">
       <TargetPath>database.db</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
@@ -183,35 +183,35 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="src\rsc\dll64\referenced\Newtonsoft.Json.dll" />
-    <Content Include="src\rsc\dll64\referenced\PhotoSauce.MagicScaler.dll" />
-    <Content Include="src\rsc\dll64\referenced\System.Data.SQLite.dll" />
-    <Content Include="src\rsc\exe\jpegoptim_1.4.7.exe" />
-    <Content Include="src\rsc\exe\pngcrush_1_8_11_w64.exe" />
-    <Content Include="src\rsc\image\favicon.ico" />
-    <Content Include="src\rsc\image\favicon.png" />
-    <Content Include="src\rsc\image\fbidev.png" />
-    <Content Include="src\rsc\image\iconForm.png" />
-    <Content Include="src\rsc\image\loader.gif" />
-    <Content Include="src\rsc\image\notfound.png" />
-    <Content Include="src\rsc\sql\ConsoleList.sql" />
-    <Content Include="src\rsc\sql\ConsoleInsert.sql" />
-    <Content Include="src\rsc\sql\ConsoleDelete.sql" />
-    <Content Include="src\rsc\sql\GameDeleteFromPlay.sql" />
-    <Content Include="src\rsc\sql\GameInsertToPlay.sql" />
-    <Content Include="src\rsc\sql\GameListToPlay.sql" />
-    <Content Include="src\rsc\sql\GameDeleteFromHide.sql" />
-    <Content Include="src\rsc\sql\GameInsertToHide.sql" />
-    <Content Include="src\rsc\sql\GameListToHide.sql" />
-    <Content Include="src\rsc\sql\GameExtendDelete.sql" />
-    <Content Include="src\rsc\sql\GameExtendInsert.sql" />
-    <Content Include="src\rsc\sql\GameExtendList.sql" />
-    <Content Include="src\rsc\sql\GameDuplicateForumTopicID.sql" />
-    <Content Include="src\rsc\sql\GameList.sql" />
-    <Content Include="src\rsc\sql\GameDelete.sql" />
-    <Content Include="src\rsc\sql\GameInsert.sql" />
-    <Content Include="src\temp\ToDo.txt" />
-    <ContentWithTargetPath Include="src\rsc\dll64\unmanaged\SQLite.Interop.dll">
+    <Content Include="rsc\dll64\referenced\Newtonsoft.Json.dll" />
+    <Content Include="rsc\dll64\referenced\PhotoSauce.MagicScaler.dll" />
+    <Content Include="rsc\dll64\referenced\System.Data.SQLite.dll" />
+    <Content Include="rsc\exe\jpegoptim_1.4.7.exe" />
+    <Content Include="rsc\exe\pngcrush_1_8_11_w64.exe" />
+    <Content Include="rsc\image\favicon.ico" />
+    <Content Include="rsc\image\favicon.png" />
+    <Content Include="rsc\image\fbidev.png" />
+    <Content Include="rsc\image\iconForm.png" />
+    <Content Include="rsc\image\loader.gif" />
+    <Content Include="rsc\image\notfound.png" />
+    <Content Include="rsc\sql\ConsoleList.sql" />
+    <Content Include="rsc\sql\ConsoleInsert.sql" />
+    <Content Include="rsc\sql\ConsoleDelete.sql" />
+    <Content Include="rsc\sql\GameDeleteFromPlay.sql" />
+    <Content Include="rsc\sql\GameInsertToPlay.sql" />
+    <Content Include="rsc\sql\GameListToPlay.sql" />
+    <Content Include="rsc\sql\GameDeleteFromHide.sql" />
+    <Content Include="rsc\sql\GameInsertToHide.sql" />
+    <Content Include="rsc\sql\GameListToHide.sql" />
+    <Content Include="rsc\sql\GameExtendDelete.sql" />
+    <Content Include="rsc\sql\GameExtendInsert.sql" />
+    <Content Include="rsc\sql\GameExtendList.sql" />
+    <Content Include="rsc\sql\GameDuplicateForumTopicID.sql" />
+    <Content Include="rsc\sql\GameList.sql" />
+    <Content Include="rsc\sql\GameDelete.sql" />
+    <Content Include="rsc\sql\GameInsert.sql" />
+    <Content Include="temp\ToDo.txt" />
+    <ContentWithTargetPath Include="rsc\dll64\unmanaged\SQLite.Interop.dll">
       <TargetPath>SQLite.Interop.dll</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
@@ -234,8 +234,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\rsc\dll32\referenced\" />
-    <Folder Include="src\rsc\dll32\unmanaged\" />
+    <Folder Include="rsc\dll32\referenced\" />
+    <Folder Include="rsc\dll32\unmanaged\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

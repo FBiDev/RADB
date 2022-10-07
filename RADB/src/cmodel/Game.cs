@@ -66,12 +66,12 @@ namespace RADB
 
         //public async static Task<List<Game>> List()
         //{
-        //    return (await GameDao.List());
+        //    return await GameDao.List();
         //}
 
         //public async static Task<Game> Find(int id)
         //{
-        //    return (await GameDao.Find(id));
+        //    return await GameDao.Find(id);
         //}
 
         public async static Task<List<Game>> Search(int consoleID, bool allTables = false)

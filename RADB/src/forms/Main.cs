@@ -412,7 +412,7 @@ namespace RADB
             await LoadGameExtend();
 
             //Update GameExtend
-            if (GameExtendBind.ID == 0)
+            if (GameExtendBind.IsNull() || GameExtendBind.ConsoleID == 0)
             {
                 btnUpdateInfo_Click(null, null);
             }
@@ -566,7 +566,7 @@ namespace RADB
         {
             if (GameBind.IsNull()) { return; }
 
-            GameExtendBind = await GameExtend.Listar(GameBind.ID);
+            GameExtendBind = await GameExtend.Find(GameBind.ID);
 
             lblInfoDeveloper.Text = GameExtendBind.Developer;
             lblInfoPublisher.Text = GameExtendBind.Publisher;
@@ -577,7 +577,7 @@ namespace RADB
 
             picInfoTitle.ScaleTo(GameExtendBind.ImageTitleBitmap);
             picInfoInGame.ScaleTo(GameExtendBind.ImageIngameBitmap);
-            picInfoBoxArt.ScaleTo(GameExtendBind.ImageBoxArtBitmap);
+            //picInfoBoxArt.ScaleTo(GameExtendBind.ImageBoxArtBitmap);
 
             ListBind<Achievement> lstCheevos = new ListBind<Achievement>();
             dgvAchievements.DataSource = lstCheevos;
