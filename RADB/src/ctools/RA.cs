@@ -192,7 +192,7 @@ namespace RADB
                 Browser.dlGameExtendImages.Files = new List<DownloadFile>() {
                     gamex.ImageTitleFile,
                     gamex.ImageIngameFile,
-                    //gamex.ImageBoxArtFile,
+                    gamex.ImageBoxArtFile,
                 };
                 await (Browser.dlGameExtendImages.Start());
             });

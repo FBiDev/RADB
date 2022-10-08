@@ -109,13 +109,16 @@ namespace RADB
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
             txtSearchGames.KeyDown += txtSearchGames_KeyDown;
 
-            chkWithoutAchievements.CheckedChanged += chkUpdateDataGrid;
             chkOfficial.CheckedChanged += chkUpdateDataGrid;
             chkPrototype.CheckedChanged += chkUpdateDataGrid;
             chkUnlicensed.CheckedChanged += chkUpdateDataGrid;
             chkDemo.CheckedChanged += chkUpdateDataGrid;
             chkHack.CheckedChanged += chkUpdateDataGrid;
             chkHomebrew.CheckedChanged += chkUpdateDataGrid;
+            chkWithoutAchievements.CheckedChanged += chkUpdateDataGrid;
+            chkSubset.CheckedChanged += chkUpdateDataGrid;
+            chkTestKit.CheckedChanged += chkUpdateDataGrid;
+            chkDemoted.CheckedChanged += chkUpdateDataGrid;
 
             //Reset placeholders
             lblProgressConsoles.Text = string.Empty;
@@ -408,6 +411,9 @@ namespace RADB
 
             GameBind = dgv_SelectionChanged<Game>(sender);
 
+            pnlInfoScroll.AutoScrollPosition = new Point(pnlInfoScroll.AutoScrollPosition.X, 0);
+            pnlInfoScroll.VerticalScroll.Value = 0;
+
             LoadGameExtendBase();
             await LoadGameExtend();
 
@@ -420,9 +426,6 @@ namespace RADB
             tabMain.SelectedTab = tabGameInfo;
 
             dgvAchievements.Focus();
-
-            pnlInfoScroll.AutoScrollPosition = new Point(pnlInfoScroll.AutoScrollPosition.X, 0);
-            pnlInfoScroll.VerticalScroll.Value = 0;
         }
 
         private void dgvGames_Scroll(object sender, ScrollEventArgs e)
@@ -498,17 +501,23 @@ namespace RADB
                     && obj.Title.IndexOf("~Unlicensed~") == -1
                     && obj.Title.IndexOf("~Demo~") == -1
                     && obj.Title.IndexOf("~Hack~") == -1
-                    && obj.Title.IndexOf("~Homebrew~") == -1;
+                    && obj.Title.IndexOf("~Homebrew~") == -1
+                    && obj.Title.IndexOf("[Subset") == -1
+                    && obj.Title.IndexOf("~Test") == -1
+                    && obj.Title.IndexOf("~Z~") == -1;
 
                 bool proto = chkPrototype.Checked && obj.Title.IndexOf("~Prototype~") >= 0;
                 bool unl = chkUnlicensed.Checked && obj.Title.IndexOf("~Unlicensed~") >= 0;
                 bool demo = chkDemo.Checked && obj.Title.IndexOf("~Demo~") >= 0;
                 bool hack = chkHack.Checked && obj.Title.IndexOf("~Hack~") >= 0;
                 bool homebrew = chkHomebrew.Checked && obj.Title.IndexOf("~Homebrew~") >= 0;
+                bool subset = chkSubset.Checked && obj.Title.IndexOf("[Subset") >= 0;
+                bool testkit = chkTestKit.Checked && obj.Title.IndexOf("~Test") >= 0;
+                bool demoted = chkDemoted.Checked && obj.Title.IndexOf("~Z~") >= 0;
 
                 if (title && !noCheevos)
                 {
-                    if (official || proto || unl || demo || hack || homebrew)
+                    if (official || proto || unl || demo || hack || homebrew || subset || testkit || demoted)
                     {
                         newSearch.Add(obj);
                     }
@@ -577,7 +586,22 @@ namespace RADB
 
             picInfoTitle.ScaleTo(GameExtendBind.ImageTitleBitmap);
             picInfoInGame.ScaleTo(GameExtendBind.ImageIngameBitmap);
-            //picInfoBoxArt.ScaleTo(GameExtendBind.ImageBoxArtBitmap);
+            picInfoBoxArt.ScaleTo(GameExtendBind.ImageBoxArtBitmap);
+
+            {//Scale Boxes
+                pnlInfoImages.Height = (picInfoTitle.Height > picInfoInGame.Height ? picInfoTitle.Height : picInfoInGame.Height) + 12;
+                pnlInfoBoxArt.Height = pnlInfoImages.Location.Y + pnlInfoImages.Height - 19;
+
+                picInfoTitle.Location = new Point(pnlInfoImages.Width / 2 - picInfoTitle.Width - 7, (pnlInfoImages.Height / 2) - (picInfoTitle.Height / 2));
+                picInfoInGame.Location = new Point(pnlInfoImages.Width / 2 + 7, (pnlInfoImages.Height / 2) - (picInfoInGame.Height / 2));
+                gpbInfo.Height = gpbInfo.PreferredSize.Height;
+
+                picInfoBoxArt.Location = new Point(pnlInfoBoxArt.Width / 2 - picInfoBoxArt.Width / 2, (pnlInfoBoxArt.Height / 2) - (picInfoBoxArt.Height / 2));
+                //(pnlInfoTop.Width + 6) + ((gpbInfo.Width - (pnlInfoTop.Width + 6)) / 2) - picInfoBoxArt.Width / 2,
+                //(gpbInfo.Height / 2) - (picInfoBoxArt.Height / 2));
+
+                gpbInfoAchievements.Location = new Point(gpbInfoAchievements.Location.X, gpbInfo.Height + 9);
+            }
 
             ListBind<Achievement> lstCheevos = new ListBind<Achievement>();
             dgvAchievements.DataSource = lstCheevos;
