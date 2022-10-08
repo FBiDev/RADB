@@ -959,7 +959,7 @@ namespace RADB
             // 
             // chkDemoted
             // 
-            this.chkDemoted._Legend = "Demoted";
+            this.chkDemoted._Legend = "gRAveyard";
             this.chkDemoted.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkDemoted.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chkDemoted.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
