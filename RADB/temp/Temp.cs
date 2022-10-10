@@ -8,6 +8,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//
+//using System.Drawing.Imaging;
+//using PhotoSauce.MagicScaler;//Need System.Memory Reference
 
 namespace RADB.temp
 {
@@ -132,10 +135,57 @@ namespace RADB.temp
         }
 
         //RADB
-        private void btnDownloadBadges_Click(object sender, EventArgs e)
-        {
+        //private void btnDownloadBadges_Click(object sender, EventArgs e)
+        //{
             //await RA.DownloadBadges(0);
             //txtOutput.Text = "Badges Downloaded!";
+        //}
+
+        //TESTS to resize Image with PhotoSauce.MagicScaler
+        private void btnDownloadBadges_Click(object sender, EventArgs e)
+        {
+            return;
+            //var file = @"Data\Temp\W2.png";
+            //var file2 = @"Data\Temp\W2_RS2.png";
+            //var file3 = @"Data\Temp\W2_RS2_NEW.png";
+
+            //var file4 = @"Data\Temp\W2_RS0.png";
+
+            //var otp = await Task.Run(() =>
+            //{
+            //    //var Encoder = new JpegEncoderOptions(98, ChromaSubsampleMode.Subsample444, true);
+            //    var Encoder = new PngEncoderOptions(PngFilter.None, false);
+            //    CropScaleMode rs = CropScaleMode.Stretch;
+
+            //    MagicImageProcessor.ProcessImage(file, file2, new ProcessImageSettings
+            //    {
+            //        Width = 96,
+            //        Height = 96,
+            //        ResizeMode = rs,
+            //        EncoderOptions = Encoder,
+            //    });
+
+
+            //    var b = new Bitmap(96 * 2, 96 * 2);
+            //    using (Graphics g = Graphics.FromImage(b))
+            //    {
+            //        g.Clear(Color.White);
+
+            //        Bitmap image1 = new Bitmap(file);
+            //        Bitmap image2 = new Bitmap(file2);
+            //        Bitmap image4 = new Bitmap(file4);
+            //        g.DrawImage(image1, new Rectangle(0, 0, image1.Width, image1.Height));
+            //        g.DrawImage(image2, new Rectangle(0, image1.Height, image2.Width, image2.Height));
+            //        g.DrawImage(image4, new Rectangle(image2.Width, image1.Height, image4.Width, image4.Height));
+            //        image1.Dispose();
+            //        image2.Dispose();
+            //        image4.Dispose();
+            //    }
+            //    b.Save(file3, ImageFormat.Png);
+
+            //    var pic = new Picture(file2, PictureFormat.Png);
+            //    return pic.Compress();
+            //});
         }
     }
 }

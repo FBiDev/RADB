@@ -21,6 +21,9 @@ namespace RADB
         public static string IconsBase { get { return Images + @"Icons\"; } }
         public static string BadgesBase { get { return Images + @"Achievements\"; } }
 
+        public static string MergedIcons { get { return Base + @"MergedIcons\"; } }
+        public static string MergedBadges { get { return Base + @"MergedBadges\"; } }
+
         public static void CreateFolders()
         {
             Directory.CreateDirectory(Base);
@@ -35,6 +38,9 @@ namespace RADB
             Directory.CreateDirectory(Images);
             Directory.CreateDirectory(IconsBase);
             Directory.CreateDirectory(BadgesBase);
+
+            Directory.CreateDirectory(MergedIcons);
+            Directory.CreateDirectory(MergedBadges);
         }
 
         public static string GameDataExtend(int consoleID)

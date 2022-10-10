@@ -9,12 +9,10 @@ using System.Windows.Forms;
 using System.IO;
 using System.Threading;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 //
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PhotoSauce.MagicScaler;
 using RADB.Properties;
 using GNX;
 
@@ -589,16 +587,16 @@ namespace RADB
             picInfoBoxArt.ScaleTo(GameExtendBind.ImageBoxArtBitmap);
 
             {//Scale Boxes
-                pnlInfoImages.Height = (picInfoTitle.Height > picInfoInGame.Height ? picInfoTitle.Height : picInfoInGame.Height) + 12;
-                pnlInfoBoxArt.Height = pnlInfoImages.Location.Y + pnlInfoImages.Height - 19;
+                pnlInfoTitle.Height = (picInfoTitle.Height > picInfoInGame.Height ? picInfoTitle.Height : picInfoInGame.Height);
+                pnlInfoInGame.Height = pnlInfoTitle.Height;
 
-                picInfoTitle.Location = new Point(pnlInfoImages.Width / 2 - picInfoTitle.Width - 7, (pnlInfoImages.Height / 2) - (picInfoTitle.Height / 2));
-                picInfoInGame.Location = new Point(pnlInfoImages.Width / 2 + 7, (pnlInfoImages.Height / 2) - (picInfoInGame.Height / 2));
+                pnlInfoImages.Height = pnlInfoTitle.Height + 12;
+                pnlInfoBoxArt.Height = pnlInfoImages.Location.Y + pnlInfoImages.Height - 19;
                 gpbInfo.Height = gpbInfo.PreferredSize.Height;
 
+                picInfoTitle.Location = new Point(pnlInfoTitle.Width / 2 - picInfoTitle.Width / 2, (pnlInfoTitle.Height / 2) - (picInfoTitle.Height / 2));
+                picInfoInGame.Location = new Point(pnlInfoInGame.Width / 2 - picInfoInGame.Width / 2, (pnlInfoInGame.Height / 2) - (picInfoInGame.Height / 2));
                 picInfoBoxArt.Location = new Point(pnlInfoBoxArt.Width / 2 - picInfoBoxArt.Width / 2, (pnlInfoBoxArt.Height / 2) - (picInfoBoxArt.Height / 2));
-                //(pnlInfoTop.Width + 6) + ((gpbInfo.Width - (pnlInfoTop.Width + 6)) / 2) - picInfoBoxArt.Width / 2,
-                //(gpbInfo.Height / 2) - (picInfoBoxArt.Height / 2));
 
                 gpbInfoAchievements.Location = new Point(gpbInfoAchievements.Location.X, gpbInfo.Height + 9);
             }
@@ -768,53 +766,6 @@ namespace RADB
 
             UserCheevosIsRunning = false;
             btnUserCheevos.Enabled = true;
-        }
-
-        //TESTS to resize Image with PhotoSauce.MagicScaler
-        private async void btnDownloadBadges_Click(object sender, EventArgs e)
-        {
-            return;
-            var file = @"Data\Temp\W2.png";
-            var file2 = @"Data\Temp\W2_RS2.png";
-            var file3 = @"Data\Temp\W2_RS2_NEW.png";
-
-            var file4 = @"Data\Temp\W2_RS0.png";
-
-            var otp = await Task.Run(() =>
-            {
-                //var Encoder = new JpegEncoderOptions(98, ChromaSubsampleMode.Subsample444, true);
-                var Encoder = new PngEncoderOptions(PngFilter.None, false);
-                CropScaleMode rs = CropScaleMode.Stretch;
-
-                MagicImageProcessor.ProcessImage(file, file2, new ProcessImageSettings
-                {
-                    Width = 96,
-                    Height = 96,
-                    ResizeMode = rs,
-                    EncoderOptions = Encoder,
-                });
-
-
-                var b = new Bitmap(96 * 2, 96 * 2);
-                using (Graphics g = Graphics.FromImage(b))
-                {
-                    g.Clear(Color.White);
-
-                    Bitmap image1 = new Bitmap(file);
-                    Bitmap image2 = new Bitmap(file2);
-                    Bitmap image4 = new Bitmap(file4);
-                    g.DrawImage(image1, new Rectangle(0, 0, image1.Width, image1.Height));
-                    g.DrawImage(image2, new Rectangle(0, image1.Height, image2.Width, image2.Height));
-                    g.DrawImage(image4, new Rectangle(image2.Width, image1.Height, image4.Width, image4.Height));
-                    image1.Dispose();
-                    image2.Dispose();
-                    image4.Dispose();
-                }
-                b.Save(file3, ImageFormat.Png);
-
-                var pic = new Picture(file2, PictureFormat.Png);
-                return pic.Compress();
-            });
         }
 
         void dgvGames_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)

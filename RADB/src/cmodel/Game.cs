@@ -39,14 +39,14 @@ namespace RADB
             ImageIconBitmap = RA.DefaultIcon;
         }
 
-        public static string IconsMergedPath(string consoleName = "")
+        public static string MergedIconsPath(string consoleName = "")
         {
-            return Folder.Temp + Archive.MakeValidFileName(consoleName) + "_Icons";
+            return Folder.MergedIcons + Archive.MakeValidFileName(consoleName) + "_Icons";
         }
 
-        public string BadgesMergedPath()
+        public string MergedBadgesPath()
         {
-            return Folder.Temp + ConsoleName + "(" + ConsoleID + ")_" + Archive.MakeValidFileName(Title) + "(" + ID + ")_Badges";
+            return Folder.MergedBadges + ConsoleName + "(" + ConsoleID + ")_" + Archive.MakeValidFileName(Title) + "(" + ID + ")_Badges";
         }
 
         //public bool Insert()

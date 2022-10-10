@@ -22,7 +22,7 @@ namespace RADB
                 Connection = new SQLiteConnection(),
                 ServerAddress = servidor,
                 DatabaseName = database,
-                DataBaseFile = @"database.db",
+                DataBaseFile = @"Data\database.db",
                 Username = "",
                 Password = "",
                 ConnectionString = ""

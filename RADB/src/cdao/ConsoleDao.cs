@@ -54,7 +54,7 @@ namespace RADB
         }
         #endregion
 
-        #region " _Listar "
+        #region " _List "
         public static Task<List<Console>> List()
         {
             return Task<List<Console>>.Run(() =>

@@ -187,7 +187,7 @@ namespace RADB
         }
         #endregion
 
-        #region ToHide
+        #region _ToHide
         public static Task<List<Game>> ListToHide()
         {
             return Task<List<Game>>.Run(() =>
@@ -226,7 +226,7 @@ namespace RADB
         }
         #endregion
 
-        #region ToPlay
+        #region _ToPlay
         public static Task<List<Game>> ListToPlay()
         {
             return Task<List<Game>>.Run(() =>

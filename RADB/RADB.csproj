@@ -61,9 +61,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>src\rsc\dll64\referenced\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PhotoSauce.MagicScaler">
-      <HintPath>src\rsc\dll64\referenced\PhotoSauce.MagicScaler.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.116.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
@@ -71,10 +68,6 @@
       <HintPath>src\rsc\dll64\referenced\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Management" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>src\rsc\dll64\referenced\System.Memory.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -175,17 +168,23 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <ContentWithTargetPath Include="rsc\db\database.db">
-      <TargetPath>database.db</TargetPath>
+      <TargetPath>Data\database.db</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="rsc\dll64\referenced\Newtonsoft.Json.dll" />
-    <Content Include="rsc\dll64\referenced\PhotoSauce.MagicScaler.dll" />
-    <Content Include="rsc\dll64\referenced\System.Data.SQLite.dll" />
+    <Content Include="x64\referenced\Newtonsoft.Json.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x64\referenced\PhotoSauce.MagicScaler.dll" />
+    <Content Include="x64\referenced\System.Data.SQLite.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="rsc\exe\jpegoptim_1.4.7.exe" />
     <Content Include="rsc\exe\pngcrush_1_8_11_w64.exe" />
     <Content Include="rsc\image\favicon.ico" />
@@ -211,10 +210,9 @@
     <Content Include="rsc\sql\GameDelete.sql" />
     <Content Include="rsc\sql\GameInsert.sql" />
     <Content Include="temp\ToDo.txt" />
-    <ContentWithTargetPath Include="rsc\dll64\unmanaged\SQLite.Interop.dll">
-      <TargetPath>SQLite.Interop.dll</TargetPath>
+    <Content Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -234,8 +232,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="rsc\dll32\referenced\" />
-    <Folder Include="rsc\dll32\unmanaged\" />
+    <Folder Include="x86\referenced\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

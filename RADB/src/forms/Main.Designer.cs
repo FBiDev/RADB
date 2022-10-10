@@ -188,7 +188,9 @@ namespace RADB
             this.pnlInfoBoxArt = new System.Windows.Forms.Panel();
             this.picInfoBoxArt = new RADB.PictureBoxInterpolated();
             this.pnlInfoImages = new System.Windows.Forms.Panel();
+            this.pnlInfoInGame = new System.Windows.Forms.Panel();
             this.picInfoInGame = new System.Windows.Forms.PictureBox();
+            this.pnlInfoTitle = new System.Windows.Forms.Panel();
             this.picInfoTitle = new System.Windows.Forms.PictureBox();
             this.pnlInfoTop = new System.Windows.Forms.Panel();
             this.lblInfoReleased = new System.Windows.Forms.Label();
@@ -240,7 +242,9 @@ namespace RADB
             this.pnlInfoBoxArt.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoBoxArt)).BeginInit();
             this.pnlInfoImages.SuspendLayout();
+            this.pnlInfoInGame.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoInGame)).BeginInit();
+            this.pnlInfoTitle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoTitle)).BeginInit();
             this.pnlInfoTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoIcon)).BeginInit();
@@ -289,12 +293,12 @@ namespace RADB
             this.mnuGamesToHide.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToHide});
             this.mnuGamesToHide.Name = "ctmHiddenGames";
-            this.mnuGamesToHide.Size = new System.Drawing.Size(195, 26);
+            this.mnuGamesToHide.Size = new System.Drawing.Size(197, 26);
             // 
             // mniRemoveGameToHide
             // 
             this.mniRemoveGameToHide.Name = "mniRemoveGameToHide";
-            this.mniRemoveGameToHide.Size = new System.Drawing.Size(194, 22);
+            this.mniRemoveGameToHide.Size = new System.Drawing.Size(196, 22);
             this.mniRemoveGameToHide.Text = "Remove Game To Hide";
             this.mniRemoveGameToHide.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToHide_MouseDown);
             // 
@@ -325,12 +329,12 @@ namespace RADB
             this.mnuGamesToPlay.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToPlay});
             this.mnuGamesToPlay.Name = "mnuGamesToPlay";
-            this.mnuGamesToPlay.Size = new System.Drawing.Size(192, 26);
+            this.mnuGamesToPlay.Size = new System.Drawing.Size(194, 26);
             // 
             // mniRemoveGameToPlay
             // 
             this.mniRemoveGameToPlay.Name = "mniRemoveGameToPlay";
-            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(191, 22);
+            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(193, 22);
             this.mniRemoveGameToPlay.Text = "Remove Game To Play";
             this.mniRemoveGameToPlay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToPlay_MouseDown);
             // 
@@ -1694,18 +1698,26 @@ namespace RADB
             // pnlInfoImages
             // 
             this.pnlInfoImages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.pnlInfoImages.Controls.Add(this.picInfoInGame);
-            this.pnlInfoImages.Controls.Add(this.picInfoTitle);
+            this.pnlInfoImages.Controls.Add(this.pnlInfoInGame);
+            this.pnlInfoImages.Controls.Add(this.pnlInfoTitle);
             this.pnlInfoImages.Location = new System.Drawing.Point(6, 152);
             this.pnlInfoImages.MinimumSize = new System.Drawing.Size(538, 156);
             this.pnlInfoImages.Name = "pnlInfoImages";
             this.pnlInfoImages.Size = new System.Drawing.Size(546, 162);
             this.pnlInfoImages.TabIndex = 16;
             // 
+            // pnlInfoInGame
+            // 
+            this.pnlInfoInGame.Controls.Add(this.picInfoInGame);
+            this.pnlInfoInGame.Location = new System.Drawing.Point(280, 6);
+            this.pnlInfoInGame.Name = "pnlInfoInGame";
+            this.pnlInfoInGame.Size = new System.Drawing.Size(260, 150);
+            this.pnlInfoInGame.TabIndex = 16;
+            // 
             // picInfoInGame
             // 
             this.picInfoInGame.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.picInfoInGame.Location = new System.Drawing.Point(282, 6);
+            this.picInfoInGame.Location = new System.Drawing.Point(0, 0);
             this.picInfoInGame.Margin = new System.Windows.Forms.Padding(6);
             this.picInfoInGame.MaximumSize = new System.Drawing.Size(260, 240);
             this.picInfoInGame.Name = "picInfoInGame";
@@ -1714,10 +1726,18 @@ namespace RADB
             this.picInfoInGame.TabIndex = 14;
             this.picInfoInGame.TabStop = false;
             // 
+            // pnlInfoTitle
+            // 
+            this.pnlInfoTitle.Controls.Add(this.picInfoTitle);
+            this.pnlInfoTitle.Location = new System.Drawing.Point(6, 6);
+            this.pnlInfoTitle.Name = "pnlInfoTitle";
+            this.pnlInfoTitle.Size = new System.Drawing.Size(260, 150);
+            this.pnlInfoTitle.TabIndex = 15;
+            // 
             // picInfoTitle
             // 
             this.picInfoTitle.BackColor = System.Drawing.Color.LightGray;
-            this.picInfoTitle.Location = new System.Drawing.Point(6, 6);
+            this.picInfoTitle.Location = new System.Drawing.Point(0, 0);
             this.picInfoTitle.Margin = new System.Windows.Forms.Padding(6);
             this.picInfoTitle.MaximumSize = new System.Drawing.Size(260, 240);
             this.picInfoTitle.Name = "picInfoTitle";
@@ -1741,7 +1761,7 @@ namespace RADB
             this.pnlInfoTop.Controls.Add(this.label3);
             this.pnlInfoTop.Location = new System.Drawing.Point(12, 19);
             this.pnlInfoTop.Name = "pnlInfoTop";
-            this.pnlInfoTop.Size = new System.Drawing.Size(536, 96);
+            this.pnlInfoTop.Size = new System.Drawing.Size(540, 96);
             this.pnlInfoTop.TabIndex = 9;
             // 
             // lblInfoReleased
@@ -1947,7 +1967,9 @@ namespace RADB
             this.pnlInfoBoxArt.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picInfoBoxArt)).EndInit();
             this.pnlInfoImages.ResumeLayout(false);
+            this.pnlInfoInGame.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picInfoInGame)).EndInit();
+            this.pnlInfoTitle.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picInfoTitle)).EndInit();
             this.pnlInfoTop.ResumeLayout(false);
             this.pnlInfoTop.PerformLayout();
@@ -2092,6 +2114,8 @@ namespace RADB
         private CheckBoxBlueA chkTestKit;
         private CheckBoxBlueA chkSubset;
         private CheckBoxBlueA chkDemoted;
+        private System.Windows.Forms.Panel pnlInfoTitle;
+        private System.Windows.Forms.Panel pnlInfoInGame;
     }
 }
 
