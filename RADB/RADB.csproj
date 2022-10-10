@@ -203,23 +203,13 @@
     <Content Include="rsc\sql\GameDelete.sql" />
     <Content Include="rsc\sql\GameInsert.sql" />
     <Content Include="temp\ToDo.txt" />
-    <Content Include="x64\referenced\IndexRange.dll" />
     <Content Include="x64\referenced\Newtonsoft.Json.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="x64\referenced\PhotoSauce.MagicScaler.dll" />
-    <Content Include="x64\referenced\PhotoSauce.MagicScaler.xml" />
-    <Content Include="x64\referenced\System.Buffers.dll" />
-    <Content Include="x64\referenced\System.Buffers.xml" />
     <Content Include="x64\referenced\System.Data.SQLite.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="x64\referenced\System.Memory.dll" />
-    <Content Include="x64\referenced\System.Memory.xml" />
-    <Content Include="x64\referenced\System.Numerics.Vectors.dll" />
-    <Content Include="x64\referenced\System.Numerics.Vectors.xml" />
-    <Content Include="x64\referenced\System.Runtime.CompilerServices.Unsafe.dll" />
-    <Content Include="x64\referenced\System.Runtime.CompilerServices.Unsafe.xml" />
     <Content Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
