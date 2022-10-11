@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 //
-using System.Net;
 using System.Windows.Forms;
+using System.Net;
+using System.Net.Http;
+using GNX;
 
 namespace RADB
 {
@@ -52,7 +54,58 @@ namespace RADB
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.DefaultConnectionLimit = 128;
 
-            //var html = await DownloadString("URL");
+            //var html = await DownloadString(RA.HOST);
+
+            //await LoginTest();
+        }
+
+        public static async Task LoginTest()
+        {
+            HttpClientHandler httpClientHandler = new HttpClientHandler()
+            {
+                Proxy = Proxy,
+                PreAuthenticate = true,
+                UseDefaultCredentials = false,
+            };
+            HttpClient client = new HttpClient(httpClientHandler);
+
+            string url = RA.HOST;
+            string token = "";
+            using (HttpResponseMessage response = await client.GetAsync(url))
+            {
+                using (HttpContent content = response.Content)
+                {
+                    var json = await content.ReadAsStringAsync();
+                    token = json.GetBetween("_token\" value=\"", "\">", false, false);
+                }
+            }
+
+            var postParams = new Dictionary<string, string>();
+            postParams.Add("_token", token);
+            postParams.Add("u", "");
+            postParams.Add("p", "");
+            postParams.Add("submit", "Login");
+
+            using (var postContent = new FormUrlEncodedContent(postParams))
+            using (HttpResponseMessage response = await client.PostAsync("https://retroachievements.org/request/auth/login.php", postContent))
+            {
+                response.EnsureSuccessStatusCode(); // Throw if httpcode is an error
+                //using (HttpContent content = response.Content)
+                //{
+                //    string result = await content.ReadAsStringAsync();
+                //}
+            }
+
+            using (HttpResponseMessage response = await client.GetAsync(RA.HOST + "linkedhashes.php?g=1"))
+            {
+                using (HttpContent content = response.Content)
+                {
+                    var json = await content.ReadAsStringAsync();
+                    var li = json.GetBetween("unique hashes registered for it:<br><br><ul>", "</ul>", false, false);
+                    var game = li.GetBetween("<p class='embedded'><b>", "</b>", false, false);
+                    var hash = li.GetBetween("<code>", "</code>", false, false);
+                }
+            }
         }
 
         private static Random rand = new Random();
@@ -68,8 +121,13 @@ namespace RADB
                         (url.IndexOf("?") < 0 ? "?" : "&") + "random=" + rand.Next()
                         : (url);
 
-                    //var values = new NameValueCollection { { "u", "" }, { "p", "" }, };
-                    //client.UploadValues("URL", values);
+                    //client.Credentials = new NetworkCredential("", "");
+                    //var values = new NameValueCollection
+                    //{
+                    //    { "u", "" },
+                    //    { "p", "" }
+                    //};
+                    //client.UploadValues(new Uri("URL"), values);
                     //var aa = await client.DownloadString("URL");
 
                     data = await client.DownloadString(url);
