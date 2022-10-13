@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using GNX;
 
 namespace RADB
@@ -37,6 +38,8 @@ namespace RADB
             }
         }
 
+        public static WebClientExtend ClientLogin = new WebClientExtend();
+
         //===Downloads
         public static Download dlConsoles = new Download { Overwrite = true, FolderBase = Folder.Console, };
         public static Download dlConsolesGamesIcon = new Download() { Overwrite = false, FolderBase = Folder.IconsBase, };
@@ -48,64 +51,56 @@ namespace RADB
         public static Download dlGameExtend = new Download { Overwrite = true, FolderBase = Folder.GameDataExtendBase, };
         public static Download dlGameExtendImages = new Download { Overwrite = false, FolderBase = Folder.Images, };
 
-        public static void Load()
+        public async static void Load()
         {
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.DefaultConnectionLimit = 128;
 
-            //var html = await DownloadString(RA.HOST);
-
             //await LoginTest();
+            await GetHashCode(1);
+        }
+
+        public static async Task GetHashCode(int GameID)
+        {
+            var html = await ClientLogin.DownloadString(RA.HOST + "linkedhashes.php?g=" + GameID);
+
+            var ul = html.GetBetween("unique hashes registered for it:<br><br><ul>", "</ul>");
+
+            string pattern = @"" + Regex.Escape("<li>") + "(.*?)" + Regex.Escape("</li>");
+            Regex rgx = new Regex(pattern, RegexOptions.Singleline | RegexOptions.IgnoreCase);
+
+            var ff = new List<Tuple<string, string>>();
+            var entries = new List<Tuple<string, string>>().Select(t => new { Game = t.Item1, Hash = t.Item2 }).ToList();
+            foreach (Match match in rgx.Matches(ul))
+            {
+                var game = match.Value.GetBetween("<p class='embedded'><b>", "</b>");
+                var hash = match.Value.GetBetween("<code>", "</code>");
+                ff.Add(new Tuple<string, string>(game, hash));
+
+                entries.Add(new { Game = game, Hash = hash });
+            }
+
+            //var a = entries[0].Game;
+            //var b = ff[0].Item1;
         }
 
         public static async Task LoginTest()
         {
-            HttpClientHandler httpClientHandler = new HttpClientHandler()
-            {
-                Proxy = Proxy,
-                PreAuthenticate = true,
-                UseDefaultCredentials = false,
-            };
-            HttpClient client = new HttpClient(httpClientHandler);
-
-            string url = RA.HOST;
             string token = "";
-            using (HttpResponseMessage response = await client.GetAsync(url))
-            {
-                using (HttpContent content = response.Content)
-                {
-                    var json = await content.ReadAsStringAsync();
-                    token = json.GetBetween("_token\" value=\"", "\">", false, false);
-                }
-            }
 
-            var postParams = new Dictionary<string, string>();
-            postParams.Add("_token", token);
-            postParams.Add("u", "");
-            postParams.Add("p", "");
-            postParams.Add("submit", "Login");
+            //wclient.Credentials = new NetworkCredential("", "");
+            var html = await ClientLogin.DownloadString(RA.HOST);
+            token = html.GetBetween("_token\" value=\"", "\">");
 
-            using (var postContent = new FormUrlEncodedContent(postParams))
-            using (HttpResponseMessage response = await client.PostAsync("https://retroachievements.org/request/auth/login.php", postContent))
+            var values = new NameValueCollection
             {
-                response.EnsureSuccessStatusCode(); // Throw if httpcode is an error
-                //using (HttpContent content = response.Content)
-                //{
-                //    string result = await content.ReadAsStringAsync();
-                //}
-            }
+                {"_token", token},
+                { "u", "" },
+                { "p", "" }
+            };
 
-            using (HttpResponseMessage response = await client.GetAsync(RA.HOST + "linkedhashes.php?g=1"))
-            {
-                using (HttpContent content = response.Content)
-                {
-                    var json = await content.ReadAsStringAsync();
-                    var li = json.GetBetween("unique hashes registered for it:<br><br><ul>", "</ul>", false, false);
-                    var game = li.GetBetween("<p class='embedded'><b>", "</b>", false, false);
-                    var hash = li.GetBetween("<code>", "</code>", false, false);
-                }
-            }
+            await ClientLogin.UploadValuesTaskAsync(new Uri(RA.HOST + "request/auth/login.php"), values);
         }
 
         private static Random rand = new Random();
@@ -120,15 +115,6 @@ namespace RADB
                     url = addRandomNumber ? url +=
                         (url.IndexOf("?") < 0 ? "?" : "&") + "random=" + rand.Next()
                         : (url);
-
-                    //client.Credentials = new NetworkCredential("", "");
-                    //var values = new NameValueCollection
-                    //{
-                    //    { "u", "" },
-                    //    { "p", "" }
-                    //};
-                    //client.UploadValues(new Uri("URL"), values);
-                    //var aa = await client.DownloadString("URL");
 
                     data = await client.DownloadString(url);
 

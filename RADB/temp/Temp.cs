@@ -187,5 +187,54 @@ namespace RADB.temp
             //    return pic.Compress();
             //});
         }
+
+        public void loginTest()
+        {
+            //HttpClientHandler httpClientHandler = new HttpClientHandler()
+            //{
+            //    Proxy = Proxy,
+            //    PreAuthenticate = true,
+            //    UseDefaultCredentials = false,
+            //};
+            //HttpClient client = new HttpClient(httpClientHandler);
+
+            //string url = RA.HOST;
+
+            //using (HttpResponseMessage response = await client.GetAsync(url))
+            //{
+            //    using (HttpContent content = response.Content)
+            //    {
+            //        var json = await content.ReadAsStringAsync();
+            //        token = json.GetBetween("_token\" value=\"", "\">");
+            //    }
+            //}
+
+            //var postParams = new Dictionary<string, string>();
+            //postParams.Add("_token", token);
+            //postParams.Add("u", "");
+            //postParams.Add("p", "");
+            //postParams.Add("submit", "Login");
+
+            //using (var postContent = new FormUrlEncodedContent(postParams))
+            //using (HttpResponseMessage response = await client.PostAsync(RA.HOST + "request/auth/login.php", postContent))
+            //{
+            //    response.EnsureSuccessStatusCode(); // Throw if httpcode is an error
+            //    //using (HttpContent content = response.Content)
+            //    //{
+            //    //    string result = await content.ReadAsStringAsync();
+            //    //}
+            //}
+
+            //using (HttpResponseMessage response = await client.GetAsync(RA.HOST + "linkedhashes.php?g=1"))
+            //{
+            //    using (HttpContent content = response.Content)
+            //    {
+            //        var json = await content.ReadAsStringAsync();
+            //        var li = json.GetBetween("unique hashes registered for it:<br><br><ul>", "</ul>");
+            //        var game = li.GetBetween("<p class='embedded'><b>", "</b>");
+            //        var hash = li.GetBetween("<code>", "</code>");
+            //    }
+            //}
+        }
     }
 }
