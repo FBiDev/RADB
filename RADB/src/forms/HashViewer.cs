@@ -19,9 +19,12 @@ namespace RADB
             InitializeComponent();
         }
 
-        public async Task GetHashCode(int GameID)
+        public async Task GetHashCode(Game game)
         {
-            var html = await Browser.ClientLogin.DownloadString(RA.HOST + "linkedhashes.php?g=" + GameID);
+            this.Text = "RA HashViewer - " + game.Title + " (" + game.ConsoleName + ")";
+            txtHashes.Text = string.Empty;
+
+            var html = await Browser.ClientLogin.DownloadString(RA.HOST + "linkedhashes.php?g=" + game.ID);
 
             var ul = html.GetBetween("unique hashes registered for it:<br><br><ul>", "</ul>");
 
@@ -29,16 +32,16 @@ namespace RADB
             Regex rgx = new Regex(pattern, RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
             var ff = new List<Tuple<string, string>>();
-            var entries = new List<Tuple<string, string>>().Select(t => new { Game = t.Item1, Hash = t.Item2 }).ToList();
+            var entries = new List<Tuple<string, string>>().Select(t => new { Title = t.Item1, Hash = t.Item2 }).ToList();
             foreach (Match match in rgx.Matches(ul))
             {
-                var game = match.Value.GetBetween("<p class='embedded'><b>", "</b>").Trim();
+                var title = match.Value.GetBetween("<p class='embedded'><b>", "</b>").Trim();
                 var hash = match.Value.GetBetween("<code>", "</code>").Trim();
-                ff.Add(new Tuple<string, string>(game, hash));
+                ff.Add(new Tuple<string, string>(title, hash));
 
-                entries.Add(new { Game = game, Hash = hash });
+                entries.Add(new { Title = title, Hash = hash });
 
-                txtHashes.Text += game + Environment.NewLine + hash + Environment.NewLine + Environment.NewLine;
+                txtHashes.Text += title + Environment.NewLine + hash + Environment.NewLine + Environment.NewLine;
             }
 
             //var a = entries[0].Game;

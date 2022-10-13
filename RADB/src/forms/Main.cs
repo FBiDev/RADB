@@ -953,7 +953,9 @@ namespace RADB
             }
 
             HashViewer f = cForm.Open<HashViewer>();
-            await f.GetHashCode(GameBind.ID);
+            f.Left = this.Left + 129;
+            f.Top = this.Top + 266;
+            await f.GetHashCode(GameBind);
         }
     }
 }
