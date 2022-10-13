@@ -57,32 +57,7 @@ namespace RADB
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.DefaultConnectionLimit = 128;
 
-            //await LoginTest();
-            await GetHashCode(1);
-        }
-
-        public static async Task GetHashCode(int GameID)
-        {
-            var html = await ClientLogin.DownloadString(RA.HOST + "linkedhashes.php?g=" + GameID);
-
-            var ul = html.GetBetween("unique hashes registered for it:<br><br><ul>", "</ul>");
-
-            string pattern = @"" + Regex.Escape("<li>") + "(.*?)" + Regex.Escape("</li>");
-            Regex rgx = new Regex(pattern, RegexOptions.Singleline | RegexOptions.IgnoreCase);
-
-            var ff = new List<Tuple<string, string>>();
-            var entries = new List<Tuple<string, string>>().Select(t => new { Game = t.Item1, Hash = t.Item2 }).ToList();
-            foreach (Match match in rgx.Matches(ul))
-            {
-                var game = match.Value.GetBetween("<p class='embedded'><b>", "</b>");
-                var hash = match.Value.GetBetween("<code>", "</code>");
-                ff.Add(new Tuple<string, string>(game, hash));
-
-                entries.Add(new { Game = game, Hash = hash });
-            }
-
-            //var a = entries[0].Game;
-            //var b = ff[0].Item1;
+            await LoginTest();
         }
 
         public static async Task LoginTest()
@@ -96,8 +71,8 @@ namespace RADB
             var values = new NameValueCollection
             {
                 {"_token", token},
-                { "u", "" },
-                { "p", "" }
+                { "u", "FBidev" },
+                { "p", "Ret1248!" }
             };
 
             await ClientLogin.UploadValuesTaskAsync(new Uri(RA.HOST + "request/auth/login.php"), values);

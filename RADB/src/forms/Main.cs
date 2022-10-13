@@ -592,7 +592,7 @@ namespace RADB
 
                 pnlInfoImages.Height = pnlInfoTitle.Height + 12;
                 pnlInfoBoxArt.Height = pnlInfoImages.Location.Y + pnlInfoImages.Height - 19;
-                gpbInfo.Height = gpbInfo.PreferredSize.Height;
+                gpbInfo.Height = gpbInfo.PreferredSize.Height - 13;
 
                 picInfoTitle.Location = new Point(pnlInfoTitle.Width / 2 - picInfoTitle.Width / 2, (pnlInfoTitle.Height / 2) - (picInfoTitle.Height / 2));
                 picInfoInGame.Location = new Point(pnlInfoInGame.Width / 2 - picInfoInGame.Width / 2, (pnlInfoInGame.Height / 2) - (picInfoInGame.Height / 2));
@@ -718,11 +718,8 @@ namespace RADB
 
         private void dgvAchievements_DataSourceChanged(object sender, EventArgs e)
         {
-            //if (dgvAchievements.RowCount == 0) { return; }
-
-            var height = dgvAchievements.RowTemplate.Height;
-            dgvAchievements.Height = dgvAchievements.PreferredSize.Height;
-            gpbInfoAchievements.Height = dgvAchievements.Height + 60;
+            dgvAchievements.Height = dgvAchievements.PreferredSize.Height - 16;
+            gpbInfoAchievements.Height = gpbInfoAchievements.PreferredSize.Height - 13;
         }
 
         private bool UserCheevosIsRunning = false;
@@ -792,6 +789,7 @@ namespace RADB
 
         private void btnGamePage_Click(object sender, EventArgs e)
         {
+            if (GameBind.IsNull()) { return; }
             System.Diagnostics.Process.Start(RA.Game_URL(GameBind.ID));
         }
 
@@ -944,6 +942,18 @@ namespace RADB
         {
             pnlFilters.Visible = !pnlFilters.Visible;
             dgvGames.Focus();
+        }
+
+        private async void btnHashes_Click(object sender, EventArgs e)
+        {
+            if (GameBind.IsNull())
+            {
+                MessageBox.Show("Select a Game in Games Tab First");
+                return;
+            }
+
+            HashViewer f = cForm.Open<HashViewer>();
+            await f.GetHashCode(GameBind.ID);
         }
     }
 }

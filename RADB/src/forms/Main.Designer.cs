@@ -93,48 +93,18 @@ namespace RADB
             this.lblNotFoundConsoles = new System.Windows.Forms.Label();
             this.picLoaderConsole = new System.Windows.Forms.PictureBox();
             this.pnlDownloadConsoles = new System.Windows.Forms.Panel();
+            this.btnUpdateConsoles = new RADB.FlatButtonA();
             this.lblUpdateConsoles = new System.Windows.Forms.Label();
             this.pgbConsoles = new System.Windows.Forms.ProgressBar();
             this.lblProgressConsoles = new System.Windows.Forms.Label();
-            this.tabGames = new System.Windows.Forms.TabPage();
-            this.pnlFilters = new GNX.PanelBorder();
-            this.lblNotFoundGameList = new System.Windows.Forms.Label();
-            this.picLoaderGameList = new System.Windows.Forms.PictureBox();
-            this.pnlGamesConsoleName = new GNX.PanelBorder();
-            this.lblConsoleGamesTotal = new System.Windows.Forms.Label();
-            this.lblConsoleName = new System.Windows.Forms.Label();
-            this.pnlDownloadGameList = new System.Windows.Forms.Panel();
-            this.lblUpdateGameList = new System.Windows.Forms.Label();
-            this.pgbGameList = new System.Windows.Forms.ProgressBar();
-            this.lblProgressGameList = new System.Windows.Forms.Label();
-            this.tabGamesToPlay = new System.Windows.Forms.TabPage();
-            this.lblNotFoundGamesToPlay = new System.Windows.Forms.Label();
-            this.tabGamesToHide = new System.Windows.Forms.TabPage();
-            this.lblNotFoundGamesToHide = new System.Windows.Forms.Label();
-            this.tabGameInfo = new System.Windows.Forms.TabPage();
-            this.lblInfoName = new System.Windows.Forms.Label();
-            this.pnlDownloadInfo = new System.Windows.Forms.Panel();
-            this.lblUpdateInfo = new System.Windows.Forms.Label();
-            this.pgbInfo = new System.Windows.Forms.ProgressBar();
-            this.lblProgressInfo = new System.Windows.Forms.Label();
-            this.tabUserInfo = new System.Windows.Forms.TabPage();
-            this.gpbOverlay = new System.Windows.Forms.GroupBox();
-            this.pnlUserCheevos = new System.Windows.Forms.Panel();
-            this.lblCheevos = new System.Windows.Forms.Label();
-            this.lblUserCheevos = new System.Windows.Forms.Label();
-            this.lblCheevoLoopUpdate = new System.Windows.Forms.Label();
-            this.chkUserCheevos = new System.Windows.Forms.CheckBox();
-            this.tabAbout = new System.Windows.Forms.TabPage();
-            this.picFBiDevIcon = new System.Windows.Forms.PictureBox();
-            this.lblAbTitle = new System.Windows.Forms.Label();
-            this.lblAbYear = new System.Windows.Forms.Label();
-            this.btnUpdateConsoles = new RADB.FlatButtonA();
             this.dgvConsoles = new RADB.FlatDataGridA();
             this.cID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cCompany = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cNumGames = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cTotalGames = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabGames = new System.Windows.Forms.TabPage();
+            this.pnlFilters = new GNX.PanelBorder();
             this.chkDemoted = new RADB.CheckBoxBlueA();
             this.chkTestKit = new RADB.CheckBoxBlueA();
             this.chkSubset = new RADB.CheckBoxBlueA();
@@ -145,9 +115,18 @@ namespace RADB
             this.chkPrototype = new RADB.CheckBoxBlueA();
             this.chkOfficial = new RADB.CheckBoxBlueA();
             this.chkWithoutAchievements = new RADB.CheckBoxBlueA();
+            this.lblNotFoundGameList = new System.Windows.Forms.Label();
+            this.picLoaderGameList = new System.Windows.Forms.PictureBox();
+            this.pnlGamesConsoleName = new GNX.PanelBorder();
+            this.lblConsoleGamesTotal = new System.Windows.Forms.Label();
+            this.lblConsoleName = new System.Windows.Forms.Label();
             this.txtSearchGames = new RADB.FlatTextBoxA();
             this.btnGameFilters = new RADB.FlatButtonA();
+            this.pnlDownloadGameList = new System.Windows.Forms.Panel();
             this.btnUpdateGameList = new RADB.FlatButtonA();
+            this.lblUpdateGameList = new System.Windows.Forms.Label();
+            this.pgbGameList = new System.Windows.Forms.ProgressBar();
+            this.lblProgressGameList = new System.Windows.Forms.Label();
             this.dgvGames = new RADB.FlatDataGridA();
             this.gID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
@@ -157,6 +136,8 @@ namespace RADB
             this.gPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabGamesToPlay = new System.Windows.Forms.TabPage();
+            this.lblNotFoundGamesToPlay = new System.Windows.Forms.Label();
             this.dgvGamesToPlay = new RADB.FlatDataGridA();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
@@ -166,6 +147,8 @@ namespace RADB
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabGamesToHide = new System.Windows.Forms.TabPage();
+            this.lblNotFoundGamesToHide = new System.Windows.Forms.Label();
             this.dgvGamesToHide = new RADB.FlatDataGridA();
             this.ghID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ghIcon = new System.Windows.Forms.DataGridViewImageColumn();
@@ -175,8 +158,10 @@ namespace RADB
             this.ghPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ghLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ghLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabGameInfo = new System.Windows.Forms.TabPage();
             this.pnlInfoScroll = new RADB.PanelNoScrollOnFocus();
             this.gpbInfoAchievements = new System.Windows.Forms.GroupBox();
+            this.btnHashes = new RADB.FlatButtonA();
             this.dgvAchievements = new RADB.FlatDataGridA();
             this.aOrder = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.aIcon = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -202,11 +187,27 @@ namespace RADB
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.lblInfoName = new System.Windows.Forms.Label();
+            this.pnlDownloadInfo = new System.Windows.Forms.Panel();
             this.btnUpdateInfo = new RADB.FlatButtonA();
+            this.lblUpdateInfo = new System.Windows.Forms.Label();
+            this.pgbInfo = new System.Windows.Forms.ProgressBar();
+            this.lblProgressInfo = new System.Windows.Forms.Label();
+            this.tabUserInfo = new System.Windows.Forms.TabPage();
+            this.gpbOverlay = new System.Windows.Forms.GroupBox();
+            this.pnlUserCheevos = new System.Windows.Forms.Panel();
+            this.lblCheevos = new System.Windows.Forms.Label();
+            this.lblUserCheevos = new System.Windows.Forms.Label();
             this.picUserCheevos = new RADB.PictureBoxInterpolated();
+            this.lblCheevoLoopUpdate = new System.Windows.Forms.Label();
             this.txtUsernameCheevos = new RADB.FlatTextBoxA();
+            this.chkUserCheevos = new System.Windows.Forms.CheckBox();
             this.btnUserCheevos = new RADB.FlatButtonA();
+            this.tabAbout = new System.Windows.Forms.TabPage();
             this.btnRaProfile = new RADB.FlatButtonA();
+            this.picFBiDevIcon = new System.Windows.Forms.PictureBox();
+            this.lblAbTitle = new System.Windows.Forms.Label();
+            this.lblAbYear = new System.Windows.Forms.Label();
             this.mnuGames.SuspendLayout();
             this.mnuGamesToHide.SuspendLayout();
             this.mnuConsoles.SuspendLayout();
@@ -217,24 +218,18 @@ namespace RADB
             this.tabConsoles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderConsole)).BeginInit();
             this.pnlDownloadConsoles.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvConsoles)).BeginInit();
             this.tabGames.SuspendLayout();
             this.pnlFilters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderGameList)).BeginInit();
             this.pnlGamesConsoleName.SuspendLayout();
             this.pnlDownloadGameList.SuspendLayout();
-            this.tabGamesToPlay.SuspendLayout();
-            this.tabGamesToHide.SuspendLayout();
-            this.tabGameInfo.SuspendLayout();
-            this.pnlDownloadInfo.SuspendLayout();
-            this.tabUserInfo.SuspendLayout();
-            this.gpbOverlay.SuspendLayout();
-            this.pnlUserCheevos.SuspendLayout();
-            this.tabAbout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picFBiDevIcon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvConsoles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGames)).BeginInit();
+            this.tabGamesToPlay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGamesToPlay)).BeginInit();
+            this.tabGamesToHide.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGamesToHide)).BeginInit();
+            this.tabGameInfo.SuspendLayout();
             this.pnlInfoScroll.SuspendLayout();
             this.gpbInfoAchievements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAchievements)).BeginInit();
@@ -248,7 +243,13 @@ namespace RADB
             ((System.ComponentModel.ISupportInitialize)(this.picInfoTitle)).BeginInit();
             this.pnlInfoTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoIcon)).BeginInit();
+            this.pnlDownloadInfo.SuspendLayout();
+            this.tabUserInfo.SuspendLayout();
+            this.gpbOverlay.SuspendLayout();
+            this.pnlUserCheevos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picUserCheevos)).BeginInit();
+            this.tabAbout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFBiDevIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuGames
@@ -344,7 +345,7 @@ namespace RADB
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlBottomOutput.BackColor = System.Drawing.Color.Transparent;
             this.pnlBottomOutput.Controls.Add(this.pnlOutput);
-            this.pnlBottomOutput.Location = new System.Drawing.Point(12, 589);
+            this.pnlBottomOutput.Location = new System.Drawing.Point(12, 592);
             this.pnlBottomOutput.Name = "pnlBottomOutput";
             this.pnlBottomOutput.Padding = new System.Windows.Forms.Padding(2);
             this.pnlBottomOutput.Size = new System.Drawing.Size(913, 66);
@@ -391,7 +392,7 @@ namespace RADB
             this.tabMain.myBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(916, 571);
+            this.tabMain.Size = new System.Drawing.Size(916, 574);
             this.tabMain.TabIndex = 28;
             this.tabMain.SelectedIndexChanged += new System.EventHandler(this.tabMain_SelectedIndexChanged);
             // 
@@ -405,7 +406,7 @@ namespace RADB
             this.tabConsoles.Location = new System.Drawing.Point(4, 25);
             this.tabConsoles.Name = "tabConsoles";
             this.tabConsoles.Padding = new System.Windows.Forms.Padding(3);
-            this.tabConsoles.Size = new System.Drawing.Size(908, 542);
+            this.tabConsoles.Size = new System.Drawing.Size(908, 545);
             this.tabConsoles.TabIndex = 0;
             this.tabConsoles.Text = "Consoles";
             // 
@@ -447,6 +448,20 @@ namespace RADB
             this.pnlDownloadConsoles.Size = new System.Drawing.Size(902, 31);
             this.pnlDownloadConsoles.TabIndex = 0;
             // 
+            // btnUpdateConsoles
+            // 
+            this.btnUpdateConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnUpdateConsoles.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.btnUpdateConsoles.FlatAppearance.BorderSize = 0;
+            this.btnUpdateConsoles.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.btnUpdateConsoles.Location = new System.Drawing.Point(5, 3);
+            this.btnUpdateConsoles.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            this.btnUpdateConsoles.Name = "btnUpdateConsoles";
+            this.btnUpdateConsoles.Size = new System.Drawing.Size(144, 23);
+            this.btnUpdateConsoles.TabIndex = 36;
+            this.btnUpdateConsoles.Text = "Update Consoles";
+            this.btnUpdateConsoles.Click += new System.EventHandler(this.btnUpdateConsoles_Click);
+            // 
             // lblUpdateConsoles
             // 
             this.lblUpdateConsoles.Location = new System.Drawing.Point(155, 8);
@@ -474,400 +489,6 @@ namespace RADB
             this.lblProgressConsoles.Size = new System.Drawing.Size(110, 13);
             this.lblProgressConsoles.TabIndex = 31;
             this.lblProgressConsoles.Text = "lblProgress";
-            // 
-            // tabGames
-            // 
-            this.tabGames.BackColor = System.Drawing.Color.Transparent;
-            this.tabGames.Controls.Add(this.pnlFilters);
-            this.tabGames.Controls.Add(this.lblNotFoundGameList);
-            this.tabGames.Controls.Add(this.picLoaderGameList);
-            this.tabGames.Controls.Add(this.pnlGamesConsoleName);
-            this.tabGames.Controls.Add(this.pnlDownloadGameList);
-            this.tabGames.Controls.Add(this.dgvGames);
-            this.tabGames.Location = new System.Drawing.Point(4, 25);
-            this.tabGames.Name = "tabGames";
-            this.tabGames.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGames.Size = new System.Drawing.Size(908, 542);
-            this.tabGames.TabIndex = 2;
-            this.tabGames.Text = "Games";
-            // 
-            // pnlFilters
-            // 
-            this.pnlFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlFilters.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.pnlFilters.Controls.Add(this.chkDemoted);
-            this.pnlFilters.Controls.Add(this.chkTestKit);
-            this.pnlFilters.Controls.Add(this.chkSubset);
-            this.pnlFilters.Controls.Add(this.chkHomebrew);
-            this.pnlFilters.Controls.Add(this.chkHack);
-            this.pnlFilters.Controls.Add(this.chkDemo);
-            this.pnlFilters.Controls.Add(this.chkUnlicensed);
-            this.pnlFilters.Controls.Add(this.chkPrototype);
-            this.pnlFilters.Controls.Add(this.chkOfficial);
-            this.pnlFilters.Controls.Add(this.chkWithoutAchievements);
-            this.pnlFilters.Location = new System.Drawing.Point(783, 83);
-            this.pnlFilters.Name = "pnlFilters";
-            this.pnlFilters.Padding = new System.Windows.Forms.Padding(2);
-            this.pnlFilters.Size = new System.Drawing.Size(97, 406);
-            this.pnlFilters.TabIndex = 10;
-            this.pnlFilters.Visible = false;
-            // 
-            // lblNotFoundGameList
-            // 
-            this.lblNotFoundGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblNotFoundGameList.Location = new System.Drawing.Point(9, 162);
-            this.lblNotFoundGameList.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblNotFoundGameList.Name = "lblNotFoundGameList";
-            this.lblNotFoundGameList.Size = new System.Drawing.Size(890, 23);
-            this.lblNotFoundGameList.TabIndex = 2;
-            this.lblNotFoundGameList.Text = "No Games Found";
-            this.lblNotFoundGameList.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // picLoaderGameList
-            // 
-            this.picLoaderGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.picLoaderGameList.Image = global::RADB.Properties.Resources.loader;
-            this.picLoaderGameList.Location = new System.Drawing.Point(6, 146);
-            this.picLoaderGameList.Name = "picLoaderGameList";
-            this.picLoaderGameList.Size = new System.Drawing.Size(896, 52);
-            this.picLoaderGameList.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.picLoaderGameList.TabIndex = 5;
-            this.picLoaderGameList.TabStop = false;
-            this.picLoaderGameList.Visible = false;
-            // 
-            // pnlGamesConsoleName
-            // 
-            this.pnlGamesConsoleName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlGamesConsoleName.Controls.Add(this.lblConsoleGamesTotal);
-            this.pnlGamesConsoleName.Controls.Add(this.lblConsoleName);
-            this.pnlGamesConsoleName.Controls.Add(this.txtSearchGames);
-            this.pnlGamesConsoleName.Controls.Add(this.btnGameFilters);
-            this.pnlGamesConsoleName.Location = new System.Drawing.Point(6, 32);
-            this.pnlGamesConsoleName.Name = "pnlGamesConsoleName";
-            this.pnlGamesConsoleName.Padding = new System.Windows.Forms.Padding(2);
-            this.pnlGamesConsoleName.Size = new System.Drawing.Size(896, 44);
-            this.pnlGamesConsoleName.TabIndex = 6;
-            // 
-            // lblConsoleGamesTotal
-            // 
-            this.lblConsoleGamesTotal.AutoSize = true;
-            this.lblConsoleGamesTotal.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConsoleGamesTotal.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.lblConsoleGamesTotal.Location = new System.Drawing.Point(7, 24);
-            this.lblConsoleGamesTotal.Name = "lblConsoleGamesTotal";
-            this.lblConsoleGamesTotal.Size = new System.Drawing.Size(62, 13);
-            this.lblConsoleGamesTotal.TabIndex = 1;
-            this.lblConsoleGamesTotal.Text = "000 Games";
-            // 
-            // lblConsoleName
-            // 
-            this.lblConsoleName.AutoSize = true;
-            this.lblConsoleName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConsoleName.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.lblConsoleName.Location = new System.Drawing.Point(3, 3);
-            this.lblConsoleName.Name = "lblConsoleName";
-            this.lblConsoleName.Size = new System.Drawing.Size(66, 21);
-            this.lblConsoleName.TabIndex = 0;
-            this.lblConsoleName.Text = "Console";
-            this.lblConsoleName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // pnlDownloadGameList
-            // 
-            this.pnlDownloadGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlDownloadGameList.Controls.Add(this.btnUpdateGameList);
-            this.pnlDownloadGameList.Controls.Add(this.lblUpdateGameList);
-            this.pnlDownloadGameList.Controls.Add(this.pgbGameList);
-            this.pnlDownloadGameList.Controls.Add(this.lblProgressGameList);
-            this.pnlDownloadGameList.Location = new System.Drawing.Point(0, 0);
-            this.pnlDownloadGameList.Name = "pnlDownloadGameList";
-            this.pnlDownloadGameList.Size = new System.Drawing.Size(902, 31);
-            this.pnlDownloadGameList.TabIndex = 0;
-            // 
-            // lblUpdateGameList
-            // 
-            this.lblUpdateGameList.Location = new System.Drawing.Point(155, 8);
-            this.lblUpdateGameList.Name = "lblUpdateGameList";
-            this.lblUpdateGameList.Size = new System.Drawing.Size(110, 13);
-            this.lblUpdateGameList.TabIndex = 34;
-            this.lblUpdateGameList.Text = "00/00/0000 00:00:00";
-            this.lblUpdateGameList.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pgbGameList
-            // 
-            this.pgbGameList.Location = new System.Drawing.Point(271, 3);
-            this.pgbGameList.MarqueeAnimationSpeed = 0;
-            this.pgbGameList.Name = "pgbGameList";
-            this.pgbGameList.Size = new System.Drawing.Size(144, 21);
-            this.pgbGameList.Step = 1;
-            this.pgbGameList.TabIndex = 31;
-            // 
-            // lblProgressGameList
-            // 
-            this.lblProgressGameList.AutoSize = true;
-            this.lblProgressGameList.Location = new System.Drawing.Point(421, 8);
-            this.lblProgressGameList.Name = "lblProgressGameList";
-            this.lblProgressGameList.Size = new System.Drawing.Size(58, 13);
-            this.lblProgressGameList.TabIndex = 33;
-            this.lblProgressGameList.Text = "lblProgress";
-            // 
-            // tabGamesToPlay
-            // 
-            this.tabGamesToPlay.BackColor = System.Drawing.Color.Transparent;
-            this.tabGamesToPlay.Controls.Add(this.lblNotFoundGamesToPlay);
-            this.tabGamesToPlay.Controls.Add(this.dgvGamesToPlay);
-            this.tabGamesToPlay.Location = new System.Drawing.Point(4, 25);
-            this.tabGamesToPlay.Name = "tabGamesToPlay";
-            this.tabGamesToPlay.Size = new System.Drawing.Size(908, 542);
-            this.tabGamesToPlay.TabIndex = 5;
-            this.tabGamesToPlay.Text = "Games to Play";
-            // 
-            // lblNotFoundGamesToPlay
-            // 
-            this.lblNotFoundGamesToPlay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblNotFoundGamesToPlay.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNotFoundGamesToPlay.Location = new System.Drawing.Point(9, 162);
-            this.lblNotFoundGamesToPlay.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblNotFoundGamesToPlay.Name = "lblNotFoundGamesToPlay";
-            this.lblNotFoundGamesToPlay.Size = new System.Drawing.Size(890, 23);
-            this.lblNotFoundGamesToPlay.TabIndex = 5;
-            this.lblNotFoundGamesToPlay.Text = "No Games Found: Add a game with right click in Games Tab Grid";
-            this.lblNotFoundGamesToPlay.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblNotFoundGamesToPlay.Visible = false;
-            // 
-            // tabGamesToHide
-            // 
-            this.tabGamesToHide.Controls.Add(this.lblNotFoundGamesToHide);
-            this.tabGamesToHide.Controls.Add(this.dgvGamesToHide);
-            this.tabGamesToHide.Location = new System.Drawing.Point(4, 25);
-            this.tabGamesToHide.Name = "tabGamesToHide";
-            this.tabGamesToHide.Size = new System.Drawing.Size(908, 542);
-            this.tabGamesToHide.TabIndex = 6;
-            this.tabGamesToHide.Text = "Games to Hide";
-            // 
-            // lblNotFoundGamesToHide
-            // 
-            this.lblNotFoundGamesToHide.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblNotFoundGamesToHide.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNotFoundGamesToHide.Location = new System.Drawing.Point(9, 162);
-            this.lblNotFoundGamesToHide.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblNotFoundGamesToHide.Name = "lblNotFoundGamesToHide";
-            this.lblNotFoundGamesToHide.Size = new System.Drawing.Size(890, 23);
-            this.lblNotFoundGamesToHide.TabIndex = 4;
-            this.lblNotFoundGamesToHide.Text = "No Games Found: Add a game with right click in Games Tab Grid";
-            this.lblNotFoundGamesToHide.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblNotFoundGamesToHide.Visible = false;
-            // 
-            // tabGameInfo
-            // 
-            this.tabGameInfo.BackColor = System.Drawing.Color.Transparent;
-            this.tabGameInfo.Controls.Add(this.pnlInfoScroll);
-            this.tabGameInfo.Controls.Add(this.lblInfoName);
-            this.tabGameInfo.Controls.Add(this.pnlDownloadInfo);
-            this.tabGameInfo.Location = new System.Drawing.Point(4, 25);
-            this.tabGameInfo.Name = "tabGameInfo";
-            this.tabGameInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGameInfo.Size = new System.Drawing.Size(908, 542);
-            this.tabGameInfo.TabIndex = 1;
-            this.tabGameInfo.Text = "Game Info";
-            // 
-            // lblInfoName
-            // 
-            this.lblInfoName.AutoSize = true;
-            this.lblInfoName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInfoName.Location = new System.Drawing.Point(6, 34);
-            this.lblInfoName.Name = "lblInfoName";
-            this.lblInfoName.Size = new System.Drawing.Size(61, 24);
-            this.lblInfoName.TabIndex = 3;
-            this.lblInfoName.Text = "Name";
-            // 
-            // pnlDownloadInfo
-            // 
-            this.pnlDownloadInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlDownloadInfo.Controls.Add(this.btnUpdateInfo);
-            this.pnlDownloadInfo.Controls.Add(this.lblUpdateInfo);
-            this.pnlDownloadInfo.Controls.Add(this.pgbInfo);
-            this.pnlDownloadInfo.Controls.Add(this.lblProgressInfo);
-            this.pnlDownloadInfo.Location = new System.Drawing.Point(0, 0);
-            this.pnlDownloadInfo.Name = "pnlDownloadInfo";
-            this.pnlDownloadInfo.Size = new System.Drawing.Size(902, 31);
-            this.pnlDownloadInfo.TabIndex = 7;
-            // 
-            // lblUpdateInfo
-            // 
-            this.lblUpdateInfo.Location = new System.Drawing.Point(155, 8);
-            this.lblUpdateInfo.Name = "lblUpdateInfo";
-            this.lblUpdateInfo.Size = new System.Drawing.Size(110, 13);
-            this.lblUpdateInfo.TabIndex = 34;
-            this.lblUpdateInfo.Text = "00/00/0000 00:00:00";
-            this.lblUpdateInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pgbInfo
-            // 
-            this.pgbInfo.Location = new System.Drawing.Point(271, 3);
-            this.pgbInfo.MarqueeAnimationSpeed = 0;
-            this.pgbInfo.Name = "pgbInfo";
-            this.pgbInfo.Size = new System.Drawing.Size(144, 21);
-            this.pgbInfo.Step = 1;
-            this.pgbInfo.TabIndex = 31;
-            // 
-            // lblProgressInfo
-            // 
-            this.lblProgressInfo.AutoSize = true;
-            this.lblProgressInfo.Location = new System.Drawing.Point(421, 8);
-            this.lblProgressInfo.Name = "lblProgressInfo";
-            this.lblProgressInfo.Size = new System.Drawing.Size(58, 13);
-            this.lblProgressInfo.TabIndex = 33;
-            this.lblProgressInfo.Text = "lblProgress";
-            // 
-            // tabUserInfo
-            // 
-            this.tabUserInfo.BackColor = System.Drawing.Color.Transparent;
-            this.tabUserInfo.Controls.Add(this.gpbOverlay);
-            this.tabUserInfo.Location = new System.Drawing.Point(4, 25);
-            this.tabUserInfo.Name = "tabUserInfo";
-            this.tabUserInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUserInfo.Size = new System.Drawing.Size(908, 542);
-            this.tabUserInfo.TabIndex = 3;
-            this.tabUserInfo.Text = "User Info";
-            // 
-            // gpbOverlay
-            // 
-            this.gpbOverlay.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.gpbOverlay.Controls.Add(this.pnlUserCheevos);
-            this.gpbOverlay.Controls.Add(this.lblCheevoLoopUpdate);
-            this.gpbOverlay.Controls.Add(this.txtUsernameCheevos);
-            this.gpbOverlay.Controls.Add(this.chkUserCheevos);
-            this.gpbOverlay.Controls.Add(this.btnUserCheevos);
-            this.gpbOverlay.Location = new System.Drawing.Point(336, 105);
-            this.gpbOverlay.Name = "gpbOverlay";
-            this.gpbOverlay.Size = new System.Drawing.Size(233, 166);
-            this.gpbOverlay.TabIndex = 32;
-            this.gpbOverlay.TabStop = false;
-            this.gpbOverlay.Text = "Overlay";
-            // 
-            // pnlUserCheevos
-            // 
-            this.pnlUserCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pnlUserCheevos.BackColor = System.Drawing.Color.Black;
-            this.pnlUserCheevos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlUserCheevos.Controls.Add(this.lblCheevos);
-            this.pnlUserCheevos.Controls.Add(this.lblUserCheevos);
-            this.pnlUserCheevos.Controls.Add(this.picUserCheevos);
-            this.pnlUserCheevos.Location = new System.Drawing.Point(6, 19);
-            this.pnlUserCheevos.Name = "pnlUserCheevos";
-            this.pnlUserCheevos.Size = new System.Drawing.Size(221, 72);
-            this.pnlUserCheevos.TabIndex = 27;
-            // 
-            // lblCheevos
-            // 
-            this.lblCheevos.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCheevos.ForeColor = System.Drawing.Color.White;
-            this.lblCheevos.Location = new System.Drawing.Point(60, 45);
-            this.lblCheevos.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
-            this.lblCheevos.Name = "lblCheevos";
-            this.lblCheevos.Size = new System.Drawing.Size(156, 20);
-            this.lblCheevos.TabIndex = 2;
-            this.lblCheevos.Text = "Achievements";
-            this.lblCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblUserCheevos
-            // 
-            this.lblUserCheevos.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserCheevos.ForeColor = System.Drawing.Color.White;
-            this.lblUserCheevos.Location = new System.Drawing.Point(60, 6);
-            this.lblUserCheevos.Name = "lblUserCheevos";
-            this.lblUserCheevos.Size = new System.Drawing.Size(156, 48);
-            this.lblUserCheevos.TabIndex = 1;
-            this.lblUserCheevos.Text = "0 / 0";
-            this.lblUserCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblCheevoLoopUpdate
-            // 
-            this.lblCheevoLoopUpdate.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblCheevoLoopUpdate.BackColor = System.Drawing.Color.Transparent;
-            this.lblCheevoLoopUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblCheevoLoopUpdate.Location = new System.Drawing.Point(158, 142);
-            this.lblCheevoLoopUpdate.Name = "lblCheevoLoopUpdate";
-            this.lblCheevoLoopUpdate.Size = new System.Drawing.Size(13, 13);
-            this.lblCheevoLoopUpdate.TabIndex = 31;
-            // 
-            // chkUserCheevos
-            // 
-            this.chkUserCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.chkUserCheevos.AutoSize = true;
-            this.chkUserCheevos.Location = new System.Drawing.Point(177, 141);
-            this.chkUserCheevos.Name = "chkUserCheevos";
-            this.chkUserCheevos.Size = new System.Drawing.Size(50, 17);
-            this.chkUserCheevos.TabIndex = 29;
-            this.chkUserCheevos.Text = "Loop";
-            // 
-            // tabAbout
-            // 
-            this.tabAbout.BackColor = System.Drawing.Color.Transparent;
-            this.tabAbout.Controls.Add(this.btnRaProfile);
-            this.tabAbout.Controls.Add(this.picFBiDevIcon);
-            this.tabAbout.Controls.Add(this.lblAbTitle);
-            this.tabAbout.Controls.Add(this.lblAbYear);
-            this.tabAbout.Location = new System.Drawing.Point(4, 25);
-            this.tabAbout.Name = "tabAbout";
-            this.tabAbout.Size = new System.Drawing.Size(908, 542);
-            this.tabAbout.TabIndex = 4;
-            this.tabAbout.Text = "About";
-            // 
-            // picFBiDevIcon
-            // 
-            this.picFBiDevIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.picFBiDevIcon.Image = global::RADB.Properties.Resources.fbidev;
-            this.picFBiDevIcon.Location = new System.Drawing.Point(407, 118);
-            this.picFBiDevIcon.Name = "picFBiDevIcon";
-            this.picFBiDevIcon.Size = new System.Drawing.Size(96, 96);
-            this.picFBiDevIcon.TabIndex = 4;
-            this.picFBiDevIcon.TabStop = false;
-            // 
-            // lblAbTitle
-            // 
-            this.lblAbTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblAbTitle.AutoSize = true;
-            this.lblAbTitle.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAbTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(137)))), ((int)(((byte)(207)))));
-            this.lblAbTitle.Location = new System.Drawing.Point(369, 64);
-            this.lblAbTitle.Name = "lblAbTitle";
-            this.lblAbTitle.Size = new System.Drawing.Size(173, 30);
-            this.lblAbTitle.TabIndex = 2;
-            this.lblAbTitle.Text = "RA Database 1.0";
-            // 
-            // lblAbYear
-            // 
-            this.lblAbYear.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblAbYear.AutoSize = true;
-            this.lblAbYear.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAbYear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(137)))), ((int)(((byte)(207)))));
-            this.lblAbYear.Location = new System.Drawing.Point(433, 94);
-            this.lblAbYear.Name = "lblAbYear";
-            this.lblAbYear.Size = new System.Drawing.Size(46, 21);
-            this.lblAbYear.TabIndex = 1;
-            this.lblAbYear.Text = "2022";
-            // 
-            // btnUpdateConsoles
-            // 
-            this.btnUpdateConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnUpdateConsoles.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.btnUpdateConsoles.FlatAppearance.BorderSize = 0;
-            this.btnUpdateConsoles.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.btnUpdateConsoles.Location = new System.Drawing.Point(5, 3);
-            this.btnUpdateConsoles.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
-            this.btnUpdateConsoles.Name = "btnUpdateConsoles";
-            this.btnUpdateConsoles.Size = new System.Drawing.Size(144, 23);
-            this.btnUpdateConsoles.TabIndex = 36;
-            this.btnUpdateConsoles.Text = "Update Consoles";
-            this.btnUpdateConsoles.Click += new System.EventHandler(this.btnUpdateConsoles_Click);
             // 
             // dgvConsoles
             // 
@@ -909,7 +530,7 @@ namespace RADB
             this.dgvConsoles.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvConsoles.RowTemplate.Height = 37;
             this.dgvConsoles.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvConsoles.Size = new System.Drawing.Size(896, 456);
+            this.dgvConsoles.Size = new System.Drawing.Size(896, 459);
             this.dgvConsoles.TabIndex = 0;
             this.dgvConsoles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvConsoles_MouseDown);
             // 
@@ -960,6 +581,43 @@ namespace RADB
             this.cTotalGames.Name = "cTotalGames";
             this.cTotalGames.ReadOnly = true;
             this.cTotalGames.Width = 94;
+            // 
+            // tabGames
+            // 
+            this.tabGames.BackColor = System.Drawing.Color.Transparent;
+            this.tabGames.Controls.Add(this.pnlFilters);
+            this.tabGames.Controls.Add(this.lblNotFoundGameList);
+            this.tabGames.Controls.Add(this.picLoaderGameList);
+            this.tabGames.Controls.Add(this.pnlGamesConsoleName);
+            this.tabGames.Controls.Add(this.pnlDownloadGameList);
+            this.tabGames.Controls.Add(this.dgvGames);
+            this.tabGames.Location = new System.Drawing.Point(4, 25);
+            this.tabGames.Name = "tabGames";
+            this.tabGames.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGames.Size = new System.Drawing.Size(908, 545);
+            this.tabGames.TabIndex = 2;
+            this.tabGames.Text = "Games";
+            // 
+            // pnlFilters
+            // 
+            this.pnlFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlFilters.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.pnlFilters.Controls.Add(this.chkDemoted);
+            this.pnlFilters.Controls.Add(this.chkTestKit);
+            this.pnlFilters.Controls.Add(this.chkSubset);
+            this.pnlFilters.Controls.Add(this.chkHomebrew);
+            this.pnlFilters.Controls.Add(this.chkHack);
+            this.pnlFilters.Controls.Add(this.chkDemo);
+            this.pnlFilters.Controls.Add(this.chkUnlicensed);
+            this.pnlFilters.Controls.Add(this.chkPrototype);
+            this.pnlFilters.Controls.Add(this.chkOfficial);
+            this.pnlFilters.Controls.Add(this.chkWithoutAchievements);
+            this.pnlFilters.Location = new System.Drawing.Point(783, 83);
+            this.pnlFilters.Name = "pnlFilters";
+            this.pnlFilters.Padding = new System.Windows.Forms.Padding(2);
+            this.pnlFilters.Size = new System.Drawing.Size(97, 406);
+            this.pnlFilters.TabIndex = 10;
+            this.pnlFilters.Visible = false;
             // 
             // chkDemoted
             // 
@@ -1081,6 +739,68 @@ namespace RADB
             this.chkWithoutAchievements.Size = new System.Drawing.Size(91, 34);
             this.chkWithoutAchievements.TabIndex = 3;
             // 
+            // lblNotFoundGameList
+            // 
+            this.lblNotFoundGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNotFoundGameList.Location = new System.Drawing.Point(9, 162);
+            this.lblNotFoundGameList.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblNotFoundGameList.Name = "lblNotFoundGameList";
+            this.lblNotFoundGameList.Size = new System.Drawing.Size(890, 23);
+            this.lblNotFoundGameList.TabIndex = 2;
+            this.lblNotFoundGameList.Text = "No Games Found";
+            this.lblNotFoundGameList.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // picLoaderGameList
+            // 
+            this.picLoaderGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.picLoaderGameList.Image = global::RADB.Properties.Resources.loader;
+            this.picLoaderGameList.Location = new System.Drawing.Point(6, 146);
+            this.picLoaderGameList.Name = "picLoaderGameList";
+            this.picLoaderGameList.Size = new System.Drawing.Size(896, 52);
+            this.picLoaderGameList.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picLoaderGameList.TabIndex = 5;
+            this.picLoaderGameList.TabStop = false;
+            this.picLoaderGameList.Visible = false;
+            // 
+            // pnlGamesConsoleName
+            // 
+            this.pnlGamesConsoleName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlGamesConsoleName.Controls.Add(this.lblConsoleGamesTotal);
+            this.pnlGamesConsoleName.Controls.Add(this.lblConsoleName);
+            this.pnlGamesConsoleName.Controls.Add(this.txtSearchGames);
+            this.pnlGamesConsoleName.Controls.Add(this.btnGameFilters);
+            this.pnlGamesConsoleName.Location = new System.Drawing.Point(6, 32);
+            this.pnlGamesConsoleName.Name = "pnlGamesConsoleName";
+            this.pnlGamesConsoleName.Padding = new System.Windows.Forms.Padding(2);
+            this.pnlGamesConsoleName.Size = new System.Drawing.Size(896, 44);
+            this.pnlGamesConsoleName.TabIndex = 6;
+            // 
+            // lblConsoleGamesTotal
+            // 
+            this.lblConsoleGamesTotal.AutoSize = true;
+            this.lblConsoleGamesTotal.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConsoleGamesTotal.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.lblConsoleGamesTotal.Location = new System.Drawing.Point(7, 24);
+            this.lblConsoleGamesTotal.Name = "lblConsoleGamesTotal";
+            this.lblConsoleGamesTotal.Size = new System.Drawing.Size(62, 13);
+            this.lblConsoleGamesTotal.TabIndex = 1;
+            this.lblConsoleGamesTotal.Text = "000 Games";
+            // 
+            // lblConsoleName
+            // 
+            this.lblConsoleName.AutoSize = true;
+            this.lblConsoleName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConsoleName.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.lblConsoleName.Location = new System.Drawing.Point(3, 3);
+            this.lblConsoleName.Name = "lblConsoleName";
+            this.lblConsoleName.Size = new System.Drawing.Size(66, 21);
+            this.lblConsoleName.TabIndex = 0;
+            this.lblConsoleName.Text = "Console";
+            this.lblConsoleName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // txtSearchGames
             // 
             this.txtSearchGames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -1103,6 +823,19 @@ namespace RADB
             this.btnGameFilters.Text = "Filters";
             this.btnGameFilters.Click += new System.EventHandler(this.btnGameFilters_Click);
             // 
+            // pnlDownloadGameList
+            // 
+            this.pnlDownloadGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlDownloadGameList.Controls.Add(this.btnUpdateGameList);
+            this.pnlDownloadGameList.Controls.Add(this.lblUpdateGameList);
+            this.pnlDownloadGameList.Controls.Add(this.pgbGameList);
+            this.pnlDownloadGameList.Controls.Add(this.lblProgressGameList);
+            this.pnlDownloadGameList.Location = new System.Drawing.Point(0, 0);
+            this.pnlDownloadGameList.Name = "pnlDownloadGameList";
+            this.pnlDownloadGameList.Size = new System.Drawing.Size(902, 31);
+            this.pnlDownloadGameList.TabIndex = 0;
+            // 
             // btnUpdateGameList
             // 
             this.btnUpdateGameList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
@@ -1116,6 +849,33 @@ namespace RADB
             this.btnUpdateGameList.TabIndex = 35;
             this.btnUpdateGameList.Text = "Update Games";
             this.btnUpdateGameList.Click += new System.EventHandler(this.btnUpdateGameList_Click);
+            // 
+            // lblUpdateGameList
+            // 
+            this.lblUpdateGameList.Location = new System.Drawing.Point(155, 8);
+            this.lblUpdateGameList.Name = "lblUpdateGameList";
+            this.lblUpdateGameList.Size = new System.Drawing.Size(110, 13);
+            this.lblUpdateGameList.TabIndex = 34;
+            this.lblUpdateGameList.Text = "00/00/0000 00:00:00";
+            this.lblUpdateGameList.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pgbGameList
+            // 
+            this.pgbGameList.Location = new System.Drawing.Point(271, 3);
+            this.pgbGameList.MarqueeAnimationSpeed = 0;
+            this.pgbGameList.Name = "pgbGameList";
+            this.pgbGameList.Size = new System.Drawing.Size(144, 21);
+            this.pgbGameList.Step = 1;
+            this.pgbGameList.TabIndex = 31;
+            // 
+            // lblProgressGameList
+            // 
+            this.lblProgressGameList.AutoSize = true;
+            this.lblProgressGameList.Location = new System.Drawing.Point(421, 8);
+            this.lblProgressGameList.Name = "lblProgressGameList";
+            this.lblProgressGameList.Size = new System.Drawing.Size(58, 13);
+            this.lblProgressGameList.TabIndex = 33;
+            this.lblProgressGameList.Text = "lblProgress";
             // 
             // dgvGames
             // 
@@ -1160,7 +920,7 @@ namespace RADB
             this.dgvGames.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.dgvGames.RowTemplate.Height = 37;
             this.dgvGames.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGames.Size = new System.Drawing.Size(896, 456);
+            this.dgvGames.Size = new System.Drawing.Size(896, 459);
             this.dgvGames.TabIndex = 1;
             this.dgvGames.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvGames_MouseDown);
             // 
@@ -1253,6 +1013,31 @@ namespace RADB
             this.gLastUpdated.ReadOnly = true;
             this.gLastUpdated.Width = 95;
             // 
+            // tabGamesToPlay
+            // 
+            this.tabGamesToPlay.BackColor = System.Drawing.Color.Transparent;
+            this.tabGamesToPlay.Controls.Add(this.lblNotFoundGamesToPlay);
+            this.tabGamesToPlay.Controls.Add(this.dgvGamesToPlay);
+            this.tabGamesToPlay.Location = new System.Drawing.Point(4, 25);
+            this.tabGamesToPlay.Name = "tabGamesToPlay";
+            this.tabGamesToPlay.Size = new System.Drawing.Size(908, 545);
+            this.tabGamesToPlay.TabIndex = 5;
+            this.tabGamesToPlay.Text = "Games to Play";
+            // 
+            // lblNotFoundGamesToPlay
+            // 
+            this.lblNotFoundGamesToPlay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNotFoundGamesToPlay.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNotFoundGamesToPlay.Location = new System.Drawing.Point(9, 162);
+            this.lblNotFoundGamesToPlay.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblNotFoundGamesToPlay.Name = "lblNotFoundGamesToPlay";
+            this.lblNotFoundGamesToPlay.Size = new System.Drawing.Size(890, 23);
+            this.lblNotFoundGamesToPlay.TabIndex = 5;
+            this.lblNotFoundGamesToPlay.Text = "No Games Found: Add a game with right click in Games Tab Grid";
+            this.lblNotFoundGamesToPlay.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblNotFoundGamesToPlay.Visible = false;
+            // 
             // dgvGamesToPlay
             // 
             this.dgvGamesToPlay.AllowUserToResizeColumns = false;
@@ -1296,7 +1081,7 @@ namespace RADB
             this.dgvGamesToPlay.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
             this.dgvGamesToPlay.RowTemplate.Height = 37;
             this.dgvGamesToPlay.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGamesToPlay.Size = new System.Drawing.Size(896, 456);
+            this.dgvGamesToPlay.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToPlay.TabIndex = 3;
             this.dgvGamesToPlay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvGamesToPlay_MouseDown);
             // 
@@ -1389,6 +1174,30 @@ namespace RADB
             this.dataGridViewTextBoxColumn7.ReadOnly = true;
             this.dataGridViewTextBoxColumn7.Width = 95;
             // 
+            // tabGamesToHide
+            // 
+            this.tabGamesToHide.Controls.Add(this.lblNotFoundGamesToHide);
+            this.tabGamesToHide.Controls.Add(this.dgvGamesToHide);
+            this.tabGamesToHide.Location = new System.Drawing.Point(4, 25);
+            this.tabGamesToHide.Name = "tabGamesToHide";
+            this.tabGamesToHide.Size = new System.Drawing.Size(908, 545);
+            this.tabGamesToHide.TabIndex = 6;
+            this.tabGamesToHide.Text = "Games to Hide";
+            // 
+            // lblNotFoundGamesToHide
+            // 
+            this.lblNotFoundGamesToHide.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNotFoundGamesToHide.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNotFoundGamesToHide.Location = new System.Drawing.Point(9, 162);
+            this.lblNotFoundGamesToHide.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblNotFoundGamesToHide.Name = "lblNotFoundGamesToHide";
+            this.lblNotFoundGamesToHide.Size = new System.Drawing.Size(890, 23);
+            this.lblNotFoundGamesToHide.TabIndex = 4;
+            this.lblNotFoundGamesToHide.Text = "No Games Found: Add a game with right click in Games Tab Grid";
+            this.lblNotFoundGamesToHide.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblNotFoundGamesToHide.Visible = false;
+            // 
             // dgvGamesToHide
             // 
             this.dgvGamesToHide.AllowUserToResizeColumns = false;
@@ -1432,7 +1241,7 @@ namespace RADB
             this.dgvGamesToHide.RowHeadersDefaultCellStyle = dataGridViewCellStyle33;
             this.dgvGamesToHide.RowTemplate.Height = 37;
             this.dgvGamesToHide.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGamesToHide.Size = new System.Drawing.Size(896, 456);
+            this.dgvGamesToHide.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToHide.TabIndex = 2;
             this.dgvGamesToHide.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvGamesToHide_MouseDown);
             // 
@@ -1525,6 +1334,19 @@ namespace RADB
             this.ghLastUpdated.ReadOnly = true;
             this.ghLastUpdated.Width = 95;
             // 
+            // tabGameInfo
+            // 
+            this.tabGameInfo.BackColor = System.Drawing.Color.Transparent;
+            this.tabGameInfo.Controls.Add(this.pnlInfoScroll);
+            this.tabGameInfo.Controls.Add(this.lblInfoName);
+            this.tabGameInfo.Controls.Add(this.pnlDownloadInfo);
+            this.tabGameInfo.Location = new System.Drawing.Point(4, 25);
+            this.tabGameInfo.Name = "tabGameInfo";
+            this.tabGameInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGameInfo.Size = new System.Drawing.Size(908, 545);
+            this.tabGameInfo.TabIndex = 1;
+            this.tabGameInfo.Text = "Game Info";
+            // 
             // pnlInfoScroll
             // 
             this.pnlInfoScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1536,21 +1358,35 @@ namespace RADB
             this.pnlInfoScroll.Location = new System.Drawing.Point(0, 62);
             this.pnlInfoScroll.Margin = new System.Windows.Forms.Padding(0);
             this.pnlInfoScroll.Name = "pnlInfoScroll";
-            this.pnlInfoScroll.Size = new System.Drawing.Size(902, 477);
+            this.pnlInfoScroll.Size = new System.Drawing.Size(902, 480);
             this.pnlInfoScroll.TabIndex = 16;
             // 
             // gpbInfoAchievements
             // 
+            this.gpbInfoAchievements.Controls.Add(this.btnHashes);
             this.gpbInfoAchievements.Controls.Add(this.dgvAchievements);
             this.gpbInfoAchievements.Controls.Add(this.btnGamePage);
             this.gpbInfoAchievements.Controls.Add(this.lblInfoAchievements);
-            this.gpbInfoAchievements.Location = new System.Drawing.Point(6, 324);
+            this.gpbInfoAchievements.Location = new System.Drawing.Point(6, 329);
             this.gpbInfoAchievements.MinimumSize = new System.Drawing.Size(557, 54);
             this.gpbInfoAchievements.Name = "gpbInfoAchievements";
             this.gpbInfoAchievements.Size = new System.Drawing.Size(876, 151);
             this.gpbInfoAchievements.TabIndex = 5;
             this.gpbInfoAchievements.TabStop = false;
             this.gpbInfoAchievements.Text = "Achievements";
+            // 
+            // btnHashes
+            // 
+            this.btnHashes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnHashes.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.btnHashes.FlatAppearance.BorderSize = 0;
+            this.btnHashes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.btnHashes.Location = new System.Drawing.Point(108, 16);
+            this.btnHashes.Name = "btnHashes";
+            this.btnHashes.Size = new System.Drawing.Size(96, 32);
+            this.btnHashes.TabIndex = 36;
+            this.btnHashes.Text = "Hashes";
+            this.btnHashes.Click += new System.EventHandler(this.btnHashes_Click);
             // 
             // dgvAchievements
             // 
@@ -1654,7 +1490,7 @@ namespace RADB
             // 
             this.lblInfoAchievements.AutoSize = true;
             this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInfoAchievements.Location = new System.Drawing.Point(108, 23);
+            this.lblInfoAchievements.Location = new System.Drawing.Point(210, 23);
             this.lblInfoAchievements.Name = "lblInfoAchievements";
             this.lblInfoAchievements.Size = new System.Drawing.Size(183, 21);
             this.lblInfoAchievements.TabIndex = 35;
@@ -1668,7 +1504,7 @@ namespace RADB
             this.gpbInfo.Controls.Add(this.pnlInfoTop);
             this.gpbInfo.Location = new System.Drawing.Point(6, 3);
             this.gpbInfo.Name = "gpbInfo";
-            this.gpbInfo.Size = new System.Drawing.Size(876, 315);
+            this.gpbInfo.Size = new System.Drawing.Size(876, 320);
             this.gpbInfo.TabIndex = 6;
             this.gpbInfo.TabStop = false;
             this.gpbInfo.Text = "Info";
@@ -1854,6 +1690,29 @@ namespace RADB
             this.label3.TabIndex = 6;
             this.label3.Text = "Publisher:";
             // 
+            // lblInfoName
+            // 
+            this.lblInfoName.AutoSize = true;
+            this.lblInfoName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInfoName.Location = new System.Drawing.Point(6, 34);
+            this.lblInfoName.Name = "lblInfoName";
+            this.lblInfoName.Size = new System.Drawing.Size(61, 24);
+            this.lblInfoName.TabIndex = 3;
+            this.lblInfoName.Text = "Name";
+            // 
+            // pnlDownloadInfo
+            // 
+            this.pnlDownloadInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlDownloadInfo.Controls.Add(this.btnUpdateInfo);
+            this.pnlDownloadInfo.Controls.Add(this.lblUpdateInfo);
+            this.pnlDownloadInfo.Controls.Add(this.pgbInfo);
+            this.pnlDownloadInfo.Controls.Add(this.lblProgressInfo);
+            this.pnlDownloadInfo.Location = new System.Drawing.Point(0, 0);
+            this.pnlDownloadInfo.Name = "pnlDownloadInfo";
+            this.pnlDownloadInfo.Size = new System.Drawing.Size(902, 31);
+            this.pnlDownloadInfo.TabIndex = 7;
+            // 
             // btnUpdateInfo
             // 
             this.btnUpdateInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
@@ -1868,6 +1727,95 @@ namespace RADB
             this.btnUpdateInfo.Text = "Update Info";
             this.btnUpdateInfo.Click += new System.EventHandler(this.btnUpdateInfo_Click);
             // 
+            // lblUpdateInfo
+            // 
+            this.lblUpdateInfo.Location = new System.Drawing.Point(155, 8);
+            this.lblUpdateInfo.Name = "lblUpdateInfo";
+            this.lblUpdateInfo.Size = new System.Drawing.Size(110, 13);
+            this.lblUpdateInfo.TabIndex = 34;
+            this.lblUpdateInfo.Text = "00/00/0000 00:00:00";
+            this.lblUpdateInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pgbInfo
+            // 
+            this.pgbInfo.Location = new System.Drawing.Point(271, 3);
+            this.pgbInfo.MarqueeAnimationSpeed = 0;
+            this.pgbInfo.Name = "pgbInfo";
+            this.pgbInfo.Size = new System.Drawing.Size(144, 21);
+            this.pgbInfo.Step = 1;
+            this.pgbInfo.TabIndex = 31;
+            // 
+            // lblProgressInfo
+            // 
+            this.lblProgressInfo.AutoSize = true;
+            this.lblProgressInfo.Location = new System.Drawing.Point(421, 8);
+            this.lblProgressInfo.Name = "lblProgressInfo";
+            this.lblProgressInfo.Size = new System.Drawing.Size(58, 13);
+            this.lblProgressInfo.TabIndex = 33;
+            this.lblProgressInfo.Text = "lblProgress";
+            // 
+            // tabUserInfo
+            // 
+            this.tabUserInfo.BackColor = System.Drawing.Color.Transparent;
+            this.tabUserInfo.Controls.Add(this.gpbOverlay);
+            this.tabUserInfo.Location = new System.Drawing.Point(4, 25);
+            this.tabUserInfo.Name = "tabUserInfo";
+            this.tabUserInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUserInfo.Size = new System.Drawing.Size(908, 545);
+            this.tabUserInfo.TabIndex = 3;
+            this.tabUserInfo.Text = "User Info";
+            // 
+            // gpbOverlay
+            // 
+            this.gpbOverlay.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.gpbOverlay.Controls.Add(this.pnlUserCheevos);
+            this.gpbOverlay.Controls.Add(this.lblCheevoLoopUpdate);
+            this.gpbOverlay.Controls.Add(this.txtUsernameCheevos);
+            this.gpbOverlay.Controls.Add(this.chkUserCheevos);
+            this.gpbOverlay.Controls.Add(this.btnUserCheevos);
+            this.gpbOverlay.Location = new System.Drawing.Point(336, 105);
+            this.gpbOverlay.Name = "gpbOverlay";
+            this.gpbOverlay.Size = new System.Drawing.Size(233, 166);
+            this.gpbOverlay.TabIndex = 32;
+            this.gpbOverlay.TabStop = false;
+            this.gpbOverlay.Text = "Overlay";
+            // 
+            // pnlUserCheevos
+            // 
+            this.pnlUserCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pnlUserCheevos.BackColor = System.Drawing.Color.Black;
+            this.pnlUserCheevos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlUserCheevos.Controls.Add(this.lblCheevos);
+            this.pnlUserCheevos.Controls.Add(this.lblUserCheevos);
+            this.pnlUserCheevos.Controls.Add(this.picUserCheevos);
+            this.pnlUserCheevos.Location = new System.Drawing.Point(6, 19);
+            this.pnlUserCheevos.Name = "pnlUserCheevos";
+            this.pnlUserCheevos.Size = new System.Drawing.Size(221, 72);
+            this.pnlUserCheevos.TabIndex = 27;
+            // 
+            // lblCheevos
+            // 
+            this.lblCheevos.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCheevos.ForeColor = System.Drawing.Color.White;
+            this.lblCheevos.Location = new System.Drawing.Point(60, 45);
+            this.lblCheevos.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
+            this.lblCheevos.Name = "lblCheevos";
+            this.lblCheevos.Size = new System.Drawing.Size(156, 20);
+            this.lblCheevos.TabIndex = 2;
+            this.lblCheevos.Text = "Achievements";
+            this.lblCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblUserCheevos
+            // 
+            this.lblUserCheevos.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserCheevos.ForeColor = System.Drawing.Color.White;
+            this.lblUserCheevos.Location = new System.Drawing.Point(60, 6);
+            this.lblUserCheevos.Name = "lblUserCheevos";
+            this.lblUserCheevos.Size = new System.Drawing.Size(156, 48);
+            this.lblUserCheevos.TabIndex = 1;
+            this.lblUserCheevos.Text = "0 / 0";
+            this.lblUserCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // picUserCheevos
             // 
             this.picUserCheevos.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
@@ -1879,6 +1827,16 @@ namespace RADB
             this.picUserCheevos.TabIndex = 0;
             this.picUserCheevos.TabStop = false;
             // 
+            // lblCheevoLoopUpdate
+            // 
+            this.lblCheevoLoopUpdate.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblCheevoLoopUpdate.BackColor = System.Drawing.Color.Transparent;
+            this.lblCheevoLoopUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblCheevoLoopUpdate.Location = new System.Drawing.Point(158, 142);
+            this.lblCheevoLoopUpdate.Name = "lblCheevoLoopUpdate";
+            this.lblCheevoLoopUpdate.Size = new System.Drawing.Size(13, 13);
+            this.lblCheevoLoopUpdate.TabIndex = 31;
+            // 
             // txtUsernameCheevos
             // 
             this.txtUsernameCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -1887,6 +1845,16 @@ namespace RADB
             this.txtUsernameCheevos.Name = "txtUsernameCheevos";
             this.txtUsernameCheevos.Size = new System.Drawing.Size(221, 34);
             this.txtUsernameCheevos.TabIndex = 30;
+            // 
+            // chkUserCheevos
+            // 
+            this.chkUserCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.chkUserCheevos.AutoSize = true;
+            this.chkUserCheevos.Location = new System.Drawing.Point(177, 141);
+            this.chkUserCheevos.Name = "chkUserCheevos";
+            this.chkUserCheevos.Size = new System.Drawing.Size(50, 17);
+            this.chkUserCheevos.TabIndex = 29;
+            this.chkUserCheevos.Text = "Loop";
             // 
             // btnUserCheevos
             // 
@@ -1900,6 +1868,19 @@ namespace RADB
             this.btnUserCheevos.Text = "Get User Achievements";
             this.btnUserCheevos.Click += new System.EventHandler(this.btnUserCheevos_Click);
             // 
+            // tabAbout
+            // 
+            this.tabAbout.BackColor = System.Drawing.Color.Transparent;
+            this.tabAbout.Controls.Add(this.btnRaProfile);
+            this.tabAbout.Controls.Add(this.picFBiDevIcon);
+            this.tabAbout.Controls.Add(this.lblAbTitle);
+            this.tabAbout.Controls.Add(this.lblAbYear);
+            this.tabAbout.Location = new System.Drawing.Point(4, 25);
+            this.tabAbout.Name = "tabAbout";
+            this.tabAbout.Size = new System.Drawing.Size(908, 545);
+            this.tabAbout.TabIndex = 4;
+            this.tabAbout.Text = "About";
+            // 
             // btnRaProfile
             // 
             this.btnRaProfile.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
@@ -1912,11 +1893,45 @@ namespace RADB
             this.btnRaProfile.Text = "RA Profile";
             this.btnRaProfile.Click += new System.EventHandler(this.btnRaProfile_Click);
             // 
+            // picFBiDevIcon
+            // 
+            this.picFBiDevIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.picFBiDevIcon.Image = global::RADB.Properties.Resources.fbidev;
+            this.picFBiDevIcon.Location = new System.Drawing.Point(407, 118);
+            this.picFBiDevIcon.Name = "picFBiDevIcon";
+            this.picFBiDevIcon.Size = new System.Drawing.Size(96, 96);
+            this.picFBiDevIcon.TabIndex = 4;
+            this.picFBiDevIcon.TabStop = false;
+            // 
+            // lblAbTitle
+            // 
+            this.lblAbTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblAbTitle.AutoSize = true;
+            this.lblAbTitle.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAbTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(137)))), ((int)(((byte)(207)))));
+            this.lblAbTitle.Location = new System.Drawing.Point(369, 64);
+            this.lblAbTitle.Name = "lblAbTitle";
+            this.lblAbTitle.Size = new System.Drawing.Size(173, 30);
+            this.lblAbTitle.TabIndex = 2;
+            this.lblAbTitle.Text = "RA Database 1.0";
+            // 
+            // lblAbYear
+            // 
+            this.lblAbYear.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblAbYear.AutoSize = true;
+            this.lblAbYear.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAbYear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(137)))), ((int)(((byte)(207)))));
+            this.lblAbYear.Location = new System.Drawing.Point(433, 94);
+            this.lblAbYear.Name = "lblAbYear";
+            this.lblAbYear.Size = new System.Drawing.Size(46, 21);
+            this.lblAbYear.TabIndex = 1;
+            this.lblAbYear.Text = "2022";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(939, 681);
+            this.ClientSize = new System.Drawing.Size(939, 684);
             this.Controls.Add(this.pnlBottomOutput);
             this.Controls.Add(this.tabMain);
             this.DoubleBuffered = true;
@@ -1935,6 +1950,7 @@ namespace RADB
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderConsole)).EndInit();
             this.pnlDownloadConsoles.ResumeLayout(false);
             this.pnlDownloadConsoles.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvConsoles)).EndInit();
             this.tabGames.ResumeLayout(false);
             this.pnlFilters.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderGameList)).EndInit();
@@ -1942,23 +1958,13 @@ namespace RADB
             this.pnlGamesConsoleName.PerformLayout();
             this.pnlDownloadGameList.ResumeLayout(false);
             this.pnlDownloadGameList.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGames)).EndInit();
             this.tabGamesToPlay.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGamesToPlay)).EndInit();
             this.tabGamesToHide.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGamesToHide)).EndInit();
             this.tabGameInfo.ResumeLayout(false);
             this.tabGameInfo.PerformLayout();
-            this.pnlDownloadInfo.ResumeLayout(false);
-            this.pnlDownloadInfo.PerformLayout();
-            this.tabUserInfo.ResumeLayout(false);
-            this.gpbOverlay.ResumeLayout(false);
-            this.gpbOverlay.PerformLayout();
-            this.pnlUserCheevos.ResumeLayout(false);
-            this.tabAbout.ResumeLayout(false);
-            this.tabAbout.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picFBiDevIcon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvConsoles)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvGames)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvGamesToPlay)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvGamesToHide)).EndInit();
             this.pnlInfoScroll.ResumeLayout(false);
             this.gpbInfoAchievements.ResumeLayout(false);
             this.gpbInfoAchievements.PerformLayout();
@@ -1974,7 +1980,16 @@ namespace RADB
             this.pnlInfoTop.ResumeLayout(false);
             this.pnlInfoTop.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoIcon)).EndInit();
+            this.pnlDownloadInfo.ResumeLayout(false);
+            this.pnlDownloadInfo.PerformLayout();
+            this.tabUserInfo.ResumeLayout(false);
+            this.gpbOverlay.ResumeLayout(false);
+            this.gpbOverlay.PerformLayout();
+            this.pnlUserCheevos.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picUserCheevos)).EndInit();
+            this.tabAbout.ResumeLayout(false);
+            this.tabAbout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFBiDevIcon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2116,6 +2131,7 @@ namespace RADB
         private CheckBoxBlueA chkDemoted;
         private System.Windows.Forms.Panel pnlInfoTitle;
         private System.Windows.Forms.Panel pnlInfoInGame;
+        private FlatButtonA btnHashes;
     }
 }
 
