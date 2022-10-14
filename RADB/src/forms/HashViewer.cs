@@ -23,7 +23,7 @@ namespace RADB
             this.Text = "RA HashViewer - " + game.Title + " (" + game.ConsoleName + ")";
             txtHashes.Text = string.Empty;
 
-            var html = await Browser.ClientLogin.DownloadString(RA.HOST + "linkedhashes.php?g=" + game.ID);
+            var html = await Browser.RALogin.DownloadString(RA.HOST + "linkedhashes.php?g=" + game.ID);
             var ul = html.GetBetween("unique hashes registered for it:<br><br><ul>", "</ul>");
 
             string pattern = @"" + Regex.Escape("<li>") + "(.*?)" + Regex.Escape("</li>");

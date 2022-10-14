@@ -38,8 +38,6 @@ namespace RADB
             }
         }
 
-        public static WebClientExtend ClientLogin = new WebClientExtend();
-
         //===Downloads
         public static Download dlConsoles = new Download { Overwrite = true, FolderBase = Folder.Console, };
         public static Download dlConsolesGamesIcon = new Download() { Overwrite = false, FolderBase = Folder.IconsBase, };
@@ -50,6 +48,8 @@ namespace RADB
 
         public static Download dlGameExtend = new Download { Overwrite = true, FolderBase = Folder.GameDataExtendBase, };
         public static Download dlGameExtendImages = new Download { Overwrite = false, FolderBase = Folder.Images, };
+
+        public static WebClientExtend RALogin = new WebClientExtend();
 
         public async static void Load()
         {
@@ -62,20 +62,18 @@ namespace RADB
 
         public static async Task LoginTest()
         {
-            string token = "";
-
             //wclient.Credentials = new NetworkCredential("", "");
-            var html = await ClientLogin.DownloadString(RA.HOST);
-            token = html.GetBetween("_token\" value=\"", "\">");
+            var html = await RALogin.DownloadString(RA.HOST);
+            var token = html.GetBetween("_token\" value=\"", "\">");
 
             var values = new NameValueCollection
             {
                 {"_token", token},
                 { "u", "RADatabase" },
-                { "p", "Ret1248!" }
+                { "p", "RADatabase123" }
             };
 
-            await ClientLogin.UploadValuesTaskAsync(new Uri(RA.HOST + "request/auth/login.php"), values);
+            await RALogin.UploadValuesTaskAsync(new Uri(RA.HOST + "request/auth/login.php"), values);
         }
 
         private static Random rand = new Random();
