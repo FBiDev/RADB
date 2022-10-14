@@ -248,7 +248,7 @@ namespace RADB
         private async Task LoadConsoles()
         {
             EnablePanelConsoles(false);
-            dgvConsoles.DataSource = await Console.List();
+            dgvConsoles.DataSource = new ListBind<Console>(await Console.List());
 
             EnablePanelConsoles(true);
             dgvConsoles.Focus();
