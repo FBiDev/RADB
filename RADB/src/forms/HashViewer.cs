@@ -33,6 +33,8 @@ namespace RADB
             foreach (Match match in rgx.Matches(ul))
             {
                 var title = match.Value.GetBetween("<b>", "</b>").Trim();
+                title = title.HtmlDecode();
+
                 var hash = match.Value.GetBetween("<code>", "</code>").Trim();
 
                 //entries.Add(new { Title = title, Hash = hash });
