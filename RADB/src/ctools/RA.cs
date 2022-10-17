@@ -289,7 +289,7 @@ namespace RADB
                 Picture pic = await Task.Run(() =>
                 {
                     pic = new Picture(gamesIcon, true, 11, GameIconSize, false);
-                    pic.Save(Game.MergedIconsPath(console.Name), PictureFormat.Png, false);
+                    pic.Save(Game.MergedIconsPath(console.Name), PictureFormat.Jpg, false);
 
                     Archive.SaveGamesIcon(games, gamesIcon, Game.MergedIconsPath(console.Name) + ".txt");
 
@@ -302,7 +302,7 @@ namespace RADB
             }
 
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
-
+            //MessageBox.Show(fim0.TotalSeconds.ToString());
             if (gamesIcon.Empty())
             {
                 MessageBox.Show("No Icons Found");

@@ -211,14 +211,14 @@ namespace RADB
             switch (FormatEnum)
             {
                 case PictureFormat.Jpg:
-                    exeResource = Resources.jpegoptim_1_4_7;
-                    exeFile += "jpegoptim_1_4_7.exe";
-                    exeCmd = exeFile + " " + Path;
+                    exeResource = Resources.jpegoptim_1_5_0;
+                    exeFile += "jpegoptim_1_5_0.exe";
+                    exeCmd = exeFile + " -w max \"" + Path + "\"";
                     break;
                 case PictureFormat.Png:
-                    exeResource = Resources.pngcrush_1_8_11_w64;
-                    exeFile += "pngcrush_1_8_11_w64.exe";
-                    exeCmd = exeFile + " -ow " + Path;
+                    exeResource = Resources.pngcrush_1_8_13_w64;
+                    exeFile += "pngcrush_1_8_13_w64.exe";
+                    exeCmd = exeFile + " -ow -speed " + "\"" + Path + "\"";
                     break;
             }
 

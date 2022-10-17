@@ -418,6 +418,16 @@ namespace RADB.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] jpegoptim_1_5_0 {
+            get {
+                object obj = ResourceManager.GetObject("jpegoptim_1_5_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap loader {
@@ -443,6 +453,16 @@ namespace RADB.Properties {
         internal static byte[] pngcrush_1_8_11_w64 {
             get {
                 object obj = ResourceManager.GetObject("pngcrush_1_8_11_w64", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] pngcrush_1_8_13_w64 {
+            get {
+                object obj = ResourceManager.GetObject("pngcrush_1_8_13_w64", resourceCulture);
                 return ((byte[])(obj));
             }
         }
