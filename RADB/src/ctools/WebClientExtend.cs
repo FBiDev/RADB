@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 //
+using System.Collections.Specialized;
 using System.IO;
 using System.IO.Compression;
 using System.ComponentModel;
@@ -86,6 +87,20 @@ namespace RADB
             FileDownloaded = new DownloadFile(address.ToString(), fileName);
 
             return base.DownloadFileTaskAsync(address, fileName);
+        }
+
+        public new async Task<byte[]> UploadValuesTaskAsync(Uri address, NameValueCollection data)
+        {
+            byte[] x = default(byte[]);
+            try
+            {
+                x = await base.UploadValuesTaskAsync(address, data);
+            }
+            catch (WebException we)
+            {
+                var a = 1;
+            }
+            return x;
         }
 
         public async new Task<string> DownloadString(string address)

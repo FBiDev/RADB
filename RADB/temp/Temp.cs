@@ -235,6 +235,9 @@ namespace RADB.temp
             //        var hash = li.GetBetween("<code>", "</code>");
             //    }
             //}
+
+            //var entries = new List<Tuple<string, string>>().Select(t => new { Title = t.Item1, Hash = t.Item2 }).ToList();
+            //entries.Add(new { Title = title, Hash = hash });
         }
     }
 }

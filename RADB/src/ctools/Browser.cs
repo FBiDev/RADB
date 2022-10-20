@@ -74,6 +74,10 @@ namespace RADB
             };
 
             await RALogin.UploadValuesTaskAsync(new Uri(RA.HOST + "request/auth/login.php"), values);
+            if (RALogin.Error)
+            {
+                MessageBox.Show(RALogin.ErrorMessage);
+            }
         }
 
         private static Random rand = new Random();

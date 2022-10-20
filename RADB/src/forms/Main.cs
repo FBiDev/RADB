@@ -944,7 +944,7 @@ namespace RADB
             dgvGames.Focus();
         }
 
-        private async void btnHashes_Click(object sender, EventArgs e)
+        private void btnHashes_Click(object sender, EventArgs e)
         {
             if (GameBind.IsNull())
             {
@@ -952,10 +952,7 @@ namespace RADB
                 return;
             }
 
-            HashViewer f = cForm.Open<HashViewer>();
-            f.Left = this.Left + 129;
-            f.Top = this.Top + 266;
-            await f.GetHashCode(GameBind);
+            HashViewer.Open(GameBind);
         }
     }
 }

@@ -18,7 +18,14 @@ namespace RADB
             InitializeComponent();
         }
 
-        public async Task GetHashCode(Game game)
+        public static async void Open(Game game)
+        {
+            HashViewer f = new HashViewer();
+            ActiveForm.BeginInvoke((Action)(() => { f.Hide(); f.ShowDialog(); }));
+            await f.GetHashCode(game);
+        }
+
+        private async Task GetHashCode(Game game)
         {
             this.Text = "RA HashViewer - " + game.Title + " (" + game.ConsoleName + ")";
             txtHashes.Text = string.Empty;
@@ -28,19 +35,24 @@ namespace RADB
 
             string pattern = @"" + Regex.Escape("<li>") + "(.*?)" + Regex.Escape("</li>");
             Regex rgx = new Regex(pattern, RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            MatchCollection matchList = rgx.Matches(ul);
 
-            //var entries = new List<Tuple<string, string>>().Select(t => new { Title = t.Item1, Hash = t.Item2 }).ToList();
-            foreach (Match match in rgx.Matches(ul))
+            var list = matchList.Cast<Match>().Select(match => match.Value).ToList();
+            var lastItem = list.LastOrDefault();
+
+            foreach (string item in list)
             {
-                var title = match.Value.GetBetween("<b>", "</b>").Trim();
-                title = title.HtmlDecode();
+                var title = item.GetBetween("<b>", "</b>").Trim().HtmlDecode();
+                var hash = item.GetBetween("<code>", "</code>").Trim();
 
-                var hash = match.Value.GetBetween("<code>", "</code>").Trim();
-
-                //entries.Add(new { Title = title, Hash = hash });
-
-                txtHashes.Text += title + Environment.NewLine + hash + Environment.NewLine + Environment.NewLine;
+                txtHashes.Text += title + Environment.NewLine + hash;
+                if (item != lastItem)
+                {
+                    txtHashes.Text += Environment.NewLine + Environment.NewLine;
+                }
             }
+
+            picLoaderHash.Visible = false;
         }
     }
 }
