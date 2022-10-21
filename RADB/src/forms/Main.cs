@@ -151,6 +151,8 @@ namespace RADB
             lstDgvGames.Add(dgvGamesToPlay);
             lstDgvGames.Add(dgvGamesToHide);
 
+            btnSystemReLogin_Click(null, null);
+
             await LoadConsoles();
             await LoadGames();
             await LoadGamesToPlay();
@@ -953,6 +955,29 @@ namespace RADB
             }
 
             HashViewer.Open(GameBind);
+        }
+
+        private async void btnSystemReLogin_Click(object sender, EventArgs e)
+        {
+            lblSystemReLogin.ForeColor = Color.Coral;
+            lblSystemReLogin.Text = "logging in...";
+
+            btnSystemReLogin.Enabled = false;
+            btnHashes.Enabled = false;
+            var logged = await Browser.SystemLogin();
+            btnSystemReLogin.Enabled = true;
+            btnHashes.Enabled = true;
+
+            if (logged)
+            {
+                lblSystemReLogin.ForeColor = Color.Green;
+                lblSystemReLogin.Text = "logged in!";
+            }
+            else
+            {
+                lblSystemReLogin.ForeColor = Color.Firebrick;
+                lblSystemReLogin.Text = "not logged in";
+            }
         }
     }
 }

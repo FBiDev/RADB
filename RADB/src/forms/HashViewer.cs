@@ -16,6 +16,15 @@ namespace RADB
         public HashViewer()
         {
             InitializeComponent();
+            txtHashes.KeyDown += HashViewer_KeyDown;
+        }
+
+        void HashViewer_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
         }
 
         public static async void Open(Game game)
@@ -31,21 +40,25 @@ namespace RADB
             txtHashes.Text = string.Empty;
 
             var html = await Browser.RALogin.DownloadString(RA.HOST + "linkedhashes.php?g=" + game.ID);
-            var ul = html.GetBetween("unique hashes registered for it:<br><br><ul>", "</ul>");
+            var ul = html.GetBetween("unique hashes registered for it:<br><br><ul>", "</ul>").HtmlDecode();
 
-            string pattern = @"" + Regex.Escape("<li>") + "(.*?)" + Regex.Escape("</li>");
-            Regex rgx = new Regex(pattern, RegexOptions.Singleline | RegexOptions.IgnoreCase);
-            MatchCollection matchList = rgx.Matches(ul);
-
-            var list = matchList.Cast<Match>().Select(match => match.Value).ToList();
+            var list = ul.GetBetweenList("<li>", "</li>");
+            list = list.OrderBy(x => x.GetBetween("<b>", "</code>", true).Length).ToList();
             var lastItem = list.LastOrDefault();
 
             foreach (string item in list)
             {
-                var title = item.GetBetween("<b>", "</b>").Trim().HtmlDecode();
+                var title = item.GetBetween("<b>", "</b>").Trim();
                 var hash = item.GetBetween("<code>", "</code>").Trim();
 
+                var imgs = item.GetBetweenList("labels/", ".");
+                imgs.ForEach(x => hash += " (" + x + ")");
+
+                var user = item.GetBetween("user/", "'");
+                hash += user != "" ? " - linked by " + user : "";
+
                 txtHashes.Text += title + Environment.NewLine + hash;
+
                 if (item != lastItem)
                 {
                     txtHashes.Text += Environment.NewLine + Environment.NewLine;

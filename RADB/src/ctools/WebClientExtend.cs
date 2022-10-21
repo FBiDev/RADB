@@ -98,7 +98,8 @@ namespace RADB
             }
             catch (WebException we)
             {
-                var a = 1;
+                _Error = true;
+                ErrorMessage = we.Message;
             }
             return x;
         }
@@ -207,8 +208,15 @@ namespace RADB
                 else
                 {
                     response = we.Response as HttpWebResponse;
-                    var fileURL = FileDownloaded == null ? response.ResponseUri.AbsoluteUri : FileDownloaded.URL;
-                    ErrorMessage = "Error to download: " + fileURL + "\r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription;
+                    if (FileDownloaded == null)
+                    {
+                        ErrorMessage = "Error to Access: \r\n\r\n" + response.ResponseUri.AbsoluteUri;
+                    }
+                    else
+                    {
+                        ErrorMessage = "Error to download: \r\n\r\n" + FileDownloaded.URL;
+                    }
+                    ErrorMessage += "\r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription;
                 }
             }
 

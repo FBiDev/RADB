@@ -69,12 +69,8 @@
             this.Controls.Add(this.txtHashes);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(296, 296);
             this.Name = "HashViewer";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "RA HashViewer";
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderHash)).EndInit();

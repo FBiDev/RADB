@@ -51,16 +51,14 @@ namespace RADB
 
         public static WebClientExtend RALogin = new WebClientExtend();
 
-        public async static void Load()
+        public static void Load()
         {
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.DefaultConnectionLimit = 128;
-
-            await LoginTest();
         }
 
-        public static async Task LoginTest()
+        public static async Task<bool> SystemLogin()
         {
             //wclient.Credentials = new NetworkCredential("", "");
             var html = await RALogin.DownloadString(RA.HOST);
@@ -78,6 +76,11 @@ namespace RADB
             {
                 MessageBox.Show(RALogin.ErrorMessage);
             }
+
+            var html2 = await RALogin.DownloadString(RA.HOST);
+            var login = html2.GetBetween("request/auth/login", "php");
+
+            return login != ".";
         }
 
         private static Random rand = new Random();
