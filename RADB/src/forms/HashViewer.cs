@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 //
 using System.Windows.Forms;
+using System.Drawing;
 using System.Text.RegularExpressions;
+using RADB.Properties;
 using GNX;
 
 namespace RADB
@@ -16,6 +18,8 @@ namespace RADB
         public HashViewer()
         {
             InitializeComponent();
+            Icon = GNX.cConvert.ToIco(Resources.iconForm, new Size(250, 250));
+
             txtHashes.KeyDown += HashViewer_KeyDown;
         }
 

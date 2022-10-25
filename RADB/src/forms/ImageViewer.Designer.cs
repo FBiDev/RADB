@@ -36,7 +36,7 @@
             // 
             this.picImage.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.picImage.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            this.picImage.Location = new System.Drawing.Point(6, 6);
+            this.picImage.Location = new System.Drawing.Point(0, 0);
             this.picImage.Margin = new System.Windows.Forms.Padding(0);
             this.picImage.Name = "picImage";
             this.picImage.Size = new System.Drawing.Size(272, 250);
@@ -48,14 +48,14 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.AutoScrollMargin = new System.Drawing.Size(6, 6);
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(272, 250);
             this.Controls.Add(this.picImage);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1101, 603);
+            this.MaximumSize = new System.Drawing.Size(1089, 591);
+            this.MinimumSize = new System.Drawing.Size(209, 227);
             this.Name = "frmImageViewer";
             this.Text = "RA ImageViewer";
             ((System.ComponentModel.ISupportInitialize)(this.picImage)).EndInit();

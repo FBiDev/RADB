@@ -64,14 +64,6 @@ namespace RADB
 
         public string Error { get; set; }
 
-        private string FolderExe
-        {
-            get
-            {
-                return Folder.Temp;
-            }
-        }
-
         private void DefaultValues()
         {
             Path = string.Empty;
@@ -205,7 +197,7 @@ namespace RADB
         public string Compress()
         {
             byte[] exeResource = new byte[0];
-            string exeFile = FolderExe;
+            string exeFile = Folder.Temp;
             string exeCmd = string.Empty;
 
             switch (FormatEnum)
@@ -353,10 +345,21 @@ namespace RADB
                     }
                     index++;
 
+                    int newWidth = image.Width > FixedPerImage.Width ? FixedPerImage.Width : image.Width;
+                    int newHeight = image.Height > FixedPerImage.Height ? FixedPerImage.Height : image.Height;
+
                     if (StretchImage)
                     {
+                        newWidth = FixedPerImage.Width;
+                        newHeight = FixedPerImage.Height;
+                    }
+
+                    bool newSize = (newWidth == FixedPerImage.Width || newHeight == FixedPerImage.Height);
+
+                    if (StretchImage || newSize)
+                    {
                         //Resize
-                        g.DrawImage(image, new Rectangle(offsetW, offsetH, FixedPerImage.Width, FixedPerImage.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                        g.DrawImage(image, new Rectangle(offsetW, offsetH, newWidth, newHeight), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
                     }
                     else
                     {
