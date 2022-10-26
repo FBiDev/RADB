@@ -188,7 +188,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="rsc\exe\jpegoptim_1.4.7.exe" />
     <Content Include="rsc\exe\jpegoptim_1.5.0.exe" />
     <Content Include="rsc\exe\pngcrush_1_8_11_w64.exe" />
     <Content Include="rsc\exe\pngcrush_1_8_13_w64.exe" />

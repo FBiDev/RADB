@@ -10,10 +10,14 @@ namespace RADB
 {
     public partial class frmImageViewer : Form
     {
-        int picW;
-        int picH;
-        double zoomFactor = 0.25;
-        double zoomPercent = 1.0;
+        private Size OriginalSize;
+        private Size MinimumClientSize = new Size(192, 192);
+        private Size UnitImageSize;
+        private int picW;
+        private int picH;
+        private double zoomFactor = 0.25;
+        private double zoomPercent = 1.0;
+        private int zoomTimes = 8;
 
         public frmImageViewer()
         {
@@ -34,35 +38,52 @@ namespace RADB
         {
             //Up = 1 Down = -1
             int mousedelta = Math.Sign(e.Delta);
+            double maxZoom = (1.0 + (zoomTimes * zoomFactor));
 
-            if (picH == 96)
-            {
-                zoomFactor = 0.28;
-                if (zoomPercent <= zoomFactor && mousedelta == -1 || zoomPercent >= (1 + (3 * zoomFactor)) && mousedelta == 1) { return; }
-            }
-            else
-            {
-                zoomFactor = 0.25;
-                if (zoomPercent <= zoomFactor && mousedelta == -1 || zoomPercent >= (1 + (7 * zoomFactor)) && mousedelta == 1) { return; }
-            }
+            if (mousedelta == 1 && zoomPercent >= maxZoom || mousedelta == -1 && zoomPercent <= zoomFactor) { return; }
 
             zoomPercent += mousedelta * zoomFactor;
 
             picImage.Width = (int)(picW * zoomPercent);
             picImage.Height = (int)(picH * zoomPercent);
+
+            //Add ScrollH space
+            if (zoomPercent > 1 && Height == OriginalSize.Height && picImage.Width > ClientSize.Width)
+                Height += SystemInformation.HorizontalScrollBarHeight;
+            else if (zoomPercent == 1 && Height > OriginalSize.Height)
+                Height -= SystemInformation.HorizontalScrollBarHeight;
         }
 
-        public void SetImage(string imagePath)
+        public void SetImage(string imagePath, Size perImageSize)
         {
+            UnitImageSize = perImageSize;
+
             Picture p = new Picture(imagePath);
             picImage.ScaleTo(p.Bitmap);
 
-            Size = new Size(this.PreferredSize.Width, this.PreferredSize.Height);
-
-            if (Size.Height == MaximumSize.Height)
+            if (picImage.Height <= MinimumClientSize.Height)
             {
-                Width += 17;
+                if (picImage.Width <= MinimumClientSize.Width)
+                {
+                    ClientSize = new Size(MinimumClientSize.Width, MinimumClientSize.Height);
+                }
+                else
+                {
+                    ClientSize = new Size(UnitImageSize.Width * (picImage.Width / UnitImageSize.Width), MinimumClientSize.Height);
+                }
             }
+            else
+            {
+                ClientSize = picImage.Size;
+            }
+
+            //Add ScrollW space
+            if (ClientSize.Height > MaximumSize.Height)
+            {
+                Width += SystemInformation.VerticalScrollBarWidth;
+            }
+
+            OriginalSize = this.Size;
         }
     }
 }

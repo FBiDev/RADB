@@ -48,14 +48,13 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(272, 250);
             this.Controls.Add(this.picImage);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1089, 591);
-            this.MinimumSize = new System.Drawing.Size(209, 227);
+            this.MaximumSize = new System.Drawing.Size(1089, 610);
+            this.MinimumSize = new System.Drawing.Size(208, 226);
             this.Name = "frmImageViewer";
             this.Text = "RA ImageViewer";
             ((System.ComponentModel.ISupportInitialize)(this.picImage)).EndInit();

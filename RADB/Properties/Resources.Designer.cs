@@ -410,16 +410,6 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] jpegoptim_1_4_7 {
-            get {
-                object obj = ResourceManager.GetObject("jpegoptim_1_4_7", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] jpegoptim_1_5_0 {
             get {
                 object obj = ResourceManager.GetObject("jpegoptim_1_5_0", resourceCulture);

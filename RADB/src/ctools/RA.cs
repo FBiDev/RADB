@@ -255,7 +255,7 @@ namespace RADB
 
                 cForm.Open<frmImageViewer>();
                 frmImageViewer f = cForm.Get<frmImageViewer>();
-                f.SetImage(pic.Path);
+                f.SetImage(pic.Path, GameBadgesSize);
             }
 
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
@@ -298,7 +298,7 @@ namespace RADB
 
                 cForm.Open<frmImageViewer>();
                 frmImageViewer f = cForm.Get<frmImageViewer>();
-                f.SetImage(pic.Path);
+                f.SetImage(pic.Path, GameIconSize);
             }
 
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
