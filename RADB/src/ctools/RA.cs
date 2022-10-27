@@ -289,7 +289,7 @@ namespace RADB
                 Picture pic = await Task.Run(() =>
                 {
                     pic = new Picture(gamesIcon, true, 11, GameIconSize, false);
-                    pic.Save(Game.MergedIconsPath(console.Name), PictureFormat.Jpg, false);
+                    pic.Save(Game.MergedIconsPath(console.Name), PictureFormat.Png, false);
 
                     Archive.SaveGamesIcon(games, gamesIcon, Game.MergedIconsPath(console.Name) + ".txt");
 

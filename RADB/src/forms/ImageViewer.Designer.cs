@@ -35,7 +35,7 @@
             // picImage
             // 
             this.picImage.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.picImage.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            this.picImage.Interpolation = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.picImage.Location = new System.Drawing.Point(0, 0);
             this.picImage.Margin = new System.Windows.Forms.Padding(0);
             this.picImage.Name = "picImage";
@@ -53,8 +53,6 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1089, 610);
-            this.MinimumSize = new System.Drawing.Size(208, 226);
             this.Name = "frmImageViewer";
             this.Text = "RA ImageViewer";
             ((System.ComponentModel.ISupportInitialize)(this.picImage)).EndInit();

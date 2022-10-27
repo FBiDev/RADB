@@ -10,80 +10,72 @@ namespace RADB
 {
     public partial class frmImageViewer : Form
     {
-        private Size OriginalSize;
-        private Size MinimumClientSize = new Size(192, 192);
+        private Size FormInitialSize;
+        private Size MinimumClientSize = new Size(192, 192);//96*2 x 96*2
+        private Size MaximumClientSize = new Size(1056, 576);//96*11 x 96*6
         private Size UnitImageSize;
-        private int picW;
-        private int picH;
+        private Picture PictureInitial;
         private double zoomFactor = 0.25;
         private double zoomPercent = 1.0;
-        private int zoomTimes = 8;
 
         public frmImageViewer()
         {
             InitializeComponent();
             Icon = GNX.cConvert.ToIco(Resources.iconForm, new Size(250, 250));
 
-            Shown += frmImageViewer_Shown;
             MouseWheel += frmImageViewer_MouseWheel;
-        }
-
-        void frmImageViewer_Shown(object sender, EventArgs e)
-        {
-            picW = picImage.Width;
-            picH = picImage.Height;
         }
 
         void frmImageViewer_MouseWheel(object sender, MouseEventArgs e)
         {
             //Up = 1 Down = -1
             int mousedelta = Math.Sign(e.Delta);
+            int zoomTimes = (int)(((ClientSize.Height / UnitImageSize.Height) - 1) / zoomFactor);
             double maxZoom = (1.0 + (zoomTimes * zoomFactor));
 
             if (mousedelta == 1 && zoomPercent >= maxZoom || mousedelta == -1 && zoomPercent <= zoomFactor) { return; }
 
             zoomPercent += mousedelta * zoomFactor;
 
-            picImage.Width = (int)(picW * zoomPercent);
-            picImage.Height = (int)(picH * zoomPercent);
+            picImage.Width = (int)(PictureInitial.Bitmap.Width * zoomPercent);
+            picImage.Height = (int)(PictureInitial.Bitmap.Height * zoomPercent);
 
-            //Add ScrollH space
-            if (zoomPercent > 1 && Height == OriginalSize.Height && picImage.Width > ClientSize.Width)
-                Height += SystemInformation.HorizontalScrollBarHeight;
-            else if (zoomPercent == 1 && Height > OriginalSize.Height)
-                Height -= SystemInformation.HorizontalScrollBarHeight;
+            SetScrollSize();
         }
 
-        public void SetImage(string imagePath, Size perImageSize)
+        public void SetImage(string imagePath, Size perImageSize = default(Size))
         {
-            UnitImageSize = perImageSize;
+            UnitImageSize = perImageSize == default(Size) ? new Size(64, 64) : perImageSize;
 
-            Picture p = new Picture(imagePath);
-            picImage.ScaleTo(p.Bitmap);
+            PictureInitial = new Picture(imagePath);
+            picImage.ScaleTo(PictureInitial.Bitmap);
 
-            if (picImage.Height <= MinimumClientSize.Height)
-            {
-                if (picImage.Width <= MinimumClientSize.Width)
-                {
-                    ClientSize = new Size(MinimumClientSize.Width, MinimumClientSize.Height);
-                }
-                else
-                {
-                    ClientSize = new Size(UnitImageSize.Width * (picImage.Width / UnitImageSize.Width), MinimumClientSize.Height);
-                }
-            }
-            else
-            {
-                ClientSize = picImage.Size;
-            }
+            int cliW = picImage.Width <= MinimumClientSize.Width ? MinimumClientSize.Width :
+                                        (picImage.Width >= MaximumClientSize.Width) ? MaximumClientSize.Width : picImage.Width;
+
+            int cliH = picImage.Height <= MinimumClientSize.Height ? MinimumClientSize.Height :
+                                        (picImage.Height >= MaximumClientSize.Height) ? MaximumClientSize.Height : picImage.Height;
+
+            ClientSize = new Size(cliW, cliH);
 
             //Add ScrollW space
-            if (ClientSize.Height > MaximumSize.Height)
+            if (picImage.Height > MaximumClientSize.Height)
             {
                 Width += SystemInformation.VerticalScrollBarWidth;
             }
 
-            OriginalSize = this.Size;
+            FormInitialSize = this.Size;
+
+            SetScrollSize();
+        }
+
+        public void SetScrollSize()
+        {
+            //Add ScrollH space
+            int ScrollH = HorizontalScroll.Visible && Height == FormInitialSize.Height ? SystemInformation.HorizontalScrollBarHeight :
+                          !HorizontalScroll.Visible && Height > FormInitialSize.Height ? -SystemInformation.HorizontalScrollBarHeight : 0;
+
+            Height += ScrollH;
         }
     }
 }

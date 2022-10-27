@@ -50,7 +50,7 @@ namespace RADB
             pe.Graphics.InterpolationMode = interpolation;
             // Certain interpolation modes (such as nearest neighbor) need
             // to be offset by half a pixel to render correctly.
-            pe.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            pe.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
 
             // Allow the PictureBox to draw.
             base.OnPaint(pe);
