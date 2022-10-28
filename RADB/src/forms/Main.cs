@@ -769,12 +769,13 @@ namespace RADB
 
         void dgvGames_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            e.Graphics.InterpolationMode = InterpolationMode.Default;
+            e.Graphics.InterpolationMode = InterpolationMode.Bilinear;
+            e.Graphics.PixelOffsetMode = PixelOffsetMode.Default;
 
             if (e.ColumnIndex == 1 && e.RowIndex != -1)
             {
                 e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                //e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                //e.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
             }
         }
 

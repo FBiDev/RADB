@@ -311,9 +311,11 @@ namespace RADB
                 //copy in High Quality
                 g.CompositingMode = CompositingMode.SourceCopy;
                 g.CompositingQuality = CompositingQuality.HighQuality;
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 g.SmoothingMode = SmoothingMode.HighQuality;
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                //If not resize
+                g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                g.PixelOffsetMode = PixelOffsetMode.Half;
 
                 //prevents ghosting around the image borders
                 var wrapMode = new ImageAttributes();
@@ -356,9 +358,12 @@ namespace RADB
 
                     bool newSize = (newWidth == FixedPerImage.Width || newHeight == FixedPerImage.Height);
 
+                    //Resize
                     if (StretchImage || newSize)
                     {
-                        //Resize
+                        g.InterpolationMode = (image.Height > FixedPerImage.Height) || (image.Width > FixedPerImage.Width) ? InterpolationMode.HighQualityBicubic : InterpolationMode.NearestNeighbor;
+                        g.PixelOffsetMode = (image.Height > FixedPerImage.Height) || (image.Width > FixedPerImage.Width) ? PixelOffsetMode.HighQuality : PixelOffsetMode.Half;
+
                         g.DrawImage(image, new Rectangle(offsetW, offsetH, newWidth, newHeight), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
                     }
                     else

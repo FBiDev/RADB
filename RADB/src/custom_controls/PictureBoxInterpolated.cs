@@ -16,12 +16,12 @@ namespace RADB
     {
         #region Interpolation Property
         /// <summary>Backing Field</summary>
-        private InterpolationMode interpolation = InterpolationMode.Default;
+        private InterpolationMode interpolation = InterpolationMode.NearestNeighbor;
 
         /// <summary>
         /// The interpolation used to render the image.
         /// </summary>
-        [DefaultValue(typeof(InterpolationMode), "Default"),
+        [DefaultValue(typeof(InterpolationMode), "NearestNeighbor"),
         Description("The interpolation used to render the image.")]
         public InterpolationMode Interpolation
         {
@@ -33,6 +33,24 @@ namespace RADB
 
                 interpolation = value;
                 Invalidate(); // Image should be redrawn when a different interpolation is selected
+            }
+        }
+        #endregion
+
+        #region PixelOffset Property
+        private PixelOffsetMode pixelOffset = PixelOffsetMode.Half;
+
+        [DefaultValue(typeof(PixelOffsetMode), "Half")]
+        public PixelOffsetMode PixelOffset
+        {
+            get { return pixelOffset; }
+            set
+            {
+                if (value == PixelOffsetMode.Invalid)
+                    throw new ArgumentException("\"Invalid\" is not a valid value.");
+
+                pixelOffset = value;
+                Invalidate();
             }
         }
         #endregion
@@ -50,7 +68,7 @@ namespace RADB
             pe.Graphics.InterpolationMode = interpolation;
             // Certain interpolation modes (such as nearest neighbor) need
             // to be offset by half a pixel to render correctly.
-            pe.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
+            pe.Graphics.PixelOffsetMode = pixelOffset;
 
             // Allow the PictureBox to draw.
             base.OnPaint(pe);

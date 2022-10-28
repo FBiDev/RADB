@@ -35,7 +35,6 @@
             // picImage
             // 
             this.picImage.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.picImage.Interpolation = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             this.picImage.Location = new System.Drawing.Point(0, 0);
             this.picImage.Margin = new System.Windows.Forms.Padding(0);
             this.picImage.Name = "picImage";

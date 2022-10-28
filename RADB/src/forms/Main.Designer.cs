@@ -1846,7 +1846,6 @@ namespace RADB
             // 
             // picUserCheevos
             // 
-            this.picUserCheevos.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picUserCheevos.Location = new System.Drawing.Point(11, 11);
             this.picUserCheevos.Margin = new System.Windows.Forms.Padding(6);
             this.picUserCheevos.Name = "picUserCheevos";
