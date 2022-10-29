@@ -15,6 +15,7 @@ namespace RADB
         private Size MaximumClientSize = new Size(1056, 576);//96*11 x 96*6
         private Size UnitImageSize;
         private Picture PictureInitial;
+        private Picture PictureSmall;
         private double zoomFactor = 0.25;
         private double zoomPercent = 1.0;
 
@@ -22,7 +23,7 @@ namespace RADB
         {
             InitializeComponent();
             Icon = GNX.cConvert.ToIco(Resources.iconForm, new Size(250, 250));
-            
+
             MouseWheel += frmImageViewer_MouseWheel;
             FormClosing += frmImageViewer_FormClosing;
 
@@ -45,8 +46,20 @@ namespace RADB
 
             zoomPercent += mousedelta * zoomFactor;
 
-            picImage.Width = (int)(PictureInitial.Width * zoomPercent);
-            picImage.Height = (int)(PictureInitial.Height * zoomPercent);
+            Size newSize = new Size((int)(PictureInitial.Width * zoomPercent), (int)(PictureInitial.Height * zoomPercent));
+
+            if (mousedelta == -1 && zoomPercent <= zoomFactor)
+            {
+                //Decrease Size and Remake the image with other interpolation
+                picImage.ScaleTo(PictureSmall.Bitmap);
+            }
+            else if (mousedelta == 1 && zoomPercent > zoomFactor)
+            {
+                //Increase Size
+                picImage.ScaleTo(PictureInitial.Bitmap);
+            }
+
+            picImage.Size = newSize;
 
             SetScrollSize();
         }
@@ -59,6 +72,10 @@ namespace RADB
 
             PictureInitial = new Picture(pic.Path);
             picImage.ScaleTo(PictureInitial.Bitmap);
+
+            //SmallPicture
+            Size sizeSmall = new Size((int)(pic.Width * zoomFactor), (int)(pic.Height * zoomFactor));
+            PictureSmall = new Picture(new List<string> { pic.Path }, true, 1, sizeSmall, true);
 
             int cliW = picImage.Width <= MinimumClientSize.Width ? MinimumClientSize.Width :
                                         (picImage.Width >= MaximumClientSize.Width) ? MaximumClientSize.Width : picImage.Width;
