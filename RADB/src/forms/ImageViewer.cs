@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using RADB.Properties;
-using GNX;
 
 namespace RADB
 {
@@ -22,7 +20,7 @@ namespace RADB
         public frmImageViewer()
         {
             InitializeComponent();
-            Icon = GNX.cConvert.ToIco(Resources.iconForm, new Size(250, 250));
+            Icon = GNX.cConvert.ToIco(Properties.Resources.iconForm, new Size(250, 250));
 
             MouseWheel += frmImageViewer_MouseWheel;
             FormClosing += frmImageViewer_FormClosing;
@@ -51,13 +49,13 @@ namespace RADB
 
             if (mousedelta == -1 && zoomPercent <= zoomFactor)
             {
-                //Decrease Size and Remake the image with other interpolation
-                picImage.ScaleTo(PictureSmall.Bitmap);
+                //Decrease Size with other interpolation
+                picImage.Image = PictureSmall.Bitmap;
             }
             else if (mousedelta == 1 && zoomPercent > zoomFactor)
             {
                 //Increase Size
-                picImage.ScaleTo(PictureInitial.Bitmap);
+                picImage.Image = PictureInitial.Bitmap;
             }
 
             picImage.Size = newSize;
@@ -67,16 +65,18 @@ namespace RADB
 
         public void SetImage(Picture pic, Size perImageSize = default(Size))
         {
-            Text += " - " + pic.Name;
-
-            UnitImageSize = perImageSize == default(Size) ? new Size(64, 64) : perImageSize;
-
             PictureInitial = new Picture(pic.Path);
-            picImage.ScaleTo(PictureInitial.Bitmap);
 
             //SmallPicture
             Size sizeSmall = new Size((int)(pic.Width * zoomFactor), (int)(pic.Height * zoomFactor));
             PictureSmall = new Picture(new List<string> { pic.Path }, true, 1, sizeSmall, true);
+
+            Text += " - " + PictureInitial.Name;
+
+            picImage.Image = PictureInitial.Bitmap;
+            picImage.Size = PictureInitial.Size;
+
+            UnitImageSize = perImageSize == default(Size) ? new Size(64, 64) : perImageSize;
 
             int cliW = picImage.Width <= MinimumClientSize.Width ? MinimumClientSize.Width :
                                         (picImage.Width >= MaximumClientSize.Width) ? MaximumClientSize.Width : picImage.Width;
