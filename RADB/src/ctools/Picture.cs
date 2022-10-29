@@ -20,6 +20,10 @@ namespace RADB
     public class Picture
     {
         public Bitmap Bitmap { get; set; }
+        private Size _Size { get; set; }
+        public Size Size { get { return _Size; } set { _Size = value; Width = value.Width; Height = _Size.Height; } }
+        public int Width { get; set; }
+        public int Height { get; set; }
         private EncoderParameters Parameters { get; set; }
         private long _Quality;
         public long Quality
@@ -87,6 +91,7 @@ namespace RADB
             DefaultValues();
 
             Bitmap = new Bitmap(width, height);
+            Size = Bitmap.Size;
 
             //Default Background
             using (Graphics g = Graphics.FromImage(Bitmap)) { g.Clear(Color.Magenta); }
@@ -97,6 +102,7 @@ namespace RADB
             DefaultValues();
 
             Bitmap = bitmap;
+            Size = Bitmap.Size;
         }
 
         public Picture(string fileName, PictureFormat format = PictureFormat.Jpg)
@@ -108,6 +114,7 @@ namespace RADB
             try
             {
                 Bitmap = FromFile(Path);
+                Size = Bitmap.Size;
             }
             catch (Exception e)
             {
@@ -299,6 +306,7 @@ namespace RADB
 
             //create a bitmap to hold the combined image
             Bitmap = new Picture(maxWidth, maxHeight).Bitmap;
+            Size = Bitmap.Size;
         }
 
         private void MergeImages()

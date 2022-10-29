@@ -22,8 +22,16 @@ namespace RADB
         {
             InitializeComponent();
             Icon = GNX.cConvert.ToIco(Resources.iconForm, new Size(250, 250));
-
+            
             MouseWheel += frmImageViewer_MouseWheel;
+            FormClosing += frmImageViewer_FormClosing;
+
+            VerticalScroll.SmallChange = 16;
+        }
+
+        void frmImageViewer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            PictureInitial.Bitmap.Dispose();
         }
 
         void frmImageViewer_MouseWheel(object sender, MouseEventArgs e)
@@ -37,17 +45,19 @@ namespace RADB
 
             zoomPercent += mousedelta * zoomFactor;
 
-            picImage.Width = (int)(PictureInitial.Bitmap.Width * zoomPercent);
-            picImage.Height = (int)(PictureInitial.Bitmap.Height * zoomPercent);
+            picImage.Width = (int)(PictureInitial.Width * zoomPercent);
+            picImage.Height = (int)(PictureInitial.Height * zoomPercent);
 
             SetScrollSize();
         }
 
-        public void SetImage(string imagePath, Size perImageSize = default(Size))
+        public void SetImage(Picture pic, Size perImageSize = default(Size))
         {
+            Text += " - " + pic.Name;
+
             UnitImageSize = perImageSize == default(Size) ? new Size(64, 64) : perImageSize;
 
-            PictureInitial = new Picture(imagePath);
+            PictureInitial = new Picture(pic.Path);
             picImage.ScaleTo(PictureInitial.Bitmap);
 
             int cliW = picImage.Width <= MinimumClientSize.Width ? MinimumClientSize.Width :

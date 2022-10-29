@@ -60,7 +60,7 @@ namespace RADB
             {
                 Picture pic = new Picture(f);
 
-                return pic.Bitmap.Size != size;
+                return pic.Size != size;
             });
 
             return files.ToList();
