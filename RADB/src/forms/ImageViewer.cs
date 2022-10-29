@@ -28,6 +28,7 @@ namespace RADB
             FormClosing += frmImageViewer_FormClosing;
 
             VerticalScroll.SmallChange = 16;
+            HorizontalScroll.SmallChange = 16;
         }
 
         void frmImageViewer_FormClosing(object sender, FormClosingEventArgs e)
