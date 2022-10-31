@@ -35,6 +35,8 @@ namespace RADB
 
         public List<DataGridView> lstDgvGames = new List<DataGridView>();
 
+        
+
         public Main()
         {
             InitializeComponent();
@@ -46,23 +48,16 @@ namespace RADB
 
             if (Config.DarkMode)
             {
-                this.BackColor = ColorTranslator.FromHtml("#F4F4F4");
-                //pnlOutput.BackColor = ColorTranslator.FromHtml("#F4F4F4");
-                //pnlOutput.BorderColor = ColorTranslator.FromHtml("#A0A0A0");
+                Theme.DarkMode(this);
 
+            }
+            else
+            {
                 tabMain.myBackColor = ColorTranslator.FromHtml("#F4F4F4");
                 foreach (TabPage tab in tabMain.TabPages)
                 {
                     tab.BackColor = Color.Transparent;
                 }
-                //tabMain.myBorderColor = ColorTranslator.FromHtml("#6D7AE0");
-                //dgvConsoles.BackgroundColor = ColorTranslator.FromHtml("#F4F4F4");
-            }
-            else
-            {
-                this.BackColor = SystemColors.Control;
-                pnlOutput.BackColor = Color.White;
-                //pnlOutput.BorderColor = ColorTranslator.FromHtml("#A0A0A0");
             }
 
             //KeyPreview = true;
@@ -103,6 +98,7 @@ namespace RADB
 
             dgvAchievements.AutoGenerateColumns = false;
             dgvAchievements.DataSourceChanged += dgvAchievements_DataSourceChanged;
+            dgvAchievements.CellPainting += dgvAchievements_CellPainting;
 
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
             txtSearchGames.KeyDown += txtSearchGames_KeyDown;
@@ -776,6 +772,44 @@ namespace RADB
             {
                 e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 //e.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
+            }
+        }
+
+        void dgvAchievements_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex != -1 && e.Value != null && e.ColumnIndex == 2)
+            {
+
+                DataGridView dgv = (DataGridView)sender;
+                if (!e.Handled)
+                {
+                    e.Handled = true;
+                    e.PaintBackground(e.CellBounds, dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected);
+                }
+                if ((e.PaintParts & DataGridViewPaintParts.ContentForeground) != DataGridViewPaintParts.None)
+                {
+                    Achievement ach = (Achievement)dgv.CurrentRow.DataBoundItem;
+
+                    string text = e.Value.ToString();
+                    string textPart1 = text.Substring(0, text.IndexOf(Environment.NewLine));
+                    string textPart2 = text.Substring(text.IndexOf(Environment.NewLine));
+
+                    //Size fullsize = TextRenderer.MeasureText(text, e.CellStyle.Font);
+                    //Size size1 = TextRenderer.MeasureText(textPart1, e.CellStyle.Font);
+                    //Size size2 = TextRenderer.MeasureText(textPart2, e.CellStyle.Font);
+
+                    Rectangle rect1 = new Rectangle(e.CellBounds.Location, e.CellBounds.Size);
+                    using (Brush cellForeBrush = new SolidBrush(Theme.CheevoTitle))
+                    {
+                        e.Graphics.DrawString(textPart1, e.CellStyle.Font, cellForeBrush, rect1);
+                    }
+                    //rect1.X += (fullsize.Width - size2.Width);
+                    //rect1.Width = e.CellBounds.Width;
+                    using (Brush cellForeBrush2 = new SolidBrush(Theme.CheevoDescription))
+                    {
+                        e.Graphics.DrawString(textPart2, e.CellStyle.Font, cellForeBrush2, rect1);
+                    }
+                }
             }
         }
 
