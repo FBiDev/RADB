@@ -53,11 +53,7 @@ namespace RADB
             }
             else
             {
-                tabMain.myBackColor = ColorTranslator.FromHtml("#F4F4F4");
-                foreach (TabPage tab in tabMain.TabPages)
-                {
-                    tab.BackColor = Color.Transparent;
-                }
+                Theme.LightMode(this);
             }
 
             //KeyPreview = true;

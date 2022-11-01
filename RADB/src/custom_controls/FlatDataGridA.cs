@@ -24,14 +24,17 @@ namespace RADB
             ColorFontRow = ColorTranslator.FromHtml("#D2D2D2");
             ColorFontRowSelection = ColorFontRow;
 
-            ColorRow = ColorTranslator.FromHtml("#212121");
-            ColorRowAlternate = ColorTranslator.FromHtml("#242424");
+            ColorRow = ColorTranslator.FromHtml("#191919");
+            ColorRowAlternate = ColorTranslator.FromHtml("#353535");
 
             ColorGrid = ColorRow;
             ColorBackground = ColorRow;
 
             ColorRowSelection = ColorTranslator.FromHtml("#0F0F0F");
-            ColorRowMouseHover = ColorTranslator.FromHtml("#353535");
+            ColorRowMouseHover = ColorTranslator.FromHtml("#4B4B4B");
+
+            ColorColumnHeader = ColorTranslator.FromHtml("#3F3F3F");
+            ColorColumnSelection = ColorColumnHeader;
         }
     }
 }
