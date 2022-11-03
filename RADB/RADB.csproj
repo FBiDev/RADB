@@ -110,6 +110,12 @@
     <Compile Include="src\custom_controls\FlatDataGridA.Designer.cs">
       <DependentUpon>FlatDataGridA.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\custom_controls\FlatGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\custom_controls\FlatGroupBox.Designer.cs">
+      <DependentUpon>FlatGroupBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\custom_controls\FlatTextBoxA.cs">
       <SubType>UserControl</SubType>
     </Compile>

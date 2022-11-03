@@ -16,10 +16,11 @@ namespace RADB
         {
             BackgroundColor = ColorTranslator.FromHtml("#191919");
             BackgroundColorFocus = BackgroundColor;
-            TextBoxColor = BackgroundColor;
+            LabelTextColor = ColorTranslator.FromHtml("#A3B2DC"); 
             TextColor = ColorTranslator.FromHtml("#D2D2D2");
             TextColorFocus = TextColor;
-            BorderColor = ColorTranslator.FromHtml("#a0a0a0");
+            BorderColor = ColorTranslator.FromHtml("#424242");
+            //BorderColor = BorderColorFocus;
         }
     }
 }

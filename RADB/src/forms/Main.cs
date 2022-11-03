@@ -35,8 +35,6 @@ namespace RADB
 
         public List<DataGridView> lstDgvGames = new List<DataGridView>();
 
-        
-
         public Main()
         {
             InitializeComponent();
@@ -58,7 +56,6 @@ namespace RADB
 
             //KeyPreview = true;
             //KeyDown += Main_KeyDown;
-
             tabMain.KeyDown += tabMain_KeyDown;
 
             dgvConsoles.AutoGenerateColumns = true;
