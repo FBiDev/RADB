@@ -133,7 +133,7 @@ namespace RADB
 
             foreach (Control ctl in GetAllControlsRecusrvive<CheckBoxBlueA>(f))
             {
-                if (Config.DarkMode)
+                //if (Config.DarkMode)
                     //((CheckBoxBlueA)ctl).BackColor = ColorTranslator.FromHtml("#353535");
             }
 
