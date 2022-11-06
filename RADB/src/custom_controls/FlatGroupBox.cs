@@ -35,6 +35,7 @@ namespace RADB
         public FlatGroupBox()
         {
             InitializeComponent();
+            DoubleBuffered = true;
         }
 
         protected override void OnPaint(PaintEventArgs e)
