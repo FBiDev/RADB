@@ -645,23 +645,20 @@ namespace RADB
                 }
             }
 
-            int scrollPosition = dgvAchievements.FirstDisplayedScrollingRowIndex;
+            int scrollPosition = pnlInfoScroll.VerticalScroll.Value;
 
             lstAchievsSearch = newSearch;
             dgvAchievements.DataSource = lstAchievsSearch;
 
-            bool maintainScroll = false;
+            if (scrollPosition < gpbInfo.Height + 4) scrollPosition = gpbInfo.Height + 4;
+            if (scrollPosition > pnlInfoScroll.VerticalScroll.Maximum) scrollPosition = pnlInfoScroll.VerticalScroll.Maximum;
+
+            bool maintainScroll = true;
             if (maintainScroll)
             {
                 bool txtFocus = txtSearchAchiev.Focused;
 
-                if (dgvAchievements.RowCount > 0 && scrollPosition > -1)
-                {
-                    if (scrollPosition >= dgvAchievements.RowCount)
-                        dgvAchievements.FirstDisplayedScrollingRowIndex = dgvAchievements.RowCount - 1;
-                    else
-                        dgvAchievements.FirstDisplayedScrollingRowIndex = scrollPosition;
-                }
+                pnlInfoScroll.VerticalScroll.Value = scrollPosition;
 
                 if (txtFocus) { txtSearchAchiev.Focus(); }
             }
