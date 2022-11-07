@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 //
 using System.Xml;
 using GNX;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace RADB
 {

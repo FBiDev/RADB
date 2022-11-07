@@ -21,6 +21,8 @@ namespace RADB
             Icon = GNX.cConvert.ToIco(Resources.iconForm, new Size(250, 250));
 
             txtHashes.KeyDown += HashViewer_KeyDown;
+
+            Theme.CheckTheme(this);
         }
 
         void HashViewer_KeyDown(object sender, KeyEventArgs e)
@@ -53,22 +55,26 @@ namespace RADB
             foreach (string item in list)
             {
                 var title = item.GetBetween("<b>", "</b>").Trim();
-                var hash = item.GetBetween("<code>", "</code>").Trim();
+                var hash = item.GetBetween("<code>", "</code>").Trim().ToUpper();
 
+                var extra = string.Empty;
                 var imgs = item.GetBetweenList("labels/", ".");
-                imgs.ForEach(x => hash += " (" + x + ")");
+                imgs.ForEach(x => extra += "-(" + x + ")");
 
                 var user = item.GetBetween("user/", "'");
-                hash += user != "" ? " - linked by " + user : "";
+                extra += user != "" ? " - linked by " + user : "";
 
-                txtHashes.Text += title + Environment.NewLine + hash;
+                txtHashes.AppendText(title + Environment.NewLine, Theme.CheevoTitle);
+                txtHashes.AppendText(hash, Theme.CheevoDescription);
+                txtHashes.AppendText(extra, txtHashes.ForeColor);
 
                 if (item != lastItem)
                 {
-                    txtHashes.Text += Environment.NewLine + Environment.NewLine;
+                    txtHashes.AppendText(Environment.NewLine + Environment.NewLine, txtHashes.ForeColor);
                 }
             }
 
+            txtHashes.SelectionStart = 0;
             picLoaderHash.Visible = false;
         }
     }

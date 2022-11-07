@@ -32,7 +32,18 @@ namespace RADB
         public static Color CheevoDescription = FlatDataGridA.DefaultForeColor;
 
 
+        public static void CheckTheme(Form f)
+        {
+            if (Config.DarkMode)
+            {
+                DarkMode(f);
 
+            }
+            else
+            {
+                LightMode(f);
+            }
+        }
 
 
         public static void LightMode(Form f)
@@ -99,6 +110,15 @@ namespace RADB
                     ((Panel)ctl).BackColor = PanelColor2;
             }
 
+            foreach (Control ctl in GetAllOfType<RichTextBox>(f))
+            {
+                if (ctl.Name == "txtHashes")
+                {
+                    ((RichTextBox)ctl).BackColor = PanelColor2;
+                    ((RichTextBox)ctl).ForeColor = FontColor1;
+                }
+            }
+
             foreach (Control ctl in GetAllControlsRecusrvive<GNX.PanelBorder>(f))
             {
                 ((GNX.PanelBorder)ctl).BackColor = BackColor2;
@@ -143,7 +163,7 @@ namespace RADB
                     ((FlatTextBoxA)ctl).DarkMode();
             }
 
-            foreach (Control ctl in GetAllControlsRecusrvive<DataGridView>(f))
+            foreach (Control ctl in GetAllControlsRecusrvive<FlatDataGridA>(f))
             {
                 if (Config.DarkMode)
                     ((FlatDataGridA)ctl).DarkMode();

@@ -191,11 +191,23 @@ namespace RADB
             this.cTotalGames = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGames = new System.Windows.Forms.TabPage();
             this.pnlFilters = new GNX.PanelBorder();
+            this.chkOfficial = new RADB.CheckBoxBlueA();
+            this.chkPrototype = new RADB.CheckBoxBlueA();
+            this.chkUnlicensed = new RADB.CheckBoxBlueA();
+            this.chkDemo = new RADB.CheckBoxBlueA();
+            this.chkHack = new RADB.CheckBoxBlueA();
+            this.chkHomebrew = new RADB.CheckBoxBlueA();
+            this.chkWithoutAchievements = new RADB.CheckBoxBlueA();
+            this.chkSubset = new RADB.CheckBoxBlueA();
+            this.chkTestKit = new RADB.CheckBoxBlueA();
+            this.chkDemoted = new RADB.CheckBoxBlueA();
             this.lblNotFoundGameList = new System.Windows.Forms.Label();
             this.picLoaderGameList = new System.Windows.Forms.PictureBox();
             this.pnlGamesConsoleName = new GNX.PanelBorder();
             this.lblConsoleGamesTotal = new System.Windows.Forms.Label();
             this.lblConsoleName = new System.Windows.Forms.Label();
+            this.txtSearchGames = new RADB.FlatTextBoxA();
+            this.btnGameFilters = new RADB.FlatButtonA();
             this.pnlDownloadGameList = new System.Windows.Forms.Panel();
             this.btnUpdateGameList = new RADB.FlatButtonA();
             this.lblUpdateGameList = new System.Windows.Forms.Label();
@@ -213,6 +225,7 @@ namespace RADB
             this.tabGameInfo = new System.Windows.Forms.TabPage();
             this.pnlInfoScroll = new RADB.PanelNoScrollOnFocus();
             this.gpbInfoAchievements = new RADB.FlatGroupBox();
+            this.txtSearchAchiev = new RADB.FlatTextBoxA();
             this.btnHashes = new RADB.FlatButtonA();
             this.dgvAchievements = new RADB.FlatDataGridA();
             this.aOrder = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -284,18 +297,6 @@ namespace RADB
             this.picFBiDevIcon = new System.Windows.Forms.PictureBox();
             this.lblAbTitle = new System.Windows.Forms.Label();
             this.lblAbYear = new System.Windows.Forms.Label();
-            this.chkDemoted = new RADB.CheckBoxBlueA();
-            this.chkTestKit = new RADB.CheckBoxBlueA();
-            this.chkSubset = new RADB.CheckBoxBlueA();
-            this.chkHomebrew = new RADB.CheckBoxBlueA();
-            this.chkHack = new RADB.CheckBoxBlueA();
-            this.chkDemo = new RADB.CheckBoxBlueA();
-            this.chkUnlicensed = new RADB.CheckBoxBlueA();
-            this.chkPrototype = new RADB.CheckBoxBlueA();
-            this.chkOfficial = new RADB.CheckBoxBlueA();
-            this.chkWithoutAchievements = new RADB.CheckBoxBlueA();
-            this.txtSearchGames = new RADB.FlatTextBoxA();
-            this.btnGameFilters = new RADB.FlatButtonA();
             this.mnuGames.SuspendLayout();
             this.mnuGamesToHide.SuspendLayout();
             this.mnuConsoles.SuspendLayout();
@@ -308,6 +309,7 @@ namespace RADB
             this.pnlDownloadConsoles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsoles)).BeginInit();
             this.tabGames.SuspendLayout();
+            this.pnlFilters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderGameList)).BeginInit();
             this.pnlGamesConsoleName.SuspendLayout();
             this.pnlDownloadGameList.SuspendLayout();
@@ -987,7 +989,7 @@ namespace RADB
             // 
             // pnlBottomOutput
             // 
-            this.pnlBottomOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlBottomOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlBottomOutput.BackColor = System.Drawing.Color.Transparent;
             this.pnlBottomOutput.Controls.Add(this.pnlOutput);
@@ -999,8 +1001,8 @@ namespace RADB
             // 
             // pnlOutput
             // 
-            this.pnlOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlOutput.AutoScroll = true;
             this.pnlOutput.Controls.Add(this.lblOutput);
@@ -1011,7 +1013,7 @@ namespace RADB
             // 
             // lblOutput
             // 
-            this.lblOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.lblOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblOutput.AutoSize = true;
             this.lblOutput.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1023,8 +1025,8 @@ namespace RADB
             // 
             // tabMain
             // 
-            this.tabMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.tabMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabMain.Controls.Add(this.tabConsoles);
             this.tabMain.Controls.Add(this.tabGames);
@@ -1059,7 +1061,7 @@ namespace RADB
             // 
             // lblNotFoundConsoles
             // 
-            this.lblNotFoundConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.lblNotFoundConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNotFoundConsoles.Location = new System.Drawing.Point(9, 162);
             this.lblNotFoundConsoles.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
@@ -1071,7 +1073,7 @@ namespace RADB
             // 
             // picLoaderConsole
             // 
-            this.picLoaderConsole.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.picLoaderConsole.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.picLoaderConsole.Image = global::RADB.Properties.Resources.loader;
             this.picLoaderConsole.Location = new System.Drawing.Point(6, 146);
@@ -1084,7 +1086,7 @@ namespace RADB
             // 
             // pnlDownloadConsoles
             // 
-            this.pnlDownloadConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlDownloadConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlDownloadConsoles.Controls.Add(this.btnUpdateConsoles);
             this.pnlDownloadConsoles.Controls.Add(this.lblUpdateConsoles);
@@ -1247,18 +1249,18 @@ namespace RADB
             // 
             // pnlFilters
             // 
-            this.pnlFilters.Controls.Add(chkOfficial);
-            this.pnlFilters.Controls.Add(chkPrototype);
-            this.pnlFilters.Controls.Add(chkUnlicensed);
-            this.pnlFilters.Controls.Add(chkDemo);
-            this.pnlFilters.Controls.Add(chkHack);
-            this.pnlFilters.Controls.Add(chkHomebrew);
-            this.pnlFilters.Controls.Add(chkWithoutAchievements);
-            this.pnlFilters.Controls.Add(chkSubset);
-            this.pnlFilters.Controls.Add(chkTestKit);
-            this.pnlFilters.Controls.Add(chkDemoted);
             this.pnlFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlFilters.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.pnlFilters.Controls.Add(this.chkOfficial);
+            this.pnlFilters.Controls.Add(this.chkPrototype);
+            this.pnlFilters.Controls.Add(this.chkUnlicensed);
+            this.pnlFilters.Controls.Add(this.chkDemo);
+            this.pnlFilters.Controls.Add(this.chkHack);
+            this.pnlFilters.Controls.Add(this.chkHomebrew);
+            this.pnlFilters.Controls.Add(this.chkWithoutAchievements);
+            this.pnlFilters.Controls.Add(this.chkSubset);
+            this.pnlFilters.Controls.Add(this.chkTestKit);
+            this.pnlFilters.Controls.Add(this.chkDemoted);
             this.pnlFilters.Location = new System.Drawing.Point(783, 83);
             this.pnlFilters.Name = "pnlFilters";
             this.pnlFilters.Padding = new System.Windows.Forms.Padding(0);
@@ -1266,9 +1268,129 @@ namespace RADB
             this.pnlFilters.TabIndex = 10;
             this.pnlFilters.Visible = false;
             // 
+            // chkOfficial
+            // 
+            this.chkOfficial._Legend = "Official";
+            this.chkOfficial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkOfficial.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.chkOfficial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.chkOfficial.Checked = true;
+            this.chkOfficial.Location = new System.Drawing.Point(-130, 6);
+            this.chkOfficial.Name = "chkOfficial";
+            this.chkOfficial.Size = new System.Drawing.Size(64, 34);
+            this.chkOfficial.TabIndex = 13;
+            // 
+            // chkPrototype
+            // 
+            this.chkPrototype._Legend = "Prototype";
+            this.chkPrototype.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkPrototype.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.chkPrototype.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.chkPrototype.Checked = true;
+            this.chkPrototype.Location = new System.Drawing.Point(-130, 46);
+            this.chkPrototype.Name = "chkPrototype";
+            this.chkPrototype.Size = new System.Drawing.Size(64, 34);
+            this.chkPrototype.TabIndex = 12;
+            // 
+            // chkUnlicensed
+            // 
+            this.chkUnlicensed._Legend = "Unlicensed";
+            this.chkUnlicensed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkUnlicensed.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.chkUnlicensed.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.chkUnlicensed.Checked = true;
+            this.chkUnlicensed.Location = new System.Drawing.Point(-130, 86);
+            this.chkUnlicensed.Name = "chkUnlicensed";
+            this.chkUnlicensed.Size = new System.Drawing.Size(64, 34);
+            this.chkUnlicensed.TabIndex = 11;
+            // 
+            // chkDemo
+            // 
+            this.chkDemo._Legend = "Demo";
+            this.chkDemo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkDemo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.chkDemo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.chkDemo.Checked = true;
+            this.chkDemo.Location = new System.Drawing.Point(-130, 127);
+            this.chkDemo.Name = "chkDemo";
+            this.chkDemo.Size = new System.Drawing.Size(64, 34);
+            this.chkDemo.TabIndex = 10;
+            // 
+            // chkHack
+            // 
+            this.chkHack._Legend = "Hack";
+            this.chkHack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkHack.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.chkHack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.chkHack.Checked = true;
+            this.chkHack.Location = new System.Drawing.Point(-130, 167);
+            this.chkHack.Name = "chkHack";
+            this.chkHack.Size = new System.Drawing.Size(64, 34);
+            this.chkHack.TabIndex = 9;
+            // 
+            // chkHomebrew
+            // 
+            this.chkHomebrew._Legend = "Homebrew";
+            this.chkHomebrew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkHomebrew.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.chkHomebrew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.chkHomebrew.Checked = true;
+            this.chkHomebrew.Location = new System.Drawing.Point(-130, 207);
+            this.chkHomebrew.Name = "chkHomebrew";
+            this.chkHomebrew.Size = new System.Drawing.Size(64, 34);
+            this.chkHomebrew.TabIndex = 8;
+            // 
+            // chkWithoutAchievements
+            // 
+            this.chkWithoutAchievements._Legend = "No Achievement";
+            this.chkWithoutAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkWithoutAchievements.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.chkWithoutAchievements.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.chkWithoutAchievements.Checked = true;
+            this.chkWithoutAchievements.Location = new System.Drawing.Point(-143, 247);
+            this.chkWithoutAchievements.Name = "chkWithoutAchievements";
+            this.chkWithoutAchievements.Size = new System.Drawing.Size(91, 34);
+            this.chkWithoutAchievements.TabIndex = 3;
+            // 
+            // chkSubset
+            // 
+            this.chkSubset._Legend = "Subset";
+            this.chkSubset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkSubset.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.chkSubset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.chkSubset.Checked = true;
+            this.chkSubset.Location = new System.Drawing.Point(-130, 287);
+            this.chkSubset.Name = "chkSubset";
+            this.chkSubset.Size = new System.Drawing.Size(64, 34);
+            this.chkSubset.TabIndex = 14;
+            // 
+            // chkTestKit
+            // 
+            this.chkTestKit._Legend = "TestKit";
+            this.chkTestKit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkTestKit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.chkTestKit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.chkTestKit.Checked = true;
+            this.chkTestKit.Location = new System.Drawing.Point(-130, 327);
+            this.chkTestKit.Name = "chkTestKit";
+            this.chkTestKit.Size = new System.Drawing.Size(64, 34);
+            this.chkTestKit.TabIndex = 15;
+            // 
+            // chkDemoted
+            // 
+            this.chkDemoted._Legend = "gRAveyard";
+            this.chkDemoted.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkDemoted.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.chkDemoted.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.chkDemoted.Checked = true;
+            this.chkDemoted.Location = new System.Drawing.Point(-130, 367);
+            this.chkDemoted.Name = "chkDemoted";
+            this.chkDemoted.Size = new System.Drawing.Size(64, 34);
+            this.chkDemoted.TabIndex = 16;
+            // 
             // lblNotFoundGameList
             // 
-            this.lblNotFoundGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.lblNotFoundGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNotFoundGameList.Location = new System.Drawing.Point(9, 162);
             this.lblNotFoundGameList.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
@@ -1280,7 +1402,7 @@ namespace RADB
             // 
             // picLoaderGameList
             // 
-            this.picLoaderGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.picLoaderGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.picLoaderGameList.Image = global::RADB.Properties.Resources.loader;
             this.picLoaderGameList.Location = new System.Drawing.Point(6, 146);
@@ -1293,7 +1415,7 @@ namespace RADB
             // 
             // pnlGamesConsoleName
             // 
-            this.pnlGamesConsoleName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlGamesConsoleName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlGamesConsoleName.Controls.Add(this.lblConsoleGamesTotal);
             this.pnlGamesConsoleName.Controls.Add(this.lblConsoleName);
@@ -1329,9 +1451,31 @@ namespace RADB
             this.lblConsoleName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lblConsoleName.UseMnemonic = false;
             // 
+            // txtSearchGames
+            // 
+            this.txtSearchGames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearchGames.LabelText = "Search Game";
+            this.txtSearchGames.Location = new System.Drawing.Point(589, 5);
+            this.txtSearchGames.Name = "txtSearchGames";
+            this.txtSearchGames.Size = new System.Drawing.Size(182, 34);
+            this.txtSearchGames.TabIndex = 2;
+            // 
+            // btnGameFilters
+            // 
+            this.btnGameFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGameFilters.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.btnGameFilters.FlatAppearance.BorderSize = 0;
+            this.btnGameFilters.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.btnGameFilters.Location = new System.Drawing.Point(777, 5);
+            this.btnGameFilters.Name = "btnGameFilters";
+            this.btnGameFilters.Size = new System.Drawing.Size(97, 34);
+            this.btnGameFilters.TabIndex = 11;
+            this.btnGameFilters.Text = "Filters";
+            this.btnGameFilters.Click += new System.EventHandler(this.btnGameFilters_Click);
+            // 
             // pnlDownloadGameList
             // 
-            this.pnlDownloadGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlDownloadGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlDownloadGameList.Controls.Add(this.btnUpdateGameList);
             this.pnlDownloadGameList.Controls.Add(this.lblUpdateGameList);
@@ -1534,8 +1678,8 @@ namespace RADB
             // 
             // pnlInfoScroll
             // 
-            this.pnlInfoScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlInfoScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlInfoScroll.AutoScroll = true;
             this.pnlInfoScroll.Controls.Add(this.gpbInfoAchievements);
@@ -1548,6 +1692,7 @@ namespace RADB
             // 
             // gpbInfoAchievements
             // 
+            this.gpbInfoAchievements.Controls.Add(this.txtSearchAchiev);
             this.gpbInfoAchievements.Controls.Add(this.btnHashes);
             this.gpbInfoAchievements.Controls.Add(this.dgvAchievements);
             this.gpbInfoAchievements.Controls.Add(this.btnGamePage);
@@ -1559,6 +1704,14 @@ namespace RADB
             this.gpbInfoAchievements.TabIndex = 5;
             this.gpbInfoAchievements.TabStop = false;
             this.gpbInfoAchievements.Text = "Achievements";
+            // 
+            // txtSearchAchiev
+            // 
+            this.txtSearchAchiev.LabelText = "Search Achievement";
+            this.txtSearchAchiev.Location = new System.Drawing.Point(688, 16);
+            this.txtSearchAchiev.Name = "txtSearchAchiev";
+            this.txtSearchAchiev.Size = new System.Drawing.Size(182, 34);
+            this.txtSearchAchiev.TabIndex = 37;
             // 
             // btnHashes
             // 
@@ -1577,7 +1730,7 @@ namespace RADB
             // 
             dataGridViewCellStyle52.BackColor = System.Drawing.Color.White;
             this.dgvAchievements.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle52;
-            this.dgvAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.dgvAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvAchievements.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             dataGridViewCellStyle53.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
@@ -1770,7 +1923,7 @@ namespace RADB
             // 
             // pnlInfoTop
             // 
-            this.pnlInfoTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlInfoTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlInfoTop.Controls.Add(this.lblInfoReleased);
             this.pnlInfoTop.Controls.Add(this.lblInfoDeveloper);
@@ -1893,7 +2046,7 @@ namespace RADB
             // 
             // pnlDownloadInfo
             // 
-            this.pnlDownloadInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlDownloadInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlDownloadInfo.Controls.Add(this.btnUpdateInfo);
             this.pnlDownloadInfo.Controls.Add(this.lblUpdateInfo);
@@ -1958,7 +2111,7 @@ namespace RADB
             // 
             // lblNotFoundGamesToPlay
             // 
-            this.lblNotFoundGamesToPlay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.lblNotFoundGamesToPlay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNotFoundGamesToPlay.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNotFoundGamesToPlay.Location = new System.Drawing.Point(9, 162);
@@ -2119,7 +2272,7 @@ namespace RADB
             // 
             // lblNotFoundGamesToHide
             // 
-            this.lblNotFoundGamesToHide.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.lblNotFoundGamesToHide.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNotFoundGamesToHide.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNotFoundGamesToHide.Location = new System.Drawing.Point(9, 162);
@@ -2466,150 +2619,6 @@ namespace RADB
             this.lblAbYear.TabIndex = 1;
             this.lblAbYear.Text = "2022";
             // 
-            // chkDemoted
-            // 
-            this.chkDemoted._Legend = "gRAveyard";
-            this.chkDemoted.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkDemoted.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkDemoted.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkDemoted.Checked = true;
-            this.chkDemoted.Location = new System.Drawing.Point(16, 367);
-            this.chkDemoted.Name = "chkDemoted";
-            this.chkDemoted.Size = new System.Drawing.Size(64, 34);
-            this.chkDemoted.TabIndex = 16;
-            // 
-            // chkTestKit
-            // 
-            this.chkTestKit._Legend = "TestKit";
-            this.chkTestKit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkTestKit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkTestKit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkTestKit.Checked = true;
-            this.chkTestKit.Location = new System.Drawing.Point(16, 327);
-            this.chkTestKit.Name = "chkTestKit";
-            this.chkTestKit.Size = new System.Drawing.Size(64, 34);
-            this.chkTestKit.TabIndex = 15;
-            // 
-            // chkSubset
-            // 
-            this.chkSubset._Legend = "Subset";
-            this.chkSubset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkSubset.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkSubset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkSubset.Checked = true;
-            this.chkSubset.Location = new System.Drawing.Point(16, 287);
-            this.chkSubset.Name = "chkSubset";
-            this.chkSubset.Size = new System.Drawing.Size(64, 34);
-            this.chkSubset.TabIndex = 14;
-            // 
-            // chkHomebrew
-            // 
-            this.chkHomebrew._Legend = "Homebrew";
-            this.chkHomebrew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkHomebrew.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkHomebrew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkHomebrew.Checked = true;
-            this.chkHomebrew.Location = new System.Drawing.Point(16, 207);
-            this.chkHomebrew.Name = "chkHomebrew";
-            this.chkHomebrew.Size = new System.Drawing.Size(64, 34);
-            this.chkHomebrew.TabIndex = 8;
-            // 
-            // chkHack
-            // 
-            this.chkHack._Legend = "Hack";
-            this.chkHack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkHack.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkHack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkHack.Checked = true;
-            this.chkHack.Location = new System.Drawing.Point(16, 167);
-            this.chkHack.Name = "chkHack";
-            this.chkHack.Size = new System.Drawing.Size(64, 34);
-            this.chkHack.TabIndex = 9;
-            // 
-            // chkDemo
-            // 
-            this.chkDemo._Legend = "Demo";
-            this.chkDemo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkDemo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkDemo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkDemo.Checked = true;
-            this.chkDemo.Location = new System.Drawing.Point(16, 127);
-            this.chkDemo.Name = "chkDemo";
-            this.chkDemo.Size = new System.Drawing.Size(64, 34);
-            this.chkDemo.TabIndex = 10;
-            // 
-            // chkUnlicensed
-            // 
-            this.chkUnlicensed._Legend = "Unlicensed";
-            this.chkUnlicensed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkUnlicensed.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkUnlicensed.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkUnlicensed.Checked = true;
-            this.chkUnlicensed.Location = new System.Drawing.Point(16, 86);
-            this.chkUnlicensed.Name = "chkUnlicensed";
-            this.chkUnlicensed.Size = new System.Drawing.Size(64, 34);
-            this.chkUnlicensed.TabIndex = 11;
-            // 
-            // chkPrototype
-            // 
-            this.chkPrototype._Legend = "Prototype";
-            this.chkPrototype.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkPrototype.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkPrototype.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkPrototype.Checked = true;
-            this.chkPrototype.Location = new System.Drawing.Point(16, 46);
-            this.chkPrototype.Name = "chkPrototype";
-            this.chkPrototype.Size = new System.Drawing.Size(64, 34);
-            this.chkPrototype.TabIndex = 12;
-            // 
-            // chkOfficial
-            // 
-            this.chkOfficial._Legend = "Official";
-            this.chkOfficial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkOfficial.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkOfficial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkOfficial.Checked = true;
-            this.chkOfficial.Location = new System.Drawing.Point(16, 6);
-            this.chkOfficial.Name = "chkOfficial";
-            this.chkOfficial.Size = new System.Drawing.Size(64, 34);
-            this.chkOfficial.TabIndex = 13;
-            // 
-            // chkWithoutAchievements
-            // 
-            this.chkWithoutAchievements._Legend = "No Achievement";
-            this.chkWithoutAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkWithoutAchievements.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkWithoutAchievements.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkWithoutAchievements.Checked = true;
-            this.chkWithoutAchievements.Location = new System.Drawing.Point(3, 247);
-            this.chkWithoutAchievements.Name = "chkWithoutAchievements";
-            this.chkWithoutAchievements.Size = new System.Drawing.Size(91, 34);
-            this.chkWithoutAchievements.TabIndex = 3;
-            // 
-            // txtSearchGames
-            // 
-            this.txtSearchGames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearchGames.LabelText = "Search Game";
-            this.txtSearchGames.Location = new System.Drawing.Point(589, 5);
-            this.txtSearchGames.Name = "txtSearchGames";
-            this.txtSearchGames.Size = new System.Drawing.Size(182, 34);
-            this.txtSearchGames.TabIndex = 2;
-            // 
-            // btnGameFilters
-            // 
-            this.btnGameFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGameFilters.BackColor = System.Drawing.SystemColors.Control;
-            this.btnGameFilters.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.btnGameFilters.FlatAppearance.BorderSize = 0;
-            this.btnGameFilters.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.btnGameFilters.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnGameFilters.Location = new System.Drawing.Point(777, 5);
-            this.btnGameFilters.Name = "btnGameFilters";
-            this.btnGameFilters.Size = new System.Drawing.Size(97, 34);
-            this.btnGameFilters.TabIndex = 11;
-            this.btnGameFilters.Text = "Filters";
-            this.btnGameFilters.Click += new System.EventHandler(this.btnGameFilters_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2635,6 +2644,7 @@ namespace RADB
             this.pnlDownloadConsoles.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsoles)).EndInit();
             this.tabGames.ResumeLayout(false);
+            this.pnlFilters.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderGameList)).EndInit();
             this.pnlGamesConsoleName.ResumeLayout(false);
             this.pnlGamesConsoleName.PerformLayout();
@@ -2866,6 +2876,7 @@ namespace RADB
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private FlatTextBoxA txtSearchAchiev;
     }
 }
 

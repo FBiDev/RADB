@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtHashes = new System.Windows.Forms.TextBox();
+            this.txtHashes = new System.Windows.Forms.RichTextBox();
             this.picLoaderHash = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderHash)).BeginInit();
             this.SuspendLayout();
@@ -45,7 +45,7 @@
             this.txtHashes.Multiline = true;
             this.txtHashes.Name = "txtHashes";
             this.txtHashes.ReadOnly = true;
-            this.txtHashes.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtHashes.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Both;
             this.txtHashes.Size = new System.Drawing.Size(719, 238);
             this.txtHashes.TabIndex = 0;
             // 
@@ -81,7 +81,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtHashes;
+        private System.Windows.Forms.RichTextBox txtHashes;
         private System.Windows.Forms.PictureBox picLoaderHash;
     }
 }

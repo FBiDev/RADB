@@ -35,6 +35,9 @@ namespace RADB
 
         public List<DataGridView> lstDgvGames = new List<DataGridView>();
 
+        public ListBind<Achievement> lstAchievs = new ListBind<Achievement>();
+        public ListBind<Achievement> lstAchievsSearch = new ListBind<Achievement>();
+
         public Main()
         {
             InitializeComponent();
@@ -44,15 +47,7 @@ namespace RADB
             Shown += Main_Shown;
             Resize += Main_Resize;
 
-            if (Config.DarkMode)
-            {
-                Theme.DarkMode(this);
-
-            }
-            else
-            {
-                Theme.LightMode(this);
-            }
+            Theme.CheckTheme(this);
 
             //KeyPreview = true;
             //KeyDown += Main_KeyDown;
@@ -95,6 +90,9 @@ namespace RADB
 
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
             txtSearchGames.KeyDown += txtSearchGames_KeyDown;
+
+            txtSearchAchiev.TextChanged += txtSearchAchiev_TextChanged;
+            txtSearchAchiev.KeyDown += txtSearchAchiev_KeyDown;
 
             chkOfficial.CheckedChanged += chkUpdateDataGrid;
             chkPrototype.CheckedChanged += chkUpdateDataGrid;
@@ -607,6 +605,7 @@ namespace RADB
                 lstCheevos = new ListBind<Achievement>(GameExtendBind.AchievementsList);
                 dgvAchievements.DataSource = lstCheevos;
             }
+            lstAchievs = lstCheevos;
         }
 
         private async void btnUpdateInfo_Click(object sender, EventArgs e)
@@ -630,6 +629,52 @@ namespace RADB
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] Game " + GameBind.ID + " Updated!" + Environment.NewLine + lblOutput.Text;
 
             pnlInfoScroll.Focus();
+        }
+
+        private void txtSearchAchiev_TextChanged(object sender, EventArgs e)
+        {
+            ListBind<Achievement> newSearch = new ListBind<Achievement>();
+            foreach (Achievement obj in lstAchievs)
+            {
+                bool title = (obj.Title != null && (obj.Title.IndexOf(txtSearchAchiev.Text, StringComparison.CurrentCultureIgnoreCase) > -1));
+                bool desc = (obj.Description != null && (obj.Description.IndexOf(txtSearchAchiev.Text, StringComparison.CurrentCultureIgnoreCase) > -1));
+
+                if (title || desc)
+                {
+                    newSearch.Add(obj);
+                }
+            }
+
+            int scrollPosition = dgvAchievements.FirstDisplayedScrollingRowIndex;
+
+            lstAchievsSearch = newSearch;
+            dgvAchievements.DataSource = lstAchievsSearch;
+
+            bool maintainScroll = false;
+            if (maintainScroll)
+            {
+                bool txtFocus = txtSearchAchiev.Focused;
+
+                if (dgvAchievements.RowCount > 0 && scrollPosition > -1)
+                {
+                    if (scrollPosition >= dgvAchievements.RowCount)
+                        dgvAchievements.FirstDisplayedScrollingRowIndex = dgvAchievements.RowCount - 1;
+                    else
+                        dgvAchievements.FirstDisplayedScrollingRowIndex = scrollPosition;
+                }
+
+                if (txtFocus) { txtSearchAchiev.Focus(); }
+            }
+
+            dgvAchievements.Refresh();
+        }
+
+        private void txtSearchAchiev_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                dgvAchievements.Focus();
+            }
         }
         #endregion
 

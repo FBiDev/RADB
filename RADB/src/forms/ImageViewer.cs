@@ -27,6 +27,8 @@ namespace RADB
 
             VerticalScroll.SmallChange = 16;
             HorizontalScroll.SmallChange = 16;
+
+            Theme.CheckTheme(this);
         }
 
         void frmImageViewer_FormClosing(object sender, FormClosingEventArgs e)
