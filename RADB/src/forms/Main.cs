@@ -476,7 +476,7 @@ namespace RADB
                     });
                 }
                 catch (Exception) { }
-                //dgv.Refresh();
+                dgv.Refresh();
             }
         }
 
