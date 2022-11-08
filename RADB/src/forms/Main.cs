@@ -10,6 +10,7 @@ using System.IO;
 using System.Threading;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Diagnostics;
 //
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -37,6 +38,13 @@ namespace RADB
 
         public ListBind<Achievement> lstAchievs = new ListBind<Achievement>();
         public ListBind<Achievement> lstAchievsSearch = new ListBind<Achievement>();
+
+        //Method to Fix Bug that make Window slow with much Controls
+        protected override void WndProc(ref Message m)
+        {
+            Debug.WriteLine("msg: {" + m.Msg + "}, wparam:{" + m.WParam + "}, lparam:{" + m.LParam + "}, lparam:{" + m.HWnd + "}");
+            base.WndProc(ref m);
+        }
 
         public Main()
         {
