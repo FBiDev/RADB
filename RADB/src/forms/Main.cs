@@ -42,6 +42,7 @@ namespace RADB
         //Method to Fix Bug that make Window slow with much Controls
         protected override void WndProc(ref Message m)
         {
+            Trace.WriteLine("msg: {" + m.Msg + "}, wparam:{" + m.WParam + "}, lparam:{" + m.LParam + "}, lparam:{" + m.HWnd + "}");
             Debug.WriteLine("msg: {" + m.Msg + "}, wparam:{" + m.WParam + "}, lparam:{" + m.LParam + "}, lparam:{" + m.HWnd + "}");
             base.WndProc(ref m);
         }
@@ -475,7 +476,7 @@ namespace RADB
                     });
                 }
                 catch (Exception) { }
-                dgv.Refresh();
+                //dgv.Refresh();
             }
         }
 
@@ -696,7 +697,7 @@ namespace RADB
                     return;
                 }
 
-                for (int i = 0; i < (dgv.Rows.Count); i++)
+                for (int i = 0; i < (dgv.RowCount); i++)
                 {
                     if (dgv.Rows[i].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), StringComparison.InvariantCultureIgnoreCase))
                     {
