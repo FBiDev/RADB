@@ -9,7 +9,7 @@ namespace RADB
     {
         public FlatTextBoxA()
         {
-
+            //BackgroundColorFocus = BackgroundColor;
         }
 
         public void DarkMode()

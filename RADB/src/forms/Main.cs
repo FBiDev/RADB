@@ -39,14 +39,6 @@ namespace RADB
         public ListBind<Achievement> lstAchievs = new ListBind<Achievement>();
         public ListBind<Achievement> lstAchievsSearch = new ListBind<Achievement>();
 
-        //Method to Fix Bug that make Window slow with much Controls
-        protected override void WndProc(ref Message m)
-        {
-            Trace.WriteLine("msg: {" + m.Msg + "}, wparam:{" + m.WParam + "}, lparam:{" + m.LParam + "}, lparam:{" + m.HWnd + "}");
-            Debug.WriteLine("msg: {" + m.Msg + "}, wparam:{" + m.WParam + "}, lparam:{" + m.LParam + "}, lparam:{" + m.HWnd + "}");
-            base.WndProc(ref m);
-        }
-
         public Main()
         {
             InitializeComponent();
@@ -119,6 +111,8 @@ namespace RADB
             lblUpdateConsoles.Text = string.Empty;
             lblProgressGameList.Text = string.Empty;
             lblUpdateGameList.Text = string.Empty;
+            lblProgressInfo.Text = string.Empty;
+            lblUpdateInfo.Text = string.Empty;
 
             //Internet
             Browser.Load();
@@ -166,19 +160,14 @@ namespace RADB
         FormWindowState? LastWindowState = null;
         private void Main_Resize(object sender, EventArgs e)
         {
-            // When window state changes
             if (WindowState != LastWindowState)
             {
+                LastWindowState = WindowState;
                 if (WindowState == FormWindowState.Maximized)
                 {
-                    // Maximized!
                     LoadGamesIcon();
                 }
-                if (WindowState == FormWindowState.Normal)
-                {
-                    // Restored!
-                }
-                LastWindowState = WindowState;
+                else if (WindowState == FormWindowState.Normal) { }
             }
         }
         #endregion
@@ -457,21 +446,18 @@ namespace RADB
                 {
                     await Task.Run(() =>
                     {
-                        if (dgv.DataSource.IsNull()) { return; }
+                        if (dgv.DataSource.IsNull() || dgv.RowCount == 0) { return; }
 
                         ListBind<Game> list = (ListBind<Game>)(dgv.DataSource);
-
                         int index = dgv.FirstDisplayedScrollingRowIndex;
-                        if (list.Count == 0 || index < 0) { return; }
 
-                        double nItems = Math.Ceiling((float)((float)(this.Size.Height - 293) / 37)) + 3;
+                        int nItems = (int)Math.Ceiling((double)(dgv.Height - 29) / 37) + 12;
 
                         for (int i = index; i < index + nItems; i++)
                         {
-                            if (i >= list.Count) { return; }
+                            if (i >= list.Count) { break; }
 
-                            Game g = list[i];
-                            g.SetImageIconBitmap();
+                            list[i].SetImageIconBitmap();
                         }
                     });
                 }
@@ -595,8 +581,8 @@ namespace RADB
                 picInfoTitle.Location = new Point(pnlInfoTitle.Width / 2 - picInfoTitle.Width / 2, (pnlInfoTitle.Height / 2) - (picInfoTitle.Height / 2));
                 picInfoInGame.Location = new Point(pnlInfoInGame.Width / 2 - picInfoInGame.Width / 2, (pnlInfoInGame.Height / 2) - (picInfoInGame.Height / 2));
                 picInfoBoxArt.Location = new Point(pnlInfoBoxArt.Width / 2 - picInfoBoxArt.Width / 2, (pnlInfoBoxArt.Height / 2) - (picInfoBoxArt.Height / 2));
-
-                gpbInfoAchievements.Location = new Point(gpbInfoAchievements.Location.X, gpbInfo.Height + 9);
+                
+                gpbInfoAchievements.Location = new Point(gpbInfoAchievements.Location.X, (gpbInfo.Height - pnlInfoScroll.VerticalScroll.Value) + 9);
             }
 
             ListBind<Achievement> lstCheevos = new ListBind<Achievement>();
@@ -812,47 +798,38 @@ namespace RADB
             e.Graphics.InterpolationMode = InterpolationMode.Bilinear;
             e.Graphics.PixelOffsetMode = PixelOffsetMode.Default;
 
-            if (e.ColumnIndex == 1 && e.RowIndex != -1)
-            {
-                e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                //e.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
-            }
+            if (e.ColumnIndex != 1 || e.RowHeader()) { return; }
+
+            e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            //e.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
         }
 
         void dgvAchievements_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.RowIndex != -1 && e.Value != null && e.ColumnIndex == 2)
+            if (e.RowHeader() || e.Value == null || e.ColumnIndex != 2) { return; }
+
+            DataGridView dgv = (DataGridView)sender;
+
+            if (!e.Handled)
             {
+                e.Handled = true;
+                e.PaintBackground(e.CellBounds, dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected);
+            }
 
-                DataGridView dgv = (DataGridView)sender;
-                if (!e.Handled)
+            if ((e.PaintParts & DataGridViewPaintParts.ContentForeground) != DataGridViewPaintParts.None)
+            {
+                Achievement ach = (Achievement)dgv.Rows[e.RowIndex].DataBoundItem;
+
+                Rectangle rect1 = new Rectangle(e.CellBounds.Location, e.CellBounds.Size);
+                using (Brush cellForeBrush = new SolidBrush(Theme.CheevoTitle))
                 {
-                    e.Handled = true;
-                    e.PaintBackground(e.CellBounds, dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected);
+                    using (Font f = new Font(e.CellStyle.Font.FontFamily, 10f, FontStyle.Bold))
+                        e.Graphics.DrawString(ach.Title, f, cellForeBrush, rect1);
                 }
-                if ((e.PaintParts & DataGridViewPaintParts.ContentForeground) != DataGridViewPaintParts.None)
+
+                using (Brush cellForeBrush2 = new SolidBrush(Theme.CheevoDescription))
                 {
-                    Achievement ach = (Achievement)dgv.CurrentRow.DataBoundItem;
-
-                    string text = e.Value.ToString();
-                    string textPart1 = text.Substring(0, text.IndexOf(Environment.NewLine));
-                    string textPart2 = text.Substring(text.IndexOf(Environment.NewLine));
-
-                    //Size fullsize = TextRenderer.MeasureText(text, e.CellStyle.Font);
-                    //Size size1 = TextRenderer.MeasureText(textPart1, e.CellStyle.Font);
-                    //Size size2 = TextRenderer.MeasureText(textPart2, e.CellStyle.Font);
-
-                    Rectangle rect1 = new Rectangle(e.CellBounds.Location, e.CellBounds.Size);
-                    using (Brush cellForeBrush = new SolidBrush(Theme.CheevoTitle))
-                    {
-                        e.Graphics.DrawString(textPart1, e.CellStyle.Font, cellForeBrush, rect1);
-                    }
-                    //rect1.X += (fullsize.Width - size2.Width);
-                    //rect1.Width = e.CellBounds.Width;
-                    using (Brush cellForeBrush2 = new SolidBrush(Theme.CheevoDescription))
-                    {
-                        e.Graphics.DrawString(textPart2, e.CellStyle.Font, cellForeBrush2, rect1);
-                    }
+                    e.Graphics.DrawString(Environment.NewLine + Environment.NewLine + "    " + ach.Description, e.CellStyle.Font, cellForeBrush2, rect1);
                 }
             }
         }
@@ -865,7 +842,7 @@ namespace RADB
 
         private void btnRaProfile_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(RA.User_URL("FBiDev"));
+            Process.Start(RA.User_URL("FBiDev"));
         }
 
         private void btnGamePage_Click(object sender, EventArgs e)

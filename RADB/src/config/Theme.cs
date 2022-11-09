@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 //
 using System.Drawing;
 using System.Windows.Forms;
+using GNX;
 
 namespace RADB
 {
@@ -98,102 +99,82 @@ namespace RADB
             f.BackColor = BackColor1;
 
             //Controls
-            foreach (Control ctl in GetAllControlsRecusrvive<Label>(f))
+            foreach (Label ctl in cForm.GetControls<Label>(f))
             {
                 if (ctl.Name == "lblConsoleName" || ctl.Name == "lblConsoleGamesTotal")
-                    ((Label)ctl).ForeColor = FontColor2;
+                    ctl.ForeColor = FontColor2;
             }
 
-            foreach (Control ctl in GetAllOfType<Panel>(f))
+            foreach (Panel ctl in cForm.GetControls<Panel>(f))
             {
                 if (ctl.Name == "pnlInfoImages" || ctl.Name == "pnlInfoBoxArt")
-                    ((Panel)ctl).BackColor = PanelColor2;
+                    ctl.BackColor = PanelColor2;
             }
 
-            foreach (Control ctl in GetAllOfType<RichTextBox>(f))
+            foreach (RichTextBox ctl in cForm.GetControls<RichTextBox>(f))
             {
                 if (ctl.Name == "txtHashes")
                 {
-                    ((RichTextBox)ctl).BackColor = PanelColor2;
-                    ((RichTextBox)ctl).ForeColor = FontColor1;
+                    ctl.BackColor = PanelColor2;
+                    ctl.ForeColor = FontColor1;
                 }
             }
 
-            foreach (Control ctl in GetAllControlsRecusrvive<GNX.PanelBorder>(f))
+            foreach (FlatPanel ctl in cForm.GetControls<FlatPanel>(f))
             {
-                ((GNX.PanelBorder)ctl).BackColor = BackColor2;
-                ((GNX.PanelBorder)ctl).BorderColor = BorderColor;
-                ((GNX.PanelBorder)ctl).ForeColor = FontColor1;
+                ctl.BackColor = BackColor1;
+                ctl.BorderColor = BorderColor;
+                ctl.ForeColor = FontColor1;
+
+                if (ctl.Name == "pnlBottomOutput" || ctl.Name == "pnlGamesConsoleName")
+                {
+                    ctl.BackColor = BackColor2;
+                }
             }
 
-            foreach (Control ctl in GetAllControlsRecusrvive<FlatGroupBox>(f))
+            foreach (FlatGroupBox ctl in cForm.GetControls<FlatGroupBox>(f))
             {
-                ((FlatGroupBox)ctl).ForeColor = FontColor1;
-                ((FlatGroupBox)ctl).BackColor = GroupBoxColor1;
-                ((FlatGroupBox)ctl).BorderColor = BorderColor;
+                ctl.ForeColor = FontColor1;
+                ctl.BackColor = GroupBoxColor1;
+                ctl.BorderColor = BorderColor;
             }
 
-            foreach (Control ctl in GetAllControlsRecusrvive<FlatTabControl.FlatTabControl>(f))
+            foreach (FlatTabControl.FlatTabControl ctl in cForm.GetControls<FlatTabControl.FlatTabControl>(f))
             {
-                ((FlatTabControl.FlatTabControl)ctl).myBackColor = TabBackColor1;
-                ((FlatTabControl.FlatTabControl)ctl).myBackColor2 = TabBackColor2;
-                ((FlatTabControl.FlatTabControl)ctl).myBorderColor = TabBorderColor;
-                foreach (TabPage page in ((FlatTabControl.FlatTabControl)ctl).TabPages)
+                ctl.myBackColor = TabBackColor1;
+                ctl.myBackColor2 = TabBackColor2;
+                ctl.myBorderColor = TabBorderColor;
+
+                foreach (TabPage page in ctl.TabPages)
                 {
                     page.ForeColor = FontColor1;
                     page.BackColor = TabBackColor1;
                 }
             }
 
-            foreach (Control ctl in GetAllControlsRecusrvive<FlatButtonA>(f))
+            foreach (FlatButtonA ctl in cForm.GetControls<FlatButtonA>(f))
             {
                 if (Config.DarkMode)
-                    ((FlatButtonA)ctl).DarkMode();
+                    ctl.DarkMode();
             }
 
-            foreach (Control ctl in GetAllControlsRecusrvive<CheckBoxBlueA>(f))
+            foreach (Control ctl in cForm.GetControls<CheckBoxBlueA>(f))
             {
                 //if (Config.DarkMode)
-                    //((CheckBoxBlueA)ctl).BackColor = ColorTranslator.FromHtml("#353535");
+                //((CheckBoxBlueA)ctl).BackColor = ColorTranslator.FromHtml("#353535");
             }
 
-            foreach (Control ctl in GetAllControlsRecusrvive<FlatTextBoxA>(f))
+            foreach (FlatTextBoxA ctl in cForm.GetControls<FlatTextBoxA>(f))
             {
                 if (Config.DarkMode)
-                    ((FlatTextBoxA)ctl).DarkMode();
+                    ctl.DarkMode();
             }
 
-            foreach (Control ctl in GetAllControlsRecusrvive<FlatDataGridA>(f))
+            foreach (FlatDataGridA ctl in cForm.GetControls<FlatDataGridA>(f))
             {
                 if (Config.DarkMode)
-                    ((FlatDataGridA)ctl).DarkMode();
+                    ctl.DarkMode();
             }
-        }
-
-        private static IEnumerable<T> GetAllOfType<T>(Control rootControl)
-        {
-            return rootControl.Controls.OfType<T>().
-                   Concat(rootControl.Controls.OfType<Control>().SelectMany(GetAllOfType<T>));
-
-        }
-
-        public static IList<T> GetAllControlsRecusrvive<T>(Control control) where T : Control
-        {
-            var rtn = new List<T>();
-            foreach (Control item in control.Controls)
-            {
-                var ctr = item as T;
-                if (ctr != null)
-                {
-                    rtn.Add(ctr);
-                }
-                else
-                {
-                    rtn.AddRange(GetAllControlsRecusrvive<T>(item));
-                }
-
-            }
-            return rtn;
         }
     }
 }

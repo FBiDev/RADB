@@ -155,9 +155,6 @@
     <Compile Include="src\cmodel\Achievement.cs" />
     <Compile Include="src\ctools\Picture.cs" />
     <Compile Include="src\ctools\RA.cs" />
-    <Compile Include="src\custom_controls\PanelNoScrollOnFocus.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="temp\Temp.cs" />
     <EmbeddedResource Include="src\forms\HashViewer.resx">
       <DependentUpon>HashViewer.cs</DependentUpon>

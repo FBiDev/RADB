@@ -13,43 +13,41 @@ namespace RADB
 {
     public partial class FlatGroupBox : GroupBox
     {
-        private Color _BorderColor = ColorTranslator.FromHtml("#A0A0A0");
-
         [Browsable(true)]
         [DefaultValue(typeof(Color), "0xA0A0A0")]
-        public Color BorderColor
-        {
-            get { return _BorderColor; }
-            set { _BorderColor = value; }
-        }
+        public Color BorderColor { get; set; }
 
-        private Color _BackColor = ColorTranslator.FromHtml("#F4F4F4");
+        [DefaultValue(1)]
+        public int BorderSize { get; set; }
+
+        [DefaultValue(true)]
+        public bool BorderRound { get; set; }
+
         [Browsable(true)]
         [DefaultValue(typeof(Color), "0xF4F4F4")]
-        public override Color BackColor
-        {
-            get { return _BackColor; }
-            set { _BackColor = value; }
-        }
+        public override Color BackColor { get; set; }
 
         public FlatGroupBox()
         {
             InitializeComponent();
             DoubleBuffered = true;
+
+            BorderSize = 1;
+            BorderColor = ColorTranslator.FromHtml("#A0A0A0");
+            BorderRound = true;
+            BackColor = ColorTranslator.FromHtml("#F4F4F4");
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.Clear(BackColor);
 
-            
             SizeF strSize = e.Graphics.MeasureString(Text, Font);
             Rectangle RecLegend = new Rectangle(7, 6, (int)strSize.Width, 6);
 
-            //ControlPaint.DrawBorder(e.Graphics, RecInner, BorderColor, ButtonBorderStyle.Solid);
-            e.Graphics.DrawRoundBorder(this, BorderColor, true);
-            ControlPaint.DrawBorder(e.Graphics, RecLegend, BackColor, ButtonBorderStyle.Solid);
+            e.Graphics.DrawRoundBorder(this, BorderColor, BorderSize, BorderRound);
 
+            ControlPaint.DrawBorder(e.Graphics, RecLegend, BackColor, ButtonBorderStyle.Solid);
             e.Graphics.DrawString(Text, Font, new Pen(ForeColor).Brush, 7, 0);
         }
     }
