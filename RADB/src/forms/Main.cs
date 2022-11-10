@@ -2,15 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 //
 using System.Windows.Forms;
-using System.IO;
-using System.Threading;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 //
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -581,7 +580,7 @@ namespace RADB
                 picInfoTitle.Location = new Point(pnlInfoTitle.Width / 2 - picInfoTitle.Width / 2, (pnlInfoTitle.Height / 2) - (picInfoTitle.Height / 2));
                 picInfoInGame.Location = new Point(pnlInfoInGame.Width / 2 - picInfoInGame.Width / 2, (pnlInfoInGame.Height / 2) - (picInfoInGame.Height / 2));
                 picInfoBoxArt.Location = new Point(pnlInfoBoxArt.Width / 2 - picInfoBoxArt.Width / 2, (pnlInfoBoxArt.Height / 2) - (picInfoBoxArt.Height / 2));
-                
+
                 gpbInfoAchievements.Location = new Point(gpbInfoAchievements.Location.X, (gpbInfo.Height - pnlInfoScroll.VerticalScroll.Value) + 9);
             }
 
@@ -821,15 +820,14 @@ namespace RADB
                 Achievement ach = (Achievement)dgv.Rows[e.RowIndex].DataBoundItem;
 
                 Rectangle rect1 = new Rectangle(e.CellBounds.Location, e.CellBounds.Size);
-                using (Brush cellForeBrush = new SolidBrush(Theme.CheevoTitle))
+                //new FontFamily("Verdana")
+                using (Font fnt = new Font(new FontFamily("Verdana"), 9.75f, FontStyle.Regular))
                 {
-                    using (Font f = new Font(e.CellStyle.Font.FontFamily, 10f, FontStyle.Bold))
-                        e.Graphics.DrawString(ach.Title, f, cellForeBrush, rect1);
-                }
+                    using (Brush cellForeBrush = new SolidBrush(Theme.CheevoTitle))
+                        e.Graphics.DrawString(ach.Title, fnt, cellForeBrush, rect1);
 
-                using (Brush cellForeBrush2 = new SolidBrush(Theme.CheevoDescription))
-                {
-                    e.Graphics.DrawString(Environment.NewLine + Environment.NewLine + "    " + ach.Description, e.CellStyle.Font, cellForeBrush2, rect1);
+                    using (Brush cellForeBrush2 = new SolidBrush(Theme.CheevoDescription))
+                        e.Graphics.DrawString(Environment.NewLine + ach.Description, fnt, cellForeBrush2, rect1);
                 }
             }
         }

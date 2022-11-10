@@ -1,6 +1,6 @@
 ﻿namespace RADB
 {
-    partial class CheckBoxBlueA
+    partial class FlatCheckBoxA
     {
         /// <summary> 
         /// Required designer variable.

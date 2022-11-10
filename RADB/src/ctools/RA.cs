@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 //
-using System.IO;
-using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing;
+using System.IO;
+using System.Threading.Tasks;
 //
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -253,8 +252,7 @@ namespace RADB
                     return pic;
                 });
 
-                cForm.Open<frmImageViewer>();
-                frmImageViewer f = cForm.Get<frmImageViewer>();
+                var f = Forms.Open<ImageViewer>();
                 f.SetImage(pic, GameBadgesSize);
             }
 
@@ -296,8 +294,7 @@ namespace RADB
                     return pic;
                 });
 
-                cForm.Open<frmImageViewer>();
-                frmImageViewer f = cForm.Get<frmImageViewer>();
+                var f = Forms.Open<ImageViewer>();
                 f.SetImage(pic, GameIconSize);
             }
 

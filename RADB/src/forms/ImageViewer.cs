@@ -6,18 +6,18 @@ using System.Windows.Forms;
 
 namespace RADB
 {
-    public partial class frmImageViewer : Form
+    public partial class ImageViewer : Form
     {
-        private Size FormInitialSize;
-        private Size MinimumClientSize = new Size(192, 192);//96*2 x 96*2
-        private Size MaximumClientSize = new Size(1056, 576);//96*11 x 96*6
-        private Size UnitImageSize;
-        private Picture PictureInitial;
-        private Picture PictureSmall;
-        private double zoomFactor = 0.25;
-        private double zoomPercent = 1.0;
+        Size FormInitialSize;
+        Size MinimumClientSize = new Size(192, 192);//96*2 x 96*2
+        Size MaximumClientSize = new Size(1056, 576);//96*11 x 96*6
+        Size UnitImageSize;
+        Picture PictureInitial;
+        Picture PictureSmall;
+        double zoomFactor = 0.25;
+        double zoomPercent = 1.0;
 
-        public frmImageViewer()
+        public ImageViewer()
         {
             InitializeComponent();
             Icon = GNX.cConvert.ToIco(Properties.Resources.iconForm, new Size(250, 250));
@@ -99,7 +99,7 @@ namespace RADB
             SetScrollSize();
         }
 
-        public void SetScrollSize()
+        void SetScrollSize()
         {
             //Add ScrollH space
             int ScrollH = HorizontalScroll.Visible && Height == FormInitialSize.Height ? SystemInformation.HorizontalScrollBarHeight :

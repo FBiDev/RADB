@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 //
-using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing;
+//
 using GNX;
 
 namespace RADB
@@ -28,10 +27,8 @@ namespace RADB
         public static Color TabBackColor2;
         public static Color TabBorderColor;
 
-
         public static Color CheevoTitle = FlatDataGridA.DefaultForeColor;
         public static Color CheevoDescription = FlatDataGridA.DefaultForeColor;
-
 
         public static void CheckTheme(Form f)
         {
@@ -46,13 +43,13 @@ namespace RADB
             }
         }
 
-
         public static void LightMode(Form f)
         {
             BackColor1 = ColorTranslator.FromHtml("#F4F4F4");
             BackColor2 = ColorTranslator.FromHtml("#F4F4F4");
 
             BorderColor = ColorTranslator.FromHtml("#A0A0A0");
+            BorderColor = Color.FromArgb(213, 223, 229);
 
             FontColor1 = ColorTranslator.FromHtml("#000000");
             FontColor2 = ColorTranslator.FromHtml("#4169E1");
@@ -63,7 +60,6 @@ namespace RADB
 
             TabBackColor1 = ColorTranslator.FromHtml("#F4F4F4");
             TabBackColor2 = ColorTranslator.FromHtml("#D4D0C8");
-
 
             TabBorderColor = ColorTranslator.FromHtml("#A0A0A0");
 
@@ -99,81 +95,83 @@ namespace RADB
             f.BackColor = BackColor1;
 
             //Controls
-            foreach (Label ctl in cForm.GetControls<Label>(f))
+            foreach (var c in f.GetControls<Label>())
             {
-                if (ctl.Name == "lblConsoleName" || ctl.Name == "lblConsoleGamesTotal")
-                    ctl.ForeColor = FontColor2;
+                if (c.Name == "lblConsoleName" || c.Name == "lblConsoleGamesTotal")
+                    c.ForeColor = FontColor2;
             }
 
-            foreach (Panel ctl in cForm.GetControls<Panel>(f))
+            foreach (var c in f.GetControls<Panel>())
             {
-                if (ctl.Name == "pnlInfoImages" || ctl.Name == "pnlInfoBoxArt")
-                    ctl.BackColor = PanelColor2;
+                if (c.Name == "pnlInfoImages" || c.Name == "pnlInfoBoxArt")
+                    c.BackColor = PanelColor2;
             }
 
-            foreach (RichTextBox ctl in cForm.GetControls<RichTextBox>(f))
+            foreach (var c in f.GetControls<RichTextBox>())
             {
-                if (ctl.Name == "txtHashes")
+                if (c.Name == "txtHashes")
                 {
-                    ctl.BackColor = PanelColor2;
-                    ctl.ForeColor = FontColor1;
+                    c.BackColor = PanelColor2;
+                    c.ForeColor = FontColor1;
                 }
             }
 
-            foreach (FlatPanel ctl in cForm.GetControls<FlatPanel>(f))
+            foreach (var c in f.GetControls<FlatPanel>())
             {
-                ctl.BackColor = BackColor1;
-                ctl.BorderColor = BorderColor;
-                ctl.ForeColor = FontColor1;
+                c.BackColor = BackColor1;
+                c.BorderColor = BorderColor;
+                c.ForeColor = FontColor1;
 
-                if (ctl.Name == "pnlBottomOutput" || ctl.Name == "pnlGamesConsoleName")
+                if (c.Name == "pnlBottomOutput" || c.Name == "pnlGamesConsoleName")
                 {
-                    ctl.BackColor = BackColor2;
+                    c.BackColor = BackColor2;
                 }
             }
 
-            foreach (FlatGroupBox ctl in cForm.GetControls<FlatGroupBox>(f))
+            foreach (var c in f.GetControls<FlatGroupBox>())
             {
-                ctl.ForeColor = FontColor1;
-                ctl.BackColor = GroupBoxColor1;
-                ctl.BorderColor = BorderColor;
+                c.ForeColor = FontColor1;
+                c.BackColor = GroupBoxColor1;
+                c.BorderColor = BorderColor;
             }
 
-            foreach (FlatTabControl.FlatTabControl ctl in cForm.GetControls<FlatTabControl.FlatTabControl>(f))
+            foreach (var c in f.GetControls<FlatTabControlA>())
             {
-                ctl.myBackColor = TabBackColor1;
-                ctl.myBackColor2 = TabBackColor2;
-                ctl.myBorderColor = TabBorderColor;
+                c.myBackColor = TabBackColor1;
+                c.myBackColor2 = TabBackColor2;
+                c.myBorderColor = TabBorderColor;
 
-                foreach (TabPage page in ctl.TabPages)
+                foreach (TabPage page in c.TabPages)
                 {
                     page.ForeColor = FontColor1;
                     page.BackColor = TabBackColor1;
                 }
             }
 
-            foreach (FlatButtonA ctl in cForm.GetControls<FlatButtonA>(f))
+            foreach (var c in f.GetControls<FlatButtonA>())
             {
                 if (Config.DarkMode)
-                    ctl.DarkMode();
+                    c.DarkMode();
             }
 
-            foreach (Control ctl in cForm.GetControls<CheckBoxBlueA>(f))
-            {
-                //if (Config.DarkMode)
-                //((CheckBoxBlueA)ctl).BackColor = ColorTranslator.FromHtml("#353535");
-            }
-
-            foreach (FlatTextBoxA ctl in cForm.GetControls<FlatTextBoxA>(f))
+            foreach (var c in f.GetControls<FlatCheckBoxA>())
             {
                 if (Config.DarkMode)
-                    ctl.DarkMode();
+                    c.DarkMode();
+                else
+                    c.LightMode();
             }
 
-            foreach (FlatDataGridA ctl in cForm.GetControls<FlatDataGridA>(f))
+            foreach (var c in f.GetControls<FlatTextBoxA>())
             {
                 if (Config.DarkMode)
-                    ctl.DarkMode();
+                    c.DarkMode();
+            }
+
+            foreach (var c in f.GetControls<FlatDataGridA>())
+            {
+                if (Config.DarkMode)
+                    c.DarkMode();
             }
         }
     }

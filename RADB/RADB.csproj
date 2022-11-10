@@ -95,11 +95,11 @@
     <Compile Include="src\ctools\WebClientExtend.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\CheckBoxBlueA.cs">
+    <Compile Include="src\custom_controls\FlatCheckBoxA.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\CheckBoxBlueA.Designer.cs">
-      <DependentUpon>CheckBoxBlueA.cs</DependentUpon>
+    <Compile Include="src\custom_controls\FlatCheckBoxA.Designer.cs">
+      <DependentUpon>FlatCheckBoxA.cs</DependentUpon>
     </Compile>
     <Compile Include="src\custom_controls\FlatButtonA.cs">
       <SubType>Component</SubType>
@@ -115,6 +115,9 @@
     </Compile>
     <Compile Include="src\custom_controls\FlatGroupBox.Designer.cs">
       <DependentUpon>FlatGroupBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\custom_controls\FlatTabControlA.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\custom_controls\FlatTextBoxA.cs">
       <SubType>UserControl</SubType>

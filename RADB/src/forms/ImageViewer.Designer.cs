@@ -1,6 +1,6 @@
 ﻿namespace RADB
 {
-    partial class frmImageViewer
+    partial class ImageViewer
     {
         /// <summary>
         /// Required designer variable.
