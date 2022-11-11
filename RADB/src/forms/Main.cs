@@ -13,12 +13,11 @@ using System.Threading.Tasks;
 //
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RADB.Properties;
 using GNX;
 
 namespace RADB
 {
-    public partial class Main : Form
+    public partial class Main : BaseForm
     {
         #region Init
         private RA RA = new RA();
@@ -41,13 +40,11 @@ namespace RADB
         public Main()
         {
             InitializeComponent();
-            Icon = GNX.cConvert.ToIco(Resources.iconForm, new Size(250, 250));
+            base.Init(this);
 
             Load += Main_Load;
             Shown += Main_Shown;
             Resize += Main_Resize;
-
-            Theme.CheckTheme(this);
 
             //KeyPreview = true;
             //KeyDown += Main_KeyDown;
@@ -820,7 +817,7 @@ namespace RADB
                 Achievement ach = (Achievement)dgv.Rows[e.RowIndex].DataBoundItem;
 
                 Rectangle rect1 = new Rectangle(e.CellBounds.Location, e.CellBounds.Size);
-                //new FontFamily("Verdana")
+
                 using (Font fnt = new Font(new FontFamily("Verdana"), 9.75f, FontStyle.Regular))
                 {
                     using (Brush cellForeBrush = new SolidBrush(Theme.CheevoTitle))
@@ -1018,11 +1015,11 @@ namespace RADB
 
             btnSystemReLogin.Enabled = false;
             btnHashes.Enabled = false;
-            var logged = await Browser.SystemLogin();
+            await Browser.SystemLogin();
             btnSystemReLogin.Enabled = true;
             btnHashes.Enabled = true;
 
-            if (logged)
+            if (Browser.RALogged)
             {
                 lblSystemReLogin.ForeColor = Color.Green;
                 lblSystemReLogin.Text = "logged in!";

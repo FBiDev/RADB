@@ -110,11 +110,14 @@
     <Compile Include="src\custom_controls\FlatDataGridA.Designer.cs">
       <DependentUpon>FlatDataGridA.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\custom_controls\FlatGroupBox.cs">
+    <Compile Include="src\custom_controls\FlatGroupBoxA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatGroupBox.Designer.cs">
-      <DependentUpon>FlatGroupBox.cs</DependentUpon>
+    <Compile Include="src\custom_controls\FlatGroupBoxA.Designer.cs">
+      <DependentUpon>FlatGroupBoxA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\custom_controls\FlatPanelA.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\custom_controls\FlatTabControlA.cs">
       <SubType>Component</SubType>
@@ -122,12 +125,21 @@
     <Compile Include="src\custom_controls\FlatTextBoxA.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\PictureBoxInterpolated.cs">
+    <Compile Include="src\custom_controls\FlatTextBoxA.Designer.cs">
+      <DependentUpon>FlatTextBoxA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\custom_controls\FlatPictureBoxA.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\cdao\ConsoleDao.cs" />
     <Compile Include="src\cdao\GameExtendDao.cs" />
     <Compile Include="src\cdao\GameDao.cs" />
+    <Compile Include="src\forms\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\forms\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\forms\HashViewer.cs">
       <SubType>Form</SubType>
     </Compile>

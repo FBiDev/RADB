@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.picImage = new RADB.PictureBoxInterpolated();
+            this.picImage = new RADB.FlatPictureBoxA();
             ((System.ComponentModel.ISupportInitialize)(this.picImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,6 +62,6 @@
 
         #endregion
 
-        private PictureBoxInterpolated picImage;
+        private FlatPictureBoxA picImage;
     }
 }

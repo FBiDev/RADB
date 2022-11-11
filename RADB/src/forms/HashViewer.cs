@@ -7,21 +7,18 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Threading.Tasks;
 //
-using RADB.Properties;
 using GNX;
 
 namespace RADB
 {
-    public partial class HashViewer : Form
+    public partial class HashViewer : BaseForm
     {
         public HashViewer()
         {
             InitializeComponent();
-            Icon = GNX.cConvert.ToIco(Resources.iconForm, new Size(250, 250));
+            base.Init(this);
 
             txtHashes.KeyDown += HashViewer_KeyDown;
-
-            Theme.CheckTheme(this);
         }
 
         void HashViewer_KeyDown(object sender, KeyEventArgs e)
@@ -34,9 +31,16 @@ namespace RADB
 
         public static async void Open(Game game)
         {
-            HashViewer f = new HashViewer();
-            ActiveForm.BeginInvoke((Action)(() => { f.Hide(); f.ShowDialog(); }));
-            await f.GetHashCode(game);
+            if (Browser.RALogged)
+            {
+                HashViewer f = new HashViewer();
+                ActiveForm.BeginInvoke((Action)(() => { f.Hide(); f.ShowDialog(); }));
+                await f.GetHashCode(game);
+            }
+            else
+            {
+                MessageBox.Show("You not logged in!");
+            }
         }
 
         private async Task GetHashCode(Game game)
@@ -47,25 +51,35 @@ namespace RADB
             var html = await Browser.RALogin.DownloadString(RA.HOST + "linkedhashes.php?g=" + game.ID);
             var ul = html.GetBetween("unique hashes registered for it:<br><br><ul>", "</ul>").HtmlDecode();
 
-            var list = ul.GetBetweenList("<li>", "</li>");
-            list = list.OrderBy(x => x.GetBetween("<b>", "</code>", true).Length).ToList();
-            var lastItem = list.LastOrDefault();
+            var listLi = ul.GetBetweenList("<li>", "</li>");
 
-            foreach (string item in list)
+            var itemObj = new { Title = default(string), Hash = default(string), Labels = default(string), User = default(string) };
+            var listItems = new List<object>().Select(t => itemObj).ToList();
+
+            foreach (string item in listLi)
             {
                 var title = item.GetBetween("<b>", "</b>").Trim();
                 var hash = item.GetBetween("<code>", "</code>").Trim().ToUpper();
 
-                var extra = string.Empty;
+                var labels = string.Empty;
                 var imgs = item.GetBetweenList("labels/", ".");
-                imgs.ForEach(x => extra += "-(" + x + ")");
+                imgs.ForEach(x => labels += "-(" + x + ")");
 
-                var user = item.GetBetween("user/", "'");
-                extra += user != "" ? " - linked by " + user : "";
+                var userLabel = item.GetBetween("user/", "'");
+                var user = userLabel != "" ? " - linked by " + userLabel : "";
 
-                txtHashes.AppendText(title + Environment.NewLine, Theme.CheevoTitle);
-                txtHashes.AppendText(hash, Theme.CheevoDescription);
-                txtHashes.AppendText(extra, txtHashes.ForeColor);
+                listItems.Add(new { Title = title, Hash = hash, Labels = labels, User = user });
+            }
+
+            listItems = listItems.OrderBy(x => (x.Title.Length + x.Labels.Length)).ToList();
+            var lastItem = listItems.LastOrDefault();
+
+            foreach (var item in listItems)
+            {
+                txtHashes.AppendText(item.Title + Environment.NewLine, Theme.CheevoTitle);
+                txtHashes.AppendText(item.Hash, Theme.CheevoDescription, new Font(new FontFamily("Courier New"), txtHashes.Font.Size, txtHashes.Font.Style));
+                txtHashes.AppendText(item.Labels, txtHashes.ForeColor);
+                txtHashes.AppendText(item.User, txtHashes.ForeColor);
 
                 if (item != lastItem)
                 {

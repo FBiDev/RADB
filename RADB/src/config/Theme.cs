@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 //
@@ -128,7 +129,7 @@ namespace RADB
                 }
             }
 
-            foreach (var c in f.GetControls<FlatGroupBox>())
+            foreach (var c in f.GetControls<FlatGroupBoxA>())
             {
                 c.ForeColor = FontColor1;
                 c.BackColor = GroupBoxColor1;

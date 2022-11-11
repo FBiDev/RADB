@@ -50,6 +50,7 @@ namespace RADB
         public static Download dlGameExtendImages = new Download { Overwrite = false, FolderBase = Folder.Images, };
 
         public static WebClientExtend RALogin = new WebClientExtend();
+        public static bool RALogged;
 
         public static void Load()
         {
@@ -67,7 +68,7 @@ namespace RADB
             var values = new NameValueCollection
             {
                 {"_token", token},
-                { "u", "RADatabase" },
+                { "u", "RADatabase1" },
                 { "p", "RADatabase123" }
             };
 
@@ -80,7 +81,8 @@ namespace RADB
             var html2 = await RALogin.DownloadString(RA.HOST);
             var login = html2.GetBetween("request/auth/login", "php");
 
-            return login != ".";
+            RALogged = login != ".";
+            return RALogged;
         }
 
         private static Random rand = new Random();
@@ -90,7 +92,7 @@ namespace RADB
             {
                 string data = string.Empty;
 
-                using (WebClientExtend client = new WebClientExtend())
+                using (var client = new WebClientExtend())
                 {
                     url = addRandomNumber ? url +=
                         (url.IndexOf("?") < 0 ? "?" : "&") + "random=" + rand.Next()

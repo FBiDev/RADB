@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
+//
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace RADB
 {
-    public partial class ImageViewer : Form
+    public partial class ImageViewer : BaseForm
     {
         Size FormInitialSize;
         Size MinimumClientSize = new Size(192, 192);//96*2 x 96*2
@@ -20,15 +22,13 @@ namespace RADB
         public ImageViewer()
         {
             InitializeComponent();
-            Icon = GNX.cConvert.ToIco(Properties.Resources.iconForm, new Size(250, 250));
+            base.Init(this);
 
             MouseWheel += frmImageViewer_MouseWheel;
             FormClosing += frmImageViewer_FormClosing;
 
             VerticalScroll.SmallChange = 16;
             HorizontalScroll.SmallChange = 16;
-
-            Theme.CheckTheme(this);
         }
 
         void frmImageViewer_FormClosing(object sender, FormClosingEventArgs e)

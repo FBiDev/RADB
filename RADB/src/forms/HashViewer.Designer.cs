@@ -42,12 +42,11 @@
             this.txtHashes.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtHashes.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtHashes.Location = new System.Drawing.Point(12, 12);
-            this.txtHashes.Multiline = true;
             this.txtHashes.Name = "txtHashes";
             this.txtHashes.ReadOnly = true;
-            this.txtHashes.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Both;
             this.txtHashes.Size = new System.Drawing.Size(719, 238);
             this.txtHashes.TabIndex = 0;
+            this.txtHashes.Text = "";
             // 
             // picLoaderHash
             // 
@@ -56,7 +55,7 @@
             this.picLoaderHash.Image = global::RADB.Properties.Resources.loader;
             this.picLoaderHash.Location = new System.Drawing.Point(12, 98);
             this.picLoaderHash.Name = "picLoaderHash";
-            this.picLoaderHash.Size = new System.Drawing.Size(702, 52);
+            this.picLoaderHash.Size = new System.Drawing.Size(719, 52);
             this.picLoaderHash.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picLoaderHash.TabIndex = 5;
             this.picLoaderHash.TabStop = false;
@@ -75,7 +74,6 @@
             this.Text = "RA HashViewer";
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderHash)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

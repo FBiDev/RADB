@@ -71,6 +71,9 @@ namespace RADB
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -109,9 +112,6 @@ namespace RADB
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle77 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle78 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle79 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Ttip = new System.Windows.Forms.ToolTip(this.components);
             this.mnuGames = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mniPlayGame = new System.Windows.Forms.ToolStripMenuItem();
@@ -175,7 +175,7 @@ namespace RADB
             this.dataGridViewTextBoxColumn51 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn52 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn53 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pnlBottomOutput = new GNX.FlatPanel();
+            this.pnlBottomOutput = new FlatPanelA();
             this.pnlOutput = new System.Windows.Forms.Panel();
             this.lblOutput = new System.Windows.Forms.Label();
             this.tabMain = new RADB.FlatTabControlA();
@@ -188,8 +188,13 @@ namespace RADB
             this.pgbConsoles = new System.Windows.Forms.ProgressBar();
             this.lblProgressConsoles = new System.Windows.Forms.Label();
             this.dgvConsoles = new RADB.FlatDataGridA();
+            this.cID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cCompany = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cNumGames = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cTotalGames = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGames = new System.Windows.Forms.TabPage();
-            this.pnlFilters = new GNX.FlatPanel();
+            this.pnlFilters = new FlatPanelA();
             this.chkOfficial = new RADB.FlatCheckBoxA();
             this.chkPrototype = new RADB.FlatCheckBoxA();
             this.chkUnlicensed = new RADB.FlatCheckBoxA();
@@ -202,7 +207,7 @@ namespace RADB
             this.chkDemoted = new RADB.FlatCheckBoxA();
             this.lblNotFoundGameList = new System.Windows.Forms.Label();
             this.picLoaderGameList = new System.Windows.Forms.PictureBox();
-            this.pnlGamesConsoleName = new GNX.FlatPanel();
+            this.pnlGamesConsoleName = new FlatPanelA();
             this.lblConsoleGamesTotal = new System.Windows.Forms.Label();
             this.lblConsoleName = new System.Windows.Forms.Label();
             this.txtSearchGames = new RADB.FlatTextBoxA();
@@ -222,10 +227,10 @@ namespace RADB
             this.cNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGameInfo = new System.Windows.Forms.TabPage();
-            this.pnlInfoScroll = new GNX.FlatPanel();
-            this.gpbInfo = new RADB.FlatGroupBox();
+            this.pnlInfoScroll = new FlatPanelA();
+            this.gpbInfo = new RADB.FlatGroupBoxA();
             this.pnlInfoBoxArt = new System.Windows.Forms.Panel();
-            this.picInfoBoxArt = new RADB.PictureBoxInterpolated();
+            this.picInfoBoxArt = new RADB.FlatPictureBoxA();
             this.pnlInfoImages = new System.Windows.Forms.Panel();
             this.pnlInfoInGame = new System.Windows.Forms.Panel();
             this.picInfoInGame = new System.Windows.Forms.PictureBox();
@@ -241,7 +246,7 @@ namespace RADB
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.gpbInfoAchievements = new RADB.FlatGroupBox();
+            this.gpbInfoAchievements = new RADB.FlatGroupBoxA();
             this.txtSearchAchiev = new RADB.FlatTextBoxA();
             this.btnHashes = new RADB.FlatButtonA();
             this.dgvAchievements = new RADB.FlatDataGridA();
@@ -281,11 +286,11 @@ namespace RADB
             this.ghLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabUserInfo = new System.Windows.Forms.TabPage();
             this.lblSystemReLogin = new System.Windows.Forms.Label();
-            this.gpbOverlay = new RADB.FlatGroupBox();
+            this.gpbOverlay = new RADB.FlatGroupBoxA();
             this.pnlUserCheevos = new System.Windows.Forms.Panel();
             this.lblCheevos = new System.Windows.Forms.Label();
             this.lblUserCheevos = new System.Windows.Forms.Label();
-            this.picUserCheevos = new RADB.PictureBoxInterpolated();
+            this.picUserCheevos = new RADB.FlatPictureBoxA();
             this.lblCheevoLoopUpdate = new System.Windows.Forms.Label();
             this.txtUsernameCheevos = new RADB.FlatTextBoxA();
             this.chkUserCheevos = new System.Windows.Forms.CheckBox();
@@ -296,11 +301,6 @@ namespace RADB
             this.picFBiDevIcon = new System.Windows.Forms.PictureBox();
             this.lblAbTitle = new System.Windows.Forms.Label();
             this.lblAbYear = new System.Windows.Forms.Label();
-            this.cID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cCompany = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cNumGames = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cTotalGames = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuGames.SuspendLayout();
             this.mnuGamesToHide.SuspendLayout();
             this.mnuConsoles.SuspendLayout();
@@ -1011,7 +1011,7 @@ namespace RADB
             this.pnlOutput.Controls.Add(this.lblOutput);
             this.pnlOutput.Location = new System.Drawing.Point(2, 2);
             this.pnlOutput.Name = "pnlOutput";
-            this.pnlOutput.Size = new System.Drawing.Size(903, 62);
+            this.pnlOutput.Size = new System.Drawing.Size(902, 62);
             this.pnlOutput.TabIndex = 30;
             // 
             // lblOutput
@@ -1186,6 +1186,55 @@ namespace RADB
             this.dgvConsoles.TabIndex = 0;
             this.dgvConsoles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvConsoles_MouseDown);
             // 
+            // cID
+            // 
+            this.cID.DataPropertyName = "ID";
+            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cID.DefaultCellStyle = dataGridViewCellStyle39;
+            this.cID.HeaderText = "ID";
+            this.cID.Name = "cID";
+            this.cID.ReadOnly = true;
+            this.cID.Width = 45;
+            // 
+            // cCompany
+            // 
+            this.cCompany.DataPropertyName = "Company";
+            this.cCompany.HeaderText = "Company";
+            this.cCompany.Name = "cCompany";
+            this.cCompany.ReadOnly = true;
+            this.cCompany.Width = 85;
+            // 
+            // cName
+            // 
+            this.cName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.cName.DataPropertyName = "Name";
+            this.cName.HeaderText = "Name";
+            this.cName.Name = "cName";
+            this.cName.ReadOnly = true;
+            // 
+            // cNumGames
+            // 
+            this.cNumGames.DataPropertyName = "NumGames";
+            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle40.Format = "N0";
+            dataGridViewCellStyle40.NullValue = null;
+            this.cNumGames.DefaultCellStyle = dataGridViewCellStyle40;
+            this.cNumGames.HeaderText = "Games";
+            this.cNumGames.Name = "cNumGames";
+            this.cNumGames.ReadOnly = true;
+            this.cNumGames.Width = 70;
+            // 
+            // cTotalGames
+            // 
+            this.cTotalGames.DataPropertyName = "TotalGames";
+            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle41.Format = "N0";
+            dataGridViewCellStyle41.NullValue = null;
+            this.cTotalGames.DefaultCellStyle = dataGridViewCellStyle41;
+            this.cTotalGames.HeaderText = "TotalGames";
+            this.cTotalGames.Name = "cTotalGames";
+            this.cTotalGames.ReadOnly = true;
+            // 
             // tabGames
             // 
             this.tabGames.BackColor = System.Drawing.Color.Transparent;
@@ -1231,7 +1280,7 @@ namespace RADB
             this.chkOfficial.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkOfficial.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkOfficial.Checked = true;
-            this.chkOfficial.Location = new System.Drawing.Point(-125, 6);
+            this.chkOfficial.Location = new System.Drawing.Point(18, 6);
             this.chkOfficial.Name = "chkOfficial";
             this.chkOfficial.Size = new System.Drawing.Size(64, 34);
             this.chkOfficial.TabIndex = 13;
@@ -1245,7 +1294,7 @@ namespace RADB
             this.chkPrototype.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkPrototype.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkPrototype.Checked = true;
-            this.chkPrototype.Location = new System.Drawing.Point(-125, 46);
+            this.chkPrototype.Location = new System.Drawing.Point(18, 46);
             this.chkPrototype.Name = "chkPrototype";
             this.chkPrototype.Size = new System.Drawing.Size(64, 34);
             this.chkPrototype.TabIndex = 12;
@@ -1259,7 +1308,7 @@ namespace RADB
             this.chkUnlicensed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkUnlicensed.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkUnlicensed.Checked = true;
-            this.chkUnlicensed.Location = new System.Drawing.Point(-125, 86);
+            this.chkUnlicensed.Location = new System.Drawing.Point(18, 86);
             this.chkUnlicensed.Name = "chkUnlicensed";
             this.chkUnlicensed.Size = new System.Drawing.Size(64, 34);
             this.chkUnlicensed.TabIndex = 11;
@@ -1273,7 +1322,7 @@ namespace RADB
             this.chkDemo.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkDemo.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkDemo.Checked = true;
-            this.chkDemo.Location = new System.Drawing.Point(-125, 127);
+            this.chkDemo.Location = new System.Drawing.Point(18, 127);
             this.chkDemo.Name = "chkDemo";
             this.chkDemo.Size = new System.Drawing.Size(64, 34);
             this.chkDemo.TabIndex = 10;
@@ -1287,7 +1336,7 @@ namespace RADB
             this.chkHack.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkHack.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkHack.Checked = true;
-            this.chkHack.Location = new System.Drawing.Point(-125, 167);
+            this.chkHack.Location = new System.Drawing.Point(18, 167);
             this.chkHack.Name = "chkHack";
             this.chkHack.Size = new System.Drawing.Size(64, 34);
             this.chkHack.TabIndex = 9;
@@ -1301,7 +1350,7 @@ namespace RADB
             this.chkHomebrew.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkHomebrew.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkHomebrew.Checked = true;
-            this.chkHomebrew.Location = new System.Drawing.Point(-125, 207);
+            this.chkHomebrew.Location = new System.Drawing.Point(18, 207);
             this.chkHomebrew.Name = "chkHomebrew";
             this.chkHomebrew.Size = new System.Drawing.Size(64, 34);
             this.chkHomebrew.TabIndex = 8;
@@ -1315,7 +1364,7 @@ namespace RADB
             this.chkWithoutAchievements.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkWithoutAchievements.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkWithoutAchievements.Checked = true;
-            this.chkWithoutAchievements.Location = new System.Drawing.Point(-138, 247);
+            this.chkWithoutAchievements.Location = new System.Drawing.Point(5, 247);
             this.chkWithoutAchievements.Name = "chkWithoutAchievements";
             this.chkWithoutAchievements.Size = new System.Drawing.Size(90, 34);
             this.chkWithoutAchievements.TabIndex = 3;
@@ -1329,7 +1378,7 @@ namespace RADB
             this.chkSubset.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkSubset.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkSubset.Checked = true;
-            this.chkSubset.Location = new System.Drawing.Point(-125, 287);
+            this.chkSubset.Location = new System.Drawing.Point(18, 287);
             this.chkSubset.Name = "chkSubset";
             this.chkSubset.Size = new System.Drawing.Size(64, 34);
             this.chkSubset.TabIndex = 14;
@@ -1343,7 +1392,7 @@ namespace RADB
             this.chkTestKit.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkTestKit.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkTestKit.Checked = true;
-            this.chkTestKit.Location = new System.Drawing.Point(-125, 327);
+            this.chkTestKit.Location = new System.Drawing.Point(18, 327);
             this.chkTestKit.Name = "chkTestKit";
             this.chkTestKit.Size = new System.Drawing.Size(64, 34);
             this.chkTestKit.TabIndex = 15;
@@ -1357,7 +1406,7 @@ namespace RADB
             this.chkDemoted.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkDemoted.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkDemoted.Checked = true;
-            this.chkDemoted.Location = new System.Drawing.Point(-125, 367);
+            this.chkDemoted.Location = new System.Drawing.Point(18, 367);
             this.chkDemoted.Name = "chkDemoted";
             this.chkDemoted.Size = new System.Drawing.Size(64, 34);
             this.chkDemoted.TabIndex = 16;
@@ -2601,55 +2650,6 @@ namespace RADB
             this.lblAbYear.TabIndex = 1;
             this.lblAbYear.Text = "2022";
             // 
-            // cID
-            // 
-            this.cID.DataPropertyName = "ID";
-            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cID.DefaultCellStyle = dataGridViewCellStyle39;
-            this.cID.HeaderText = "ID";
-            this.cID.Name = "cID";
-            this.cID.ReadOnly = true;
-            this.cID.Width = 45;
-            // 
-            // cCompany
-            // 
-            this.cCompany.DataPropertyName = "Company";
-            this.cCompany.HeaderText = "Company";
-            this.cCompany.Name = "cCompany";
-            this.cCompany.ReadOnly = true;
-            this.cCompany.Width = 85;
-            // 
-            // cName
-            // 
-            this.cName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cName.DataPropertyName = "Name";
-            this.cName.HeaderText = "Name";
-            this.cName.Name = "cName";
-            this.cName.ReadOnly = true;
-            // 
-            // cNumGames
-            // 
-            this.cNumGames.DataPropertyName = "NumGames";
-            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle40.Format = "N0";
-            dataGridViewCellStyle40.NullValue = null;
-            this.cNumGames.DefaultCellStyle = dataGridViewCellStyle40;
-            this.cNumGames.HeaderText = "Games";
-            this.cNumGames.Name = "cNumGames";
-            this.cNumGames.ReadOnly = true;
-            this.cNumGames.Width = 70;
-            // 
-            // cTotalGames
-            // 
-            this.cTotalGames.DataPropertyName = "TotalGames";
-            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle41.Format = "N0";
-            dataGridViewCellStyle41.NullValue = null;
-            this.cTotalGames.DefaultCellStyle = dataGridViewCellStyle41;
-            this.cTotalGames.HeaderText = "TotalGames";
-            this.cTotalGames.Name = "cTotalGames";
-            this.cTotalGames.ReadOnly = true;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2735,7 +2735,7 @@ namespace RADB
         private System.Windows.Forms.TabPage tabUserInfo;
         private System.Windows.Forms.Label lblInfoName;
         private System.Windows.Forms.PictureBox picInfoIcon;
-        private FlatGroupBox gpbInfo;
+        private FlatGroupBoxA gpbInfo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel pnlInfoTop;
         private System.Windows.Forms.Label label5;
@@ -2754,8 +2754,8 @@ namespace RADB
         private System.Windows.Forms.PictureBox picInfoTitle;
         private System.Windows.Forms.PictureBox picLoaderConsole;
         private System.Windows.Forms.PictureBox picLoaderGameList;
-        private FlatGroupBox gpbInfoAchievements;
-        private GNX.FlatPanel pnlInfoScroll;
+        private FlatGroupBoxA gpbInfoAchievements;
+        private FlatPanelA pnlInfoScroll;
         private System.Windows.Forms.Panel pnlInfoImages;
         private System.Windows.Forms.PictureBox picInfoInGame;
         private System.Windows.Forms.Panel pnlUserCheevos;
@@ -2770,7 +2770,7 @@ namespace RADB
         private FlatDataGridA dgvGames;
         private FlatButtonA btnUpdateInfo;
         private FlatButtonA btnUserCheevos;
-        private GNX.FlatPanel pnlGamesConsoleName;
+        private FlatPanelA pnlGamesConsoleName;
         private System.Windows.Forms.Label lblConsoleName;
         private System.Windows.Forms.Label lblConsoleGamesTotal;
         private FlatTextBoxA txtSearchGames;
@@ -2782,8 +2782,8 @@ namespace RADB
         private System.Windows.Forms.Label lblCheevoLoopUpdate;
         private System.Windows.Forms.TabPage tabGamesToPlay;
         private System.Windows.Forms.PictureBox picFBiDevIcon;
-        private PictureBoxInterpolated picUserCheevos;
-        private GNX.FlatPanel pnlBottomOutput;
+        private FlatPictureBoxA picUserCheevos;
+        private FlatPanelA pnlBottomOutput;
         private FlatCheckBoxA chkWithoutAchievements;
         private FlatCheckBoxA chkUnlicensed;
         private FlatCheckBoxA chkDemo;
@@ -2811,8 +2811,8 @@ namespace RADB
         private System.Windows.Forms.ToolStripMenuItem mniPlayGame;
         private FlatButtonA btnGamePage;
         private System.Windows.Forms.Label lblInfoAchievements;
-        private FlatGroupBox gpbOverlay;
-        private GNX.FlatPanel pnlFilters;
+        private FlatGroupBoxA gpbOverlay;
+        private FlatPanelA pnlFilters;
         private FlatButtonA btnGameFilters;
         private FlatCheckBoxA chkTestKit;
         private FlatCheckBoxA chkSubset;
@@ -2823,7 +2823,7 @@ namespace RADB
         private FlatButtonA btnSystemReLogin;
         private System.Windows.Forms.Label lblSystemReLogin;
         private System.Windows.Forms.Panel pnlInfoBoxArt;
-        private PictureBoxInterpolated picInfoBoxArt;
+        private FlatPictureBoxA picInfoBoxArt;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
