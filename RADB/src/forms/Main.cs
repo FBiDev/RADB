@@ -572,12 +572,15 @@ namespace RADB
 
                 pnlInfoImages.Height = pnlInfoTitle.Height + 12;
                 pnlInfoBoxArt.Height = pnlInfoImages.Location.Y + pnlInfoImages.Height - 19;
-                gpbInfo.Height = gpbInfo.PreferredSize.Height - 13;
+
+                picInfoBoxArt.MaximumSize = new Size(pnlInfoBoxArt.Width - 12, pnlInfoBoxArt.Height - 12);
+                picInfoBoxArt.ScaleTo(GameExtendBind.ImageBoxArtBitmap);
 
                 picInfoTitle.Location = new Point(pnlInfoTitle.Width / 2 - picInfoTitle.Width / 2, (pnlInfoTitle.Height / 2) - (picInfoTitle.Height / 2));
                 picInfoInGame.Location = new Point(pnlInfoInGame.Width / 2 - picInfoInGame.Width / 2, (pnlInfoInGame.Height / 2) - (picInfoInGame.Height / 2));
                 picInfoBoxArt.Location = new Point(pnlInfoBoxArt.Width / 2 - picInfoBoxArt.Width / 2, (pnlInfoBoxArt.Height / 2) - (picInfoBoxArt.Height / 2));
 
+                gpbInfo.Height = gpbInfo.PreferredSize.Height - 13;
                 gpbInfoAchievements.Location = new Point(gpbInfoAchievements.Location.X, (gpbInfo.Height - pnlInfoScroll.VerticalScroll.Value) + 9);
             }
 
@@ -608,6 +611,7 @@ namespace RADB
                 return;
             }
 
+            txtSearchAchiev.Enabled = false;
             //Download GameExtend
             await RA.DownloadGameExtend(GameBind, Browser.dlGameExtend);
 
@@ -616,6 +620,7 @@ namespace RADB
 
             //Load Game
             await LoadGameExtend();
+            txtSearchAchiev.Enabled = true;
 
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] Game " + GameBind.ID + " Updated!" + Environment.NewLine + lblOutput.Text;
 
