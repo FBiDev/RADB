@@ -65,6 +65,11 @@ namespace RADB
                 var imgs = item.GetBetweenList("labels/", ".");
                 imgs.ForEach(x => labels += "-(" + x + ")");
 
+                if (labels == string.Empty)
+                {
+                    labels = item.GetBetween("</b>", "<br/>").Trim();
+                }
+
                 var userLabel = item.GetBetween("user/", "'");
                 var user = userLabel != "" ? " - linked by " + userLabel : "";
 
@@ -72,8 +77,11 @@ namespace RADB
             }
 
             listItems = listItems.OrderBy(x => (x.Title.Length + x.Labels.Length)).ToList();
-            var lastItem = listItems.LastOrDefault();
 
+            var listItemsMove = listItems.Where(x => (x.Title == "Unlabeled")).ToList();
+            listItemsMove.ForEach(x => listItems.MoveToLast(x));
+
+            var lastItem = listItems.LastOrDefault();
             foreach (var item in listItems)
             {
                 txtHashes.AppendText(item.Title + Environment.NewLine, Theme.CheevoTitle);
@@ -85,6 +93,11 @@ namespace RADB
                 {
                     txtHashes.AppendText(Environment.NewLine + Environment.NewLine, txtHashes.ForeColor);
                 }
+            }
+
+            if (listItems.Empty()) 
+            {
+                txtHashes.Text = "No Hashes Available for this Game";
             }
 
             txtHashes.SelectionStart = 0;

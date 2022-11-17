@@ -68,7 +68,7 @@ namespace RADB
             var values = new NameValueCollection
             {
                 {"_token", token},
-                { "u", "RADatabase1" },
+                { "u", "RADatabase" },
                 { "p", "RADatabase123" }
             };
 
