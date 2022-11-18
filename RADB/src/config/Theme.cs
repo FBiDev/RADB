@@ -96,11 +96,11 @@ namespace RADB
             f.BackColor = BackColor1;
 
             //Controls
-            foreach (var c in f.GetControls<Label>())
-            {
-                if (c.Name == "lblConsoleName" || c.Name == "lblConsoleGamesTotal")
-                    c.ForeColor = FontColor2;
-            }
+            foreach (var c in f.GetControls<FlatLabelA>())
+                c.ForeColor = FontColor1;
+
+            foreach (var c in f.GetControls<FlatLabelB>())
+                c.ForeColor = FontColor2;
 
             foreach (var c in f.GetControls<Panel>())
             {
@@ -117,7 +117,7 @@ namespace RADB
                 }
             }
 
-            foreach (var c in f.GetControls<FlatPanel>())
+            foreach (var c in f.GetControls<FlatPanelA>())
             {
                 c.BackColor = BackColor1;
                 c.BorderColor = BorderColor;

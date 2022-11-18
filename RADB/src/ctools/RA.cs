@@ -92,8 +92,11 @@ namespace RADB
 
             if (await Browser.dlConsoles.Start())
             {
-                await new Console().Delete();
-                await Console.InsertList(await DeserializeConsoles());
+                await Console.DeleteAll();
+
+                List<Console> list = await DeserializeConsoles();
+                if (list.Any())
+                    await Console.InsertList(await DeserializeConsoles());
             }
         }
 
@@ -117,8 +120,10 @@ namespace RADB
                 if (await Browser.dlGames.Start())
                 {
                     await Game.Delete(console.ID);
+
                     List<Game> list = await DeserializeGameList(console);
-                    await Game.InsertList(list);
+                    if (list.Any())
+                        await Game.InsertList(list);
                 }
             });
         }

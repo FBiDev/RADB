@@ -25,6 +25,11 @@ namespace RADB
             return await ConsoleDao.InsertList(list);
         }
 
+        public async static Task<bool> DeleteAll()
+        {
+            return await ConsoleDao.Delete(new Console());
+        }
+
         public async Task<bool> Delete()
         {
             return await ConsoleDao.Delete(this);

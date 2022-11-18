@@ -95,6 +95,12 @@
     <Compile Include="src\ctools\WebClientExtend.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="src\custom_controls\FlatLabelB.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\custom_controls\FlatLabelB.Designer.cs">
+      <DependentUpon>FlatLabelB.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\custom_controls\FlatCheckBoxA.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -116,8 +122,20 @@
     <Compile Include="src\custom_controls\FlatGroupBoxA.Designer.cs">
       <DependentUpon>FlatGroupBoxA.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\custom_controls\FlatLabelA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\custom_controls\FlatLabelA.Designer.cs">
+      <DependentUpon>FlatLabelA.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\custom_controls\FlatPanelA.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\custom_controls\FlatProgressBarA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\custom_controls\FlatProgressBarA.Designer.cs">
+      <DependentUpon>FlatProgressBarA.cs</DependentUpon>
     </Compile>
     <Compile Include="src\custom_controls\FlatTabControlA.cs">
       <SubType>Component</SubType>
