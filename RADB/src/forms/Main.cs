@@ -546,7 +546,7 @@ namespace RADB
             lblInfoName.Text = GameBind.Title + " (" + GameBind.ConsoleName + ")";
             picInfoIcon.Image = GameBind.ImageIconBitmap;
 
-            lblInfoAchievements.Text = GameBind.NumAchievements.ToString() + " Achievements: " + GameBind.Points + " points";
+            lblInfoAchievements.Text = GameBind.NumAchievements.ToString() + " Trophies: " + GameBind.Points + " points";
         }
 
         private async Task LoadGameExtend()
@@ -555,10 +555,10 @@ namespace RADB
 
             GameExtendBind = await GameExtend.Find(GameBind.ID);
 
-            lblInfoDeveloper.Text = GameExtendBind.Developer;
-            lblInfoPublisher.Text = GameExtendBind.Publisher;
-            lblInfoGenre.Text = GameExtendBind.Genre;
-            lblInfoReleased.Text = GameExtendBind.Released;
+            lblInfoDeveloper1.Text = GameExtendBind.Developer;
+            lblInfoPublisher1.Text = GameExtendBind.Publisher;
+            lblInfoGenre1.Text = GameExtendBind.Genre;
+            lblInfoReleased1.Text = GameExtendBind.Released;
 
             GameExtendBind.SetImagesBitmap();
 

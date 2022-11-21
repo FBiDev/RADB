@@ -96,16 +96,16 @@ namespace RADB
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle63 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle70 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle71 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle72 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle73 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle80 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle81 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle64 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle65 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle66 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle67 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle68 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle69 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle72 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle73 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle80 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle81 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle74 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle75 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle76 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -125,56 +125,7 @@ namespace RADB
             this.mniMergeGamesIconBadSize = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuGamesToPlay = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mniRemoveGameToPlay = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewImageColumn3 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewTextBoxColumn25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn29 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn31 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn32 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn33 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn35 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn36 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn37 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn38 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn39 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn40 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewImageColumn4 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewTextBoxColumn41 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn42 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn43 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn44 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn45 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn46 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn47 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewImageColumn5 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewTextBoxColumn48 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn49 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn50 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn51 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn52 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn53 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            
             this.pnlBottomOutput = new RADB.FlatPanelA();
             this.tabMain = new RADB.FlatTabControlA();
             this.tabConsoles = new System.Windows.Forms.TabPage();
@@ -197,9 +148,9 @@ namespace RADB
             this.chkPrototype = new RADB.FlatCheckBoxA();
             this.chkUnlicensed = new RADB.FlatCheckBoxA();
             this.chkDemo = new RADB.FlatCheckBoxA();
+            this.chkWithoutAchievements = new RADB.FlatCheckBoxA();
             this.chkHack = new RADB.FlatCheckBoxA();
             this.chkHomebrew = new RADB.FlatCheckBoxA();
-            this.chkWithoutAchievements = new RADB.FlatCheckBoxA();
             this.chkSubset = new RADB.FlatCheckBoxA();
             this.chkTestKit = new RADB.FlatCheckBoxA();
             this.chkDemoted = new RADB.FlatCheckBoxA();
@@ -235,15 +186,15 @@ namespace RADB
             this.pnlInfoTitle = new System.Windows.Forms.Panel();
             this.picInfoTitle = new System.Windows.Forms.PictureBox();
             this.pnlInfoTop = new System.Windows.Forms.Panel();
-            this.lblInfoReleased = new System.Windows.Forms.Label();
-            this.lblInfoDeveloper = new System.Windows.Forms.Label();
-            this.lblInfoGenre = new System.Windows.Forms.Label();
-            this.lblInfoPublisher = new System.Windows.Forms.Label();
+            this.lblInfoReleased1 = new RADB.FlatLabelA();
+            this.lblInfoDeveloper1 = new RADB.FlatLabelA();
+            this.lblInfoGenre1 = new RADB.FlatLabelA();
+            this.lblInfoPublisher1 = new RADB.FlatLabelA();
             this.picInfoIcon = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblInfoReleased0 = new RADB.FlatLabelA();
+            this.lblInfoDeveloper0 = new RADB.FlatLabelA();
+            this.lblInfoGenre0 = new RADB.FlatLabelA();
+            this.lblInfoPublisher0 = new RADB.FlatLabelA();
             this.gpbInfoAchievements = new RADB.FlatGroupBoxA();
             this.txtSearchAchiev = new RADB.FlatTextBoxA();
             this.btnHashes = new RADB.FlatButtonA();
@@ -263,31 +214,15 @@ namespace RADB
             this.tabGamesToPlay = new System.Windows.Forms.TabPage();
             this.lblNotFoundGamesToPlay = new RADB.FlatLabelA();
             this.dgvGamesToPlay = new RADB.FlatDataGridA();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGamesToHide = new System.Windows.Forms.TabPage();
             this.lblNotFoundGamesToHide = new RADB.FlatLabelA();
             this.dgvGamesToHide = new RADB.FlatDataGridA();
-            this.ghID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghIcon = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ghTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabUserInfo = new System.Windows.Forms.TabPage();
             this.lblSystemReLogin = new RADB.FlatLabelA();
             this.gpbOverlay = new RADB.FlatGroupBoxA();
             this.pnlUserCheevos = new System.Windows.Forms.Panel();
-            this.lblCheevos = new System.Windows.Forms.Label();
-            this.lblUserCheevos = new System.Windows.Forms.Label();
+            this.lblCheevos = new FlatLabelA();
+            this.lblUserCheevos = new FlatLabelA();
             this.picUserCheevos = new RADB.FlatPictureBoxA();
             this.lblCheevoLoopUpdate = new System.Windows.Forms.Label();
             this.txtUsernameCheevos = new RADB.FlatTextBoxA();
@@ -297,10 +232,26 @@ namespace RADB
             this.tabAbout = new System.Windows.Forms.TabPage();
             this.btnRaProfile = new RADB.FlatButtonA();
             this.picFBiDevIcon = new System.Windows.Forms.PictureBox();
-            this.lblAbTitle = new FlatLabelB();
-            this.lblAbYear = new FlatLabelB();
+            this.lblAbTitle = new RADB.FlatLabelB();
+            this.lblAbYear = new RADB.FlatLabelB();
             this.pnlOutput = new System.Windows.Forms.Panel();
             this.lblOutput = new System.Windows.Forms.Label();
+            this.gpID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
+            this.gpTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ghTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuGames.SuspendLayout();
             this.mnuGamesToHide.SuspendLayout();
             this.mnuConsoles.SuspendLayout();
@@ -430,565 +381,6 @@ namespace RADB
             this.mniRemoveGameToPlay.Size = new System.Drawing.Size(193, 22);
             this.mniRemoveGameToPlay.Text = "Remove Game To Play";
             this.mniRemoveGameToPlay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToPlay_MouseDown);
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.DataPropertyName = "ConsoleName";
-            this.dataGridViewTextBoxColumn8.HeaderText = "Console";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn9.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Format = "N0";
-            dataGridViewCellStyle1.NullValue = null;
-            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewTextBoxColumn9.HeaderText = "Achievements";
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.ReadOnly = true;
-            this.dataGridViewTextBoxColumn9.Width = 86;
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn10.DataPropertyName = "Points";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewTextBoxColumn10.HeaderText = "Points";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.ReadOnly = true;
-            this.dataGridViewTextBoxColumn10.Width = 45;
-            // 
-            // dataGridViewTextBoxColumn11
-            // 
-            this.dataGridViewTextBoxColumn11.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn11.DataPropertyName = "NumLeaderboards";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Format = "N0";
-            dataGridViewCellStyle3.NullValue = null;
-            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewTextBoxColumn11.HeaderText = "Leaderboards";
-            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            this.dataGridViewTextBoxColumn11.ReadOnly = true;
-            this.dataGridViewTextBoxColumn11.Width = 83;
-            // 
-            // dataGridViewTextBoxColumn12
-            // 
-            this.dataGridViewTextBoxColumn12.DataPropertyName = "DateModified";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.Format = "dd MMM, yyyy";
-            dataGridViewCellStyle4.NullValue = null;
-            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridViewTextBoxColumn12.HeaderText = "Last Updated";
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            this.dataGridViewTextBoxColumn12.ReadOnly = true;
-            this.dataGridViewTextBoxColumn12.Width = 95;
-            // 
-            // dataGridViewTextBoxColumn13
-            // 
-            this.dataGridViewTextBoxColumn13.DataPropertyName = "DisplayOrder";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn13.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dataGridViewTextBoxColumn13.HeaderText = "Order";
-            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            this.dataGridViewTextBoxColumn13.ReadOnly = true;
-            this.dataGridViewTextBoxColumn13.Width = 62;
-            // 
-            // dataGridViewTextBoxColumn14
-            // 
-            this.dataGridViewTextBoxColumn14.DataPropertyName = "DisplayOrder";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn14.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dataGridViewTextBoxColumn14.HeaderText = "Icon";
-            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            this.dataGridViewTextBoxColumn14.ReadOnly = true;
-            this.dataGridViewTextBoxColumn14.Visible = false;
-            this.dataGridViewTextBoxColumn14.Width = 72;
-            // 
-            // dataGridViewTextBoxColumn15
-            // 
-            this.dataGridViewTextBoxColumn15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn15.DataPropertyName = "DescriptionComplete";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn15.DefaultCellStyle = dataGridViewCellStyle7;
-            this.dataGridViewTextBoxColumn15.HeaderText = "Description";
-            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-            this.dataGridViewTextBoxColumn15.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn16
-            // 
-            this.dataGridViewTextBoxColumn16.DataPropertyName = "Points";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn16.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dataGridViewTextBoxColumn16.HeaderText = "Points";
-            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            this.dataGridViewTextBoxColumn16.ReadOnly = true;
-            this.dataGridViewTextBoxColumn16.Width = 64;
-            // 
-            // dataGridViewTextBoxColumn17
-            // 
-            this.dataGridViewTextBoxColumn17.DataPropertyName = "ID";
-            this.dataGridViewTextBoxColumn17.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            this.dataGridViewTextBoxColumn17.ReadOnly = true;
-            this.dataGridViewTextBoxColumn17.Width = 43;
-            // 
-            // dataGridViewImageColumn2
-            // 
-            this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewImageColumn2.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle9.NullValue")));
-            dataGridViewCellStyle9.Padding = new System.Windows.Forms.Padding(2);
-            this.dataGridViewImageColumn2.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridViewImageColumn2.HeaderText = "Icon";
-            this.dataGridViewImageColumn2.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
-            this.dataGridViewImageColumn2.ReadOnly = true;
-            this.dataGridViewImageColumn2.Width = 36;
-            // 
-            // dataGridViewTextBoxColumn18
-            // 
-            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn18.DataPropertyName = "Title";
-            this.dataGridViewTextBoxColumn18.HeaderText = "Title";
-            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            this.dataGridViewTextBoxColumn18.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn19
-            // 
-            this.dataGridViewTextBoxColumn19.DataPropertyName = "ConsoleName";
-            this.dataGridViewTextBoxColumn19.HeaderText = "Console";
-            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-            this.dataGridViewTextBoxColumn19.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn20
-            // 
-            this.dataGridViewTextBoxColumn20.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn20.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.Format = "N0";
-            dataGridViewCellStyle10.NullValue = null;
-            this.dataGridViewTextBoxColumn20.DefaultCellStyle = dataGridViewCellStyle10;
-            this.dataGridViewTextBoxColumn20.HeaderText = "Achievements";
-            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
-            this.dataGridViewTextBoxColumn20.ReadOnly = true;
-            this.dataGridViewTextBoxColumn20.Width = 86;
-            // 
-            // dataGridViewTextBoxColumn21
-            // 
-            this.dataGridViewTextBoxColumn21.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn21.DataPropertyName = "Points";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.Format = "N0";
-            dataGridViewCellStyle11.NullValue = null;
-            this.dataGridViewTextBoxColumn21.DefaultCellStyle = dataGridViewCellStyle11;
-            this.dataGridViewTextBoxColumn21.HeaderText = "Points";
-            this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
-            this.dataGridViewTextBoxColumn21.ReadOnly = true;
-            this.dataGridViewTextBoxColumn21.Width = 45;
-            // 
-            // dataGridViewTextBoxColumn22
-            // 
-            this.dataGridViewTextBoxColumn22.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn22.DataPropertyName = "NumLeaderboards";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Format = "N0";
-            dataGridViewCellStyle12.NullValue = null;
-            this.dataGridViewTextBoxColumn22.DefaultCellStyle = dataGridViewCellStyle12;
-            this.dataGridViewTextBoxColumn22.HeaderText = "Leaderboards";
-            this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
-            this.dataGridViewTextBoxColumn22.ReadOnly = true;
-            this.dataGridViewTextBoxColumn22.Width = 83;
-            // 
-            // dataGridViewTextBoxColumn23
-            // 
-            this.dataGridViewTextBoxColumn23.DataPropertyName = "DateModified";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle13.Format = "dd MMM, yyyy";
-            dataGridViewCellStyle13.NullValue = null;
-            this.dataGridViewTextBoxColumn23.DefaultCellStyle = dataGridViewCellStyle13;
-            this.dataGridViewTextBoxColumn23.HeaderText = "Last Updated";
-            this.dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
-            this.dataGridViewTextBoxColumn23.ReadOnly = true;
-            this.dataGridViewTextBoxColumn23.Width = 95;
-            // 
-            // dataGridViewTextBoxColumn24
-            // 
-            this.dataGridViewTextBoxColumn24.DataPropertyName = "ID";
-            this.dataGridViewTextBoxColumn24.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
-            this.dataGridViewTextBoxColumn24.ReadOnly = true;
-            this.dataGridViewTextBoxColumn24.Width = 43;
-            // 
-            // dataGridViewImageColumn3
-            // 
-            this.dataGridViewImageColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewImageColumn3.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle14.NullValue")));
-            dataGridViewCellStyle14.Padding = new System.Windows.Forms.Padding(2);
-            this.dataGridViewImageColumn3.DefaultCellStyle = dataGridViewCellStyle14;
-            this.dataGridViewImageColumn3.HeaderText = "Icon";
-            this.dataGridViewImageColumn3.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn3.Name = "dataGridViewImageColumn3";
-            this.dataGridViewImageColumn3.ReadOnly = true;
-            this.dataGridViewImageColumn3.Width = 36;
-            // 
-            // dataGridViewTextBoxColumn25
-            // 
-            this.dataGridViewTextBoxColumn25.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn25.DataPropertyName = "Title";
-            this.dataGridViewTextBoxColumn25.HeaderText = "Title";
-            this.dataGridViewTextBoxColumn25.Name = "dataGridViewTextBoxColumn25";
-            this.dataGridViewTextBoxColumn25.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn26
-            // 
-            this.dataGridViewTextBoxColumn26.DataPropertyName = "ConsoleName";
-            this.dataGridViewTextBoxColumn26.HeaderText = "Console";
-            this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
-            this.dataGridViewTextBoxColumn26.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn27
-            // 
-            this.dataGridViewTextBoxColumn27.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn27.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Format = "N0";
-            dataGridViewCellStyle15.NullValue = null;
-            this.dataGridViewTextBoxColumn27.DefaultCellStyle = dataGridViewCellStyle15;
-            this.dataGridViewTextBoxColumn27.HeaderText = "Achievements";
-            this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
-            this.dataGridViewTextBoxColumn27.ReadOnly = true;
-            this.dataGridViewTextBoxColumn27.Width = 86;
-            // 
-            // dataGridViewTextBoxColumn28
-            // 
-            this.dataGridViewTextBoxColumn28.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn28.DataPropertyName = "Points";
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.Format = "N0";
-            dataGridViewCellStyle16.NullValue = null;
-            this.dataGridViewTextBoxColumn28.DefaultCellStyle = dataGridViewCellStyle16;
-            this.dataGridViewTextBoxColumn28.HeaderText = "Points";
-            this.dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
-            this.dataGridViewTextBoxColumn28.ReadOnly = true;
-            this.dataGridViewTextBoxColumn28.Width = 45;
-            // 
-            // dataGridViewTextBoxColumn29
-            // 
-            this.dataGridViewTextBoxColumn29.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn29.DataPropertyName = "NumLeaderboards";
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.Format = "N0";
-            dataGridViewCellStyle17.NullValue = null;
-            this.dataGridViewTextBoxColumn29.DefaultCellStyle = dataGridViewCellStyle17;
-            this.dataGridViewTextBoxColumn29.HeaderText = "Leaderboards";
-            this.dataGridViewTextBoxColumn29.Name = "dataGridViewTextBoxColumn29";
-            this.dataGridViewTextBoxColumn29.ReadOnly = true;
-            this.dataGridViewTextBoxColumn29.Width = 83;
-            // 
-            // dataGridViewTextBoxColumn30
-            // 
-            this.dataGridViewTextBoxColumn30.DataPropertyName = "DateModified";
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle18.Format = "dd MMM, yyyy";
-            dataGridViewCellStyle18.NullValue = null;
-            this.dataGridViewTextBoxColumn30.DefaultCellStyle = dataGridViewCellStyle18;
-            this.dataGridViewTextBoxColumn30.HeaderText = "Last Updated";
-            this.dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
-            this.dataGridViewTextBoxColumn30.ReadOnly = true;
-            this.dataGridViewTextBoxColumn30.Width = 95;
-            // 
-            // dataGridViewTextBoxColumn31
-            // 
-            this.dataGridViewTextBoxColumn31.DataPropertyName = "ConsoleName";
-            this.dataGridViewTextBoxColumn31.HeaderText = "Console";
-            this.dataGridViewTextBoxColumn31.Name = "dataGridViewTextBoxColumn31";
-            this.dataGridViewTextBoxColumn31.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn32
-            // 
-            this.dataGridViewTextBoxColumn32.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn32.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.Format = "N0";
-            dataGridViewCellStyle19.NullValue = null;
-            this.dataGridViewTextBoxColumn32.DefaultCellStyle = dataGridViewCellStyle19;
-            this.dataGridViewTextBoxColumn32.HeaderText = "Achievements";
-            this.dataGridViewTextBoxColumn32.Name = "dataGridViewTextBoxColumn32";
-            this.dataGridViewTextBoxColumn32.ReadOnly = true;
-            this.dataGridViewTextBoxColumn32.Width = 86;
-            // 
-            // dataGridViewTextBoxColumn33
-            // 
-            this.dataGridViewTextBoxColumn33.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn33.DataPropertyName = "Points";
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.Format = "N0";
-            dataGridViewCellStyle20.NullValue = null;
-            this.dataGridViewTextBoxColumn33.DefaultCellStyle = dataGridViewCellStyle20;
-            this.dataGridViewTextBoxColumn33.HeaderText = "Points";
-            this.dataGridViewTextBoxColumn33.Name = "dataGridViewTextBoxColumn33";
-            this.dataGridViewTextBoxColumn33.ReadOnly = true;
-            this.dataGridViewTextBoxColumn33.Width = 45;
-            // 
-            // dataGridViewTextBoxColumn34
-            // 
-            this.dataGridViewTextBoxColumn34.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn34.DataPropertyName = "NumLeaderboards";
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle21.Format = "N0";
-            dataGridViewCellStyle21.NullValue = null;
-            this.dataGridViewTextBoxColumn34.DefaultCellStyle = dataGridViewCellStyle21;
-            this.dataGridViewTextBoxColumn34.HeaderText = "Leaderboards";
-            this.dataGridViewTextBoxColumn34.Name = "dataGridViewTextBoxColumn34";
-            this.dataGridViewTextBoxColumn34.ReadOnly = true;
-            this.dataGridViewTextBoxColumn34.Width = 83;
-            // 
-            // dataGridViewTextBoxColumn35
-            // 
-            this.dataGridViewTextBoxColumn35.DataPropertyName = "DateModified";
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle22.Format = "dd MMM, yyyy";
-            dataGridViewCellStyle22.NullValue = null;
-            this.dataGridViewTextBoxColumn35.DefaultCellStyle = dataGridViewCellStyle22;
-            this.dataGridViewTextBoxColumn35.HeaderText = "Last Updated";
-            this.dataGridViewTextBoxColumn35.Name = "dataGridViewTextBoxColumn35";
-            this.dataGridViewTextBoxColumn35.ReadOnly = true;
-            this.dataGridViewTextBoxColumn35.Width = 95;
-            // 
-            // dataGridViewTextBoxColumn36
-            // 
-            this.dataGridViewTextBoxColumn36.DataPropertyName = "DisplayOrder";
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn36.DefaultCellStyle = dataGridViewCellStyle23;
-            this.dataGridViewTextBoxColumn36.HeaderText = "Order";
-            this.dataGridViewTextBoxColumn36.Name = "dataGridViewTextBoxColumn36";
-            this.dataGridViewTextBoxColumn36.ReadOnly = true;
-            this.dataGridViewTextBoxColumn36.Width = 62;
-            // 
-            // dataGridViewTextBoxColumn37
-            // 
-            this.dataGridViewTextBoxColumn37.DataPropertyName = "DisplayOrder";
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn37.DefaultCellStyle = dataGridViewCellStyle24;
-            this.dataGridViewTextBoxColumn37.HeaderText = "Icon";
-            this.dataGridViewTextBoxColumn37.Name = "dataGridViewTextBoxColumn37";
-            this.dataGridViewTextBoxColumn37.ReadOnly = true;
-            this.dataGridViewTextBoxColumn37.Visible = false;
-            this.dataGridViewTextBoxColumn37.Width = 72;
-            // 
-            // dataGridViewTextBoxColumn38
-            // 
-            this.dataGridViewTextBoxColumn38.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn38.DataPropertyName = "DescriptionComplete";
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn38.DefaultCellStyle = dataGridViewCellStyle25;
-            this.dataGridViewTextBoxColumn38.HeaderText = "Description";
-            this.dataGridViewTextBoxColumn38.Name = "dataGridViewTextBoxColumn38";
-            this.dataGridViewTextBoxColumn38.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn39
-            // 
-            this.dataGridViewTextBoxColumn39.DataPropertyName = "Points";
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn39.DefaultCellStyle = dataGridViewCellStyle26;
-            this.dataGridViewTextBoxColumn39.HeaderText = "Points";
-            this.dataGridViewTextBoxColumn39.Name = "dataGridViewTextBoxColumn39";
-            this.dataGridViewTextBoxColumn39.ReadOnly = true;
-            this.dataGridViewTextBoxColumn39.Width = 64;
-            // 
-            // dataGridViewTextBoxColumn40
-            // 
-            this.dataGridViewTextBoxColumn40.DataPropertyName = "ID";
-            this.dataGridViewTextBoxColumn40.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn40.Name = "dataGridViewTextBoxColumn40";
-            this.dataGridViewTextBoxColumn40.ReadOnly = true;
-            this.dataGridViewTextBoxColumn40.Width = 43;
-            // 
-            // dataGridViewImageColumn4
-            // 
-            this.dataGridViewImageColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewImageColumn4.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle27.NullValue")));
-            dataGridViewCellStyle27.Padding = new System.Windows.Forms.Padding(2);
-            this.dataGridViewImageColumn4.DefaultCellStyle = dataGridViewCellStyle27;
-            this.dataGridViewImageColumn4.HeaderText = "Icon";
-            this.dataGridViewImageColumn4.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn4.Name = "dataGridViewImageColumn4";
-            this.dataGridViewImageColumn4.ReadOnly = true;
-            this.dataGridViewImageColumn4.Width = 36;
-            // 
-            // dataGridViewTextBoxColumn41
-            // 
-            this.dataGridViewTextBoxColumn41.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn41.DataPropertyName = "Title";
-            this.dataGridViewTextBoxColumn41.HeaderText = "Title";
-            this.dataGridViewTextBoxColumn41.Name = "dataGridViewTextBoxColumn41";
-            this.dataGridViewTextBoxColumn41.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn42
-            // 
-            this.dataGridViewTextBoxColumn42.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn42.DataPropertyName = "ConsoleName";
-            this.dataGridViewTextBoxColumn42.HeaderText = "Console";
-            this.dataGridViewTextBoxColumn42.Name = "dataGridViewTextBoxColumn42";
-            this.dataGridViewTextBoxColumn42.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn43
-            // 
-            this.dataGridViewTextBoxColumn43.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn43.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle28.Format = "N0";
-            dataGridViewCellStyle28.NullValue = null;
-            this.dataGridViewTextBoxColumn43.DefaultCellStyle = dataGridViewCellStyle28;
-            this.dataGridViewTextBoxColumn43.HeaderText = "Achievements";
-            this.dataGridViewTextBoxColumn43.Name = "dataGridViewTextBoxColumn43";
-            this.dataGridViewTextBoxColumn43.ReadOnly = true;
-            this.dataGridViewTextBoxColumn43.Width = 86;
-            // 
-            // dataGridViewTextBoxColumn44
-            // 
-            this.dataGridViewTextBoxColumn44.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn44.DataPropertyName = "Points";
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle29.Format = "N0";
-            dataGridViewCellStyle29.NullValue = null;
-            this.dataGridViewTextBoxColumn44.DefaultCellStyle = dataGridViewCellStyle29;
-            this.dataGridViewTextBoxColumn44.HeaderText = "Points";
-            this.dataGridViewTextBoxColumn44.Name = "dataGridViewTextBoxColumn44";
-            this.dataGridViewTextBoxColumn44.ReadOnly = true;
-            this.dataGridViewTextBoxColumn44.Width = 45;
-            // 
-            // dataGridViewTextBoxColumn45
-            // 
-            this.dataGridViewTextBoxColumn45.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn45.DataPropertyName = "NumLeaderboards";
-            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle30.Format = "N0";
-            dataGridViewCellStyle30.NullValue = null;
-            this.dataGridViewTextBoxColumn45.DefaultCellStyle = dataGridViewCellStyle30;
-            this.dataGridViewTextBoxColumn45.HeaderText = "Leaderboards";
-            this.dataGridViewTextBoxColumn45.Name = "dataGridViewTextBoxColumn45";
-            this.dataGridViewTextBoxColumn45.ReadOnly = true;
-            this.dataGridViewTextBoxColumn45.Width = 83;
-            // 
-            // dataGridViewTextBoxColumn46
-            // 
-            this.dataGridViewTextBoxColumn46.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn46.DataPropertyName = "DateModified";
-            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle31.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle31.Format = "dd MMM, yyyy";
-            dataGridViewCellStyle31.NullValue = null;
-            this.dataGridViewTextBoxColumn46.DefaultCellStyle = dataGridViewCellStyle31;
-            this.dataGridViewTextBoxColumn46.HeaderText = "Last Updated";
-            this.dataGridViewTextBoxColumn46.Name = "dataGridViewTextBoxColumn46";
-            this.dataGridViewTextBoxColumn46.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn47
-            // 
-            this.dataGridViewTextBoxColumn47.DataPropertyName = "ID";
-            this.dataGridViewTextBoxColumn47.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn47.Name = "dataGridViewTextBoxColumn47";
-            this.dataGridViewTextBoxColumn47.ReadOnly = true;
-            this.dataGridViewTextBoxColumn47.Width = 43;
-            // 
-            // dataGridViewImageColumn5
-            // 
-            this.dataGridViewImageColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewImageColumn5.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle32.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle32.NullValue")));
-            dataGridViewCellStyle32.Padding = new System.Windows.Forms.Padding(2);
-            this.dataGridViewImageColumn5.DefaultCellStyle = dataGridViewCellStyle32;
-            this.dataGridViewImageColumn5.HeaderText = "Icon";
-            this.dataGridViewImageColumn5.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn5.Name = "dataGridViewImageColumn5";
-            this.dataGridViewImageColumn5.ReadOnly = true;
-            this.dataGridViewImageColumn5.Width = 36;
-            // 
-            // dataGridViewTextBoxColumn48
-            // 
-            this.dataGridViewTextBoxColumn48.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn48.DataPropertyName = "Title";
-            this.dataGridViewTextBoxColumn48.HeaderText = "Title";
-            this.dataGridViewTextBoxColumn48.Name = "dataGridViewTextBoxColumn48";
-            this.dataGridViewTextBoxColumn48.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn49
-            // 
-            this.dataGridViewTextBoxColumn49.DataPropertyName = "ConsoleName";
-            this.dataGridViewTextBoxColumn49.HeaderText = "Console";
-            this.dataGridViewTextBoxColumn49.Name = "dataGridViewTextBoxColumn49";
-            this.dataGridViewTextBoxColumn49.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn50
-            // 
-            this.dataGridViewTextBoxColumn50.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn50.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle33.Format = "N0";
-            dataGridViewCellStyle33.NullValue = null;
-            this.dataGridViewTextBoxColumn50.DefaultCellStyle = dataGridViewCellStyle33;
-            this.dataGridViewTextBoxColumn50.HeaderText = "Achievements";
-            this.dataGridViewTextBoxColumn50.Name = "dataGridViewTextBoxColumn50";
-            this.dataGridViewTextBoxColumn50.ReadOnly = true;
-            this.dataGridViewTextBoxColumn50.Width = 86;
-            // 
-            // dataGridViewTextBoxColumn51
-            // 
-            this.dataGridViewTextBoxColumn51.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn51.DataPropertyName = "Points";
-            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle34.Format = "N0";
-            dataGridViewCellStyle34.NullValue = null;
-            this.dataGridViewTextBoxColumn51.DefaultCellStyle = dataGridViewCellStyle34;
-            this.dataGridViewTextBoxColumn51.HeaderText = "Points";
-            this.dataGridViewTextBoxColumn51.Name = "dataGridViewTextBoxColumn51";
-            this.dataGridViewTextBoxColumn51.ReadOnly = true;
-            this.dataGridViewTextBoxColumn51.Width = 45;
-            // 
-            // dataGridViewTextBoxColumn52
-            // 
-            this.dataGridViewTextBoxColumn52.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn52.DataPropertyName = "NumLeaderboards";
-            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle35.Format = "N0";
-            dataGridViewCellStyle35.NullValue = null;
-            this.dataGridViewTextBoxColumn52.DefaultCellStyle = dataGridViewCellStyle35;
-            this.dataGridViewTextBoxColumn52.HeaderText = "Leaderboards";
-            this.dataGridViewTextBoxColumn52.Name = "dataGridViewTextBoxColumn52";
-            this.dataGridViewTextBoxColumn52.ReadOnly = true;
-            this.dataGridViewTextBoxColumn52.Width = 83;
-            // 
-            // dataGridViewTextBoxColumn53
-            // 
-            this.dataGridViewTextBoxColumn53.DataPropertyName = "DateModified";
-            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle36.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle36.Format = "dd MMM, yyyy";
-            dataGridViewCellStyle36.NullValue = null;
-            this.dataGridViewTextBoxColumn53.DefaultCellStyle = dataGridViewCellStyle36;
-            this.dataGridViewTextBoxColumn53.HeaderText = "Last Updated";
-            this.dataGridViewTextBoxColumn53.Name = "dataGridViewTextBoxColumn53";
-            this.dataGridViewTextBoxColumn53.ReadOnly = true;
-            this.dataGridViewTextBoxColumn53.Width = 95;
             // 
             // pnlBottomOutput
             // 
@@ -1233,9 +625,9 @@ namespace RADB
             this.pnlFilters.Controls.Add(this.chkPrototype);
             this.pnlFilters.Controls.Add(this.chkUnlicensed);
             this.pnlFilters.Controls.Add(this.chkDemo);
+            this.pnlFilters.Controls.Add(this.chkWithoutAchievements);
             this.pnlFilters.Controls.Add(this.chkHack);
             this.pnlFilters.Controls.Add(this.chkHomebrew);
-            this.pnlFilters.Controls.Add(this.chkWithoutAchievements);
             this.pnlFilters.Controls.Add(this.chkSubset);
             this.pnlFilters.Controls.Add(this.chkTestKit);
             this.pnlFilters.Controls.Add(this.chkDemoted);
@@ -1254,7 +646,7 @@ namespace RADB
             this.chkOfficial.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkOfficial.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkOfficial.Checked = true;
-            this.chkOfficial.Location = new System.Drawing.Point(18, 6);
+            this.chkOfficial.Location = new System.Drawing.Point(18, 47);
             this.chkOfficial.Name = "chkOfficial";
             this.chkOfficial.Size = new System.Drawing.Size(64, 34);
             this.chkOfficial.TabIndex = 13;
@@ -1268,7 +660,7 @@ namespace RADB
             this.chkPrototype.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkPrototype.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkPrototype.Checked = true;
-            this.chkPrototype.Location = new System.Drawing.Point(18, 46);
+            this.chkPrototype.Location = new System.Drawing.Point(18, 87);
             this.chkPrototype.Name = "chkPrototype";
             this.chkPrototype.Size = new System.Drawing.Size(64, 34);
             this.chkPrototype.TabIndex = 12;
@@ -1282,7 +674,7 @@ namespace RADB
             this.chkUnlicensed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkUnlicensed.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkUnlicensed.Checked = true;
-            this.chkUnlicensed.Location = new System.Drawing.Point(18, 86);
+            this.chkUnlicensed.Location = new System.Drawing.Point(18, 127);
             this.chkUnlicensed.Name = "chkUnlicensed";
             this.chkUnlicensed.Size = new System.Drawing.Size(64, 34);
             this.chkUnlicensed.TabIndex = 11;
@@ -1296,10 +688,24 @@ namespace RADB
             this.chkDemo.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkDemo.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkDemo.Checked = true;
-            this.chkDemo.Location = new System.Drawing.Point(18, 127);
+            this.chkDemo.Location = new System.Drawing.Point(18, 167);
             this.chkDemo.Name = "chkDemo";
             this.chkDemo.Size = new System.Drawing.Size(64, 34);
             this.chkDemo.TabIndex = 10;
+            // 
+            // chkWithoutAchievements
+            // 
+            this.chkWithoutAchievements._Legend = "No Trophy";
+            this.chkWithoutAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkWithoutAchievements.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.chkWithoutAchievements.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.chkWithoutAchievements.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.chkWithoutAchievements.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.chkWithoutAchievements.Checked = true;
+            this.chkWithoutAchievements.Location = new System.Drawing.Point(18, 7);
+            this.chkWithoutAchievements.Name = "chkWithoutAchievements";
+            this.chkWithoutAchievements.Size = new System.Drawing.Size(64, 34);
+            this.chkWithoutAchievements.TabIndex = 3;
             // 
             // chkHack
             // 
@@ -1310,7 +716,7 @@ namespace RADB
             this.chkHack.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkHack.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkHack.Checked = true;
-            this.chkHack.Location = new System.Drawing.Point(18, 167);
+            this.chkHack.Location = new System.Drawing.Point(18, 207);
             this.chkHack.Name = "chkHack";
             this.chkHack.Size = new System.Drawing.Size(64, 34);
             this.chkHack.TabIndex = 9;
@@ -1324,24 +730,10 @@ namespace RADB
             this.chkHomebrew.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.chkHomebrew.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkHomebrew.Checked = true;
-            this.chkHomebrew.Location = new System.Drawing.Point(18, 207);
+            this.chkHomebrew.Location = new System.Drawing.Point(18, 247);
             this.chkHomebrew.Name = "chkHomebrew";
             this.chkHomebrew.Size = new System.Drawing.Size(64, 34);
             this.chkHomebrew.TabIndex = 8;
-            // 
-            // chkWithoutAchievements
-            // 
-            this.chkWithoutAchievements._Legend = "No Achievement";
-            this.chkWithoutAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkWithoutAchievements.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkWithoutAchievements.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkWithoutAchievements.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkWithoutAchievements.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            this.chkWithoutAchievements.Checked = true;
-            this.chkWithoutAchievements.Location = new System.Drawing.Point(5, 247);
-            this.chkWithoutAchievements.Name = "chkWithoutAchievements";
-            this.chkWithoutAchievements.Size = new System.Drawing.Size(90, 34);
-            this.chkWithoutAchievements.TabIndex = 3;
             // 
             // chkSubset
             // 
@@ -1619,7 +1011,7 @@ namespace RADB
             dataGridViewCellStyle48.Format = "N0";
             dataGridViewCellStyle48.NullValue = null;
             this.gNumAchievements.DefaultCellStyle = dataGridViewCellStyle48;
-            this.gNumAchievements.HeaderText = "Cheevos";
+            this.gNumAchievements.HeaderText = "Trophies";
             this.gNumAchievements.Name = "gNumAchievements";
             this.gNumAchievements.ReadOnly = true;
             this.gNumAchievements.Width = 80;
@@ -1781,63 +1173,63 @@ namespace RADB
             // 
             this.pnlInfoTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlInfoTop.Controls.Add(this.lblInfoReleased);
-            this.pnlInfoTop.Controls.Add(this.lblInfoDeveloper);
-            this.pnlInfoTop.Controls.Add(this.lblInfoGenre);
-            this.pnlInfoTop.Controls.Add(this.lblInfoPublisher);
+            this.pnlInfoTop.Controls.Add(this.lblInfoReleased1);
+            this.pnlInfoTop.Controls.Add(this.lblInfoDeveloper1);
+            this.pnlInfoTop.Controls.Add(this.lblInfoGenre1);
+            this.pnlInfoTop.Controls.Add(this.lblInfoPublisher1);
             this.pnlInfoTop.Controls.Add(this.picInfoIcon);
-            this.pnlInfoTop.Controls.Add(this.label5);
-            this.pnlInfoTop.Controls.Add(this.label1);
-            this.pnlInfoTop.Controls.Add(this.label4);
-            this.pnlInfoTop.Controls.Add(this.label3);
+            this.pnlInfoTop.Controls.Add(this.lblInfoReleased0);
+            this.pnlInfoTop.Controls.Add(this.lblInfoDeveloper0);
+            this.pnlInfoTop.Controls.Add(this.lblInfoGenre0);
+            this.pnlInfoTop.Controls.Add(this.lblInfoPublisher0);
             this.pnlInfoTop.Location = new System.Drawing.Point(12, 19);
             this.pnlInfoTop.Name = "pnlInfoTop";
             this.pnlInfoTop.Size = new System.Drawing.Size(540, 96);
             this.pnlInfoTop.TabIndex = 9;
             // 
-            // lblInfoReleased
+            // lblInfoReleased1
             // 
-            this.lblInfoReleased.AutoSize = true;
-            this.lblInfoReleased.Location = new System.Drawing.Point(190, 78);
-            this.lblInfoReleased.Margin = new System.Windows.Forms.Padding(6);
-            this.lblInfoReleased.Name = "lblInfoReleased";
-            this.lblInfoReleased.Size = new System.Drawing.Size(52, 13);
-            this.lblInfoReleased.TabIndex = 12;
-            this.lblInfoReleased.Text = "Released";
-            this.lblInfoReleased.UseMnemonic = false;
+            this.lblInfoReleased1.AutoSize = true;
+            this.lblInfoReleased1.Location = new System.Drawing.Point(190, 76);
+            this.lblInfoReleased1.Margin = new System.Windows.Forms.Padding(4);
+            this.lblInfoReleased1.MinimumSize = new System.Drawing.Size(48, 16);
+            this.lblInfoReleased1.Name = "lblInfoReleased1";
+            this.lblInfoReleased1.Size = new System.Drawing.Size(53, 16);
+            this.lblInfoReleased1.TabIndex = 12;
+            this.lblInfoReleased1.Text = "Released";
             // 
-            // lblInfoDeveloper
+            // lblInfoDeveloper1
             // 
-            this.lblInfoDeveloper.AutoSize = true;
-            this.lblInfoDeveloper.Location = new System.Drawing.Point(190, 3);
-            this.lblInfoDeveloper.Margin = new System.Windows.Forms.Padding(6);
-            this.lblInfoDeveloper.Name = "lblInfoDeveloper";
-            this.lblInfoDeveloper.Size = new System.Drawing.Size(56, 13);
-            this.lblInfoDeveloper.TabIndex = 9;
-            this.lblInfoDeveloper.Text = "Developer";
-            this.lblInfoDeveloper.UseMnemonic = false;
+            this.lblInfoDeveloper1.AutoSize = true;
+            this.lblInfoDeveloper1.Location = new System.Drawing.Point(190, 4);
+            this.lblInfoDeveloper1.Margin = new System.Windows.Forms.Padding(4);
+            this.lblInfoDeveloper1.MinimumSize = new System.Drawing.Size(48, 16);
+            this.lblInfoDeveloper1.Name = "lblInfoDeveloper1";
+            this.lblInfoDeveloper1.Size = new System.Drawing.Size(60, 16);
+            this.lblInfoDeveloper1.TabIndex = 9;
+            this.lblInfoDeveloper1.Text = "Developer";
             // 
-            // lblInfoGenre
+            // lblInfoGenre1
             // 
-            this.lblInfoGenre.AutoSize = true;
-            this.lblInfoGenre.Location = new System.Drawing.Point(190, 53);
-            this.lblInfoGenre.Margin = new System.Windows.Forms.Padding(6);
-            this.lblInfoGenre.Name = "lblInfoGenre";
-            this.lblInfoGenre.Size = new System.Drawing.Size(36, 13);
-            this.lblInfoGenre.TabIndex = 11;
-            this.lblInfoGenre.Text = "Genre";
-            this.lblInfoGenre.UseMnemonic = false;
+            this.lblInfoGenre1.AutoSize = true;
+            this.lblInfoGenre1.Location = new System.Drawing.Point(190, 52);
+            this.lblInfoGenre1.Margin = new System.Windows.Forms.Padding(4);
+            this.lblInfoGenre1.MinimumSize = new System.Drawing.Size(48, 16);
+            this.lblInfoGenre1.Name = "lblInfoGenre1";
+            this.lblInfoGenre1.Size = new System.Drawing.Size(48, 16);
+            this.lblInfoGenre1.TabIndex = 11;
+            this.lblInfoGenre1.Text = "Genre";
             // 
-            // lblInfoPublisher
+            // lblInfoPublisher1
             // 
-            this.lblInfoPublisher.AutoSize = true;
-            this.lblInfoPublisher.Location = new System.Drawing.Point(190, 28);
-            this.lblInfoPublisher.Margin = new System.Windows.Forms.Padding(6);
-            this.lblInfoPublisher.Name = "lblInfoPublisher";
-            this.lblInfoPublisher.Size = new System.Drawing.Size(50, 13);
-            this.lblInfoPublisher.TabIndex = 10;
-            this.lblInfoPublisher.Text = "Publisher";
-            this.lblInfoPublisher.UseMnemonic = false;
+            this.lblInfoPublisher1.AutoSize = true;
+            this.lblInfoPublisher1.Location = new System.Drawing.Point(190, 28);
+            this.lblInfoPublisher1.Margin = new System.Windows.Forms.Padding(4);
+            this.lblInfoPublisher1.MinimumSize = new System.Drawing.Size(48, 16);
+            this.lblInfoPublisher1.Name = "lblInfoPublisher1";
+            this.lblInfoPublisher1.Size = new System.Drawing.Size(56, 16);
+            this.lblInfoPublisher1.TabIndex = 10;
+            this.lblInfoPublisher1.Text = "Publisher";
             // 
             // picInfoIcon
             // 
@@ -1849,45 +1241,49 @@ namespace RADB
             this.picInfoIcon.TabIndex = 4;
             this.picInfoIcon.TabStop = false;
             // 
-            // label5
+            // lblInfoReleased0
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(109, 78);
-            this.label5.Margin = new System.Windows.Forms.Padding(6);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Released:";
+            this.lblInfoReleased0.AutoSize = true;
+            this.lblInfoReleased0.Location = new System.Drawing.Point(112, 76);
+            this.lblInfoReleased0.Margin = new System.Windows.Forms.Padding(4);
+            this.lblInfoReleased0.MinimumSize = new System.Drawing.Size(48, 16);
+            this.lblInfoReleased0.Name = "lblInfoReleased0";
+            this.lblInfoReleased0.Size = new System.Drawing.Size(56, 16);
+            this.lblInfoReleased0.TabIndex = 8;
+            this.lblInfoReleased0.Text = "Released:";
             // 
-            // label1
+            // lblInfoDeveloper0
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(105, 3);
-            this.label1.Margin = new System.Windows.Forms.Padding(6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Developer:";
+            this.lblInfoDeveloper0.AutoSize = true;
+            this.lblInfoDeveloper0.Location = new System.Drawing.Point(105, 4);
+            this.lblInfoDeveloper0.Margin = new System.Windows.Forms.Padding(4);
+            this.lblInfoDeveloper0.MinimumSize = new System.Drawing.Size(48, 16);
+            this.lblInfoDeveloper0.Name = "lblInfoDeveloper0";
+            this.lblInfoDeveloper0.Size = new System.Drawing.Size(63, 16);
+            this.lblInfoDeveloper0.TabIndex = 5;
+            this.lblInfoDeveloper0.Text = "Developer:";
             // 
-            // label4
+            // lblInfoGenre0
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(125, 53);
-            this.label4.Margin = new System.Windows.Forms.Padding(6);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(39, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Genre:";
+            this.lblInfoGenre0.AutoSize = true;
+            this.lblInfoGenre0.Location = new System.Drawing.Point(127, 52);
+            this.lblInfoGenre0.Margin = new System.Windows.Forms.Padding(4);
+            this.lblInfoGenre0.MinimumSize = new System.Drawing.Size(48, 16);
+            this.lblInfoGenre0.Name = "lblInfoGenre0";
+            this.lblInfoGenre0.Size = new System.Drawing.Size(48, 16);
+            this.lblInfoGenre0.TabIndex = 7;
+            this.lblInfoGenre0.Text = "Genre:";
             // 
-            // label3
+            // lblInfoPublisher0
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(111, 28);
-            this.label3.Margin = new System.Windows.Forms.Padding(6);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Publisher:";
+            this.lblInfoPublisher0.AutoSize = true;
+            this.lblInfoPublisher0.Location = new System.Drawing.Point(109, 28);
+            this.lblInfoPublisher0.Margin = new System.Windows.Forms.Padding(4);
+            this.lblInfoPublisher0.MinimumSize = new System.Drawing.Size(48, 16);
+            this.lblInfoPublisher0.Name = "lblInfoPublisher0";
+            this.lblInfoPublisher0.Size = new System.Drawing.Size(59, 16);
+            this.lblInfoPublisher0.TabIndex = 6;
+            this.lblInfoPublisher0.Text = "Publisher:";
             // 
             // gpbInfoAchievements
             // 
@@ -1902,11 +1298,11 @@ namespace RADB
             this.gpbInfoAchievements.Size = new System.Drawing.Size(876, 151);
             this.gpbInfoAchievements.TabIndex = 5;
             this.gpbInfoAchievements.TabStop = false;
-            this.gpbInfoAchievements.Text = "Achievements";
+            this.gpbInfoAchievements.Text = "Trophies";
             // 
             // txtSearchAchiev
             // 
-            this.txtSearchAchiev.LabelText = "Search Achievement";
+            this.txtSearchAchiev.LabelText = "Search Trophy";
             this.txtSearchAchiev.Location = new System.Drawing.Point(688, 16);
             this.txtSearchAchiev.Name = "txtSearchAchiev";
             this.txtSearchAchiev.Size = new System.Drawing.Size(182, 34);
@@ -2031,9 +1427,9 @@ namespace RADB
             this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoAchievements.Location = new System.Drawing.Point(218, 23);
             this.lblInfoAchievements.Name = "lblInfoAchievements";
-            this.lblInfoAchievements.Size = new System.Drawing.Size(183, 24);
+            this.lblInfoAchievements.Size = new System.Drawing.Size(146, 24);
             this.lblInfoAchievements.TabIndex = 35;
-            this.lblInfoAchievements.Text = "0 Achievements: 0 points";
+            this.lblInfoAchievements.Text = "0 Trophies: 0 points";
             this.lblInfoAchievements.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblInfoName
@@ -2141,14 +1537,14 @@ namespace RADB
             dataGridViewCellStyle63.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvGamesToPlay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle63;
             this.dgvGamesToPlay.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewImageColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn6,
-            this.dataGridViewTextBoxColumn7});
+            this.gpID,
+            this.gpIconBitmap,
+            this.gpTitle,
+            this.gpConsole,
+            this.gpNumAchievements,
+            this.gpPoints,
+            this.gpNumLeaderboards,
+            this.gpLastUpdated});
             dataGridViewCellStyle70.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle70.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle70.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2172,97 +1568,6 @@ namespace RADB
             this.dgvGamesToPlay.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToPlay.TabIndex = 3;
             this.dgvGamesToPlay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvGamesToPlay_MouseDown);
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "ID";
-            dataGridViewCellStyle64.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle64;
-            this.dataGridViewTextBoxColumn1.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 45;
-            // 
-            // dataGridViewImageColumn1
-            // 
-            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewImageColumn1.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle65.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle65.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle65.NullValue")));
-            dataGridViewCellStyle65.Padding = new System.Windows.Forms.Padding(2);
-            this.dataGridViewImageColumn1.DefaultCellStyle = dataGridViewCellStyle65;
-            this.dataGridViewImageColumn1.HeaderText = "Icon";
-            this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
-            this.dataGridViewImageColumn1.ReadOnly = true;
-            this.dataGridViewImageColumn1.Width = 36;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "Title";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Title";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "ConsoleName";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Console";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle66.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle66.Format = "N0";
-            dataGridViewCellStyle66.NullValue = null;
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle66;
-            this.dataGridViewTextBoxColumn4.HeaderText = "Cheevos";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Width = 80;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Points";
-            dataGridViewCellStyle67.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle67.Format = "N0";
-            dataGridViewCellStyle67.NullValue = null;
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle67;
-            this.dataGridViewTextBoxColumn5.HeaderText = "Points";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            this.dataGridViewTextBoxColumn5.Width = 65;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "NumLeaderboards";
-            dataGridViewCellStyle68.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle68.Format = "N0";
-            dataGridViewCellStyle68.NullValue = null;
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle68;
-            this.dataGridViewTextBoxColumn6.HeaderText = "Scores";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            this.dataGridViewTextBoxColumn6.Width = 70;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.DataPropertyName = "DateModified";
-            dataGridViewCellStyle69.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle69.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle69.Format = "dd MMM, yyyy";
-            dataGridViewCellStyle69.NullValue = null;
-            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle69;
-            this.dataGridViewTextBoxColumn7.HeaderText = "Last Updated";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
-            this.dataGridViewTextBoxColumn7.Width = 105;
             // 
             // tabGamesToHide
             // 
@@ -2304,12 +1609,12 @@ namespace RADB
             this.dgvGamesToHide.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle73;
             this.dgvGamesToHide.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ghID,
-            this.ghIcon,
+            this.ghIconBitmap,
             this.ghTitle,
             this.ghConsole,
-            this.ghAchievements,
+            this.ghNumAchievements,
             this.ghPoints,
-            this.ghLeaderboards,
+            this.ghNumLeaderboards,
             this.ghLastUpdated});
             dataGridViewCellStyle80.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle80.BackColor = System.Drawing.Color.White;
@@ -2334,97 +1639,6 @@ namespace RADB
             this.dgvGamesToHide.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToHide.TabIndex = 2;
             this.dgvGamesToHide.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvGamesToHide_MouseDown);
-            // 
-            // ghID
-            // 
-            this.ghID.DataPropertyName = "ID";
-            dataGridViewCellStyle74.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ghID.DefaultCellStyle = dataGridViewCellStyle74;
-            this.ghID.HeaderText = "ID";
-            this.ghID.Name = "ghID";
-            this.ghID.ReadOnly = true;
-            this.ghID.Width = 45;
-            // 
-            // ghIcon
-            // 
-            this.ghIcon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ghIcon.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle75.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle75.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle75.NullValue")));
-            dataGridViewCellStyle75.Padding = new System.Windows.Forms.Padding(2);
-            this.ghIcon.DefaultCellStyle = dataGridViewCellStyle75;
-            this.ghIcon.HeaderText = "Icon";
-            this.ghIcon.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.ghIcon.Name = "ghIcon";
-            this.ghIcon.ReadOnly = true;
-            this.ghIcon.Width = 36;
-            // 
-            // ghTitle
-            // 
-            this.ghTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ghTitle.DataPropertyName = "Title";
-            this.ghTitle.HeaderText = "Title";
-            this.ghTitle.Name = "ghTitle";
-            this.ghTitle.ReadOnly = true;
-            // 
-            // ghConsole
-            // 
-            this.ghConsole.DataPropertyName = "ConsoleName";
-            this.ghConsole.HeaderText = "Console";
-            this.ghConsole.Name = "ghConsole";
-            this.ghConsole.ReadOnly = true;
-            // 
-            // ghAchievements
-            // 
-            this.ghAchievements.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ghAchievements.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle76.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle76.Format = "N0";
-            dataGridViewCellStyle76.NullValue = null;
-            this.ghAchievements.DefaultCellStyle = dataGridViewCellStyle76;
-            this.ghAchievements.HeaderText = "Cheevos";
-            this.ghAchievements.Name = "ghAchievements";
-            this.ghAchievements.ReadOnly = true;
-            this.ghAchievements.Width = 80;
-            // 
-            // ghPoints
-            // 
-            this.ghPoints.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ghPoints.DataPropertyName = "Points";
-            dataGridViewCellStyle77.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle77.Format = "N0";
-            dataGridViewCellStyle77.NullValue = null;
-            this.ghPoints.DefaultCellStyle = dataGridViewCellStyle77;
-            this.ghPoints.HeaderText = "Points";
-            this.ghPoints.Name = "ghPoints";
-            this.ghPoints.ReadOnly = true;
-            this.ghPoints.Width = 65;
-            // 
-            // ghLeaderboards
-            // 
-            this.ghLeaderboards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ghLeaderboards.DataPropertyName = "NumLeaderboards";
-            dataGridViewCellStyle78.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle78.Format = "N0";
-            dataGridViewCellStyle78.NullValue = null;
-            this.ghLeaderboards.DefaultCellStyle = dataGridViewCellStyle78;
-            this.ghLeaderboards.HeaderText = "Scores";
-            this.ghLeaderboards.Name = "ghLeaderboards";
-            this.ghLeaderboards.ReadOnly = true;
-            this.ghLeaderboards.Width = 70;
-            // 
-            // ghLastUpdated
-            // 
-            this.ghLastUpdated.DataPropertyName = "DateModified";
-            dataGridViewCellStyle79.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle79.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle79.Format = "dd MMM, yyyy";
-            dataGridViewCellStyle79.NullValue = null;
-            this.ghLastUpdated.DefaultCellStyle = dataGridViewCellStyle79;
-            this.ghLastUpdated.HeaderText = "Last Updated";
-            this.ghLastUpdated.Name = "ghLastUpdated";
-            this.ghLastUpdated.ReadOnly = true;
-            this.ghLastUpdated.Width = 105;
             // 
             // tabUserInfo
             // 
@@ -2486,7 +1700,7 @@ namespace RADB
             this.lblCheevos.Name = "lblCheevos";
             this.lblCheevos.Size = new System.Drawing.Size(156, 20);
             this.lblCheevos.TabIndex = 2;
-            this.lblCheevos.Text = "Achievements";
+            this.lblCheevos.Text = "Trophies";
             this.lblCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblUserCheevos
@@ -2550,7 +1764,7 @@ namespace RADB
             this.btnUserCheevos.Name = "btnUserCheevos";
             this.btnUserCheevos.Size = new System.Drawing.Size(146, 24);
             this.btnUserCheevos.TabIndex = 28;
-            this.btnUserCheevos.Text = "Get User Achievements";
+            this.btnUserCheevos.Text = "Get User Trophies";
             this.btnUserCheevos.Click += new System.EventHandler(this.btnUserCheevos_Click);
             // 
             // btnSystemReLogin
@@ -2611,7 +1825,7 @@ namespace RADB
             this.lblAbTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(137)))), ((int)(((byte)(207)))));
             this.lblAbTitle.Location = new System.Drawing.Point(369, 64);
             this.lblAbTitle.Name = "lblAbTitle";
-            this.lblAbTitle.Size = new System.Drawing.Size(173, 30);
+            this.lblAbTitle.Size = new System.Drawing.Size(173, 31);
             this.lblAbTitle.TabIndex = 2;
             this.lblAbTitle.Text = "RA Database 1.0";
             // 
@@ -2623,7 +1837,7 @@ namespace RADB
             this.lblAbYear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(137)))), ((int)(((byte)(207)))));
             this.lblAbYear.Location = new System.Drawing.Point(433, 94);
             this.lblAbYear.Name = "lblAbYear";
-            this.lblAbYear.Size = new System.Drawing.Size(46, 21);
+            this.lblAbYear.Size = new System.Drawing.Size(48, 24);
             this.lblAbYear.TabIndex = 1;
             this.lblAbYear.Text = "2022";
             // 
@@ -2650,6 +1864,188 @@ namespace RADB
             this.lblOutput.Size = new System.Drawing.Size(16, 15);
             this.lblOutput.TabIndex = 29;
             this.lblOutput.Text = "   ";
+            // 
+            // gpID
+            // 
+            this.gpID.DataPropertyName = "ID";
+            dataGridViewCellStyle64.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gpID.DefaultCellStyle = dataGridViewCellStyle64;
+            this.gpID.HeaderText = "ID";
+            this.gpID.Name = "gpID";
+            this.gpID.ReadOnly = true;
+            this.gpID.Width = 45;
+            // 
+            // gpIconBitmap
+            // 
+            this.gpIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.gpIconBitmap.DataPropertyName = "ImageIconBitmap";
+            dataGridViewCellStyle65.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle65.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle65.NullValue")));
+            dataGridViewCellStyle65.Padding = new System.Windows.Forms.Padding(2);
+            this.gpIconBitmap.DefaultCellStyle = dataGridViewCellStyle65;
+            this.gpIconBitmap.HeaderText = "Icon";
+            this.gpIconBitmap.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.gpIconBitmap.Name = "gpIconBitmap";
+            this.gpIconBitmap.ReadOnly = true;
+            this.gpIconBitmap.Width = 36;
+            // 
+            // gpTitle
+            // 
+            this.gpTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.gpTitle.DataPropertyName = "Title";
+            this.gpTitle.HeaderText = "Title";
+            this.gpTitle.Name = "gpTitle";
+            this.gpTitle.ReadOnly = true;
+            // 
+            // gpConsole
+            // 
+            this.gpConsole.DataPropertyName = "ConsoleName";
+            this.gpConsole.HeaderText = "Console";
+            this.gpConsole.Name = "gpConsole";
+            this.gpConsole.ReadOnly = true;
+            // 
+            // gpNumAchievements
+            // 
+            this.gpNumAchievements.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.gpNumAchievements.DataPropertyName = "NumAchievements";
+            dataGridViewCellStyle66.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle66.Format = "N0";
+            dataGridViewCellStyle66.NullValue = null;
+            this.gpNumAchievements.DefaultCellStyle = dataGridViewCellStyle66;
+            this.gpNumAchievements.HeaderText = "Trophies";
+            this.gpNumAchievements.Name = "gpNumAchievements";
+            this.gpNumAchievements.ReadOnly = true;
+            this.gpNumAchievements.Width = 80;
+            // 
+            // gpPoints
+            // 
+            this.gpPoints.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.gpPoints.DataPropertyName = "Points";
+            dataGridViewCellStyle67.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle67.Format = "N0";
+            dataGridViewCellStyle67.NullValue = null;
+            this.gpPoints.DefaultCellStyle = dataGridViewCellStyle67;
+            this.gpPoints.HeaderText = "Points";
+            this.gpPoints.Name = "gpPoints";
+            this.gpPoints.ReadOnly = true;
+            this.gpPoints.Width = 65;
+            // 
+            // gpNumLeaderboards
+            // 
+            this.gpNumLeaderboards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.gpNumLeaderboards.DataPropertyName = "NumLeaderboards";
+            dataGridViewCellStyle68.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle68.Format = "N0";
+            dataGridViewCellStyle68.NullValue = null;
+            this.gpNumLeaderboards.DefaultCellStyle = dataGridViewCellStyle68;
+            this.gpNumLeaderboards.HeaderText = "Scores";
+            this.gpNumLeaderboards.Name = "gpNumLeaderboards";
+            this.gpNumLeaderboards.ReadOnly = true;
+            this.gpNumLeaderboards.Width = 70;
+            // 
+            // gpLastUpdated
+            // 
+            this.gpLastUpdated.DataPropertyName = "DateModified";
+            dataGridViewCellStyle69.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle69.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle69.Format = "dd MMM, yyyy";
+            dataGridViewCellStyle69.NullValue = null;
+            this.gpLastUpdated.DefaultCellStyle = dataGridViewCellStyle69;
+            this.gpLastUpdated.HeaderText = "Last Updated";
+            this.gpLastUpdated.Name = "gpLastUpdated";
+            this.gpLastUpdated.ReadOnly = true;
+            this.gpLastUpdated.Width = 105;
+            // 
+            // ghID
+            // 
+            this.ghID.DataPropertyName = "ID";
+            dataGridViewCellStyle74.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ghID.DefaultCellStyle = dataGridViewCellStyle74;
+            this.ghID.HeaderText = "ID";
+            this.ghID.Name = "ghID";
+            this.ghID.ReadOnly = true;
+            this.ghID.Width = 45;
+            // 
+            // ghIconBitmap
+            // 
+            this.ghIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ghIconBitmap.DataPropertyName = "ImageIconBitmap";
+            dataGridViewCellStyle75.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle75.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle75.NullValue")));
+            dataGridViewCellStyle75.Padding = new System.Windows.Forms.Padding(2);
+            this.ghIconBitmap.DefaultCellStyle = dataGridViewCellStyle75;
+            this.ghIconBitmap.HeaderText = "Icon";
+            this.ghIconBitmap.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.ghIconBitmap.Name = "ghIconBitmap";
+            this.ghIconBitmap.ReadOnly = true;
+            this.ghIconBitmap.Width = 36;
+            // 
+            // ghTitle
+            // 
+            this.ghTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ghTitle.DataPropertyName = "Title";
+            this.ghTitle.HeaderText = "Title";
+            this.ghTitle.Name = "ghTitle";
+            this.ghTitle.ReadOnly = true;
+            // 
+            // ghConsole
+            // 
+            this.ghConsole.DataPropertyName = "ConsoleName";
+            this.ghConsole.HeaderText = "Console";
+            this.ghConsole.Name = "ghConsole";
+            this.ghConsole.ReadOnly = true;
+            // 
+            // ghNumAchievements
+            // 
+            this.ghNumAchievements.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ghNumAchievements.DataPropertyName = "NumAchievements";
+            dataGridViewCellStyle76.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle76.Format = "N0";
+            dataGridViewCellStyle76.NullValue = null;
+            this.ghNumAchievements.DefaultCellStyle = dataGridViewCellStyle76;
+            this.ghNumAchievements.HeaderText = "Trophies";
+            this.ghNumAchievements.Name = "ghNumAchievements";
+            this.ghNumAchievements.ReadOnly = true;
+            this.ghNumAchievements.Width = 80;
+            // 
+            // ghPoints
+            // 
+            this.ghPoints.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ghPoints.DataPropertyName = "Points";
+            dataGridViewCellStyle77.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle77.Format = "N0";
+            dataGridViewCellStyle77.NullValue = null;
+            this.ghPoints.DefaultCellStyle = dataGridViewCellStyle77;
+            this.ghPoints.HeaderText = "Points";
+            this.ghPoints.Name = "ghPoints";
+            this.ghPoints.ReadOnly = true;
+            this.ghPoints.Width = 65;
+            // 
+            // ghNumLeaderboards
+            // 
+            this.ghNumLeaderboards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ghNumLeaderboards.DataPropertyName = "NumLeaderboards";
+            dataGridViewCellStyle78.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle78.Format = "N0";
+            dataGridViewCellStyle78.NullValue = null;
+            this.ghNumLeaderboards.DefaultCellStyle = dataGridViewCellStyle78;
+            this.ghNumLeaderboards.HeaderText = "Scores";
+            this.ghNumLeaderboards.Name = "ghNumLeaderboards";
+            this.ghNumLeaderboards.ReadOnly = true;
+            this.ghNumLeaderboards.Width = 70;
+            // 
+            // ghLastUpdated
+            // 
+            this.ghLastUpdated.DataPropertyName = "DateModified";
+            dataGridViewCellStyle79.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle79.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle79.Format = "dd MMM, yyyy";
+            dataGridViewCellStyle79.NullValue = null;
+            this.ghLastUpdated.DefaultCellStyle = dataGridViewCellStyle79;
+            this.ghLastUpdated.HeaderText = "Last Updated";
+            this.ghLastUpdated.Name = "ghLastUpdated";
+            this.ghLastUpdated.ReadOnly = true;
+            this.ghLastUpdated.Width = 105;
             // 
             // Main
             // 
@@ -2735,15 +2131,15 @@ namespace RADB
         private FlatLabelA lblInfoName;
         private System.Windows.Forms.PictureBox picInfoIcon;
         private FlatGroupBoxA gpbInfo;
-        private System.Windows.Forms.Label label1;
+        private FlatLabelA lblInfoDeveloper0;
         private System.Windows.Forms.Panel pnlInfoTop;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label lblInfoReleased;
-        private System.Windows.Forms.Label lblInfoDeveloper;
-        private System.Windows.Forms.Label lblInfoGenre;
-        private System.Windows.Forms.Label lblInfoPublisher;
+        private FlatLabelA lblInfoReleased0;
+        private FlatLabelA lblInfoGenre0;
+        private FlatLabelA lblInfoPublisher0;
+        private FlatLabelA lblInfoReleased1;
+        private FlatLabelA lblInfoDeveloper1;
+        private FlatLabelA lblInfoGenre1;
+        private FlatLabelA lblInfoPublisher1;
         private FlatLabelA lblNotFoundGameList;
         private FlatLabelA lblNotFoundConsoles;
         private System.Windows.Forms.Panel pnlDownloadInfo;
@@ -2758,9 +2154,9 @@ namespace RADB
         private System.Windows.Forms.Panel pnlInfoImages;
         private System.Windows.Forms.PictureBox picInfoInGame;
         private System.Windows.Forms.Panel pnlUserCheevos;
-        private System.Windows.Forms.Label lblUserCheevos;
+        private FlatLabelA lblUserCheevos;
         private System.Windows.Forms.CheckBox chkUserCheevos;
-        private System.Windows.Forms.Label lblCheevos;
+        private FlatLabelA lblCheevos;
         private System.Windows.Forms.Label lblOutput;
         private System.Windows.Forms.Panel pnlOutput;
         private FlatDataGridA dgvConsoles;
@@ -2823,61 +2219,17 @@ namespace RADB
         private FlatLabelA lblSystemReLogin;
         private System.Windows.Forms.Panel pnlInfoBoxArt;
         private FlatPictureBoxA picInfoBoxArt;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
-        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn23;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn24;
-        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn27;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn28;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn29;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn30;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn31;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn32;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn33;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn34;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn35;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn36;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn37;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn38;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn39;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn40;
-        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn41;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn42;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn43;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn44;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn45;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn46;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn47;
-        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn48;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn49;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn50;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn51;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn52;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn53;
+        
         private FlatTextBoxA txtSearchAchiev;
         private System.Windows.Forms.DataGridViewTextBoxColumn aOrder;
         private System.Windows.Forms.DataGridViewTextBoxColumn aIcon;
         private System.Windows.Forms.DataGridViewTextBoxColumn aDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn aPoints;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cCompany;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cNumGames;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cTotalGames;
         private System.Windows.Forms.DataGridViewTextBoxColumn gID;
         private System.Windows.Forms.DataGridViewImageColumn gIconBitmap;
         private System.Windows.Forms.DataGridViewTextBoxColumn gTitle;
@@ -2886,27 +2238,22 @@ namespace RADB
         private System.Windows.Forms.DataGridViewTextBoxColumn gPoints;
         private System.Windows.Forms.DataGridViewTextBoxColumn cNumLeaderboards;
         private System.Windows.Forms.DataGridViewTextBoxColumn gLastUpdated;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpID;
+        private System.Windows.Forms.DataGridViewImageColumn gpIconBitmap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpConsole;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpNumAchievements;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpPoints;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpNumLeaderboards;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpLastUpdated;
         private System.Windows.Forms.DataGridViewTextBoxColumn ghID;
-        private System.Windows.Forms.DataGridViewImageColumn ghIcon;
+        private System.Windows.Forms.DataGridViewImageColumn ghIconBitmap;
         private System.Windows.Forms.DataGridViewTextBoxColumn ghTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn ghConsole;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ghAchievements;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ghNumAchievements;
         private System.Windows.Forms.DataGridViewTextBoxColumn ghPoints;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ghLeaderboards;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ghNumLeaderboards;
         private System.Windows.Forms.DataGridViewTextBoxColumn ghLastUpdated;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cCompany;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cNumGames;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cTotalGames;
     }
 }
 
