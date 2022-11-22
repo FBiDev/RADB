@@ -66,9 +66,7 @@ namespace RADB
                 imgs.ForEach(x => labels += "-(" + x + ")");
 
                 if (labels == string.Empty)
-                {
-                    labels = item.GetBetween("</b>", "<br/>").Trim();
-                }
+                    labels = "-( unknown )";
 
                 var userLabel = item.GetBetween("user/", "'");
                 var user = userLabel != "" ? " - linked by " + userLabel : "";
@@ -76,10 +74,18 @@ namespace RADB
                 listItems.Add(new { Title = title, Hash = hash, Labels = labels, User = user });
             }
 
-            listItems = listItems.OrderBy(x => (x.Title.Length + x.Labels.Length)).ToList();
+            listItems = listItems.OrderBy(x => x.Labels.Length).ThenBy(x =>
+                x.Title.IndexOf(".") > 0 ? (x.Title.Substring(0, x.Title.LastIndexOf("."))) : x.Title).ToList();
 
-            var listItemsMove = listItems.Where(x => (x.Title == "Unlabeled")).ToList();
-            listItemsMove.ForEach(x => listItems.MoveToLast(x));
+            var mainItems = listItems.Where(x => x.Labels.IndexOf(")-") == -1).ToList();
+            mainItems.Reverse();
+
+            listItems.MoveToFirst(mainItems.Where(x => x.Title.IndexOf(" (Europe)") >= 0));
+            listItems.MoveToFirst(mainItems.Where(x => x.Title.IndexOf(" (Japan)") >= 0));
+            listItems.MoveToFirst(mainItems.Where(x => x.Title.IndexOf(" (USA)") >= 0));
+
+            listItems.MoveToLast(listItems.Where(x => x.Labels.IndexOf("msu1") >= 0));
+            listItems.MoveToLast(listItems.Where(x => x.Title.IndexOf("Unlabeled") >= 0));
 
             var lastItem = listItems.LastOrDefault();
             foreach (var item in listItems)
@@ -95,7 +101,7 @@ namespace RADB
                 }
             }
 
-            if (listItems.Empty()) 
+            if (listItems.Empty())
             {
                 txtHashes.Text = "No Hashes Available for this Game";
             }
