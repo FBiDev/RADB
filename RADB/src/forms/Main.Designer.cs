@@ -127,7 +127,7 @@ namespace RADB
             this.pnlDownloadGameList = new System.Windows.Forms.Panel();
             this.btnUpdateGameList = new RADB.FlatButtonA();
             this.lblUpdateGameList = new RADB.FlatLabelA();
-            this.pgbGameList = new System.Windows.Forms.ProgressBar();
+            this.pgbGameList = new RADB.FlatProgressBarA();
             this.lblProgressGameList = new RADB.FlatLabelA();
             this.dgvGames = new RADB.FlatDataGridA();
             this.gID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -141,19 +141,19 @@ namespace RADB
             this.tabGameInfo = new System.Windows.Forms.TabPage();
             this.pnlInfoScroll = new RADB.FlatPanelA();
             this.gpbInfo = new RADB.FlatGroupBoxA();
-            this.pnlInfoBoxArt = new System.Windows.Forms.Panel();
+            this.pnlInfoBoxArt = new RADB.FlatPanelA();
             this.picInfoBoxArt = new RADB.FlatPictureBoxA();
-            this.pnlInfoImages = new System.Windows.Forms.Panel();
-            this.pnlInfoInGame = new System.Windows.Forms.Panel();
-            this.picInfoInGame = new System.Windows.Forms.PictureBox();
-            this.pnlInfoTitle = new System.Windows.Forms.Panel();
-            this.picInfoTitle = new System.Windows.Forms.PictureBox();
+            this.pnlInfoImages = new RADB.FlatPanelA();
+            this.pnlInfoInGame = new RADB.FlatPanelA();
+            this.picInfoInGame = new RADB.FlatPictureBoxA();
+            this.pnlInfoTitle = new RADB.FlatPanelA();
+            this.picInfoTitle = new RADB.FlatPictureBoxA();
             this.pnlInfoTop = new System.Windows.Forms.Panel();
             this.lblInfoReleased1 = new RADB.FlatLabelA();
             this.lblInfoDeveloper1 = new RADB.FlatLabelA();
             this.lblInfoGenre1 = new RADB.FlatLabelA();
             this.lblInfoPublisher1 = new RADB.FlatLabelA();
-            this.picInfoIcon = new System.Windows.Forms.PictureBox();
+            this.picInfoIcon = new RADB.FlatPictureBoxA();
             this.lblInfoReleased0 = new RADB.FlatLabelA();
             this.lblInfoDeveloper0 = new RADB.FlatLabelA();
             this.lblInfoGenre0 = new RADB.FlatLabelA();
@@ -172,7 +172,7 @@ namespace RADB
             this.pnlDownloadInfo = new System.Windows.Forms.Panel();
             this.btnUpdateInfo = new RADB.FlatButtonA();
             this.lblUpdateInfo = new RADB.FlatLabelA();
-            this.pgbInfo = new System.Windows.Forms.ProgressBar();
+            this.pgbInfo = new RADB.FlatProgressBarA();
             this.lblProgressInfo = new RADB.FlatLabelA();
             this.tabGamesToPlay = new System.Windows.Forms.TabPage();
             this.lblNotFoundGamesToPlay = new RADB.FlatLabelA();
@@ -300,12 +300,12 @@ namespace RADB
             this.mnuGamesToHide.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToHide});
             this.mnuGamesToHide.Name = "ctmHiddenGames";
-            this.mnuGamesToHide.Size = new System.Drawing.Size(195, 26);
+            this.mnuGamesToHide.Size = new System.Drawing.Size(197, 26);
             // 
             // mniRemoveGameToHide
             // 
             this.mniRemoveGameToHide.Name = "mniRemoveGameToHide";
-            this.mniRemoveGameToHide.Size = new System.Drawing.Size(194, 22);
+            this.mniRemoveGameToHide.Size = new System.Drawing.Size(196, 22);
             this.mniRemoveGameToHide.Text = "Remove Game To Hide";
             this.mniRemoveGameToHide.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToHide_MouseDown);
             // 
@@ -336,12 +336,12 @@ namespace RADB
             this.mnuGamesToPlay.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToPlay});
             this.mnuGamesToPlay.Name = "mnuGamesToPlay";
-            this.mnuGamesToPlay.Size = new System.Drawing.Size(192, 26);
+            this.mnuGamesToPlay.Size = new System.Drawing.Size(194, 26);
             // 
             // mniRemoveGameToPlay
             // 
             this.mniRemoveGameToPlay.Name = "mniRemoveGameToPlay";
-            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(191, 22);
+            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(193, 22);
             this.mniRemoveGameToPlay.Text = "Remove Game To Play";
             this.mniRemoveGameToPlay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToPlay_MouseDown);
             // 
@@ -809,6 +809,7 @@ namespace RADB
             this.txtSearchGames.LabelText = "Search Game";
             this.txtSearchGames.Location = new System.Drawing.Point(586, 5);
             this.txtSearchGames.Name = "txtSearchGames";
+            this.txtSearchGames.previousText = "";
             this.txtSearchGames.Size = new System.Drawing.Size(182, 34);
             this.txtSearchGames.TabIndex = 2;
             // 
@@ -1064,6 +1065,7 @@ namespace RADB
             // pnlInfoBoxArt
             // 
             this.pnlInfoBoxArt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.pnlInfoBoxArt.BorderSize = 0;
             this.pnlInfoBoxArt.Controls.Add(this.picInfoBoxArt);
             this.pnlInfoBoxArt.Location = new System.Drawing.Point(558, 19);
             this.pnlInfoBoxArt.Name = "pnlInfoBoxArt";
@@ -1086,6 +1088,7 @@ namespace RADB
             // pnlInfoImages
             // 
             this.pnlInfoImages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.pnlInfoImages.BorderSize = 0;
             this.pnlInfoImages.Controls.Add(this.pnlInfoInGame);
             this.pnlInfoImages.Controls.Add(this.pnlInfoTitle);
             this.pnlInfoImages.Location = new System.Drawing.Point(6, 152);
@@ -1096,6 +1099,7 @@ namespace RADB
             // 
             // pnlInfoInGame
             // 
+            this.pnlInfoInGame.BorderSize = 0;
             this.pnlInfoInGame.Controls.Add(this.picInfoInGame);
             this.pnlInfoInGame.Location = new System.Drawing.Point(280, 6);
             this.pnlInfoInGame.Name = "pnlInfoInGame";
@@ -1116,6 +1120,7 @@ namespace RADB
             // 
             // pnlInfoTitle
             // 
+            this.pnlInfoTitle.BorderSize = 0;
             this.pnlInfoTitle.Controls.Add(this.picInfoTitle);
             this.pnlInfoTitle.Location = new System.Drawing.Point(6, 6);
             this.pnlInfoTitle.Name = "pnlInfoTitle";
@@ -1125,6 +1130,7 @@ namespace RADB
             // picInfoTitle
             // 
             this.picInfoTitle.BackColor = System.Drawing.Color.LightGray;
+            this.picInfoTitle.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picInfoTitle.Location = new System.Drawing.Point(0, 0);
             this.picInfoTitle.Margin = new System.Windows.Forms.Padding(6);
             this.picInfoTitle.MaximumSize = new System.Drawing.Size(260, 240);
@@ -1270,6 +1276,7 @@ namespace RADB
             this.txtSearchAchiev.LabelText = "Search Trophy";
             this.txtSearchAchiev.Location = new System.Drawing.Point(688, 16);
             this.txtSearchAchiev.Name = "txtSearchAchiev";
+            this.txtSearchAchiev.previousText = "";
             this.txtSearchAchiev.Size = new System.Drawing.Size(182, 34);
             this.txtSearchAchiev.TabIndex = 37;
             // 
@@ -1392,7 +1399,7 @@ namespace RADB
             this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoAchievements.Location = new System.Drawing.Point(218, 23);
             this.lblInfoAchievements.Name = "lblInfoAchievements";
-            this.lblInfoAchievements.Size = new System.Drawing.Size(145, 24);
+            this.lblInfoAchievements.Size = new System.Drawing.Size(146, 24);
             this.lblInfoAchievements.TabIndex = 35;
             this.lblInfoAchievements.Text = "0 Trophies: 0 points";
             this.lblInfoAchievements.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1888,6 +1895,7 @@ namespace RADB
             this.txtUsernameCheevos.LabelText = "Username";
             this.txtUsernameCheevos.Location = new System.Drawing.Point(6, 97);
             this.txtUsernameCheevos.Name = "txtUsernameCheevos";
+            this.txtUsernameCheevos.previousText = "";
             this.txtUsernameCheevos.Size = new System.Drawing.Size(221, 34);
             this.txtUsernameCheevos.TabIndex = 30;
             // 
@@ -2089,12 +2097,12 @@ namespace RADB
         private FlatLabelA lblProgressConsoles;
         private FlatProgressBarA pgbConsoles;
         private System.Windows.Forms.Panel pnlDownloadGameList;
-        private System.Windows.Forms.ProgressBar pgbGameList;
+        private FlatProgressBarA pgbGameList;
         private FlatLabelA lblUpdateGameList;
         private FlatLabelA lblProgressGameList;
         private System.Windows.Forms.TabPage tabUserInfo;
         private FlatLabelA lblInfoName;
-        private System.Windows.Forms.PictureBox picInfoIcon;
+        private FlatPictureBoxA picInfoIcon;
         private FlatGroupBoxA gpbInfo;
         private FlatLabelA lblInfoDeveloper0;
         private System.Windows.Forms.Panel pnlInfoTop;
@@ -2110,14 +2118,14 @@ namespace RADB
         private System.Windows.Forms.Panel pnlDownloadInfo;
         private FlatLabelA lblUpdateInfo;
         private FlatLabelA lblProgressInfo;
-        private System.Windows.Forms.ProgressBar pgbInfo;
-        private System.Windows.Forms.PictureBox picInfoTitle;
+        private FlatProgressBarA pgbInfo;
+        private FlatPictureBoxA picInfoTitle;
         private System.Windows.Forms.PictureBox picLoaderConsole;
         private System.Windows.Forms.PictureBox picLoaderGameList;
         private FlatGroupBoxA gpbInfoAchievements;
         private FlatPanelA pnlInfoScroll;
-        private System.Windows.Forms.Panel pnlInfoImages;
-        private System.Windows.Forms.PictureBox picInfoInGame;
+        private FlatPanelA pnlInfoImages;
+        private FlatPictureBoxA picInfoInGame;
         private System.Windows.Forms.Panel pnlUserCheevos;
         private FlatLabelA lblUserCheevos;
         private System.Windows.Forms.CheckBox chkUserCheevos;
@@ -2177,12 +2185,12 @@ namespace RADB
         private FlatCheckBoxA chkTestKit;
         private FlatCheckBoxA chkSubset;
         private FlatCheckBoxA chkDemoted;
-        private System.Windows.Forms.Panel pnlInfoTitle;
-        private System.Windows.Forms.Panel pnlInfoInGame;
+        private FlatPanelA pnlInfoTitle;
+        private FlatPanelA pnlInfoInGame;
         private FlatButtonA btnHashes;
         private FlatButtonA btnSystemReLogin;
         private FlatLabelA lblSystemReLogin;
-        private System.Windows.Forms.Panel pnlInfoBoxArt;
+        private FlatPanelA pnlInfoBoxArt;
         private FlatPictureBoxA picInfoBoxArt;
         
         private FlatTextBoxA txtSearchAchiev;
