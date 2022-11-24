@@ -104,7 +104,7 @@ namespace RADB
 
             foreach (var c in f.GetControls<Panel>())
             {
-                
+
             }
 
             foreach (var c in f.GetControls<RichTextBox>())
@@ -127,8 +127,9 @@ namespace RADB
                     c.BackColor = BackColor2;
                 }
 
-                if (c.Name == "pnlInfoImages" || c.Name == "pnlInfoBoxArt" ||
-                    c.Name == "pnlInfoInGame" || c.Name == "pnlInfoTitle")
+                if (c.Name == "pnlInfoImages" || c.Name == "pnlInfoBoxArt"
+                 || c.Name == "pnlInfoInGame" || c.Name == "pnlInfoTitle"
+                 )
                     c.BackColor = PanelColor2;
             }
 

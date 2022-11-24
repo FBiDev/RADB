@@ -42,6 +42,14 @@ namespace RADB
             InitializeComponent();
             base.Init(this);
 
+            //styles
+            dgvConsoles.Columns.StyleCenter(0);
+            dgvConsoles.Columns.StyleNumber(3, 4);
+
+            dgvGames.Columns.StyleCenter(0);
+            dgvGames.Columns.StyleImage(1);
+            dgvGames.Columns.StyleNumberCenter(4, 5, 6);
+
             Load += Main_Load;
             Shown += Main_Shown;
             Resize += Main_Resize;
@@ -54,6 +62,8 @@ namespace RADB
             dgvConsoles.CellDoubleClick += dgvConsoles_CellDoubleClick;
             dgvConsoles.KeyPress += dgvConsoles_KeyPress;
             dgvConsoles.KeyDown += dgvConsoles_KeyDown;
+
+
 
             dgvGames.AutoGenerateColumns = false;
             dgvGames.DataSourceChanged += dgvGames_DataSourceChanged;
@@ -570,6 +580,7 @@ namespace RADB
 
             {//Scale Boxes
                 pnlInfoTitle.Height = (picInfoTitle.Height > picInfoInGame.Height ? picInfoTitle.Height : picInfoInGame.Height);
+                if (pnlInfoTitle.Height < pnlInfoImages.MinimumSize.Height - 12) pnlInfoTitle.Height = pnlInfoImages.MinimumSize.Height - 12;
                 pnlInfoInGame.Height = pnlInfoTitle.Height;
 
                 pnlInfoImages.Height = pnlInfoTitle.Height + 12;
