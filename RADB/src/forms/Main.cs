@@ -43,12 +43,18 @@ namespace RADB
             base.Init(this);
 
             //styles
-            dgvConsoles.Columns.StyleCenter(0);
-            dgvConsoles.Columns.StyleNumber(3, 4);
+            dgvConsoles.Columns.Format(CellStyle.StringCenter, 0);
+            dgvConsoles.Columns.Format(CellStyle.NumberCenter, 3, 4);
 
-            dgvGames.Columns.StyleCenter(0);
-            dgvGames.Columns.StyleImage(1);
-            dgvGames.Columns.StyleNumberCenter(4, 5, 6);
+            dgvGames.Columns.Format(CellStyle.StringCenter, 0);
+            dgvGames.Columns.Format(CellStyle.Image, 1);
+            dgvGames.Columns.Format(CellStyle.NumberCenter, 4, 5, 6);
+            dgvGames.Columns.Format(CellStyle.DateCenter, 7);
+
+            dgvGamesToHide.Columns.Format(CellStyle.StringCenter, 0);
+            dgvGamesToHide.Columns.Format(CellStyle.Image, 1);
+            dgvGamesToHide.Columns.Format(CellStyle.NumberCenter, 4, 5, 6);
+            dgvGamesToHide.Columns.Format(CellStyle.DateCenter, 7);
 
             Load += Main_Load;
             Shown += Main_Shown;
