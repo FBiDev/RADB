@@ -13,7 +13,7 @@ namespace RADB
 {
     public static class Config
     {
-        public static CultureID Language = CultureID.Brazil_Portuguese;
+        public static CultureID Language = CultureID.UnitedStates_English;
         public static bool Singleton = true;
         public const string SystemName = "RADatabase";
         public static bool Loaded { get; set; }

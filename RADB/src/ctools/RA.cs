@@ -24,6 +24,7 @@ namespace RADB
         //https://s3-eu-west-1.amazonaws.com/i.retroachievements.org
         public static string IMAGE_HOST = "http://media.retroachievements.org/Images/";
         public static string BADGE_HOST = "http://media.retroachievements.org/Badge/";
+        public static string USER_HOST = "http://media.retroachievements.org/UserPic/";
 
         //URLs
         public static string Game_URL(int gameID) { return HOST + "game/" + gameID.ToString(); }
@@ -60,6 +61,13 @@ namespace RADB
             return new DownloadFile(
                 GetURL("API_GetUserProgress.php", "u=" + userName + "&i=" + gameID),
                 (Folder.User + "UserProgress.json"));
+        }
+
+        public DownloadFile API_UserInfo(string userName)
+        {
+            return new DownloadFile(
+                GetURL("API_GetUserSummary.php", "u=" + userName),
+                (Folder.User + "UserInfo.json"));
         }
 
         private static Size GameIconSize { get { return new Size(96, 96); } }
@@ -218,6 +226,29 @@ namespace RADB
                     user = JsonConvert.DeserializeObject<UserProgress>(userData);
                     user.UserName = userName;
                     user.GameID = gameID;
+                }
+                return user;
+            });
+        }
+
+        public async Task<User> GetUserInfo(string userName)
+        {
+            return await Task.Run(async () =>
+            {
+                string userData = await Browser.DownloadString(API_UserInfo(userName).URL, true);
+
+                User user = new User();
+                if (string.IsNullOrWhiteSpace(userData) == false)
+                {
+                    user = JsonConvert.DeserializeObject<User>(userData);
+                    user.Name = user.LastActivity.User;
+                    user.Lastupdate = user.LastActivity.lastupdate;
+
+                    Download dl = new Download();
+                    dl.SetFile(user.UserPicFile);
+                    await (dl.Start());
+
+                    user.SetUserPicBitmap();
                 }
                 return user;
             });

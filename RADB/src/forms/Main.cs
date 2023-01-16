@@ -770,6 +770,27 @@ namespace RADB
             gpbInfoAchievements.Height = gpbInfoAchievements.PreferredSize.Height - 13;
         }
 
+
+        private async void btnGetUserInfo_Click(object sender, EventArgs e)
+        {
+            User user = await RA.GetUserInfo(txtUsername.Text.Trim());
+
+            picUserName.Image = user.UserPicBitmap;
+            lblUserStatus.Text = user.Status;
+            lblUserName.Text = user.Name;
+            lblUserMotto.Text = user.Motto;
+
+            lblUserMemberSince.Text = user.MemberSince.ToString("dd MMM yyyy, HH:mm");
+            lblUserLastActivity.Text = user.Lastupdate.ToString("dd MMM yyyy, HH:mm");
+            lblUserAccountType.Text = user.AccountType;
+
+            lblUserHCPoints.Text = user.TotalPoints.ToString() + " (" + user.TotalTruePoints + ")";
+            lblUserRank.Text = user.GetRank;
+            lblUserRetroRatio.Text = user.RetroRatio.ToString();
+            lblUserSoftPoints.Text = user.TotalSoftcorePoints.ToString();
+            lblUserSoftRank.Text = user.GetSoftRank;
+        }
+
         private bool UserCheevosIsRunning = false;
         private static UserProgress LastUser = new UserProgress();
         private async void btnUserCheevos_Click(object sender, EventArgs e)
@@ -787,7 +808,7 @@ namespace RADB
 
             do
             {
-                UserProgress user = await RA.GetUserProgress(txtUsernameCheevos.Text, GameBind.ID);
+                UserProgress user = await RA.GetUserProgress(txtUsername.Text, GameBind.ID);
                 picUserCheevos.Image = GameBind.ImageIconBitmap;
                 lblUserCheevos.Text = user.NumAchieved + " / " + GameBind.NumAchievements;
 
@@ -1054,5 +1075,7 @@ namespace RADB
                 lblSystemReLogin.Text = "not logged in";
             }
         }
+
+
     }
 }
