@@ -1818,6 +1818,7 @@ namespace RADB
             // 
             // btnGetUserInfo
             // 
+            this.btnGetUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.btnGetUserInfo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.btnGetUserInfo.FlatAppearance.BorderSize = 0;
             this.btnGetUserInfo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
@@ -1842,6 +1843,8 @@ namespace RADB
             // 
             // gpbUserInfo
             // 
+            this.gpbUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gpbUserInfo.Controls.Add(this.lblUserCompletion);
             this.gpbUserInfo.Controls.Add(this.lblUserSoftRank);
             this.gpbUserInfo.Controls.Add(this.lblUserSoftPoints);
@@ -1876,7 +1879,7 @@ namespace RADB
             this.lblUserCompletion.Name = "lblUserCompletion";
             this.lblUserCompletion.Size = new System.Drawing.Size(48, 16);
             this.lblUserCompletion.TabIndex = 28;
-            this.lblUserCompletion.Text = "90.00%";
+            this.lblUserCompletion.Text = "0.00%";
             // 
             // lblUserSoftRank
             // 
@@ -1885,9 +1888,9 @@ namespace RADB
             this.lblUserSoftRank.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserSoftRank.MinimumSize = new System.Drawing.Size(48, 16);
             this.lblUserSoftRank.Name = "lblUserSoftRank";
-            this.lblUserSoftRank.Size = new System.Drawing.Size(129, 16);
+            this.lblUserSoftRank.Size = new System.Drawing.Size(48, 16);
             this.lblUserSoftRank.TabIndex = 27;
-            this.lblUserSoftRank.Text = "34000/34000 (Top 99%)";
+            this.lblUserSoftRank.Text = "-";
             // 
             // lblUserSoftPoints
             // 
@@ -1896,9 +1899,9 @@ namespace RADB
             this.lblUserSoftPoints.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserSoftPoints.MinimumSize = new System.Drawing.Size(48, 16);
             this.lblUserSoftPoints.Name = "lblUserSoftPoints";
-            this.lblUserSoftPoints.Size = new System.Drawing.Size(49, 16);
+            this.lblUserSoftPoints.Size = new System.Drawing.Size(48, 16);
             this.lblUserSoftPoints.TabIndex = 26;
-            this.lblUserSoftPoints.Text = "0000000";
+            this.lblUserSoftPoints.Text = "0";
             // 
             // lblUserRetroRatio
             // 
@@ -1909,7 +1912,7 @@ namespace RADB
             this.lblUserRetroRatio.Name = "lblUserRetroRatio";
             this.lblUserRetroRatio.Size = new System.Drawing.Size(48, 16);
             this.lblUserRetroRatio.TabIndex = 25;
-            this.lblUserRetroRatio.Text = "3.50";
+            this.lblUserRetroRatio.Text = "0.00";
             // 
             // lblUserRank
             // 
@@ -1918,9 +1921,9 @@ namespace RADB
             this.lblUserRank.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserRank.MinimumSize = new System.Drawing.Size(48, 16);
             this.lblUserRank.Name = "lblUserRank";
-            this.lblUserRank.Size = new System.Drawing.Size(129, 16);
+            this.lblUserRank.Size = new System.Drawing.Size(48, 16);
             this.lblUserRank.TabIndex = 24;
-            this.lblUserRank.Text = "34000/34000 (Top 99%)";
+            this.lblUserRank.Text = "-";
             // 
             // lblUserHCPoints
             // 
@@ -1929,9 +1932,9 @@ namespace RADB
             this.lblUserHCPoints.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserHCPoints.MinimumSize = new System.Drawing.Size(48, 16);
             this.lblUserHCPoints.Name = "lblUserHCPoints";
-            this.lblUserHCPoints.Size = new System.Drawing.Size(49, 16);
+            this.lblUserHCPoints.Size = new System.Drawing.Size(48, 16);
             this.lblUserHCPoints.TabIndex = 23;
-            this.lblUserHCPoints.Text = "0000000";
+            this.lblUserHCPoints.Text = "0";
             // 
             // lblUserAccountType
             // 
@@ -1942,7 +1945,7 @@ namespace RADB
             this.lblUserAccountType.Name = "lblUserAccountType";
             this.lblUserAccountType.Size = new System.Drawing.Size(48, 16);
             this.lblUserAccountType.TabIndex = 22;
-            this.lblUserAccountType.Text = "R";
+            this.lblUserAccountType.Text = "-";
             // 
             // lblUserLastActivity
             // 
@@ -1951,9 +1954,9 @@ namespace RADB
             this.lblUserLastActivity.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserLastActivity.MinimumSize = new System.Drawing.Size(48, 16);
             this.lblUserLastActivity.Name = "lblUserLastActivity";
-            this.lblUserLastActivity.Size = new System.Drawing.Size(103, 16);
+            this.lblUserLastActivity.Size = new System.Drawing.Size(48, 16);
             this.lblUserLastActivity.TabIndex = 21;
-            this.lblUserLastActivity.Text = "23 Mar 2021, 19:46";
+            this.lblUserLastActivity.Text = "-";
             // 
             // flatLabelA10
             // 
@@ -2050,9 +2053,9 @@ namespace RADB
             this.lblUserMemberSince.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserMemberSince.MinimumSize = new System.Drawing.Size(48, 16);
             this.lblUserMemberSince.Name = "lblUserMemberSince";
-            this.lblUserMemberSince.Size = new System.Drawing.Size(103, 16);
+            this.lblUserMemberSince.Size = new System.Drawing.Size(48, 16);
             this.lblUserMemberSince.TabIndex = 11;
-            this.lblUserMemberSince.Text = "23 Mar 2021, 19:46";
+            this.lblUserMemberSince.Text = "-";
             // 
             // flatLabelA1
             // 
@@ -2162,7 +2165,7 @@ namespace RADB
             // 
             // txtUsername
             // 
-            this.txtUsername.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.txtUsername.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.txtUsername.LabelText = "Username";
             this.txtUsername.Location = new System.Drawing.Point(6, 6);
             this.txtUsername.Name = "txtUsername";

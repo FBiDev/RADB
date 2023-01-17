@@ -69,8 +69,6 @@ namespace RADB
             dgvConsoles.KeyPress += dgvConsoles_KeyPress;
             dgvConsoles.KeyDown += dgvConsoles_KeyDown;
 
-
-
             dgvGames.AutoGenerateColumns = false;
             dgvGames.DataSourceChanged += dgvGames_DataSourceChanged;
             dgvGames.CellDoubleClick += dgvGames_CellDoubleClick;
@@ -117,6 +115,8 @@ namespace RADB
             chkSubset.CheckedChanged += chkUpdateDataGrid;
             chkTestKit.CheckedChanged += chkUpdateDataGrid;
             chkDemoted.CheckedChanged += chkUpdateDataGrid;
+
+            txtUsername.KeyDown += txtUsername_KeyDown;
 
             //Reset placeholders
             lblProgressConsoles.Text = string.Empty;
@@ -195,26 +195,26 @@ namespace RADB
             {
                 dgvConsoles.Focus(); return;
             }
-
-            if (tab.SelectedTab == tabGames)
+            else if (tab.SelectedTab == tabGames)
             {
                 pnlGamesConsoleName.Visible = !ConsoleBind.IsNull();
                 dgvGames.Focus(); return;
             }
-
-            if (tab.SelectedTab == tabGamesToPlay)
+            else if (tab.SelectedTab == tabGamesToPlay)
             {
                 dgvGamesToPlay.Focus(); return;
             }
-
-            if (tab.SelectedTab == tabGamesToHide)
+            else if (tab.SelectedTab == tabGamesToHide)
             {
                 dgvGamesToHide.Focus(); return;
             }
-
-            if (tab.SelectedTab == tabGameInfo)
+            else if (tab.SelectedTab == tabGameInfo)
             {
                 pnlInfoScroll.Focus(); return;
+            }
+            else if (tab.SelectedTab == tabUserInfo)
+            {
+                txtUsername.Focus(); return;
             }
         }
 
@@ -770,10 +770,20 @@ namespace RADB
             gpbInfoAchievements.Height = gpbInfoAchievements.PreferredSize.Height - 13;
         }
 
+        private void txtUsername_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                btnGetUserInfo_Click(null, null);
+            }
+        }
 
         private async void btnGetUserInfo_Click(object sender, EventArgs e)
         {
+            txtUsername.Focus();
+
             User user = await RA.GetUserInfo(txtUsername.Text.Trim());
+            if (user.ID <= 0) return;
 
             picUserName.Image = user.UserPicBitmap;
             lblUserStatus.Text = user.Status;
@@ -784,11 +794,13 @@ namespace RADB
             lblUserLastActivity.Text = user.Lastupdate.ToString("dd MMM yyyy, HH:mm");
             lblUserAccountType.Text = user.AccountType;
 
-            lblUserHCPoints.Text = user.TotalPoints.ToString() + " (" + user.TotalTruePoints + ")";
+            lblUserHCPoints.Text = user.TotalPoints.ToNumber(languageNumber: true) + " (" + user.TotalTruePoints.ToNumber(languageNumber: true) + ")";
             lblUserRank.Text = user.GetRank;
-            lblUserRetroRatio.Text = user.RetroRatio.ToString();
-            lblUserSoftPoints.Text = user.TotalSoftcorePoints.ToString();
+            lblUserRetroRatio.Text = user.RetroRatio;
+            lblUserSoftPoints.Text = user.TotalSoftcorePoints.ToNumber(languageNumber: true);
             lblUserSoftRank.Text = user.GetSoftRank;
+
+            lblUserCompletion.Text = user.AverageCompletion;
         }
 
         private bool UserCheevosIsRunning = false;

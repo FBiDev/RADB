@@ -6,16 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 //
 using System.Drawing;
+using Newtonsoft.Json;
 
 namespace RADB
 {
     public class Game
     {
         public int ID { get; set; }
+
         public string Title { get; set; }
         public int ConsoleID { get; set; }
         public string ConsoleName { get; set; }
         public int NumAchievements { get; set; }
+
         public int Points { get; set; }
         public int NumLeaderboards { get; set; }
         public DateTime? DateModified { get; set; }

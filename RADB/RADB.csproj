@@ -84,6 +84,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="src\cmodel\GameProgress.cs" />
     <Compile Include="src\cmodel\User.cs" />
     <Compile Include="src\config\Banco.cs" />
     <Compile Include="src\config\Config.cs" />

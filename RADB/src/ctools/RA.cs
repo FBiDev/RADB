@@ -70,6 +70,13 @@ namespace RADB
                 (Folder.User + "UserInfo.json"));
         }
 
+        public DownloadFile API_UserCompletedGames(string userName)
+        {
+            return new DownloadFile(
+                GetURL("API_GetUserCompletedGames.php", "u=" + userName),
+                (Folder.User + "UserCompletedGames.json"));
+        }
+
         private static Size GameIconSize { get { return new Size(96, 96); } }
         private static Size GameBadgesSize { get { return new Size(64, 64); } }
 
@@ -241,8 +248,11 @@ namespace RADB
                 if (string.IsNullOrWhiteSpace(userData) == false)
                 {
                     user = JsonConvert.DeserializeObject<User>(userData);
-                    user.Name = user.LastActivity.User;
-                    user.Lastupdate = user.LastActivity.lastupdate;
+                    if (user.LastActivity != null)
+                    {
+                        user.Name = user.LastActivity.User;
+                        user.Lastupdate = user.LastActivity.lastupdate;
+                    }
 
                     Download dl = new Download();
                     dl.SetFile(user.UserPicFile);
@@ -250,6 +260,29 @@ namespace RADB
 
                     user.SetUserPicBitmap();
                 }
+
+                string userCompletedGames = await Browser.DownloadString(API_UserCompletedGames(userName).URL, true);
+                List<GameProgress> progressdGames = JsonConvert.DeserializeObject<List<GameProgress>>(userCompletedGames);
+
+                int chevHC = progressdGames.Where(x => x.HardcoreMode == 1).Sum(x => x.NumAwardedHC);
+                int chevSC = progressdGames.Where(x => x.HardcoreMode == 0).Sum(x => x.NumAwarded);
+                int chevTotalPossible = progressdGames.Where(x => x.HardcoreMode == 1).Sum(x => x.MaxPossible);
+
+                float averageCompletion = ((float)(chevHC + chevSC) / (float)chevTotalPossible) * 100f;
+
+                float pctHC = progressdGames.Where(x => x.HardcoreMode == 1).Sum(x => x.PctWonHC);
+                float pctSC = progressdGames.Where(x => x.HardcoreMode == 0).Sum(x => x.PctWon + x.PctWonHC);
+
+                float avgHC = (float)((pctHC) / (progressdGames.Count()));
+                float avgSC = (float)((pctSC) / (progressdGames.Count()));
+
+                decimal originalNumber = 0.335802962962963m;
+                decimal roundedNumber = Math.Round(originalNumber, 4, MidpointRounding.AwayFromZero);
+
+                float avgpct = (float)Math.Round((decimal)(avgHC+avgSC), 2);
+
+                user.AverageCompletion = avgpct.ToString() + "%";
+
                 return user;
             });
         }

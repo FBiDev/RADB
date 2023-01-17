@@ -8,12 +8,15 @@ using System.Drawing;
 using System.Xml;
 //
 using GNX;
+using System.Globalization;
 
 namespace RADB
 {
     public static class Config
     {
         public static CultureID Language = CultureID.UnitedStates_English;
+        public static CultureID LanguageNumbers = CultureID.Brazil_Portuguese;
+
         public static bool Singleton = true;
         public const string SystemName = "RADatabase";
         public static bool Loaded { get; set; }
@@ -22,6 +25,7 @@ namespace RADB
         public static void Start()
         {
             cApp.SetLanguage(Language);
+            cApp.SetLanguageNumbers(LanguageNumbers);
             cApp.Start();
 
             //Carregar Config
