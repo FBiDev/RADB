@@ -93,6 +93,7 @@
     <Compile Include="src\ctools\Browser.cs" />
     <Compile Include="src\ctools\DownloadBase.cs" />
     <Compile Include="src\cmodel\GameExtend.cs" />
+    <Compile Include="src\ctools\JsonExtension.cs" />
     <Compile Include="src\ctools\UserProgress.cs" />
     <Compile Include="src\ctools\WebClientExtend.cs">
       <SubType>Component</SubType>

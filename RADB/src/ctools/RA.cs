@@ -35,6 +35,8 @@ namespace RADB
         private string API_UserName = "RADatabase";
         private string API_Key = "GRaWk9onm4B0LSWSFaDt5a2dQE3N8Yme";
 
+        public const int MIN_POINTS = 250;
+
         public DownloadFile API_Consoles()
         {
             return new DownloadFile(
@@ -242,10 +244,10 @@ namespace RADB
         {
             return await Task.Run(async () =>
             {
-                string userData = await Browser.DownloadString(API_UserInfo(userName).URL, true);
+                var userData = await Browser.DownloadString(API_UserInfo(userName).URL, true);
 
-                User user = new User();
-                if (string.IsNullOrWhiteSpace(userData) == false)
+                var user = new User();
+                if (userData.Empty() == false)
                 {
                     user = JsonConvert.DeserializeObject<User>(userData);
                     if (user.LastActivity != null)
@@ -261,27 +263,21 @@ namespace RADB
                     user.SetUserPicBitmap();
                 }
 
-                string userCompletedGames = await Browser.DownloadString(API_UserCompletedGames(userName).URL, true);
-                List<GameProgress> progressdGames = JsonConvert.DeserializeObject<List<GameProgress>>(userCompletedGames);
+                if (user.TotalPoints > 0 || user.TotalSoftcorePoints > 0)
+                {
+                    string playedGamesRaw = await Browser.DownloadString(API_UserCompletedGames(userName).URL, true);
+                    var playedGames = JsonConvert.DeserializeObject<List<GameProgress>>(playedGamesRaw);
 
-                int chevHC = progressdGames.Where(x => x.HardcoreMode == 1).Sum(x => x.NumAwardedHC);
-                int chevSC = progressdGames.Where(x => x.HardcoreMode == 0).Sum(x => x.NumAwarded);
-                int chevTotalPossible = progressdGames.Where(x => x.HardcoreMode == 1).Sum(x => x.MaxPossible);
+                    var includedGames = playedGames.Where(x => x.PctWon > 0 && x.ConsoleName != "Hubs" && x.ConsoleName != "Events");
 
-                float averageCompletion = ((float)(chevHC + chevSC) / (float)chevTotalPossible) * 100f;
+                    float? totalPctWon = includedGames.Sum(x => x.PctWon);
 
-                float pctHC = progressdGames.Where(x => x.HardcoreMode == 1).Sum(x => x.PctWonHC);
-                float pctSC = progressdGames.Where(x => x.HardcoreMode == 0).Sum(x => x.PctWon + x.PctWonHC);
-
-                float avgHC = (float)((pctHC) / (progressdGames.Count()));
-                float avgSC = (float)((pctSC) / (progressdGames.Count()));
-
-                decimal originalNumber = 0.335802962962963m;
-                decimal roundedNumber = Math.Round(originalNumber, 4, MidpointRounding.AwayFromZero);
-
-                float avgpct = (float)Math.Round((decimal)(avgHC+avgSC), 2);
-
-                user.AverageCompletion = avgpct.ToString() + "%";
+                    if (totalPctWon > 0)
+                    {
+                        float avgPctWon = ((float)totalPctWon / includedGames.Count()) * 100f;
+                        user.AverageCompletion = avgPctWon.ToNumber() + "%";
+                    }
+                }
 
                 return user;
             });

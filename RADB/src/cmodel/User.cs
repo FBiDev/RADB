@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using Newtonsoft.Json;
 using GNX;
-using System.Globalization;
 
 namespace RADB
 {
@@ -22,7 +21,9 @@ namespace RADB
         public DateTime? Lastupdate { get; set; }
 
         public int Permissions { get; set; }
-        public int Untracked { get; set; }
+
+        [JsonConverter(typeof(BoolConverter))]
+        public bool Untracked { get; set; }
 
         public string AccountType
         {
@@ -30,12 +31,14 @@ namespace RADB
             {
                 switch (Permissions)
                 {
+                    case -2: return "Spam";
+                    case -1: return "Banned";
                     case 0: return "Unregistered";
                     case 1: return "Registered";
                     case 2: return "Junior Developer";
                     case 3: return "Developer";
                     case 4: return "Admin";
-                    default: return "User";
+                    default: return "Invalid permission";
                 }
             }
         }
@@ -54,40 +57,45 @@ namespace RADB
         public int TotalPoints { get; set; }
         public int TotalTruePoints { get; set; }
 
-        public string RetroRatio
+        public float RetroRatio
         {
             get
             {
                 if (TotalTruePoints > 0)
-                    return ((float)TotalTruePoints / (float)TotalPoints).ToNumber();
+                    return ((float)TotalTruePoints / (float)TotalPoints);
                 else
-                    return 0.ToNumber();
+                    return 0;
             }
         }
 
         public int? Rank { get; set; }
         public int TotalRanked { get; set; }
 
-        private string GetTop() { return (((float)Rank / (float)TotalRanked) * 100).ToNumber(); }
-        public string GetRank
+        private float GetTop() { return (((float)Rank / (float)TotalRanked) * 100f); }
+        public string GetRank(bool useGroupSeparator = true)
         {
-            get
-            {
-                if (Untracked == 1)
-                    return "Untracked";
-                else if (TotalPoints < 250)
-                    return "Needs at least 250 points.";
-                else if (Rank != null && TotalRanked > 0)
-                    return Rank.ToNumber(languageNumber: true) + " / " + TotalRanked.ToNumber(languageNumber: true) + " (Top " + GetTop() + "%)";
-                else
-                    return "-";
-            }
+            if (Untracked)
+                return "Untracked";
+            else if (TotalPoints < RA.MIN_POINTS)
+                return "Needs at least " + RA.MIN_POINTS + " points.";
+            else if (Rank != null && TotalRanked > 0)
+                return Rank.ToNumber(languageNumber: useGroupSeparator) + " / " + TotalRanked.ToNumber(languageNumber: useGroupSeparator) + " (Top " + GetTop().ToNumber() + "%)";
+            else
+                return "-";
         }
 
         public int TotalSoftcorePoints { get; set; }
 
         private string GetSoftTop() { return "-"; }
-        public string GetSoftRank { get { return "-"; } }
+        public string GetSoftRank(bool useGroupSeparator = true)
+        {
+            if (Untracked)
+                return "Untracked";
+            else if (TotalSoftcorePoints < RA.MIN_POINTS)
+                return "Needs at least " + RA.MIN_POINTS + " points.";
+            else
+                return "Unknown";
+        }
 
         public string AverageCompletion { get; set; }
 
@@ -100,6 +108,29 @@ namespace RADB
         public int UserWallActive { get; set; }
 
         public Game LastGame { get; set; }
+
+        public string LastGameString()
+        {
+            string message = "-";
+            if (RichPresenceMsg.Empty() == false && RichPresenceMsg != "Unknown")
+            {
+                if (LastGame.NotNull())
+                {
+                    message = LastGame.Title + " (" + LastGame.ConsoleName + ")";
+                }
+            }
+            return message;
+        }
+
+        public string LastGameDescString()
+        {
+            string message = "-";
+            if (RichPresenceMsg.Empty() == false && RichPresenceMsg != "Unknown")
+            {
+                message = RichPresenceMsg;
+            }
+            return message;
+        }
 
         public User()
         {

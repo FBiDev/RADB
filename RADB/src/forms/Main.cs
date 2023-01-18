@@ -795,12 +795,15 @@ namespace RADB
             lblUserAccountType.Text = user.AccountType;
 
             lblUserHCPoints.Text = user.TotalPoints.ToNumber(languageNumber: true) + " (" + user.TotalTruePoints.ToNumber(languageNumber: true) + ")";
-            lblUserRank.Text = user.GetRank;
-            lblUserRetroRatio.Text = user.RetroRatio;
+            lblUserRank.Text = user.GetRank();
+            lblUserRetroRatio.Text = user.RetroRatio.ToNumber();
             lblUserSoftPoints.Text = user.TotalSoftcorePoints.ToNumber(languageNumber: true);
-            lblUserSoftRank.Text = user.GetSoftRank;
+            lblUserSoftRank.Text = user.GetSoftRank();
 
             lblUserCompletion.Text = user.AverageCompletion;
+
+            lblUserLastGame.Text = user.LastGameString();
+            lblUserRichPresence.Text = user.LastGameDescString();
         }
 
         private bool UserCheevosIsRunning = false;
