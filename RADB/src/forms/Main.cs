@@ -25,6 +25,7 @@ namespace RADB
         public static Console ConsoleBind = null;
         private Game GameBind = null;
         private GameExtend GameExtendBind = null;
+        private User UserBind = new User();
 
         public ListBind<Game> lstGames = new ListBind<Game>();
         public ListBind<Game> lstGamesSearch = new ListBind<Game>();
@@ -782,28 +783,46 @@ namespace RADB
         {
             txtUsername.Focus();
 
-            User user = await RA.GetUserInfo(txtUsername.Text.Trim());
-            if (user.ID <= 0) return;
+            btnGetUserInfo.Enabled = false;
+            UserBind = await RA.GetUserInfo(txtUsername.Text.Trim());
+            btnGetUserInfo.Enabled = true;
+            if (UserBind.ID <= 0) return;
 
-            picUserName.Image = user.UserPicBitmap;
-            lblUserStatus.Text = user.Status;
-            lblUserName.Text = user.Name;
-            lblUserMotto.Text = user.Motto;
+            picUserName.Image = UserBind.UserPicBitmap;
+            lblUserStatus.Text = UserBind.Status;
+            lblUserName.Text = UserBind.Name;
+            lblUserMotto.Text = UserBind.Motto;
 
-            lblUserMemberSince.Text = user.MemberSince.ToString("dd MMM yyyy, HH:mm");
-            lblUserLastActivity.Text = user.Lastupdate.ToString("dd MMM yyyy, HH:mm");
-            lblUserAccountType.Text = user.AccountType;
+            lblUserMemberSince.Text = UserBind.MemberSince.ToString("dd MMM yyyy, HH:mm");
+            lblUserLastActivity.Text = UserBind.Lastupdate.ToString("dd MMM yyyy, HH:mm");
+            lblUserAccountType.Text = UserBind.AccountType;
 
-            lblUserHCPoints.Text = user.TotalPoints.ToNumber(languageNumber: true) + " (" + user.TotalTruePoints.ToNumber(languageNumber: true) + ")";
-            lblUserRank.Text = user.GetRank();
-            lblUserRetroRatio.Text = user.RetroRatio.ToNumber();
-            lblUserSoftPoints.Text = user.TotalSoftcorePoints.ToNumber(languageNumber: true);
-            lblUserSoftRank.Text = user.GetSoftRank();
+            lblUserHCPoints.Text = UserBind.TotalPoints.ToNumber(customLanguage: true) + " (" + UserBind.TotalTruePoints.ToNumber(customLanguage: true) + ")";
+            lnkUserRank.Text = UserBind.GetRank();
+            lnkUserRank.Size = lnkUserRank.PreferredSize;
 
-            lblUserCompletion.Text = user.AverageCompletion;
+            if (UserBind.Untracked || UserBind.Rank == null || UserBind.TotalPoints < RA.MIN_POINTS)
+                lnkUserRank.LinkArea = new LinkArea(0, 0);
+            else
+                lnkUserRank.LinkArea = new LinkArea(0, UserBind.Rank.ToNumber(true).Count());
 
-            lblUserLastGame.Text = user.LastGameString();
-            lblUserRichPresence.Text = user.LastGameDescString();
+            lblUserRetroRatio.Text = UserBind.RetroRatio.ToNumber();
+            lblUserSoftPoints.Text = UserBind.TotalSoftcorePoints.ToNumber(customLanguage: true);
+            lblUserSoftRank.Text = UserBind.GetSoftRank();
+
+            lblUserCompletion.Text = UserBind.AverageCompletion;
+
+            if (UserBind.LastGame.ImageIcon.Empty() == false)
+                picUserLastGame.Image = UserBind.LastGame.ImageIconBitmap;
+            else
+                picUserLastGame.Image = null;
+
+            lblUserLastConsole.Text = UserBind.LastGame.ConsoleName;
+            lblUserLastGame.Text = UserBind.LastGameTitle();
+            lblUserRichPresence.Text = UserBind.RichPresence();
+
+            //Reallocate RichPresence
+            lblUserRichPresence.Location = new Point(lblUserRichPresence.Location.X, lblUserLastGame.Location.Y + lblUserLastGame.Size.Height + lblUserRichPresence.Margin.Top);
         }
 
         private bool UserCheevosIsRunning = false;
@@ -895,15 +914,24 @@ namespace RADB
             dgvGames.Focus();
         }
 
-        private void btnRaProfile_Click(object sender, EventArgs e)
+        private void lnkUserRank_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(RA.User_URL("FBiDev"));
+            var rank = UserBind.Rank;
+            if (rank.GetValueOrDefault() == 0) { return; }
+
+            var rankOffset = (int)((rank - 1) / 25) * 25;
+            Process.Start(RA.HOST + "globalRanking.php?s=5&t=2&o=" + rankOffset);
         }
 
         private void btnGamePage_Click(object sender, EventArgs e)
         {
             if (GameBind.IsNull()) { return; }
-            System.Diagnostics.Process.Start(RA.Game_URL(GameBind.ID));
+            Process.Start(RA.Game_URL(GameBind.ID));
+        }
+
+        private void btnRaProfile_Click(object sender, EventArgs e)
+        {
+            Process.Start(RA.User_URL("FBiDev"));
         }
 
         private void dgvConsoles_MouseDown(object sender, MouseEventArgs e)
@@ -1090,7 +1118,5 @@ namespace RADB
                 lblSystemReLogin.Text = "not logged in";
             }
         }
-
-
     }
 }

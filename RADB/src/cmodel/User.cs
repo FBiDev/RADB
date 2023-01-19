@@ -64,7 +64,7 @@ namespace RADB
                 if (TotalTruePoints > 0)
                     return ((float)TotalTruePoints / (float)TotalPoints);
                 else
-                    return 0;
+                    return 0f;
             }
         }
 
@@ -72,14 +72,18 @@ namespace RADB
         public int TotalRanked { get; set; }
 
         private float GetTop() { return (((float)Rank / (float)TotalRanked) * 100f); }
-        public string GetRank(bool useGroupSeparator = true)
+        public string GetRank(bool useCustomLanguage = true)
         {
             if (Untracked)
                 return "Untracked";
             else if (TotalPoints < RA.MIN_POINTS)
                 return "Needs at least " + RA.MIN_POINTS + " points.";
             else if (Rank != null && TotalRanked > 0)
-                return Rank.ToNumber(languageNumber: useGroupSeparator) + " / " + TotalRanked.ToNumber(languageNumber: useGroupSeparator) + " (Top " + GetTop().ToNumber() + "%)";
+            {
+                string rank = Rank.ToNumber(useCustomLanguage) + " / " + TotalRanked.ToNumber(useCustomLanguage);
+                rank += " (Top " + GetTop().ToNumber() + "%)";
+                return rank;
+            }
             else
                 return "-";
         }
@@ -104,37 +108,37 @@ namespace RADB
         //Points Awarded to Others
         public int ContribYield { get; set; }
 
-        public string RichPresenceMsg { get; set; }
-        public int UserWallActive { get; set; }
+        [JsonConverter(typeof(BoolConverter))]
+        public bool UserWallActive { get; set; }
 
         public Game LastGame { get; set; }
+        public string RichPresenceMsg { get; set; }
 
-        public string LastGameString()
+        public string LastGameTitle()
         {
-            string message = "-";
             if (RichPresenceMsg.Empty() == false && RichPresenceMsg != "Unknown")
             {
                 if (LastGame.NotNull())
                 {
-                    message = LastGame.Title + " (" + LastGame.ConsoleName + ")";
+                    return LastGame.Title;
                 }
             }
-            return message;
+            return "";
         }
 
-        public string LastGameDescString()
+        public string RichPresence()
         {
-            string message = "-";
             if (RichPresenceMsg.Empty() == false && RichPresenceMsg != "Unknown")
             {
-                message = RichPresenceMsg;
+                return RichPresenceMsg;
             }
-            return message;
+            return "";
         }
 
         public User()
         {
             UserPicBitmap = RA.DefaultIcon;
+            LastGame = new Game();
         }
     }
 }

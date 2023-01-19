@@ -69,14 +69,14 @@ namespace RADB
         {
             return new DownloadFile(
                 GetURL("API_GetUserSummary.php", "u=" + userName),
-                (Folder.User + "UserInfo.json"));
+                (Folder.User + userName.ToLower() + "_Info.json"));
         }
 
         public DownloadFile API_UserCompletedGames(string userName)
         {
             return new DownloadFile(
                 GetURL("API_GetUserCompletedGames.php", "u=" + userName),
-                (Folder.User + "UserCompletedGames.json"));
+                (Folder.User + userName.ToLower() + "_CompletedGames.json"));
         }
 
         private static Size GameIconSize { get { return new Size(96, 96); } }
@@ -244,36 +244,60 @@ namespace RADB
         {
             return await Task.Run(async () =>
             {
-                var userData = await Browser.DownloadString(API_UserInfo(userName).URL, true);
-
                 var user = new User();
-                if (userData.Empty() == false)
+                var userInfoFile = API_UserInfo(userName);
+
+                Download dl = new Download() { Overwrite = true };
+                dl.SetFile(userInfoFile);
+                if (await dl.Start() == false) { return user; }
+                dl.Overwrite = false;
+
+                var userData = File.ReadAllText(userInfoFile.Path);
+                if (userData.Empty()) { return user; }
+
+                user = JsonConvert.DeserializeObject<User>(userData);
+
+                if (user.LastActivity != null)
                 {
-                    user = JsonConvert.DeserializeObject<User>(userData);
-                    if (user.LastActivity != null)
-                    {
-                        user.Name = user.LastActivity.User;
-                        user.Lastupdate = user.LastActivity.lastupdate;
-                    }
+                    user.Name = user.LastActivity.User;
+                    user.Lastupdate = user.LastActivity.lastupdate;
+                }
 
-                    Download dl = new Download();
-                    dl.SetFile(user.UserPicFile);
-                    await (dl.Start());
-
+                dl.SetFile(user.UserPicFile);
+                if (await (dl.Start()))
+                {
                     user.SetUserPicBitmap();
                 }
 
-                if (user.TotalPoints > 0 || user.TotalSoftcorePoints > 0)
+                if (user.LastGame.ID > 0)
                 {
-                    string playedGamesRaw = await Browser.DownloadString(API_UserCompletedGames(userName).URL, true);
-                    var playedGames = JsonConvert.DeserializeObject<List<GameProgress>>(playedGamesRaw);
+                    var game = user.LastGame;
+                    dl.SetFile(game.ImageIconFile);
+                    if (await (dl.Start()))
+                    {
+                        game.SetImageIconBitmap();
+                    }
+                }
 
+                if (user.TotalPoints == 0 && user.TotalSoftcorePoints == 0)
+                {
+                    user.AverageCompletion ="0.00%";
+                }
+                else
+                {
+                    var userPlayedGames = API_UserCompletedGames(userName);
+                    dl.SetFile(userPlayedGames);
+
+                    if (await dl.Start() == false) { return user; }
+
+                    var playedGamesRaw = File.ReadAllText(userPlayedGames.Path);
+
+                    var playedGames = JsonConvert.DeserializeObject<List<GameProgress>>(playedGamesRaw);
                     var includedGames = playedGames.Where(x => x.PctWon > 0 && x.ConsoleName != "Hubs" && x.ConsoleName != "Events");
 
-                    float? totalPctWon = includedGames.Sum(x => x.PctWon);
-
-                    if (totalPctWon > 0)
+                    if (includedGames.Count() > 0)
                     {
+                        float? totalPctWon = includedGames.Sum(x => x.PctWon);
                         float avgPctWon = ((float)totalPctWon / includedGames.Count()) * 100f;
                         user.AverageCompletion = avgPctWon.ToNumber() + "%";
                     }

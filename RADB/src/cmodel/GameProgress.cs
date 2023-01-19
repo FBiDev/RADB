@@ -18,14 +18,11 @@ namespace RADB
         public string ConsoleName { get; set; }
 
         public int? MaxPossible { get; set; }
-
-        [JsonProperty("MAX(aw.HardcoreMode)")]
-        public int HardcoreMode { get; set; }
-
         public int NumAwarded { get; set; }
-        public int NumAwardedHC { get; set; }
         public float? PctWon { get; set; }
-        public float? PctWonHC { get; set; }
+
+        [JsonConverter(typeof(BoolConverter))]
+        public bool HardcoreMode { get; set; }
 
         #region _ImageIcon_
         private string _ImageIcon { get; set; }
