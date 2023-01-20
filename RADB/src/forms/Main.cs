@@ -133,8 +133,6 @@ namespace RADB
             Folder.CreateFolders();
         }
 
-
-
         void Main_Load(object sender, EventArgs e)
         {
             var j = JsonConvert.DeserializeObject<JObject>("{\"LoadJsonDLL\":\"...\"}");
@@ -823,6 +821,36 @@ namespace RADB
 
             //Reallocate RichPresence
             lblUserRichPresence.Location = new Point(lblUserRichPresence.Location.X, lblUserLastGame.Location.Y + lblUserLastGame.Size.Height + lblUserRichPresence.Margin.Top);
+
+            var completedGames = UserBind.PlayedGames.Where(x => x.PctWon == 1.0);
+
+            var dl = new Download() { Overwrite = false };
+            dl.Files = completedGames.Select(x => x.ImageIconFile).ToList();
+            await dl.Start();
+
+            int i = 0, c = 0, r = 0;
+            int perRow = 6;
+
+            foreach (var game in completedGames)
+            {
+                game.SetImageIconBitmap();
+
+                var picBox = new FlatPictureBoxA()
+                {
+                    Margin = new Padding(3),
+                    Size = new Size(48, 48),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    Interpolation = InterpolationMode.HighQualityBicubic,
+                    Image = game.ImageIconBitmap,
+                    Location = new Point(c * 54, r * 54),
+                };
+
+                i++;
+                c = (i % perRow);
+                r = (i / perRow);
+
+                pnlUserPlayedGames.Controls.Add(picBox);
+            }
         }
 
         private bool UserCheevosIsRunning = false;

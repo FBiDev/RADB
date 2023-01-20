@@ -79,11 +79,7 @@ namespace RADB
             else if (TotalPoints < RA.MIN_POINTS)
                 return "Needs at least " + RA.MIN_POINTS + " points.";
             else if (Rank != null && TotalRanked > 0)
-            {
-                string rank = Rank.ToNumber(useCustomLanguage) + " / " + TotalRanked.ToNumber(useCustomLanguage);
-                rank += " (Top " + GetTop().ToNumber() + "%)";
-                return rank;
-            }
+                return Rank.ToNumber(useCustomLanguage) + " / " + TotalRanked.ToNumber(useCustomLanguage) + " (Top " + GetTop().ToNumber() + "%)";
             else
                 return "-";
         }
@@ -111,34 +107,31 @@ namespace RADB
         [JsonConverter(typeof(BoolConverter))]
         public bool UserWallActive { get; set; }
 
+        public List<GameProgress> PlayedGames { get; set; }
         public Game LastGame { get; set; }
         public string RichPresenceMsg { get; set; }
 
         public string LastGameTitle()
         {
-            if (RichPresenceMsg.Empty() == false && RichPresenceMsg != "Unknown")
-            {
-                if (LastGame.NotNull())
-                {
-                    return LastGame.Title;
-                }
-            }
-            return "";
+            if (LastGame.IsNull())
+                return "";
+
+            return LastGame.Title;
         }
 
         public string RichPresence()
         {
-            if (RichPresenceMsg.Empty() == false && RichPresenceMsg != "Unknown")
-            {
-                return RichPresenceMsg;
-            }
-            return "";
+            if (RichPresenceMsg.Empty() || RichPresenceMsg == "Unknown")
+                return "";
+
+            return RichPresenceMsg;
         }
 
         public User()
         {
             UserPicBitmap = RA.DefaultIcon;
             LastGame = new Game();
+            PlayedGames = new List<GameProgress>();
         }
     }
 }

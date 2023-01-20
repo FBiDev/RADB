@@ -15,3 +15,61 @@
 	size 300; 283
 	maxSize 300; 283
 	sizeMode StretchImage
+
+
+Links to test
+RAWeb/public/dorequest.php
+
+retroachievements.org/dorequest.php?r=login&u=user&p=pass
+	"Success": true,
+	"User": "",
+	"Token": "",
+	"Score": 0,
+	"SoftcoreScore": 0,
+	"Messages": 0,
+	"Permissions": 1,
+	"AccountType": "Registered"
+
+retroachievements.org/dorequest.php?r=unlocks&u=user&t=token&g=11245&h=1
+	"Success": true,
+	"UserUnlocks": [
+		84984,
+		84985
+	],
+	"GameID": 11245,
+	"HardcoreMode": true
+
+retroachievements.org/dorequest.php?r=patch&u=user&t=token&g=1
+	"Leaderboards":
+		"ID": 2,
+		"Mem": "STA:0xfe10=h0000_0xhf601=h0c_d0xhf601!=h0c_0xH00ffe0=0_0xH00ffe3=0::CAN:0xhfe13<d0xhfe13::SUB:0xh00d5c1=h3a_A:0xhfe24=0_A:0xhfe25=0_0xhfe22!=0::VAL:0xhfe24*1_0xhfe25*60_0xhfe22*3600",
+		"Format": "TIME",
+		"LowerIsBetter": true,
+		"Title": "Green Hill Zone - Act 1",
+		"Description": "Complete this act in the fastest time!",
+		"Hidden": false
+
+retroachievements.org/dorequest.php?r=lbinfo&u=user&t=token&i=2&o=0&c=5
+	"LeaderboardData": {
+		"LBID": 2,
+		"GameID": 1,
+		"GameTitle": "Sonic the Hedgehog",
+		"LowerIsBetter": 1,
+		"LBTitle": "Green Hill Zone - Act 1",
+		"LBDesc": "Complete this act in the fastest time!",
+		"LBFormat": "TIME",
+		"LBMem": "STA:0xfe10=h0000_0xhf601=h0c_d0xhf601!=h0c_0xH00ffe0=0_0xH00ffe3=0::CAN:0xhfe13<d0xhfe13::SUB:0xh00d5c1=h3a_A:0xhfe24=0_A:0xhfe25=0_0xhfe22!=0::VAL:0xhfe24*1_0xhfe25*60_0xhfe22*3600",
+		"LBAuthor": null,
+		"ConsoleID": 1,
+		"ConsoleName": "Mega Drive",
+		"ForumTopicID": 112,
+		"GameIcon": "\/Images\/016743.png",
+		"LBCreated": "2015-04-20 14:00:58",
+		"LBUpdated": "2022-11-16 20:25:41",
+		"TotalEntries": 7711,
+	}
+
+retroachievements.org/dorequest.php?r=getfriendlist&u=user&t=token
+retroachievements.org/dorequest.php?r=latestclient&e=7
+retroachievements.org/dorequest.php?r=hashlibrary&c=12
+retroachievements.org/dorequest.php?r=achievementwondata&u=user&t=token&a=1&f=0

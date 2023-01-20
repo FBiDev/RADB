@@ -183,11 +183,21 @@ namespace RADB
             this.ghNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ghLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabUserInfo = new System.Windows.Forms.TabPage();
+            this.flatGroupBoxA1 = new RADB.FlatGroupBoxA();
+            this.pnlUserPlayedGames = new RADB.FlatPanelA();
             this.lblUserStatus = new RADB.FlatLabelA();
             this.lblUserMotto = new RADB.FlatLabelA();
             this.lblUserName = new RADB.FlatLabelA();
             this.btnGetUserInfo = new RADB.FlatButtonA();
             this.picUserName = new RADB.FlatPictureBoxA();
+            this.gpbOverlay = new RADB.FlatGroupBoxA();
+            this.pnlUserCheevos = new System.Windows.Forms.Panel();
+            this.lblCheevos = new RADB.FlatLabelA();
+            this.lblUserCheevos = new RADB.FlatLabelA();
+            this.picUserCheevos = new RADB.FlatPictureBoxA();
+            this.lblCheevoLoopUpdate = new System.Windows.Forms.Label();
+            this.chkUserCheevos = new System.Windows.Forms.CheckBox();
+            this.btnUserCheevos = new RADB.FlatButtonA();
             this.gpbUserInfo = new RADB.FlatGroupBoxA();
             this.lnkUserRank = new System.Windows.Forms.LinkLabel();
             this.picUserLastGame = new RADB.FlatPictureBoxA();
@@ -212,14 +222,6 @@ namespace RADB
             this.flatLabelA3 = new RADB.FlatLabelA();
             this.lblUserMemberSince = new RADB.FlatLabelA();
             this.flatLabelA1 = new RADB.FlatLabelA();
-            this.gpbOverlay = new RADB.FlatGroupBoxA();
-            this.pnlUserCheevos = new System.Windows.Forms.Panel();
-            this.lblCheevos = new RADB.FlatLabelA();
-            this.lblUserCheevos = new RADB.FlatLabelA();
-            this.picUserCheevos = new RADB.FlatPictureBoxA();
-            this.lblCheevoLoopUpdate = new System.Windows.Forms.Label();
-            this.chkUserCheevos = new System.Windows.Forms.CheckBox();
-            this.btnUserCheevos = new RADB.FlatButtonA();
             this.txtUsername = new RADB.FlatTextBoxA();
             this.tabAbout = new System.Windows.Forms.TabPage();
             this.lblSystemReLogin = new RADB.FlatLabelA();
@@ -265,12 +267,13 @@ namespace RADB
             this.tabGamesToHide.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGamesToHide)).BeginInit();
             this.tabUserInfo.SuspendLayout();
+            this.flatGroupBoxA1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picUserName)).BeginInit();
-            this.gpbUserInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picUserLastGame)).BeginInit();
             this.gpbOverlay.SuspendLayout();
             this.pnlUserCheevos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picUserCheevos)).BeginInit();
+            this.gpbUserInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picUserLastGame)).BeginInit();
             this.tabAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picFBiDevIcon)).BeginInit();
             this.SuspendLayout();
@@ -317,12 +320,12 @@ namespace RADB
             this.mnuGamesToHide.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToHide});
             this.mnuGamesToHide.Name = "ctmHiddenGames";
-            this.mnuGamesToHide.Size = new System.Drawing.Size(195, 26);
+            this.mnuGamesToHide.Size = new System.Drawing.Size(197, 26);
             // 
             // mniRemoveGameToHide
             // 
             this.mniRemoveGameToHide.Name = "mniRemoveGameToHide";
-            this.mniRemoveGameToHide.Size = new System.Drawing.Size(194, 22);
+            this.mniRemoveGameToHide.Size = new System.Drawing.Size(196, 22);
             this.mniRemoveGameToHide.Text = "Remove Game To Hide";
             this.mniRemoveGameToHide.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToHide_MouseDown);
             // 
@@ -353,12 +356,12 @@ namespace RADB
             this.mnuGamesToPlay.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToPlay});
             this.mnuGamesToPlay.Name = "mnuGamesToPlay";
-            this.mnuGamesToPlay.Size = new System.Drawing.Size(192, 26);
+            this.mnuGamesToPlay.Size = new System.Drawing.Size(194, 26);
             // 
             // mniRemoveGameToPlay
             // 
             this.mniRemoveGameToPlay.Name = "mniRemoveGameToPlay";
-            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(191, 22);
+            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(193, 22);
             this.mniRemoveGameToPlay.Text = "Remove Game To Play";
             this.mniRemoveGameToPlay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToPlay_MouseDown);
             // 
@@ -1403,7 +1406,7 @@ namespace RADB
             this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoAchievements.Location = new System.Drawing.Point(218, 23);
             this.lblInfoAchievements.Name = "lblInfoAchievements";
-            this.lblInfoAchievements.Size = new System.Drawing.Size(145, 24);
+            this.lblInfoAchievements.Size = new System.Drawing.Size(146, 24);
             this.lblInfoAchievements.TabIndex = 35;
             this.lblInfoAchievements.Text = "0 Trophies: 0 points";
             this.lblInfoAchievements.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1773,13 +1776,14 @@ namespace RADB
             // tabUserInfo
             // 
             this.tabUserInfo.BackColor = System.Drawing.Color.Transparent;
+            this.tabUserInfo.Controls.Add(this.flatGroupBoxA1);
             this.tabUserInfo.Controls.Add(this.lblUserStatus);
             this.tabUserInfo.Controls.Add(this.lblUserMotto);
             this.tabUserInfo.Controls.Add(this.lblUserName);
             this.tabUserInfo.Controls.Add(this.btnGetUserInfo);
             this.tabUserInfo.Controls.Add(this.picUserName);
-            this.tabUserInfo.Controls.Add(this.gpbUserInfo);
             this.tabUserInfo.Controls.Add(this.gpbOverlay);
+            this.tabUserInfo.Controls.Add(this.gpbUserInfo);
             this.tabUserInfo.Controls.Add(this.txtUsername);
             this.tabUserInfo.Location = new System.Drawing.Point(4, 25);
             this.tabUserInfo.Name = "tabUserInfo";
@@ -1787,6 +1791,26 @@ namespace RADB
             this.tabUserInfo.Size = new System.Drawing.Size(908, 545);
             this.tabUserInfo.TabIndex = 3;
             this.tabUserInfo.Text = "User Info";
+            // 
+            // flatGroupBoxA1
+            // 
+            this.flatGroupBoxA1.Controls.Add(this.pnlUserPlayedGames);
+            this.flatGroupBoxA1.Location = new System.Drawing.Point(330, 76);
+            this.flatGroupBoxA1.Name = "flatGroupBoxA1";
+            this.flatGroupBoxA1.Size = new System.Drawing.Size(360, 463);
+            this.flatGroupBoxA1.TabIndex = 43;
+            this.flatGroupBoxA1.TabStop = false;
+            this.flatGroupBoxA1.Text = "Awards";
+            // 
+            // pnlUserPlayedGames
+            // 
+            this.pnlUserPlayedGames.AutoScroll = true;
+            this.pnlUserPlayedGames.BorderSize = 0;
+            this.pnlUserPlayedGames.Location = new System.Drawing.Point(9, 20);
+            this.pnlUserPlayedGames.Name = "pnlUserPlayedGames";
+            this.pnlUserPlayedGames.Size = new System.Drawing.Size(343, 437);
+            this.pnlUserPlayedGames.TabIndex = 47;
+            this.pnlUserPlayedGames.TabStop = true;
             // 
             // lblUserStatus
             // 
@@ -1814,7 +1838,6 @@ namespace RADB
             // 
             // lblUserName
             // 
-            this.lblUserName.AutoSize = true;
             this.lblUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserName.Location = new System.Drawing.Point(234, 29);
             this.lblUserName.Name = "lblUserName";
@@ -1847,6 +1870,101 @@ namespace RADB
             this.picUserName.TabIndex = 14;
             this.picUserName.TabStop = false;
             // 
+            // gpbOverlay
+            // 
+            this.gpbOverlay.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.gpbOverlay.Controls.Add(this.pnlUserCheevos);
+            this.gpbOverlay.Controls.Add(this.lblCheevoLoopUpdate);
+            this.gpbOverlay.Controls.Add(this.chkUserCheevos);
+            this.gpbOverlay.Controls.Add(this.btnUserCheevos);
+            this.gpbOverlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.gpbOverlay.Location = new System.Drawing.Point(696, 412);
+            this.gpbOverlay.Name = "gpbOverlay";
+            this.gpbOverlay.Size = new System.Drawing.Size(237, 127);
+            this.gpbOverlay.TabIndex = 32;
+            this.gpbOverlay.TabStop = false;
+            this.gpbOverlay.Text = "Overlay";
+            // 
+            // pnlUserCheevos
+            // 
+            this.pnlUserCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pnlUserCheevos.BackColor = System.Drawing.Color.Black;
+            this.pnlUserCheevos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlUserCheevos.Controls.Add(this.lblCheevos);
+            this.pnlUserCheevos.Controls.Add(this.lblUserCheevos);
+            this.pnlUserCheevos.Controls.Add(this.picUserCheevos);
+            this.pnlUserCheevos.Location = new System.Drawing.Point(8, 19);
+            this.pnlUserCheevos.Name = "pnlUserCheevos";
+            this.pnlUserCheevos.Size = new System.Drawing.Size(221, 72);
+            this.pnlUserCheevos.TabIndex = 27;
+            // 
+            // lblCheevos
+            // 
+            this.lblCheevos.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCheevos.ForeColor = System.Drawing.Color.White;
+            this.lblCheevos.Location = new System.Drawing.Point(60, 45);
+            this.lblCheevos.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
+            this.lblCheevos.Name = "lblCheevos";
+            this.lblCheevos.Size = new System.Drawing.Size(156, 24);
+            this.lblCheevos.TabIndex = 2;
+            this.lblCheevos.Text = "Trophies";
+            this.lblCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblUserCheevos
+            // 
+            this.lblUserCheevos.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserCheevos.ForeColor = System.Drawing.Color.White;
+            this.lblUserCheevos.Location = new System.Drawing.Point(60, 6);
+            this.lblUserCheevos.Name = "lblUserCheevos";
+            this.lblUserCheevos.Size = new System.Drawing.Size(156, 48);
+            this.lblUserCheevos.TabIndex = 1;
+            this.lblUserCheevos.Text = "0 / 0";
+            this.lblUserCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // picUserCheevos
+            // 
+            this.picUserCheevos.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            this.picUserCheevos.Location = new System.Drawing.Point(11, 11);
+            this.picUserCheevos.Margin = new System.Windows.Forms.Padding(6);
+            this.picUserCheevos.Name = "picUserCheevos";
+            this.picUserCheevos.Size = new System.Drawing.Size(48, 48);
+            this.picUserCheevos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picUserCheevos.TabIndex = 0;
+            this.picUserCheevos.TabStop = false;
+            // 
+            // lblCheevoLoopUpdate
+            // 
+            this.lblCheevoLoopUpdate.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblCheevoLoopUpdate.BackColor = System.Drawing.Color.Transparent;
+            this.lblCheevoLoopUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblCheevoLoopUpdate.Location = new System.Drawing.Point(160, 102);
+            this.lblCheevoLoopUpdate.Name = "lblCheevoLoopUpdate";
+            this.lblCheevoLoopUpdate.Size = new System.Drawing.Size(13, 13);
+            this.lblCheevoLoopUpdate.TabIndex = 31;
+            // 
+            // chkUserCheevos
+            // 
+            this.chkUserCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.chkUserCheevos.AutoSize = true;
+            this.chkUserCheevos.Location = new System.Drawing.Point(179, 101);
+            this.chkUserCheevos.Name = "chkUserCheevos";
+            this.chkUserCheevos.Size = new System.Drawing.Size(50, 17);
+            this.chkUserCheevos.TabIndex = 29;
+            this.chkUserCheevos.Text = "Loop";
+            // 
+            // btnUserCheevos
+            // 
+            this.btnUserCheevos.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.btnUserCheevos.FlatAppearance.BorderSize = 0;
+            this.btnUserCheevos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.btnUserCheevos.Location = new System.Drawing.Point(8, 97);
+            this.btnUserCheevos.MinimumSize = new System.Drawing.Size(24, 24);
+            this.btnUserCheevos.Name = "btnUserCheevos";
+            this.btnUserCheevos.Size = new System.Drawing.Size(146, 24);
+            this.btnUserCheevos.TabIndex = 28;
+            this.btnUserCheevos.Text = "Get User Trophies";
+            this.btnUserCheevos.Click += new System.EventHandler(this.btnUserCheevos_Click);
+            // 
             // gpbUserInfo
             // 
             this.gpbUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1877,7 +1995,7 @@ namespace RADB
             this.gpbUserInfo.Controls.Add(this.flatLabelA1);
             this.gpbUserInfo.Location = new System.Drawing.Point(6, 76);
             this.gpbUserInfo.Name = "gpbUserInfo";
-            this.gpbUserInfo.Size = new System.Drawing.Size(362, 463);
+            this.gpbUserInfo.Size = new System.Drawing.Size(318, 463);
             this.gpbUserInfo.TabIndex = 33;
             this.gpbUserInfo.TabStop = false;
             this.gpbUserInfo.Text = "Info";
@@ -1931,7 +2049,7 @@ namespace RADB
             this.lblUserRichPresence.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserRichPresence.Location = new System.Drawing.Point(67, 347);
             this.lblUserRichPresence.Margin = new System.Windows.Forms.Padding(4);
-            this.lblUserRichPresence.MaximumSize = new System.Drawing.Size(288, 0);
+            this.lblUserRichPresence.MaximumSize = new System.Drawing.Size(244, 0);
             this.lblUserRichPresence.MinimumSize = new System.Drawing.Size(48, 16);
             this.lblUserRichPresence.Name = "lblUserRichPresence";
             this.lblUserRichPresence.Size = new System.Drawing.Size(48, 16);
@@ -1956,7 +2074,7 @@ namespace RADB
             this.lblUserLastGame.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserLastGame.Location = new System.Drawing.Point(67, 323);
             this.lblUserLastGame.Margin = new System.Windows.Forms.Padding(4);
-            this.lblUserLastGame.MaximumSize = new System.Drawing.Size(288, 0);
+            this.lblUserLastGame.MaximumSize = new System.Drawing.Size(244, 0);
             this.lblUserLastGame.MinimumSize = new System.Drawing.Size(48, 16);
             this.lblUserLastGame.Name = "lblUserLastGame";
             this.lblUserLastGame.Size = new System.Drawing.Size(48, 16);
@@ -2118,7 +2236,7 @@ namespace RADB
             this.flatLabelA4.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA4.MinimumSize = new System.Drawing.Size(48, 16);
             this.flatLabelA4.Name = "flatLabelA4";
-            this.flatLabelA4.Size = new System.Drawing.Size(82, 16);
+            this.flatLabelA4.Size = new System.Drawing.Size(84, 16);
             this.flatLabelA4.TabIndex = 13;
             this.flatLabelA4.Text = "Account Type:";
             // 
@@ -2155,101 +2273,6 @@ namespace RADB
             this.flatLabelA1.Size = new System.Drawing.Size(86, 16);
             this.flatLabelA1.TabIndex = 10;
             this.flatLabelA1.Text = "Member Since:";
-            // 
-            // gpbOverlay
-            // 
-            this.gpbOverlay.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.gpbOverlay.Controls.Add(this.pnlUserCheevos);
-            this.gpbOverlay.Controls.Add(this.lblCheevoLoopUpdate);
-            this.gpbOverlay.Controls.Add(this.chkUserCheevos);
-            this.gpbOverlay.Controls.Add(this.btnUserCheevos);
-            this.gpbOverlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gpbOverlay.Location = new System.Drawing.Point(669, 107);
-            this.gpbOverlay.Name = "gpbOverlay";
-            this.gpbOverlay.Size = new System.Drawing.Size(233, 166);
-            this.gpbOverlay.TabIndex = 32;
-            this.gpbOverlay.TabStop = false;
-            this.gpbOverlay.Text = "Overlay";
-            // 
-            // pnlUserCheevos
-            // 
-            this.pnlUserCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pnlUserCheevos.BackColor = System.Drawing.Color.Black;
-            this.pnlUserCheevos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlUserCheevos.Controls.Add(this.lblCheevos);
-            this.pnlUserCheevos.Controls.Add(this.lblUserCheevos);
-            this.pnlUserCheevos.Controls.Add(this.picUserCheevos);
-            this.pnlUserCheevos.Location = new System.Drawing.Point(6, 19);
-            this.pnlUserCheevos.Name = "pnlUserCheevos";
-            this.pnlUserCheevos.Size = new System.Drawing.Size(221, 72);
-            this.pnlUserCheevos.TabIndex = 27;
-            // 
-            // lblCheevos
-            // 
-            this.lblCheevos.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCheevos.ForeColor = System.Drawing.Color.White;
-            this.lblCheevos.Location = new System.Drawing.Point(60, 45);
-            this.lblCheevos.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
-            this.lblCheevos.Name = "lblCheevos";
-            this.lblCheevos.Size = new System.Drawing.Size(156, 24);
-            this.lblCheevos.TabIndex = 2;
-            this.lblCheevos.Text = "Trophies";
-            this.lblCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblUserCheevos
-            // 
-            this.lblUserCheevos.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserCheevos.ForeColor = System.Drawing.Color.White;
-            this.lblUserCheevos.Location = new System.Drawing.Point(60, 6);
-            this.lblUserCheevos.Name = "lblUserCheevos";
-            this.lblUserCheevos.Size = new System.Drawing.Size(156, 48);
-            this.lblUserCheevos.TabIndex = 1;
-            this.lblUserCheevos.Text = "0 / 0";
-            this.lblUserCheevos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // picUserCheevos
-            // 
-            this.picUserCheevos.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            this.picUserCheevos.Location = new System.Drawing.Point(11, 11);
-            this.picUserCheevos.Margin = new System.Windows.Forms.Padding(6);
-            this.picUserCheevos.Name = "picUserCheevos";
-            this.picUserCheevos.Size = new System.Drawing.Size(48, 48);
-            this.picUserCheevos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picUserCheevos.TabIndex = 0;
-            this.picUserCheevos.TabStop = false;
-            // 
-            // lblCheevoLoopUpdate
-            // 
-            this.lblCheevoLoopUpdate.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblCheevoLoopUpdate.BackColor = System.Drawing.Color.Transparent;
-            this.lblCheevoLoopUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblCheevoLoopUpdate.Location = new System.Drawing.Point(158, 142);
-            this.lblCheevoLoopUpdate.Name = "lblCheevoLoopUpdate";
-            this.lblCheevoLoopUpdate.Size = new System.Drawing.Size(13, 13);
-            this.lblCheevoLoopUpdate.TabIndex = 31;
-            // 
-            // chkUserCheevos
-            // 
-            this.chkUserCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.chkUserCheevos.AutoSize = true;
-            this.chkUserCheevos.Location = new System.Drawing.Point(177, 141);
-            this.chkUserCheevos.Name = "chkUserCheevos";
-            this.chkUserCheevos.Size = new System.Drawing.Size(50, 17);
-            this.chkUserCheevos.TabIndex = 29;
-            this.chkUserCheevos.Text = "Loop";
-            // 
-            // btnUserCheevos
-            // 
-            this.btnUserCheevos.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.btnUserCheevos.FlatAppearance.BorderSize = 0;
-            this.btnUserCheevos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.btnUserCheevos.Location = new System.Drawing.Point(6, 137);
-            this.btnUserCheevos.MinimumSize = new System.Drawing.Size(24, 24);
-            this.btnUserCheevos.Name = "btnUserCheevos";
-            this.btnUserCheevos.Size = new System.Drawing.Size(146, 24);
-            this.btnUserCheevos.TabIndex = 28;
-            this.btnUserCheevos.Text = "Get User Trophies";
-            this.btnUserCheevos.Click += new System.EventHandler(this.btnUserCheevos_Click);
             // 
             // txtUsername
             // 
@@ -2401,14 +2424,15 @@ namespace RADB
             ((System.ComponentModel.ISupportInitialize)(this.dgvGamesToHide)).EndInit();
             this.tabUserInfo.ResumeLayout(false);
             this.tabUserInfo.PerformLayout();
+            this.flatGroupBoxA1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picUserName)).EndInit();
-            this.gpbUserInfo.ResumeLayout(false);
-            this.gpbUserInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picUserLastGame)).EndInit();
             this.gpbOverlay.ResumeLayout(false);
             this.gpbOverlay.PerformLayout();
             this.pnlUserCheevos.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picUserCheevos)).EndInit();
+            this.gpbUserInfo.ResumeLayout(false);
+            this.gpbUserInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picUserLastGame)).EndInit();
             this.tabAbout.ResumeLayout(false);
             this.tabAbout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picFBiDevIcon)).EndInit();
@@ -2587,6 +2611,8 @@ namespace RADB
         private FlatLabelA lblUserLastConsole;
         private FlatPictureBoxA picUserLastGame;
         private System.Windows.Forms.LinkLabel lnkUserRank;
+        private FlatGroupBoxA flatGroupBoxA1;
+        private FlatPanelA pnlUserPlayedGames;
     }
 }
 

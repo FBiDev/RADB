@@ -304,6 +304,8 @@ namespace RADB
                         float? totalPctWon = includedGames.Sum(x => x.PctWon);
                         float avgPctWon = ((float)totalPctWon / includedGames.Count()) * 100f;
                         user.AverageCompletion = avgPctWon.ToNumber() + "%";
+
+                        user.PlayedGames = includedGames.ToList();
                     }
                 }
 
