@@ -281,7 +281,7 @@ namespace RADB
 
                 if (user.TotalPoints == 0 && user.TotalSoftcorePoints == 0)
                 {
-                    user.AverageCompletion ="0.00%";
+                    user.AverageCompletion = "0.00%";
                 }
                 else
                 {
@@ -294,6 +294,10 @@ namespace RADB
 
                     var playedGames = JsonConvert.DeserializeObject<List<GameProgress>>(playedGamesRaw);
                     var includedGames = playedGames.Where(x => x.PctWon > 0 && x.ConsoleName != "Hubs" && x.ConsoleName != "Events");
+
+                    //Remove SoftCore Duplicates
+                    includedGames = includedGames.GroupBy(x => x.GameID,
+                        (k, g) => g.Aggregate((a, x) => (x.PctWon > a.PctWon) ? x : a));
 
                     if (includedGames.Count() > 0)
                     {
