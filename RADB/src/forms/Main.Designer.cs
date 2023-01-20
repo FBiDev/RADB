@@ -317,12 +317,12 @@ namespace RADB
             this.mnuGamesToHide.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToHide});
             this.mnuGamesToHide.Name = "ctmHiddenGames";
-            this.mnuGamesToHide.Size = new System.Drawing.Size(197, 26);
+            this.mnuGamesToHide.Size = new System.Drawing.Size(195, 26);
             // 
             // mniRemoveGameToHide
             // 
             this.mniRemoveGameToHide.Name = "mniRemoveGameToHide";
-            this.mniRemoveGameToHide.Size = new System.Drawing.Size(196, 22);
+            this.mniRemoveGameToHide.Size = new System.Drawing.Size(194, 22);
             this.mniRemoveGameToHide.Text = "Remove Game To Hide";
             this.mniRemoveGameToHide.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToHide_MouseDown);
             // 
@@ -353,12 +353,12 @@ namespace RADB
             this.mnuGamesToPlay.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToPlay});
             this.mnuGamesToPlay.Name = "mnuGamesToPlay";
-            this.mnuGamesToPlay.Size = new System.Drawing.Size(194, 26);
+            this.mnuGamesToPlay.Size = new System.Drawing.Size(192, 26);
             // 
             // mniRemoveGameToPlay
             // 
             this.mniRemoveGameToPlay.Name = "mniRemoveGameToPlay";
-            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(193, 22);
+            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(191, 22);
             this.mniRemoveGameToPlay.Text = "Remove Game To Play";
             this.mniRemoveGameToPlay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToPlay_MouseDown);
             // 
@@ -1403,7 +1403,7 @@ namespace RADB
             this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoAchievements.Location = new System.Drawing.Point(218, 23);
             this.lblInfoAchievements.Name = "lblInfoAchievements";
-            this.lblInfoAchievements.Size = new System.Drawing.Size(146, 24);
+            this.lblInfoAchievements.Size = new System.Drawing.Size(145, 24);
             this.lblInfoAchievements.TabIndex = 35;
             this.lblInfoAchievements.Text = "0 Trophies: 0 points";
             this.lblInfoAchievements.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2112,7 +2112,7 @@ namespace RADB
             this.flatLabelA4.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA4.MinimumSize = new System.Drawing.Size(48, 16);
             this.flatLabelA4.Name = "flatLabelA4";
-            this.flatLabelA4.Size = new System.Drawing.Size(84, 16);
+            this.flatLabelA4.Size = new System.Drawing.Size(82, 16);
             this.flatLabelA4.TabIndex = 13;
             this.flatLabelA4.Text = "Account Type:";
             // 
