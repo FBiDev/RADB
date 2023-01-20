@@ -1877,7 +1877,7 @@ namespace RADB
             this.gpbUserInfo.Controls.Add(this.flatLabelA1);
             this.gpbUserInfo.Location = new System.Drawing.Point(6, 76);
             this.gpbUserInfo.Name = "gpbUserInfo";
-            this.gpbUserInfo.Size = new System.Drawing.Size(390, 463);
+            this.gpbUserInfo.Size = new System.Drawing.Size(362, 463);
             this.gpbUserInfo.TabIndex = 33;
             this.gpbUserInfo.TabStop = false;
             this.gpbUserInfo.Text = "Info";
@@ -1917,7 +1917,7 @@ namespace RADB
             // lblUserLastConsole
             // 
             this.lblUserLastConsole.AutoSize = true;
-            this.lblUserLastConsole.Location = new System.Drawing.Point(134, 298);
+            this.lblUserLastConsole.Location = new System.Drawing.Point(134, 299);
             this.lblUserLastConsole.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserLastConsole.MinimumSize = new System.Drawing.Size(48, 16);
             this.lblUserLastConsole.Name = "lblUserLastConsole";
@@ -1929,17 +1929,20 @@ namespace RADB
             // 
             this.lblUserRichPresence.AutoSize = true;
             this.lblUserRichPresence.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserRichPresence.Location = new System.Drawing.Point(66, 342);
-            this.lblUserRichPresence.MaximumSize = new System.Drawing.Size(256, 0);
+            this.lblUserRichPresence.Location = new System.Drawing.Point(67, 347);
+            this.lblUserRichPresence.Margin = new System.Windows.Forms.Padding(4);
+            this.lblUserRichPresence.MaximumSize = new System.Drawing.Size(288, 0);
+            this.lblUserRichPresence.MinimumSize = new System.Drawing.Size(48, 16);
             this.lblUserRichPresence.Name = "lblUserRichPresence";
-            this.lblUserRichPresence.Size = new System.Drawing.Size(48, 24);
+            this.lblUserRichPresence.Size = new System.Drawing.Size(48, 16);
             this.lblUserRichPresence.TabIndex = 31;
             this.lblUserRichPresence.Text = "-";
+            this.lblUserRichPresence.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // 
             // flatLabelA2
             // 
             this.flatLabelA2.AutoSize = true;
-            this.flatLabelA2.Location = new System.Drawing.Point(55, 298);
+            this.flatLabelA2.Location = new System.Drawing.Point(55, 299);
             this.flatLabelA2.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA2.MinimumSize = new System.Drawing.Size(48, 16);
             this.flatLabelA2.Name = "flatLabelA2";
@@ -1951,12 +1954,15 @@ namespace RADB
             // 
             this.lblUserLastGame.AutoSize = true;
             this.lblUserLastGame.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserLastGame.Location = new System.Drawing.Point(66, 318);
-            this.lblUserLastGame.MaximumSize = new System.Drawing.Size(256, 0);
+            this.lblUserLastGame.Location = new System.Drawing.Point(67, 323);
+            this.lblUserLastGame.Margin = new System.Windows.Forms.Padding(4);
+            this.lblUserLastGame.MaximumSize = new System.Drawing.Size(288, 0);
+            this.lblUserLastGame.MinimumSize = new System.Drawing.Size(48, 16);
             this.lblUserLastGame.Name = "lblUserLastGame";
-            this.lblUserLastGame.Size = new System.Drawing.Size(48, 24);
+            this.lblUserLastGame.Size = new System.Drawing.Size(48, 16);
             this.lblUserLastGame.TabIndex = 29;
             this.lblUserLastGame.Text = "-";
+            this.lblUserLastGame.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // 
             // lblUserCompletion
             // 
