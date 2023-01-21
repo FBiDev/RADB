@@ -822,6 +822,9 @@ namespace RADB
             //Reallocate RichPresence
             lblUserRichPresence.Location = new Point(lblUserRichPresence.Location.X, lblUserLastGame.Location.Y + lblUserLastGame.Size.Height + lblUserRichPresence.Margin.Top);
 
+            //Awards
+            pnlUserPlayedGames.Controls.Clear();
+
             var completedGames = UserBind.PlayedGames.Where(x => x.PctWon == 1.0);
 
             var dl = new Download() { Overwrite = false };

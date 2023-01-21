@@ -183,7 +183,7 @@ namespace RADB
             this.ghNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ghLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabUserInfo = new System.Windows.Forms.TabPage();
-            this.flatGroupBoxA1 = new RADB.FlatGroupBoxA();
+            this.gpbAwards = new RADB.FlatGroupBoxA();
             this.pnlUserPlayedGames = new RADB.FlatPanelA();
             this.lblUserStatus = new RADB.FlatLabelA();
             this.lblUserMotto = new RADB.FlatLabelA();
@@ -267,7 +267,7 @@ namespace RADB
             this.tabGamesToHide.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGamesToHide)).BeginInit();
             this.tabUserInfo.SuspendLayout();
-            this.flatGroupBoxA1.SuspendLayout();
+            this.gpbAwards.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picUserName)).BeginInit();
             this.gpbOverlay.SuspendLayout();
             this.pnlUserCheevos.SuspendLayout();
@@ -320,12 +320,12 @@ namespace RADB
             this.mnuGamesToHide.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToHide});
             this.mnuGamesToHide.Name = "ctmHiddenGames";
-            this.mnuGamesToHide.Size = new System.Drawing.Size(197, 26);
+            this.mnuGamesToHide.Size = new System.Drawing.Size(195, 26);
             // 
             // mniRemoveGameToHide
             // 
             this.mniRemoveGameToHide.Name = "mniRemoveGameToHide";
-            this.mniRemoveGameToHide.Size = new System.Drawing.Size(196, 22);
+            this.mniRemoveGameToHide.Size = new System.Drawing.Size(194, 22);
             this.mniRemoveGameToHide.Text = "Remove Game To Hide";
             this.mniRemoveGameToHide.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToHide_MouseDown);
             // 
@@ -356,12 +356,12 @@ namespace RADB
             this.mnuGamesToPlay.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToPlay});
             this.mnuGamesToPlay.Name = "mnuGamesToPlay";
-            this.mnuGamesToPlay.Size = new System.Drawing.Size(194, 26);
+            this.mnuGamesToPlay.Size = new System.Drawing.Size(192, 26);
             // 
             // mniRemoveGameToPlay
             // 
             this.mniRemoveGameToPlay.Name = "mniRemoveGameToPlay";
-            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(193, 22);
+            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(191, 22);
             this.mniRemoveGameToPlay.Text = "Remove Game To Play";
             this.mniRemoveGameToPlay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToPlay_MouseDown);
             // 
@@ -1406,7 +1406,7 @@ namespace RADB
             this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoAchievements.Location = new System.Drawing.Point(218, 23);
             this.lblInfoAchievements.Name = "lblInfoAchievements";
-            this.lblInfoAchievements.Size = new System.Drawing.Size(146, 24);
+            this.lblInfoAchievements.Size = new System.Drawing.Size(145, 24);
             this.lblInfoAchievements.TabIndex = 35;
             this.lblInfoAchievements.Text = "0 Trophies: 0 points";
             this.lblInfoAchievements.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1776,7 +1776,7 @@ namespace RADB
             // tabUserInfo
             // 
             this.tabUserInfo.BackColor = System.Drawing.Color.Transparent;
-            this.tabUserInfo.Controls.Add(this.flatGroupBoxA1);
+            this.tabUserInfo.Controls.Add(this.gpbAwards);
             this.tabUserInfo.Controls.Add(this.lblUserStatus);
             this.tabUserInfo.Controls.Add(this.lblUserMotto);
             this.tabUserInfo.Controls.Add(this.lblUserName);
@@ -1792,15 +1792,15 @@ namespace RADB
             this.tabUserInfo.TabIndex = 3;
             this.tabUserInfo.Text = "User Info";
             // 
-            // flatGroupBoxA1
+            // gpbAwards
             // 
-            this.flatGroupBoxA1.Controls.Add(this.pnlUserPlayedGames);
-            this.flatGroupBoxA1.Location = new System.Drawing.Point(330, 76);
-            this.flatGroupBoxA1.Name = "flatGroupBoxA1";
-            this.flatGroupBoxA1.Size = new System.Drawing.Size(360, 463);
-            this.flatGroupBoxA1.TabIndex = 43;
-            this.flatGroupBoxA1.TabStop = false;
-            this.flatGroupBoxA1.Text = "Awards";
+            this.gpbAwards.Controls.Add(this.pnlUserPlayedGames);
+            this.gpbAwards.Location = new System.Drawing.Point(330, 76);
+            this.gpbAwards.Name = "gpbAwards";
+            this.gpbAwards.Size = new System.Drawing.Size(360, 463);
+            this.gpbAwards.TabIndex = 43;
+            this.gpbAwards.TabStop = false;
+            this.gpbAwards.Text = "Awards";
             // 
             // pnlUserPlayedGames
             // 
@@ -2236,7 +2236,7 @@ namespace RADB
             this.flatLabelA4.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA4.MinimumSize = new System.Drawing.Size(48, 16);
             this.flatLabelA4.Name = "flatLabelA4";
-            this.flatLabelA4.Size = new System.Drawing.Size(84, 16);
+            this.flatLabelA4.Size = new System.Drawing.Size(82, 16);
             this.flatLabelA4.TabIndex = 13;
             this.flatLabelA4.Text = "Account Type:";
             // 
@@ -2424,7 +2424,7 @@ namespace RADB
             ((System.ComponentModel.ISupportInitialize)(this.dgvGamesToHide)).EndInit();
             this.tabUserInfo.ResumeLayout(false);
             this.tabUserInfo.PerformLayout();
-            this.flatGroupBoxA1.ResumeLayout(false);
+            this.gpbAwards.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picUserName)).EndInit();
             this.gpbOverlay.ResumeLayout(false);
             this.gpbOverlay.PerformLayout();
@@ -2611,7 +2611,7 @@ namespace RADB
         private FlatLabelA lblUserLastConsole;
         private FlatPictureBoxA picUserLastGame;
         private System.Windows.Forms.LinkLabel lnkUserRank;
-        private FlatGroupBoxA flatGroupBoxA1;
+        private FlatGroupBoxA gpbAwards;
         private FlatPanelA pnlUserPlayedGames;
     }
 }

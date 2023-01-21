@@ -82,11 +82,18 @@ namespace RADB
 
         public new Task DownloadFileTaskAsync(Uri address, string fileName)
         {
-            fileName = SetTempFile(fileName);
-
             FileDownloaded = new DownloadFile(address.ToString(), fileName);
 
-            return base.DownloadFileTaskAsync(address, fileName);
+            if (FileDownloaded.Name != "")
+            {
+                fileName = SetTempFile(fileName);
+
+                FileDownloaded = new DownloadFile(address.ToString(), fileName);
+
+                return base.DownloadFileTaskAsync(address, fileName);
+            }
+
+            return null;
         }
 
         public new async Task<byte[]> UploadValuesTaskAsync(Uri address, NameValueCollection data)
