@@ -297,7 +297,7 @@ namespace RADB
 
                     //Remove SoftCore Duplicates
                     includedGames = includedGames.GroupBy(x => x.GameID,
-                        (k, g) => g.Aggregate((a, x) => (x.PctWon >= a.PctWon) ? x : a));
+                        (k, g) => g.Aggregate((x1, x2) => (x1.PctWon > x2.PctWon) ? x1 : x2));
 
                     if (includedGames.Count() > 0)
                     {
