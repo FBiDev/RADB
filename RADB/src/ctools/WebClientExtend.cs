@@ -84,16 +84,12 @@ namespace RADB
         {
             FileDownloaded = new DownloadFile(address.ToString(), fileName);
 
-            if (FileDownloaded.Name != "")
-            {
-                fileName = SetTempFile(fileName);
+            if (string.IsNullOrWhiteSpace(FileDownloaded.Name)) { return null; }
 
-                FileDownloaded = new DownloadFile(address.ToString(), fileName);
+            fileName = SetTempFile(fileName);
+            FileDownloaded = new DownloadFile(address.ToString(), fileName);
 
-                return base.DownloadFileTaskAsync(address, fileName);
-            }
-
-            return null;
+            return base.DownloadFileTaskAsync(address, fileName);
         }
 
         public new async Task<byte[]> UploadValuesTaskAsync(Uri address, NameValueCollection data)

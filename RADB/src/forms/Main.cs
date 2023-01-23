@@ -784,7 +784,7 @@ namespace RADB
             btnGetUserInfo.Enabled = false;
             UserBind = await RA.GetUserInfo(txtUsername.Text.Trim());
             btnGetUserInfo.Enabled = true;
-            if (UserBind.ID <= 0) return;
+            if (UserBind.Name.Empty()) return;
 
             picUserName.Image = UserBind.UserPicBitmap;
             lblUserStatus.Text = UserBind.Status;
@@ -832,8 +832,15 @@ namespace RADB
             await dl.Start();
 
             int i = 0, c = 0, r = 0;
-            int perRow = 6;
+            int perRow = 5;
 
+
+            var images = new List<Bitmap>();
+            var imagePaths = new List<string>();
+            //var pics = new ImageList()
+            //{
+            //    ImageSize = new Size(52,52)
+            //};
             foreach (var game in completedGames)
             {
                 game.SetImageIconBitmap();
@@ -848,12 +855,38 @@ namespace RADB
                     Location = new Point(c * 54, r * 54),
                 };
 
+                imagePaths.Add(game.ImageIconFile.Path);
+                images.Add(game.ImageIconBitmap);
+
+                //pics.Images.Add(game.ImageIconBitmap);
+
+                var item = new ListViewItem()
+                {
+                    ImageIndex = i,
+                    //IndentCount = 0
+                    //ImageKey = game.GameID.ToString(),
+                    //Text = game.Title,
+                };
+
+                //lsvGameAwards.Items.Add(item);
+                pnlUserPlayedGames.Controls.Add(picBox);
+
                 i++;
                 c = (i % perRow);
                 r = (i / perRow);
-
-                pnlUserPlayedGames.Controls.Add(picBox);
             }
+
+            //lsvGameAwards.ImagePadding = 0;
+            //lsvGameAwards.TileSize = new Size(56, 49);
+
+            lsvGameAwards.TileSize = new Size(50, 50);
+            lsvGameAwards.AddImageList(images, new Size(48, 48));
+
+            
+            //lsvGameAwards.View = View.Tile;
+            //lsvGameAwards.TileSize = new Size(60, 60);
+            //lsvGameAwards.LargeImageList = pics;
+            //lsvGameAwards.SmallImageList = pics;
         }
 
         private bool UserCheevosIsRunning = false;

@@ -131,6 +131,9 @@
     <Compile Include="src\custom_controls\FlatLabelA.Designer.cs">
       <DependentUpon>FlatLabelA.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\custom_controls\FlatListViewA.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="src\custom_controls\FlatPanelA.cs">
       <SubType>Component</SubType>
     </Compile>
