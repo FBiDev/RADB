@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using GNX;
+using System.Drawing.Imaging;
 
 namespace RADB
 {
@@ -832,13 +833,13 @@ namespace RADB
             int i = 0, c = 0, r = 0;
             int perRow = 5;
 
-            var imagePaths = new List<string>();
+            var titles = new List<string>();
 
             foreach (var game in completedGames)
             {
                 game.SetImageIconBitmap();
-
-                //imagePaths.Add(game.ImageIconFile.Path);
+                var text = game.Title + "\r\n" + game.ConsoleName + "\r\n\r\n" + "Mastered on " + "11 Sep 2022, 01:21";
+                titles.Add(text);
 
                 i++;
                 c = (i % perRow);
@@ -848,14 +849,87 @@ namespace RADB
             var images = completedGames.Select(g => g.ImageIconBitmap).ToList();
 
             //lsvGameAwards.ImagePadding = 0;
-            lsvGameAwards.ItemMouseHover += lsvGameAwards_ItemMouseHover;
-            lsvGameAwards.TileSize = new Size(58, 58);
-            await lsvGameAwards.AddImageList(images, new Size(52, 52));
+            lsvGameAwards.MouseLeave += lsvGameAwards_MouseLeave;
+            lsvGameAwards.MouseEnter += pinnedAppsListBox_MouseEnter;
+            lsvGameAwards.MouseMove += pinnedAppsListBox_MouseEnter;
+            //lsvGameAwards.TileSize = new Size(58, 58);
+            lsvGameAwards.ImagesBorderColor = Color.Gold;
+            lsvGameAwards.ImagesBorder = 2;
+            lsvGameAwards.ImagesMargin = 6;
+            //lsvGameAwards.Images = Color.Transparent;
+            await lsvGameAwards.AddImageList(images, new Size(52, 52), titles);
+        }
+
+        private void lsvGameAwards_MouseLeave(object sender, EventArgs e)
+        {
+            pnlAwardFloating.Visible = false;
+        }
+
+        private void pinnedAppsListBox_MouseEnter(object sender, EventArgs e)
+        {
+
+
+            var pos = Cursor.Position;
+
+
+            Point point = lsvGameAwards.PointToClient(pos);
+
+
+            //if (point.X <= 10)
+            //    point.X -= 8;
+            //else
+            //    point.X += 4;
+
+            //if (point.Y <= 10)
+            //    point.Y -= 2;
+            //else
+            //    point.Y += 8;
+
+            //if (point.Y >= lsvGameAwards.ImagesPerRow * )
+            //    point.Y -= 6;
+
+            var index = lsvGameAwards.HitTest(point);
+            if (index.Item == null) { pnlAwardFloating.Visible = false; return; }
+            if (index.Item.Index < 0) return;
+            //Do any action with the item
+
+            pnlAwardFloating.Visible = true;
+
+            var newPos = point;
+            newPos.X += 345;
+            newPos.Y += 100;
+
+            if (point.Y >= 375)
+                newPos.Y -= 65;
+            pnlAwardFloating.Location = newPos;
+
+            //lsvGameAwards.GetItemRect(index.Item.Index).Inflate(1, 2);
+
+            var item = index.Item;
+            var currentImage = lsvGameAwards.Images[index.Item.Index];
+            int x = (item.Bounds.Left) + 2 + 4;
+            int y = (item.Bounds.Top - 2) + 2;
+            var rectAll = new Rectangle(x, y, currentImage.Width, currentImage.Height);
+
+            picAwardFloating.Image = currentImage;
+            lblAwardFloating.Text = lsvGameAwards.Titles[index.Item.Index];
+
+            var newImage = new Bitmap(52, 52, PixelFormat.Format24bppRgb);
+
+            using (Graphics g = Graphics.FromImage(newImage))
+            {
+                //g.Clear(Color.Indigo);
+                Brush brush = new SolidBrush(Color.FromArgb(120, 0, 120, 215));
+                g.FillRectangle(brush, rectAll);
+            }
         }
 
         private void lsvGameAwards_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
         {
-            //MessageBox.Show("a");
+            var lv = (FlatListViewA)sender;
+            e.Item.BackColor = Color.Black;
+            //MessageBox.Show(e.Item.ImageIndex.ToString());
+
         }
 
         private bool UserCheevosIsRunning = false;

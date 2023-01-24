@@ -129,8 +129,14 @@ namespace RADB
 
                 if (c.Name == "pnlInfoImages" || c.Name == "pnlInfoBoxArt"
                  || c.Name == "pnlInfoInGame" || c.Name == "pnlInfoTitle"
+                 || c.Name == "pnlAwardFloating"
                  )
                     c.BackColor = PanelColor2;
+
+                if (c.Name == "pnlAwardFloating")
+                {
+                    //c.BackColor = BackColor1;
+                }
             }
 
             foreach (var c in f.GetControls<FlatGroupBoxA>())
