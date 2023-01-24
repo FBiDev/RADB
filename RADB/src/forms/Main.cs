@@ -823,8 +823,6 @@ namespace RADB
             lblUserRichPresence.Location = new Point(lblUserRichPresence.Location.X, lblUserLastGame.Location.Y + lblUserLastGame.Size.Height + lblUserRichPresence.Margin.Top);
 
             //Awards
-            pnlUserPlayedGames.Controls.Clear();
-
             var completedGames = UserBind.PlayedGames.Where(x => x.PctWon == 1.0);
 
             var dl = new Download() { Overwrite = false };
@@ -834,60 +832,30 @@ namespace RADB
             int i = 0, c = 0, r = 0;
             int perRow = 5;
 
-
-            var images = new List<Bitmap>();
             var imagePaths = new List<string>();
-            var pics = new ImageList()
-            {
-                ImageSize = new Size(48, 48),
-                ColorDepth = ColorDepth.Depth24Bit
-            };
+
             foreach (var game in completedGames)
             {
                 game.SetImageIconBitmap();
 
-                //var picBox = new FlatPictureBoxA()
-                //{
-                //    Margin = new Padding(3),
-                //    Size = new Size(48, 48),
-                //    SizeMode = PictureBoxSizeMode.StretchImage,
-                //    Interpolation = InterpolationMode.HighQualityBicubic,
-                //    Image = game.ImageIconBitmap,
-                //    Location = new Point(c * 54, r * 54),
-                //};
-
                 //imagePaths.Add(game.ImageIconFile.Path);
-                images.Add(game.ImageIconBitmap);
-
-                //pics.Images.Add(game.ImageIconBitmap);
-
-                var item = new ListViewItem()
-                {
-                    ImageIndex = i,
-                    //IndentCount = 0
-                    //ImageKey = game.GameID.ToString(),
-                    //Text = game.Title,
-                };
-
-                //lsvGameAwards.Items.Add(item);
-                //pnlUserPlayedGames.Controls.Add(picBox);
 
                 i++;
                 c = (i % perRow);
                 r = (i / perRow);
             }
 
+            var images = completedGames.Select(g => g.ImageIconBitmap).ToList();
+
             //lsvGameAwards.ImagePadding = 0;
-            //lsvGameAwards.TileSize = new Size(56, 49);
-
+            lsvGameAwards.ItemMouseHover += lsvGameAwards_ItemMouseHover;
             lsvGameAwards.TileSize = new Size(58, 58);
-            lsvGameAwards.AddImageList(images, new Size(52, 52));
+            await lsvGameAwards.AddImageList(images, new Size(52, 52));
+        }
 
-            
-            //lsvGameAwards.View = View.Tile;
-            //lsvGameAwards.TileSize = new Size(60, 60);
-            //lsvGameAwards.LargeImageList = pics;
-            //lsvGameAwards.SmallImageList = pics;
+        private void lsvGameAwards_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+        {
+            //MessageBox.Show("a");
         }
 
         private bool UserCheevosIsRunning = false;
