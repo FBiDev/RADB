@@ -30,36 +30,36 @@ namespace RADB
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle143 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle144 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle133 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle134 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle167 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle168 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle123 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle124 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle165 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle166 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle173 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle174 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle157 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle158 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle169 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle170 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle171 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle172 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle163 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle164 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Ttip = new System.Windows.Forms.ToolTip(this.components);
             this.mnuGames = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mniPlayGame = new System.Windows.Forms.ToolStripMenuItem();
@@ -183,8 +183,9 @@ namespace RADB
             this.ghNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ghLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabUserInfo = new System.Windows.Forms.TabPage();
-            this.gpbAwards = new RADB.FlatGroupBoxA();
             this.pnlUserPlayedGames = new RADB.FlatPanelA();
+            this.gpbAwards = new RADB.FlatGroupBoxA();
+            this.lsvGameAwards = new RADB.FlatListViewA();
             this.lblUserStatus = new RADB.FlatLabelA();
             this.lblUserMotto = new RADB.FlatLabelA();
             this.lblUserName = new RADB.FlatLabelA();
@@ -224,7 +225,6 @@ namespace RADB
             this.flatLabelA1 = new RADB.FlatLabelA();
             this.txtUsername = new RADB.FlatTextBoxA();
             this.tabAbout = new System.Windows.Forms.TabPage();
-            this.lsvGameAwards = new RADB.FlatListViewA();
             this.lblSystemReLogin = new RADB.FlatLabelA();
             this.btnSystemReLogin = new RADB.FlatButtonA();
             this.btnRaProfile = new RADB.FlatButtonA();
@@ -321,12 +321,12 @@ namespace RADB
             this.mnuGamesToHide.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToHide});
             this.mnuGamesToHide.Name = "ctmHiddenGames";
-            this.mnuGamesToHide.Size = new System.Drawing.Size(197, 26);
+            this.mnuGamesToHide.Size = new System.Drawing.Size(195, 26);
             // 
             // mniRemoveGameToHide
             // 
             this.mniRemoveGameToHide.Name = "mniRemoveGameToHide";
-            this.mniRemoveGameToHide.Size = new System.Drawing.Size(196, 22);
+            this.mniRemoveGameToHide.Size = new System.Drawing.Size(194, 22);
             this.mniRemoveGameToHide.Text = "Remove Game To Hide";
             this.mniRemoveGameToHide.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToHide_MouseDown);
             // 
@@ -357,12 +357,12 @@ namespace RADB
             this.mnuGamesToPlay.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToPlay});
             this.mnuGamesToPlay.Name = "mnuGamesToPlay";
-            this.mnuGamesToPlay.Size = new System.Drawing.Size(194, 26);
+            this.mnuGamesToPlay.Size = new System.Drawing.Size(192, 26);
             // 
             // mniRemoveGameToPlay
             // 
             this.mniRemoveGameToPlay.Name = "mniRemoveGameToPlay";
-            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(193, 22);
+            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(191, 22);
             this.mniRemoveGameToPlay.Text = "Remove Game To Play";
             this.mniRemoveGameToPlay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToPlay_MouseDown);
             // 
@@ -521,40 +521,40 @@ namespace RADB
             // 
             this.dgvConsoles.AllowUserToResizeColumns = false;
             this.dgvConsoles.AllowUserToResizeRows = false;
-            dataGridViewCellStyle31.BackColor = System.Drawing.Color.White;
-            this.dgvConsoles.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle31;
+            dataGridViewCellStyle27.BackColor = System.Drawing.Color.White;
+            this.dgvConsoles.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle27;
             this.dgvConsoles.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle32.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle32.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle32.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvConsoles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle32;
+            dataGridViewCellStyle28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            dataGridViewCellStyle28.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle28.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvConsoles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle28;
             this.dgvConsoles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cID,
             this.cCompany,
             this.cName,
             this.cNumGames,
             this.cTotalGames});
-            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle33.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle33.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle33.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle33.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle33.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvConsoles.DefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle143.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle143.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle143.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle143.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle143.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
+            dataGridViewCellStyle143.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle143.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvConsoles.DefaultCellStyle = dataGridViewCellStyle143;
             this.dgvConsoles.Location = new System.Drawing.Point(6, 83);
             this.dgvConsoles.Name = "dgvConsoles";
-            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle34.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle34.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle34.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvConsoles.RowHeadersDefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewCellStyle144.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle144.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle144.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle144.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle144.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle144.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle144.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvConsoles.RowHeadersDefaultCellStyle = dataGridViewCellStyle144;
             this.dgvConsoles.RowTemplate.Height = 37;
             this.dgvConsoles.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvConsoles.Size = new System.Drawing.Size(896, 459);
@@ -923,16 +923,16 @@ namespace RADB
             // 
             this.dgvGames.AllowUserToResizeColumns = false;
             this.dgvGames.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            this.dgvGames.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle31.BackColor = System.Drawing.Color.White;
+            this.dgvGames.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle31;
             this.dgvGames.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGames.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle32.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            dataGridViewCellStyle32.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvGames.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle32;
             this.dgvGames.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gID,
             this.gIconBitmap,
@@ -942,24 +942,24 @@ namespace RADB
             this.gPoints,
             this.cNumLeaderboards,
             this.gLastUpdated});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGames.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle133.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle133.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle133.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle133.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle133.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
+            dataGridViewCellStyle133.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle133.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvGames.DefaultCellStyle = dataGridViewCellStyle133;
             this.dgvGames.Location = new System.Drawing.Point(6, 83);
             this.dgvGames.Name = "dgvGames";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGames.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle134.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle134.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle134.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle134.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle134.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle134.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle134.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvGames.RowHeadersDefaultCellStyle = dataGridViewCellStyle134;
             this.dgvGames.RowTemplate.Height = 37;
             this.dgvGames.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGames.Size = new System.Drawing.Size(896, 459);
@@ -1304,41 +1304,41 @@ namespace RADB
             // 
             // dgvAchievements
             // 
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-            this.dgvAchievements.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            this.dgvAchievements.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvAchievements.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvAchievements.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAchievements.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvAchievements.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.aOrder,
             this.aIconBitmap,
             this.aDescription,
             this.aPoints});
-            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle37.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle37.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle37.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle37.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle37.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvAchievements.DefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle167.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle167.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle167.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle167.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle167.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
+            dataGridViewCellStyle167.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle167.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvAchievements.DefaultCellStyle = dataGridViewCellStyle167;
             this.dgvAchievements.Location = new System.Drawing.Point(6, 54);
             this.dgvAchievements.Name = "dgvAchievements";
-            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle38.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle38.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle38.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvAchievements.RowHeadersDefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle168.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle168.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle168.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle168.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle168.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle168.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle168.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAchievements.RowHeadersDefaultCellStyle = dataGridViewCellStyle168;
             this.dgvAchievements.RowTemplate.Height = 72;
             this.dgvAchievements.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvAchievements.ScrollBars = System.Windows.Forms.ScrollBars.None;
@@ -1348,8 +1348,8 @@ namespace RADB
             // aOrder
             // 
             this.aOrder.DataPropertyName = "DisplayOrder";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.aOrder.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle123.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.aOrder.DefaultCellStyle = dataGridViewCellStyle123;
             this.aOrder.HeaderText = "Order";
             this.aOrder.Name = "aOrder";
             this.aOrder.ReadOnly = true;
@@ -1358,8 +1358,8 @@ namespace RADB
             // aIconBitmap
             // 
             this.aIconBitmap.DataPropertyName = "DisplayOrder";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.aIconBitmap.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle124.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.aIconBitmap.DefaultCellStyle = dataGridViewCellStyle124;
             this.aIconBitmap.HeaderText = "Icon";
             this.aIconBitmap.Name = "aIconBitmap";
             this.aIconBitmap.ReadOnly = true;
@@ -1370,9 +1370,9 @@ namespace RADB
             // 
             this.aDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.aDescription.DataPropertyName = "DescriptionComplete";
-            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.aDescription.DefaultCellStyle = dataGridViewCellStyle35;
+            dataGridViewCellStyle165.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle165.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.aDescription.DefaultCellStyle = dataGridViewCellStyle165;
             this.aDescription.HeaderText = "Description";
             this.aDescription.Name = "aDescription";
             this.aDescription.ReadOnly = true;
@@ -1380,8 +1380,8 @@ namespace RADB
             // aPoints
             // 
             this.aPoints.DataPropertyName = "Points";
-            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.aPoints.DefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewCellStyle166.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.aPoints.DefaultCellStyle = dataGridViewCellStyle166;
             this.aPoints.HeaderText = "Points";
             this.aPoints.Name = "aPoints";
             this.aPoints.ReadOnly = true;
@@ -1407,7 +1407,7 @@ namespace RADB
             this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoAchievements.Location = new System.Drawing.Point(218, 23);
             this.lblInfoAchievements.Name = "lblInfoAchievements";
-            this.lblInfoAchievements.Size = new System.Drawing.Size(146, 24);
+            this.lblInfoAchievements.Size = new System.Drawing.Size(145, 24);
             this.lblInfoAchievements.TabIndex = 35;
             this.lblInfoAchievements.Text = "0 Trophies: 0 points";
             this.lblInfoAchievements.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1506,16 +1506,16 @@ namespace RADB
             // 
             this.dgvGamesToPlay.AllowUserToResizeColumns = false;
             this.dgvGamesToPlay.AllowUserToResizeRows = false;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
-            this.dgvGamesToPlay.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            this.dgvGamesToPlay.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvGamesToPlay.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGamesToPlay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvGamesToPlay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvGamesToPlay.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gpID,
             this.gpIconBitmap,
@@ -1525,24 +1525,24 @@ namespace RADB
             this.gpPoints,
             this.gpNumLeaderboards,
             this.gpLastUpdated});
-            dataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle43.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle43.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle43.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle43.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle43.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle43.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGamesToPlay.DefaultCellStyle = dataGridViewCellStyle43;
+            dataGridViewCellStyle173.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle173.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle173.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle173.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle173.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
+            dataGridViewCellStyle173.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle173.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvGamesToPlay.DefaultCellStyle = dataGridViewCellStyle173;
             this.dgvGamesToPlay.Location = new System.Drawing.Point(6, 83);
             this.dgvGamesToPlay.Name = "dgvGamesToPlay";
-            dataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle44.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle44.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle44.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle44.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle44.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle44.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGamesToPlay.RowHeadersDefaultCellStyle = dataGridViewCellStyle44;
+            dataGridViewCellStyle174.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle174.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle174.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle174.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle174.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle174.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle174.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvGamesToPlay.RowHeadersDefaultCellStyle = dataGridViewCellStyle174;
             this.dgvGamesToPlay.RowTemplate.Height = 37;
             this.dgvGamesToPlay.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGamesToPlay.Size = new System.Drawing.Size(896, 459);
@@ -1552,8 +1552,8 @@ namespace RADB
             // gpID
             // 
             this.gpID.DataPropertyName = "ID";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gpID.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle157.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.gpID.DefaultCellStyle = dataGridViewCellStyle157;
             this.gpID.HeaderText = "ID";
             this.gpID.Name = "gpID";
             this.gpID.ReadOnly = true;
@@ -1563,10 +1563,10 @@ namespace RADB
             // 
             this.gpIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.gpIconBitmap.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.NullValue = null;
-            dataGridViewCellStyle16.Padding = new System.Windows.Forms.Padding(2);
-            this.gpIconBitmap.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle158.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle158.NullValue = null;
+            dataGridViewCellStyle158.Padding = new System.Windows.Forms.Padding(2);
+            this.gpIconBitmap.DefaultCellStyle = dataGridViewCellStyle158;
             this.gpIconBitmap.HeaderText = "Icon";
             this.gpIconBitmap.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
             this.gpIconBitmap.Name = "gpIconBitmap";
@@ -1592,10 +1592,10 @@ namespace RADB
             // 
             this.gpNumAchievements.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.gpNumAchievements.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle39.Format = "N0";
-            dataGridViewCellStyle39.NullValue = null;
-            this.gpNumAchievements.DefaultCellStyle = dataGridViewCellStyle39;
+            dataGridViewCellStyle169.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle169.Format = "N0";
+            dataGridViewCellStyle169.NullValue = null;
+            this.gpNumAchievements.DefaultCellStyle = dataGridViewCellStyle169;
             this.gpNumAchievements.HeaderText = "Trophies";
             this.gpNumAchievements.Name = "gpNumAchievements";
             this.gpNumAchievements.ReadOnly = true;
@@ -1605,10 +1605,10 @@ namespace RADB
             // 
             this.gpPoints.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.gpPoints.DataPropertyName = "Points";
-            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle40.Format = "N0";
-            dataGridViewCellStyle40.NullValue = null;
-            this.gpPoints.DefaultCellStyle = dataGridViewCellStyle40;
+            dataGridViewCellStyle170.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle170.Format = "N0";
+            dataGridViewCellStyle170.NullValue = null;
+            this.gpPoints.DefaultCellStyle = dataGridViewCellStyle170;
             this.gpPoints.HeaderText = "Points";
             this.gpPoints.Name = "gpPoints";
             this.gpPoints.ReadOnly = true;
@@ -1618,10 +1618,10 @@ namespace RADB
             // 
             this.gpNumLeaderboards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.gpNumLeaderboards.DataPropertyName = "NumLeaderboards";
-            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle41.Format = "N0";
-            dataGridViewCellStyle41.NullValue = null;
-            this.gpNumLeaderboards.DefaultCellStyle = dataGridViewCellStyle41;
+            dataGridViewCellStyle171.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle171.Format = "N0";
+            dataGridViewCellStyle171.NullValue = null;
+            this.gpNumLeaderboards.DefaultCellStyle = dataGridViewCellStyle171;
             this.gpNumLeaderboards.HeaderText = "Scores";
             this.gpNumLeaderboards.Name = "gpNumLeaderboards";
             this.gpNumLeaderboards.ReadOnly = true;
@@ -1630,11 +1630,11 @@ namespace RADB
             // gpLastUpdated
             // 
             this.gpLastUpdated.DataPropertyName = "DateModified";
-            dataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle42.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle42.Format = "dd MMM, yyyy";
-            dataGridViewCellStyle42.NullValue = null;
-            this.gpLastUpdated.DefaultCellStyle = dataGridViewCellStyle42;
+            dataGridViewCellStyle172.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle172.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle172.Format = "dd MMM, yyyy";
+            dataGridViewCellStyle172.NullValue = null;
+            this.gpLastUpdated.DefaultCellStyle = dataGridViewCellStyle172;
             this.gpLastUpdated.HeaderText = "Last Updated";
             this.gpLastUpdated.Name = "gpLastUpdated";
             this.gpLastUpdated.ReadOnly = true;
@@ -1668,16 +1668,16 @@ namespace RADB
             // 
             this.dgvGamesToHide.AllowUserToResizeColumns = false;
             this.dgvGamesToHide.AllowUserToResizeRows = false;
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.White;
-            this.dgvGamesToHide.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
+            this.dgvGamesToHide.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvGamesToHide.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGamesToHide.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvGamesToHide.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvGamesToHide.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ghID,
             this.ghIconBitmap,
@@ -1687,24 +1687,24 @@ namespace RADB
             this.ghPoints,
             this.ghNumLeaderboards,
             this.ghLastUpdated});
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle25.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle25.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGamesToHide.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle163.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle163.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle163.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle163.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle163.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
+            dataGridViewCellStyle163.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle163.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvGamesToHide.DefaultCellStyle = dataGridViewCellStyle163;
             this.dgvGamesToHide.Location = new System.Drawing.Point(6, 83);
             this.dgvGamesToHide.Name = "dgvGamesToHide";
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle26.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle26.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGamesToHide.RowHeadersDefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle164.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle164.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle164.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle164.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle164.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle164.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle164.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvGamesToHide.RowHeadersDefaultCellStyle = dataGridViewCellStyle164;
             this.dgvGamesToHide.RowTemplate.Height = 37;
             this.dgvGamesToHide.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGamesToHide.Size = new System.Drawing.Size(896, 459);
@@ -1777,6 +1777,7 @@ namespace RADB
             // tabUserInfo
             // 
             this.tabUserInfo.BackColor = System.Drawing.Color.Transparent;
+            this.tabUserInfo.Controls.Add(this.pnlUserPlayedGames);
             this.tabUserInfo.Controls.Add(this.gpbAwards);
             this.tabUserInfo.Controls.Add(this.lblUserStatus);
             this.tabUserInfo.Controls.Add(this.lblUserMotto);
@@ -1793,25 +1794,37 @@ namespace RADB
             this.tabUserInfo.TabIndex = 3;
             this.tabUserInfo.Text = "User Info";
             // 
-            // gpbAwards
-            // 
-            this.gpbAwards.Controls.Add(this.pnlUserPlayedGames);
-            this.gpbAwards.Location = new System.Drawing.Point(330, 76);
-            this.gpbAwards.Name = "gpbAwards";
-            this.gpbAwards.Size = new System.Drawing.Size(360, 463);
-            this.gpbAwards.TabIndex = 43;
-            this.gpbAwards.TabStop = false;
-            this.gpbAwards.Text = "Awards";
-            // 
             // pnlUserPlayedGames
             // 
             this.pnlUserPlayedGames.AutoScroll = true;
             this.pnlUserPlayedGames.BorderSize = 0;
-            this.pnlUserPlayedGames.Location = new System.Drawing.Point(9, 20);
+            this.pnlUserPlayedGames.Location = new System.Drawing.Point(704, 96);
             this.pnlUserPlayedGames.Name = "pnlUserPlayedGames";
-            this.pnlUserPlayedGames.Size = new System.Drawing.Size(343, 437);
+            this.pnlUserPlayedGames.Size = new System.Drawing.Size(186, 184);
             this.pnlUserPlayedGames.TabIndex = 47;
             this.pnlUserPlayedGames.TabStop = true;
+            // 
+            // gpbAwards
+            // 
+            this.gpbAwards.Controls.Add(this.lsvGameAwards);
+            this.gpbAwards.Location = new System.Drawing.Point(330, 76);
+            this.gpbAwards.Name = "gpbAwards";
+            this.gpbAwards.Size = new System.Drawing.Size(324, 463);
+            this.gpbAwards.TabIndex = 43;
+            this.gpbAwards.TabStop = false;
+            this.gpbAwards.Text = "Awards";
+            // 
+            // lsvGameAwards
+            // 
+            this.lsvGameAwards.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lsvGameAwards.Location = new System.Drawing.Point(6, 20);
+            this.lsvGameAwards.Name = "lsvGameAwards";
+            this.lsvGameAwards.OwnerDraw = true;
+            this.lsvGameAwards.Size = new System.Drawing.Size(312, 437);
+            this.lsvGameAwards.TabIndex = 46;
+            this.lsvGameAwards.TileSize = new System.Drawing.Size(32, 32);
+            this.lsvGameAwards.UseCompatibleStateImageBehavior = false;
+            this.lsvGameAwards.View = System.Windows.Forms.View.Tile;
             // 
             // lblUserStatus
             // 
@@ -1879,7 +1892,7 @@ namespace RADB
             this.gpbOverlay.Controls.Add(this.chkUserCheevos);
             this.gpbOverlay.Controls.Add(this.btnUserCheevos);
             this.gpbOverlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gpbOverlay.Location = new System.Drawing.Point(696, 412);
+            this.gpbOverlay.Location = new System.Drawing.Point(674, 286);
             this.gpbOverlay.Name = "gpbOverlay";
             this.gpbOverlay.Size = new System.Drawing.Size(237, 127);
             this.gpbOverlay.TabIndex = 32;
@@ -2237,7 +2250,7 @@ namespace RADB
             this.flatLabelA4.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA4.MinimumSize = new System.Drawing.Size(48, 16);
             this.flatLabelA4.Name = "flatLabelA4";
-            this.flatLabelA4.Size = new System.Drawing.Size(84, 16);
+            this.flatLabelA4.Size = new System.Drawing.Size(82, 16);
             this.flatLabelA4.TabIndex = 13;
             this.flatLabelA4.Text = "Account Type:";
             // 
@@ -2288,7 +2301,6 @@ namespace RADB
             // tabAbout
             // 
             this.tabAbout.BackColor = System.Drawing.Color.Transparent;
-            this.tabAbout.Controls.Add(this.lsvGameAwards);
             this.tabAbout.Controls.Add(this.lblSystemReLogin);
             this.tabAbout.Controls.Add(this.btnSystemReLogin);
             this.tabAbout.Controls.Add(this.btnRaProfile);
@@ -2300,18 +2312,6 @@ namespace RADB
             this.tabAbout.Size = new System.Drawing.Size(908, 545);
             this.tabAbout.TabIndex = 4;
             this.tabAbout.Text = "About";
-            // 
-            // lsvGameAwards
-            // 
-            this.lsvGameAwards.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lsvGameAwards.Location = new System.Drawing.Point(21, 94);
-            this.lsvGameAwards.Name = "lsvGameAwards";
-            this.lsvGameAwards.OwnerDraw = true;
-            this.lsvGameAwards.Size = new System.Drawing.Size(277, 302);
-            this.lsvGameAwards.TabIndex = 45;
-            this.lsvGameAwards.TileSize = new System.Drawing.Size(32, 32);
-            this.lsvGameAwards.UseCompatibleStateImageBehavior = false;
-            this.lsvGameAwards.View = System.Windows.Forms.View.Tile;
             // 
             // lblSystemReLogin
             // 

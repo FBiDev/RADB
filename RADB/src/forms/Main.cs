@@ -837,25 +837,26 @@ namespace RADB
 
             var images = new List<Bitmap>();
             var imagePaths = new List<string>();
-            //var pics = new ImageList()
-            //{
-            //    ImageSize = new Size(52,52)
-            //};
+            var pics = new ImageList()
+            {
+                ImageSize = new Size(48, 48),
+                ColorDepth = ColorDepth.Depth24Bit
+            };
             foreach (var game in completedGames)
             {
                 game.SetImageIconBitmap();
 
-                var picBox = new FlatPictureBoxA()
-                {
-                    Margin = new Padding(3),
-                    Size = new Size(48, 48),
-                    SizeMode = PictureBoxSizeMode.StretchImage,
-                    Interpolation = InterpolationMode.HighQualityBicubic,
-                    Image = game.ImageIconBitmap,
-                    Location = new Point(c * 54, r * 54),
-                };
+                //var picBox = new FlatPictureBoxA()
+                //{
+                //    Margin = new Padding(3),
+                //    Size = new Size(48, 48),
+                //    SizeMode = PictureBoxSizeMode.StretchImage,
+                //    Interpolation = InterpolationMode.HighQualityBicubic,
+                //    Image = game.ImageIconBitmap,
+                //    Location = new Point(c * 54, r * 54),
+                //};
 
-                imagePaths.Add(game.ImageIconFile.Path);
+                //imagePaths.Add(game.ImageIconFile.Path);
                 images.Add(game.ImageIconBitmap);
 
                 //pics.Images.Add(game.ImageIconBitmap);
@@ -869,7 +870,7 @@ namespace RADB
                 };
 
                 //lsvGameAwards.Items.Add(item);
-                pnlUserPlayedGames.Controls.Add(picBox);
+                //pnlUserPlayedGames.Controls.Add(picBox);
 
                 i++;
                 c = (i % perRow);
@@ -879,8 +880,8 @@ namespace RADB
             //lsvGameAwards.ImagePadding = 0;
             //lsvGameAwards.TileSize = new Size(56, 49);
 
-            lsvGameAwards.TileSize = new Size(50, 50);
-            lsvGameAwards.AddImageList(images, new Size(48, 48));
+            lsvGameAwards.TileSize = new Size(58, 58);
+            lsvGameAwards.AddImageList(images, new Size(52, 52));
 
             
             //lsvGameAwards.View = View.Tile;

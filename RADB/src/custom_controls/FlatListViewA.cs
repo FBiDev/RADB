@@ -12,6 +12,7 @@ namespace RADB
         public FlatListViewA() 
         {
             BackColor = ColorTranslator.FromHtml("#353535");
+            //BackColor = Color.White;
         }
     }
 }
