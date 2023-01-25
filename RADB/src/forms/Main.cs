@@ -834,12 +834,14 @@ namespace RADB
             int perRow = 5;
 
             var titles = new List<string>();
+            var descs = new List<string>();
 
             foreach (var game in completedGames)
             {
                 game.SetImageIconBitmap();
-                var text = game.Title + "\r\n" + game.ConsoleName + "\r\n\r\n" + "Mastered on " + "11 Sep 2022, 01:21";
-                titles.Add(text);
+
+                titles.Add(game.Title);
+                descs.Add(game.ConsoleName + "\r\n" + "Mastered on " + "11 Sep 2022, 01:21");
 
                 i++;
                 c = (i % perRow);
@@ -848,16 +850,15 @@ namespace RADB
 
             var images = completedGames.Select(g => g.ImageIconBitmap).ToList();
 
-            //lsvGameAwards.ImagePadding = 0;
             lsvGameAwards.MouseLeave += lsvGameAwards_MouseLeave;
-            lsvGameAwards.MouseEnter += pinnedAppsListBox_MouseEnter;
+            //lsvGameAwards.MouseEnter += pinnedAppsListBox_MouseEnter;
             lsvGameAwards.MouseMove += pinnedAppsListBox_MouseEnter;
-            //lsvGameAwards.TileSize = new Size(58, 58);
+
             lsvGameAwards.ImagesBorderColor = Color.Gold;
             lsvGameAwards.ImagesBorder = 2;
             lsvGameAwards.ImagesMargin = 6;
-            //lsvGameAwards.Images = Color.Transparent;
-            await lsvGameAwards.AddImageList(images, new Size(52, 52), titles);
+
+            await lsvGameAwards.AddImageList(images, new Size(52, 52), titles, descs);
         }
 
         private void lsvGameAwards_MouseLeave(object sender, EventArgs e)
@@ -865,35 +866,33 @@ namespace RADB
             pnlAwardFloating.Visible = false;
         }
 
+        private int mouseMoves = 1;
         private void pinnedAppsListBox_MouseEnter(object sender, EventArgs e)
         {
+            //Cursor.Current = Cursors.Hand;
 
+            mouseMoves--;
+
+            if (mouseMoves > 0)
+            { return; }
+
+            mouseMoves = 4;
 
             var pos = Cursor.Position;
-
-
             Point point = lsvGameAwards.PointToClient(pos);
 
-
-            //if (point.X <= 10)
-            //    point.X -= 8;
-            //else
-            //    point.X += 4;
-
-            //if (point.Y <= 10)
-            //    point.Y -= 2;
-            //else
-            //    point.Y += 8;
-
-            //if (point.Y >= lsvGameAwards.ImagesPerRow * )
-            //    point.Y -= 6;
-
             var index = lsvGameAwards.HitTest(point);
-            if (index.Item == null) { pnlAwardFloating.Visible = false; return; }
+            if (index.Item == null)
+            {
+                pnlAwardFloating.Visible = false;
+                //Cursor.Current = Cursors.Default;
+                return;
+            }
             if (index.Item.Index < 0) return;
             //Do any action with the item
 
             pnlAwardFloating.Visible = true;
+
 
             var newPos = point;
             newPos.X += 345;
@@ -903,33 +902,10 @@ namespace RADB
                 newPos.Y -= 65;
             pnlAwardFloating.Location = newPos;
 
-            //lsvGameAwards.GetItemRect(index.Item.Index).Inflate(1, 2);
-
-            var item = index.Item;
-            var currentImage = lsvGameAwards.Images[index.Item.Index];
-            int x = (item.Bounds.Left) + 2 + 4;
-            int y = (item.Bounds.Top - 2) + 2;
-            var rectAll = new Rectangle(x, y, currentImage.Width, currentImage.Height);
-
+            var currentImage = lsvGameAwards.ImagesOriginal[index.Item.Index];
             picAwardFloating.Image = currentImage;
-            lblAwardFloating.Text = lsvGameAwards.Titles[index.Item.Index];
-
-            var newImage = new Bitmap(52, 52, PixelFormat.Format24bppRgb);
-
-            using (Graphics g = Graphics.FromImage(newImage))
-            {
-                //g.Clear(Color.Indigo);
-                Brush brush = new SolidBrush(Color.FromArgb(120, 0, 120, 215));
-                g.FillRectangle(brush, rectAll);
-            }
-        }
-
-        private void lsvGameAwards_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
-        {
-            var lv = (FlatListViewA)sender;
-            e.Item.BackColor = Color.Black;
-            //MessageBox.Show(e.Item.ImageIndex.ToString());
-
+            lblAwardFloatingTitle.Text = lsvGameAwards.Titles[index.Item.Index];
+            lblAwardFloatingDesc.Text = lsvGameAwards.Descriptions[index.Item.Index];
         }
 
         private bool UserCheevosIsRunning = false;
