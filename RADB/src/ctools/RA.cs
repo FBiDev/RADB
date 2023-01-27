@@ -287,7 +287,7 @@ namespace RADB
         {
             return await Task.Run(async () =>
             {
-                if (user.TotalPoints > 0 && user.TotalSoftcorePoints == 0) { return user; }
+                if (user.TotalPoints == 0 && user.TotalSoftcorePoints == 0) { return user; }
 
                 var file = API_UserCompletedGames(user.Name);
                 var dl = new Download(file);
