@@ -774,6 +774,7 @@ namespace RADB
         {
             if (e.KeyData == Keys.Enter)
             {
+                e.Handled = true;
                 btnGetUserInfo_Click(null, null);
             }
         }
@@ -781,13 +782,17 @@ namespace RADB
         private async void btnGetUserInfo_Click(object sender, EventArgs e)
         {
             txtUsername.Focus();
-
             btnGetUserInfo.Enabled = false;
+            btnUserPage.Enabled = false;
+
+            //UserInfo
             UserBind = await RA.GetUserInfo(txtUsername.Text.Trim());
             btnGetUserInfo.Enabled = true;
-            if (UserBind.Name.Empty()) return;
+            if (UserBind.ID == 0) return;
 
-            picUserName.Image = UserBind.UserPicBitmap;
+            //Valid User
+            btnUserPage.Enabled = true;
+
             lblUserStatus.Text = UserBind.Status;
             lblUserName.Text = UserBind.Name;
             lblUserMotto.Text = UserBind.Motto;
@@ -809,8 +814,16 @@ namespace RADB
             lblUserSoftPoints.Text = UserBind.TotalSoftcorePoints.ToNumber(customLanguage: true);
             lblUserSoftRank.Text = UserBind.GetSoftRank();
 
-            lblUserCompletion.Text = UserBind.AverageCompletion;
+            lblUserRichPresence.Text = UserBind.RichPresence();
 
+            lblUserCompletion.Text = "Loading...";
+
+            //UserPciture
+            UserBind = await RA.GetUserInfoPic(UserBind);
+            picUserName.Image = UserBind.UserPicBitmap;
+
+            //UserLastGame
+            UserBind = await RA.GetUserInfoLastGame(UserBind);
             if (UserBind.LastGame.ImageIcon.Empty() == false)
                 picUserLastGame.Image = UserBind.LastGame.ImageIconBitmap;
             else
@@ -818,47 +831,47 @@ namespace RADB
 
             lblUserLastConsole.Text = UserBind.LastGame.ConsoleName;
             lblUserLastGame.Text = UserBind.LastGameTitle();
-            lblUserRichPresence.Text = UserBind.RichPresence();
 
-            //Reallocate RichPresence
+            //--Reallocate RichPresence
             lblUserRichPresence.Location = new Point(lblUserRichPresence.Location.X, lblUserLastGame.Location.Y + lblUserLastGame.Size.Height + lblUserRichPresence.Margin.Top);
 
-            //Awards
-            var completedGames = UserBind.PlayedGames.Where(x => x.PctWon == 1.0);
-
-            var dl = new Download() { Overwrite = false };
-            dl.Files = completedGames.Select(x => x.ImageIconFile).ToList();
-            await dl.Start();
-
-            int i = 0, c = 0, r = 0;
-            int perRow = 5;
-
-            var titles = new List<string>();
-            var descs = new List<string>();
-
-            foreach (var game in completedGames)
+            //UserAwards
             {
-                game.SetImageIconBitmap();
+                lsvGameAwards.Items.Clear();
+                picLoaderUserAwards.Visible = true;
+                UserBind = await RA.GetUserInfoAwards(UserBind);
 
-                titles.Add(game.Title);
-                descs.Add(game.ConsoleName + "\r\n" + "Mastered on " + "11 Sep 2022, 01:21");
+                lblUserCompletion.Text = UserBind.AverageCompletion;
+                var completedGames = UserBind.PlayedGames.Where(x => x.PctWon == 1.0);
 
-                i++;
-                c = (i % perRow);
-                r = (i / perRow);
+                var dl = new Download() { Overwrite = false };
+                dl.Files = completedGames.Select(x => x.ImageIconFile).ToList();
+                await dl.Start();
+
+                var titles = new List<string>();
+                var descs = new List<string>();
+
+                foreach (var game in completedGames)
+                {
+                    game.SetImageIconBitmap();
+
+                    titles.Add(game.Title);
+                    descs.Add(game.ConsoleName + "\r\n\r\n" + "Mastered on " + "11 Sep 2022, 01:21");
+                }
+
+                var images = completedGames.Select(g => g.ImageIconBitmap).ToList();
+
+                lsvGameAwards.MouseLeave += lsvGameAwards_MouseLeave;
+                //lsvGameAwards.MouseEnter += pinnedAppsListBox_MouseEnter;
+                lsvGameAwards.MouseMove += lsvGameAwards_MouseMove;
+
+                lsvGameAwards.ImagesBorderColor = Color.Gold;
+                lsvGameAwards.ImagesBorder = 2;
+                lsvGameAwards.ImagesMargin = 6;
+
+                await lsvGameAwards.AddImageList(images, new Size(52, 52), titles, descs);
+                picLoaderUserAwards.Visible = false;
             }
-
-            var images = completedGames.Select(g => g.ImageIconBitmap).ToList();
-
-            lsvGameAwards.MouseLeave += lsvGameAwards_MouseLeave;
-            //lsvGameAwards.MouseEnter += pinnedAppsListBox_MouseEnter;
-            lsvGameAwards.MouseMove += pinnedAppsListBox_MouseEnter;
-
-            lsvGameAwards.ImagesBorderColor = Color.Gold;
-            lsvGameAwards.ImagesBorder = 2;
-            lsvGameAwards.ImagesMargin = 6;
-
-            await lsvGameAwards.AddImageList(images, new Size(52, 52), titles, descs);
         }
 
         private void lsvGameAwards_MouseLeave(object sender, EventArgs e)
@@ -867,45 +880,42 @@ namespace RADB
         }
 
         private int mouseMoves = 1;
-        private void pinnedAppsListBox_MouseEnter(object sender, EventArgs e)
+        private void lsvGameAwards_MouseMove(object sender, EventArgs e)
         {
-            //Cursor.Current = Cursors.Hand;
+            Cursor.Current = Cursors.Hand;
 
             mouseMoves--;
-
-            if (mouseMoves > 0)
-            { return; }
-
+            if (mouseMoves > 0) { return; }
             mouseMoves = 4;
 
-            var pos = Cursor.Position;
-            Point point = lsvGameAwards.PointToClient(pos);
+            pnlAwardFloating.Parent = this;
+            pnlAwardFloating.BringToFront();
 
-            var index = lsvGameAwards.HitTest(point);
-            if (index.Item == null)
+            var pos = Cursor.Position;
+
+            Point pointParent = this.PointToClient(pos);
+            pointParent.X += 15;
+            pointParent.Y += 5;
+
+            Point point = lsvGameAwards.PointToClient(pos);
+            var hitInfo = lsvGameAwards.HitTest(point);
+
+            if (hitInfo.Item == null || hitInfo.Item.Index < 0)
             {
                 pnlAwardFloating.Visible = false;
-                //Cursor.Current = Cursors.Default;
                 return;
             }
-            if (index.Item.Index < 0) return;
+
+            var itemIndex = hitInfo.Item.Index;
+
             //Do any action with the item
-
-            pnlAwardFloating.Visible = true;
-
-
-            var newPos = point;
-            newPos.X += 345;
-            newPos.Y += 100;
-
-            if (point.Y >= 375)
-                newPos.Y -= 65;
-            pnlAwardFloating.Location = newPos;
-
-            var currentImage = lsvGameAwards.ImagesOriginal[index.Item.Index];
+            var currentImage = lsvGameAwards.ImagesOriginal[itemIndex];
             picAwardFloating.Image = currentImage;
-            lblAwardFloatingTitle.Text = lsvGameAwards.Titles[index.Item.Index];
-            lblAwardFloatingDesc.Text = lsvGameAwards.Descriptions[index.Item.Index];
+            lblAwardFloatingTitle.Text = lsvGameAwards.Titles[itemIndex];
+            lblAwardFloatingDesc.Text = lsvGameAwards.Descriptions[itemIndex];
+
+            pnlAwardFloating.Location = pointParent;
+            pnlAwardFloating.Visible = true;
         }
 
         private bool UserCheevosIsRunning = false;
@@ -1004,6 +1014,12 @@ namespace RADB
 
             var rankOffset = (int)((rank - 1) / 25) * 25;
             Process.Start(RA.HOST + "globalRanking.php?s=5&t=2&o=" + rankOffset);
+        }
+
+        private void btnUserPage_Click(object sender, EventArgs e)
+        {
+            if (UserBind.ID > 0)
+                Process.Start(RA.User_URL(txtUsername.Text));
         }
 
         private void btnGamePage_Click(object sender, EventArgs e)

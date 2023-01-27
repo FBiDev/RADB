@@ -15,6 +15,11 @@ namespace RADB
         {
         }
 
+        public Download(DownloadFile file)
+        {
+            SetFile(file);
+        }
+
         public override async Task<bool> Start()
         {
             await base.Start();

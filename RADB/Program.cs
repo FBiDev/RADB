@@ -26,6 +26,7 @@ namespace RADB
             GNX.cApp.SingleProcess(Config.Singleton, new Mutex(true, Config.SystemName));
             Config.Start();
 
+            //Application.Run(new TestForm());
             Application.Run(new Main());
         }
     }

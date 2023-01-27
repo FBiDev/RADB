@@ -35,49 +35,49 @@ namespace RADB
         private string API_UserName = "RADatabase";
         private string API_Key = "GRaWk9onm4B0LSWSFaDt5a2dQE3N8Yme";
 
-        public const int MIN_POINTS = 250;
+        private string AuthQS()
+        { return "?z=" + API_UserName + "&y=" + API_Key; }
+
+        private string GetURL(string target, string parames = "")
+        { return API_HOST + target + AuthQS() + "&" + parames; }
 
         public DownloadFile API_Consoles()
         {
-            return new DownloadFile(
-                GetURL("API_GetConsoleIDs.php"),
+            return new DownloadFile(GetURL("API_GetConsoleIDs.php"),
                 Folder.Console + "Consoles.json");
         }
 
         public DownloadFile API_GameList(Console console)
         {
-            return new DownloadFile(
-                GetURL("API_GetGameList.php", "i=" + console.ID),
+            return new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID),
                 (Folder.GameData + console.Name + ".json").Replace("/", "-"));
         }
 
         public DownloadFile API_GameExtend(Game game)
         {
-            return new DownloadFile(
-                GetURL("API_GetGameExtended.php", "i=" + game.ID),
+            return new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID),
                 (Folder.GameDataExtend(game.ConsoleID) + game.ID + ".json"));
         }
 
         public DownloadFile API_UserProgress(string userName, int gameID)
         {
-            return new DownloadFile(
-                GetURL("API_GetUserProgress.php", "u=" + userName + "&i=" + gameID),
+            return new DownloadFile(GetURL("API_GetUserProgress.php", "u=" + userName + "&i=" + gameID),
                 (Folder.User + "UserProgress.json"));
         }
 
         public DownloadFile API_UserInfo(string userName)
         {
-            return new DownloadFile(
-                GetURL("API_GetUserSummary.php", "u=" + userName),
+            return new DownloadFile(GetURL("API_GetUserSummary.php", "u=" + userName),
                 (Folder.User + userName.ToLower() + "_Info.json"));
         }
 
         public DownloadFile API_UserCompletedGames(string userName)
         {
-            return new DownloadFile(
-                GetURL("API_GetUserCompletedGames.php", "u=" + userName),
+            return new DownloadFile(GetURL("API_GetUserCompletedGames.php", "u=" + userName),
                 (Folder.User + userName.ToLower() + "_CompletedGames.json"));
         }
+
+        public const int MIN_POINTS = 250;
 
         private static Size GameIconSize { get { return new Size(96, 96); } }
         private static Size GameBadgesSize { get { return new Size(64, 64); } }
@@ -91,15 +91,6 @@ namespace RADB
 
         public RA() { }
 
-        private string AuthQS()
-        {
-            return "?z=" + API_UserName + "&y=" + API_Key;
-        }
-
-        private string GetURL(string target, string parames = "")
-        {
-            return API_HOST + target + AuthQS() + "&" + parames;
-        }
         #endregion
 
         #region _Consoles
@@ -245,14 +236,12 @@ namespace RADB
             return await Task.Run(async () =>
             {
                 var user = new User();
-                var userInfoFile = API_UserInfo(userName);
 
-                Download dl = new Download() { Overwrite = true };
-                dl.SetFile(userInfoFile);
+                var file = API_UserInfo(userName);
+                var dl = new Download(file) { Overwrite = true };
                 if (await dl.Start() == false) { return user; }
-                dl.Overwrite = false;
 
-                var userData = File.ReadAllText(userInfoFile.Path);
+                var userData = File.ReadAllText(file.Path);
                 if (userData.Empty()) { return user; }
 
                 user = JsonConvert.DeserializeObject<User>(userData);
@@ -262,58 +251,72 @@ namespace RADB
                     user.Name = user.LastActivity.User;
                     user.Lastupdate = user.LastActivity.lastupdate;
                 }
+                return user;
+            });
+        }
 
-                dl.SetFile(user.UserPicFile);
+        public async Task<User> GetUserInfoPic(User user)
+        {
+            return await Task.Run(async () =>
+            {
+                var file = user.UserPicFile;
+                var dl = new Download(file);
                 if (await (dl.Start()))
-                {
                     user.SetUserPicBitmap();
-                }
 
-                if (user.LastGame.ID > 0)
+                return user;
+            });
+        }
+
+        public async Task<User> GetUserInfoLastGame(User user)
+        {
+            return await Task.Run(async () =>
+            {
+                if (user.LastGame.ID == 0) { return user; }
+
+                var file = user.LastGame.ImageIconFile;
+                var dl = new Download(file);
+                if (await (dl.Start()))
+                    user.LastGame.SetImageIconBitmap();
+
+                return user;
+            });
+        }
+
+        public async Task<User> GetUserInfoAwards(User user)
+        {
+            return await Task.Run(async () =>
+            {
+                if (user.TotalPoints > 0 && user.TotalSoftcorePoints == 0) { return user; }
+
+                var file = API_UserCompletedGames(user.Name);
+                var dl = new Download(file);
+                if (await dl.Start() == false) { return user; }
+
+                var awardsJson = File.ReadAllText(file.Path);
+
+                var awardsList = JsonConvert.DeserializeObject<IEnumerable<GameProgress>>(awardsJson);
+                awardsList = awardsList.Where(x => x.PctWon > 0 && x.ConsoleName != "Hubs" && x.ConsoleName != "Events");
+
+                //Remove SoftCore Duplicates
+                awardsList = awardsList.OrderByDescending(x => x.HardcoreMode).GroupBy(x => x.GameID,
+                    (k, g) => g.Aggregate((x1, x2) => (x1.PctWon >= x2.PctWon) ? x1 : x2));
+
+                if (awardsList.Count() > 0)
                 {
-                    var game = user.LastGame;
-                    dl.SetFile(game.ImageIconFile);
-                    if (await (dl.Start()))
-                    {
-                        game.SetImageIconBitmap();
-                    }
+                    float? totalPctWon = awardsList.Sum(x => x.PctWon);
+                    float avgPctWon = ((float)totalPctWon / awardsList.Count()) * 100f;
+                    user.AverageCompletion = avgPctWon.ToNumber() + "%";
+
+                    user.PlayedGames = awardsList;
                 }
-
-                if (user.TotalPoints == 0 && user.TotalSoftcorePoints == 0)
-                {
-                    user.AverageCompletion = "0.00%";
-                }
-                else
-                {
-                    var userPlayedGames = API_UserCompletedGames(userName);
-                    dl.SetFile(userPlayedGames);
-
-                    if (await dl.Start() == false) { return user; }
-
-                    var playedGamesRaw = File.ReadAllText(userPlayedGames.Path);
-
-                    var playedGames = JsonConvert.DeserializeObject<List<GameProgress>>(playedGamesRaw);
-                    var includedGames = playedGames.Where(x => x.PctWon > 0 && x.ConsoleName != "Hubs" && x.ConsoleName != "Events");
-
-                    //Remove SoftCore Duplicates
-                    includedGames = includedGames.GroupBy(x => x.GameID,
-                        (k, g) => g.Aggregate((x1, x2) => (x1.PctWon > x2.PctWon) ? x1 : x2));
-
-                    if (includedGames.Count() > 0)
-                    {
-                        float? totalPctWon = includedGames.Sum(x => x.PctWon);
-                        float avgPctWon = ((float)totalPctWon / includedGames.Count()) * 100f;
-                        user.AverageCompletion = avgPctWon.ToNumber() + "%";
-
-                        user.PlayedGames = includedGames.ToList();
-                    }
-                }
-
                 return user;
             });
         }
         #endregion
 
+
+        #region MergeImages
         public async Task MergeGameBadges(Game game)
         {
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
@@ -403,5 +406,6 @@ namespace RADB
             //MessageBox.Show("Badges merged in: " + fim0.TotalSeconds + "s");
             return;
         }
+        #endregion
     }
 }

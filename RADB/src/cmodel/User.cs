@@ -97,7 +97,12 @@ namespace RADB
                 return "Unknown";
         }
 
-        public string AverageCompletion { get; set; }
+        private string _AverageCompletion { get; set; }
+        public string AverageCompletion
+        {
+            get { return _AverageCompletion = _AverageCompletion == null ? "0.00%" : _AverageCompletion; }
+            set { _AverageCompletion = value; }
+        }
 
         //Achievements Won By Others
         public int ContribCount { get; set; }
@@ -107,7 +112,7 @@ namespace RADB
         [JsonConverter(typeof(BoolConverter))]
         public bool UserWallActive { get; set; }
 
-        public List<GameProgress> PlayedGames { get; set; }
+        public IEnumerable<GameProgress> PlayedGames { get; set; }
         public Game LastGame { get; set; }
         public string RichPresenceMsg { get; set; }
 

@@ -74,8 +74,6 @@ namespace RADB
             this.mnuGamesToPlay = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mniRemoveGameToPlay = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlBottomOutput = new RADB.FlatPanelA();
-            this.pnlOutput = new System.Windows.Forms.Panel();
-            this.lblOutput = new System.Windows.Forms.Label();
             this.tabMain = new RADB.FlatTabControlA();
             this.tabConsoles = new System.Windows.Forms.TabPage();
             this.lblNotFoundConsoles = new RADB.FlatLabelA();
@@ -183,11 +181,14 @@ namespace RADB
             this.ghNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ghLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabUserInfo = new System.Windows.Forms.TabPage();
+            this.btnUserPage = new RADB.FlatButtonA();
             this.pnlAwardFloating = new RADB.FlatPanelA();
+            this.picAwardFloating = new RADB.FlatPictureBoxA();
+            this.tblAwardFloating = new System.Windows.Forms.TableLayoutPanel();
             this.lblAwardFloatingTitle = new RADB.FlatLabelA();
             this.lblAwardFloatingDesc = new RADB.FlatLabelA();
-            this.picAwardFloating = new RADB.FlatPictureBoxA();
             this.gpbAwards = new RADB.FlatGroupBoxA();
+            this.picLoaderUserAwards = new RADB.FlatPictureBoxA();
             this.lsvGameAwards = new RADB.FlatListViewA();
             this.lblUserStatus = new RADB.FlatLabelA();
             this.lblUserMotto = new RADB.FlatLabelA();
@@ -234,12 +235,12 @@ namespace RADB
             this.picFBiDevIcon = new RADB.FlatPictureBoxA();
             this.lblAbTitle = new RADB.FlatLabelB();
             this.lblAbYear = new RADB.FlatLabelB();
+            this.pnlOutput = new System.Windows.Forms.Panel();
+            this.lblOutput = new System.Windows.Forms.Label();
             this.mnuGames.SuspendLayout();
             this.mnuGamesToHide.SuspendLayout();
             this.mnuConsoles.SuspendLayout();
             this.mnuGamesToPlay.SuspendLayout();
-            this.pnlBottomOutput.SuspendLayout();
-            this.pnlOutput.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabConsoles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderConsole)).BeginInit();
@@ -273,7 +274,9 @@ namespace RADB
             this.tabUserInfo.SuspendLayout();
             this.pnlAwardFloating.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAwardFloating)).BeginInit();
+            this.tblAwardFloating.SuspendLayout();
             this.gpbAwards.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoaderUserAwards)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picUserName)).BeginInit();
             this.gpbUserInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picUserLastGame)).BeginInit();
@@ -282,6 +285,7 @@ namespace RADB
             this.pnlUserCheevos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picUserCheevos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFBiDevIcon)).BeginInit();
+            this.pnlOutput.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuGames
@@ -326,12 +330,12 @@ namespace RADB
             this.mnuGamesToHide.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToHide});
             this.mnuGamesToHide.Name = "ctmHiddenGames";
-            this.mnuGamesToHide.Size = new System.Drawing.Size(195, 26);
+            this.mnuGamesToHide.Size = new System.Drawing.Size(197, 26);
             // 
             // mniRemoveGameToHide
             // 
             this.mniRemoveGameToHide.Name = "mniRemoveGameToHide";
-            this.mniRemoveGameToHide.Size = new System.Drawing.Size(194, 22);
+            this.mniRemoveGameToHide.Size = new System.Drawing.Size(196, 22);
             this.mniRemoveGameToHide.Text = "Remove Game To Hide";
             this.mniRemoveGameToHide.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToHide_MouseDown);
             // 
@@ -362,12 +366,12 @@ namespace RADB
             this.mnuGamesToPlay.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToPlay});
             this.mnuGamesToPlay.Name = "mnuGamesToPlay";
-            this.mnuGamesToPlay.Size = new System.Drawing.Size(192, 26);
+            this.mnuGamesToPlay.Size = new System.Drawing.Size(194, 26);
             // 
             // mniRemoveGameToPlay
             // 
             this.mniRemoveGameToPlay.Name = "mniRemoveGameToPlay";
-            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(191, 22);
+            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(193, 22);
             this.mniRemoveGameToPlay.Text = "Remove Game To Play";
             this.mniRemoveGameToPlay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToPlay_MouseDown);
             // 
@@ -376,35 +380,10 @@ namespace RADB
             this.pnlBottomOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlBottomOutput.BackColor = System.Drawing.Color.Transparent;
-            this.pnlBottomOutput.Controls.Add(this.pnlOutput);
             this.pnlBottomOutput.Location = new System.Drawing.Point(12, 592);
             this.pnlBottomOutput.Name = "pnlBottomOutput";
             this.pnlBottomOutput.Size = new System.Drawing.Size(913, 66);
             this.pnlBottomOutput.TabIndex = 31;
-            // 
-            // pnlOutput
-            // 
-            this.pnlOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlOutput.AutoScroll = true;
-            this.pnlOutput.Controls.Add(this.lblOutput);
-            this.pnlOutput.Location = new System.Drawing.Point(2, 2);
-            this.pnlOutput.Name = "pnlOutput";
-            this.pnlOutput.Size = new System.Drawing.Size(902, 62);
-            this.pnlOutput.TabIndex = 30;
-            // 
-            // lblOutput
-            // 
-            this.lblOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblOutput.AutoSize = true;
-            this.lblOutput.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOutput.Location = new System.Drawing.Point(0, 0);
-            this.lblOutput.Name = "lblOutput";
-            this.lblOutput.Size = new System.Drawing.Size(16, 15);
-            this.lblOutput.TabIndex = 29;
-            this.lblOutput.Text = "   ";
             // 
             // tabMain
             // 
@@ -1412,7 +1391,7 @@ namespace RADB
             this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoAchievements.Location = new System.Drawing.Point(218, 23);
             this.lblInfoAchievements.Name = "lblInfoAchievements";
-            this.lblInfoAchievements.Size = new System.Drawing.Size(145, 24);
+            this.lblInfoAchievements.Size = new System.Drawing.Size(146, 24);
             this.lblInfoAchievements.TabIndex = 35;
             this.lblInfoAchievements.Text = "0 Trophies: 0 points";
             this.lblInfoAchievements.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1782,6 +1761,7 @@ namespace RADB
             // tabUserInfo
             // 
             this.tabUserInfo.BackColor = System.Drawing.Color.Transparent;
+            this.tabUserInfo.Controls.Add(this.btnUserPage);
             this.tabUserInfo.Controls.Add(this.pnlAwardFloating);
             this.tabUserInfo.Controls.Add(this.gpbAwards);
             this.tabUserInfo.Controls.Add(this.lblUserStatus);
@@ -1798,59 +1778,95 @@ namespace RADB
             this.tabUserInfo.TabIndex = 3;
             this.tabUserInfo.Text = "User Info";
             // 
+            // btnUserPage
+            // 
+            this.btnUserPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnUserPage.Enabled = false;
+            this.btnUserPage.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.btnUserPage.FlatAppearance.BorderSize = 0;
+            this.btnUserPage.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.btnUserPage.Location = new System.Drawing.Point(78, 46);
+            this.btnUserPage.MinimumSize = new System.Drawing.Size(24, 24);
+            this.btnUserPage.Name = "btnUserPage";
+            this.btnUserPage.Size = new System.Drawing.Size(74, 24);
+            this.btnUserPage.TabIndex = 45;
+            this.btnUserPage.Text = "User Page";
+            this.btnUserPage.Click += new System.EventHandler(this.btnUserPage_Click);
+            // 
             // pnlAwardFloating
             // 
             this.pnlAwardFloating.AutoSize = true;
             this.pnlAwardFloating.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.pnlAwardFloating.Controls.Add(this.lblAwardFloatingTitle);
-            this.pnlAwardFloating.Controls.Add(this.lblAwardFloatingDesc);
             this.pnlAwardFloating.Controls.Add(this.picAwardFloating);
+            this.pnlAwardFloating.Controls.Add(this.tblAwardFloating);
             this.pnlAwardFloating.Location = new System.Drawing.Point(410, 4);
-            this.pnlAwardFloating.MaximumSize = new System.Drawing.Size(0, 66);
             this.pnlAwardFloating.Name = "pnlAwardFloating";
-            this.pnlAwardFloating.Size = new System.Drawing.Size(148, 66);
+            this.pnlAwardFloating.Padding = new System.Windows.Forms.Padding(1);
+            this.pnlAwardFloating.Size = new System.Drawing.Size(119, 66);
             this.pnlAwardFloating.TabIndex = 44;
             this.pnlAwardFloating.Visible = false;
-            // 
-            // lblAwardFloatingTitle
-            // 
-            this.lblAwardFloatingTitle.AutoSize = true;
-            this.lblAwardFloatingTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAwardFloatingTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.lblAwardFloatingTitle.Location = new System.Drawing.Point(68, 3);
-            this.lblAwardFloatingTitle.MaximumSize = new System.Drawing.Size(300, 0);
-            this.lblAwardFloatingTitle.MinimumSize = new System.Drawing.Size(0, 0);
-            this.lblAwardFloatingTitle.Name = "lblAwardFloatingTitle";
-            this.lblAwardFloatingTitle.Size = new System.Drawing.Size(77, 16);
-            this.lblAwardFloatingTitle.TabIndex = 1;
-            this.lblAwardFloatingTitle.Text = "flatLabelA11";
-            this.lblAwardFloatingTitle.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-            // 
-            // lblAwardFloatingDesc
-            // 
-            this.lblAwardFloatingDesc.AutoSize = true;
-            this.lblAwardFloatingDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.lblAwardFloatingDesc.Location = new System.Drawing.Point(68, 34);
-            this.lblAwardFloatingDesc.Margin = new System.Windows.Forms.Padding(0);
-            this.lblAwardFloatingDesc.MinimumSize = new System.Drawing.Size(0, 0);
-            this.lblAwardFloatingDesc.Name = "lblAwardFloatingDesc";
-            this.lblAwardFloatingDesc.Size = new System.Drawing.Size(72, 16);
-            this.lblAwardFloatingDesc.TabIndex = 2;
-            this.lblAwardFloatingDesc.Text = "flatLabelA11";
-            this.lblAwardFloatingDesc.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // 
             // picAwardFloating
             // 
             this.picAwardFloating.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picAwardFloating.Location = new System.Drawing.Point(1, 1);
+            this.picAwardFloating.Margin = new System.Windows.Forms.Padding(0);
             this.picAwardFloating.Name = "picAwardFloating";
             this.picAwardFloating.Size = new System.Drawing.Size(64, 64);
             this.picAwardFloating.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picAwardFloating.TabIndex = 0;
             this.picAwardFloating.TabStop = false;
             // 
+            // tblAwardFloating
+            // 
+            this.tblAwardFloating.AutoSize = true;
+            this.tblAwardFloating.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tblAwardFloating.ColumnCount = 1;
+            this.tblAwardFloating.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tblAwardFloating.Controls.Add(this.lblAwardFloatingTitle, 0, 0);
+            this.tblAwardFloating.Controls.Add(this.lblAwardFloatingDesc, 0, 1);
+            this.tblAwardFloating.Location = new System.Drawing.Point(68, 1);
+            this.tblAwardFloating.Margin = new System.Windows.Forms.Padding(0);
+            this.tblAwardFloating.Name = "tblAwardFloating";
+            this.tblAwardFloating.Padding = new System.Windows.Forms.Padding(1);
+            this.tblAwardFloating.RowCount = 2;
+            this.tblAwardFloating.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tblAwardFloating.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tblAwardFloating.Size = new System.Drawing.Size(50, 34);
+            this.tblAwardFloating.TabIndex = 13;
+            // 
+            // lblAwardFloatingTitle
+            // 
+            this.lblAwardFloatingTitle.AutoSize = true;
+            this.lblAwardFloatingTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblAwardFloatingTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAwardFloatingTitle.Location = new System.Drawing.Point(1, 1);
+            this.lblAwardFloatingTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblAwardFloatingTitle.MaximumSize = new System.Drawing.Size(250, 0);
+            this.lblAwardFloatingTitle.MinimumSize = new System.Drawing.Size(48, 16);
+            this.lblAwardFloatingTitle.Name = "lblAwardFloatingTitle";
+            this.lblAwardFloatingTitle.Padding = new System.Windows.Forms.Padding(0);
+            this.lblAwardFloatingTitle.Size = new System.Drawing.Size(48, 16);
+            this.lblAwardFloatingTitle.TabIndex = 0;
+            this.lblAwardFloatingTitle.Text = "Title";
+            // 
+            // lblAwardFloatingDesc
+            // 
+            this.lblAwardFloatingDesc.AutoSize = true;
+            this.lblAwardFloatingDesc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblAwardFloatingDesc.Location = new System.Drawing.Point(1, 17);
+            this.lblAwardFloatingDesc.Margin = new System.Windows.Forms.Padding(0);
+            this.lblAwardFloatingDesc.MaximumSize = new System.Drawing.Size(250, 0);
+            this.lblAwardFloatingDesc.MinimumSize = new System.Drawing.Size(48, 16);
+            this.lblAwardFloatingDesc.Name = "lblAwardFloatingDesc";
+            this.lblAwardFloatingDesc.Padding = new System.Windows.Forms.Padding(0);
+            this.lblAwardFloatingDesc.Size = new System.Drawing.Size(48, 16);
+            this.lblAwardFloatingDesc.TabIndex = 1;
+            this.lblAwardFloatingDesc.Text = "Desc";
+            // 
             // gpbAwards
             // 
+            this.gpbAwards.Controls.Add(this.picLoaderUserAwards);
             this.gpbAwards.Controls.Add(this.lsvGameAwards);
             this.gpbAwards.Location = new System.Drawing.Point(330, 76);
             this.gpbAwards.Name = "gpbAwards";
@@ -1858,6 +1874,20 @@ namespace RADB
             this.gpbAwards.TabIndex = 43;
             this.gpbAwards.TabStop = false;
             this.gpbAwards.Text = "Awards";
+            // 
+            // picLoaderUserAwards
+            // 
+            this.picLoaderUserAwards.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.picLoaderUserAwards.Image = global::RADB.Properties.Resources.loader;
+            this.picLoaderUserAwards.Location = new System.Drawing.Point(23, 68);
+            this.picLoaderUserAwards.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
+            this.picLoaderUserAwards.Name = "picLoaderUserAwards";
+            this.picLoaderUserAwards.Size = new System.Drawing.Size(275, 52);
+            this.picLoaderUserAwards.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picLoaderUserAwards.TabIndex = 47;
+            this.picLoaderUserAwards.TabStop = false;
+            this.picLoaderUserAwards.Visible = false;
             // 
             // lsvGameAwards
             // 
@@ -1914,9 +1944,9 @@ namespace RADB
             this.btnGetUserInfo.Location = new System.Drawing.Point(6, 46);
             this.btnGetUserInfo.MinimumSize = new System.Drawing.Size(24, 24);
             this.btnGetUserInfo.Name = "btnGetUserInfo";
-            this.btnGetUserInfo.Size = new System.Drawing.Size(146, 24);
+            this.btnGetUserInfo.Size = new System.Drawing.Size(66, 24);
             this.btnGetUserInfo.TabIndex = 32;
-            this.btnGetUserInfo.Text = "Get User Info";
+            this.btnGetUserInfo.Text = "Get User";
             this.btnGetUserInfo.Click += new System.EventHandler(this.btnGetUserInfo_Click);
             // 
             // picUserName
@@ -2201,7 +2231,7 @@ namespace RADB
             this.flatLabelA4.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA4.MinimumSize = new System.Drawing.Size(48, 16);
             this.flatLabelA4.Name = "flatLabelA4";
-            this.flatLabelA4.Size = new System.Drawing.Size(82, 16);
+            this.flatLabelA4.Size = new System.Drawing.Size(84, 16);
             this.flatLabelA4.TabIndex = 13;
             this.flatLabelA4.Text = "Account Type:";
             // 
@@ -2358,6 +2388,7 @@ namespace RADB
             this.btnUserCheevos.Size = new System.Drawing.Size(146, 24);
             this.btnUserCheevos.TabIndex = 28;
             this.btnUserCheevos.Text = "Get User Trophies";
+            this.btnUserCheevos.Click += new System.EventHandler(this.btnUserCheevos_Click);
             // 
             // lblSystemReLogin
             // 
@@ -2428,6 +2459,30 @@ namespace RADB
             this.lblAbYear.TabIndex = 1;
             this.lblAbYear.Text = "2023";
             // 
+            // pnlOutput
+            // 
+            this.pnlOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlOutput.AutoScroll = true;
+            this.pnlOutput.Controls.Add(this.lblOutput);
+            this.pnlOutput.Location = new System.Drawing.Point(2, 2);
+            this.pnlOutput.Name = "pnlOutput";
+            this.pnlOutput.Size = new System.Drawing.Size(902, 62);
+            this.pnlOutput.TabIndex = 30;
+            // 
+            // lblOutput
+            // 
+            this.lblOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblOutput.AutoSize = true;
+            this.lblOutput.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOutput.Location = new System.Drawing.Point(0, 0);
+            this.lblOutput.Name = "lblOutput";
+            this.lblOutput.Size = new System.Drawing.Size(16, 15);
+            this.lblOutput.TabIndex = 29;
+            this.lblOutput.Text = "   ";
+            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2442,9 +2497,6 @@ namespace RADB
             this.mnuGamesToHide.ResumeLayout(false);
             this.mnuConsoles.ResumeLayout(false);
             this.mnuGamesToPlay.ResumeLayout(false);
-            this.pnlBottomOutput.ResumeLayout(false);
-            this.pnlOutput.ResumeLayout(false);
-            this.pnlOutput.PerformLayout();
             this.tabMain.ResumeLayout(false);
             this.tabConsoles.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderConsole)).EndInit();
@@ -2487,7 +2539,10 @@ namespace RADB
             this.pnlAwardFloating.ResumeLayout(false);
             this.pnlAwardFloating.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAwardFloating)).EndInit();
+            this.tblAwardFloating.ResumeLayout(false);
+            this.tblAwardFloating.PerformLayout();
             this.gpbAwards.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picLoaderUserAwards)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picUserName)).EndInit();
             this.gpbUserInfo.ResumeLayout(false);
             this.gpbUserInfo.PerformLayout();
@@ -2499,6 +2554,8 @@ namespace RADB
             this.pnlUserCheevos.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picUserCheevos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFBiDevIcon)).EndInit();
+            this.pnlOutput.ResumeLayout(false);
+            this.pnlOutput.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2670,7 +2727,6 @@ namespace RADB
         private FlatListViewA lsvGameAwards;
         private FlatPanelA pnlAwardFloating;
         private FlatPictureBoxA picAwardFloating;
-        private FlatLabelA lblAwardFloatingTitle;
         private FlatGroupBoxA gpbOverlay;
         private System.Windows.Forms.Panel pnlUserCheevos;
         private FlatLabelA lblCheevos;
@@ -2679,7 +2735,11 @@ namespace RADB
         private System.Windows.Forms.Label lblCheevoLoopUpdate;
         private System.Windows.Forms.CheckBox chkUserCheevos;
         private FlatButtonA btnUserCheevos;
+        private System.Windows.Forms.TableLayoutPanel tblAwardFloating;
+        private FlatLabelA lblAwardFloatingTitle;
         private FlatLabelA lblAwardFloatingDesc;
+        private FlatButtonA btnUserPage;
+        private FlatPictureBoxA picLoaderUserAwards;
     }
 }
 
