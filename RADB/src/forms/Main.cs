@@ -864,7 +864,7 @@ namespace RADB
                 lsvGameAwards.MouseLeave += lsvGameAwards_MouseLeave;
                 //lsvGameAwards.MouseEnter += pinnedAppsListBox_MouseEnter;
                 lsvGameAwards.MouseMove += lsvGameAwards_MouseMove;
-
+                lsvGameAwards.Scroll += lsvGameAwards_Scroll;
                 lsvGameAwards.ImagesBorderColor = Color.Gold;
                 lsvGameAwards.ImagesBorder = 2;
                 lsvGameAwards.ImagesMargin = 6;
@@ -872,6 +872,12 @@ namespace RADB
                 await lsvGameAwards.AddImageList(images, new Size(52, 52), titles, descs);
                 picLoaderUserAwards.Visible = false;
             }
+        }
+
+        void lsvGameAwards_Scroll(object sender, ScrollEventArgs e)
+        {
+            mouseMoves = 1;
+            lsvGameAwards_MouseMove(null, null);
         }
 
         private void lsvGameAwards_MouseLeave(object sender, EventArgs e)
@@ -882,7 +888,8 @@ namespace RADB
         private int mouseMoves = 1;
         private void lsvGameAwards_MouseMove(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.Hand;
+            //Very Slow Draw
+            //Cursor.Current = Cursors.Hand;
 
             mouseMoves--;
             if (mouseMoves > 0) { return; }
