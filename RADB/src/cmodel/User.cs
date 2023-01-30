@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using Newtonsoft.Json;
 using GNX;
 
@@ -43,7 +42,7 @@ namespace RADB
             }
         }
 
-        private string _UserPic { get; set; }
+        string _UserPic { get; set; }
         public string UserPic { get { return _UserPic; } set { _UserPic = value.Replace(@"/UserPic/", ""); } }
         public DownloadFile UserPicFile { get { return new DownloadFile(RA.USER_HOST + UserPic, Folder.User + UserPic); } }
         public Bitmap UserPicBitmap { get; set; }
@@ -62,45 +61,42 @@ namespace RADB
             get
             {
                 if (TotalTruePoints > 0)
-                    return ((float)TotalTruePoints / (float)TotalPoints);
-                else
-                    return 0f;
+                    return ((float)TotalTruePoints / TotalPoints);
+                return 0f;
             }
         }
 
         public int? Rank { get; set; }
         public int TotalRanked { get; set; }
 
-        private float GetTop() { return (((float)Rank / (float)TotalRanked) * 100f); }
+        float GetTop() { return (((float)Rank / TotalRanked) * 100f); }
         public string GetRank(bool useCustomLanguage = true)
         {
             if (Untracked)
                 return "Untracked";
-            else if (TotalPoints < RA.MIN_POINTS)
+            if (TotalPoints < RA.MIN_POINTS)
                 return "Needs at least " + RA.MIN_POINTS + " points.";
-            else if (Rank != null && TotalRanked > 0)
+            if (Rank != null && TotalRanked > 0)
                 return Rank.ToNumber(useCustomLanguage) + " / " + TotalRanked.ToNumber(useCustomLanguage) + " (Top " + GetTop().ToNumber() + "%)";
-            else
-                return "-";
+            return "-";
         }
 
         public int TotalSoftcorePoints { get; set; }
 
-        private string GetSoftTop() { return "-"; }
-        public string GetSoftRank(bool useGroupSeparator = true)
+        string GetSoftTop() { return "-"; }
+        public string GetSoftRank()
         {
             if (Untracked)
                 return "Untracked";
-            else if (TotalSoftcorePoints < RA.MIN_POINTS)
+            if (TotalSoftcorePoints < RA.MIN_POINTS)
                 return "Needs at least " + RA.MIN_POINTS + " points.";
-            else
-                return "Unknown";
+            return "Unknown";
         }
 
-        private string _AverageCompletion { get; set; }
+        string _AverageCompletion { get; set; }
         public string AverageCompletion
         {
-            get { return _AverageCompletion = _AverageCompletion == null ? "0.00%" : _AverageCompletion; }
+            get { return _AverageCompletion = _AverageCompletion ?? "0.00%"; }
             set { _AverageCompletion = value; }
         }
 
@@ -114,7 +110,6 @@ namespace RADB
 
         public IEnumerable<GameProgress> PlayedGames { get; set; }
         public Game LastGame { get; set; }
-        public string RichPresenceMsg { get; set; }
 
         public string LastGameTitle()
         {
@@ -124,12 +119,16 @@ namespace RADB
             return LastGame.Title;
         }
 
-        public string RichPresence()
+        string _RichPresenceMsg;
+        public string RichPresenceMsg
         {
-            if (RichPresenceMsg.Empty() || RichPresenceMsg == "Unknown")
-                return "";
-
-            return RichPresenceMsg;
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_RichPresenceMsg) || _RichPresenceMsg == "Unknown")
+                    return "";
+                return _RichPresenceMsg;
+            }
+            set { _RichPresenceMsg = value; }
         }
 
         public User()
@@ -138,5 +137,8 @@ namespace RADB
             LastGame = new Game();
             PlayedGames = new List<GameProgress>();
         }
+
+        public bool Invalid { get { return ID == 0 || string.IsNullOrWhiteSpace(Name); } }
+        public bool RankInvalid { get { return Untracked || Rank == null || TotalPoints < RA.MIN_POINTS; } }
     }
 }
