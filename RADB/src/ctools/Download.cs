@@ -70,7 +70,7 @@ namespace RADB
                 case DownloadStatus.Completed:
                     resultTime.InvokeIfRequired(() =>
                     {
-                        resultTime.Text = this.TimeCompleted.ToString();
+                        resultTime.Text = this.TimeCompleted.ToString("dd/MM/yyyy HH:mm");
                     });
                     resultBar.InvokeIfRequired(() =>
                     {

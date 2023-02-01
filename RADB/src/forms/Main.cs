@@ -7,24 +7,60 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 //
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using GNX;
-using System.Diagnostics.Contracts;
 
 namespace RADB
 {
     public partial class Main : BaseForm
     {
+
+        //Main
+        MainLogic logic;
+        public FlatTabControlA tabMain_ { get { return tabMain; } set { tabMain = value; } }
+        public TabPage tabGames_ { get { return tabGames; } set { tabGames = value; } }
+        public Label lblOutput_ { get { return lblOutput; } set { lblOutput = value; } }
+
+        //Consoles
+        public FlatDataGridA dgvConsoles_ { get { return dgvConsoles; } set { dgvConsoles = value; } }
+        public FlatLabelA lblProgressConsoles_ { get { return lblProgressConsoles; } set { lblProgressConsoles = value; } }
+        public FlatLabelA lblUpdateConsoles_ { get { return lblUpdateConsoles; } set { lblUpdateConsoles = value; } }
+
+        public Panel pnlDownloadConsoles_ { get { return pnlDownloadConsoles; } set { pnlDownloadConsoles = value; } }
+        public FlatButtonA btnUpdateConsoles_ { get { return btnUpdateConsoles; } set { btnUpdateConsoles = value; } }
+
+
+        public FlatLabelA lblNotFoundConsoles_ { get { return lblNotFoundConsoles; } set { lblNotFoundConsoles = value; } }
+        public FlatPictureBoxA picLoaderConsole_ { get { return picLoaderConsole; } set { picLoaderConsole = value; } }
+
+
+        //UserInfo
+        public FlatTextBoxA txtUsername_ { get { return txtUsername; } set { txtUsername = value; } }
+
+        //About
+        public FlatButtonA btnRALogin_ { get { return btnRALogin; } set { btnRALogin = value; } }
+        public FlatLabelA lblRALogin_ { get { return lblSystemReLogin; } set { lblSystemReLogin = value; } }
+        public FlatButtonA btnRAProfileAbout_ { get { return btnRAProfileAbout; } set { btnRAProfileAbout = value; } }
+
+        public FlatButtonA btnUserCheevos_ { get { return btnUserCheevos; } set { btnUserCheevos = value; } }
+        public FlatLabelA lblUserCheevos_ { get { return lblUserCheevos; } set { lblUserCheevos = value; } }
+        public FlatPictureBoxA picUserCheevos_ { get { return picUserCheevos; } set { picUserCheevos = value; } }
+        public Label lblCheevoLoopUpdate_ { get { return lblCheevoLoopUpdate; } set { lblCheevoLoopUpdate = value; } }
+        public CheckBox chkUserCheevos_ { get { return chkUserCheevos; } set { chkUserCheevos = value; } }
+
+        //GameInfo
+        public FlatButtonA btnHashes_ { get { return btnHashes; } set { btnHashes = value; } }
+
+
         #region Init
         RA RA = new RA();
 
-        public static Console ConsoleBind = null;
-        Game GameBind = null;
-        GameExtend GameExtendBind = null;
+        public static Console ConsoleBind;
+        Game GameBind;
+        GameExtend GameExtendBind;
         User UserBind = new User();
 
         public ListBind<Game> lstGames = new ListBind<Game>();
@@ -43,10 +79,9 @@ namespace RADB
             InitializeComponent();
             Init(this);
 
-            //styles
-            dgvConsoles.Columns.Format(CellStyle.StringCenter, 0);
-            dgvConsoles.Columns.Format(CellStyle.NumberCenter, 3, 4);
+            logic = new MainLogic(this);
 
+            //styles
             dgvGames.Columns.Format(CellStyle.StringCenter, 0);
             dgvGames.Columns.Format(CellStyle.Image, 1);
             dgvGames.Columns.Format(CellStyle.NumberCenter, 4, 5, 6);
@@ -59,16 +94,11 @@ namespace RADB
 
             Load += Main_Load;
             Shown += Main_Shown;
-            Resize += Main_Resize;
+            //Resize += Main_Resize;
 
             //KeyPreview = true;
             //KeyDown += Main_KeyDown;
             tabMain.KeyDown += tabMain_KeyDown;
-
-            dgvConsoles.AutoGenerateColumns = true;
-            dgvConsoles.CellDoubleClick += dgvConsoles_CellDoubleClick;
-            dgvConsoles.KeyPress += dgvConsoles_KeyPress;
-            dgvConsoles.KeyDown += dgvConsoles_KeyDown;
 
             dgvGames.AutoGenerateColumns = false;
             dgvGames.DataSourceChanged += dgvGames_DataSourceChanged;
@@ -120,8 +150,7 @@ namespace RADB
             txtUsername.KeyDown += txtUsername_KeyDown;
 
             //Reset placeholders
-            lblProgressConsoles.Text = string.Empty;
-            lblUpdateConsoles.Text = string.Empty;
+
             lblProgressGameList.Text = string.Empty;
             lblUpdateGameList.Text = string.Empty;
             lblProgressInfo.Text = string.Empty;
@@ -154,9 +183,7 @@ namespace RADB
             lstDgvGames.Add(dgvGamesToPlay);
             lstDgvGames.Add(dgvGamesToHide);
 
-            btnSystemReLogin_Click(null, null);
-
-            await LoadConsoles();
+            //await LoadConsoles();
             await LoadGames();
             await LoadGamesToPlay();
             await LoadGamesToHide();
@@ -165,23 +192,7 @@ namespace RADB
             //TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
         }
 
-        void Main_KeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = e.Modifiers == Keys.Alt;
-        }
 
-        FormWindowState? LastWindowState = null;
-
-        async void Main_Resize(object sender, EventArgs e)
-        {
-            if (WindowState != LastWindowState)
-            {
-                LastWindowState = WindowState;
-                if (WindowState == FormWindowState.Maximized)
-                    await LoadGamesIcon();
-                else if (WindowState == FormWindowState.Normal) { }
-            }
-        }
         #endregion
 
         #region Tab
@@ -225,34 +236,6 @@ namespace RADB
         #endregion
 
         #region Consoles
-        void EnablePanelConsoles(bool enable, bool resetDatagrid = true)
-        {
-            pnlDownloadConsoles.Enabled = enable;
-
-            lblNotFoundConsoles.Visible = false;
-            picLoaderConsole.Visible = !enable;
-
-            if (resetDatagrid == false) { dgvConsoles.Enabled = enable; }
-
-            if (enable)
-            {
-                lblNotFoundConsoles.Visible = (dgvConsoles.RowCount == 0);
-            }
-            else if (resetDatagrid)
-            {
-                dgvConsoles.DataSource = new List<Console>();
-            }
-        }
-
-        async Task LoadConsoles()
-        {
-            EnablePanelConsoles(false);
-            dgvConsoles.DataSource = new ListBind<Console>(await Console.List());
-
-            EnablePanelConsoles(true);
-            dgvConsoles.Focus();
-        }
-
         void UpdateConsoleLabels()
         {
             if (ConsoleBind.NotNull())
@@ -265,44 +248,7 @@ namespace RADB
             }
         }
 
-        async void btnUpdateConsoles_Click(object sender, EventArgs e)
-        {
-            EnablePanelConsoles(false);
-            await RA.DownloadConsoles();
-            await LoadConsoles();
 
-            lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + "Consoles Updated!" + Environment.NewLine + lblOutput.Text;
-        }
-
-        async void dgvConsoles_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowHeader()) return;
-
-            Console ConsoleSelected = dgv_SelectionChanged<Console>(sender);
-            if (ConsoleBind.IsNull() || ConsoleSelected.ID != ConsoleBind.ID)
-            {
-                ConsoleBind = ConsoleSelected;
-
-                lblUpdateGameList.Text = string.Empty;
-                lblProgressGameList.Text = string.Empty;
-                pgbGameList.Value = 0;
-                txtSearchGames.Text = string.Empty;
-
-                tabMain.SelectedTab = tabGames;
-
-                await LoadGames();
-
-                //Update GameList
-                if (lstGames.Count == 0 || ConsoleBind.ID == 0 && !File.Exists(Folder.GameData + ConsoleBind.Name + ".json"))
-                {
-                    btnUpdateGameList_Click(null, null);
-                }
-
-                UpdateConsoleLabels();
-            }
-
-            tabMain.SelectedTab = tabGames;
-        }
         #endregion
 
         #region GameList
@@ -364,7 +310,6 @@ namespace RADB
 
         async Task LoadGamesToHide()
         {
-            Contract.Ensures(Contract.Result<Task>() != null);
             lstGamesToHide = new ListBind<Game>(await Game.ListToHide());
             dgvGamesToHide.DataSource = lstGamesToHide;
             await LoadGamesIcon();
@@ -408,6 +353,7 @@ namespace RADB
             if (e.RowHeader()) return;
 
             GameBind = dgv_SelectionChanged<Game>(sender);
+            logic.GameBind = GameBind;
 
             pnlInfoScroll.AutoScrollPosition = new Point(pnlInfoScroll.AutoScrollPosition.X, 0);
             pnlInfoScroll.VerticalScroll.Value = 0;
@@ -435,7 +381,7 @@ namespace RADB
             await LoadGamesIcon();
         }
 
-        int wheel = 0;
+        int wheel;
         void dgvGames_MouseWheel(object sender, MouseEventArgs e)
         {
             wheel = 1;
@@ -493,7 +439,7 @@ namespace RADB
                 title = (obj.Title != null && (obj.Title.IndexOf(txtSearchGames.Text, StringComparison.CurrentCultureIgnoreCase) > -1));
                 bool noCheevos = !chkWithoutAchievements.Checked && obj.NumAchievements == 0;
 
-                string[] searchs = new string[] { "~Prototype~", "~Unlicensed~", "~Demo~", "~Hack~", 
+                string[] searchs = { "~Prototype~", "~Unlicensed~", "~Demo~", "~Hack~",
                     "~Homebrew~", "[Subset", "~Test", "~Z~" };
 
                 bool official = chkOfficial.Checked && obj.Title.NotContains(searchs);
@@ -744,14 +690,7 @@ namespace RADB
             }
         }
 
-        void dgvConsoles_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.Enter)
-            {
-                e.Handled = true;
-                dgvConsoles_CellDoubleClick(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
-            }
-        }
+
 
         T dgv_SelectionChanged<T>(object sender) where T : class
         {
@@ -921,48 +860,7 @@ namespace RADB
             pnlAwardFloating.Visible = true;
         }
 
-        bool UserCheevosIsRunning = false;
-        static UserProgress LastUser = new UserProgress();
-        async void btnUserCheevos_Click(object sender, EventArgs e)
-        {
-            if (GameBind.IsNull())
-            {
-                MessageBox.Show("Select a Game in Games Tab First");
-                return;
-            }
-            if (UserCheevosIsRunning) { return; }
 
-            UserCheevosIsRunning = true;
-            btnUserCheevos.Enabled = false;
-            lblUserCheevos.Text = string.Empty;
-
-            do
-            {
-                UserProgress user = await RA.GetUserProgress(txtUsername.Text, GameBind.ID);
-                picUserCheevos.Image = GameBind.ImageIconBitmap;
-                lblUserCheevos.Text = user.NumAchieved + " / " + GameBind.NumAchievements;
-
-                if (user.SameProgress(LastUser))
-                {
-                    lblCheevoLoopUpdate.BackColor = Color.Orange;
-                }
-                else
-                {
-                    lblCheevoLoopUpdate.BackColor = Color.LightGreen;
-                    LastUser = user;
-                }
-
-                await Task.Run(() => { Thread.Sleep(500); });
-
-                lblCheevoLoopUpdate.BackColor = Color.Transparent;
-
-                await Task.Run(() => { Thread.Sleep(2500); });
-
-            } while (chkUserCheevos.Checked);
-
-            UserCheevosIsRunning = false;
-            btnUserCheevos.Enabled = true;
-        }
 
         void dgvGames_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -1029,11 +927,6 @@ namespace RADB
         {
             if (GameBind.IsNull()) { return; }
             Process.Start(RA.Game_URL(GameBind.ID));
-        }
-
-        void btnRaProfile_Click(object sender, EventArgs e)
-        {
-            Process.Start(RA.User_URL("FBiDev"));
         }
 
         void dgvConsoles_MouseDown(object sender, MouseEventArgs e)
@@ -1163,9 +1056,9 @@ namespace RADB
 
             var console = dgv_SelectionChanged<Console>(dgvConsoles);
 
-            EnablePanelConsoles(false, false);
+            logic.EnablePanelConsoles(false, false);
             await RA.MergeGamesIcon(console);
-            EnablePanelConsoles(true, false);
+            logic.EnablePanelConsoles(true, false);
         }
 
         async void mniMergeGamesIconBadSize_MouseDown(object sender, MouseEventArgs e)
@@ -1174,9 +1067,9 @@ namespace RADB
 
             var console = dgv_SelectionChanged<Console>(dgvConsoles);
 
-            EnablePanelConsoles(false, false);
+            logic.EnablePanelConsoles(false, false);
             await RA.MergeGamesIcon(console, true);
-            EnablePanelConsoles(true, false);
+            logic.EnablePanelConsoles(true, false);
         }
 
         void btnGameFilters_Click(object sender, EventArgs e)
@@ -1196,27 +1089,5 @@ namespace RADB
             HashViewer.Open(GameBind);
         }
 
-        async void btnSystemReLogin_Click(object sender, EventArgs e)
-        {
-            lblSystemReLogin.ForeColor = Color.Coral;
-            lblSystemReLogin.Text = "logging in...";
-
-            btnSystemReLogin.Enabled = false;
-            btnHashes.Enabled = false;
-            await Browser.SystemLogin();
-            btnSystemReLogin.Enabled = true;
-            btnHashes.Enabled = true;
-
-            if (Browser.RALogged)
-            {
-                lblSystemReLogin.ForeColor = Color.Green;
-                lblSystemReLogin.Text = "logged in!";
-            }
-            else
-            {
-                lblSystemReLogin.ForeColor = Color.Firebrick;
-                lblSystemReLogin.Text = "not logged in";
-            }
-        }
     }
 }

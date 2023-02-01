@@ -97,7 +97,7 @@ namespace RADB
 
         public static ListBind<Game> OrderList(List<Game> list)
         {
-            List<string> prefixNotOffical = new List<string> { 
+            List<string> prefixNotOffical = new List<string> {
                         "~Demo~", "~Hack~", "~Homebrew~", "~Prototype~", "~Test Kit~", "~Unlicensed~", "~Z~" };
 
             //Get NotOffical
@@ -176,7 +176,7 @@ namespace RADB
             {
                 string sql = Resources.GameDelete;
 
-                var parameters = new List<cSqlParameter> 
+                var parameters = new List<cSqlParameter>
                 {
                     new cSqlParameter("@ID", obj.ID),
                     new cSqlParameter("@ConsoleID", obj.ConsoleID),
@@ -216,7 +216,7 @@ namespace RADB
             {
                 string sql = Resources.GameDeleteFromHide;
 
-                var parameters = new List<cSqlParameter> 
+                var parameters = new List<cSqlParameter>
                 {
                     new cSqlParameter("@ID", obj.ID),
                 };
@@ -229,10 +229,9 @@ namespace RADB
         #region _ToPlay
         public static Task<List<Game>> ListToPlay()
         {
-            return Task<List<Game>>.Run(() =>
+            return Task.Run(() =>
             {
                 string sql = Resources.GameListToPlay;
-
                 return Load<List<Game>>(Banco.ExecutarSelect(sql));
             });
         }
@@ -255,7 +254,7 @@ namespace RADB
             {
                 string sql = Resources.GameDeleteFromPlay;
 
-                var parameters = new List<cSqlParameter> 
+                var parameters = new List<cSqlParameter>
                 {
                     new cSqlParameter("@ID", obj.ID),
                 };

@@ -188,6 +188,7 @@
     <Compile Include="src\ctools\Download.cs" />
     <Compile Include="src\ctools\Archive.cs" />
     <Compile Include="src\ctools\DownloadFile.cs" />
+    <Compile Include="src\forms\MainLogic.cs" />
     <Compile Include="src\forms\TestForm.cs">
       <SubType>Form</SubType>
     </Compile>

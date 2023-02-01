@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 namespace RADB
 {
     partial class Main
@@ -232,8 +232,8 @@ namespace RADB
             this.chkUserCheevos = new System.Windows.Forms.CheckBox();
             this.btnUserCheevos = new RADB.FlatButtonA();
             this.lblSystemReLogin = new RADB.FlatLabelA();
-            this.btnSystemReLogin = new RADB.FlatButtonA();
-            this.btnRaProfile = new RADB.FlatButtonA();
+            this.btnRALogin = new RADB.FlatButtonA();
+            this.btnRAProfileAbout = new RADB.FlatButtonA();
             this.picFBiDevIcon = new RADB.FlatPictureBoxA();
             this.lblAbTitle = new RADB.FlatLabelB();
             this.lblAbYear = new RADB.FlatLabelB();
@@ -331,12 +331,12 @@ namespace RADB
             this.mnuGamesToHide.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToHide});
             this.mnuGamesToHide.Name = "ctmHiddenGames";
-            this.mnuGamesToHide.Size = new System.Drawing.Size(195, 26);
+            this.mnuGamesToHide.Size = new System.Drawing.Size(197, 26);
             // 
             // mniRemoveGameToHide
             // 
             this.mniRemoveGameToHide.Name = "mniRemoveGameToHide";
-            this.mniRemoveGameToHide.Size = new System.Drawing.Size(194, 22);
+            this.mniRemoveGameToHide.Size = new System.Drawing.Size(196, 22);
             this.mniRemoveGameToHide.Text = "Remove Game To Hide";
             this.mniRemoveGameToHide.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToHide_MouseDown);
             // 
@@ -367,12 +367,12 @@ namespace RADB
             this.mnuGamesToPlay.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToPlay});
             this.mnuGamesToPlay.Name = "mnuGamesToPlay";
-            this.mnuGamesToPlay.Size = new System.Drawing.Size(192, 26);
+            this.mnuGamesToPlay.Size = new System.Drawing.Size(194, 26);
             // 
             // mniRemoveGameToPlay
             // 
             this.mniRemoveGameToPlay.Name = "mniRemoveGameToPlay";
-            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(191, 22);
+            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(193, 22);
             this.mniRemoveGameToPlay.Text = "Remove Game To Play";
             this.mniRemoveGameToPlay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mniRemoveGameToPlay_MouseDown);
             // 
@@ -396,7 +396,7 @@ namespace RADB
             this.pnlOutput.Controls.Add(this.lblOutput);
             this.pnlOutput.Location = new System.Drawing.Point(2, 2);
             this.pnlOutput.Name = "pnlOutput";
-            this.pnlOutput.Size = new System.Drawing.Size(902, 61);
+            this.pnlOutput.Size = new System.Drawing.Size(1572, 0);
             this.pnlOutput.TabIndex = 30;
             // 
             // lblOutput
@@ -498,7 +498,6 @@ namespace RADB
             this.btnUpdateConsoles.Size = new System.Drawing.Size(144, 24);
             this.btnUpdateConsoles.TabIndex = 36;
             this.btnUpdateConsoles.Text = "Update Consoles";
-            this.btnUpdateConsoles.Click += new System.EventHandler(this.btnUpdateConsoles_Click);
             // 
             // lblUpdateConsoles
             // 
@@ -507,6 +506,7 @@ namespace RADB
             this.lblUpdateConsoles.Size = new System.Drawing.Size(110, 24);
             this.lblUpdateConsoles.TabIndex = 32;
             this.lblUpdateConsoles.Text = "00/00/0000 00:00:00";
+            this.lblUpdateConsoles.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pgbConsoles
             // 
@@ -1417,7 +1417,7 @@ namespace RADB
             this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoAchievements.Location = new System.Drawing.Point(218, 23);
             this.lblInfoAchievements.Name = "lblInfoAchievements";
-            this.lblInfoAchievements.Size = new System.Drawing.Size(145, 24);
+            this.lblInfoAchievements.Size = new System.Drawing.Size(146, 24);
             this.lblInfoAchievements.TabIndex = 35;
             this.lblInfoAchievements.Text = "0 Trophies: 0 points";
             this.lblInfoAchievements.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2257,7 +2257,7 @@ namespace RADB
             this.flatLabelA4.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA4.MinimumSize = new System.Drawing.Size(48, 16);
             this.flatLabelA4.Name = "flatLabelA4";
-            this.flatLabelA4.Size = new System.Drawing.Size(82, 16);
+            this.flatLabelA4.Size = new System.Drawing.Size(84, 16);
             this.flatLabelA4.TabIndex = 13;
             this.flatLabelA4.Text = "Account Type:";
             // 
@@ -2310,8 +2310,8 @@ namespace RADB
             this.tabAbout.BackColor = System.Drawing.Color.Transparent;
             this.tabAbout.Controls.Add(this.gpbOverlay);
             this.tabAbout.Controls.Add(this.lblSystemReLogin);
-            this.tabAbout.Controls.Add(this.btnSystemReLogin);
-            this.tabAbout.Controls.Add(this.btnRaProfile);
+            this.tabAbout.Controls.Add(this.btnRALogin);
+            this.tabAbout.Controls.Add(this.btnRAProfileAbout);
             this.tabAbout.Controls.Add(this.picFBiDevIcon);
             this.tabAbout.Controls.Add(this.lblAbTitle);
             this.tabAbout.Controls.Add(this.lblAbYear);
@@ -2414,7 +2414,6 @@ namespace RADB
             this.btnUserCheevos.Size = new System.Drawing.Size(146, 24);
             this.btnUserCheevos.TabIndex = 28;
             this.btnUserCheevos.Text = "Get User Trophies";
-            this.btnUserCheevos.Click += new System.EventHandler(this.btnUserCheevos_Click);
             // 
             // lblSystemReLogin
             // 
@@ -2425,31 +2424,30 @@ namespace RADB
             this.lblSystemReLogin.Text = "not logged in";
             this.lblSystemReLogin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnSystemReLogin
+            // btnRALogin
             // 
-            this.btnSystemReLogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSystemReLogin.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.btnSystemReLogin.FlatAppearance.BorderSize = 0;
-            this.btnSystemReLogin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.btnSystemReLogin.Location = new System.Drawing.Point(3, 3);
-            this.btnSystemReLogin.MinimumSize = new System.Drawing.Size(24, 24);
-            this.btnSystemReLogin.Name = "btnSystemReLogin";
-            this.btnSystemReLogin.Size = new System.Drawing.Size(124, 24);
-            this.btnSystemReLogin.TabIndex = 34;
-            this.btnSystemReLogin.Text = "System ReLogin";
+            this.btnRALogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRALogin.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.btnRALogin.FlatAppearance.BorderSize = 0;
+            this.btnRALogin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.btnRALogin.Location = new System.Drawing.Point(3, 3);
+            this.btnRALogin.MinimumSize = new System.Drawing.Size(24, 24);
+            this.btnRALogin.Name = "btnRALogin";
+            this.btnRALogin.Size = new System.Drawing.Size(124, 24);
+            this.btnRALogin.TabIndex = 34;
+            this.btnRALogin.Text = "System ReLogin";
             // 
-            // btnRaProfile
+            // btnRAProfileAbout
             // 
-            this.btnRaProfile.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.btnRaProfile.FlatAppearance.BorderSize = 0;
-            this.btnRaProfile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.btnRaProfile.Location = new System.Drawing.Point(407, 220);
-            this.btnRaProfile.MinimumSize = new System.Drawing.Size(24, 24);
-            this.btnRaProfile.Name = "btnRaProfile";
-            this.btnRaProfile.Size = new System.Drawing.Size(96, 32);
-            this.btnRaProfile.TabIndex = 5;
-            this.btnRaProfile.Text = "RA Profile";
-            this.btnRaProfile.Click += new System.EventHandler(this.btnRaProfile_Click);
+            this.btnRAProfileAbout.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.btnRAProfileAbout.FlatAppearance.BorderSize = 0;
+            this.btnRAProfileAbout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.btnRAProfileAbout.Location = new System.Drawing.Point(407, 220);
+            this.btnRAProfileAbout.MinimumSize = new System.Drawing.Size(24, 24);
+            this.btnRAProfileAbout.Name = "btnRAProfileAbout";
+            this.btnRAProfileAbout.Size = new System.Drawing.Size(96, 32);
+            this.btnRAProfileAbout.TabIndex = 5;
+            this.btnRAProfileAbout.Text = "RA Profile";
             // 
             // picFBiDevIcon
             // 
@@ -2630,7 +2628,7 @@ namespace RADB
         private FlatCheckBoxA chkHomebrew;
         private FlatCheckBoxA chkPrototype;
         private FlatCheckBoxA chkOfficial;
-        private FlatButtonA btnRaProfile;
+        private FlatButtonA btnRAProfileAbout;
         private System.Windows.Forms.ContextMenuStrip mnuGames;
         private System.Windows.Forms.ToolStripMenuItem mniHideGame;
         private System.Windows.Forms.TabPage tabGamesToHide;
@@ -2696,7 +2694,7 @@ namespace RADB
         private System.Windows.Forms.DataGridViewTextBoxColumn cNumLeaderboards;
         private System.Windows.Forms.DataGridViewTextBoxColumn gLastUpdated;
         private FlatLabelA lblSystemReLogin;
-        private FlatButtonA btnSystemReLogin;
+        private FlatButtonA btnRALogin;
         private FlatGroupBoxA gpbUserInfo;
         private FlatLabelA lblUserName;
         private FlatButtonA btnGetUserInfo;
