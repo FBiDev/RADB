@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -31,7 +28,20 @@ namespace RADB
 
         RA RA = new RA();
         public Game GameBind;
-        public Console ConsoleBind;
+
+        event EventHandler ConsoleBindChanged = delegate { };
+        Console _ConsoleBind;
+        public Console ConsoleBind
+        {
+            get { return _ConsoleBind; }
+            set
+            {
+                _ConsoleBind = value;
+                ConsoleBindChanged(this, EventArgs.Empty);
+            }
+        }
+
+        event EventHandler ConsoleGridChanged = delegate { };
         #endregion
 
         public MainLogic(Main form)
@@ -40,6 +50,7 @@ namespace RADB
 
             Form_Init();
             Consoles_Init();
+            Games_Init();
             GameInfo_Init();
             About_Init();
         }
@@ -54,7 +65,8 @@ namespace RADB
 
         async void Form_Shown(object sender, EventArgs e)
         {
-            await Consoles_Shown(sender, e);
+            await Consoles_Shown();
+            await Games_Shown();
         }
 
         void Form_KeyDown(object sender, KeyEventArgs e)
@@ -63,7 +75,7 @@ namespace RADB
         }
 
         FormWindowState? LastWindowState;
-        async void Form_Resize(object sender, EventArgs e)
+        void Form_Resize(object sender, EventArgs e)
         {
             if (f.WindowState != LastWindowState)
             {
@@ -81,6 +93,7 @@ namespace RADB
         void Consoles_Init()
         {
             f.btnUpdateConsoles_.Click += btnUpdateConsoles_Click;
+
             f.lblUpdateConsoles_.Text = string.Empty;
             f.lblProgressConsoles_.Text = string.Empty;
 
@@ -93,74 +106,53 @@ namespace RADB
             f.dgvConsoles_.KeyDown += dgvConsoles_KeyDown;
         }
 
-        async Task Consoles_Shown(object sender, EventArgs e)
+        async Task Consoles_Shown()
         {
             await LoadConsoles();
         }
 
-        public void EnablePanelConsoles(bool enable, bool resetDatagrid = true)
+        public void DisablePanelConsoles()
         {
-            f.pnlDownloadConsoles_.Enabled = enable;
-
+            f.pnlDownloadConsoles_.Enabled = false;
             f.lblNotFoundConsoles_.Visible = false;
-            f.picLoaderConsole_.Visible = !enable;
+            f.picLoaderConsole_.Visible = true;
+            f.dgvConsoles_.Enabled = false;
+        }
 
-            if (resetDatagrid == false) { f.dgvConsoles_.Enabled = enable; }
-
-            if (enable)
-            {
-                f.lblNotFoundConsoles_.Visible = (f.dgvConsoles_.RowCount == 0);
-            }
-            else if (resetDatagrid)
-            {
-                f.dgvConsoles_.DataSource = new List<Console>();
-            }
+        public void EnablePanelConsoles()
+        {
+            f.pnlDownloadConsoles_.Enabled = true;
+            f.lblNotFoundConsoles_.Visible = (f.dgvConsoles_.RowCount == 0);
+            f.picLoaderConsole_.Visible = false;
+            f.dgvConsoles_.Enabled = true;
         }
 
         async Task LoadConsoles()
         {
-            EnablePanelConsoles(false);
+            DisablePanelConsoles();
             f.dgvConsoles_.DataSource = new ListBind<Console>(await Console.List());
+            EnablePanelConsoles();
 
-            EnablePanelConsoles(true);
             f.dgvConsoles_.Focus();
         }
 
         async void btnUpdateConsoles_Click(object sender, EventArgs e)
         {
-            EnablePanelConsoles(false);
+            f.dgvConsoles_.DataSource = new List<Console>();
+            DisablePanelConsoles();
             await RA.DownloadConsoles();
             await LoadConsoles();
 
-            f.lblOutput_.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + "Consoles Updated!" + Environment.NewLine + f.lblOutput_.Text;
+            f.lblOutput_.Text = "[" + DateTime.Now.ToTimeLong() + "] " + "Consoles Updated!" + Environment.NewLine + f.lblOutput_.Text;
         }
 
-        async void dgvConsoles_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        void dgvConsoles_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowHeader()) return;
 
             Console ConsoleSelected = dgv_SelectionChanged<Console>(sender);
             if (ConsoleBind.IsNull() || ConsoleSelected.ID != ConsoleBind.ID)
-            {
                 ConsoleBind = ConsoleSelected;
-
-                //f.lblUpdateGameList.Text = string.Empty;
-                //f.lblProgressGameList.Text = string.Empty;
-                //f.pgbGameList.Value = 0;
-                //f.txtSearchGames.Text = string.Empty;
-
-                f.tabMain_.SelectedTab = f.tabGames_;
-
-                //await LoadGames();
-
-                //Update GameList
-                //if (lstGames.Count == 0 || ConsoleBind.ID == 0 && !File.Exists(Folder.GameData + ConsoleBind.Name + ".json"))
-                //{
-                //btnUpdateGameList_Click(null, null);
-                //}
-
-                //UpdateConsoleLabels();
-            }
 
             f.tabMain_.SelectedTab = f.tabGames_;
         }
@@ -172,6 +164,38 @@ namespace RADB
                 e.Handled = true;
                 dgvConsoles_CellDoubleClick(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
             }
+        }
+        #endregion
+
+        #region Games
+        void Games_Init()
+        {
+            ConsoleBindChanged += LoadGames;
+        }
+
+        async Task Games_Shown()
+        {
+            await f.LoadGames();
+        }
+
+        async void LoadGames(object sender, EventArgs e)
+        {
+            Main.ConsoleBind = ConsoleBind;
+
+            //f.lblUpdateGameList.Text = string.Empty;
+            //f.lblProgressGameList.Text = string.Empty;
+            //f.pgbGameList.Value = 0;
+            //f.txtSearchGames.Text = string.Empty;
+
+            await f.LoadGames();
+
+            //Update GameList
+            //if (lstGames.Count == 0 || ConsoleBind.ID == 0 && !File.Exists(Folder.GameData + ConsoleBind.Name + ".json"))
+            //{
+            //btnUpdateGameList_Click(null, null);
+            //}
+
+            //UpdateConsoleLabels();
         }
         #endregion
 
@@ -281,8 +305,9 @@ namespace RADB
 
         T dgv_SelectionChanged<T>(object sender) where T : class
         {
-            if (((DataGridView)sender).CurrentRow.NotNull())
-                return ((DataGridView)sender).CurrentRow.DataBoundItem as T;
+            var dgv = sender as DataGridView;
+            if (dgv.CurrentRow.NotNull())
+                return dgv.CurrentRow.DataBoundItem as T;
             return null;
         }
     }

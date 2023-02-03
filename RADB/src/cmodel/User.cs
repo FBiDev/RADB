@@ -15,9 +15,11 @@ namespace RADB
         public string Status { get; set; }
 
         public DateTime? MemberSince { get; set; }
+        public string MemberSinceString { get { return MemberSince.ToString("dd MMM yyyy, HH:mm"); } }
 
         public dynamic LastActivity { get; set; }
         public DateTime? Lastupdate { get; set; }
+        public string LastupdateString { get { return Lastupdate.ToString("dd MMM yyyy, HH:mm"); } }
 
         public int Permissions { get; set; }
 
@@ -56,48 +58,73 @@ namespace RADB
         public int TotalPoints { get; set; }
         public int TotalTruePoints { get; set; }
 
+        public string TotalPointsString
+        {
+            get { return TotalPoints + " (" + TotalTruePoints + ")"; }
+        }
+
         public float RetroRatio
+        {
+            get { return TotalTruePoints > 0 ? ((float)TotalTruePoints / TotalPoints) : 0f; }
+        }
+
+        public string RetroRatioString
+        {
+            get { return string.Format("{0:N2}", RetroRatio); }
+        }
+
+        [JsonProperty("Rank")]
+        public int? _Rank { get; set; }
+        [JsonProperty("RankInt")]
+        public int Rank { get { return _Rank ?? 0; } set { _Rank = value; } }
+
+        public int TotalRanked { get; set; }
+
+        string RankTop
+        {
+            get { return string.Format("{0:N2}", (((float)Rank / TotalRanked) * 100f)); }
+        }
+
+        public string RankString
         {
             get
             {
-                if (TotalTruePoints > 0)
-                    return ((float)TotalTruePoints / TotalPoints);
-                return 0f;
+                if (Untracked)
+                    return "Untracked";
+                if (TotalPoints < RA.MIN_POINTS)
+                    return "Needs at least " + RA.MIN_POINTS + " points.";
+                if (Rank > 0 && TotalRanked > 0)
+                    return Rank + " / " + TotalRanked + " (Top " + RankTop + "%)";
+                return "-";
             }
-        }
-
-        public int? Rank { get; set; }
-        public int TotalRanked { get; set; }
-
-        float GetTop() { return (((float)Rank / TotalRanked) * 100f); }
-        public string GetRank(bool useCustomLanguage = true)
-        {
-            if (Untracked)
-                return "Untracked";
-            if (TotalPoints < RA.MIN_POINTS)
-                return "Needs at least " + RA.MIN_POINTS + " points.";
-            if (Rank != null && TotalRanked > 0)
-                return Rank.ToNumber(useCustomLanguage) + " / " + TotalRanked.ToNumber(useCustomLanguage) + " (Top " + GetTop().ToNumber() + "%)";
-            return "-";
         }
 
         public int TotalSoftcorePoints { get; set; }
 
-        string GetSoftTop() { return "-"; }
-        public string GetSoftRank()
+        public string TotalSoftcorePointsString
         {
-            if (Untracked)
-                return "Untracked";
-            if (TotalSoftcorePoints < RA.MIN_POINTS)
-                return "Needs at least " + RA.MIN_POINTS + " points.";
-            return "Unknown";
+            get { return TotalSoftcorePoints.ToString(); }
         }
 
-        string _AverageCompletion { get; set; }
-        public string AverageCompletion
+        string RankSoftTop { get { return "-"; } }
+        public string RankSoft
         {
-            get { return _AverageCompletion = _AverageCompletion ?? "0.00%"; }
-            set { _AverageCompletion = value; }
+            get
+            {
+                if (Untracked)
+                    return "Untracked";
+                if (TotalSoftcorePoints < RA.MIN_POINTS)
+                    return "Needs at least " + RA.MIN_POINTS + " points.";
+                //Need Soft Rank and SoftTop
+                return "Unknown";
+            }
+        }
+
+        public float AverageCompletion { get; set; }
+
+        public string AverageCompletionString
+        {
+            get { return string.Format("{0:N2}", AverageCompletion) + "%"; }
         }
 
         //Achievements Won By Others
@@ -111,23 +138,20 @@ namespace RADB
         public IEnumerable<GameProgress> PlayedGames { get; set; }
         public Game LastGame { get; set; }
 
-        public string LastGameTitle()
+        public string LastGameTitle
         {
-            if (LastGame.IsNull())
-                return "";
-
-            return LastGame.Title;
+            get { return LastGame == null ? "" : LastGame.Title; }
         }
 
-        string _RichPresenceMsg;
+        public Bitmap LastGameImage
+        {
+            get { return string.IsNullOrWhiteSpace(LastGame.ImageIcon) ? null : LastGame.ImageIconBitmap; }
+        }
+
+        string _RichPresenceMsg { get; set; }
         public string RichPresenceMsg
         {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(_RichPresenceMsg) || _RichPresenceMsg == "Unknown")
-                    return "";
-                return _RichPresenceMsg;
-            }
+            get { return string.IsNullOrWhiteSpace(_RichPresenceMsg) || _RichPresenceMsg == "Unknown" ? "" : _RichPresenceMsg; }
             set { _RichPresenceMsg = value; }
         }
 
@@ -139,6 +163,6 @@ namespace RADB
         }
 
         public bool Invalid { get { return ID == 0 || string.IsNullOrWhiteSpace(Name); } }
-        public bool RankInvalid { get { return Untracked || Rank == null || TotalPoints < RA.MIN_POINTS; } }
+        public bool RankInvalid { get { return Untracked || Rank == 0 || TotalPoints < RA.MIN_POINTS; } }
     }
 }

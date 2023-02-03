@@ -89,6 +89,20 @@ namespace RADB
         public static Bitmap DefaultIngameImage = new Picture(200, 150).Bitmap;
         public static Bitmap DefaultBoxArtImage = new Picture(200, 150).Bitmap;
 
+        public struct GameType
+        {
+            public static string[] NotOfficial = { Prototype, Unlicensed, Demo, Hack, Homebrew, Subset, TestKit, Demoted };
+            public const string Prototype = "~Prototype~";
+            public const string Unlicensed = "~Unlicensed~";
+            public const string Demo = "~Demo~";
+            public const string Hack = "~Hack~";
+            public const string Homebrew = "~Homebrew~";
+            public const string Subset = "[Subset";
+            public const string TestKit = "~Test";
+            public const string Demoted = "~Z~";
+            public const string Multi = "~Multi~";
+        }
+
         public RA() { }
 
         #endregion
@@ -306,7 +320,7 @@ namespace RADB
                 {
                     float? totalPctWon = awardsList.Sum(x => x.PctWon);
                     float avgPctWon = ((float)totalPctWon / awardsList.Count()) * 100f;
-                    user.AverageCompletion = avgPctWon.ToNumber() + "%";
+                    user.AverageCompletion = avgPctWon;
 
                     user.PlayedGames = awardsList;
                 }

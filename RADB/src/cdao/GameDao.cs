@@ -11,10 +11,10 @@ using GNX;
 
 namespace RADB
 {
-    public class GameDao
+    public static class GameDao
     {
         #region " _Load "
-        private static T Load<T>(DataTable table) where T : IList, new()
+        static T Load<T>(DataTable table) where T : IList, new()
         {
             T list = new T();
             foreach (DataRow row in table.Rows)
@@ -38,7 +38,7 @@ namespace RADB
         #endregion
 
         #region " _MountFilters "
-        private static List<cSqlParameter> MountFilters(Game obj)
+        static List<cSqlParameter> MountFilters(Game obj)
         {
             return new List<cSqlParameter>
             {
@@ -51,7 +51,7 @@ namespace RADB
         #endregion
 
         #region " _MountParameters "
-        private static List<cSqlParameter> MountParameters(Game obj)
+        static List<cSqlParameter> MountParameters(Game obj)
         {
             return new List<cSqlParameter>
             {
@@ -83,7 +83,7 @@ namespace RADB
 
         public static Task<List<Game>> Search(Game obj, bool allTables)
         {
-            return Task<List<Game>>.Run(() =>
+            return Task.Run(() =>
             {
                 string sql = Resources.GameList;
                 sql += " ORDER BY NumAchievements=0, Title ASC ";
@@ -97,28 +97,24 @@ namespace RADB
 
         public static ListBind<Game> OrderList(List<Game> list)
         {
-            List<string> prefixNotOffical = new List<string> {
-                        "~Demo~", "~Hack~", "~Homebrew~", "~Prototype~", "~Test Kit~", "~Unlicensed~", "~Z~" };
-
             //Get NotOffical
-            List<Game> LNotOffical = list.Where(x => prefixNotOffical.Any(y => x.Title.IndexOf(y) >= 0)).ToList();
+            var LNotOffical = list.Where(x => RA.GameType.NotOfficial.Any(x.Title.ContainsExtend));
             //Remove NotOffical from Main List
             list = list.Except(LNotOffical).ToList();
             //Get Game with no cheevos from NotOffical
-            List<Game> LNotOfficalNoCheevos = LNotOffical.Where(x => x.NumAchievements == 0).ToList();
+            var LNotOfficalNoCheevos = LNotOffical.Where(x => x.NumAchievements == 0);
             //Get Games Has Cheevos
-            LNotOffical = LNotOffical.Where(x => x.NumAchievements > 0).ToList();
+            LNotOffical = LNotOffical.Where(x => x.NumAchievements > 0);
             //Get Game with no cheevos from Main List
-            List<Game> LNoCheevos = list.Where(x => x.NumAchievements == 0).ToList();
+            var LNoCheevos = list.Where(x => x.NumAchievements == 0);
             //Remove Games no Cheevos from Main List
             list = list.Except(LNoCheevos).ToList();
 
-            //TimeSpan fim = new TimeSpan(DateTime.Now.Ticks) - ini;
             //Join Ordered Lists
             list = list.OrderBy(x => x.Title).ToList();
-            list.AddRange(LNotOffical.OrderBy(x => x.Title).ToList());
-            list.AddRange(LNoCheevos.OrderBy(x => x.Title).ToList());
-            list.AddRange(LNotOfficalNoCheevos.OrderBy(x => x.Title).ToList());
+            list.AddRange(LNotOffical.OrderBy(x => x.Title));
+            list.AddRange(LNoCheevos.OrderBy(x => x.Title));
+            list.AddRange(LNotOfficalNoCheevos.OrderBy(x => x.Title));
 
             return new ListBind<Game>(list);
         }
@@ -136,7 +132,7 @@ namespace RADB
 
         public static Task<bool> InsertList(IList<Game> list)
         {
-            return Task<bool>.Run(() =>
+            return Task.Run(() =>
             {
                 string sql = "INSERT INTO GameData " +
                                 "(ID, Title, ConsoleID, NumAchievements, Points, " +
@@ -172,7 +168,7 @@ namespace RADB
         #region " _Delete "
         public static Task<bool> Delete(Game obj)
         {
-            return Task<bool>.Run(() =>
+            return Task.Run(() =>
             {
                 string sql = Resources.GameDelete;
 
@@ -190,7 +186,7 @@ namespace RADB
         #region _ToHide
         public static Task<List<Game>> ListToHide()
         {
-            return Task<List<Game>>.Run(() =>
+            return Task.Run(() =>
             {
                 string sql = Resources.GameListToHide;
 
@@ -200,7 +196,7 @@ namespace RADB
 
         public static Task<bool> InsertToHide(Game obj)
         {
-            return Task<bool>.Run(() =>
+            return Task.Run(() =>
             {
                 string sql = Resources.GameInsertToHide;
 
@@ -212,7 +208,7 @@ namespace RADB
 
         public static Task<bool> DeleteFromHide(Game obj)
         {
-            return Task<bool>.Run(() =>
+            return Task.Run(() =>
             {
                 string sql = Resources.GameDeleteFromHide;
 
@@ -238,7 +234,7 @@ namespace RADB
 
         public static Task<bool> InsertToPlay(Game obj)
         {
-            return Task<bool>.Run(() =>
+            return Task.Run(() =>
             {
                 string sql = Resources.GameInsertToPlay;
 
@@ -250,7 +246,7 @@ namespace RADB
 
         public static Task<bool> DeleteFromPlay(Game obj)
         {
-            return Task<bool>.Run(() =>
+            return Task.Run(() =>
             {
                 string sql = Resources.GameDeleteFromPlay;
 

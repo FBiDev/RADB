@@ -184,7 +184,7 @@ namespace RADB
             lstDgvGames.Add(dgvGamesToHide);
 
             //await LoadConsoles();
-            await LoadGames();
+            //await LoadGames();
             await LoadGamesToPlay();
             await LoadGamesToHide();
 
@@ -275,7 +275,7 @@ namespace RADB
             }
         }
 
-        async Task LoadGames()
+        public async Task LoadGames()
         {
             if (ConsoleBind.IsNull()) { return; }
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
@@ -345,7 +345,7 @@ namespace RADB
             ConsoleBind.NumGames = lstGames.Sum(g => (g.NumAchievements > 0).ToInt());
             ConsoleBind.TotalGames = lstGames.Count();
 
-            lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] " + ConsoleBind.Name + " Updated!" + Environment.NewLine + lblOutput.Text;
+            lblOutput.Text = "[" + DateTime.Now.ToTimeLong() + "] " + ConsoleBind.Name + " Updated!" + Environment.NewLine + lblOutput.Text;
         }
 
         async void dgvGames_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -436,22 +436,19 @@ namespace RADB
             {
                 bool title;
 
-                title = (obj.Title != null && (obj.Title.IndexOf(txtSearchGames.Text, StringComparison.CurrentCultureIgnoreCase) > -1));
+                title = (obj.Title.HasValue() && obj.Title.ContainsExtend(txtSearchGames.Text));
                 bool noCheevos = !chkWithoutAchievements.Checked && obj.NumAchievements == 0;
 
-                string[] searchs = { "~Prototype~", "~Unlicensed~", "~Demo~", "~Hack~",
-                    "~Homebrew~", "[Subset", "~Test", "~Z~" };
+                bool official = chkOfficial.Checked && obj.Title.NotContains(RA.GameType.NotOfficial);
 
-                bool official = chkOfficial.Checked && obj.Title.NotContains(searchs);
-
-                bool proto = chkPrototype.Checked && obj.Title.Contains(searchs[0]);
-                bool unl = chkUnlicensed.Checked && obj.Title.Contains("~Unlicensed~");
-                bool demo = chkDemo.Checked && obj.Title.Contains("~Demo~");
-                bool hack = chkHack.Checked && obj.Title.Contains("~Hack~");
-                bool homebrew = chkHomebrew.Checked && obj.Title.Contains("~Homebrew~");
-                bool subset = chkSubset.Checked && obj.Title.Contains("[Subset");
-                bool testkit = chkTestKit.Checked && obj.Title.Contains("~Test");
-                bool demoted = chkDemoted.Checked && obj.Title.Contains("~Z~");
+                bool proto = chkPrototype.Checked && obj.Title.ContainsExtend(RA.GameType.Prototype);
+                bool unl = chkUnlicensed.Checked && obj.Title.ContainsExtend(RA.GameType.Unlicensed);
+                bool demo = chkDemo.Checked && obj.Title.ContainsExtend(RA.GameType.Demo);
+                bool hack = chkHack.Checked && obj.Title.ContainsExtend(RA.GameType.Hack);
+                bool homebrew = chkHomebrew.Checked && obj.Title.ContainsExtend(RA.GameType.Homebrew);
+                bool subset = chkSubset.Checked && obj.Title.ContainsExtend(RA.GameType.Subset);
+                bool testkit = chkTestKit.Checked && obj.Title.ContainsExtend(RA.GameType.TestKit);
+                bool demoted = chkDemoted.Checked && obj.Title.ContainsExtend(RA.GameType.Demoted);
 
                 if (title && !noCheevos)
                 {
@@ -738,22 +735,22 @@ namespace RADB
             lblUserName.Text = UserBind.Name;
             lblUserMotto.Text = UserBind.Motto;
 
-            lblUserMemberSince.Text = UserBind.MemberSince.ToString("dd MMM yyyy, HH:mm");
-            lblUserLastActivity.Text = UserBind.Lastupdate.ToString("dd MMM yyyy, HH:mm");
+            lblUserMemberSince.Text = UserBind.MemberSinceString;
+            lblUserLastActivity.Text = UserBind.LastupdateString;
             lblUserAccountType.Text = UserBind.AccountType;
 
-            lblUserHCPoints.Text = UserBind.TotalPoints.ToNumber(customLanguage: true) + " (" + UserBind.TotalTruePoints.ToNumber(customLanguage: true) + ")";
-            lnkUserRank.Text = UserBind.GetRank();
+            lblUserHCPoints.Text = UserBind.TotalPointsString;
+            lnkUserRank.Text = UserBind.RankString;
             lnkUserRank.Size = lnkUserRank.PreferredSize;
 
             if (UserBind.RankInvalid)
                 lnkUserRank.LinkArea = new LinkArea(0, 0);
             else
-                lnkUserRank.LinkArea = new LinkArea(0, UserBind.Rank.ToNumber(true).Count());
+                lnkUserRank.LinkArea = new LinkArea(0, UserBind.Rank.ToString().Count());
 
-            lblUserRetroRatio.Text = UserBind.RetroRatio.ToNumber();
-            lblUserSoftPoints.Text = UserBind.TotalSoftcorePoints.ToNumber(customLanguage: true);
-            lblUserSoftRank.Text = UserBind.GetSoftRank();
+            lblUserRetroRatio.Text = UserBind.RetroRatioString;
+            lblUserSoftPoints.Text = UserBind.TotalSoftcorePointsString;
+            lblUserSoftRank.Text = UserBind.RankSoft;
 
             lblUserRichPresence.Text = UserBind.RichPresenceMsg;
 
@@ -763,11 +760,9 @@ namespace RADB
 
             //UserLastGame
             UserBind = await RA.GetUserInfoLastGame(UserBind);
-            if (UserBind.LastGame.ImageIcon.Empty() == false)
-                picUserLastGame.Image = UserBind.LastGame.ImageIconBitmap;
-
+            picUserLastGame.Image = UserBind.LastGameImage;
             lblUserLastConsole.Text = UserBind.LastGame.ConsoleName;
-            lblUserLastGame.Text = UserBind.LastGameTitle();
+            lblUserLastGame.Text = UserBind.LastGameTitle;
 
             //--Reallocate RichPresence
             lblUserRichPresence.Location = new Point(lblUserRichPresence.Location.X, lblUserLastGame.Location.Y + lblUserLastGame.Size.Height + lblUserRichPresence.Margin.Top);
@@ -776,7 +771,7 @@ namespace RADB
             {
                 UserBind = await RA.GetUserInfoAwards(UserBind);
 
-                lblUserCompletion.Text = UserBind.AverageCompletion;
+                lblUserCompletion.Text = UserBind.AverageCompletionString;
                 var completedGames = UserBind.PlayedGames.Where(x => x.PctWon.Equals(1.0f));
 
                 var dl = new Download() { Overwrite = false };
@@ -860,8 +855,6 @@ namespace RADB
             pnlAwardFloating.Visible = true;
         }
 
-
-
         void dgvGames_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             e.Graphics.InterpolationMode = InterpolationMode.Bilinear;
@@ -910,10 +903,9 @@ namespace RADB
 
         void lnkUserRank_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var rank = UserBind.Rank;
-            if (rank.GetValueOrDefault() == 0) { return; }
+            if (UserBind.RankInvalid) { return; }
 
-            var rankOffset = (int)((rank - 1) / 25) * 25;
+            var rankOffset = (UserBind.Rank - 1) / 25 * 25;
             Process.Start(RA.HOST + "globalRanking.php?s=5&t=2&o=" + rankOffset);
         }
 
@@ -1056,9 +1048,9 @@ namespace RADB
 
             var console = dgv_SelectionChanged<Console>(dgvConsoles);
 
-            logic.EnablePanelConsoles(false, false);
+            logic.DisablePanelConsoles();
             await RA.MergeGamesIcon(console);
-            logic.EnablePanelConsoles(true, false);
+            logic.EnablePanelConsoles();
         }
 
         async void mniMergeGamesIconBadSize_MouseDown(object sender, MouseEventArgs e)
@@ -1067,9 +1059,9 @@ namespace RADB
 
             var console = dgv_SelectionChanged<Console>(dgvConsoles);
 
-            logic.EnablePanelConsoles(false, false);
+            logic.DisablePanelConsoles();
             await RA.MergeGamesIcon(console, true);
-            logic.EnablePanelConsoles(true, false);
+            logic.EnablePanelConsoles();
         }
 
         void btnGameFilters_Click(object sender, EventArgs e)

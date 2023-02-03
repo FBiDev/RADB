@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 //
 using System.Windows.Forms;
+using GNX;
 
 namespace RADB
 {
@@ -70,7 +71,7 @@ namespace RADB
                 case DownloadStatus.Completed:
                     resultTime.InvokeIfRequired(() =>
                     {
-                        resultTime.Text = this.TimeCompleted.ToString("dd/MM/yyyy HH:mm");
+                        resultTime.Text = this.TimeCompleted.ToDMY_TimeShort();
                     });
                     resultBar.InvokeIfRequired(() =>
                     {
