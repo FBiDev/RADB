@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//
+﻿using System.Threading.Tasks;
 using System.Windows.Forms;
 using GNX;
 
@@ -25,10 +19,7 @@ namespace RADB
         {
             await base.Start();
 
-            if (Error)
-            {
-                MessageBox.Show(ErrorMessage);
-            }
+            if (Error) { MessageBox.Show(ErrorMessage); }
 
             return !Error;
         }
@@ -38,14 +29,14 @@ namespace RADB
         //==========
         public void SetControls(Label resultLabel, ProgressBar resultBar, Label resultTime)
         {
-            this.ProgressChanged += () => DownloadChanged(resultLabel, resultBar, resultTime);
+            ProgressChanged += () => DownloadChanged(resultLabel, resultBar, resultTime);
         }
 
-        private void DownloadChanged(Label resultLabel, ProgressBar resultBar, Label resultTime)
+        void DownloadChanged(Label resultLabel, ProgressBar resultBar, Label resultTime)
         {
             resultLabel.InvokeIfRequired(() =>
             {
-                resultLabel.Text = this.Result;
+                resultLabel.Text = Result;
             });
 
             switch (Status)
@@ -60,8 +51,8 @@ namespace RADB
                 case DownloadStatus.ProgressChanged:
                     resultBar.InvokeIfRequired(() =>
                     {
-                        resultBar.Value = this.Percentage;
-                        resultBar.Style = (this.TotalBytesToReceive == -1 ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous);
+                        resultBar.Value = Percentage;
+                        resultBar.Style = (TotalBytesToReceive == -1 ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous);
                     });
                     break;
                 case DownloadStatus.FileDownloaded:
@@ -71,7 +62,7 @@ namespace RADB
                 case DownloadStatus.Completed:
                     resultTime.InvokeIfRequired(() =>
                     {
-                        resultTime.Text = this.TimeCompleted.ToDMY_TimeShort();
+                        resultTime.Text = TimeCompleted.ToDMY_TimeShort();
                     });
                     resultBar.InvokeIfRequired(() =>
                     {
@@ -89,15 +80,16 @@ namespace RADB
             }
         }
 
-        private void BarStart(ProgressBar bar, ProgressBarStyle style = ProgressBarStyle.Continuous, int maximum = 100)
+        void BarStart(ProgressBar bar, ProgressBarStyle style = ProgressBarStyle.Continuous, int maximum = 100)
         {
+            bar.Visible = true;
             bar.Maximum = maximum;
             bar.Value = 0;
             bar.MarqueeAnimationSpeed = 50;
             bar.Style = style;
         }
 
-        private void BarStop(ProgressBar bar)
+        void BarStop(ProgressBar bar)
         {
             if (bar.Style == ProgressBarStyle.Marquee)
             {

@@ -237,6 +237,7 @@
       <TargetPath>Data\database.db</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
+    <Compile Include="src\forms\MainLogicVars.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 //
@@ -19,7 +18,7 @@ namespace RADB
     {
         #region _Main
         //HOSTS
-        public static string HOST = "https://retroachievements.org/";
+        public const string HOST_URL = "https://retroachievements.org/";
 
         //https://s3-eu-west-1.amazonaws.com/i.retroachievements.org
         public static string IMAGE_HOST = "http://media.retroachievements.org/Images/";
@@ -27,13 +26,22 @@ namespace RADB
         public static string USER_HOST = "http://media.retroachievements.org/UserPic/";
 
         //URLs
-        public static string Game_URL(int gameID) { return HOST + "game/" + gameID.ToString(); }
-        public static string User_URL(string userName) { return HOST + "user/" + userName; }
+        public static string Game_URL(int gameID) { return HOST_URL + "game/" + gameID.ToString(); }
+        public static string User_URL(string userName) { return HOST_URL + "user/" + userName; }
 
         //API
-        private string API_HOST = HOST + "API/";
+        private string API_HOST = HOST_URL + "API/";
         private string API_UserName = "RADatabase";
         private string API_Key = "GRaWk9onm4B0LSWSFaDt5a2dQE3N8Yme";
+
+        public const string Login_URL = HOST_URL + "request/auth/login.php";
+
+        const string API_URL_Consoles = "API_GetConsoleIDs.php";
+        const string API_URL_GameList = "API_GetGameList.php";
+        const string API_URL_GameExtend = "API_GetGameExtended.php";
+        const string API_URL_UserProgress = "API_GetUserProgress.php";
+        const string API_URL_UserInfo = "API_GetUserSummary.php";
+        const string API_URL_UserCompletedGames = "API_GetUserCompletedGames.php";
 
         private string AuthQS()
         { return "?z=" + API_UserName + "&y=" + API_Key; }
@@ -41,46 +49,53 @@ namespace RADB
         private string GetURL(string target, string parames = "")
         { return API_HOST + target + AuthQS() + "&" + parames; }
 
-        public DownloadFile API_Consoles()
+        public DownloadFile API_File_Consoles()
         {
-            return new DownloadFile(GetURL("API_GetConsoleIDs.php"),
-                Folder.Console + "Consoles.json");
+            return new DownloadFile(GetURL(API_URL_Consoles),
+                            Folder.Console + "Consoles.json");
         }
 
-        public DownloadFile API_GameList(Console console)
+        public DownloadFile API_File_GameList(Console console)
         {
-            return new DownloadFile(GetURL("API_GetGameList.php", "i=" + console.ID),
-                (Folder.GameData + console.Name + ".json").Replace("/", "-"));
+            return new DownloadFile(GetURL(API_URL_GameList, "i=" + console.ID),
+                            (Folder.GameData + console.Name + ".json").Replace("/", "-"));
         }
 
-        public DownloadFile API_GameExtend(Game game)
+        public DownloadFile API_File_GameExtend(Game game)
         {
-            return new DownloadFile(GetURL("API_GetGameExtended.php", "i=" + game.ID),
-                (Folder.GameDataExtend(game.ConsoleID) + game.ID + ".json"));
+            return new DownloadFile(GetURL(API_URL_GameExtend, "i=" + game.ID),
+                            (Folder.GameDataExtend(game.ConsoleID) + game.ID + ".json"));
         }
 
-        public DownloadFile API_UserProgress(string userName, int gameID)
+        public DownloadFile API_File_UserProgress(string userName, int gameID)
         {
-            return new DownloadFile(GetURL("API_GetUserProgress.php", "u=" + userName + "&i=" + gameID),
-                (Folder.User + "UserProgress.json"));
+            return new DownloadFile(GetURL(API_URL_UserProgress, "u=" + userName + "&i=" + gameID),
+                            (Folder.User + "UserProgress.json"));
         }
 
-        public DownloadFile API_UserInfo(string userName)
+        public DownloadFile API_File_UserInfo(string userName)
         {
-            return new DownloadFile(GetURL("API_GetUserSummary.php", "u=" + userName),
-                (Folder.User + userName.ToLower() + "_Info.json"));
+            return new DownloadFile(GetURL(API_URL_UserInfo, "u=" + userName),
+                            (Folder.User + userName.ToLower() + "_Info.json"));
         }
 
-        public DownloadFile API_UserCompletedGames(string userName)
+        public DownloadFile API_File_UserCompletedGames(string userName)
         {
-            return new DownloadFile(GetURL("API_GetUserCompletedGames.php", "u=" + userName),
-                (Folder.User + userName.ToLower() + "_CompletedGames.json"));
+            return new DownloadFile(GetURL(API_URL_UserCompletedGames, "u=" + userName),
+                            (Folder.User + userName.ToLower() + "_CompletedGames.json"));
         }
+
+        Dictionary<string, string> LinkMessages = new Dictionary<string, string>()
+        {
+            {API_URL_Consoles,"API Consoles File"},
+            {API_URL_UserInfo,"API User Summary File - Username not found!"},
+            {Login_URL, "Failed to Login in RA"},
+        };
 
         public const int MIN_POINTS = 250;
 
-        private static Size GameIconSize { get { return new Size(96, 96); } }
-        private static Size GameBadgesSize { get { return new Size(64, 64); } }
+        static Size GameIconSize { get { return new Size(96, 96); } }
+        static Size GameBadgesSize { get { return new Size(64, 64); } }
 
         public static Bitmap DefaultIcon = new Picture(GameIconSize).Bitmap;
         public static Bitmap ErrorIcon = Resources.notfound;
@@ -103,14 +118,17 @@ namespace RADB
             public const string Multi = "~Multi~";
         }
 
-        public RA() { }
+        public RA()
+        {
+            WebClientExtend.CustomErrorMessages = LinkMessages;
+        }
 
         #endregion
 
         #region _Consoles
         public async Task DownloadConsoles()
         {
-            Browser.dlConsoles.SetFile(API_Consoles());
+            Browser.dlConsoles.SetFile(API_File_Consoles());
 
             if (await Browser.dlConsoles.Start())
             {
@@ -122,11 +140,11 @@ namespace RADB
             }
         }
 
-        private Task<List<Console>> DeserializeConsoles()
+        Task<List<Console>> DeserializeConsoles()
         {
-            return Task<List<Console>>.Run(() =>
+            return Task.Run(() =>
             {
-                List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(API_Consoles().Path));
+                List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(API_File_Consoles().Path));
                 return consoles.OrderBy(x => x.ID).ToList();
             });
         }
@@ -137,7 +155,7 @@ namespace RADB
         {
             await Task.Run(async () =>
             {
-                Browser.dlGames.SetFile(API_GameList(console));
+                Browser.dlGames.SetFile(API_File_GameList(console));
 
                 if (await Browser.dlGames.Start())
                 {
@@ -150,11 +168,11 @@ namespace RADB
             });
         }
 
-        private Task<List<Game>> DeserializeGameList(Console console)
+        Task<List<Game>> DeserializeGameList(Console console)
         {
-            return Task<List<Game>>.Run(() =>
+            return Task.Run(() =>
             {
-                List<Game> list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(API_GameList(console).Path));
+                List<Game> list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(API_File_GameList(console).Path));
                 return list;
             });
         }
@@ -173,9 +191,9 @@ namespace RADB
         #region _GameExtend
         public Task<GameExtend> DownloadGameExtend(Game game, Download dlExtend)
         {
-            return Task<GameExtend>.Run(async () =>
+            return Task.Run(async () =>
             {
-                dlExtend.SetFile(API_GameExtend(game));
+                dlExtend.SetFile(API_File_GameExtend(game));
 
                 if (await (dlExtend.Start()))
                 {
@@ -190,11 +208,11 @@ namespace RADB
             });
         }
 
-        private Task<GameExtend> DeserializeGameExtend(Game game)
+        Task<GameExtend> DeserializeGameExtend(Game game)
         {
-            return Task<GameExtend>.Run(() =>
+            return Task.Run(() =>
             {
-                string AllText = File.ReadAllText(API_GameExtend(game).Path);
+                string AllText = File.ReadAllText(API_File_GameExtend(game).Path);
                 string gameData = AllText.GetBetween("{", ",\"Achievements\":");
                 string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
                 gameData = "{" + gameData + "}";
@@ -230,7 +248,7 @@ namespace RADB
         {
             return await Task.Run(async () =>
             {
-                string userData = await Browser.DownloadString(API_UserProgress(userName, gameID).URL, true);
+                string userData = await Browser.DownloadString(API_File_UserProgress(userName, gameID).URL, true);
                 userData = userData.GetBetween(":{", "}}");
                 userData = "{" + userData + "}";
 
@@ -247,14 +265,14 @@ namespace RADB
 
         public async Task<User> GetUserInfo(string userName)
         {
-            return await Task.Run(async () =>
+            var user = new User();
+
+            var file = API_File_UserInfo(userName);
+            var dl = new Download(file) { Overwrite = true };
+            if (await dl.Start() == false) { return user; }
+
+            return await Task.Run(() =>
             {
-                var user = new User();
-
-                var file = API_UserInfo(userName);
-                var dl = new Download(file) { Overwrite = true };
-                if (await dl.Start() == false) { return user; }
-
                 var userData = File.ReadAllText(file.Path);
                 if (userData.Empty()) { return user; }
 
@@ -303,7 +321,7 @@ namespace RADB
             {
                 if (user.TotalPoints == 0 && user.TotalSoftcorePoints == 0) { return user; }
 
-                var file = API_UserCompletedGames(user.Name);
+                var file = API_File_UserCompletedGames(user.Name);
                 var dl = new Download(file);
                 if (await dl.Start() == false) { return user; }
 

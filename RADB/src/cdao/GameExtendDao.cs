@@ -85,46 +85,34 @@ namespace RADB
             return (await Search(obj)).FirstOrNew();
         }
 
-        public static Task<List<GameExtend>> Search(GameExtend obj)
+        public async static Task<List<GameExtend>> Search(GameExtend obj)
         {
-            return Task<List<GameExtend>>.Run(() =>
-            {
-                string sql = Resources.GameExtendList;
-
-                return Load<List<GameExtend>>(Banco.ExecutarSelect(sql, MountFilters(obj)));
-            });
+            string sql = Resources.GameExtendList;
+            return Load<List<GameExtend>>(await Banco.ExecutarSelect(sql, MountFilters(obj)));
         }
         #endregion
 
         #region " _Insert "
-        public static Task<bool> Insert(GameExtend obj)
+        public async static Task<bool> Insert(GameExtend obj)
         {
-            return Task<bool>.Run(() =>
-            {
-                string sql = Resources.GameExtendInsert;
+            string sql = Resources.GameExtendInsert;
+            var parameters = MountParameters(obj);
 
-                var parameters = MountParameters(obj);
-
-                return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
-            });
+            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
         }
         #endregion
 
         #region " _Delete "
-        public static Task<bool> Delete(GameExtend obj)
+        public async static Task<bool> Delete(GameExtend obj)
         {
-            return Task<bool>.Run(() =>
+            string sql = Resources.GameExtendDelete;
+            var parameters = new List<cSqlParameter> 
             {
-                string sql = Resources.GameExtendDelete;
+                new cSqlParameter("@ID", obj.ID),
+                new cSqlParameter("@ConsoleID", obj.ConsoleID),
+            };
 
-                var parameters = new List<cSqlParameter> 
-                {
-                    new cSqlParameter("@ID", obj.ID),
-                    new cSqlParameter("@ConsoleID", obj.ConsoleID),
-                };
-
-                return Banco.Executar(sql, DbAction.Delete, parameters).AffectedRows > 0;
-            });
+            return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
         }
         #endregion
     }

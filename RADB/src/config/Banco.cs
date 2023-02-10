@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Data.SQLite;
 using GNX;
+using System.Threading.Tasks;
 
 namespace RADB
 {
@@ -29,27 +30,27 @@ namespace RADB
             };
         }
 
-        public static DataTable ExecutarSelect(string sql, List<cSqlParameter> parameters = null, string storedProcedure = default(string))
+        public async static Task<DataTable> ExecutarSelect(string sql, List<cSqlParameter> parameters = null, string storedProcedure = default(string))
         {
-            if (ConfigLoaded) { return DB.ExecuteSelect(sql, parameters, storedProcedure); }
+            if (ConfigLoaded) { return await DB.ExecuteSelect(sql, parameters, storedProcedure); }
             return new DataTable();
         }
 
-        public static cSqlResult Executar(string sql, DbAction movimento, List<cSqlParameter> parameters)
+        public async static Task<cSqlResult> Executar(string sql, DbAction movimento, List<cSqlParameter> parameters)
         {
-            if (ConfigLoaded) { return DB.Execute(sql, ((DbAction)movimento), parameters); }
+            if (ConfigLoaded) { return await DB.Execute(sql, ((DbAction)movimento), parameters); }
             return new cSqlResult();
         }
 
-        public static int GetLastID()
+        public async static Task<int> GetLastID()
         {
-            if (ConfigLoaded) { return DB.GetLastID(); }
+            if (ConfigLoaded) { return await DB.GetLastID(); }
             return 0;
         }
 
-        public static DateTime DataServidor()
+        public async static Task<DateTime> DataServidor()
         {
-            if (ConfigLoaded) { return DB.DateTimeServer(); }
+            if (ConfigLoaded) { return await DB.DateTimeServer(); }
             return DateTime.MinValue;
         }
     }

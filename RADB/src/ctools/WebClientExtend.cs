@@ -58,9 +58,26 @@ namespace RADB
         private long GZipSizeUncompressed { get; set; }
         public DownloadFile FileDownloaded;
 
+        public static Dictionary<string, string> CustomErrorMessages = new Dictionary<string, string>() { };
+
         private bool _Error;
         public bool Error { get { return _Error; } }
-        public string ErrorMessage;
+        string _ErrorMessage { get; set; }
+        public string ErrorMessage
+        {
+            get
+            {
+                return _ErrorMessage;
+            }
+            set
+            {
+                var link = CustomErrorMessages.SingleOrDefault(x => value.Contains(x.Key));
+                if (link.Value != null)
+                    _ErrorMessage += link.Value;
+                else
+                    _ErrorMessage = value;
+            }
+        }
 
         public CookieContainer CookieContainer { get; private set; }
 
@@ -213,11 +230,13 @@ namespace RADB
                     response = we.Response as HttpWebResponse;
                     if (FileDownloaded == null)
                     {
-                        ErrorMessage = "Error to Access: \r\n\r\n" + response.ResponseUri.AbsoluteUri;
+                        ErrorMessage = "Error to Access: \r\n\r\n";
+                        ErrorMessage += response.ResponseUri.AbsoluteUri;
                     }
                     else
                     {
-                        ErrorMessage = "Error to download: \r\n\r\n" + FileDownloaded.URL;
+                        ErrorMessage = "Error to download: \r\n\r\n";
+                        ErrorMessage += FileDownloaded.URL;
                     }
                     ErrorMessage += "\r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription;
                 }

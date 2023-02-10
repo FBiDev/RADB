@@ -81,18 +81,15 @@ namespace RADB
             return (await Search(obj, false)).FirstOrNew();
         }
 
-        public static Task<List<Game>> Search(Game obj, bool allTables)
+        public async static Task<List<Game>> Search(Game obj, bool allTables)
         {
-            return Task.Run(() =>
-            {
-                string sql = Resources.GameList;
-                sql += " ORDER BY NumAchievements=0, Title ASC ";
+            string sql = Resources.GameList;
+            sql += " ORDER BY NumAchievements=0, Title ASC ";
 
-                var parameters = MountFilters(obj);
-                parameters.Add(new cSqlParameter("@allTables", allTables));
+            var parameters = MountFilters(obj);
+            parameters.Add(new cSqlParameter("@allTables", allTables));
 
-                return Load<List<Game>>(Banco.ExecutarSelect(sql, parameters));
-            });
+            return Load<List<Game>>(await Banco.ExecutarSelect(sql, parameters));
         }
 
         public static ListBind<Game> OrderList(List<Game> list)
@@ -121,142 +118,113 @@ namespace RADB
         #endregion
 
         #region " _Insert "
-        public static bool Insert(Game obj)
+        public async static Task<bool> Insert(Game obj)
         {
             string sql = Resources.GameInsert;
-
             var parameters = MountParameters(obj);
 
-            return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
+            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
         }
 
-        public static Task<bool> InsertList(IList<Game> list)
+        public async static Task<bool> InsertList(IList<Game> list)
         {
-            return Task.Run(() =>
+            string sql = "INSERT INTO GameData " +
+                "(ID, Title, ConsoleID, NumAchievements, Points, " +
+                "NumLeaderboards, DateModified, ForumTopicID, ImageIcon)" +
+            " VALUES " + Environment.NewLine;
+
+            StringBuilder s = new StringBuilder();
+            int index = 0;
+            foreach (var i in list)
             {
-                string sql = "INSERT INTO GameData " +
-                                "(ID, Title, ConsoleID, NumAchievements, Points, " +
-                                "NumLeaderboards, DateModified, ForumTopicID, ImageIcon)" +
-                            " VALUES " + Environment.NewLine;
+                s.Append("(" + i.ID +
+                        ",'" + i.Title.Replace("'", "''") + "'" +
+                        ", " + i.ConsoleID +
+                        ", " + i.NumAchievements +
+                        ", " + i.Points +
+                        ", " + i.NumLeaderboards +
+                        ", " + i.DateModified.ToDB() +
+                        ", " + i.ForumTopicID.ToDB() +
+                        ", '" + i.ImageIcon + "')");
 
-                StringBuilder s = new StringBuilder();
-                int index = 0;
-                foreach (var i in list)
-                {
-                    s.Append("(" + i.ID +
-                            ",'" + i.Title.Replace("'", "''") + "'" +
-                            ", " + i.ConsoleID +
-                            ", " + i.NumAchievements +
-                            ", " + i.Points +
-                            ", " + i.NumLeaderboards +
-                            ", " + i.DateModified.ToDB() +
-                            ", " + i.ForumTopicID.ToDB() +
-                            ", '" + i.ImageIcon + "')");
+                index++;
+                if (index < list.Count) { s.Append("," + Environment.NewLine); }
+            }
+            sql += s.ToString();
 
-                    index++;
-                    if (index < list.Count) { s.Append("," + Environment.NewLine); }
-                }
-                sql += s.ToString();
+            var parameters = new List<cSqlParameter>();
 
-                var parameters = new List<cSqlParameter>();
-
-                return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
-            });
+            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
         }
         #endregion
 
         #region " _Delete "
-        public static Task<bool> Delete(Game obj)
+        public async static Task<bool> Delete(Game obj)
         {
-            return Task.Run(() =>
+            string sql = Resources.GameDelete;
+            var parameters = new List<cSqlParameter>
             {
-                string sql = Resources.GameDelete;
+                new cSqlParameter("@ID", obj.ID),
+                new cSqlParameter("@ConsoleID", obj.ConsoleID),
+            };
 
-                var parameters = new List<cSqlParameter>
-                {
-                    new cSqlParameter("@ID", obj.ID),
-                    new cSqlParameter("@ConsoleID", obj.ConsoleID),
-                };
-
-                return Banco.Executar(sql, DbAction.Delete, parameters).AffectedRows > 0;
-            });
+            return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
         }
         #endregion
 
         #region _ToHide
-        public static Task<List<Game>> ListToHide()
+        public async static Task<List<Game>> ListToHide()
         {
-            return Task.Run(() =>
-            {
-                string sql = Resources.GameListToHide;
+            string sql = Resources.GameListToHide;
 
-                return Load<List<Game>>(Banco.ExecutarSelect(sql));
-            });
+            return Load<List<Game>>(await Banco.ExecutarSelect(sql));
         }
 
-        public static Task<bool> InsertToHide(Game obj)
+        public async static Task<bool> InsertToHide(Game obj)
         {
-            return Task.Run(() =>
-            {
-                string sql = Resources.GameInsertToHide;
+            string sql = Resources.GameInsertToHide;
+            var parameters = MountParameters(obj);
 
-                var parameters = MountParameters(obj);
-
-                return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
-            });
+            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
         }
 
-        public static Task<bool> DeleteFromHide(Game obj)
+        public async static Task<bool> DeleteFromHide(Game obj)
         {
-            return Task.Run(() =>
+            string sql = Resources.GameDeleteFromHide;
+            var parameters = new List<cSqlParameter>
             {
-                string sql = Resources.GameDeleteFromHide;
+                new cSqlParameter("@ID", obj.ID),
+            };
 
-                var parameters = new List<cSqlParameter>
-                {
-                    new cSqlParameter("@ID", obj.ID),
-                };
-
-                return Banco.Executar(sql, DbAction.Delete, parameters).AffectedRows > 0;
-            });
+            return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
         }
         #endregion
 
         #region _ToPlay
-        public static Task<List<Game>> ListToPlay()
+        public async static Task<List<Game>> ListToPlay()
         {
-            return Task.Run(() =>
-            {
-                string sql = Resources.GameListToPlay;
-                return Load<List<Game>>(Banco.ExecutarSelect(sql));
-            });
+            string sql = Resources.GameListToPlay;
+            return Load<List<Game>>(await Banco.ExecutarSelect(sql));
         }
 
-        public static Task<bool> InsertToPlay(Game obj)
+        public async static Task<bool> InsertToPlay(Game obj)
         {
-            return Task.Run(() =>
-            {
-                string sql = Resources.GameInsertToPlay;
+            string sql = Resources.GameInsertToPlay;
+            var parameters = MountParameters(obj);
 
-                var parameters = MountParameters(obj);
-
-                return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
-            });
+            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
         }
 
-        public static Task<bool> DeleteFromPlay(Game obj)
+        public async static Task<bool> DeleteFromPlay(Game obj)
         {
-            return Task.Run(() =>
+            string sql = Resources.GameDeleteFromPlay;
+
+            var parameters = new List<cSqlParameter>
             {
-                string sql = Resources.GameDeleteFromPlay;
+                new cSqlParameter("@ID", obj.ID),
+            };
 
-                var parameters = new List<cSqlParameter>
-                {
-                    new cSqlParameter("@ID", obj.ID),
-                };
-
-                return Banco.Executar(sql, DbAction.Delete, parameters).AffectedRows > 0;
-            });
+            return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
         }
         #endregion
     }

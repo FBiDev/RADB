@@ -55,72 +55,73 @@ namespace RADB
         #endregion
 
         #region " _List "
-        public static Task<List<Console>> List()
+        public async static Task<List<Console>> List()
         {
-            return Task<List<Console>>.Run(() =>
+            string sql = Resources.ConsoleList;
+            var obj = new Console();
+
+            var list = Load<List<Console>>(await Banco.ExecutarSelect(sql, MountFilters(obj)));
+            if (list.Count == 0) return list;
+
+            var allGames = new Console()
             {
-                var obj = new Console();
+                Name = "All Games",
+                Company = "All Games",
+                NumGames = list.Sum(x => x.NumGames),
+                TotalGames = list.Sum(x => x.TotalGames)
+            };
 
-                string sql = Resources.ConsoleList;
+            list.Insert(0, allGames);
 
-                return Load<List<Console>>(Banco.ExecutarSelect(sql, MountFilters(obj)));
-            });
+            return list;
         }
         #endregion
 
         #region " _Insert "
-        public static bool Insert(Console obj)
+        public async static Task<bool> Insert(Console obj)
         {
             string sql = Resources.ConsoleInsert;
 
             var parameters = MountParameters(obj);
 
-            return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
+            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
         }
 
-        public static Task<bool> InsertList(IList<Console> list)
+        public async static Task<bool> InsertList(IList<Console> list)
         {
-            return Task<bool>.Run(() =>
+            string sql = "INSERT INTO Console (ID, Name) VALUES " + Environment.NewLine; ;
+            var parameters = new List<cSqlParameter>();
+
+            int index = 0;
+            foreach (var i in list)
             {
-                string sql = "INSERT INTO Console (ID, Name) VALUES " + Environment.NewLine; ;
-
-                var parameters = new List<cSqlParameter>();
-
-                int index = 0;
-                foreach (var i in list)
+                parameters.AddRange(new List<cSqlParameter>
                 {
-                    parameters.AddRange(new List<cSqlParameter>
-                    {
-                        new cSqlParameter("@ID" + index, i.ID),
-                        new cSqlParameter("@Name" + index, i.Name),
-                    });
+                    new cSqlParameter("@ID" + index, i.ID),
+                    new cSqlParameter("@Name" + index, i.Name),
+                });
 
-                    sql += "(" + "@ID" + index + ", @Name" + index + ")";
+                sql += "(" + "@ID" + index + ", @Name" + index + ")";
 
-                    index++;
-                    if (index < list.Count) { sql += "," + Environment.NewLine; }
-                }
+                index++;
+                if (index < list.Count) { sql += "," + Environment.NewLine; }
+            }
 
-                return Banco.Executar(sql, DbAction.Insert, parameters).AffectedRows > 0;
-            });
+            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
         }
         #endregion
 
         #region " _Delete "
-        public static Task<bool> Delete(Console obj)
+        public async static Task<bool> Delete(Console obj)
         {
-            return Task<bool>.Run(() =>
+            string sql = Resources.ConsoleDelete;
+            var parameters = new List<cSqlParameter> 
             {
-                string sql = Resources.ConsoleDelete;
+                new cSqlParameter("@ID", obj.ID),
+                new cSqlParameter("@Name", obj.Name),
+            };
 
-                var parameters = new List<cSqlParameter> 
-                {
-                    new cSqlParameter("@ID", obj.ID),
-                    new cSqlParameter("@Name", obj.Name),
-                };
-
-                return Banco.Executar(sql, DbAction.Delete, parameters).AffectedRows > 0;
-            });
+            return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
         }
         #endregion
     }

@@ -62,7 +62,7 @@ namespace RADB
         public static async Task<bool> SystemLogin()
         {
             //wclient.Credentials = new NetworkCredential("", "");
-            var html = await RALogin.DownloadString(RA.HOST);
+            var html = await RALogin.DownloadString(RA.HOST_URL);
             var token = html.GetBetween("_token\" value=\"", "\">");
 
             var values = new NameValueCollection
@@ -72,13 +72,13 @@ namespace RADB
                 { "p", "RADatabase123" }
             };
 
-            await RALogin.UploadValuesTaskAsync(new Uri(RA.HOST + "request/auth/login.php"), values);
+            await RALogin.UploadValuesTaskAsync(new Uri(RA.Login_URL), values);
             if (RALogin.Error)
             {
                 MessageBox.Show(RALogin.ErrorMessage);
             }
 
-            var html2 = await RALogin.DownloadString(RA.HOST);
+            var html2 = await RALogin.DownloadString(RA.HOST_URL);
             var login = html2.GetBetween("request/auth/login", "php");
 
             RALogged = login != ".";
