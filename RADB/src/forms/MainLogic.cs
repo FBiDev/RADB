@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using GNX;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Data;
 
 namespace RADB
 {
@@ -49,7 +50,7 @@ namespace RADB
 
         public ListBind<Console> lstConsoles = new ListBind<Console>();
 
-        public ListBind<Game> lstGames = new ListBind<Game>();
+        public List<Game> lstGames = new List<Game>();
         public Game GameBind;
         public ListBind<Game> lstGamesSearch = new ListBind<Game>();
 
@@ -310,6 +311,7 @@ namespace RADB
         #region Games
         void Games_Init()
         {
+            SESSION.ConsoleChanged += ResetGamesLabels;
             SESSION.ConsoleChanged += LoadGames;
 
             f.Shown += Games_Shown;
@@ -339,6 +341,7 @@ namespace RADB
             dgvGames.Scroll += dgvGames_Scroll;
             dgvGames.Sorted += dgvGames_Sorted;
 
+            //txtSearchGames.TextChanged += async (sender, e) => await txtSearchGames_TextChanged(sender, e);
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
             txtSearchGames.KeyDown += txtSearchGames_KeyDown;
 
@@ -361,7 +364,7 @@ namespace RADB
             }
         }
 
-        void Games_Shown(object sender, EventArgs e)
+        async void Games_Shown(object sender, EventArgs e)
         {
             Browser.dlGames.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
             Browser.dlGamesIcon.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
@@ -369,9 +372,9 @@ namespace RADB
 
             lstDgvGames.Add(dgvGames);
 
-            ResetGamesLabels();
-
-            //await LoadGames(sender, e);
+            //ResetGamesLabels(false);
+            //Load All Games
+            lstGames = await Game.Search(0);
         }
 
         void DisablePanelGames()
@@ -392,39 +395,58 @@ namespace RADB
             dgvGames.Enabled = true;
         }
 
-        void ResetGamesLabels()
+        Task ResetGamesLabels()
         {
+            DisablePanelGames();
+            lstGamesSearch.Clear();
+
+            UpdateConsoleLabels();
+
             lblUpdateGameList.Text = string.Empty;
             lblProgressGameList.Text = string.Empty;
             pgbGameList.Value = 0;
             pgbGameList.Visible = false;
-            txtSearchGames.Text = string.Empty;
+
+            txtSearchGames.TextChanged -= txtSearchGames_TextChanged;
+            txtSearchGames.Text = "";
+            txtSearchGames.TextChanged += txtSearchGames_TextChanged;
+            
+            dgvGames.Columns["gConsole"].Visible = SESSION.Console.ID == 0;
+
+            ChangeTab(tabGames);
+
+            return null;
+        }
+
+        void ChangeTab(TabPage tab)
+        {
+            tabMain.SelectedTab = tab;
+            tabMain.Refresh();
         }
 
         async Task LoadGames()
         {
             if (SESSION.Console.IsNull()) { return; }
+            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
+            //lstGames = await Game.Search(SESSION.Console.ID);
 
-            lstGamesSearch.Clear();
-            ResetGamesLabels();
-            UpdateConsoleLabels();
-
-            tabMain.SelectedTab = tabGames;
-
-            DisablePanelGames();
-            dgvGames.Columns["gConsole"].Visible = SESSION.Console.ID == 0;
-            lstGames = new ListBind<Game>(await Game.Search(SESSION.Console.ID));
-
+            //TODO: update to filter by console
             //Update GameList
-            if (lstGames.Count == 0 && !File.Exists(Folder.GameData + SESSION.Console.Name + ".json"))
+            if (lstGames.Count == 0)
             {
-                btnUpdateGameList_Click(null, null);
+                var fileExist = File.Exists(Folder.GameData + SESSION.Console.Name + ".json");
+                if (fileExist == false)
+                {
+                    btnUpdateGameList_Click(null, null);
+                }
             }
 
             txtSearchGames_TextChanged(null, null);
             EnablePanelGames();
 
             dgvGames.Focus();
+            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
+            MessageBox.Show(fim0.TotalMilliseconds.ToString());
         }
 
         async void btnUpdateGameList_Click(object sender, EventArgs e)
@@ -445,6 +467,7 @@ namespace RADB
 
             //Load Games
             TimeSpan ini2 = new TimeSpan(DateTime.Now.Ticks);
+            //TODO Reload list of games
             await LoadGames();
             await LoadGamesToPlay();
             await LoadGamesToHide();
@@ -472,41 +495,61 @@ namespace RADB
             lblConsoleGamesTotal.Text = numGames + " of " + totalGames + " Games";
         }
 
-        async void txtSearchGames_TextChanged(object sender, EventArgs e)
+        void txtSearchGames_TextChanged(object sender, EventArgs e)
         {
             //if (txtSearchGames.Text.Count() > 0 && txtSearchGames.Text.Count() < 3) { return; }
 
             ListBind<Game> newSearch = new ListBind<Game>();
-            foreach (Game obj in lstGames)
+            List<Predicate<Game>> predicates = new List<Predicate<Game>>();
+
+            var gameTypes = new Dictionary<FlatCheckBoxA, string[]>
             {
-                bool title;
+                { chkOfficial, RA.GameType.NotOfficial },
+                { chkPrototype, new[]{ RA.GameType.Prototype }},
+                { chkUnlicensed, new[]{RA.GameType.Unlicensed }},
+                { chkDemo, new[]{RA.GameType.Demo }},
+                { chkHack, new[]{RA.GameType.Hack }},
+                { chkHomebrew, new[]{RA.GameType.Homebrew }},
+                { chkSubset, new[]{RA.GameType.Subset }},
+                { chkTestKit, new[]{RA.GameType.TestKit }},
+                { chkDemoted, new[]{RA.GameType.Demoted }},
+            };
 
-                title = (obj.Title.HasValue() && obj.Title.ContainsExtend(txtSearchGames.Text));
-                bool noCheevos = !chkWithoutAchievements.Checked && obj.NumAchievements == 0;
-
-                bool official = chkOfficial.Checked && obj.Title.NotContains(RA.GameType.NotOfficial);
-
-                bool proto = chkPrototype.Checked && obj.Title.ContainsExtend(RA.GameType.Prototype);
-                bool unl = chkUnlicensed.Checked && obj.Title.ContainsExtend(RA.GameType.Unlicensed);
-                bool demo = chkDemo.Checked && obj.Title.ContainsExtend(RA.GameType.Demo);
-                bool hack = chkHack.Checked && obj.Title.ContainsExtend(RA.GameType.Hack);
-                bool homebrew = chkHomebrew.Checked && obj.Title.ContainsExtend(RA.GameType.Homebrew);
-                bool subset = chkSubset.Checked && obj.Title.ContainsExtend(RA.GameType.Subset);
-                bool testkit = chkTestKit.Checked && obj.Title.ContainsExtend(RA.GameType.TestKit);
-                bool demoted = chkDemoted.Checked && obj.Title.ContainsExtend(RA.GameType.Demoted);
-
-                if (title && !noCheevos)
+            foreach (var gameType in gameTypes)
+            {
+                if (gameType.Key.Checked)
                 {
-                    if (official || proto || unl || demo || hack || homebrew || subset || testkit || demoted)
-                    {
-                        newSearch.Add(obj);
-                    }
+                    if (gameType.Key == chkOfficial)
+                        predicates.Add(g => g.Title.NotContains(gameType.Value));
+                    else
+                        predicates.Add(g => g.Title.ContainsExtend(gameType.Value[0]));
+                }
+            }
+
+            string search = txtSearchGames.Text;
+            bool WithoutAchievements = !chkWithoutAchievements.Checked;
+
+            IEnumerable<Game> nList;
+            if (SESSION.Console.ID > 0)
+                nList = lstGames.Where(x => x.ConsoleID == SESSION.Console.ID);
+            else
+                nList = lstGames;
+
+            foreach (Game obj in nList)
+            {
+                bool title = (obj.Title.HasValue() && obj.Title.ContainsExtend(search));
+                bool noCheevos = WithoutAchievements && obj.NumAchievements == 0;
+
+                if (title && !noCheevos && predicates.Any(p => p(obj)))
+                {
+                    newSearch.Add(obj);
                 }
             }
 
             lstGamesSearch = newSearch;
-            UpdateConsoleLabels();
             dgvGames.DataSource = lstGamesSearch;
+
+            UpdateConsoleLabels();
 
             int scrollPosition = dgvGames.FirstDisplayedScrollingRowIndex;
             bool maintainScroll = true;
@@ -524,10 +567,6 @@ namespace RADB
 
                 if (txtFocus) { txtSearchGames.Focus(); }
             }
-
-            await LoadGamesIcon();
-            dgvGames.Refresh();
-            //EnablePanelGames();
         }
 
         void txtSearchGames_KeyDown(object sender, KeyEventArgs e)
@@ -613,8 +652,8 @@ namespace RADB
             pnlInfoScroll.AutoScrollPosition = new Point(pnlInfoScroll.AutoScrollPosition.X, 0);
             pnlInfoScroll.VerticalScroll.Value = 0;
 
-            //LoadGameExtendBase();
-            //await LoadGameExtend();
+            f.LoadGameExtendBase();
+            await f.LoadGameExtend();
 
             //Update GameExtend
             if (GameExtendBind.IsNull() || GameExtendBind.ConsoleID == 0)
@@ -631,28 +670,25 @@ namespace RADB
         {
             foreach (DataGridView dgv in lstDgvGames)
             {
-                try
+                await Task.Run(() =>
                 {
-                    await Task.Run(() =>
+                    if (dgv.DataSource.IsNull() || dgv.RowCount == 0) { return; }
+
+                    int index = dgv.FirstDisplayedScrollingRowIndex;
+                    int nItems = (int)Math.Ceiling((double)(dgv.Height - 29) / 37) + 12;
+
+                    var list = dgv.DataSource as ListBind<Game>;
+                    //var list = dgv.DataSource as DataTable;
+
+                    if (list == null) return;
+
+                    for (int i = index; i < index + nItems; i++)
                     {
-                        if (dgv.DataSource.IsNull() || dgv.RowCount == 0) { return; }
+                        if (i >= list.Count) { break; }
 
-                        ListBind<Game> list = (ListBind<Game>)(dgv.DataSource);
-                        int index = dgv.FirstDisplayedScrollingRowIndex;
-
-                        int nItems = (int)Math.Ceiling((double)(dgv.Height - 29) / 37) + 12;
-
-                        for (int i = index; i < index + nItems; i++)
-                        {
-                            if (i >= list.Count) { break; }
-
-                            list[i].SetImageIconBitmap();
-                        }
-                    });
-                }
-                catch (Exception e)
-                { var error = e.Message; }
-
+                        list[i].SetImageIconBitmap();
+                    }
+                });
                 dgv.Refresh();
             }
         }

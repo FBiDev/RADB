@@ -70,6 +70,10 @@ namespace RADB
                     });
                     break;
                 case DownloadStatus.Stopped:
+                    resultTime.InvokeIfRequired(() =>
+                    {
+                        resultTime.Text = TimeCompleted.ToDMY_TimeShort();
+                    });
                     resultBar.InvokeIfRequired(() =>
                     {
                         BarStop(resultBar);

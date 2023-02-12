@@ -116,14 +116,6 @@ namespace RADB
             this.pgbGameList = new RADB.FlatProgressBarA();
             this.lblProgressGameList = new RADB.FlatLabelA();
             this.dgvGames = new RADB.FlatDataGridA();
-            this.gID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
-            this.gTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGameInfo = new System.Windows.Forms.TabPage();
             this.pnlInfoScroll = new RADB.FlatPanelA();
             this.gpbInfo = new RADB.FlatGroupBoxA();
@@ -237,6 +229,14 @@ namespace RADB
             this.picFBiDevIcon = new RADB.FlatPictureBoxA();
             this.lblAbTitle = new RADB.FlatLabelB();
             this.lblAbYear = new RADB.FlatLabelB();
+            this.gID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
+            this.gTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuGames.SuspendLayout();
             this.mnuGamesToHide.SuspendLayout();
             this.mnuConsoles.SuspendLayout();
@@ -328,12 +328,12 @@ namespace RADB
             this.mnuGamesToHide.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToHide});
             this.mnuGamesToHide.Name = "ctmHiddenGames";
-            this.mnuGamesToHide.Size = new System.Drawing.Size(197, 26);
+            this.mnuGamesToHide.Size = new System.Drawing.Size(195, 26);
             // 
             // mniRemoveGameToHide
             // 
             this.mniRemoveGameToHide.Name = "mniRemoveGameToHide";
-            this.mniRemoveGameToHide.Size = new System.Drawing.Size(196, 22);
+            this.mniRemoveGameToHide.Size = new System.Drawing.Size(194, 22);
             this.mniRemoveGameToHide.Text = "Remove Game To Hide";
             // 
             // mnuConsoles
@@ -361,12 +361,12 @@ namespace RADB
             this.mnuGamesToPlay.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mniRemoveGameToPlay});
             this.mnuGamesToPlay.Name = "mnuGamesToPlay";
-            this.mnuGamesToPlay.Size = new System.Drawing.Size(194, 26);
+            this.mnuGamesToPlay.Size = new System.Drawing.Size(192, 26);
             // 
             // mniRemoveGameToPlay
             // 
             this.mniRemoveGameToPlay.Name = "mniRemoveGameToPlay";
-            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(193, 22);
+            this.mniRemoveGameToPlay.Size = new System.Drawing.Size(191, 22);
             this.mniRemoveGameToPlay.Text = "Remove Game To Play";
             // 
             // pnlBottomOutput
@@ -966,69 +966,6 @@ namespace RADB
             this.dgvGames.Size = new System.Drawing.Size(896, 459);
             this.dgvGames.TabIndex = 1;
             // 
-            // gID
-            // 
-            this.gID.DataPropertyName = "ID";
-            this.gID.HeaderText = "ID";
-            this.gID.Name = "gID";
-            this.gID.ReadOnly = true;
-            this.gID.Width = 45;
-            // 
-            // gIconBitmap
-            // 
-            this.gIconBitmap.DataPropertyName = "ImageIconBitmap";
-            this.gIconBitmap.HeaderText = "Icon";
-            this.gIconBitmap.Name = "gIconBitmap";
-            this.gIconBitmap.ReadOnly = true;
-            this.gIconBitmap.Width = 36;
-            // 
-            // gTitle
-            // 
-            this.gTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.gTitle.DataPropertyName = "Title";
-            this.gTitle.HeaderText = "Title";
-            this.gTitle.Name = "gTitle";
-            this.gTitle.ReadOnly = true;
-            // 
-            // gConsole
-            // 
-            this.gConsole.DataPropertyName = "ConsoleName";
-            this.gConsole.HeaderText = "Console";
-            this.gConsole.Name = "gConsole";
-            this.gConsole.ReadOnly = true;
-            // 
-            // gNumAchievements
-            // 
-            this.gNumAchievements.DataPropertyName = "NumAchievements";
-            this.gNumAchievements.HeaderText = "Trophies";
-            this.gNumAchievements.Name = "gNumAchievements";
-            this.gNumAchievements.ReadOnly = true;
-            this.gNumAchievements.Width = 80;
-            // 
-            // gPoints
-            // 
-            this.gPoints.DataPropertyName = "Points";
-            this.gPoints.HeaderText = "Points";
-            this.gPoints.Name = "gPoints";
-            this.gPoints.ReadOnly = true;
-            this.gPoints.Width = 65;
-            // 
-            // cNumLeaderboards
-            // 
-            this.cNumLeaderboards.DataPropertyName = "NumLeaderboards";
-            this.cNumLeaderboards.HeaderText = "Scores";
-            this.cNumLeaderboards.Name = "cNumLeaderboards";
-            this.cNumLeaderboards.ReadOnly = true;
-            this.cNumLeaderboards.Width = 70;
-            // 
-            // gLastUpdated
-            // 
-            this.gLastUpdated.DataPropertyName = "DateModified";
-            this.gLastUpdated.HeaderText = "Last Updated";
-            this.gLastUpdated.Name = "gLastUpdated";
-            this.gLastUpdated.ReadOnly = true;
-            this.gLastUpdated.Width = 105;
-            // 
             // tabGameInfo
             // 
             this.tabGameInfo.BackColor = System.Drawing.Color.Transparent;
@@ -1405,7 +1342,7 @@ namespace RADB
             this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInfoAchievements.Location = new System.Drawing.Point(218, 23);
             this.lblInfoAchievements.Name = "lblInfoAchievements";
-            this.lblInfoAchievements.Size = new System.Drawing.Size(146, 24);
+            this.lblInfoAchievements.Size = new System.Drawing.Size(145, 24);
             this.lblInfoAchievements.TabIndex = 35;
             this.lblInfoAchievements.Text = "0 Trophies: 0 points";
             this.lblInfoAchievements.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2241,7 +2178,7 @@ namespace RADB
             this.flatLabelA4.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA4.MinimumSize = new System.Drawing.Size(48, 16);
             this.flatLabelA4.Name = "flatLabelA4";
-            this.flatLabelA4.Size = new System.Drawing.Size(84, 16);
+            this.flatLabelA4.Size = new System.Drawing.Size(82, 16);
             this.flatLabelA4.TabIndex = 13;
             this.flatLabelA4.Text = "Account Type:";
             // 
@@ -2467,6 +2404,69 @@ namespace RADB
             this.lblAbYear.TabIndex = 1;
             this.lblAbYear.Text = "2023";
             // 
+            // gID
+            // 
+            this.gID.DataPropertyName = "ID";
+            this.gID.HeaderText = "ID";
+            this.gID.Name = "gID";
+            this.gID.ReadOnly = true;
+            this.gID.Width = 45;
+            // 
+            // gIconBitmap
+            // 
+            this.gIconBitmap.DataPropertyName = "ImageIconBitmap";
+            this.gIconBitmap.HeaderText = "Icon";
+            this.gIconBitmap.Name = "gIconBitmap";
+            this.gIconBitmap.ReadOnly = true;
+            this.gIconBitmap.Width = 36;
+            // 
+            // gTitle
+            // 
+            this.gTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.gTitle.DataPropertyName = "Title";
+            this.gTitle.HeaderText = "Title";
+            this.gTitle.Name = "gTitle";
+            this.gTitle.ReadOnly = true;
+            // 
+            // gConsole
+            // 
+            this.gConsole.DataPropertyName = "ConsoleName";
+            this.gConsole.HeaderText = "Console";
+            this.gConsole.Name = "gConsole";
+            this.gConsole.ReadOnly = true;
+            // 
+            // gNumAchievements
+            // 
+            this.gNumAchievements.DataPropertyName = "NumAchievements";
+            this.gNumAchievements.HeaderText = "Trophies";
+            this.gNumAchievements.Name = "gNumAchievements";
+            this.gNumAchievements.ReadOnly = true;
+            this.gNumAchievements.Width = 80;
+            // 
+            // gPoints
+            // 
+            this.gPoints.DataPropertyName = "Points";
+            this.gPoints.HeaderText = "Points";
+            this.gPoints.Name = "gPoints";
+            this.gPoints.ReadOnly = true;
+            this.gPoints.Width = 65;
+            // 
+            // cNumLeaderboards
+            // 
+            this.cNumLeaderboards.DataPropertyName = "NumLeaderboards";
+            this.cNumLeaderboards.HeaderText = "Scores";
+            this.cNumLeaderboards.Name = "cNumLeaderboards";
+            this.cNumLeaderboards.ReadOnly = true;
+            this.cNumLeaderboards.Width = 70;
+            // 
+            // gLastUpdated
+            // 
+            this.gLastUpdated.DataPropertyName = "DateModified";
+            this.gLastUpdated.HeaderText = "Last Updated";
+            this.gLastUpdated.Name = "gLastUpdated";
+            this.gLastUpdated.ReadOnly = true;
+            this.gLastUpdated.Width = 105;
+            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2603,14 +2603,6 @@ namespace RADB
         private System.Windows.Forms.DataGridViewTextBoxColumn aIconBitmap;
         private System.Windows.Forms.DataGridViewTextBoxColumn aDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn aPoints;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gID;
-        private System.Windows.Forms.DataGridViewImageColumn gIconBitmap;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gTitle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gConsole;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gNumAchievements;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gPoints;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cNumLeaderboards;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gLastUpdated;
         private FlatGroupBoxA gpbUserInfo;
         private FlatLabelA lblUserName;
         private FlatPictureBoxA picUserName;
@@ -2725,6 +2717,14 @@ namespace RADB
         internal FlatLabelA lblProgressInfo;
         internal FlatProgressBarA pgbInfo;
         internal FlatButtonA btnUpdateInfo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gID;
+        private System.Windows.Forms.DataGridViewImageColumn gIconBitmap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gConsole;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gNumAchievements;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gPoints;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cNumLeaderboards;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gLastUpdated;
     }
 }
 

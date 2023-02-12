@@ -56,7 +56,7 @@ namespace RADB
         #endregion
 
         #region GameInfo
-        void LoadGameExtendBase()
+        public void LoadGameExtendBase()
         {
             if (GameBind.IsNull()) { return; }
 
@@ -66,7 +66,7 @@ namespace RADB
             lblInfoAchievements.Text = GameBind.NumAchievements.ToString() + " Trophies: " + GameBind.Points + " points";
         }
 
-        async Task LoadGameExtend()
+        public async Task LoadGameExtend()
         {
             if (GameBind.IsNull()) { return; }
 
