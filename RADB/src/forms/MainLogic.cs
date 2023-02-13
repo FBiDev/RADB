@@ -20,7 +20,7 @@ namespace RADB
         #region Properties
         protected readonly Main f;
 
-        struct SESSION
+        struct BIND
         {
             internal static event AsyncAction ConsoleChanged = delegate { return Task.Run(() => { }); };
 
@@ -162,7 +162,7 @@ namespace RADB
             if (tab.SelectedTab == tabConsoles) { dgvConsoles.Focus(); return; }
             if (tab.SelectedTab == tabGames)
             {
-                pnlGamesConsoleName.Visible = !SESSION.Console.IsNull();
+                pnlGamesConsoleName.Visible = !BIND.Console.IsNull();
                 dgvGames.Focus(); return;
             }
             if (tab.SelectedTab == tabGamesToPlay) { dgvGamesToPlay.Focus(); return; }
@@ -184,7 +184,7 @@ namespace RADB
             btnUpdateConsoles.Click += btnUpdateConsoles_Click;
 
             dgvConsoles.AutoGenerateColumns = true;
-            dgvConsoles.DataSource = lstConsoles;
+            //dgvConsoles.DataSource = lstConsoles;
 
             dgvConsoles.Columns.Format(CellStyle.StringCenter, 0);
             dgvConsoles.Columns.Format(CellStyle.NumberCenter, 3, 4);
@@ -237,10 +237,14 @@ namespace RADB
 
         async Task LoadConsoles()
         {
-            lstConsoles.Clear();
             DisablePanelConsoles();
 
-            lstConsoles.AddRange(new ListBind<Console>(await Console.List()));
+            //Not Block UI
+            //await Task.Run(async () => { lstConsoles = new ListBind<Console>(await Console.List()); });
+            lstConsoles = new ListBind<Console>(await Console.List());
+
+            dgvConsoles.DataSource = lstConsoles;
+
             EnablePanelConsoles();
 
             if (lstConsoles.Empty())
@@ -267,8 +271,8 @@ namespace RADB
             if (e.RowHeader()) return;
 
             Console ConsoleSelected = dgvGetCurrentItem<Console>(sender);
-            if (SESSION.Console.IsNull() || ConsoleSelected.ID != SESSION.Console.ID)
-                SESSION.Console = ConsoleSelected;
+            if (BIND.Console.IsNull() || ConsoleSelected.ID != BIND.Console.ID)
+                BIND.Console = ConsoleSelected;
         }
 
         void dgvConsoles_KeyDown(object sender, KeyEventArgs e)
@@ -311,8 +315,8 @@ namespace RADB
         #region Games
         void Games_Init()
         {
-            SESSION.ConsoleChanged += ResetGamesLabels;
-            SESSION.ConsoleChanged += LoadGames;
+            BIND.ConsoleChanged += ResetGamesLabels;
+            BIND.ConsoleChanged += LoadGames;
 
             f.Shown += Games_Shown;
             mniMergeGameBadges.MouseDown += mniMergeGameBadges_MouseDown;
@@ -373,8 +377,9 @@ namespace RADB
             lstDgvGames.Add(dgvGames);
 
             //ResetGamesLabels(false);
-            //Load All Games
+            //Load All Games //Not Block UI
             lstGames = await Game.Search(0);
+            //});
         }
 
         void DisablePanelGames()
@@ -410,8 +415,8 @@ namespace RADB
             txtSearchGames.TextChanged -= txtSearchGames_TextChanged;
             txtSearchGames.Text = "";
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
-            
-            dgvGames.Columns["gConsole"].Visible = SESSION.Console.ID == 0;
+
+            dgvGames.Columns["gConsole"].Visible = BIND.Console.ID == 0;
 
             ChangeTab(tabGames);
 
@@ -424,9 +429,9 @@ namespace RADB
             tabMain.Refresh();
         }
 
-        async Task LoadGames()
+        Task LoadGames()
         {
-            if (SESSION.Console.IsNull()) { return; }
+            if (BIND.Console.IsNull()) { return null; }
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             //lstGames = await Game.Search(SESSION.Console.ID);
 
@@ -434,7 +439,7 @@ namespace RADB
             //Update GameList
             if (lstGames.Count == 0)
             {
-                var fileExist = File.Exists(Folder.GameData + SESSION.Console.Name + ".json");
+                var fileExist = File.Exists(Folder.GameData + BIND.Console.Name + ".json");
                 if (fileExist == false)
                 {
                     btnUpdateGameList_Click(null, null);
@@ -446,23 +451,24 @@ namespace RADB
 
             dgvGames.Focus();
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
-            MessageBox.Show(fim0.TotalMilliseconds.ToString());
+            lblOutput.Text = "Games Loaded in: " + Convert.ToInt32(fim0.TotalMilliseconds) + " Milliseconds" + Environment.NewLine + lblOutput.Text;
+            return null;
         }
 
         async void btnUpdateGameList_Click(object sender, EventArgs e)
         {
-            if (SESSION.Console.IsNull()) { MessageBox.Show("No Console Selected"); return; }
+            if (BIND.Console.IsNull()) { MessageBox.Show("No Console Selected"); return; }
 
             DisablePanelGames();
             lstGamesSearch.Clear();
             //Download GameList
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
-            await RA.DownloadGameList(SESSION.Console);
+            await RA.DownloadGameList(BIND.Console);
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
 
             //Download game icons
             TimeSpan ini1 = new TimeSpan(DateTime.Now.Ticks);
-            await RA.DownloadGamesIcon(SESSION.Console, Browser.dlGamesIcon);
+            await RA.DownloadGamesIcon(BIND.Console, Browser.dlGamesIcon);
             TimeSpan fim1 = new TimeSpan(DateTime.Now.Ticks) - ini1;
 
             //Load Games
@@ -476,22 +482,22 @@ namespace RADB
             TimeSpan fim2 = new TimeSpan(DateTime.Now.Ticks) - ini2;
 
             //Update ConsoleBind
-            SESSION.Console.NumGames = lstGames.Count(g => g.NumAchievements > 0);
-            SESSION.Console.TotalGames = lstGames.Count();
+            BIND.Console.NumGames = lstGames.Count(g => g.NumAchievements > 0);
+            BIND.Console.TotalGames = lstGames.Count();
 
-            lblOutput.Text = "[" + DateTime.Now.ToTimeLong() + "] " + SESSION.Console.Name + " Updated!" + Environment.NewLine + lblOutput.Text;
+            lblOutput.Text = "[" + DateTime.Now.ToTimeLong() + "] " + BIND.Console.Name + " Updated!" + Environment.NewLine + lblOutput.Text;
 
             GamesUpdated = true;
         }
 
         void UpdateConsoleLabels()
         {
-            if (SESSION.Console == null) return;
+            if (BIND.Console == null) return;
 
             //Update Console
             var numGames = lstGamesSearch.Count(g => g.NumAchievements > 0);
             var totalGames = lstGamesSearch.Count();
-            lblConsoleName.Text = SESSION.Console.Name;
+            lblConsoleName.Text = BIND.Console.Name;
             lblConsoleGamesTotal.Text = numGames + " of " + totalGames + " Games";
         }
 
@@ -530,8 +536,8 @@ namespace RADB
             bool WithoutAchievements = !chkWithoutAchievements.Checked;
 
             IEnumerable<Game> nList;
-            if (SESSION.Console.ID > 0)
-                nList = lstGames.Where(x => x.ConsoleID == SESSION.Console.ID);
+            if (BIND.Console.ID > 0)
+                nList = lstGames.Where(x => x.ConsoleID == BIND.Console.ID);
             else
                 nList = lstGames;
 
@@ -652,8 +658,8 @@ namespace RADB
             pnlInfoScroll.AutoScrollPosition = new Point(pnlInfoScroll.AutoScrollPosition.X, 0);
             pnlInfoScroll.VerticalScroll.Value = 0;
 
-            f.LoadGameExtendBase();
-            await f.LoadGameExtend();
+            LoadGameExtendBase();
+            await LoadGameExtend();
 
             //Update GameExtend
             if (GameExtendBind.IsNull() || GameExtendBind.ConsoleID == 0)
@@ -688,8 +694,11 @@ namespace RADB
 
                         list[i].SetImageIconBitmap();
                     }
+                    dgv.InvokeIfRequired(() =>
+                    {
+                        dgv.Refresh();
+                    });
                 });
-                dgv.Refresh();
             }
         }
 
@@ -761,6 +770,70 @@ namespace RADB
             btnHashes.Enabled = false;
         }
 
+        void LoadGameExtendBase()
+        {
+            if (GameBind.IsNull()) { return; }
+
+            lblInfoName.Text = GameBind.Title + " (" + GameBind.ConsoleName + ")";
+            picInfoIcon.Image = GameBind.ImageIconBitmap;
+
+            lblInfoAchievements.Text = GameBind.NumAchievements.ToString() + " Trophies: " + GameBind.Points + " points";
+        }
+
+        public async Task LoadGameExtend()
+        {
+            if (GameBind.IsNull()) { return; }
+
+            GameExtendBind = await GameExtend.Find(GameBind.ID);
+
+            lblInfoDeveloper1.Text = GameExtendBind.Developer;
+            lblInfoPublisher1.Text = GameExtendBind.Publisher;
+            lblInfoGenre1.Text = GameExtendBind.Genre;
+            lblInfoReleased1.Text = GameExtendBind.Released;
+
+            //GameExtendBind.SetImagesBitmap();
+
+            //picInfoTitle.ScaleTo(GameExtendBind.ImageTitleBitmap);
+            //picInfoInGame.ScaleTo(GameExtendBind.ImageIngameBitmap);
+            //picInfoBoxArt.ScaleTo(GameExtendBind.ImageBoxArtBitmap);
+
+            //{//Scale Boxes
+            //    pnlInfoTitle.Height = (picInfoTitle.Height > picInfoInGame.Height ? picInfoTitle.Height : picInfoInGame.Height);
+            //    if (pnlInfoTitle.Height < pnlInfoImages.MinimumSize.Height - 12) pnlInfoTitle.Height = pnlInfoImages.MinimumSize.Height - 12;
+            //    pnlInfoInGame.Height = pnlInfoTitle.Height;
+
+            //    pnlInfoImages.Height = pnlInfoTitle.Height + 12;
+            //    pnlInfoBoxArt.Height = pnlInfoImages.Location.Y + pnlInfoImages.Height - 19;
+
+            //    picInfoBoxArt.MaximumSize = new Size(pnlInfoBoxArt.Width - 12, pnlInfoBoxArt.Height - 12);
+            //    picInfoBoxArt.ScaleTo(GameExtendBind.ImageBoxArtBitmap);
+
+            //    picInfoTitle.Location = new Point(pnlInfoTitle.Width / 2 - picInfoTitle.Width / 2, (pnlInfoTitle.Height / 2) - (picInfoTitle.Height / 2));
+            //    picInfoInGame.Location = new Point(pnlInfoInGame.Width / 2 - picInfoInGame.Width / 2, (pnlInfoInGame.Height / 2) - (picInfoInGame.Height / 2));
+            //    picInfoBoxArt.Location = new Point(pnlInfoBoxArt.Width / 2 - picInfoBoxArt.Width / 2, (pnlInfoBoxArt.Height / 2) - (picInfoBoxArt.Height / 2));
+
+            //    gpbInfo.Height = gpbInfo.PreferredSize.Height - 13;
+            //    gpbInfoAchievements.Location = new Point(gpbInfoAchievements.Location.X, (gpbInfo.Height - pnlInfoScroll.VerticalScroll.Value) + 9);
+            //}
+
+            //ListBind<Achievement> lstCheevos = new ListBind<Achievement>();
+            //dgvAchievements.DataSource = lstCheevos;
+            //if (File.Exists(RA.API_File_GameExtend(GameBind).Path))
+            //{
+            //    //gx.SetAchievements(resultInfo["Achievements"]);
+            //    string AllText = File.ReadAllText(RA.API_File_GameExtend(GameBind).Path);
+            //    string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
+            //    cheevos = "{" + cheevos + "}";
+
+            //    JToken jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
+
+            //    GameExtendBind.SetAchievements(jcheevos);
+            //    lstCheevos = new ListBind<Achievement>(GameExtendBind.AchievementsList);
+            //    dgvAchievements.DataSource = lstCheevos;
+            //}
+            //lstAchievs = lstCheevos;
+        }
+
         void GameInfo_Login(object sender, EventArgs e)
         {
             btnHashes.Enabled = RALogged;
@@ -812,11 +885,9 @@ namespace RADB
         async Task LoadGamesToPlay()
         {
             lstGamesToPlay.Clear();
-            lstGamesToPlay.AddRange(new ListBind<Game>(await Game.ListToPlay()));
-            //dgvGamesToPlay.DataSource = lstGamesToPlay;
+            lstGamesToPlay.AddRange(await Game.ListToPlay());
             lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
             await LoadGamesIcon();
-            //dgvGamesToPlay.Refresh();
         }
 
         async void mniRemoveGameToPlay_MouseDown(object sender, MouseEventArgs e)
@@ -827,7 +898,7 @@ namespace RADB
 
             if (await game.DeleteFromPlay())
             {
-                if (SESSION.Console.NotNull() && SESSION.Console.ID == game.ConsoleID)
+                if (BIND.Console.NotNull() && BIND.Console.ID == game.ConsoleID)
                 {
                     lstGames.Insert(0, game);
                     lstGamesSearch.Insert(0, game);
@@ -872,7 +943,7 @@ namespace RADB
         async Task LoadGamesToHide()
         {
             lstGamesToHide.Clear();
-            lstGamesToHide.AddRange(new ListBind<Game>(await Game.ListToHide()));
+            lstGamesToHide.AddRange(await Game.ListToHide());
 
             await LoadGamesIcon();
 
@@ -888,7 +959,7 @@ namespace RADB
 
             if (await game.DeleteFromHide())
             {
-                if (SESSION.Console.NotNull() && SESSION.Console.ID == game.ConsoleID)
+                if (BIND.Console.NotNull() && BIND.Console.ID == game.ConsoleID)
                 {
                     lstGames.Insert(0, game);
                     lstGamesSearch.Insert(0, game);

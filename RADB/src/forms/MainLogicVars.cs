@@ -70,9 +70,19 @@ namespace RADB
         public FlatProgressBarA pgbInfo { get { return f.pgbInfo; } set { f.pgbInfo = value; } }
         public FlatLabelA lblUpdateInfo { get { return f.lblUpdateInfo; } set { f.lblUpdateInfo = value; } }
         public FlatPanelA pnlInfoScroll { get { return f.pnlInfoScroll; } set { f.pnlInfoScroll = value; } }
+
         public FlatButtonA btnGamePage { get { return f.btnGamePage; } set { f.btnGamePage = value; } }
         public FlatButtonA btnHashes { get { return f.btnHashes; } set { f.btnHashes = value; } }
         public FlatDataGridA dgvAchievements { get { return f.dgvAchievements; } set { f.dgvAchievements = value; } }
+
+        public FlatLabelA lblInfoName { get { return f.lblInfoName; } set { f.lblInfoName = value; } }
+        public FlatPictureBoxA picInfoIcon { get { return f.picInfoIcon; } set { f.picInfoIcon = value; } }
+        public FlatLabelA lblInfoAchievements { get { return f.lblInfoAchievements; } set { f.lblInfoAchievements = value; } }
+
+        public FlatLabelA lblInfoDeveloper1 { get { return f.lblInfoDeveloper1; } set { f.lblInfoDeveloper1 = value; } }
+        public FlatLabelA lblInfoPublisher1 { get { return f.lblInfoPublisher1; } set { f.lblInfoPublisher1 = value; } }
+        public FlatLabelA lblInfoGenre1 { get { return f.lblInfoGenre1; } set { f.lblInfoGenre1 = value; } }
+        public FlatLabelA lblInfoReleased1 { get { return f.lblInfoReleased1; } set { f.lblInfoReleased1 = value; } }
 
         //GameToPlay
         public FlatDataGridA dgvGamesToPlay { get { return f.dgvGamesToPlay; } set { f.dgvGamesToPlay = value; } }

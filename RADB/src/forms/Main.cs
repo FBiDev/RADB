@@ -56,69 +56,9 @@ namespace RADB
         #endregion
 
         #region GameInfo
-        public void LoadGameExtendBase()
-        {
-            if (GameBind.IsNull()) { return; }
+        
 
-            lblInfoName.Text = GameBind.Title + " (" + GameBind.ConsoleName + ")";
-            picInfoIcon.Image = GameBind.ImageIconBitmap;
-
-            lblInfoAchievements.Text = GameBind.NumAchievements.ToString() + " Trophies: " + GameBind.Points + " points";
-        }
-
-        public async Task LoadGameExtend()
-        {
-            if (GameBind.IsNull()) { return; }
-
-            GameExtendBind = await GameExtend.Find(GameBind.ID);
-
-            lblInfoDeveloper1.Text = GameExtendBind.Developer;
-            lblInfoPublisher1.Text = GameExtendBind.Publisher;
-            lblInfoGenre1.Text = GameExtendBind.Genre;
-            lblInfoReleased1.Text = GameExtendBind.Released;
-
-            GameExtendBind.SetImagesBitmap();
-
-            picInfoTitle.ScaleTo(GameExtendBind.ImageTitleBitmap);
-            picInfoInGame.ScaleTo(GameExtendBind.ImageIngameBitmap);
-            picInfoBoxArt.ScaleTo(GameExtendBind.ImageBoxArtBitmap);
-
-            {//Scale Boxes
-                pnlInfoTitle.Height = (picInfoTitle.Height > picInfoInGame.Height ? picInfoTitle.Height : picInfoInGame.Height);
-                if (pnlInfoTitle.Height < pnlInfoImages.MinimumSize.Height - 12) pnlInfoTitle.Height = pnlInfoImages.MinimumSize.Height - 12;
-                pnlInfoInGame.Height = pnlInfoTitle.Height;
-
-                pnlInfoImages.Height = pnlInfoTitle.Height + 12;
-                pnlInfoBoxArt.Height = pnlInfoImages.Location.Y + pnlInfoImages.Height - 19;
-
-                picInfoBoxArt.MaximumSize = new Size(pnlInfoBoxArt.Width - 12, pnlInfoBoxArt.Height - 12);
-                picInfoBoxArt.ScaleTo(GameExtendBind.ImageBoxArtBitmap);
-
-                picInfoTitle.Location = new Point(pnlInfoTitle.Width / 2 - picInfoTitle.Width / 2, (pnlInfoTitle.Height / 2) - (picInfoTitle.Height / 2));
-                picInfoInGame.Location = new Point(pnlInfoInGame.Width / 2 - picInfoInGame.Width / 2, (pnlInfoInGame.Height / 2) - (picInfoInGame.Height / 2));
-                picInfoBoxArt.Location = new Point(pnlInfoBoxArt.Width / 2 - picInfoBoxArt.Width / 2, (pnlInfoBoxArt.Height / 2) - (picInfoBoxArt.Height / 2));
-
-                gpbInfo.Height = gpbInfo.PreferredSize.Height - 13;
-                gpbInfoAchievements.Location = new Point(gpbInfoAchievements.Location.X, (gpbInfo.Height - pnlInfoScroll.VerticalScroll.Value) + 9);
-            }
-
-            ListBind<Achievement> lstCheevos = new ListBind<Achievement>();
-            dgvAchievements.DataSource = lstCheevos;
-            if (File.Exists(RA.API_File_GameExtend(GameBind).Path))
-            {
-                //gx.SetAchievements(resultInfo["Achievements"]);
-                string AllText = File.ReadAllText(RA.API_File_GameExtend(GameBind).Path);
-                string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
-                cheevos = "{" + cheevos + "}";
-
-                JToken jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
-
-                GameExtendBind.SetAchievements(jcheevos);
-                lstCheevos = new ListBind<Achievement>(GameExtendBind.AchievementsList);
-                dgvAchievements.DataSource = lstCheevos;
-            }
-            lstAchievs = lstCheevos;
-        }
+        
 
         public async void btnUpdateInfo_Click(object sender, EventArgs e)
         {
@@ -137,7 +77,7 @@ namespace RADB
             await RA.DownloadGameExtendImages(GameBind);
 
             //Load Game
-            await LoadGameExtend();
+            await logic.LoadGameExtend();
             txtSearchAchiev.Enabled = true;
 
             lblOutput.Text = "[" + DateTime.Now.ToLongTimeString() + "] Game " + GameBind.ID + " Updated!" + Environment.NewLine + lblOutput.Text;
