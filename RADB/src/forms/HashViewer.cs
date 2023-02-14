@@ -1,12 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-//
 using System.Windows.Forms;
 using System.Drawing;
 using System.Threading.Tasks;
-//
 using GNX;
 
 namespace RADB
@@ -16,7 +13,7 @@ namespace RADB
         public HashViewer()
         {
             InitializeComponent();
-            base.Init(this);
+            Init(this);
 
             txtHashes.KeyDown += HashViewer_KeyDown;
         }
@@ -25,13 +22,13 @@ namespace RADB
         {
             if (e.KeyCode == Keys.Escape)
             {
-                this.Close();
+                Close();
             }
         }
 
-        public static async void Open(Game game)
+        public static async Task Open(Game game)
         {
-            if (Browser.RALogged)
+            if (BIND.RALogged)
             {
                 HashViewer f = new HashViewer();
                 ActiveForm.BeginInvoke((Action)(() => { f.Hide(); f.ShowDialog(); }));
@@ -43,9 +40,9 @@ namespace RADB
             }
         }
 
-        private async Task GetHashCode(Game game)
+        async Task GetHashCode(Game game)
         {
-            this.Text = "RA HashViewer - " + game.Title + " (" + game.ConsoleName + ")";
+            Text = "RA HashViewer - " + game.Title + " (" + game.ConsoleName + ")";
             txtHashes.Text = string.Empty;
 
             var html = await Browser.RALogin.DownloadString(RA.HOST_URL + "linkedhashes.php?g=" + game.ID);

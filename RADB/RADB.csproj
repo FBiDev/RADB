@@ -238,6 +238,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
     <Compile Include="src\forms\MainLogicVars.cs" />
+    <Compile Include="src\controller\ConsoleMain.cs" />
+    <Compile Include="src\cmodel\BIND.cs" />
+    <Compile Include="src\controller\GameMain.cs" />
+    <Compile Include="src\controller\GameMainControls.cs" />
+    <Compile Include="src\controller\ConsoleMainControls.cs" />
+    <Compile Include="src\controller\AboutMain.cs" />
+    <Compile Include="src\controller\AboutMainControls.cs" />
+    <Compile Include="src\controller\GameToPlayMain.cs" />
+    <Compile Include="src\controller\GameToPlayMainControls.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -301,6 +310,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="x86\referenced\" />
+    <Folder Include="src\controller\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

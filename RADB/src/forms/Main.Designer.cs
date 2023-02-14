@@ -1446,7 +1446,6 @@ namespace RADB
             this.btnUpdateInfo.Size = new System.Drawing.Size(144, 24);
             this.btnUpdateInfo.TabIndex = 35;
             this.btnUpdateInfo.Text = "Update Info";
-            this.btnUpdateInfo.Click += new System.EventHandler(this.btnUpdateInfo_Click);
             // 
             // lblUpdateInfo
             // 
@@ -1958,7 +1957,6 @@ namespace RADB
             this.btnGetUserInfo.Size = new System.Drawing.Size(66, 24);
             this.btnGetUserInfo.TabIndex = 32;
             this.btnGetUserInfo.Text = "Get User";
-            this.btnGetUserInfo.Click += new System.EventHandler(this.btnGetUserInfo_Click);
             // 
             // picUserName
             // 
@@ -2548,29 +2546,18 @@ namespace RADB
         #endregion
 
         public System.Windows.Forms.ToolTip Ttip;
-        private FlatGroupBoxA gpbInfo;
         private FlatLabelA lblInfoDeveloper0;
         private System.Windows.Forms.Panel pnlInfoTop;
         private FlatLabelA lblInfoReleased0;
         private FlatLabelA lblInfoGenre0;
         private FlatLabelA lblInfoPublisher0;
         private System.Windows.Forms.Panel pnlDownloadInfo;
-        private FlatPictureBoxA picInfoTitle;
-        private FlatGroupBoxA gpbInfoAchievements;
-        private FlatPanelA pnlInfoImages;
-        private FlatPictureBoxA picInfoInGame;
         private System.Windows.Forms.Panel pnlOutput;
         private FlatLabelB lblAbTitle;
         private FlatLabelB lblAbYear;
         private FlatPictureBoxA picFBiDevIcon;
         private FlatPanelA pnlBottomOutput;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private FlatPanelA pnlInfoTitle;
-        private FlatPanelA pnlInfoInGame;
-        private FlatPanelA pnlInfoBoxArt;
-        private FlatPictureBoxA picInfoBoxArt;
-
-        private FlatTextBoxA txtSearchAchiev;
         private System.Windows.Forms.DataGridViewTextBoxColumn cID;
         private System.Windows.Forms.DataGridViewTextBoxColumn cCompany;
         private System.Windows.Forms.DataGridViewTextBoxColumn cName;
@@ -2597,8 +2584,6 @@ namespace RADB
         private System.Windows.Forms.DataGridViewTextBoxColumn aDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn aPoints;
         private FlatGroupBoxA gpbUserInfo;
-        private FlatLabelA lblUserName;
-        private FlatPictureBoxA picUserName;
         private FlatLabelA flatLabelA10;
         private FlatLabelA flatLabelA9;
         private FlatLabelA flatLabelA8;
@@ -2607,33 +2592,13 @@ namespace RADB
         private FlatLabelA flatLabelA5;
         private FlatLabelA flatLabelA4;
         private FlatLabelA flatLabelA3;
-        private FlatLabelA lblUserMemberSince;
         private FlatLabelA flatLabelA1;
-        private FlatLabelA lblUserMotto;
-        private FlatLabelA lblUserLastActivity;
-        private FlatLabelA lblUserAccountType;
-        private FlatLabelA lblUserCompletion;
-        private FlatLabelA lblUserSoftRank;
-        private FlatLabelA lblUserSoftPoints;
-        private FlatLabelA lblUserRetroRatio;
-        private FlatLabelA lblUserHCPoints;
-        private FlatLabelA lblUserStatus;
-        private FlatLabelA lblUserLastGame;
         private FlatLabelA flatLabelA2;
-        private FlatLabelA lblUserRichPresence;
-        private FlatLabelA lblUserLastConsole;
-        private FlatPictureBoxA picUserLastGame;
         private FlatGroupBoxA gpbAwards;
-        private FlatListViewA lsvGameAwards;
-        private FlatPanelA pnlAwardFloating;
-        private FlatPictureBoxA picAwardFloating;
         private FlatGroupBoxA gpbOverlay;
         private System.Windows.Forms.Panel pnlUserCheevos;
         private FlatLabelA lblCheevos;
         private System.Windows.Forms.TableLayoutPanel tblAwardFloating;
-        private FlatLabelA lblAwardFloatingTitle;
-        private FlatLabelA lblAwardFloatingDesc;
-        private FlatPictureBoxA picLoaderUserAwards;
         internal FlatCheckBoxA chkPrototype;
         internal FlatCheckBoxA chkWithoutAchievements;
         internal FlatCheckBoxA chkOfficial;
@@ -2725,6 +2690,38 @@ namespace RADB
         internal FlatLabelA lblInfoDeveloper1;
         internal FlatLabelA lblInfoGenre1;
         internal FlatLabelA lblInfoPublisher1;
+        internal FlatPictureBoxA picInfoTitle;
+        internal FlatPictureBoxA picInfoInGame;
+        internal FlatPictureBoxA picInfoBoxArt;
+        internal FlatPanelA pnlInfoImages;
+        internal FlatPanelA pnlInfoTitle;
+        internal FlatPanelA pnlInfoInGame;
+        internal FlatPanelA pnlInfoBoxArt;
+        internal FlatGroupBoxA gpbInfoAchievements;
+        internal FlatGroupBoxA gpbInfo;
+        internal FlatTextBoxA txtSearchAchiev;
+        internal FlatLabelA lblUserName;
+        internal FlatPictureBoxA picUserName;
+        internal FlatLabelA lblUserMemberSince;
+        internal FlatLabelA lblUserMotto;
+        internal FlatLabelA lblUserLastActivity;
+        internal FlatLabelA lblUserAccountType;
+        internal FlatLabelA lblUserCompletion;
+        internal FlatLabelA lblUserSoftRank;
+        internal FlatLabelA lblUserSoftPoints;
+        internal FlatLabelA lblUserRetroRatio;
+        internal FlatLabelA lblUserHCPoints;
+        internal FlatLabelA lblUserStatus;
+        internal FlatLabelA lblUserLastGame;
+        internal FlatLabelA lblUserRichPresence;
+        internal FlatLabelA lblUserLastConsole;
+        internal FlatPictureBoxA picUserLastGame;
+        internal FlatListViewA lsvGameAwards;
+        internal FlatPictureBoxA picLoaderUserAwards;
+        internal FlatPanelA pnlAwardFloating;
+        internal FlatPictureBoxA picAwardFloating;
+        internal FlatLabelA lblAwardFloatingTitle;
+        internal FlatLabelA lblAwardFloatingDesc;
     }
 }
 

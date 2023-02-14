@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-//
 using System.Windows.Forms;
 using System.Net;
-using System.Net.Http;
-using System.Text.RegularExpressions;
 using GNX;
 
 namespace RADB
@@ -50,7 +43,6 @@ namespace RADB
         public static Download dlGameExtendImages = new Download { Overwrite = false, FolderBase = Folder.Images, };
 
         public static WebClientExtend RALogin = new WebClientExtend();
-        public static bool RALogged;
 
         public static void Load()
         {
@@ -59,8 +51,9 @@ namespace RADB
             ServicePointManager.DefaultConnectionLimit = 128;
         }
 
-        public static async Task<bool> SystemLogin()
+        public static async Task SystemLogin()
         {
+            BIND.RALogged = false;
             //wclient.Credentials = new NetworkCredential("", "");
             var html = await RALogin.DownloadString(RA.HOST_URL);
             var token = html.GetBetween("_token\" value=\"", "\">");
@@ -81,21 +74,20 @@ namespace RADB
             var html2 = await RALogin.DownloadString(RA.HOST_URL);
             var login = html2.GetBetween("request/auth/login", "php");
 
-            RALogged = login != ".";
-            return RALogged;
+            BIND.RALogged = login != ".";
         }
 
-        private static Random rand = new Random();
+        static readonly Random rand = new Random();
         public async static Task<string> DownloadString(string url, bool addRandomNumber = false)
         {
-            return await Task<string>.Run(async () =>
+            return await Task.Run(async () =>
             {
                 string data = string.Empty;
 
                 using (var client = new WebClientExtend())
                 {
                     url = addRandomNumber ? url +=
-                        (url.IndexOf("?") < 0 ? "?" : "&") + "random=" + rand.Next()
+                          (url.IndexOf("?", StringComparison.Ordinal) < 0 ? "?" : "&") + "random=" + rand.Next()
                         : (url);
 
                     data = await client.DownloadString(url);
