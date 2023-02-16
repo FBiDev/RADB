@@ -8,33 +8,31 @@ using GNX;
 
 namespace RADB
 {
-    public partial class AboutMain
+    public static partial class MainAbout
     {
-        RA RA = new RA();
-
-        public AboutMain()
-        {
-            f = BIND.f;
-            About_Init();
-        }
+        static RA RA = new RA();
 
         #region About
-        void About_Init()
+        public static async Task About_Init()
         {
-            f.Shown += About_Shown;
+            //f.Shown += About_Shown;
 
             btnRALogin.Click += btnRALogin_Click;
+            //async (sender, e) => await btnRALogin_Click(sender, e);
             btnRAProfileAbout.Click += btnRAProfileAbout_Click;
 
             btnUserCheevos.Click += btnUserCheevos_Click;
+
+            await About_Shown(null, null);
         }
 
-        void About_Shown(object sender, EventArgs e)
+        static Task About_Shown(object sender, EventArgs e)
         {
             btnRALogin_Click(null, null);
+            return Task.FromResult(0);
         }
 
-        async void btnRALogin_Click(object sender, EventArgs e)
+        static async void btnRALogin_Click(object sender, EventArgs e)
         {
             lblRALogin.ForeColor = Color.Coral;
             lblRALogin.Text = "logging in...";
@@ -55,14 +53,14 @@ namespace RADB
             }
         }
 
-        void btnRAProfileAbout_Click(object sender, EventArgs e)
+        static void btnRAProfileAbout_Click(object sender, EventArgs e)
         {
             Process.Start(RA.User_URL("FBiDev"));
         }
 
-        bool UserCheevosIsRunning;
+        static bool UserCheevosIsRunning;
         static UserProgress LastUser = new UserProgress();
-        async void btnUserCheevos_Click(object sender, EventArgs e)
+        static async void btnUserCheevos_Click(object sender, EventArgs e)
         {
             if (BIND.Game.IsNull())
             {
@@ -77,7 +75,7 @@ namespace RADB
 
             do
             {
-                UserProgress user = await RA.GetUserProgress(f.txtUsername.Text, BIND.Game.ID);
+                UserProgress user = await RA.GetUserProgress(form.txtUsername.Text, BIND.Game.ID);
                 picUserCheevos.Image = BIND.Game.ImageIconBitmap;
                 lblUserCheevos.Text = user.NumAchieved + " / " + BIND.Game.NumAchievements;
 

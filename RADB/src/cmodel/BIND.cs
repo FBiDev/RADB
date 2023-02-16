@@ -12,10 +12,12 @@ namespace RADB
         public delegate Task AsyncAction();
 
         public static event Action OnRALoggedChanged = delegate { };
+        public static event Action OnUserChanged = delegate { };
         public static event Action OnTabMainChanged = delegate { };
         public static event AsyncAction OnGameListChanged = delegate { return Task.Run(() => { }); };
         public static event AsyncAction OnConsoleChanged = delegate { return Task.Run(() => { }); };
         public static event AsyncAction OnGameChanged = delegate { return Task.Run(() => { }); };
+        public static event AsyncAction OnGameExtendChanged = delegate { return Task.Run(() => { }); };
 
         static bool _RALogged;
         public static bool RALogged
@@ -25,6 +27,17 @@ namespace RADB
             {
                 _RALogged = value;
                 OnRALoggedChanged();
+            }
+        }
+
+        static User _User;
+        public static User User
+        {
+            get { return _User; }
+            set
+            {
+                _User = value;
+                OnUserChanged();
             }
         }
 
@@ -60,6 +73,17 @@ namespace RADB
             {
                 _Game = value;
                 OnGameChanged();
+            }
+        }
+
+        static GameExtend _GameExtend;
+        public static GameExtend GameExtend
+        {
+            get { return _GameExtend; }
+            set
+            {
+                _GameExtend = value;
+                OnGameExtendChanged();
             }
         }
 

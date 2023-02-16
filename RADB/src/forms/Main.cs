@@ -7,7 +7,7 @@
             InitializeComponent();
             Init(this);
 
-            var logic = new MainLogic(this);
+            MainCommon.Main_Init(this);
         }
     }
 }

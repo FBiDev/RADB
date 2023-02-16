@@ -6,24 +6,18 @@ using GNX;
 
 namespace RADB
 {
-    public partial class ConsoleMain
+    public static partial class MainConsole
     {
-        RA RA = new RA();
-        ListBind<Console> lstConsoles = new ListBind<Console>();
+        static RA RA = new RA();
+        static ListBind<Console> lstConsoles = new ListBind<Console>();
 
         #region Consoles
-        public ConsoleMain()
-        {
-            f = BIND.f;
-            Consoles_Init();
-        }
-
-        void Consoles_Init()
+        public static async Task Console_Init()
         {
             BIND.OnGameListChanged += UpdateConsoleAllGames;
-            BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == f.tabConsoles) { dgvConsoles.Focus(); } };
+            BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabConsoles) { dgvConsoles.Focus(); } };
 
-            f.Shown += Consoles_Shown;
+            //form.Shown += Console_Shown;
             mniMergeGamesIcon.MouseDown += mniMergeGamesIcon_MouseDown;
             mniMergeGamesIconBadSize.MouseDown += mniMergeGamesIconBadSize_MouseDown;
 
@@ -39,9 +33,11 @@ namespace RADB
             dgvConsoles.CellDoubleClick += dgvConsoles_CellDoubleClick;
             dgvConsoles.KeyPress += dgvConsoles_KeyPress;
             dgvConsoles.KeyDown += dgvConsoles_KeyDown;
+
+            await Console_Shown(null, null);
         }
 
-        async void Consoles_Shown(object sender, EventArgs e)
+        static async Task Console_Shown(object sender, EventArgs e)
         {
             Browser.dlConsoles.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
             Browser.dlConsolesGamesIcon.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
@@ -50,7 +46,7 @@ namespace RADB
             await LoadConsoles();
         }
 
-        Task UpdateConsoleAllGames()
+        static Task UpdateConsoleAllGames()
         {
             var console = lstConsoles.Where(x => x.Name == "All Games");
             console.First().NumGames = lstConsoles.Except(console).Sum(x => x.NumGames);
@@ -58,7 +54,7 @@ namespace RADB
             return null;
         }
 
-        void DisablePanelConsoles()
+        static void DisablePanelConsoles()
         {
             pnlDownloadConsoles.Enabled = false;
             lblNotFoundConsoles.Visible = false;
@@ -66,7 +62,7 @@ namespace RADB
             dgvConsoles.Enabled = false;
         }
 
-        void EnablePanelConsoles()
+        static void EnablePanelConsoles()
         {
             pnlDownloadConsoles.Enabled = true;
             lblNotFoundConsoles.Visible = (dgvConsoles.RowCount == 0);
@@ -74,7 +70,7 @@ namespace RADB
             dgvConsoles.Enabled = true;
         }
 
-        void ResetConsolesLabels()
+        static void ResetConsolesLabels()
         {
             lblUpdateConsoles.Text = string.Empty;
             lblProgressConsoles.Text = string.Empty;
@@ -82,7 +78,7 @@ namespace RADB
             pgbConsoles.Visible = false;
         }
 
-        async Task LoadConsoles()
+        static async Task LoadConsoles()
         {
             DisablePanelConsoles();
 
@@ -102,7 +98,7 @@ namespace RADB
             dgvConsoles.Focus();
         }
 
-        async void btnUpdateConsoles_Click(object sender, EventArgs e)
+        static async void btnUpdateConsoles_Click(object sender, EventArgs e)
         {
             DisablePanelConsoles();
             lstConsoles.Clear();
@@ -110,19 +106,19 @@ namespace RADB
             await LoadConsoles();
             EnablePanelConsoles();
 
-            f.lblOutput.Text = "[" + DateTime.Now.ToTimeLong() + "] " + "Consoles Updated!" + Environment.NewLine + f.lblOutput.Text;
+            MainCommon.WriteOutput("[" + DateTime.Now.ToTimeLong() + "] " + "Consoles Updated!");
         }
 
-        void dgvConsoles_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        static void dgvConsoles_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowHeader()) return;
 
-            Console ConsoleSelected = dgvGetCurrentItem<Console>(sender);
+            Console ConsoleSelected = dgvConsoles.GetSelectedItem<Console>();
             if (BIND.Console.IsNull() || ConsoleSelected.ID != BIND.Console.ID)
                 BIND.Console = ConsoleSelected;
         }
 
-        void dgvConsoles_KeyDown(object sender, KeyEventArgs e)
+        static void dgvConsoles_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter)
             {
@@ -131,43 +127,31 @@ namespace RADB
             }
         }
 
-        void dgvConsoles_KeyPress(object sender, KeyPressEventArgs e)
+        static void dgvConsoles_KeyPress(object sender, KeyPressEventArgs e)
         {
-            dgv_KeyPress(sender, e, "cName");
+            MainCommon.GridViewKeyPress(sender, e, "cName");
         }
 
-        async void mniMergeGamesIcon_MouseDown(object sender, MouseEventArgs e)
+        static async void mniMergeGamesIcon_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var console = dgvGetCurrentItem<Console>(dgvConsoles);
+            var console = dgvConsoles.GetSelectedItem<Console>();
 
             DisablePanelConsoles();
             await RA.MergeGamesIcon(console);
             EnablePanelConsoles();
         }
 
-        async void mniMergeGamesIconBadSize_MouseDown(object sender, MouseEventArgs e)
+        static async void mniMergeGamesIconBadSize_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var console = dgvGetCurrentItem<Console>(dgvConsoles);
+            var console = dgvConsoles.GetSelectedItem<Console>();
 
             DisablePanelConsoles();
             await RA.MergeGamesIcon(console, true);
             EnablePanelConsoles();
-        }
-        #endregion
-
-        #region Common
-        T dgvGetCurrentItem<T>(object sender) where T : class
-        {
-            return MainLogic.dgvGetCurrentItem<T>(sender);
-        }
-
-        void dgv_KeyPress(object sender, KeyPressEventArgs e, string columnName)
-        {
-            MainLogic.dgv_KeyPress(sender, e, columnName);
         }
         #endregion
     }

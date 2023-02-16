@@ -21,18 +21,18 @@ namespace RADB
         public const string HOST_URL = "https://retroachievements.org/";
 
         //https://s3-eu-west-1.amazonaws.com/i.retroachievements.org
-        public static string IMAGE_HOST = "http://media.retroachievements.org/Images/";
-        public static string BADGE_HOST = "http://media.retroachievements.org/Badge/";
-        public static string USER_HOST = "http://media.retroachievements.org/UserPic/";
+        public const string IMAGE_HOST = "http://media.retroachievements.org/Images/";
+        public const string BADGE_HOST = "http://media.retroachievements.org/Badge/";
+        public const string USER_HOST = "http://media.retroachievements.org/UserPic/";
 
         //URLs
         public static string Game_URL(int gameID) { return HOST_URL + "game/" + gameID.ToString(); }
         public static string User_URL(string userName) { return HOST_URL + "user/" + userName; }
 
         //API
-        private string API_HOST = HOST_URL + "API/";
-        private string API_UserName = "RADatabase";
-        private string API_Key = "GRaWk9onm4B0LSWSFaDt5a2dQE3N8Yme";
+        const string API_HOST = HOST_URL + "API/";
+        const string API_UserName = "RADatabase";
+        const string API_Key = "GRaWk9onm4B0LSWSFaDt5a2dQE3N8Yme";
 
         public const string Login_URL = HOST_URL + "request/auth/login.php";
 
@@ -43,10 +43,10 @@ namespace RADB
         const string API_URL_UserInfo = "API_GetUserSummary.php";
         const string API_URL_UserCompletedGames = "API_GetUserCompletedGames.php";
 
-        private string AuthQS()
+        string AuthQS()
         { return "?z=" + API_UserName + "&y=" + API_Key; }
 
-        private string GetURL(string target, string parames = "")
+        string GetURL(string target, string parames = "")
         { return API_HOST + target + AuthQS() + "&" + parames; }
 
         public DownloadFile API_File_Consoles()
@@ -94,15 +94,15 @@ namespace RADB
 
         public const int MIN_POINTS = 250;
 
-        static Size GameIconSize { get { return new Size(96, 96); } }
-        static Size GameBadgesSize { get { return new Size(64, 64); } }
+        static readonly Size GameIconSize = new Size(96, 96);
+        static readonly Size GameBadgesSize = new Size(64, 64);
 
-        public static Bitmap DefaultIcon = new Picture(GameIconSize).Bitmap;
-        public static Bitmap ErrorIcon = Resources.notfound;
+        public static readonly Bitmap DefaultIcon = new Picture(GameIconSize).Bitmap;
+        public static readonly Bitmap ErrorIcon = Resources.notfound;
 
-        public static Bitmap DefaultTitleImage = new Picture(200, 150).Bitmap;
-        public static Bitmap DefaultIngameImage = new Picture(200, 150).Bitmap;
-        public static Bitmap DefaultBoxArtImage = new Picture(200, 150).Bitmap;
+        public static readonly Bitmap DefaultTitleImage = new Picture(200, 150).Bitmap;
+        public static readonly Bitmap DefaultIngameImage = new Picture(200, 150).Bitmap;
+        public static readonly Bitmap DefaultBoxArtImage = new Picture(200, 150).Bitmap;
 
         public struct GameType
         {
@@ -122,7 +122,6 @@ namespace RADB
         {
             WebClientExtend.CustomErrorMessages = LinkMessages;
         }
-
         #endregion
 
         #region _Consoles
@@ -346,7 +345,6 @@ namespace RADB
             });
         }
         #endregion
-
 
         #region MergeImages
         public async Task MergeGameBadges(Game game)

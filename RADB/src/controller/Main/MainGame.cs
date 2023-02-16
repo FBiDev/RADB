@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
@@ -9,26 +10,28 @@ using GNX;
 
 namespace RADB
 {
-    public partial class GameMain
+    public static partial class MainGame
     {
-        RA RA = new RA();
+        static RA RA = new RA();
 
-        public List<Game> lstGames = new List<Game>();
-        public ListBind<Game> lstGamesSearch = new ListBind<Game>();
-
-        public GameMain()
-        {
-            f = BIND.f;
-            Games_Init();
-        }
+        static List<Game> lstGames = new List<Game>();
+        static ListBind<Game> lstGamesSearch = new ListBind<Game>();
 
         #region Games
-        void Games_Init()
+        public static async Task Games_Init()
         {
             BIND.OnConsoleChanged += ResetGamesLabels;
             BIND.OnConsoleChanged += LoadGames;
+            BIND.OnTabMainChanged += () =>
+            {
+                if (BIND.SelectedTab == form.tabGames)
+                {
+                    pnlGamesConsoleName.Visible = BIND.Console.NotNull();
+                    dgvGames.Focus();
+                }
+            };
 
-            f.Shown += Games_Shown;
+            //f.Shown += Games_Shown;
             mniMergeGameBadges.MouseDown += mniMergeGameBadges_MouseDown;
             mniPlayGame.MouseDown += mniPlayGame_MouseDown;
             mniHideGame.MouseDown += mniHideGame_MouseDown;
@@ -43,11 +46,11 @@ namespace RADB
             dgvGames.Columns.Format(CellStyle.NumberCenter, 4, 5, 6);
             dgvGames.Columns.Format(CellStyle.DateCenter, 7);
 
-            dgvGames.CellPainting += dgvGames_CellPainting;
+            //dgvGames.CellPainting += MainCommon.GridViewAdjustImageQuality;
             dgvGames.DataSourceChanged += dgvGames_DataSourceChanged;
 
             dgvGames.MouseDown += (sender, e) => dgvGames.ShowContextMenu(e, mnuGames);
-            dgvGames.CellDoubleClick += dgvGames_CellDoubleClick;
+            dgvGames.CellDoubleClick += MainCommon.ChangeBindGame;
             dgvGames.KeyPress += dgvGames_KeyPress;
             dgvGames.KeyDown += dgvGames_KeyDown;
 
@@ -76,9 +79,11 @@ namespace RADB
             {
                 checkBox.CheckedChanged += chkUpdateDataGrid;
             }
+
+            await Games_Shown(null, null);
         }
 
-        async void Games_Shown(object sender, EventArgs e)
+        static async Task Games_Shown(object sender, EventArgs e)
         {
             Browser.dlGames.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
             Browser.dlGamesIcon.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
@@ -89,10 +94,9 @@ namespace RADB
             //ResetGamesLabels(false);
             //Load All Games //Not Block UI
             lstGames = await Game.Search(0);
-            //});
         }
 
-        void DisablePanelGames()
+        static void DisablePanelGames()
         {
             pnlDownloadGameList.Enabled = false;
             pnlGamesConsoleName.Enabled = false;
@@ -101,7 +105,7 @@ namespace RADB
             dgvGames.Enabled = false;
         }
 
-        void EnablePanelGames()
+        static void EnablePanelGames()
         {
             pnlDownloadGameList.Enabled = true;
             pnlGamesConsoleName.Enabled = true;
@@ -110,7 +114,7 @@ namespace RADB
             dgvGames.Enabled = true;
         }
 
-        Task ResetGamesLabels()
+        static Task ResetGamesLabels()
         {
             DisablePanelGames();
             lstGamesSearch.Clear();
@@ -128,18 +132,18 @@ namespace RADB
 
             dgvGames.Columns["gConsole"].Visible = BIND.Console.ID == 0;
 
-            ChangeTab(f.tabGames);
+            ChangeTab(form.tabGames);
 
             return null;
         }
 
-        void ChangeTab(TabPage tab)
+        static void ChangeTab(TabPage tab)
         {
-            f.tabMain.SelectedTab = tab;
-            f.tabMain.Refresh();
+            form.tabMain.SelectedTab = tab;
+            form.tabMain.Refresh();
         }
 
-        Task LoadGames()
+        static Task LoadGames()
         {
             if (BIND.Console.IsNull()) { return null; }
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
@@ -160,11 +164,12 @@ namespace RADB
 
             dgvGames.Focus();
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
-            f.lblOutput.Text = "Games Loaded in: " + Convert.ToInt32(fim0.TotalMilliseconds) + " Milliseconds" + Environment.NewLine + f.lblOutput.Text;
+
+            MainCommon.WriteOutput("Games Loaded in: " + Convert.ToInt32(fim0.TotalMilliseconds) + " Milliseconds");
             return null;
         }
 
-        async void btnUpdateGameList_Click(object sender, EventArgs e)
+        static async void btnUpdateGameList_Click(object sender, EventArgs e)
         {
             if (BIND.Console.IsNull()) { MessageBox.Show("No Console Selected"); return; }
 
@@ -194,12 +199,12 @@ namespace RADB
             BIND.Console.NumGames = lstGames.Count(g => g.NumAchievements > 0);
             BIND.Console.TotalGames = lstGames.Count();
 
-            f.lblOutput.Text = "[" + DateTime.Now.ToTimeLong() + "] " + BIND.Console.Name + " Updated!" + Environment.NewLine + f.lblOutput.Text;
+            MainCommon.WriteOutput("[" + DateTime.Now.ToTimeLong() + "] " + BIND.Console.Name + " Updated!");
 
             BIND.GameListChanged();
         }
 
-        void UpdateConsoleLabels()
+        static void UpdateConsoleLabels()
         {
             if (BIND.Console == null) return;
 
@@ -210,7 +215,7 @@ namespace RADB
             lblConsoleGamesTotal.Text = numGames + " of " + totalGames + " Games";
         }
 
-        void txtSearchGames_TextChanged(object sender, EventArgs e)
+        static void txtSearchGames_TextChanged(object sender, EventArgs e)
         {
             //if (txtSearchGames.Text.Count() > 0 && txtSearchGames.Text.Count() < 3) { return; }
             ListBind<Game> newSearch = new ListBind<Game>();
@@ -283,7 +288,7 @@ namespace RADB
             }
         }
 
-        void txtSearchGames_KeyDown(object sender, KeyEventArgs e)
+        static void txtSearchGames_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter)
             {
@@ -291,142 +296,81 @@ namespace RADB
             }
         }
 
-        void btnGameFilters_Click(object sender, EventArgs e)
+        static void btnGameFilters_Click(object sender, EventArgs e)
         {
             pnlFilters.Visible = !pnlFilters.Visible;
             dgvGames.Focus();
         }
 
-        void chkUpdateDataGrid(object sender, EventArgs e)
+        static void chkUpdateDataGrid(object sender, EventArgs e)
         {
             txtSearchGames_TextChanged(null, null);
             dgvGames.Focus();
         }
 
-        void dgvGames_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            e.Graphics.InterpolationMode = InterpolationMode.Bilinear;
-            e.Graphics.PixelOffsetMode = PixelOffsetMode.Default;
-
-            if (e.ColumnIndex != 1 || e.RowHeader()) { return; }
-
-            e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            //e.Graphics.PixelOffsetMode = PixelOffHalf;
-        }
-
-        int wheel;
-        void dgvGames_MouseWheel(object sender, MouseEventArgs e)
+        static int wheel;
+        static void dgvGames_MouseWheel(object sender, MouseEventArgs e)
         {
             wheel = 1;
         }
 
-        async void dgvGames_Scroll(object sender, ScrollEventArgs e)
+        static async void dgvGames_Scroll(object sender, ScrollEventArgs e)
         {
             if (wheel > 0 && wheel < 3) { wheel++; return; }
             wheel = 0;
 
             ((DataGridView)sender).Focus();
-            await LoadGamesIcon();
+            await MainCommon.LoadGamesIcon();
         }
 
-        async void dgvGames_Sorted(object sender, EventArgs e)
+        static async void dgvGames_Sorted(object sender, EventArgs e)
         {
-            await LoadGamesIcon();
+            await MainCommon.LoadGamesIcon();
         }
 
-        async void dgvGames_DataSourceChanged(object sender, EventArgs e)
+        static async void dgvGames_DataSourceChanged(object sender, EventArgs e)
         {
-            await LoadGamesIcon();
+            await MainCommon.LoadGamesIcon();
         }
 
-        void dgvGames_KeyPress(object sender, KeyPressEventArgs e)
+        static void dgvGames_KeyPress(object sender, KeyPressEventArgs e)
         {
-            dgv_KeyPress(sender, e, "gTitle");
+            MainCommon.GridViewKeyPress(sender, e, "gTitle");
         }
 
-        void dgvGames_KeyDown(object sender, KeyEventArgs e)
+        static void dgvGames_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter)
             {
                 e.Handled = true;
-                dgvGames_CellDoubleClick(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
+                MainCommon.ChangeBindGame(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
             }
 
             if (e.KeyData == Keys.Escape) { txtSearchGames.Focus(); }
             if (e.KeyData == Keys.F5) { btnUpdateGameList_Click(null, null); }
         }
 
-        void dgvGames_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowHeader()) return;
-
-            BIND.Game = dgvGetCurrentItem<Game>(sender);
-
-            //pnlInfoScroll.AutoScrollPosition = new Point(pnlInfoScroll.AutoScrollPosition.X, 0);
-            //pnlInfoScroll.VerticalScroll.Value = 0;
-
-            //LoadGameExtendBase();
-            //await LoadGameExtend();
-
-            ////Update GameExtend
-            //if (GameExtendBind.IsNull() || GameExtendBind.ConsoleID == 0)
-            //{
-            //    btnUpdateInfo_Click(null, null);
-            //}
-
-            //f.tabMain.SelectedTab = f.tabGameInfo;
-
-            //dgvAchievements.Focus();
-        }
-
-        async Task LoadGamesIcon()
-        {
-            foreach (DataGridView dgv in BIND.lstDgvGames)
-            {
-                await Task.Run(() =>
-                {
-                    if (dgv.DataSource.IsNull() || dgv.RowCount == 0) { return; }
-
-                    int index = dgv.FirstDisplayedScrollingRowIndex;
-                    int nItems = (int)Math.Ceiling((double)(dgv.Height - 29) / 37) + 12;
-
-                    var list = dgv.DataSource as ListBind<Game>;
-                    //var list = dgv.DataSource as DataTable;
-
-                    if (list == null) return;
-
-                    for (int i = index; i < index + nItems; i++)
-                    {
-                        if (i >= list.Count) { break; }
-
-                        list[i].SetImageIconBitmap();
-                    }
-                    dgv.InvokeIfRequired(dgv.Refresh);
-                });
-            }
-        }
-
-        async void mniPlayGame_MouseDown(object sender, MouseEventArgs e)
+        static async void mniPlayGame_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var game = dgvGetCurrentItem<Game>(dgvGames);
+            var game = dgvGames.GetSelectedItem<Game>();
 
             if (await game.InsertToPlay())
             {
                 lstGames.Remove(game);
                 lstGamesSearch.Remove(game);
                 //lstGamesToPlay.Insert(0, game);
-                await LoadGamesIcon();
+                await MainCommon.LoadGamesIcon();
                 //lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
             }
         }
 
-        async void mniHideGame_MouseDown(object sender, MouseEventArgs e)
+        static async void mniHideGame_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var game = dgvGetCurrentItem<Game>(dgvGames);
+            var game = dgvGames.GetSelectedItem<Game>();
 
             if (await game.InsertToHide())
             {
@@ -438,32 +382,20 @@ namespace RADB
                 lstGames.Remove(game);
                 lstGamesSearch.Remove(game);
                 //lstGamesToHide.Insert(0, game);
-                await LoadGamesIcon();
+                await MainCommon.LoadGamesIcon();
                 //lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
             }
         }
 
-        async void mniMergeGameBadges_MouseDown(object sender, MouseEventArgs e)
+        static async void mniMergeGameBadges_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var game = dgvGetCurrentItem<Game>(dgvGames);
+            var game = dgvGames.GetSelectedItem<Game>();
 
             DisablePanelGames();
             await RA.MergeGameBadges(game);
             EnablePanelGames();
-        }
-        #endregion
-
-        #region Common
-        T dgvGetCurrentItem<T>(object sender) where T : class
-        {
-            return MainLogic.dgvGetCurrentItem<T>(sender);
-        }
-
-        void dgv_KeyPress(object sender, KeyPressEventArgs e, string columnName)
-        {
-            MainLogic.dgv_KeyPress(sender, e, columnName);
         }
         #endregion
     }

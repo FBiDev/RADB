@@ -5,55 +5,52 @@ using GNX;
 
 namespace RADB
 {
-    public partial class GameToPlayMain
+    public static partial class MainGameToPlay
     {
-        public ListBind<Game> lstGamesToPlay = new ListBind<Game>();
-
-        public GameToPlayMain()
-        {
-            f = BIND.f;
-            GamesToPlay_Init();
-        }
+        static RA RA = new RA();
+        static ListBind<Game> lstGamesToPlay = new ListBind<Game>();
 
         #region GamesToPlay
-        void GamesToPlay_Init()
+        public async static Task GamesToPlay_Init()
         {
-            f.Shown += GamesToPlay_Shown;
+            BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabGamesToPlay) { dgvGamesToPlay.Focus(); } };
+
             mniRemoveGameToPlay.MouseDown += mniRemoveGameToPlay_MouseDown;
-            BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == f.tabConsoles) { dgvGamesToPlay.Focus(); } };
 
             dgvGamesToPlay.AutoGenerateColumns = false;
             dgvGamesToPlay.DataSource = lstGamesToPlay;
 
-            //dgvGamesToPlay.CellPainting += dgvGames_CellPainting;
+            //dgvGamesToPlay.CellPainting += MainCommon.GridViewAdjustImageQuality;
             dgvGamesToPlay.MouseDown += (sender, e) => dgvGamesToPlay.ShowContextMenu(e, mnuGamesToPlay);
 
-            //dgvGamesToPlay.CellDoubleClick += dgvGames_CellDoubleClick;
+            dgvGamesToPlay.CellDoubleClick += MainCommon.ChangeBindGame;
             //dgvGamesToPlay.MouseWheel += dgvGames_MouseWheel;
             //dgvGamesToPlay.Scroll += dgvGames_Scroll;
             //dgvGamesToPlay.Sorted += dgvGames_Sorted;
 
             BIND.lstDgvGames.Add(dgvGamesToPlay);
+
+            await GamesToPlay_Shown(null, null);
         }
 
-        async void GamesToPlay_Shown(object sender, EventArgs e)
+        static async Task GamesToPlay_Shown(object sender, EventArgs e)
         {
             await LoadGamesToPlay();
         }
 
-        async Task LoadGamesToPlay()
+        static async Task LoadGamesToPlay()
         {
             lstGamesToPlay.Clear();
             lstGamesToPlay.AddRange(await Game.ListToPlay());
             lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
-            //await LoadGamesIcon();
+            //await MainCommon.LoadGamesIcon();
         }
 
-        async void mniRemoveGameToPlay_MouseDown(object sender, MouseEventArgs e)
+        static async void mniRemoveGameToPlay_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var game = dgvGetCurrentItem<Game>(dgvGamesToPlay);
+            var game = dgvGamesToPlay.GetSelectedItem<Game>();
 
             if (await game.DeleteFromPlay())
             {
@@ -67,18 +64,6 @@ namespace RADB
                 lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
                 //await LoadGamesIcon();
             }
-        }
-        #endregion
-
-        #region Common
-        T dgvGetCurrentItem<T>(object sender) where T : class
-        {
-            return MainLogic.dgvGetCurrentItem<T>(sender);
-        }
-
-        void dgv_KeyPress(object sender, KeyPressEventArgs e, string columnName)
-        {
-            MainLogic.dgv_KeyPress(sender, e, columnName);
         }
         #endregion
     }

@@ -188,7 +188,6 @@
     <Compile Include="src\ctools\Download.cs" />
     <Compile Include="src\ctools\Archive.cs" />
     <Compile Include="src\ctools\DownloadFile.cs" />
-    <Compile Include="src\forms\MainLogic.cs" />
     <Compile Include="src\forms\TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,16 +236,16 @@
       <TargetPath>Data\database.db</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <Compile Include="src\forms\MainLogicVars.cs" />
-    <Compile Include="src\controller\ConsoleMain.cs" />
     <Compile Include="src\cmodel\BIND.cs" />
-    <Compile Include="src\controller\GameMain.cs" />
-    <Compile Include="src\controller\GameMainControls.cs" />
-    <Compile Include="src\controller\ConsoleMainControls.cs" />
-    <Compile Include="src\controller\AboutMain.cs" />
-    <Compile Include="src\controller\AboutMainControls.cs" />
-    <Compile Include="src\controller\GameToPlayMain.cs" />
-    <Compile Include="src\controller\GameToPlayMainControls.cs" />
+    <Compile Include="src\controller\Main\MainAbout.cs" />
+    <Compile Include="src\controller\Main\MainControls.cs" />
+    <Compile Include="src\controller\Main\MainConsole.cs" />
+    <Compile Include="src\controller\Main\MainGame.cs" />
+    <Compile Include="src\controller\Main\MainGameToHide.cs" />
+    <Compile Include="src\controller\Main\MainGameToPlay.cs" />
+    <Compile Include="src\controller\Main\MainGameInfo.cs" />
+    <Compile Include="src\controller\Main\MainUserInfo.cs" />
+    <Compile Include="src\controller\Main\MainCommon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -311,6 +310,7 @@
   <ItemGroup>
     <Folder Include="x86\referenced\" />
     <Folder Include="src\controller\" />
+    <Folder Include="src\controller\Main\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
