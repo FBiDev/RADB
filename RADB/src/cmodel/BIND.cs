@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GNX;
 
 namespace RADB
 {
@@ -10,14 +11,20 @@ namespace RADB
         public static Main f;
 
         public delegate Task AsyncAction();
+        public delegate bool ActionWithGame(Game game);
 
         public static event Action OnRALoggedChanged = delegate { };
         public static event Action OnUserChanged = delegate { };
         public static event Action OnTabMainChanged = delegate { };
+
         public static event AsyncAction OnGameListChanged = delegate { return Task.Run(() => { }); };
         public static event AsyncAction OnConsoleChanged = delegate { return Task.Run(() => { }); };
         public static event AsyncAction OnGameChanged = delegate { return Task.Run(() => { }); };
         public static event AsyncAction OnGameExtendChanged = delegate { return Task.Run(() => { }); };
+
+        public static event ActionWithGame OnAddGamesToPlay = delegate { return false; };
+        public static event ActionWithGame OnAddGamesToHide = delegate { return false; };
+        public static event ActionWithGame OnAddGames = delegate { return false; };
 
         static bool _RALogged;
         public static bool RALogged
@@ -53,6 +60,10 @@ namespace RADB
             if (changed)
                 OnGameListChanged();
         }
+
+        public static bool AddGamesToPlay(Game game) { return OnAddGamesToPlay(game); }
+        public static bool AddGamesToHide(Game game) { return OnAddGamesToHide(game); }
+        public static bool AddGames(Game game) { return OnAddGames(game); }
 
         static Console _Console;
         public static Console Console

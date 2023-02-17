@@ -2,8 +2,6 @@
 using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Drawing.Drawing2D;
-using System.Drawing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using GNX;

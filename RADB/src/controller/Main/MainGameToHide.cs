@@ -14,6 +14,12 @@ namespace RADB
         public static async Task GamesToHide_Init()
         {
             BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabGamesToHide) { dgvGamesToHide.Focus(); } };
+            BIND.OnAddGamesToHide += (game) =>
+            {
+                lstGamesToHide.Insert(0, game);
+                lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
+                return true;
+            };
             //f.Shown += GamesToHide_Shown;
             mniRemoveGameToHide.MouseDown += mniRemoveGameToHide_MouseDown;
 
@@ -25,7 +31,6 @@ namespace RADB
             dgvGamesToHide.Columns.Format(CellStyle.NumberCenter, 4, 5, 6);
             dgvGamesToHide.Columns.Format(CellStyle.DateCenter, 7);
 
-            //dgvGamesToHide.CellPainting += MainCommon.GridViewAdjustImageQuality;
             dgvGamesToHide.MouseDown += (sender, e) => dgvGamesToHide.ShowContextMenu(e, mnuGamesToHide);
             dgvGamesToHide.CellDoubleClick += MainCommon.ChangeBindGame;
             //dgvGamesToHide.MouseWheel += dgvGames_MouseWheel;
@@ -47,8 +52,6 @@ namespace RADB
             lstGamesToHide.Clear();
             lstGamesToHide.AddRange(await Game.ListToHide());
 
-            //await LoadGamesIcon();
-
             lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
             dgvGamesToHide.Refresh();
         }
@@ -61,16 +64,13 @@ namespace RADB
 
             if (await game.DeleteFromHide())
             {
-                if (BIND.Console.NotNull() && BIND.Console.ID == game.ConsoleID)
-                {
-                    //lstGames.Insert(0, game);
-                    //lstGamesSearch.Insert(0, game);
-                }
-
                 lstGamesToHide.Remove(game);
                 lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
 
-                //await LoadGamesIcon();
+                if (BIND.Console.NotNull() && BIND.Console.ID == game.ConsoleID)
+                {
+                    BIND.AddGames(game);
+                }
             }
         }
         #endregion

@@ -14,13 +14,18 @@ namespace RADB
         public async static Task GamesToPlay_Init()
         {
             BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabGamesToPlay) { dgvGamesToPlay.Focus(); } };
+            BIND.OnAddGamesToPlay += (game) =>
+            {
+                lstGamesToPlay.Insert(0, game);
+                lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
+                return true;
+            };
 
             mniRemoveGameToPlay.MouseDown += mniRemoveGameToPlay_MouseDown;
 
             dgvGamesToPlay.AutoGenerateColumns = false;
             dgvGamesToPlay.DataSource = lstGamesToPlay;
 
-            //dgvGamesToPlay.CellPainting += MainCommon.GridViewAdjustImageQuality;
             dgvGamesToPlay.MouseDown += (sender, e) => dgvGamesToPlay.ShowContextMenu(e, mnuGamesToPlay);
 
             dgvGamesToPlay.CellDoubleClick += MainCommon.ChangeBindGame;
@@ -43,7 +48,6 @@ namespace RADB
             lstGamesToPlay.Clear();
             lstGamesToPlay.AddRange(await Game.ListToPlay());
             lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
-            //await MainCommon.LoadGamesIcon();
         }
 
         static async void mniRemoveGameToPlay_MouseDown(object sender, MouseEventArgs e)
@@ -54,15 +58,13 @@ namespace RADB
 
             if (await game.DeleteFromPlay())
             {
-                if (BIND.Console.NotNull() && BIND.Console.ID == game.ConsoleID)
-                {
-                    //lstGames.Insert(0, game);
-                    //lstGamesSearch.Insert(0, game);
-                }
-
                 lstGamesToPlay.Remove(game);
                 lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
-                //await LoadGamesIcon();
+
+                if (BIND.Console.NotNull() && BIND.Console.ID == game.ConsoleID)
+                {
+                    BIND.AddGames(game);
+                }
             }
         }
         #endregion

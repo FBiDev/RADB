@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -180,12 +180,12 @@ namespace RADB
             return Load<List<Game>>(await Banco.ExecutarSelect(sql));
         }
 
-        public async static Task<bool> InsertToHide(Game obj)
+        public async static Task<bool> SaveToHide(Game obj)
         {
             string sql = Resources.GameInsertToHide;
             var parameters = MountParameters(obj);
 
-            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
+            return await Task.Run(async () => (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0);
         }
 
         public async static Task<bool> DeleteFromHide(Game obj)
@@ -207,12 +207,12 @@ namespace RADB
             return Load<List<Game>>(await Banco.ExecutarSelect(sql));
         }
 
-        public async static Task<bool> InsertToPlay(Game obj)
+        public async static Task<bool> SaveToPlay(Game obj)
         {
             string sql = Resources.GameInsertToPlay;
             var parameters = MountParameters(obj);
 
-            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
+            return await Task.Run(async () => (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0);
         }
 
         public async static Task<bool> DeleteFromPlay(Game obj)

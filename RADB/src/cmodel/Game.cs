@@ -84,9 +84,9 @@ namespace RADB
             return (await GameDao.ListToHide());
         }
 
-        public async Task<bool> InsertToHide()
+        public async Task<bool> SaveToHide()
         {
-            return await GameDao.InsertToHide(this);
+            return await GameDao.SaveToHide(this);
         }
 
         public async Task<bool> DeleteFromHide()
@@ -99,9 +99,9 @@ namespace RADB
             return await GameDao.ListToPlay();
         }
 
-        public async Task<bool> InsertToPlay()
+        public async Task<bool> SaveToPlay()
         {
-            return await GameDao.InsertToPlay(this);
+            return await GameDao.SaveToPlay(this);
         }
 
         public async Task<bool> DeleteFromPlay()

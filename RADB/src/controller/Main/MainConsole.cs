@@ -48,10 +48,10 @@ namespace RADB
 
         static Task UpdateConsoleAllGames()
         {
-            var console = lstConsoles.Where(x => x.Name == "All Games");
-            console.First().NumGames = lstConsoles.Except(console).Sum(x => x.NumGames);
-            console.First().TotalGames = lstConsoles.Except(console).Sum(x => x.TotalGames);
-            return null;
+            var console = lstConsoles.First(x => x.Name == "All Games");
+            console.NumGames = lstConsoles.Except(new[] { console }).Sum(x => x.NumGames);
+            console.TotalGames = lstConsoles.Except(new[] { console }).Sum(x => x.TotalGames);
+            return Task.FromResult(0);
         }
 
         static void DisablePanelConsoles()

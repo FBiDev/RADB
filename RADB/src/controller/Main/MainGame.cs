@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,8 +12,9 @@ namespace RADB
     {
         static RA RA = new RA();
 
-        static List<Game> lstGames = new List<Game>();
-        static ListBind<Game> lstGamesSearch = new ListBind<Game>();
+        static List<Game> lstGamesAll = new List<Game>();
+        static ListBind<Game> lstGamesByFilters = new ListBind<Game>();
+        static IEnumerable<Game> lstGamesByPlataform;
 
         #region Games
         public static async Task Games_Init()
@@ -30,8 +29,13 @@ namespace RADB
                     dgvGames.Focus();
                 }
             };
+            BIND.OnAddGames += (game) =>
+            {
+                lstGamesAll.Insert(0, game);
+                lstGamesByFilters.Insert(0, game);
+                return true;
+            };
 
-            //f.Shown += Games_Shown;
             mniMergeGameBadges.MouseDown += mniMergeGameBadges_MouseDown;
             mniPlayGame.MouseDown += mniPlayGame_MouseDown;
             mniHideGame.MouseDown += mniHideGame_MouseDown;
@@ -46,7 +50,6 @@ namespace RADB
             dgvGames.Columns.Format(CellStyle.NumberCenter, 4, 5, 6);
             dgvGames.Columns.Format(CellStyle.DateCenter, 7);
 
-            //dgvGames.CellPainting += MainCommon.GridViewAdjustImageQuality;
             dgvGames.DataSourceChanged += dgvGames_DataSourceChanged;
 
             dgvGames.MouseDown += (sender, e) => dgvGames.ShowContextMenu(e, mnuGames);
@@ -58,7 +61,6 @@ namespace RADB
             dgvGames.Scroll += dgvGames_Scroll;
             dgvGames.Sorted += dgvGames_Sorted;
 
-            //txtSearchGames.TextChanged += async (sender, e) => await txtSearchGames_TextChanged(sender, e);
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
             txtSearchGames.KeyDown += txtSearchGames_KeyDown;
 
@@ -93,7 +95,7 @@ namespace RADB
 
             //ResetGamesLabels(false);
             //Load All Games //Not Block UI
-            lstGames = await Game.Search(0);
+            lstGamesAll = await Game.Search(0);
         }
 
         static void DisablePanelGames()
@@ -117,7 +119,7 @@ namespace RADB
         static Task ResetGamesLabels()
         {
             DisablePanelGames();
-            lstGamesSearch.Clear();
+            lstGamesByFilters.Clear();
 
             UpdateConsoleLabels();
 
@@ -147,10 +149,13 @@ namespace RADB
         {
             if (BIND.Console.IsNull()) { return null; }
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
-            //lstGames = await Game.Search(SESSION.Console.ID);
 
-            //TODO: update to filter by console
-            if (lstGames.Count == 0)
+            if (BIND.Console.ID > 0)
+                lstGamesByPlataform = lstGamesAll.Where(x => x.ConsoleID == BIND.Console.ID);
+            else
+                lstGamesByPlataform = lstGamesAll;
+
+            if (lstGamesByPlataform.Count() == 0)
             {
                 var fileExist = File.Exists(Folder.GameData + BIND.Console.Name + ".json");
                 if (fileExist == false)
@@ -174,7 +179,7 @@ namespace RADB
             if (BIND.Console.IsNull()) { MessageBox.Show("No Console Selected"); return; }
 
             DisablePanelGames();
-            lstGamesSearch.Clear();
+            lstGamesByFilters.Clear();
             //Download GameList
             TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
             await RA.DownloadGameList(BIND.Console);
@@ -187,7 +192,15 @@ namespace RADB
 
             //Load Games
             TimeSpan ini2 = new TimeSpan(DateTime.Now.Ticks);
-            //TODO Reload list of games
+            if (BIND.Console.ID > 0)
+                lstGamesAll.RemoveAll(x => x.ConsoleID == BIND.Console.ID);
+            else
+                lstGamesAll.Clear();
+
+            lstGamesAll.AddRange(await Game.Search(BIND.Console.ID));
+
+            //TODO Reload list of games to Play and Hide
+
             await LoadGames();
             //await LoadGamesToPlay();
             //await LoadGamesToHide();
@@ -196,8 +209,8 @@ namespace RADB
             TimeSpan fim2 = new TimeSpan(DateTime.Now.Ticks) - ini2;
 
             //Update ConsoleBind
-            BIND.Console.NumGames = lstGames.Count(g => g.NumAchievements > 0);
-            BIND.Console.TotalGames = lstGames.Count();
+            BIND.Console.NumGames = lstGamesByFilters.Count(g => g.NumAchievements > 0);
+            BIND.Console.TotalGames = lstGamesByFilters.Count();
 
             MainCommon.WriteOutput("[" + DateTime.Now.ToTimeLong() + "] " + BIND.Console.Name + " Updated!");
 
@@ -209,8 +222,8 @@ namespace RADB
             if (BIND.Console == null) return;
 
             //Update Console
-            var numGames = lstGamesSearch.Count(g => g.NumAchievements > 0);
-            var totalGames = lstGamesSearch.Count();
+            var numGames = lstGamesByFilters.Count(g => g.NumAchievements > 0);
+            var totalGames = lstGamesByFilters.Count();
             lblConsoleName.Text = BIND.Console.Name;
             lblConsoleGamesTotal.Text = numGames + " of " + totalGames + " Games";
         }
@@ -218,7 +231,6 @@ namespace RADB
         static void txtSearchGames_TextChanged(object sender, EventArgs e)
         {
             //if (txtSearchGames.Text.Count() > 0 && txtSearchGames.Text.Count() < 3) { return; }
-            ListBind<Game> newSearch = new ListBind<Game>();
             List<Predicate<Game>> predicates = new List<Predicate<Game>>();
 
             var gameTypes = new Dictionary<FlatCheckBoxA, string[]>
@@ -248,25 +260,19 @@ namespace RADB
             string search = txtSearchGames.Text;
             bool WithoutAchievements = !chkWithoutAchievements.Checked;
 
-            IEnumerable<Game> nList;
-            if (BIND.Console.ID > 0)
-                nList = lstGames.Where(x => x.ConsoleID == BIND.Console.ID);
-            else
-                nList = lstGames;
-
-            foreach (Game obj in nList)
+            lstGamesByFilters = new ListBind<Game>();
+            foreach (Game obj in lstGamesByPlataform)
             {
                 bool title = (obj.Title.HasValue() && obj.Title.ContainsExtend(search));
                 bool noCheevos = WithoutAchievements && obj.NumAchievements == 0;
 
                 if (title && !noCheevos && predicates.Any(p => p(obj)))
                 {
-                    newSearch.Add(obj);
+                    lstGamesByFilters.Add(obj);
                 }
             }
 
-            lstGamesSearch = newSearch;
-            dgvGames.DataSource = lstGamesSearch;
+            dgvGames.DataSource = lstGamesByFilters;
 
             UpdateConsoleLabels();
 
@@ -356,13 +362,10 @@ namespace RADB
 
             var game = dgvGames.GetSelectedItem<Game>();
 
-            if (await game.InsertToPlay())
+            if (await game.SaveToPlay() && BIND.AddGamesToPlay(game))
             {
-                lstGames.Remove(game);
-                lstGamesSearch.Remove(game);
-                //lstGamesToPlay.Insert(0, game);
-                await MainCommon.LoadGamesIcon();
-                //lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
+                lstGamesAll.Remove(game);
+                lstGamesByFilters.Remove(game);
             }
         }
 
@@ -372,18 +375,10 @@ namespace RADB
 
             var game = dgvGames.GetSelectedItem<Game>();
 
-            if (await game.InsertToHide())
+            if (await game.SaveToHide() && BIND.AddGamesToHide(game))
             {
-                //CurrencyManager cMnger = (CurrencyManager)BindingContext[dgvGames.DataSource];
-                //cMnger.SuspendBinding();
-                //dgvGames.SelectedRows[0].Visible = false;
-                //cMnger.ResumeBinding();
-
-                lstGames.Remove(game);
-                lstGamesSearch.Remove(game);
-                //lstGamesToHide.Insert(0, game);
-                await MainCommon.LoadGamesIcon();
-                //lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
+                lstGamesAll.Remove(game);
+                lstGamesByFilters.Remove(game);
             }
         }
 
