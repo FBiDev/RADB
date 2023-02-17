@@ -166,7 +166,7 @@ namespace RADB
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
 
             MainCommon.WriteOutput("Games Loaded in: " + Convert.ToInt32(fim0.TotalMilliseconds) + " Milliseconds");
-            return null;
+            return Task.FromResult(0);
         }
 
         static async void btnUpdateGameList_Click(object sender, EventArgs e)
