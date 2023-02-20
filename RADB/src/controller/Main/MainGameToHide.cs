@@ -67,7 +67,7 @@ namespace RADB
                 lstGamesToHide.Remove(game);
                 lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
 
-                if (BIND.Console.NotNull() && BIND.Console.ID == game.ConsoleID)
+                if (BIND.Console.NotNull() && (BIND.Console.ID == game.ConsoleID || BIND.Console.ID == 0))
                 {
                     BIND.AddGames(game);
                 }

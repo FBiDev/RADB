@@ -61,7 +61,7 @@ namespace RADB
                 lstGamesToPlay.Remove(game);
                 lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
 
-                if (BIND.Console.NotNull() && BIND.Console.ID == game.ConsoleID)
+                if (BIND.Console.NotNull() && (BIND.Console.ID == game.ConsoleID || BIND.Console.ID == 0))
                 {
                     BIND.AddGames(game);
                 }
