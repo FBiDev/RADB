@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GNX;
+using System.Diagnostics;
 
 namespace RADB
 {
@@ -145,33 +146,34 @@ namespace RADB
             form.tabMain.Refresh();
         }
 
-        static Task LoadGames()
+        static async Task LoadGames()
         {
-            if (BIND.Console.IsNull()) { return null; }
-            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
+            if (BIND.Console.IsNull()) { return; }
 
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            lstGamesByPlataform = lstGamesAll;
             if (BIND.Console.ID > 0)
                 lstGamesByPlataform = lstGamesAll.Where(x => x.ConsoleID == BIND.Console.ID);
-            else
-                lstGamesByPlataform = lstGamesAll;
 
-            if (lstGamesByPlataform.Count() == 0)
+            if (lstGamesByPlataform.Empty())
             {
-                var fileExist = File.Exists(Folder.GameData + BIND.Console.Name + ".json");
-                if (fileExist == false)
+                var fileName = Folder.GameData + BIND.Console.Name + ".json";
+                if (File.Exists(fileName) == false)
                 {
                     btnUpdateGameList_Click(null, null);
                 }
             }
 
-            txtSearchGames_TextChanged(null, null);
+            await FilterGameList();
             EnablePanelGames();
 
             dgvGames.Focus();
-            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
+            stopwatch.Stop();
 
-            MainCommon.WriteOutput("Games Loaded in: " + Convert.ToInt32(fim0.TotalMilliseconds) + " Milliseconds");
-            return Task.FromResult(0);
+            MainCommon.WriteOutput("Games Loaded in: " + stopwatch.ElapsedMilliseconds + " Milliseconds");
+            await Task.CompletedTask;
         }
 
         static async void btnUpdateGameList_Click(object sender, EventArgs e)
@@ -180,18 +182,10 @@ namespace RADB
 
             DisablePanelGames();
             lstGamesByFilters.Clear();
-            //Download GameList
-            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
+
             await RA.DownloadGameList(BIND.Console);
-            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
-
-            //Download game icons
-            TimeSpan ini1 = new TimeSpan(DateTime.Now.Ticks);
             await RA.DownloadGamesIcon(BIND.Console, Browser.dlGamesIcon);
-            TimeSpan fim1 = new TimeSpan(DateTime.Now.Ticks) - ini1;
 
-            //Load Games
-            TimeSpan ini2 = new TimeSpan(DateTime.Now.Ticks);
             if (BIND.Console.ID > 0)
                 lstGamesAll.RemoveAll(x => x.ConsoleID == BIND.Console.ID);
             else
@@ -199,18 +193,7 @@ namespace RADB
 
             lstGamesAll.AddRange(await Game.Search(BIND.Console.ID));
 
-            //TODO Reload list of games to Play and Hide
-
             await LoadGames();
-            //await LoadGamesToPlay();
-            //await LoadGamesToHide();
-
-            //UpdateConsoleLabels();
-            TimeSpan fim2 = new TimeSpan(DateTime.Now.Ticks) - ini2;
-
-            //Update ConsoleBind
-            BIND.Console.NumGames = lstGamesByFilters.Count(g => g.NumAchievements > 0);
-            BIND.Console.TotalGames = lstGamesByFilters.Count();
 
             MainCommon.WriteOutput("[" + DateTime.Now.ToTimeLong() + "] " + BIND.Console.Name + " Updated!");
 
@@ -221,14 +204,13 @@ namespace RADB
         {
             if (BIND.Console == null) return;
 
-            //Update Console
             var numGames = lstGamesByFilters.Count(g => g.NumAchievements > 0);
             var totalGames = lstGamesByFilters.Count();
             lblConsoleName.Text = BIND.Console.Name;
             lblConsoleGamesTotal.Text = numGames + " of " + totalGames + " Games";
         }
 
-        static void txtSearchGames_TextChanged(object sender, EventArgs e)
+        static async Task FilterGameList()
         {
             //if (txtSearchGames.Text.Count() > 0 && txtSearchGames.Text.Count() < 3) { return; }
             List<Predicate<Game>> predicates = new List<Predicate<Game>>();
@@ -292,6 +274,12 @@ namespace RADB
 
                 if (txtFocus) { txtSearchGames.Focus(); }
             }
+            await Task.CompletedTask;
+        }
+
+        static async void txtSearchGames_TextChanged(object sender, EventArgs e)
+        {
+            await FilterGameList();
         }
 
         static void txtSearchGames_KeyDown(object sender, KeyEventArgs e)
@@ -308,9 +296,9 @@ namespace RADB
             dgvGames.Focus();
         }
 
-        static void chkUpdateDataGrid(object sender, EventArgs e)
+        static async void chkUpdateDataGrid(object sender, EventArgs e)
         {
-            txtSearchGames_TextChanged(null, null);
+            await FilterGameList();
             dgvGames.Focus();
         }
 
