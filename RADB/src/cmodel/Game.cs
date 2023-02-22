@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 //
 using System.Drawing;
@@ -86,7 +86,7 @@ namespace RADB
 
         public async Task<bool> SaveToHide()
         {
-            return await GameDao.SaveToHide(this);
+            return await GameDao.InsertToHide(this);
         }
 
         public async Task<bool> DeleteFromHide()
@@ -101,7 +101,7 @@ namespace RADB
 
         public async Task<bool> SaveToPlay()
         {
-            return await GameDao.SaveToPlay(this);
+            return await GameDao.InsertToPlay(this);
         }
 
         public async Task<bool> DeleteFromPlay()

@@ -14,6 +14,7 @@ namespace RADB
         public async static Task GamesToPlay_Init()
         {
             BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabGamesToPlay) { dgvGamesToPlay.Focus(); } };
+            BIND.OnGameListChanged += LoadGamesToPlay;
             BIND.OnAddGamesToPlay += (game) =>
             {
                 lstGamesToPlay.Insert(0, game);

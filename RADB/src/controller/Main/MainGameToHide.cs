@@ -14,6 +14,7 @@ namespace RADB
         public static async Task GamesToHide_Init()
         {
             BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabGamesToHide) { dgvGamesToHide.Focus(); } };
+            BIND.OnGameListChanged += LoadGamesToHide;
             BIND.OnAddGamesToHide += (game) =>
             {
                 lstGamesToHide.Insert(0, game);

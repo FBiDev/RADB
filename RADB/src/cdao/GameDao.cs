@@ -180,7 +180,7 @@ namespace RADB
             return Load<List<Game>>(await Banco.ExecutarSelect(sql));
         }
 
-        public async static Task<bool> SaveToHide(Game obj)
+        public async static Task<bool> InsertToHide(Game obj)
         {
             string sql = Resources.GameInsertToHide;
             var parameters = MountParameters(obj);
@@ -207,7 +207,7 @@ namespace RADB
             return Load<List<Game>>(await Banco.ExecutarSelect(sql));
         }
 
-        public async static Task<bool> SaveToPlay(Game obj)
+        public async static Task<bool> InsertToPlay(Game obj)
         {
             string sql = Resources.GameInsertToPlay;
             var parameters = MountParameters(obj);

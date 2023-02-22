@@ -14,7 +14,7 @@ namespace RADB
         #region Consoles
         public static async Task Console_Init()
         {
-            BIND.OnGameListChanged += UpdateConsoleAllGames;
+            BIND.OnGameListChanged += UpdateConsoleList;
             BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabConsoles) { dgvConsoles.Focus(); } };
 
             //form.Shown += Console_Shown;
@@ -24,7 +24,7 @@ namespace RADB
             btnUpdateConsoles.Click += btnUpdateConsoles_Click;
 
             dgvConsoles.AutoGenerateColumns = true;
-            //dgvConsoles.DataSource = lstConsoles;
+            dgvConsoles.DataSource = lstConsoles;
 
             dgvConsoles.Columns.Format(CellStyle.StringCenter, 0);
             dgvConsoles.Columns.Format(CellStyle.NumberCenter, 3, 4);
@@ -46,12 +46,15 @@ namespace RADB
             await LoadConsoles();
         }
 
-        static Task UpdateConsoleAllGames()
+        static async Task UpdateConsoleList()
         {
+            lstConsoles.Clear();
+            lstConsoles.AddRange(new ListBind<Console>(await Console.List()));
+
             var console = lstConsoles.First(x => x.Name == "All Games");
             console.NumGames = lstConsoles.Except(new[] { console }).Sum(x => x.NumGames);
             console.TotalGames = lstConsoles.Except(new[] { console }).Sum(x => x.TotalGames);
-            return Task.FromResult(0);
+            //return Task.FromResult(0);
         }
 
         static void DisablePanelConsoles()
@@ -84,18 +87,16 @@ namespace RADB
 
             //Not Block UI
             //await Task.Run(async () => { lstConsoles = new ListBind<Console>(await Console.List()); });
-            lstConsoles = new ListBind<Console>(await Console.List());
-
-            dgvConsoles.DataSource = lstConsoles;
+            lstConsoles.Clear();
+            lstConsoles.AddRange(new ListBind<Console>(await Console.List()));
 
             EnablePanelConsoles();
 
             if (lstConsoles.Empty())
-            {
                 btnUpdateConsoles_Click(null, null);
-            }
 
-            dgvConsoles.Focus();
+            if (BIND.SelectedTab == form.tabConsoles)
+                dgvConsoles.Focus();
         }
 
         static async void btnUpdateConsoles_Click(object sender, EventArgs e)
