@@ -42,14 +42,15 @@ namespace RADB
             Browser.dlConsoles.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
             Browser.dlConsolesGamesIcon.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
 
+            MainCommon.ChangeTab(form.tabConsoles);
             ResetConsolesLabels();
             await LoadConsoles();
         }
 
         static async Task UpdateConsoleList()
         {
-            lstConsoles.Clear();
-            lstConsoles.AddRange(new ListBind<Console>(await Console.List()));
+            await Task.Run(async () => { lstConsoles = new ListBind<Console>(await Console.List()); });
+            dgvConsoles.DataSource = lstConsoles;
 
             var console = lstConsoles.First(x => x.Name == "All Games");
             console.NumGames = lstConsoles.Except(new[] { console }).Sum(x => x.NumGames);
@@ -86,9 +87,9 @@ namespace RADB
             DisablePanelConsoles();
 
             //Not Block UI
-            //await Task.Run(async () => { lstConsoles = new ListBind<Console>(await Console.List()); });
-            lstConsoles.Clear();
-            lstConsoles.AddRange(new ListBind<Console>(await Console.List()));
+            await Task.Run(async () => { lstConsoles = new ListBind<Console>(await Console.List()); });
+            //lstConsoles = new ListBind<Console>(await Console.List());
+            dgvConsoles.DataSource = lstConsoles;
 
             EnablePanelConsoles();
 

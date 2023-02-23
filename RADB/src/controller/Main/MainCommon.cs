@@ -87,6 +87,13 @@ namespace RADB
         #endregion
 
         #region Common
+        public static void ChangeTab(TabPage tab)
+        {
+            form.tabMain.SelectedTab = tab;
+            tabMain_SelectedIndexChanged(tabMain, null);
+            form.tabMain.Refresh();
+        }
+
         public static void WriteOutput(string text)
         {
             form.lblOutput.Text = text + Environment.NewLine + form.lblOutput.Text;

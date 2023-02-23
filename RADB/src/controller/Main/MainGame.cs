@@ -135,15 +135,9 @@ namespace RADB
 
             dgvGames.Columns["gConsole"].Visible = BIND.Console.ID == 0;
 
-            ChangeTab(form.tabGames);
+            MainCommon.ChangeTab(form.tabGames);
 
             return null;
-        }
-
-        static void ChangeTab(TabPage tab)
-        {
-            form.tabMain.SelectedTab = tab;
-            form.tabMain.Refresh();
         }
 
         static async Task LoadGames()
@@ -166,14 +160,13 @@ namespace RADB
                 }
             }
 
-            await FilterGameList();
+            await Task.Run(() => FilterGameList());
             EnablePanelGames();
 
             dgvGames.Focus();
             stopwatch.Stop();
 
             MainCommon.WriteOutput("Games Loaded in: " + stopwatch.ElapsedMilliseconds + " Milliseconds");
-            await Task.CompletedTask;
         }
 
         static async void btnUpdateGameList_Click(object sender, EventArgs e)
@@ -208,9 +201,26 @@ namespace RADB
             var totalGames = lstGamesByFilters.Count();
             lblConsoleName.Text = BIND.Console.Name;
             lblConsoleGamesTotal.Text = numGames + " of " + totalGames + " Games";
+
+            int scrollPosition = dgvGames.FirstDisplayedScrollingRowIndex;
+            bool maintainScroll = true;
+            if (maintainScroll)
+            {
+                bool txtFocus = txtSearchGames.Focused;
+
+                if (dgvGames.RowCount > 0 && scrollPosition > -1)
+                {
+                    if (scrollPosition >= dgvGames.RowCount)
+                        dgvGames.FirstDisplayedScrollingRowIndex = dgvGames.RowCount - 1;
+                    else
+                        dgvGames.FirstDisplayedScrollingRowIndex = scrollPosition;
+                }
+
+                if (txtFocus) { txtSearchGames.Focus(); }
+            }
         }
 
-        static async Task FilterGameList()
+        static Task FilterGameList()
         {
             //if (txtSearchGames.Text.Count() > 0 && txtSearchGames.Text.Count() < 3) { return; }
             List<Predicate<Game>> predicates = new List<Predicate<Game>>();
@@ -254,27 +264,13 @@ namespace RADB
                 }
             }
 
-            dgvGames.DataSource = lstGamesByFilters;
-
-            UpdateConsoleLabels();
-
-            int scrollPosition = dgvGames.FirstDisplayedScrollingRowIndex;
-            bool maintainScroll = true;
-            if (maintainScroll)
+            dgvGames.InvokeIfRequired(() =>
             {
-                bool txtFocus = txtSearchGames.Focused;
+                dgvGames.DataSource = lstGamesByFilters;
+                UpdateConsoleLabels();
+            });
 
-                if (dgvGames.RowCount > 0 && scrollPosition > -1)
-                {
-                    if (scrollPosition >= dgvGames.RowCount)
-                        dgvGames.FirstDisplayedScrollingRowIndex = dgvGames.RowCount - 1;
-                    else
-                        dgvGames.FirstDisplayedScrollingRowIndex = scrollPosition;
-                }
-
-                if (txtFocus) { txtSearchGames.Focus(); }
-            }
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         }
 
         static async void txtSearchGames_TextChanged(object sender, EventArgs e)
