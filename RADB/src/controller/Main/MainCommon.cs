@@ -11,7 +11,7 @@ namespace RADB
     public static partial class MainCommon
     {
         #region MAIN
-        static async Task Delay5s() { await Task.Run(() => { Thread.Sleep(3001); }); }
+        static async Task DelayShow() { await Task.Run(() => { Thread.Sleep(10); }); }
 
         public static void Main_Init(Main formDesign)
         {
@@ -39,7 +39,7 @@ namespace RADB
 
         static async void Main_Shown(object sender, EventArgs e)
         {
-            //await Delay5s();
+            await DelayShow();
             await MainConsole.Console_Init();
             await MainGame.Games_Init();
             await MainGameInfo.GameInfo_Init();
