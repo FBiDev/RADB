@@ -25,14 +25,16 @@ namespace RADB
             mniRemoveGameToPlay.MouseDown += mniRemoveGameToPlay_MouseDown;
 
             dgvGamesToPlay.AutoGenerateColumns = false;
-            dgvGamesToPlay.DataSource = lstGamesToPlay;
+            //dgvGamesToPlay.DataSource = lstGamesToPlay;
 
             dgvGamesToPlay.MouseDown += (sender, e) => dgvGamesToPlay.ShowContextMenu(e, mnuGamesToPlay);
 
             dgvGamesToPlay.CellDoubleClick += MainCommon.ChangeBindGame;
-            //dgvGamesToPlay.MouseWheel += dgvGames_MouseWheel;
-            //dgvGamesToPlay.Scroll += dgvGames_Scroll;
-            //dgvGamesToPlay.Sorted += dgvGames_Sorted;
+
+            dgvGamesToPlay.DataSourceChanged += LoadGamesToPlayIcons;
+            dgvGamesToPlay.Sorted += LoadGamesToPlayIcons;
+            dgvGamesToPlay.MouseWheel += dgvGamesToPlay_MouseWheel;
+            dgvGamesToPlay.Scroll += dgvGamesToPlay_Scroll;
 
             BIND.lstDgvGames.Add(dgvGamesToPlay);
 
@@ -46,9 +48,24 @@ namespace RADB
 
         static async Task LoadGamesToPlay()
         {
-            lstGamesToPlay.Clear();
-            lstGamesToPlay.AddRange(await Game.ListToPlay());
+            lstGamesToPlay = new ListBind<Game>(await Game.ListToPlay());
+            dgvGamesToPlay.DataSource = lstGamesToPlay;
+
             lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
+        }
+
+        static async void LoadGamesToPlayIcons(object sender, EventArgs e)
+        {
+            await MainCommon.LoadGridIcons(dgvGamesToPlay);
+        }
+
+        static int gamesToPlayWheelCounter;
+        static void dgvGamesToPlay_MouseWheel(object sender, MouseEventArgs e) { gamesToPlayWheelCounter = 1; }
+        static void dgvGamesToPlay_Scroll(object sender, EventArgs e)
+        {
+            if (gamesToPlayWheelCounter > 0 && gamesToPlayWheelCounter < 3) { gamesToPlayWheelCounter++; return; }
+            gamesToPlayWheelCounter = 0;
+            LoadGamesToPlayIcons(sender, e);
         }
 
         static async void mniRemoveGameToPlay_MouseDown(object sender, MouseEventArgs e)

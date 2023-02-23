@@ -116,6 +116,11 @@ namespace RADB
                 }
             }
 
+            foreach (var c in f.GetControls<FlatPictureBoxA>())
+            {
+                c.BackColor = PanelColor1;
+            }
+
             foreach (var c in f.GetControls<FlatPanelA>())
             {
                 c.BackColor = BackColor1;

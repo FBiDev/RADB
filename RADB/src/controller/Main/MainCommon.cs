@@ -48,7 +48,7 @@ namespace RADB
             await MainUserInfo.User_Init();
             await MainAbout.About_Init();
 
-            await LoadGamesIcon();
+            await LoadAllGamesIcon();
         }
 
         static void Main_KeyDown(object sender, KeyEventArgs e)
@@ -63,7 +63,7 @@ namespace RADB
             {
                 if (form.WindowState == FormWindowState.Maximized)
                 {
-                    await LoadGamesIcon();
+                    await LoadAllGamesIcon();
                 }
                 else if (form.WindowState == FormWindowState.Normal) { }
                 LastWindowState = form.WindowState;
@@ -106,30 +106,35 @@ namespace RADB
             BIND.Game = dgv.GetSelectedItem<Game>();
         }
 
-        public static async Task LoadGamesIcon()
+        public static async Task LoadGridIcons(DataGridView dgv)
+        {
+            await Task.Run(() =>
+            {
+                if (dgv.DataSource.IsNull() || dgv.RowCount == 0) { return; }
+
+                int index = dgv.FirstDisplayedScrollingRowIndex;
+                int nItems = (int)Math.Ceiling((double)(dgv.Height - 29) / 37) + 12;
+
+                var list = dgv.DataSource as ListBind<Game>;
+
+                if (list == null) return;
+
+                for (int i = index; i < index + nItems; i++)
+                {
+                    if (i >= list.Count) { break; }
+
+                    list[i].SetImageIconBitmap();
+                }
+            });
+            //dgv.Focus();
+            dgv.Refresh();
+        }
+
+        public static async Task LoadAllGamesIcon()
         {
             foreach (DataGridView dgv in BIND.lstDgvGames)
             {
-                await Task.Run(() =>
-                {
-                    if (dgv.DataSource.IsNull() || dgv.RowCount == 0) { return; }
-
-                    int index = dgv.FirstDisplayedScrollingRowIndex;
-                    int nItems = (int)Math.Ceiling((double)(dgv.Height - 29) / 37) + 12;
-
-                    var list = dgv.DataSource as ListBind<Game>;
-                    //var list = dgv.DataSource as DataTable;
-
-                    if (list == null) return;
-
-                    for (int i = index; i < index + nItems; i++)
-                    {
-                        if (i >= list.Count) { break; }
-
-                        list[i].SetImageIconBitmap();
-                    }
-                    dgv.InvokeIfRequired(dgv.Refresh);
-                });
+                await LoadGridIcons(dgv);
             }
         }
 

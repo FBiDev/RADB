@@ -43,13 +43,23 @@ namespace RADB
         {
             Browser.dlGameExtend.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
             Browser.dlGameExtendImages.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
+            HideDownloadControls();
+            return Task.CompletedTask;
+        }
 
-            return Task.FromResult(btnHashes.Enabled = false);
+        static void HideDownloadControls()
+        {
+            lblUpdateInfo.Text = string.Empty;
+            lblProgressInfo.Text = string.Empty;
+            pgbInfo.Value = 0;
+            pgbInfo.Visible = false;
         }
 
         static async Task LoadSelectedGame()
         {
             if (BIND.Game.IsNull()) { return; }
+
+            HideDownloadControls();
 
             pnlInfoScroll.AutoScrollPosition = new Point(pnlInfoScroll.AutoScrollPosition.X, 0);
             pnlInfoScroll.VerticalScroll.Value = 0;

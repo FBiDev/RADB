@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace RADB
 {
-    public static partial class MainGame
+    public partial class MainGame
     {
         static RA RA = new RA();
 
@@ -51,16 +51,15 @@ namespace RADB
             dgvGames.Columns.Format(CellStyle.NumberCenter, 4, 5, 6);
             dgvGames.Columns.Format(CellStyle.DateCenter, 7);
 
-            dgvGames.DataSourceChanged += dgvGames_DataSourceChanged;
-
             dgvGames.MouseDown += (sender, e) => dgvGames.ShowContextMenu(e, mnuGames);
             dgvGames.CellDoubleClick += MainCommon.ChangeBindGame;
             dgvGames.KeyPress += dgvGames_KeyPress;
             dgvGames.KeyDown += dgvGames_KeyDown;
 
+            dgvGames.DataSourceChanged += LoadGamesIcons;
+            dgvGames.Sorted += LoadGamesIcons;
             dgvGames.MouseWheel += dgvGames_MouseWheel;
             dgvGames.Scroll += dgvGames_Scroll;
-            dgvGames.Sorted += dgvGames_Sorted;
 
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
             txtSearchGames.KeyDown += txtSearchGames_KeyDown;
@@ -94,8 +93,7 @@ namespace RADB
 
             BIND.lstDgvGames.Add(dgvGames);
 
-            //ResetGamesLabels(false);
-            //Load All Games //Not Block UI
+            HideDownloadControls();
             lstGamesAll = await Game.Search(0);
         }
 
@@ -117,6 +115,14 @@ namespace RADB
             dgvGames.Enabled = true;
         }
 
+        static void HideDownloadControls()
+        {
+            lblUpdateGameList.Text = string.Empty;
+            lblProgressGameList.Text = string.Empty;
+            pgbGameList.Value = 0;
+            pgbGameList.Visible = false;
+        }
+
         static Task ResetGamesLabels()
         {
             DisablePanelGames();
@@ -124,10 +130,7 @@ namespace RADB
 
             UpdateConsoleLabels();
 
-            lblUpdateGameList.Text = string.Empty;
-            lblProgressGameList.Text = string.Empty;
-            pgbGameList.Value = 0;
-            pgbGameList.Visible = false;
+            HideDownloadControls();
 
             txtSearchGames.TextChanged -= txtSearchGames_TextChanged;
             txtSearchGames.Text = "";
@@ -137,7 +140,7 @@ namespace RADB
 
             MainCommon.ChangeTab(form.tabGames);
 
-            return null;
+            return Task.CompletedTask;
         }
 
         static async Task LoadGames()
@@ -186,11 +189,10 @@ namespace RADB
 
             lstGamesAll.AddRange(await Game.Search(BIND.Console.ID));
 
-            await LoadGames();
-
             MainCommon.WriteOutput("[" + DateTime.Now.ToTimeLong() + "] " + BIND.Console.Name + " Updated!");
-
             BIND.GameListChanged();
+
+            await LoadGames();
         }
 
         static void UpdateConsoleLabels()
@@ -223,7 +225,7 @@ namespace RADB
         static Task FilterGameList()
         {
             //if (txtSearchGames.Text.Count() > 0 && txtSearchGames.Text.Count() < 3) { return; }
-            List<Predicate<Game>> predicates = new List<Predicate<Game>>();
+            var predicates = new List<Predicate<Game>>();
 
             var gameTypes = new Dictionary<FlatCheckBoxA, string[]>
             {
@@ -273,6 +275,11 @@ namespace RADB
             return Task.CompletedTask;
         }
 
+        static async void LoadGamesIcons(object sender, EventArgs e)
+        {
+            await MainCommon.LoadGridIcons(dgvGames);
+        }
+
         static async void txtSearchGames_TextChanged(object sender, EventArgs e)
         {
             await FilterGameList();
@@ -298,29 +305,13 @@ namespace RADB
             dgvGames.Focus();
         }
 
-        static int wheel;
-        static void dgvGames_MouseWheel(object sender, MouseEventArgs e)
+        static int gamesWheelCounter;
+        static void dgvGames_MouseWheel(object sender, MouseEventArgs e) { gamesWheelCounter = 1; }
+        static void dgvGames_Scroll(object sender, ScrollEventArgs e)
         {
-            wheel = 1;
-        }
-
-        static async void dgvGames_Scroll(object sender, ScrollEventArgs e)
-        {
-            if (wheel > 0 && wheel < 3) { wheel++; return; }
-            wheel = 0;
-
-            ((DataGridView)sender).Focus();
-            await MainCommon.LoadGamesIcon();
-        }
-
-        static async void dgvGames_Sorted(object sender, EventArgs e)
-        {
-            await MainCommon.LoadGamesIcon();
-        }
-
-        static async void dgvGames_DataSourceChanged(object sender, EventArgs e)
-        {
-            await MainCommon.LoadGamesIcon();
+            if (gamesWheelCounter > 0 && gamesWheelCounter < 3) { gamesWheelCounter++; return; }
+            gamesWheelCounter = 0;
+            LoadGamesIcons(sender, e);
         }
 
         static void dgvGames_KeyPress(object sender, KeyPressEventArgs e)

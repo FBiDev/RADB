@@ -21,11 +21,11 @@ namespace RADB
                 lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
                 return true;
             };
-            //f.Shown += GamesToHide_Shown;
+
             mniRemoveGameToHide.MouseDown += mniRemoveGameToHide_MouseDown;
 
             dgvGamesToHide.AutoGenerateColumns = false;
-            dgvGamesToHide.DataSource = lstGamesToHide;
+            //dgvGamesToHide.DataSource = lstGamesToHide;
 
             dgvGamesToHide.Columns.Format(CellStyle.StringCenter, 0);
             dgvGamesToHide.Columns.Format(CellStyle.Image, 1);
@@ -34,9 +34,11 @@ namespace RADB
 
             dgvGamesToHide.MouseDown += (sender, e) => dgvGamesToHide.ShowContextMenu(e, mnuGamesToHide);
             dgvGamesToHide.CellDoubleClick += MainCommon.ChangeBindGame;
-            //dgvGamesToHide.MouseWheel += dgvGames_MouseWheel;
-            //dgvGamesToHide.Scroll += dgvGames_Scroll;
-            //dgvGamesToHide.Sorted += dgvGames_Sorted;
+
+            dgvGamesToHide.DataSourceChanged += LoadGamesToHideIcons;
+            dgvGamesToHide.Sorted += LoadGamesToHideIcons;
+            dgvGamesToHide.MouseWheel += dgvGamesToHide_MouseWheel;
+            dgvGamesToHide.Scroll += dgvGamesToHide_Scroll;
 
             BIND.lstDgvGames.Add(dgvGamesToHide);
 
@@ -50,11 +52,24 @@ namespace RADB
 
         static async Task LoadGamesToHide()
         {
-            lstGamesToHide.Clear();
-            lstGamesToHide.AddRange(await Game.ListToHide());
+            lstGamesToHide = new ListBind<Game>(await Game.ListToHide());
+            dgvGamesToHide.DataSource = lstGamesToHide;
 
             lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
-            dgvGamesToHide.Refresh();
+        }
+
+        static async void LoadGamesToHideIcons(object sender, EventArgs e)
+        {
+            await MainCommon.LoadGridIcons(dgvGamesToHide);
+        }
+
+        static int gamesToHideWheelCounter;
+        static void dgvGamesToHide_MouseWheel(object sender, MouseEventArgs e) { gamesToHideWheelCounter = 1; }
+        static void dgvGamesToHide_Scroll(object sender, EventArgs e)
+        {
+            if (gamesToHideWheelCounter > 0 && gamesToHideWheelCounter < 3) { gamesToHideWheelCounter++; return; }
+            gamesToHideWheelCounter = 0;
+            LoadGamesToHideIcons(sender, e);
         }
 
         static async void mniRemoveGameToHide_MouseDown(object sender, MouseEventArgs e)
