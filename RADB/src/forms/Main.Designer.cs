@@ -48,18 +48,12 @@ namespace RADB
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Ttip = new System.Windows.Forms.ToolTip(this.components);
             this.mnuGames = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mniPlayGame = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,14 +110,6 @@ namespace RADB
             this.pgbGameList = new RADB.FlatProgressBarA();
             this.lblProgressGameList = new RADB.FlatLabelA();
             this.dgvGames = new RADB.FlatDataGridA();
-            this.gID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
-            this.gTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGameInfo = new System.Windows.Forms.TabPage();
             this.pnlInfoScroll = new RADB.FlatPanelA();
             this.gpbInfo = new RADB.FlatGroupBoxA();
@@ -237,6 +223,14 @@ namespace RADB
             this.picFBiDevIcon = new RADB.FlatPictureBoxA();
             this.lblAbTitle = new RADB.FlatLabelB();
             this.lblAbYear = new RADB.FlatLabelB();
+            this.gID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
+            this.gTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuGames.SuspendLayout();
             this.mnuGamesToHide.SuspendLayout();
             this.mnuConsoles.SuspendLayout();
@@ -371,7 +365,7 @@ namespace RADB
             // 
             // pnlBottomOutput
             // 
-            this.pnlBottomOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlBottomOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlBottomOutput.BackColor = System.Drawing.Color.Transparent;
             this.pnlBottomOutput.Controls.Add(this.pnlOutput);
@@ -382,8 +376,8 @@ namespace RADB
             // 
             // pnlOutput
             // 
-            this.pnlOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlOutput.AutoScroll = true;
             this.pnlOutput.Controls.Add(this.lblOutput);
@@ -396,7 +390,7 @@ namespace RADB
             // 
             // lblOutput
             // 
-            this.lblOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblOutput.AutoSize = true;
             this.lblOutput.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -408,8 +402,8 @@ namespace RADB
             // 
             // tabMain
             // 
-            this.tabMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tabMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabMain.Controls.Add(this.tabConsoles);
             this.tabMain.Controls.Add(this.tabGames);
@@ -443,7 +437,7 @@ namespace RADB
             // 
             // lblNotFoundConsoles
             // 
-            this.lblNotFoundConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblNotFoundConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNotFoundConsoles.Location = new System.Drawing.Point(9, 162);
             this.lblNotFoundConsoles.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
@@ -455,7 +449,7 @@ namespace RADB
             // 
             // picLoaderConsole
             // 
-            this.picLoaderConsole.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.picLoaderConsole.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.picLoaderConsole.Image = global::RADB.Properties.Resources.loader;
             this.picLoaderConsole.Location = new System.Drawing.Point(6, 146);
@@ -468,7 +462,7 @@ namespace RADB
             // 
             // pnlDownloadConsoles
             // 
-            this.pnlDownloadConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlDownloadConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlDownloadConsoles.Controls.Add(this.btnUpdateConsoles);
             this.pnlDownloadConsoles.Controls.Add(this.lblUpdateConsoles);
@@ -781,7 +775,7 @@ namespace RADB
             // 
             // lblNotFoundGameList
             // 
-            this.lblNotFoundGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblNotFoundGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNotFoundGameList.Location = new System.Drawing.Point(9, 162);
             this.lblNotFoundGameList.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
@@ -793,7 +787,7 @@ namespace RADB
             // 
             // picLoaderGameList
             // 
-            this.picLoaderGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.picLoaderGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.picLoaderGameList.Image = global::RADB.Properties.Resources.loader;
             this.picLoaderGameList.Location = new System.Drawing.Point(6, 146);
@@ -806,7 +800,7 @@ namespace RADB
             // 
             // pnlGamesConsoleName
             // 
-            this.pnlGamesConsoleName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlGamesConsoleName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlGamesConsoleName.Controls.Add(this.lblConsoleGamesTotal);
             this.pnlGamesConsoleName.Controls.Add(this.lblConsoleName);
@@ -867,7 +861,7 @@ namespace RADB
             // 
             // pnlDownloadGameList
             // 
-            this.pnlDownloadGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlDownloadGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlDownloadGameList.Controls.Add(this.btnUpdateGameList);
             this.pnlDownloadGameList.Controls.Add(this.lblUpdateGameList);
@@ -922,18 +916,10 @@ namespace RADB
             // 
             // dgvGames
             // 
+            this.dgvGames.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgvGames.RowTemplate.Height = 37;
             this.dgvGames.AllowUserToResizeColumns = false;
             this.dgvGames.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-            this.dgvGames.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvGames.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGames.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvGames.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gID,
             this.gIconBitmap,
@@ -941,93 +927,12 @@ namespace RADB
             this.gConsole,
             this.gNumAchievements,
             this.gPoints,
-            this.cNumLeaderboards,
+            this.gNumLeaderboards,
             this.gLastUpdated});
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGames.DefaultCellStyle = dataGridViewCellStyle7;
             this.dgvGames.Location = new System.Drawing.Point(6, 83);
             this.dgvGames.Name = "dgvGames";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGames.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
-            this.dgvGames.RowTemplate.Height = 37;
-            this.dgvGames.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGames.Size = new System.Drawing.Size(896, 459);
             this.dgvGames.TabIndex = 1;
-            // 
-            // gID
-            // 
-            this.gID.DataPropertyName = "ID";
-            this.gID.HeaderText = "ID";
-            this.gID.Name = "gID";
-            this.gID.ReadOnly = true;
-            this.gID.Width = 45;
-            // 
-            // gIconBitmap
-            // 
-            this.gIconBitmap.DataPropertyName = "ImageIconBitmap";
-            this.gIconBitmap.HeaderText = "Icon";
-            this.gIconBitmap.Name = "gIconBitmap";
-            this.gIconBitmap.ReadOnly = true;
-            this.gIconBitmap.Width = 36;
-            // 
-            // gTitle
-            // 
-            this.gTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.gTitle.DataPropertyName = "Title";
-            this.gTitle.HeaderText = "Title";
-            this.gTitle.Name = "gTitle";
-            this.gTitle.ReadOnly = true;
-            // 
-            // gConsole
-            // 
-            this.gConsole.DataPropertyName = "ConsoleName";
-            this.gConsole.HeaderText = "Console";
-            this.gConsole.Name = "gConsole";
-            this.gConsole.ReadOnly = true;
-            // 
-            // gNumAchievements
-            // 
-            this.gNumAchievements.DataPropertyName = "NumAchievements";
-            this.gNumAchievements.HeaderText = "Trophies";
-            this.gNumAchievements.Name = "gNumAchievements";
-            this.gNumAchievements.ReadOnly = true;
-            this.gNumAchievements.Width = 80;
-            // 
-            // gPoints
-            // 
-            this.gPoints.DataPropertyName = "Points";
-            this.gPoints.HeaderText = "Points";
-            this.gPoints.Name = "gPoints";
-            this.gPoints.ReadOnly = true;
-            this.gPoints.Width = 65;
-            // 
-            // cNumLeaderboards
-            // 
-            this.cNumLeaderboards.DataPropertyName = "NumLeaderboards";
-            this.cNumLeaderboards.HeaderText = "Scores";
-            this.cNumLeaderboards.Name = "cNumLeaderboards";
-            this.cNumLeaderboards.ReadOnly = true;
-            this.cNumLeaderboards.Width = 70;
-            // 
-            // gLastUpdated
-            // 
-            this.gLastUpdated.DataPropertyName = "DateModified";
-            this.gLastUpdated.HeaderText = "Last Updated";
-            this.gLastUpdated.Name = "gLastUpdated";
-            this.gLastUpdated.ReadOnly = true;
-            this.gLastUpdated.Width = 105;
             // 
             // tabGameInfo
             // 
@@ -1044,8 +949,8 @@ namespace RADB
             // 
             // pnlInfoScroll
             // 
-            this.pnlInfoScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlInfoScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlInfoScroll.AutoScroll = true;
             this.pnlInfoScroll.BorderSize = 0;
@@ -1150,7 +1055,7 @@ namespace RADB
             // 
             // pnlInfoTop
             // 
-            this.pnlInfoTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlInfoTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlInfoTop.Controls.Add(this.lblInfoReleased1);
             this.pnlInfoTop.Controls.Add(this.lblInfoDeveloper1);
@@ -1305,7 +1210,7 @@ namespace RADB
             // 
             dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
             this.dgvAchievements.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
-            this.dgvAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvAchievements.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
@@ -1422,7 +1327,7 @@ namespace RADB
             // 
             // pnlDownloadInfo
             // 
-            this.pnlDownloadInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlDownloadInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlDownloadInfo.Controls.Add(this.btnUpdateInfo);
             this.pnlDownloadInfo.Controls.Add(this.lblUpdateInfo);
@@ -1488,7 +1393,7 @@ namespace RADB
             // 
             // lblNotFoundGamesToPlay
             // 
-            this.lblNotFoundGamesToPlay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblNotFoundGamesToPlay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNotFoundGamesToPlay.Location = new System.Drawing.Point(9, 162);
             this.lblNotFoundGamesToPlay.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
@@ -1501,18 +1406,9 @@ namespace RADB
             // 
             // dgvGamesToPlay
             // 
+            this.dgvGamesToPlay.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgvGamesToPlay.AllowUserToResizeColumns = false;
             this.dgvGamesToPlay.AllowUserToResizeRows = false;
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.White;
-            this.dgvGamesToPlay.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
-            this.dgvGamesToPlay.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGamesToPlay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
             this.dgvGamesToPlay.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gpID,
             this.gpIconBitmap,
@@ -1522,34 +1418,15 @@ namespace RADB
             this.gpPoints,
             this.gpNumLeaderboards,
             this.gpLastUpdated});
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle25.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle25.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGamesToPlay.DefaultCellStyle = dataGridViewCellStyle25;
             this.dgvGamesToPlay.Location = new System.Drawing.Point(6, 83);
             this.dgvGamesToPlay.Name = "dgvGamesToPlay";
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle26.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle26.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGamesToPlay.RowHeadersDefaultCellStyle = dataGridViewCellStyle26;
             this.dgvGamesToPlay.RowTemplate.Height = 37;
-            this.dgvGamesToPlay.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGamesToPlay.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToPlay.TabIndex = 3;
             // 
             // gpID
             // 
             this.gpID.DataPropertyName = "ID";
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.gpID.DefaultCellStyle = dataGridViewCellStyle19;
             this.gpID.HeaderText = "ID";
             this.gpID.Name = "gpID";
             this.gpID.ReadOnly = true;
@@ -1559,12 +1436,7 @@ namespace RADB
             // 
             this.gpIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.gpIconBitmap.DataPropertyName = "ImageIconBitmap";
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.NullValue = null;
-            dataGridViewCellStyle20.Padding = new System.Windows.Forms.Padding(2);
-            this.gpIconBitmap.DefaultCellStyle = dataGridViewCellStyle20;
             this.gpIconBitmap.HeaderText = "Icon";
-            this.gpIconBitmap.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
             this.gpIconBitmap.Name = "gpIconBitmap";
             this.gpIconBitmap.ReadOnly = true;
             this.gpIconBitmap.Width = 36;
@@ -1586,12 +1458,7 @@ namespace RADB
             // 
             // gpNumAchievements
             // 
-            this.gpNumAchievements.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.gpNumAchievements.DataPropertyName = "NumAchievements";
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle21.Format = "N0";
-            dataGridViewCellStyle21.NullValue = null;
-            this.gpNumAchievements.DefaultCellStyle = dataGridViewCellStyle21;
             this.gpNumAchievements.HeaderText = "Trophies";
             this.gpNumAchievements.Name = "gpNumAchievements";
             this.gpNumAchievements.ReadOnly = true;
@@ -1599,12 +1466,7 @@ namespace RADB
             // 
             // gpPoints
             // 
-            this.gpPoints.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.gpPoints.DataPropertyName = "Points";
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle22.Format = "N0";
-            dataGridViewCellStyle22.NullValue = null;
-            this.gpPoints.DefaultCellStyle = dataGridViewCellStyle22;
             this.gpPoints.HeaderText = "Points";
             this.gpPoints.Name = "gpPoints";
             this.gpPoints.ReadOnly = true;
@@ -1612,12 +1474,7 @@ namespace RADB
             // 
             // gpNumLeaderboards
             // 
-            this.gpNumLeaderboards.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.gpNumLeaderboards.DataPropertyName = "NumLeaderboards";
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle23.Format = "N0";
-            dataGridViewCellStyle23.NullValue = null;
-            this.gpNumLeaderboards.DefaultCellStyle = dataGridViewCellStyle23;
             this.gpNumLeaderboards.HeaderText = "Scores";
             this.gpNumLeaderboards.Name = "gpNumLeaderboards";
             this.gpNumLeaderboards.ReadOnly = true;
@@ -1626,11 +1483,6 @@ namespace RADB
             // gpLastUpdated
             // 
             this.gpLastUpdated.DataPropertyName = "DateModified";
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle24.Format = "dd MMM, yyyy";
-            dataGridViewCellStyle24.NullValue = null;
-            this.gpLastUpdated.DefaultCellStyle = dataGridViewCellStyle24;
             this.gpLastUpdated.HeaderText = "Last Updated";
             this.gpLastUpdated.Name = "gpLastUpdated";
             this.gpLastUpdated.ReadOnly = true;
@@ -1649,7 +1501,7 @@ namespace RADB
             // 
             // lblNotFoundGamesToHide
             // 
-            this.lblNotFoundGamesToHide.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblNotFoundGamesToHide.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNotFoundGamesToHide.Location = new System.Drawing.Point(9, 162);
             this.lblNotFoundGamesToHide.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
@@ -1662,18 +1514,9 @@ namespace RADB
             // 
             // dgvGamesToHide
             // 
+            this.dgvGamesToHide.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgvGamesToHide.AllowUserToResizeColumns = false;
             this.dgvGamesToHide.AllowUserToResizeRows = false;
-            dataGridViewCellStyle27.BackColor = System.Drawing.Color.White;
-            this.dgvGamesToHide.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle27;
-            this.dgvGamesToHide.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle28.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle28.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGamesToHide.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle28;
             this.dgvGamesToHide.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ghID,
             this.ghIconBitmap,
@@ -1683,26 +1526,9 @@ namespace RADB
             this.ghPoints,
             this.ghNumLeaderboards,
             this.ghLastUpdated});
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle29.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle29.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle29.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
-            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGamesToHide.DefaultCellStyle = dataGridViewCellStyle29;
             this.dgvGamesToHide.Location = new System.Drawing.Point(6, 83);
             this.dgvGamesToHide.Name = "dgvGamesToHide";
-            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle30.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle30.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle30.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle30.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle30.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvGamesToHide.RowHeadersDefaultCellStyle = dataGridViewCellStyle30;
             this.dgvGamesToHide.RowTemplate.Height = 37;
-            this.dgvGamesToHide.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGamesToHide.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToHide.TabIndex = 2;
             // 
@@ -1887,7 +1713,7 @@ namespace RADB
             // 
             // picLoaderUserAwards
             // 
-            this.picLoaderUserAwards.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.picLoaderUserAwards.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.picLoaderUserAwards.Image = global::RADB.Properties.Resources.loader;
             this.picLoaderUserAwards.Location = new System.Drawing.Point(23, 68);
@@ -1971,8 +1797,8 @@ namespace RADB
             // 
             // gpbUserInfo
             // 
-            this.gpbUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.gpbUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gpbUserInfo.Controls.Add(this.lnkUserRank);
             this.gpbUserInfo.Controls.Add(this.picUserLastGame);
@@ -2465,6 +2291,69 @@ namespace RADB
             this.lblAbYear.TabIndex = 1;
             this.lblAbYear.Text = "2023";
             // 
+            // gID
+            // 
+            this.gID.DataPropertyName = "ID";
+            this.gID.HeaderText = "ID";
+            this.gID.Name = "gID";
+            this.gID.ReadOnly = true;
+            this.gID.Width = 45;
+            // 
+            // gIconBitmap
+            // 
+            this.gIconBitmap.DataPropertyName = "ImageIconBitmap";
+            this.gIconBitmap.HeaderText = "Icon";
+            this.gIconBitmap.Name = "gIconBitmap";
+            this.gIconBitmap.ReadOnly = true;
+            this.gIconBitmap.Width = 36;
+            // 
+            // gTitle
+            // 
+            this.gTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.gTitle.DataPropertyName = "Title";
+            this.gTitle.HeaderText = "Title";
+            this.gTitle.Name = "gTitle";
+            this.gTitle.ReadOnly = true;
+            // 
+            // gConsole
+            // 
+            this.gConsole.DataPropertyName = "ConsoleName";
+            this.gConsole.HeaderText = "Console";
+            this.gConsole.Name = "gConsole";
+            this.gConsole.ReadOnly = true;
+            // 
+            // gNumAchievements
+            // 
+            this.gNumAchievements.DataPropertyName = "NumAchievements";
+            this.gNumAchievements.HeaderText = "Trophies";
+            this.gNumAchievements.Name = "gNumAchievements";
+            this.gNumAchievements.ReadOnly = true;
+            this.gNumAchievements.Width = 80;
+            // 
+            // gPoints
+            // 
+            this.gPoints.DataPropertyName = "Points";
+            this.gPoints.HeaderText = "Points";
+            this.gPoints.Name = "gPoints";
+            this.gPoints.ReadOnly = true;
+            this.gPoints.Width = 65;
+            // 
+            // gNumLeaderboards
+            // 
+            this.gNumLeaderboards.DataPropertyName = "NumLeaderboards";
+            this.gNumLeaderboards.HeaderText = "Scores";
+            this.gNumLeaderboards.Name = "gNumLeaderboards";
+            this.gNumLeaderboards.ReadOnly = true;
+            this.gNumLeaderboards.Width = 70;
+            // 
+            // gLastUpdated
+            // 
+            this.gLastUpdated.DataPropertyName = "DateModified";
+            this.gLastUpdated.HeaderText = "Last Updated";
+            this.gLastUpdated.Name = "gLastUpdated";
+            this.gLastUpdated.ReadOnly = true;
+            this.gLastUpdated.Width = 105;
+            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2563,14 +2452,6 @@ namespace RADB
         private System.Windows.Forms.DataGridViewTextBoxColumn cName;
         private System.Windows.Forms.DataGridViewTextBoxColumn cNumGames;
         private System.Windows.Forms.DataGridViewTextBoxColumn cTotalGames;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gpID;
-        private System.Windows.Forms.DataGridViewImageColumn gpIconBitmap;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gpTitle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gpConsole;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gpNumAchievements;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gpPoints;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gpNumLeaderboards;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gpLastUpdated;
         private System.Windows.Forms.DataGridViewTextBoxColumn ghID;
         private System.Windows.Forms.DataGridViewImageColumn ghIconBitmap;
         private System.Windows.Forms.DataGridViewTextBoxColumn ghTitle;
@@ -2675,14 +2556,6 @@ namespace RADB
         internal FlatLabelA lblProgressInfo;
         internal FlatProgressBarA pgbInfo;
         internal FlatButtonA btnUpdateInfo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gID;
-        private System.Windows.Forms.DataGridViewImageColumn gIconBitmap;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gTitle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gConsole;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gNumAchievements;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gPoints;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cNumLeaderboards;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gLastUpdated;
         internal FlatLabelA lblInfoName;
         internal FlatPictureBoxA picInfoIcon;
         internal FlatLabelA lblInfoAchievements;
@@ -2722,6 +2595,22 @@ namespace RADB
         internal FlatPictureBoxA picAwardFloating;
         internal FlatLabelA lblAwardFloatingTitle;
         internal FlatLabelA lblAwardFloatingDesc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpID;
+        private System.Windows.Forms.DataGridViewImageColumn gpIconBitmap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpConsole;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpNumAchievements;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpPoints;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpNumLeaderboards;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpLastUpdated;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gID;
+        private System.Windows.Forms.DataGridViewImageColumn gIconBitmap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gConsole;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gNumAchievements;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gPoints;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gNumLeaderboards;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gLastUpdated;
     }
 }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -11,8 +10,6 @@ namespace RADB
     public static partial class MainCommon
     {
         #region MAIN
-        static async Task DelayShow() { await Task.Run(() => { Thread.Sleep(10); }); }
-
         public static void Main_Init(Main formDesign)
         {
             BIND.f = formDesign;
@@ -39,7 +36,8 @@ namespace RADB
 
         static async void Main_Shown(object sender, EventArgs e)
         {
-            await DelayShow();
+            await Task.Delay(10);
+
             await MainConsole.Console_Init();
             await MainGame.Games_Init();
             await MainGameInfo.GameInfo_Init();

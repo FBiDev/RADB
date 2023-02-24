@@ -110,7 +110,7 @@ namespace RADB
         {
             pnlDownloadGameList.Enabled = true;
             pnlGamesConsoleName.Enabled = true;
-            lblNotFoundGameList.Visible = (dgvGames.RowCount == 0);
+            lblNotFoundGameList.Visible = (lstGamesByFilters.Count == 0);
             picLoaderGameList.Visible = false;
             dgvGames.Enabled = true;
         }
@@ -164,7 +164,6 @@ namespace RADB
             }
 
             await Task.Run(() => FilterGameList());
-            EnablePanelGames();
 
             dgvGames.Focus();
             stopwatch.Stop();
@@ -270,6 +269,7 @@ namespace RADB
             {
                 dgvGames.DataSource = lstGamesByFilters;
                 UpdateConsoleLabels();
+                EnablePanelGames();
             });
 
             return Task.CompletedTask;
