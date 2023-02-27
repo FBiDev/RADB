@@ -21,8 +21,7 @@ namespace RADB
         public int? ForumTopicID { get; set; }
 
         #region _ImageIcon_
-        private string _ImageIcon { get; set; }
-        //[JsonProperty("ImageIcon")]
+        string _ImageIcon { get; set; }
         public string ImageIcon { get { return _ImageIcon; } set { _ImageIcon = value.Replace(@"/Images/", ""); } }
         public DownloadFile ImageIconFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageIcon, Folder.Icons(ConsoleID) + ImageIcon); } }
         public Bitmap ImageIconBitmap { get; set; }
@@ -48,12 +47,7 @@ namespace RADB
             return Folder.MergedBadges + ConsoleName + "(" + ConsoleID + ")_" + Archive.MakeValidFileName(Title) + "(" + ID + ")_Badges";
         }
 
-        //public bool Insert()
-        //{
-        //    return GameDao.Insert(this);
-        //}
-
-        public async static Task<bool> InsertList(IList<Game> list)
+        public async static Task<bool> SaveList(IList<Game> list)
         {
             return await GameDao.InsertList(list);
         }
@@ -63,35 +57,10 @@ namespace RADB
             return await GameDao.Delete(new Game { ConsoleID = ConsoleID });
         }
 
-        //public async static Task<List<Game>> List()
-        //{
-        //    return await GameDao.List();
-        //}
-
-        //public async static Task<Game> Find(int id)
-        //{
-        //    return await GameDao.Find(id);
-        //}
-
         public async static Task<List<Game>> Search(int consoleID, bool allTables = false)
         {
             var obj = new Game { ConsoleID = consoleID };
             return (await GameDao.Search(obj, allTables));
-        }
-
-        public async static Task<List<Game>> ListToHide()
-        {
-            return (await GameDao.ListToHide());
-        }
-
-        public async Task<bool> SaveToHide()
-        {
-            return await GameDao.InsertToHide(this);
-        }
-
-        public async Task<bool> DeleteFromHide()
-        {
-            return await GameDao.DeleteFromHide(this);
         }
 
         public async static Task<List<Game>> ListToPlay()
@@ -107,6 +76,21 @@ namespace RADB
         public async Task<bool> DeleteFromPlay()
         {
             return await GameDao.DeleteFromPlay(this);
+        }
+
+        public async static Task<List<Game>> ListToHide()
+        {
+            return (await GameDao.ListToHide());
+        }
+
+        public async Task<bool> SaveToHide()
+        {
+            return await GameDao.InsertToHide(this);
+        }
+
+        public async Task<bool> DeleteFromHide()
+        {
+            return await GameDao.DeleteFromHide(this);
         }
     }
 }

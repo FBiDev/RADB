@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 //
 using System.Drawing;
@@ -25,17 +22,17 @@ namespace RADB
         public string Genre { get; set; }
 
         #region _Images
-        private string _ImageTitle { get; set; }
+        string _ImageTitle { get; set; }
         public string ImageTitle { get { return _ImageTitle; } set { _ImageTitle = value.Replace(@"/Images/", ""); } }
         public DownloadFile ImageTitleFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageTitle, Folder.Titles(ConsoleID) + ImageTitle); } }
         public Bitmap ImageTitleBitmap { get; set; }
 
-        private string _ImageIngame { get; set; }
+        string _ImageIngame { get; set; }
         public string ImageIngame { get { return _ImageIngame; } set { _ImageIngame = value.Replace(@"/Images/", ""); } }
         public DownloadFile ImageIngameFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageIngame, Folder.Ingame(ConsoleID) + ImageIngame); } }
         public Bitmap ImageIngameBitmap { get; set; }
 
-        private string _ImageBoxArt { get; set; }
+        string _ImageBoxArt { get; set; }
         public string ImageBoxArt { get { return _ImageBoxArt; } set { _ImageBoxArt = value.Replace(@"/Images/", ""); } }
         public DownloadFile ImageBoxArtFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageBoxArt, Folder.BoxArt(ConsoleID) + ImageBoxArt); } }
         public Bitmap ImageBoxArtBitmap { get; set; }
@@ -50,7 +47,7 @@ namespace RADB
 
         public string Flags { get; set; }
 
-        private string _Released { get; set; }
+        string _Released { get; set; }
         public string Released
         {
             get
@@ -64,7 +61,7 @@ namespace RADB
                 if (string.IsNullOrWhiteSpace(Released)) return;
 
                 DateTime d;
-                if (DateTime.TryParse(value, out  d)) { ReleasedDate = d; return; }
+                if (DateTime.TryParse(value, out d)) { ReleasedDate = d; return; }
                 if (DateTime.TryParseExact(value, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out d)) { ReleasedDate = d; }
             }
         }
@@ -97,14 +94,7 @@ namespace RADB
             AchievementsList.ForEach(c => { c.GameID = ID; c.ConsoleID = ConsoleID; });
         }
 
-        public List<string> AchievementsFiles()
-        {
-            List<string> files = new List<string>();
-            AchievementsList.ForEach(c => { files.Add(c.BadgeFile()); });
-            return files;
-        }
-
-        public async Task<bool> Insert()
+        public async Task<bool> Save()
         {
             return await GameExtendDao.Insert(this);
         }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace RADB
@@ -20,7 +16,7 @@ namespace RADB
             Company = Name = string.Empty;
         }
 
-        public async static Task<bool> InsertList(IList<Console> list)
+        public async static Task<bool> SaveList(IList<Console> list)
         {
             return await ConsoleDao.InsertList(list);
         }

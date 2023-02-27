@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GNX;
+using System.IO;
 using System.Diagnostics;
+using GNX;
 
 namespace RADB
 {
@@ -154,7 +154,7 @@ namespace RADB
             if (BIND.Console.ID > 0)
                 lstGamesByPlataform = lstGamesAll.Where(x => x.ConsoleID == BIND.Console.ID);
 
-            if (lstGamesByPlataform.Empty())
+            if (lstGamesByPlataform.IsEmpty())
             {
                 var fileName = Folder.GameData + BIND.Console.Name + ".json";
                 if (File.Exists(fileName) == false)

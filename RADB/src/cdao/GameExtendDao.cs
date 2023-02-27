@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 //
 using System.Data;
@@ -11,10 +8,10 @@ using GNX;
 
 namespace RADB
 {
-    public class GameExtendDao
+    public static class GameExtendDao
     {
         #region " _Load "
-        private static T Load<T>(DataTable table) where T : IList, new()
+        static T Load<T>(DataTable table) where T : IList, new()
         {
             T list = new T();
             foreach (DataRow row in table.Rows)
@@ -43,7 +40,7 @@ namespace RADB
         #endregion
 
         #region " _MountFilters "
-        private static List<cSqlParameter> MountFilters(GameExtend obj)
+        static List<cSqlParameter> MountFilters(GameExtend obj)
         {
             return new List<cSqlParameter>
             {
@@ -54,7 +51,7 @@ namespace RADB
         #endregion
 
         #region " _MountParameters "
-        private static List<cSqlParameter> MountParameters(GameExtend obj)
+        static List<cSqlParameter> MountParameters(GameExtend obj)
         {
             return new List<cSqlParameter>
             {
@@ -106,7 +103,7 @@ namespace RADB
         public async static Task<bool> Delete(GameExtend obj)
         {
             string sql = Resources.GameExtendDelete;
-            var parameters = new List<cSqlParameter> 
+            var parameters = new List<cSqlParameter>
             {
                 new cSqlParameter("@ID", obj.ID),
                 new cSqlParameter("@ConsoleID", obj.ConsoleID),

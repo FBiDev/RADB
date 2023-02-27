@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using GNX;
@@ -124,7 +124,6 @@ namespace RADB
                     list[i].SetImageIconBitmap();
                 }
             });
-            //dgv.Focus();
             dgv.Refresh();
         }
 
@@ -138,31 +137,24 @@ namespace RADB
 
         public static void GridViewKeyPress(object sender, KeyPressEventArgs e, string columnName)
         {
-            DataGridView dgv = (DataGridView)sender;
-            char typedChar = e.KeyChar;
+            var dgv = sender as DataGridView;
+            var typedChar = e.KeyChar;
 
-            if (char.IsLetter(typedChar))
+            if (char.IsLetter(typedChar) == false) return;
+
+            int firstIndex = -1;
+            int nextIndex = -1;
+            foreach (DataGridViewRow row in dgv.Rows)
             {
-                if (typedChar == (char)Keys.Left || typedChar == (char)Keys.Right ||
-                    typedChar == (char)Keys.Up || typedChar == (char)Keys.Down)
+                if (row.Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), StringComparison.OrdinalIgnoreCase))
                 {
-                    return;
-                }
-
-                for (int i = 0; i < (dgv.RowCount); i++)
-                {
-                    if (dgv.Rows[i].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        if (dgv.Rows[dgv.CurrentRow.Index].Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            if (i <= dgv.CurrentRow.Index) continue;
-                        }
-
-                        dgv.Rows[i].Cells[0].Selected = true;
-                        return;
-                    }
+                    if (firstIndex == -1) { firstIndex = row.Index; }
+                    if (nextIndex == -1 && dgv.CurrentRow.Index < row.Index) { nextIndex = row.Index; }
                 }
             }
+
+            if (nextIndex == -1) { nextIndex = firstIndex; }
+            dgv.Rows[nextIndex].Cells[0].Selected = true;
         }
         #endregion
     }

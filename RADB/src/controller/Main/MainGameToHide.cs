@@ -18,7 +18,7 @@ namespace RADB
             BIND.OnAddGamesToHide += (game) =>
             {
                 lstGamesToHide.Insert(0, game);
-                lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
+                lblNotFoundGamesToHide.Visible = lstGamesToHide.IsEmpty();
                 return true;
             };
 
@@ -55,7 +55,7 @@ namespace RADB
             lstGamesToHide = new ListBind<Game>(await Game.ListToHide());
             dgvGamesToHide.DataSource = lstGamesToHide;
 
-            lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
+            lblNotFoundGamesToHide.Visible = lstGamesToHide.IsEmpty();
         }
 
         static async void LoadGamesToHideIcons(object sender, EventArgs e)
@@ -81,7 +81,7 @@ namespace RADB
             if (await game.DeleteFromHide())
             {
                 lstGamesToHide.Remove(game);
-                lblNotFoundGamesToHide.Visible = lstGamesToHide.Empty();
+                lblNotFoundGamesToHide.Visible = lstGamesToHide.IsEmpty();
 
                 if (BIND.Console.NotNull() && (BIND.Console.ID == game.ConsoleID || BIND.Console.ID == 0))
                 {

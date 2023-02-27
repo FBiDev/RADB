@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 //
 using System.Data;
@@ -11,10 +10,10 @@ using GNX;
 
 namespace RADB
 {
-    public class ConsoleDao
+    public static class ConsoleDao
     {
         #region " _Load "
-        private static T Load<T>(DataTable table) where T : IList, new()
+        static T Load<T>(DataTable table) where T : IList, new()
         {
             T list = new T();
             foreach (DataRow row in table.Rows)
@@ -33,7 +32,7 @@ namespace RADB
         #endregion
 
         #region " _MountFilters "
-        private static List<cSqlParameter> MountFilters(Console obj)
+        static List<cSqlParameter> MountFilters(Console obj)
         {
             return new List<cSqlParameter>
             {
@@ -44,7 +43,7 @@ namespace RADB
         #endregion
 
         #region " _MountParameters "
-        private static List<cSqlParameter> MountParameters(Console obj)
+        static List<cSqlParameter> MountParameters(Console obj)
         {
             return new List<cSqlParameter>
             {
@@ -89,7 +88,7 @@ namespace RADB
 
         public async static Task<bool> InsertList(IList<Console> list)
         {
-            string sql = "INSERT INTO Console (ID, Name) VALUES " + Environment.NewLine; ;
+            string sql = "INSERT INTO Console (ID, Name) VALUES " + Environment.NewLine;
             var parameters = new List<cSqlParameter>();
 
             int index = 0;
@@ -115,7 +114,7 @@ namespace RADB
         public async static Task<bool> Delete(Console obj)
         {
             string sql = Resources.ConsoleDelete;
-            var parameters = new List<cSqlParameter> 
+            var parameters = new List<cSqlParameter>
             {
                 new cSqlParameter("@ID", obj.ID),
                 new cSqlParameter("@Name", obj.Name),

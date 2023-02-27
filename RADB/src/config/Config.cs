@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-//
-using System.Windows.Forms;
-using System.Drawing;
-using System.Xml;
-//
 using GNX;
-using System.Globalization;
 
 namespace RADB
 {
@@ -19,7 +10,6 @@ namespace RADB
 
         public static bool Singleton = true;
         public const string SystemName = "RADatabase";
-        public static bool Loaded { get; set; }
         public static bool DarkMode { get; set; }
 
         public static void Start()
@@ -29,11 +19,11 @@ namespace RADB
             cApp.Start();
 
             //Carregar Config
-            Banco.ConfigLoaded = Loaded = CarregarXML();
+            Banco.Loaded = CarregarXML();
             DarkMode = true;
 
             //Carregar BaseSistema
-            Banco.Carregar("", "");
+            Banco.Carregar();
 
             cDebug.LogSQLSistema = Banco.Log;
         }

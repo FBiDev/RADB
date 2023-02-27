@@ -71,18 +71,18 @@ namespace RADB
                 listItems.Add(new { Title = title, Hash = hash, Labels = labels, User = user });
             }
 
-            listItems = listItems.OrderBy(x => x.Labels.Length).ThenBy(x =>
-                x.Title.IndexOf(".") > 0 ? (x.Title.Substring(0, x.Title.LastIndexOf("."))) : x.Title).ToList();
+            listItems = listItems.OrderBy(x => x.Labels.Length).ThenBy(x => x.Title.Contains(".") ?
+                           (x.Title.Substring(0, x.Title.LastIndexOf(".", StringComparison.OrdinalIgnoreCase))) : x.Title).ToList();
 
-            var mainItems = listItems.Where(x => x.Labels.IndexOf(")-") == -1).ToList();
+            var mainItems = listItems.Where(x => x.Labels.Contains(")-") == false);
             mainItems.Reverse();
 
-            listItems.MoveToFirst(mainItems.Where(x => x.Title.IndexOf(" (Europe)") >= 0));
-            listItems.MoveToFirst(mainItems.Where(x => x.Title.IndexOf(" (Japan)") >= 0));
-            listItems.MoveToFirst(mainItems.Where(x => x.Title.IndexOf(" (USA)") >= 0));
+            listItems.MoveToFirst(mainItems.Where(x => x.Title.Contains(" (Europe)")));
+            listItems.MoveToFirst(mainItems.Where(x => x.Title.Contains(" (Japan)")));
+            listItems.MoveToFirst(mainItems.Where(x => x.Title.Contains(" (USA)")));
 
-            listItems.MoveToLast(listItems.Where(x => x.Labels.IndexOf("msu1") >= 0));
-            listItems.MoveToLast(listItems.Where(x => x.Title.IndexOf("Unlabeled") >= 0));
+            listItems.MoveToLast(listItems.Where(x => x.Labels.Contains("msu1")));
+            listItems.MoveToLast(listItems.Where(x => x.Title.Contains("Unlabeled")));
 
             var lastItem = listItems.LastOrDefault();
             foreach (var item in listItems)
@@ -98,7 +98,7 @@ namespace RADB
                 }
             }
 
-            if (listItems.Empty())
+            if (listItems.IsEmpty())
             {
                 txtHashes.Text = "No Hashes Available for this Game";
             }

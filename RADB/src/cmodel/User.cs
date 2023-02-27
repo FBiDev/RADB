@@ -48,7 +48,6 @@ namespace RADB
         public string UserPic { get { return _UserPic; } set { _UserPic = value.Replace(@"/UserPic/", ""); } }
         public DownloadFile UserPicFile { get { return new DownloadFile(RA.USER_HOST + UserPic, Folder.User + UserPic); } }
         public Bitmap UserPicBitmap { get; set; }
-
         public void SetUserPicBitmap()
         {
             if (UserPicBitmap != RA.DefaultIcon) { return; }
@@ -162,7 +161,8 @@ namespace RADB
             PlayedGames = new List<GameProgress>();
         }
 
-        public bool Invalid { get { return ID == 0 || string.IsNullOrWhiteSpace(Name); } }
+        public bool Invalid { get { return ID == 0; } }
         public bool RankInvalid { get { return Untracked || Rank == 0 || TotalPoints < RA.MIN_POINTS; } }
+        public int RankLength { get { return RankInvalid == false && Rank > 0 ? Rank.ToString().Length : 0; } }
     }
 }

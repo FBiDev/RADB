@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-//
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using System.Drawing;
 //
 using GNX;
@@ -28,8 +23,8 @@ namespace RADB
         public static Color TabBackColor2;
         public static Color TabBorderColor;
 
-        public static Color CheevoTitle = FlatDataGridA.DefaultForeColor;
-        public static Color CheevoDescription = FlatDataGridA.DefaultForeColor;
+        public static Color CheevoTitle = Control.DefaultForeColor;
+        public static Color CheevoDescription = Control.DefaultForeColor;
 
         public static void CheckTheme(Form f)
         {

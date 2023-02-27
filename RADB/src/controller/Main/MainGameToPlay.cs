@@ -18,7 +18,7 @@ namespace RADB
             BIND.OnAddGamesToPlay += (game) =>
             {
                 lstGamesToPlay.Insert(0, game);
-                lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
+                lblNotFoundGamesToPlay.Visible = lstGamesToPlay.IsEmpty();
                 return true;
             };
 
@@ -55,7 +55,7 @@ namespace RADB
             lstGamesToPlay = new ListBind<Game>(await Game.ListToPlay());
             dgvGamesToPlay.DataSource = lstGamesToPlay;
 
-            lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
+            lblNotFoundGamesToPlay.Visible = lstGamesToPlay.IsEmpty();
         }
 
         static async void LoadGamesToPlayIcons(object sender, EventArgs e)
@@ -81,7 +81,7 @@ namespace RADB
             if (await game.DeleteFromPlay())
             {
                 lstGamesToPlay.Remove(game);
-                lblNotFoundGamesToPlay.Visible = lstGamesToPlay.Empty();
+                lblNotFoundGamesToPlay.Visible = lstGamesToPlay.IsEmpty();
 
                 if (BIND.Console.NotNull() && (BIND.Console.ID == game.ConsoleID || BIND.Console.ID == 0))
                 {

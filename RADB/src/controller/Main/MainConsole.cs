@@ -89,7 +89,7 @@ namespace RADB
 
             EnablePanelConsoles();
 
-            if (lstConsoles.Empty())
+            if (lstConsoles.IsEmpty())
                 btnUpdateConsoles_Click(null, null);
 
             if (BIND.SelectedTab == form.tabConsoles)
@@ -116,6 +116,11 @@ namespace RADB
                 BIND.Console = ConsoleSelected;
         }
 
+        static void dgvConsoles_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            MainCommon.GridViewKeyPress(sender, e, "cName");
+        }
+
         static void dgvConsoles_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter)
@@ -123,11 +128,6 @@ namespace RADB
                 e.Handled = true;
                 dgvConsoles_CellDoubleClick(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
             }
-        }
-
-        static void dgvConsoles_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            MainCommon.GridViewKeyPress(sender, e, "cName");
         }
 
         static async void mniMergeGamesIcon_MouseDown(object sender, MouseEventArgs e)

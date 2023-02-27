@@ -44,8 +44,6 @@ namespace RADB
 
         static void lnkUserRank_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (BIND.User.RankInvalid) { return; }
-
             var rankOffset = (BIND.User.Rank - 1) / 25 * 25;
             Process.Start(RA.HOST_URL + "globalRanking.php?s=5&t=2&o=" + rankOffset);
         }
@@ -53,6 +51,13 @@ namespace RADB
         static async void btnGetUserInfo_Click(object sender, EventArgs e)
         {
             txtUsername.Focus();
+
+            if (txtUsername.Text.Length < 2)
+            {
+                MessageBox.Show("Username need 2 letters or more.");
+                return;
+            }
+
             btnGetUserInfo.Enabled = false;
             btnUserPage.Enabled = false;
 
@@ -81,11 +86,7 @@ namespace RADB
             lblUserHCPoints.Text = BIND.User.TotalPointsString;
             lnkUserRank.Text = BIND.User.RankString;
             lnkUserRank.Size = lnkUserRank.PreferredSize;
-
-            if (BIND.User.RankInvalid)
-                lnkUserRank.LinkArea = new LinkArea(0, 0);
-            else
-                lnkUserRank.LinkArea = new LinkArea(0, BIND.User.Rank.ToString().Count());
+            lnkUserRank.LinkArea = new LinkArea(0, BIND.User.RankLength);
 
             lblUserRetroRatio.Text = BIND.User.RetroRatioString;
             lblUserSoftPoints.Text = BIND.User.TotalSoftcorePointsString;

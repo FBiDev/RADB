@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-//
-using System.IO;
+﻿using System.IO;
 
 namespace RADB
 {
     public static class Folder
     {
-        public static string Base { get { return @".\Data\"; } }
-        public static string Temp { get { return Base + @"Temp\"; } }
-        private static string Json { get { return Base + @"Json\"; } }
+        public const string Base = @".\Data\";
+        public const string Temp = Base + @"Temp\";
+        const string Json = Base + @"Json\";
 
-        public static string User = Json + @"User\";
-        public static string Console { get { return Json + @"Console\"; } }
-        public static string GameData { get { return Json + @"GameData\"; } }
-        public static string GameDataExtendBase { get { return Json + @"GameDataExtend\"; } }
+        public const string User = Json + @"User\";
+        public const string Console = Json + @"Console\";
+        public const string GameData = Json + @"GameData\";
+        public const string GameDataExtendBase = Json + @"GameDataExtend\";
 
-        public static string Images { get { return Base + @"Images\"; } }
-        public static string IconsBase { get { return Images + @"Icons\"; } }
-        public static string BadgesBase { get { return Images + @"Achievements\"; } }
+        public const string Images = Base + @"Images\";
+        public const string IconsBase = Images + @"Icons\";
+        public const string BadgesBase = Images + @"Achievements\";
 
-        public static string MergedIcons { get { return Base + @"MergedIcons\"; } }
-        public static string MergedBadges { get { return Base + @"MergedBadges\"; } }
+        public const string MergedIcons = Base + @"MergedIcons\";
+        public const string MergedBadges = Base + @"MergedBadges\";
 
         public static void CreateFolders()
         {

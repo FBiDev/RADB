@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GNX;
@@ -15,12 +14,8 @@ namespace RADB
         #region About
         public static async Task About_Init()
         {
-            //f.Shown += About_Shown;
-
             btnRALogin.Click += btnRALogin_Click;
-            //async (sender, e) => await btnRALogin_Click(sender, e);
             btnRAProfileAbout.Click += btnRAProfileAbout_Click;
-
             btnUserCheevos.Click += btnUserCheevos_Click;
 
             await About_Shown(null, null);
@@ -89,11 +84,9 @@ namespace RADB
                     LastUser = user;
                 }
 
-                await Task.Run(() => { Thread.Sleep(500); });
-
+                await Task.Delay(500);
                 lblCheevoLoopUpdate.BackColor = Color.Transparent;
-
-                await Task.Run(() => { Thread.Sleep(2500); });
+                await Task.Delay(2500);
 
             } while (chkUserCheevos.Checked);
 

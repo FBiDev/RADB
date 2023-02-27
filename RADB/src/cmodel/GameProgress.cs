@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//
-using System.Drawing;
+﻿using System.Drawing;
 using Newtonsoft.Json;
 
 namespace RADB
@@ -25,7 +18,7 @@ namespace RADB
         public bool HardcoreMode { get; set; }
 
         #region _ImageIcon_
-        private string _ImageIcon { get; set; }
+        string _ImageIcon { get; set; }
         public string ImageIcon { get { return _ImageIcon; } set { _ImageIcon = value.Replace(@"/Images/", ""); } }
         public DownloadFile ImageIconFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageIcon, Folder.Icons(ConsoleID) + ImageIcon); } }
         public Bitmap ImageIconBitmap { get; set; }

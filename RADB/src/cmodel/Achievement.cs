@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace RADB
 {
@@ -32,8 +30,8 @@ namespace RADB
 
         public int TrueRatio { get; set; }
 
-        private string BadgeFormatLocal { get { return ".png"; } }
-        private string BadgeFormatURL { get { return ".png"; } }
+        const string BadgeFormatLocal = ".png";
+        const string BadgeFormatURL = ".png";
 
         public string BadgeFile()
         {

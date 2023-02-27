@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 //
@@ -133,9 +133,9 @@ namespace RADB
             {
                 await Console.DeleteAll();
 
-                List<Console> list = await DeserializeConsoles();
+                var list = await DeserializeConsoles();
                 if (list.Any())
-                    await Console.InsertList(await DeserializeConsoles());
+                    await Console.SaveList(await DeserializeConsoles());
             }
         }
 
@@ -162,7 +162,7 @@ namespace RADB
 
                     List<Game> list = await DeserializeGameList(console);
                     if (list.Any())
-                        await Game.InsertList(list);
+                        await Game.SaveList(list);
                 }
             });
         }
@@ -200,7 +200,7 @@ namespace RADB
                     obj.ID = game.ID;
                     obj.ConsoleID = game.ConsoleID;
                     await obj.Delete();
-                    await obj.Insert();
+                    await obj.Save();
                     return obj;
                 }
                 return null;
@@ -273,7 +273,7 @@ namespace RADB
             return await Task.Run(() =>
             {
                 var userData = File.ReadAllText(file.Path);
-                if (userData.Empty()) { return user; }
+                if (userData.IsEmpty()) { return user; }
 
                 user = JsonConvert.DeserializeObject<User>(userData);
 
@@ -386,7 +386,7 @@ namespace RADB
 
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
 
-            if (badgeNames.Empty())
+            if (badgeNames.IsEmpty())
             {
                 MessageBox.Show("No Icons Found");
             }
@@ -428,7 +428,7 @@ namespace RADB
 
             TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
             //MessageBox.Show(fim0.TotalSeconds.ToString());
-            if (gamesIcon.Empty())
+            if (gamesIcon.IsEmpty())
             {
                 MessageBox.Show("No Icons Found");
             }
