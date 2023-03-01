@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-//
 using System.Windows.Forms;
 using System.Drawing;
 
@@ -22,7 +19,7 @@ namespace RADB
         public ImageViewer()
         {
             InitializeComponent();
-            base.Init(this);
+            Init(this);
 
             MouseWheel += frmImageViewer_MouseWheel;
             FormClosing += frmImageViewer_FormClosing;
@@ -94,7 +91,7 @@ namespace RADB
                 Width += SystemInformation.VerticalScrollBarWidth;
             }
 
-            FormInitialSize = this.Size;
+            FormInitialSize = Size;
 
             SetScrollSize();
         }

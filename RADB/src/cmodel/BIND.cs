@@ -64,6 +64,7 @@ namespace RADB
         public static bool AddGamesToHide(Game game) { return OnAddGamesToHide(game); }
         public static bool AddGames(Game game) { return OnAddGames(game); }
 
+        public static Console LastConsole { get; set; }
         static Console _Console;
         public static Console Console
         {

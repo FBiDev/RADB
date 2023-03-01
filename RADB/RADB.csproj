@@ -309,8 +309,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="x86\referenced\" />
-    <Folder Include="src\controller\" />
-    <Folder Include="src\controller\Main\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

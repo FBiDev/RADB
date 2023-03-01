@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 //
+using System.Drawing;
 using System.IO;
 using System.Security.Cryptography;
-using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace RADB
 {
@@ -25,10 +26,10 @@ namespace RADB
 
         public static string MakeValidFileName(string name)
         {
-            string invalidChars = System.Text.RegularExpressions.Regex.Escape(new string(System.IO.Path.GetInvalidFileNameChars()));
+            string invalidChars = Regex.Escape(new string(Path.GetInvalidFileNameChars()));
             string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
 
-            return System.Text.RegularExpressions.Regex.Replace(name, invalidRegStr, "_");
+            return Regex.Replace(name, invalidRegStr, "_");
         }
 
         public static List<string> RemoveDuplicates(List<string> list)
@@ -73,14 +74,14 @@ namespace RADB
                 foreach (string item in list)
                 {
                     string imageName = item.Split('\\').Last();
-                    Game game = games.Where(g => g.ImageIcon == imageName).FirstOrDefault() ?? new Game();
+                    Game game = games.FirstOrDefault(g => g.ImageIcon == imageName) ?? new Game();
                     string GameID = game.ID.ToString().PadLeft(5) + " => " + game.Title;
                     sw.WriteLine(imageName + " => " + GameID);
                 }
             }
         }
 
-        public static void SaveGameBadges(Game game, List<string> badges, string fileName)
+        public static void SaveGameBadges(List<string> badges, string fileName)
         {
             using (StreamWriter sw = File.CreateText(fileName))
             {

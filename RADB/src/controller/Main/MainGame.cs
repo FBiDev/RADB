@@ -125,6 +125,12 @@ namespace RADB
 
         static Task ResetGamesLabels()
         {
+            if (BIND.LastConsole.NotNull() && BIND.Console.ID == BIND.LastConsole.ID)
+            {
+                MainCommon.ChangeTab(form.tabGames);
+                return Task.CompletedTask;
+            }
+
             DisablePanelGames();
             lstGamesByFilters.Clear();
 
@@ -145,7 +151,7 @@ namespace RADB
 
         static async Task LoadGames()
         {
-            if (BIND.Console.IsNull()) { return; }
+            if (BIND.Console.IsNull() || BIND.LastConsole.NotNull() && BIND.Console.ID == BIND.LastConsole.ID) { return; }
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();

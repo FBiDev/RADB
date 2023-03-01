@@ -30,9 +30,9 @@ namespace RADB
         {
             if (BIND.RALogged)
             {
-                HashViewer f = new HashViewer();
-                ActiveForm.BeginInvoke((Action)(() => { f.Hide(); f.ShowDialog(); }));
-                await f.GetHashCode(game);
+                var form = new HashViewer();
+                ActiveForm.BeginInvoke((Action)(() => { form.Hide(); form.ShowDialog(); }));
+                await form.GetHashCode(game);
             }
             else
             {

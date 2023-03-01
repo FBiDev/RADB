@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 //
@@ -6,6 +5,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
+using System.Diagnostics;
 //
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -52,37 +52,37 @@ namespace RADB
         public DownloadFile API_File_Consoles()
         {
             return new DownloadFile(GetURL(API_URL_Consoles),
-                            Folder.Console + "Consoles.json");
+                                    (Folder.Console + "Consoles.json"));
         }
 
         public DownloadFile API_File_GameList(Console console)
         {
             return new DownloadFile(GetURL(API_URL_GameList, "i=" + console.ID),
-                            (Folder.GameData + console.Name + ".json").Replace("/", "-"));
+                                    (Folder.GameData + console.Name + ".json").Replace("/", "-"));
         }
 
         public DownloadFile API_File_GameExtend(Game game)
         {
             return new DownloadFile(GetURL(API_URL_GameExtend, "i=" + game.ID),
-                            (Folder.GameDataExtend(game.ConsoleID) + game.ID + ".json"));
+                                    (Folder.GameDataExtend(game.ConsoleID) + game.ID + ".json"));
         }
 
         public DownloadFile API_File_UserProgress(string userName, int gameID)
         {
             return new DownloadFile(GetURL(API_URL_UserProgress, "u=" + userName + "&i=" + gameID),
-                            (Folder.User + "UserProgress.json"));
+                                    (Folder.User + "UserProgress.json"));
         }
 
         public DownloadFile API_File_UserInfo(string userName)
         {
             return new DownloadFile(GetURL(API_URL_UserInfo, "u=" + userName),
-                            (Folder.User + userName.ToLower() + "_Info.json"));
+                                    (Folder.User + userName.ToLower() + "_Info.json"));
         }
 
         public DownloadFile API_File_UserCompletedGames(string userName)
         {
             return new DownloadFile(GetURL(API_URL_UserCompletedGames, "u=" + userName),
-                            (Folder.User + userName.ToLower() + "_CompletedGames.json"));
+                                    (Folder.User + userName.ToLower() + "_CompletedGames.json"));
         }
 
         Dictionary<string, string> LinkMessages = new Dictionary<string, string>()
@@ -118,10 +118,7 @@ namespace RADB
             public const string Multi = "~Multi~";
         }
 
-        public RA()
-        {
-            WebClientExtend.CustomErrorMessages = LinkMessages;
-        }
+        public RA() { WebClientExtend.CustomErrorMessages = LinkMessages; }
         #endregion
 
         #region _Consoles
@@ -169,11 +166,8 @@ namespace RADB
 
         Task<List<Game>> DeserializeGameList(Console console)
         {
-            return Task.Run(() =>
-            {
-                List<Game> list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(API_File_GameList(console).Path));
-                return list;
-            });
+            var list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(API_File_GameList(console).Path));
+            return Task.FromResult(list);
         }
 
         public async Task DownloadGamesIcon(Console console, Download dl)
@@ -192,7 +186,7 @@ namespace RADB
         {
             return Task.Run(async () =>
             {
-                dlExtend.SetFile(API_File_GameExtend(game));
+                dlExtend.SetFile(game.ExtendFile);
 
                 if (await (dlExtend.Start()))
                 {
@@ -209,22 +203,18 @@ namespace RADB
 
         Task<GameExtend> DeserializeGameExtend(Game game)
         {
-            return Task.Run(() =>
-            {
-                string AllText = File.ReadAllText(API_File_GameExtend(game).Path);
-                string gameData = AllText.GetBetween("{", ",\"Achievements\":");
-                string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
-                gameData = "{" + gameData + "}";
-                cheevos = "{" + cheevos + "}";
+            string AllText = File.ReadAllText(game.ExtendFile.Path);
+            string gameData = AllText.GetBetween("{", ",\"Achievements\":");
+            string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
+            gameData = "{" + gameData + "}";
+            cheevos = "{" + cheevos + "}";
 
-                GameExtend obj = JsonConvert.DeserializeObject<GameExtend>(gameData);
+            var obj = JsonConvert.DeserializeObject<GameExtend>(gameData);
+            var jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
 
-                JToken jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
+            obj.SetAchievements(jcheevos);
 
-                obj.SetAchievements(jcheevos);
-
-                return obj;
-            });
+            return Task.FromResult(obj);
         }
 
         public async Task DownloadGameExtendImages(Game game)
@@ -251,13 +241,12 @@ namespace RADB
                 userData = userData.GetBetween(":{", "}}");
                 userData = "{" + userData + "}";
 
-                UserProgress user = null;
-                if (string.IsNullOrWhiteSpace(userData) == false)
-                {
-                    user = JsonConvert.DeserializeObject<UserProgress>(userData);
-                    user.UserName = userName;
-                    user.GameID = gameID;
-                }
+                if (userData.IsEmpty()) return null;
+
+                UserProgress user = JsonConvert.DeserializeObject<UserProgress>(userData);
+                user.UserName = userName;
+                user.GameID = gameID;
+
                 return user;
             });
         }
@@ -267,7 +256,7 @@ namespace RADB
             var user = new User();
 
             var file = API_File_UserInfo(userName);
-            var dl = new Download(file) { Overwrite = true };
+            var dl = new Download(file) { };
             if (await dl.Start() == false) { return user; }
 
             return await Task.Run(() =>
@@ -291,7 +280,7 @@ namespace RADB
             return await Task.Run(async () =>
             {
                 var file = user.UserPicFile;
-                var dl = new Download(file);
+                var dl = new Download(file) { Overwrite = false };
                 if (await (dl.Start()))
                     user.SetUserPicBitmap();
 
@@ -349,19 +338,12 @@ namespace RADB
         #region MergeImages
         public async Task MergeGameBadges(Game game)
         {
-            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
-
-            //var query = gCheevos.GroupBy(x => new { x.BadgeURL, x.GameID }).Where(g => g.Count() > 1)
-            //  .Select(y => new { Element = y.Key, Counter = y.Count() })
-            //  .ToList().OrderBy(x => x.Element.BadgeURL).ToList();
-            //var queryTotal = gCheevos.Count - (query.Select(x => x.Counter).Sum() - query.Count);
-
-            //Game game = (await Game.Listar(new Game { ID = gameID })).FirstOrNew();
             GameExtend gameExtend = await DownloadGameExtend(game, Browser.dlGames);
             var badgeFiles = gameExtend.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
-            Browser.dlGamesBadges.Files = badgeFiles;
 
+            Browser.dlGamesBadges.Files = badgeFiles;
             await Browser.dlGamesBadges.Start();
+
             var badgeNames = badgeFiles.Select(a => a.Path).ToList();
 
             await Task.Run(() =>
@@ -371,34 +353,34 @@ namespace RADB
 
             if (badgeNames.Any())
             {
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+
                 Picture pic = await Task.Run(() =>
                 {
                     pic = new Picture(badgeNames, true, 11, GameBadgesSize, false);
                     pic.Save(game.MergedBadgesPath(), PictureFormat.Png, false);
 
-                    Archive.SaveGameBadges(game, badgeNames, game.MergedBadgesPath() + ".txt");
+                    Archive.SaveGameBadges(badgeNames, game.MergedBadgesPath() + ".txt");
                     return pic;
                 });
 
                 var f = Forms.Open<ImageViewer>();
                 f.SetImage(pic, GameBadgesSize);
-            }
 
-            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
+                stopwatch.Stop();
+                //MessageBox.Show("Badges merged in: " + stopwatch.ElapsedSeconds() + "s");
+            }
 
             if (badgeNames.IsEmpty())
             {
                 MessageBox.Show("No Icons Found");
             }
-
-            //MessageBox.Show("Badges merged in: " + fim0.TotalSeconds + "s");
         }
 
         public async Task MergeGamesIcon(Console console, bool getIncorrectSize = false)
         {
             if (console.IsNull()) { MessageBox.Show("No Console Selected"); return; }
-
-            TimeSpan ini0 = new TimeSpan(DateTime.Now.Ticks);
 
             await DownloadGamesIcon(console, Browser.dlConsolesGamesIcon);
             var games = (await Game.Search(console.ID, true)).Where(g => g.NumAchievements > 0).ToList();
@@ -412,6 +394,9 @@ namespace RADB
 
             if (gamesIcon.Any())
             {
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+
                 Picture pic = await Task.Run(() =>
                 {
                     pic = new Picture(gamesIcon, true, 11, GameIconSize, false);
@@ -424,17 +409,15 @@ namespace RADB
 
                 var f = Forms.Open<ImageViewer>();
                 f.SetImage(pic, GameIconSize);
+
+                stopwatch.Stop();
+                //MessageBox.Show("Badges merged in: " + stopwatch.ElapsedSeconds() + "s");
             }
 
-            TimeSpan fim0 = new TimeSpan(DateTime.Now.Ticks) - ini0;
-            //MessageBox.Show(fim0.TotalSeconds.ToString());
             if (gamesIcon.IsEmpty())
             {
                 MessageBox.Show("No Icons Found");
             }
-
-            //MessageBox.Show("Badges merged in: " + fim0.TotalSeconds + "s");
-            return;
         }
         #endregion
     }

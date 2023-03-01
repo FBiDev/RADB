@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 //
 using System.IO;
 using System.Drawing;
@@ -13,37 +12,37 @@ namespace RADB
 {
     public enum PictureFormat
     {
-        Jpg = 0x2E6A7067,   //.png
-        Png = 0x2E706E67,   //.jpg
+        Jpg = 0x2E6A7067,//.png
+        Png = 0x2E706E67,//.jpg
     }
 
     public class Picture
     {
         public Bitmap Bitmap { get; set; }
-        private Size _Size { get; set; }
+        Size _Size { get; set; }
         public Size Size { get { return _Size; } set { _Size = value; Width = value.Width; Height = _Size.Height; } }
         public int Width { get; set; }
         public int Height { get; set; }
-        private EncoderParameters Parameters { get; set; }
-        private long _Quality;
+        EncoderParameters Parameters { get; set; }
+        long _Quality;
         public long Quality
         {
             get { return _Quality; }
             set
             {
-                Parameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, value);
+                Parameters.Param[0] = new EncoderParameter(Encoder.Quality, value);
                 _Quality = value;
             }
         }
 
         public string Path { get; set; }
         public string Name { get { return System.IO.Path.GetFileName(Path); } }
-        private ImageFormat Format { get; set; }
-        private PictureFormat FormatEnum { get; set; }
+        ImageFormat Format { get; set; }
+        PictureFormat FormatEnum { get; set; }
 
         public Size Scale(Size maxSize)
         {
-            float factor = Bitmap.Width >= Bitmap.Height ? (float)Bitmap.Height / (float)Bitmap.Width : (float)Bitmap.Width / (float)Bitmap.Height;
+            float factor = Bitmap.Width >= Bitmap.Height ? Bitmap.Height / (float)Bitmap.Width : Bitmap.Width / (float)Bitmap.Height;
 
             int width = Bitmap.Width;
             int height = Bitmap.Height;
@@ -61,14 +60,14 @@ namespace RADB
             return new Size(width, height);
         }
 
-        private List<string> ImageFiles { get; set; }
+        List<string> ImageFiles { get; set; }
         public int ImagesPerRow { get; set; }
         public Size FixedPerImage { get; set; }
         public bool StretchImage { get; set; }
 
         public string Error { get; set; }
 
-        private void DefaultValues()
+        void DefaultValues()
         {
             Path = string.Empty;
             ImageFiles = new List<string>();
@@ -82,9 +81,7 @@ namespace RADB
             //ImagesPerRow = 11;
         }
 
-        public Picture(Size size)
-            : this(size.Width, size.Height)
-        { }
+        public Picture(Size size) : this(size.Width, size.Height) { }
 
         public Picture(int width, int height)
         {
@@ -133,10 +130,7 @@ namespace RADB
 
             BlankBitmap();
 
-            if (merge)
-            {
-                MergeImages();
-            }
+            if (merge) { MergeImages(); }
         }
 
         public static Picture Create(string fileName, Bitmap errorBitmap = null)
@@ -152,14 +146,13 @@ namespace RADB
         {
             var bytes = File.ReadAllBytes(filePath);
             var ms = new MemoryStream(bytes);
-            //var img = Image.FromStream(ms);
             return (Bitmap)Image.FromStream(ms);
         }
 
         #region Saves
-        private ImageCodecInfo GetEncoder(ImageFormat format)
+        ImageCodecInfo GetEncoder(ImageFormat format)
         {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+            var codecs = ImageCodecInfo.GetImageEncoders();
             foreach (ImageCodecInfo codec in codecs)
             {
                 if (codec.FormatID == format.Guid)
@@ -195,47 +188,44 @@ namespace RADB
             Bitmap.Save(Path, GetEncoder(Format), Parameters);
             Bitmap.Dispose();
 
-            if (compress)
-            {
-                Compress();
-            }
+            if (compress) { Compress(); }
         }
 
         public string Compress()
         {
             byte[] exeResource = new byte[0];
-            string exeFile = Folder.Temp;
+            string exeFilePath = Folder.Temp;
             string exeCmd = string.Empty;
 
             switch (FormatEnum)
             {
                 case PictureFormat.Jpg:
                     exeResource = Resources.jpegoptim_1_5_0;
-                    exeFile += "jpegoptim_1_5_0.exe";
-                    exeCmd = exeFile + " -w max \"" + Path + "\"";
+                    exeFilePath += "jpegoptim_1_5_0.exe";
+                    exeCmd = exeFilePath + " -w max \"" + Path + "\"";
                     break;
                 case PictureFormat.Png:
                     exeResource = Resources.pngcrush_1_8_13_w64;
-                    exeFile += "pngcrush_1_8_13_w64.exe";
-                    exeCmd = exeFile + " -ow -speed " + "\"" + Path + "\"";
+                    exeFilePath += "pngcrush_1_8_13_w64.exe";
+                    exeCmd = exeFilePath + " -ow -speed " + "\"" + Path + "\"";
                     break;
             }
 
-            using (FileStream exeNewFile = new FileStream(exeFile, FileMode.Create))
+            using (FileStream exeNewFile = new FileStream(exeFilePath, FileMode.Create))
             {
                 exeNewFile.Write(exeResource, 0, exeResource.Length);
             }
 
             string output = CMD.Execute(exeCmd);
 
-            File.Delete(exeFile);
+            File.Delete(exeFilePath);
 
             return output;
         }
         #endregion
 
         #region MergeImages
-        private void BlankBitmap()
+        void BlankBitmap()
         {
             int width = 0;
             int maxWidth = 0;
@@ -261,9 +251,7 @@ namespace RADB
                     continue;
                 }
 
-                //create a Bitmap from the file and add it to the list
                 Bitmap image = FromFile(imageFile);
-                //Bitmap image = new Bitmap(imageFile);
 
                 //update the width of the final bitmap
                 if (index <= imagesPerRow && width <= maxWidth)
@@ -304,19 +292,16 @@ namespace RADB
 
             if (maxWidth == 0 || maxHeight == 0) { return; }
 
-            //create a bitmap to hold the combined image
             Bitmap = new Picture(maxWidth, maxHeight).Bitmap;
             Size = Bitmap.Size;
         }
 
-        private void MergeImages()
+        void MergeImages()
         {
             if (Bitmap == null || (Bitmap is Bitmap) == false) { return; }
 
-            //get a graphics object from the image so we can draw on it
             using (Graphics g = Graphics.FromImage(Bitmap))
             {
-                //copy in High Quality
                 g.CompositingMode = CompositingMode.SourceCopy;
                 g.CompositingQuality = CompositingQuality.HighQuality;
                 g.SmoothingMode = SmoothingMode.HighQuality;
@@ -329,7 +314,6 @@ namespace RADB
                 var wrapMode = new ImageAttributes();
                 wrapMode.SetWrapMode(WrapMode.TileFlipXY);
 
-                //go through each image and draw it on the final image
                 int offsetW = 0;
                 int offsetH = 0;
                 int offsetHLine = 0;
@@ -340,7 +324,6 @@ namespace RADB
                 foreach (string imageFile in ImageFiles)
                 {
                     Bitmap image = FromFile(imageFile);
-                    //Bitmap image = new Bitmap(imageFile);
 
                     if (index > imagesPerRow)
                     {
@@ -390,17 +373,15 @@ namespace RADB
         #endregion
 
         #region Effects Grayscale
-        private Bitmap MakeGrayscale(Bitmap original)
+        Bitmap MakeGrayscale(Bitmap original)
         {
-            //create a blank bitmap the same size as original
             Bitmap newBitmap = new Bitmap(original.Width, original.Height);
 
-            //get a graphics object from the new image
             using (Graphics g = Graphics.FromImage(newBitmap))
             {
                 //create the grayscale ColorMatrix
-                ColorMatrix colorMatrix = new ColorMatrix(
-                    new float[][] 
+                var colorMatrix = new ColorMatrix(
+                    new float[][]
                     {
                         new float[] {.3f, .3f, .3f, 0, 0},
                         new float[] {.59f, .59f, .59f, 0, 0},
@@ -410,16 +391,11 @@ namespace RADB
                     }
                 );
 
-                //create some image attributes
                 using (ImageAttributes attributes = new ImageAttributes())
                 {
-                    //set the color matrix attribute
                     attributes.SetColorMatrix(colorMatrix);
-
-                    //draw the original image on the new image
-                    //using the grayscale color matrix
                     g.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height),
-                                0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
+                                                    0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
                 }
             }
             return newBitmap;

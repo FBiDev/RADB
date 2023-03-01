@@ -23,8 +23,6 @@ namespace RADB
             BIND.OnGameChanged += LoadSelectedGame;
             BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabGameInfo) { pnlInfoScroll.Focus(); } };
 
-            //f.Shown += GameInfo_Shown;
-
             btnUpdateInfo.Click += btnUpdateInfo_Click;
             btnGamePage.Click += OnButtonGamePageClicked;
             btnHashes.Click += OnButtonHashesClicked;
@@ -122,18 +120,18 @@ namespace RADB
                 gpbInfoAchievements.Location = new Point(gpbInfoAchievements.Location.X, (gpbInfo.Height - pnlInfoScroll.VerticalScroll.Value) + 9);
             }
 
-            ListBind<Achievement> lstCheevos = new ListBind<Achievement>();
+            var lstCheevos = new ListBind<Achievement>();
             dgvAchievements.DataSource = lstCheevos;
-            if (File.Exists(RA.API_File_GameExtend(BIND.Game).Path))
+
+            if (File.Exists(BIND.Game.ExtendFile.Path))
             {
-                //gx.SetAchievements(resultInfo["Achievements"]);
-                string AllText = File.ReadAllText(RA.API_File_GameExtend(BIND.Game).Path);
+                string AllText = File.ReadAllText(BIND.Game.ExtendFile.Path);
                 string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
                 cheevos = "{" + cheevos + "}";
 
                 JToken jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
-
                 BIND.GameExtend.SetAchievements(jcheevos);
+
                 lstCheevos = new ListBind<Achievement>(BIND.GameExtend.AchievementsList);
                 dgvAchievements.DataSource = lstCheevos;
             }

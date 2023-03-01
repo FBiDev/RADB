@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 //
-using System.Collections.Specialized;
 using System.IO;
 using System.IO.Compression;
 using System.ComponentModel;
@@ -15,28 +14,22 @@ namespace RADB
 {
     public class WebClientExtend : WebClient
     {
-        private bool GZipContent
-        {
-            get
-            {
-                if (HeaderExist("Content-Encoding"))
-                {
-                    return ResponseHeaders[HttpResponseHeader.ContentEncoding] == "gzip";
-                }
-                return false;
-            }
-        }
-
         public bool HeaderExist(string headerName)
         {
-            if (ResponseHeaders != null && Convert.ToBoolean(ResponseHeaders.AllKeys.Where(h => h.ToLower() == headerName.ToLower()).Count()))
-            {
-                return true;
-            }
-            return false;
+            return ResponseHeaders != null && ResponseHeaders.AllKeys.Any(h => h.ToLower() == headerName.ToLower());
         }
 
-        private bool _GZipEnable { get; set; }
+        public string HeaderValue(string headerName)
+        {
+            return HeaderExist(headerName) ? ResponseHeaders.AllKeys.Single(h => h.ToLower() == headerName.ToLower()) : string.Empty;
+        }
+
+        bool IsGZipContent
+        {
+            get { return HeaderExist("Content-Encoding") && ResponseHeaders[HttpResponseHeader.ContentEncoding] == "gzip"; }
+        }
+
+        bool _GZipEnable { get; set; }
         public bool GZipEnable
         {
             get { return _GZipEnable; }
@@ -53,14 +46,14 @@ namespace RADB
                 }
             }
         }
-        private string GZipExtension { get { return ".gz"; } }
-        private long GZipSize { get; set; }
-        private long GZipSizeUncompressed { get; set; }
+        const string GZipExtension = ".gz";
+        long GZipSize { get; set; }
+        long GZipSizeUncompressed { get; set; }
         public DownloadFile FileDownloaded;
 
         public static Dictionary<string, string> CustomErrorMessages = new Dictionary<string, string>() { };
 
-        private bool _Error;
+        bool _Error;
         public bool Error { get { return _Error; } }
         string _ErrorMessage { get; set; }
         public string ErrorMessage
@@ -82,7 +75,6 @@ namespace RADB
         public CookieContainer CookieContainer { get; private set; }
 
         public WebClientExtend()
-            : base()
         {
             GZipEnable = true;
 
@@ -133,7 +125,7 @@ namespace RADB
 
             if (ResponseHeaders == null) { return msg; }
 
-            string ContentType = this.ResponseHeaders[HttpResponseHeader.ContentType];
+            string ContentType = ResponseHeaders[HttpResponseHeader.ContentType];
 
             if (ContentType.IndexOf("ISO-8859-1", 0, StringComparison.OrdinalIgnoreCase) >= 0)
             {
@@ -158,13 +150,12 @@ namespace RADB
 
         public async new Task<byte[]> DownloadData(string address)
         {
-            HttpWebResponse response = null;
             byte[] data = new byte[0];
 
             try
             {
                 _Error = false;
-                data = await base.DownloadDataTaskAsync(new Uri(address));
+                data = await DownloadDataTaskAsync(new Uri(address));
             }
             catch (WebException we)
             {
@@ -177,15 +168,14 @@ namespace RADB
                 }
                 else
                 {
-                    response = we.Response as HttpWebResponse;
+                    HttpWebResponse response = we.Response as HttpWebResponse;
                     ErrorMessage = "Download Error: \r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription;
                 }
             }
 
-            if (GZipContent)
+            if (IsGZipContent)
             {
                 GetGZipSize(data);
-                //string base64 = Convert.ToBase64String(data);
                 data = DecodeGZip(data);
             }
             return data;
@@ -193,7 +183,7 @@ namespace RADB
 
         protected override WebRequest GetWebRequest(Uri address)
         {
-            HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
+            HttpWebRequest request = base.GetWebRequest(address) as HttpWebRequest;
             request.CookieContainer = CookieContainer;
 
             if (FileDownloaded == null)
@@ -268,12 +258,11 @@ namespace RADB
 
             RevertTempFile(FileDownloaded.Path);
 
-            if (GZipContent)
+            if (IsGZipContent)
             {
                 FileInfo fileToDecompress = new FileInfo(FileDownloaded.Path);
 
                 string oldName = fileToDecompress.FullName;
-                //string NoExtensionName = oldName.Remove(oldName.Length - fileToDecompress.Extension.Length);
                 string gzName = oldName + GZipExtension;
 
                 File.Delete(gzName);
@@ -303,12 +292,12 @@ namespace RADB
             return;
         }
 
-        private string SetTempFile(string fileName)
+        string SetTempFile(string fileName)
         {
             return fileName + ".tmp";
         }
 
-        private void RevertTempFile(string fileName)
+        void RevertTempFile(string fileName)
         {
             string newFile = fileName.Substring(0, fileName.Length - 4);
             FileDownloaded.Path = newFile;
@@ -320,25 +309,22 @@ namespace RADB
             File.Move(fileName, newFile);
         }
 
-        private void GetGZipSize(byte[] data)
+        void GetGZipSize(byte[] data)
         {
-            if (GZipContent)
+            if (IsGZipContent)
             {
                 GZipSize = data.Length;
 
-                var last4 = new byte[4];
+                byte[] last4 = new byte[4];
                 last4[0] = data[data.Length - 4];
                 last4[1] = data[data.Length - 3];
                 last4[2] = data[data.Length - 2];
                 last4[3] = data[data.Length - 1];
                 GZipSizeUncompressed = BitConverter.ToUInt32(last4, 0);
-
-                //var gz = Archive.CalculateSize(GZipSize);
-                //var gzUn = Archive.CalculateSize(GZipSizeUncompressed);
             }
         }
 
-        private byte[] DecodeGZip(byte[] gzBuffer)
+        byte[] DecodeGZip(byte[] gzBuffer)
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -354,9 +340,8 @@ namespace RADB
                     length = zip.Read(buffer, 0, buffer.Length);
                 }
 
-                var data = new byte[length];
+                byte[] data = new byte[length];
                 Array.Copy(buffer, data, length);
-                //return Encoding.UTF8.GetString(data);
                 return data;
             }
         }

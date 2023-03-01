@@ -382,8 +382,6 @@ namespace RADB
             this.pnlOutput.AutoScroll = true;
             this.pnlOutput.Controls.Add(this.lblOutput);
             this.pnlOutput.Location = new System.Drawing.Point(2, 2);
-            this.pnlOutput.MaximumSize = new System.Drawing.Size(902, 61);
-            this.pnlOutput.MinimumSize = new System.Drawing.Size(902, 61);
             this.pnlOutput.Name = "pnlOutput";
             this.pnlOutput.Size = new System.Drawing.Size(902, 61);
             this.pnlOutput.TabIndex = 30;
@@ -1843,6 +1841,8 @@ namespace RADB
             // 
             // gpbAwards
             // 
+            this.gpbAwards.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.gpbAwards.Controls.Add(this.picLoaderUserAwards);
             this.gpbAwards.Controls.Add(this.lsvGameAwards);
             this.gpbAwards.Location = new System.Drawing.Point(330, 76);
@@ -1868,6 +1868,8 @@ namespace RADB
             // 
             // lsvGameAwards
             // 
+            this.lsvGameAwards.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lsvGameAwards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.lsvGameAwards.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lsvGameAwards.Location = new System.Drawing.Point(1, 17);
@@ -1938,9 +1940,8 @@ namespace RADB
             // 
             // gpbUserInfo
             // 
-            this.gpbUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gpbUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.gpbUserInfo.Controls.Add(this.lnkUserRank);
             this.gpbUserInfo.Controls.Add(this.picUserLastGame);
             this.gpbUserInfo.Controls.Add(this.lblUserLastConsole);

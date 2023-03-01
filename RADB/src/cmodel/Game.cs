@@ -32,6 +32,20 @@ namespace RADB
         }
         #endregion
 
+        DownloadFile _ExtendFile;
+        public DownloadFile ExtendFile
+        {
+            get
+            {
+                if (_ExtendFile == null)
+                {
+                    var RA = new RA();
+                    _ExtendFile = RA.API_File_GameExtend(this);
+                }
+                return _ExtendFile;
+            }
+        }
+
         public Game()
         {
             ImageIconBitmap = RA.DefaultIcon;

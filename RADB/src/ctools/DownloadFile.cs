@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Drawing;
 
 namespace RADB
 {
@@ -28,31 +26,17 @@ namespace RADB
 
         public bool Equals(DownloadFile other)
         {
-            //Check whether the compared object is null.
-            if (Object.ReferenceEquals(other, null)) return false;
-
-            //Check whether the compared object references the same data.
-            if (Object.ReferenceEquals(this, other)) return true;
-
-            //Check whether the products' properties are equal.
+            if (ReferenceEquals(other, null)) return false;
+            if (ReferenceEquals(this, other)) return true;
             return URL.Equals(other.URL) && Path.Equals(other.Path);
             //return URL.Equals(other.URL);
         }
 
-        // If Equals() returns true for a pair of objects
-        // then GetHashCode() must return the same value for these objects.
-
         public override int GetHashCode()
         {
-            //Get hash code for the Name field if it is not null.
-            int hashProductPath = Path == null ? 0 : Path.GetHashCode();
-
-            //Get hash code for the Code field.
             int hashProductURL = URL == null ? 0 : URL.GetHashCode();
-
-            //Calculate the hash code for the product.
+            int hashProductPath = Path == null ? 0 : Path.GetHashCode();
             return hashProductPath ^ hashProductURL;
-            //return hashProductURL;
         }
     }
 }

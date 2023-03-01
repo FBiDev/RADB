@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace RADB
+﻿namespace RADB
 {
     public class UserProgress
     {
@@ -17,14 +13,7 @@ namespace RADB
 
         public bool SameProgress(UserProgress otherUser)
         {
-            if (this.UserName == otherUser.UserName && this.GameID == otherUser.GameID && this.NumAchieved == otherUser.NumAchieved)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return UserName == otherUser.UserName && GameID == otherUser.GameID && NumAchieved == otherUser.NumAchieved;
         }
     }
 }

@@ -6,14 +6,8 @@ namespace RADB
 {
     public class Download : DownloadBase
     {
-        public Download()
-        {
-        }
-
-        public Download(DownloadFile file)
-        {
-            SetFile(file);
-        }
+        public Download() { }
+        public Download(DownloadFile file) { SetFile(file); }
 
         public override async Task<bool> Start()
         {
@@ -24,9 +18,7 @@ namespace RADB
             return !Error;
         }
 
-        //==========
-        //===Desktop
-        //==========
+        //==========//===Desktop//==========
         public void SetControls(Label resultLabel, ProgressBar resultBar, Label resultTime)
         {
             ProgressChanged += () => DownloadChanged(resultLabel, resultBar, resultTime);
@@ -42,7 +34,6 @@ namespace RADB
             switch (Status)
             {
                 case DownloadStatus.Connecting:
-
                     resultBar.InvokeIfRequired(() =>
                     {
                         BarStart(resultBar, ProgressBarStyle.Marquee);
@@ -55,10 +46,8 @@ namespace RADB
                         resultBar.Style = (TotalBytesToReceive == -1 ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous);
                     });
                     break;
-                case DownloadStatus.FileDownloaded:
-                    break;
-                case DownloadStatus.NextFiles:
-                    break;
+                case DownloadStatus.FileDownloaded: break;
+                case DownloadStatus.NextFiles: break;
                 case DownloadStatus.Completed:
                     resultTime.InvokeIfRequired(() =>
                     {
@@ -78,8 +67,6 @@ namespace RADB
                     {
                         BarStop(resultBar);
                     });
-                    break;
-                default:
                     break;
             }
         }

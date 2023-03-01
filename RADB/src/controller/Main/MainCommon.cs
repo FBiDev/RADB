@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using GNX;
 
 namespace RADB
@@ -29,10 +27,7 @@ namespace RADB
             Folder.CreateFolders();
         }
 
-        static void Main_Load(object sender, EventArgs e)
-        {
-            var j = JsonConvert.DeserializeObject<JObject>("{\"LoadJsonDLL\":\"...\"}");
-        }
+        static void Main_Load(object sender, EventArgs e) { }
 
         static async void Main_Shown(object sender, EventArgs e)
         {

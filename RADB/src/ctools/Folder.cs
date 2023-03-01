@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows.Forms;
 
 namespace RADB
 {
@@ -48,6 +49,7 @@ namespace RADB
 
         public static string Icons(int consoleID)
         {
+            if (consoleID == 0) MessageBox.Show("X");
             string folder = IconsBase + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;

@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RADB
 {
     public class FlatArticle : FlowLayoutPanel
     {
-        private Label lblTitle = new Label();
-        private Label lblDesc = new Label();
+        readonly Label lblTitle = new Label();
+        readonly Label lblDesc = new Label();
 
-        [DefaultValue(typeof(String), "LabelTitle")]
+        [DefaultValue(typeof(string), "LabelTitle")]
         public string TextTitle
         {
             get { return lblTitle.Text; }
             set { lblTitle.Text = value; }
         }
 
-        [DefaultValue(typeof(String), "LabelDesc")]
+        [DefaultValue(typeof(string), "LabelDesc")]
         public string TextDesc
         {
             get { return lblDesc.Text; }
@@ -157,8 +153,8 @@ namespace RADB
             BackColor = Color.Transparent;
             BorderColor = Color.Transparent;
 
-            this.Controls.Add(lblTitle);
-            this.Controls.Add(lblDesc);
+            Controls.Add(lblTitle);
+            Controls.Add(lblDesc);
         }
     }
 }

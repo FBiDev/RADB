@@ -67,6 +67,10 @@ namespace RADB
             if (BIND.User.Invalid) return;
 
             //Valid User
+            txtUsername.Text = BIND.User.Name;
+            txtUsername.SelectionLength = 0;
+            txtUsername.SelectionStart = txtUsername.Text.Length;
+
             btnUserPage.Enabled = true;
 
             lsvGameAwards.Items.Clear();

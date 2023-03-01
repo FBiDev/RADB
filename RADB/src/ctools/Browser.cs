@@ -3,6 +3,8 @@ using System.Collections.Specialized;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using GNX;
 
 namespace RADB
@@ -16,18 +18,15 @@ namespace RADB
         {
             get
             {
-                if (useProxy)
-                {
-                    return new WebProxy
-                    {
-                        Address = new Uri("http://cohab-proxy.cohabct.com.br:3128"),
-                        BypassProxyOnLocal = true,
-                        BypassList = new string[] { },
-                        Credentials = new NetworkCredential("fbirnfeld", "zumbie")
-                    };
-                }
+                if (useProxy == false) return new WebProxy();
 
-                return new WebProxy();
+                return new WebProxy
+                {
+                    Address = new Uri("http://cohab-proxy.cohabct.com.br:3128"),
+                    BypassProxyOnLocal = true,
+                    BypassList = new string[] { },
+                    Credentials = new NetworkCredential("fbirnfeld", "zumbie")
+                };
             }
         }
 
@@ -49,12 +48,14 @@ namespace RADB
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.DefaultConnectionLimit = 128;
+
+            var j = JsonConvert.DeserializeObject<JObject>("{\"LoadJsonDLL\":\"...\"}");
         }
 
         public static async Task SystemLogin()
         {
             BIND.RALogged = false;
-            //wclient.Credentials = new NetworkCredential("", "");
+
             var html = await RALogin.DownloadString(RA.HOST_URL);
             var token = html.GetBetween("_token\" value=\"", "\">");
 
@@ -96,8 +97,7 @@ namespace RADB
                     {
                         MessageBox.Show(client.ErrorMessage);
                     }
-                    //if (client.HeaderExist("X-Cache") && client.ResponseHeaders["X-Cache"] != "HIT")
-                    //{ var a = 1; }
+                    //if (client.HeaderValue("X-Cache") != "HIT") { var a = 1; }
                 }
 
                 return data;

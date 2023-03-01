@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 //
 using System.IO;
@@ -219,7 +217,7 @@ namespace RADB
             return !Error;
         }
 
-        private void CalculateResult()
+        void CalculateResult()
         {
             int FilesTotal = FilesToDownload.Count;
             string progressBytes = string.Empty;
@@ -230,7 +228,7 @@ namespace RADB
             Result = progressBytes + progressFiles;
         }
 
-        private string DownloadedProgress(double bytesIn, double bytesTotal)
+        string DownloadedProgress(double bytesIn, double bytesTotal)
         {
             string bytesProgress = Archive.CalculateSize(bytesIn);
             double bytesCalc = bytesTotal <= 0 ? bytesIn : bytesTotal;
