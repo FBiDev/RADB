@@ -62,6 +62,12 @@ namespace RADB
                 MessageBox.Show("Select a Game in Games Tab First");
                 return;
             }
+            if (form.txtUsername.Text.Length < 2)
+            {
+                MessageBox.Show("Username need 2 letters or more.");
+                return;
+            }
+
             if (UserCheevosIsRunning) { return; }
 
             UserCheevosIsRunning = true;

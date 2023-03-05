@@ -31,7 +31,7 @@ namespace RADB
             if (Config.DarkMode)
             {
                 DarkMode(f);
-
+                Config.SetWindowDark(f.Handle);
             }
             else
             {

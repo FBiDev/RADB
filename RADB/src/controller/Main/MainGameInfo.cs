@@ -147,6 +147,7 @@ namespace RADB
                 return;
             }
 
+            btnUpdateInfo.Enabled = false;
             txtSearchAchiev.Enabled = false;
             //Download GameExtend
             await RA.DownloadGameExtend(BIND.Game, Browser.dlGameExtend);
@@ -156,6 +157,7 @@ namespace RADB
 
             //Load Game
             await LoadGameExtend();
+            btnUpdateInfo.Enabled = true;
             txtSearchAchiev.Enabled = true;
             pnlInfoScroll.Focus();
 

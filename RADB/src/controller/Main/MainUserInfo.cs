@@ -63,15 +63,12 @@ namespace RADB
 
             //UserInfo
             BIND.User = await RA.GetUserInfo(txtUsername.Text.Trim());
-            btnGetUserInfo.Enabled = true;
             if (BIND.User.Invalid) return;
 
             //Valid User
             txtUsername.Text = BIND.User.Name;
             txtUsername.SelectionLength = 0;
             txtUsername.SelectionStart = txtUsername.Text.Length;
-
-            btnUserPage.Enabled = true;
 
             lsvGameAwards.Items.Clear();
             lblUserCompletion.Text = "Loading...";
@@ -145,6 +142,9 @@ namespace RADB
                 await lsvGameAwards.AddImageList(images, new Size(52, 52), titles, descs);
                 picLoaderUserAwards.Visible = false;
             }
+
+            btnGetUserInfo.Enabled = true;
+            btnUserPage.Enabled = true;
         }
 
         static void lsvGameAwards_MouseLeave(object sender, EventArgs e)
