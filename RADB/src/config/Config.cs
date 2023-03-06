@@ -44,14 +44,14 @@ namespace RADB
             }
         }
 
-        [DllImport("dwmapi.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
-        public static extern void DwmSetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE attribute, ref int pvAttribute, uint cbAttribute);
-
         public static void SetWindowDark(IntPtr handle)
         {
             var dark = 1;
             DwmSetWindowAttribute(handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref dark, sizeof(uint));
         }
+
+        [DllImport("dwmapi.dll", CharSet = CharSet.Unicode, PreserveSig = true)]
+        public static extern void DwmSetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE attribute, ref int pvAttribute, uint cbAttribute);
 
         public enum DWMWINDOWATTRIBUTE : uint
         {
