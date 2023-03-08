@@ -45,7 +45,15 @@ namespace RADB
         }
 
         string _UserPic { get; set; }
-        public string UserPic { get { return _UserPic; } set { _UserPic = value = LastActivity.User.ToString() + PictureFormat.Png.ToStringHex(); } }
+        public string UserPic
+        {
+            get { return _UserPic; }
+            set
+            {
+                if (LastActivity != null)
+                    _UserPic = value = LastActivity.User.ToString() + PictureFormat.Png.ToStringHex();
+            }
+        }
         public DownloadFile UserPicFile { get { return new DownloadFile(RA.USER_HOST + UserPic, Folder.User + UserPic); } }
         public Bitmap UserPicBitmap { get; set; }
         public void SetUserPicBitmap()

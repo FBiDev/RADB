@@ -16,11 +16,10 @@ namespace RADB
         public static async Task User_Init()
         {
             BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabUserInfo) { txtUsername.Focus(); } };
-            //f.Shown += User_Shown;
             txtUsername.KeyDown += txtUsername_KeyDown;
             btnGetUserInfo.Click += btnGetUserInfo_Click;
             btnUserPage.Click += OnButtonUserPageClicked;
-            lnkUserRank.LinkClicked += lnkUserRank_LinkClicked;
+            lnkUserRank.LinkClicked += OnLinkUserRankClicked;
 
             await User_Shown(null, null);
         }
@@ -42,10 +41,22 @@ namespace RADB
                 Process.Start(RA.User_URL(txtUsername.Text));
         }
 
-        static void lnkUserRank_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        static void OnLinkUserRankClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var rankOffset = (BIND.User.Rank - 1) / 25 * 25;
             Process.Start(RA.HOST_URL + "globalRanking.php?s=5&t=2&o=" + rankOffset);
+        }
+
+        static void EnablePanelUser()
+        {
+            btnGetUserInfo.Enabled = true;
+            btnUserPage.Enabled = true;
+        }
+
+        static void DisablePanelUser()
+        {
+            btnGetUserInfo.Enabled = false;
+            btnUserPage.Enabled = false;
         }
 
         static async void btnGetUserInfo_Click(object sender, EventArgs e)
@@ -58,12 +69,15 @@ namespace RADB
                 return;
             }
 
-            btnGetUserInfo.Enabled = false;
-            btnUserPage.Enabled = false;
+            DisablePanelUser();
 
             //UserInfo
             BIND.User = await RA.GetUserInfo(txtUsername.Text.Trim());
-            if (BIND.User.Invalid) return;
+            if (BIND.User.Invalid)
+            {
+                EnablePanelUser();
+                return;
+            }
 
             //Valid User
             txtUsername.Text = BIND.User.Name;
@@ -143,8 +157,7 @@ namespace RADB
                 picLoaderUserAwards.Visible = false;
             }
 
-            btnGetUserInfo.Enabled = true;
-            btnUserPage.Enabled = true;
+            EnablePanelUser();
         }
 
         static void lsvGameAwards_MouseLeave(object sender, EventArgs e)
