@@ -46,7 +46,7 @@ namespace RADB
             txtHashes.Text = string.Empty;
 
             var html = await Browser.RALogin.DownloadString(RA.HOST_URL + "linkedhashes.php?g=" + game.ID);
-            var ul = html.GetBetween("unique hashes registered for it:<br><br><ul>", "</ul>").HtmlDecode();
+            var ul = html.GetBetween("supported game file hashes registered for this game.</p><ul>", "</ul>").HtmlDecode();
 
             var listLi = ul.GetBetweenList("<li>", "</li>");
 
