@@ -43,7 +43,7 @@
             this.picImage.TabIndex = 0;
             this.picImage.TabStop = false;
             // 
-            // frmImageViewer
+            // ImageViewer
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
@@ -52,7 +52,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
-            this.Name = "frmImageViewer";
+            this.Name = "ImageViewer";
             this.Text = "RA ImageViewer";
             ((System.ComponentModel.ISupportInitialize)(this.picImage)).EndInit();
             this.ResumeLayout(false);
@@ -61,6 +61,7 @@
 
         #endregion
 
-        private FlatPictureBoxA picImage;
+        internal FlatPictureBoxA picImage;
+
     }
 }

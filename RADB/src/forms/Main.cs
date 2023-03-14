@@ -5,8 +5,6 @@
         public Main()
         {
             InitializeComponent();
-            Init(this);
-
             MainCommon.Main_Init(this);
         }
     }

@@ -94,8 +94,8 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox txtHashes;
-        private System.Windows.Forms.PictureBox picLoaderHash;
         private FlatPanelA pnlHashes;
+        internal System.Windows.Forms.RichTextBox txtHashes;
+        internal System.Windows.Forms.PictureBox picLoaderHash;
     }
 }

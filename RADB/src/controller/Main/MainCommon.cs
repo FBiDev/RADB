@@ -11,6 +11,7 @@ namespace RADB
         public static void Main_Init(Main formDesign)
         {
             BIND.f = formDesign;
+            form.Init(form);
 
             form.Load += Main_Load;
             form.Shown += Main_Shown;

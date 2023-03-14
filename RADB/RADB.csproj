@@ -90,6 +90,8 @@
     <Compile Include="src\config\Config.cs" />
     <Compile Include="src\cmodel\Console.cs" />
     <Compile Include="src\config\Theme.cs" />
+    <Compile Include="src\controller\HashViewer\HashViewerCommon.cs" />
+    <Compile Include="src\controller\HashViewer\HashViewerControls.cs" />
     <Compile Include="src\ctools\Browser.cs" />
     <Compile Include="src\ctools\DownloadBase.cs" />
     <Compile Include="src\cmodel\GameExtend.cs" />
@@ -246,6 +248,8 @@
     <Compile Include="src\controller\Main\MainGameInfo.cs" />
     <Compile Include="src\controller\Main\MainUserInfo.cs" />
     <Compile Include="src\controller\Main\MainCommon.cs" />
+    <Compile Include="src\controller\ImageViewer\ImageViewerCommon.cs" />
+    <Compile Include="src\controller\ImageViewer\ImageViewerControls.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -309,6 +313,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="x86\referenced\" />
+    <Folder Include="src\controller\ImageViewer\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

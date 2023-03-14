@@ -183,7 +183,7 @@ namespace RADB
                 return;
             }
 
-            await HashViewer.Open(BIND.Game);
+            await HashViewerCommon.Open(BIND.Game);
         }
 
         static void txtSearchAchiev_KeyDown(object sender, KeyEventArgs e)

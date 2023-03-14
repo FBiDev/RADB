@@ -365,8 +365,7 @@ namespace RADB
                     return pic;
                 });
 
-                var f = Forms.Open<ImageViewer>();
-                f.SetImage(pic, GameBadgesSize);
+                ImageViewerCommon.SetImage(pic, GameBadgesSize);
 
                 stopwatch.Stop();
                 //MessageBox.Show("Badges merged in: " + stopwatch.ElapsedSeconds() + "s");
@@ -407,8 +406,7 @@ namespace RADB
                     return pic;
                 });
 
-                var f = Forms.Open<ImageViewer>();
-                f.SetImage(pic, GameIconSize);
+                ImageViewerCommon.SetImage(pic, GameIconSize);
 
                 stopwatch.Stop();
                 //MessageBox.Show("Badges merged in: " + stopwatch.ElapsedSeconds() + "s");
