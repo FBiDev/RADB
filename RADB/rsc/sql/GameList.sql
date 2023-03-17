@@ -2,8 +2,9 @@
 SELECT
 	  g.ID 
 	, Title 
-	, ConsoleID 
+	, g.ConsoleID 
 	, c.Name AS ConsoleName 
+	, strftime('%Y-%m-%d', rd.ReleasedDate) AS ReleasedDate 
 	, ImageIcon 
 	, NumAchievements 
 	, Points 
@@ -12,6 +13,7 @@ SELECT
 	, ForumTopicID 
 FROM GameData AS g 
 	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
+	LEFT JOIN GameReleasedDate AS rd ON rd.ID = g.ID 
 WHERE 1 = 1 
 	AND g.ID != (CASE WHEN @allTables = 1 THEN (SELECT -1) ELSE COALESCE((SELECT ID FROM GameToPlay AS p WHERE p.ID = g.ID), -1) END) 
 	AND g.ID != (CASE WHEN @allTables = 1 THEN (SELECT -1) ELSE COALESCE((SELECT ID FROM GameToHide AS h WHERE h.ID = g.ID), -1) END) 

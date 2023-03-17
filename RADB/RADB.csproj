@@ -269,6 +269,7 @@
     <Content Include="rsc\sql\ConsoleList.sql" />
     <Content Include="rsc\sql\ConsoleInsert.sql" />
     <Content Include="rsc\sql\ConsoleDelete.sql" />
+    <Content Include="rsc\sql\GameInsertReleasedDate.sql" />
     <Content Include="rsc\sql\GameDeleteFromPlay.sql" />
     <Content Include="rsc\sql\GameInsertToPlay.sql" />
     <Content Include="rsc\sql\GameListToPlay.sql" />
@@ -313,7 +314,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="x86\referenced\" />
-    <Folder Include="src\controller\ImageViewer\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

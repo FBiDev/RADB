@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-//
 using System.Drawing;
 using System.Threading.Tasks;
+using GNX;
 
 namespace RADB
 {
@@ -18,6 +18,18 @@ namespace RADB
         public int Points { get; set; }
         public int NumLeaderboards { get; set; }
         public DateTime? DateModified { get; set; }
+        public void SetYear(DateTime? date)
+        {
+            if (date.HasValue)
+            {
+                ReleasedDate = date.Value.ToString("yyyy-MM-dd");
+                Year = date.Value.Year.ToString();
+                return;
+            }
+            Year = "";
+        }
+        public string ReleasedDate { get; set; }
+        public string Year { get; set; }
         public int? ForumTopicID { get; set; }
 
         #region _ImageIcon_
@@ -59,6 +71,11 @@ namespace RADB
         public string MergedBadgesPath()
         {
             return Folder.MergedBadges + ConsoleName + "(" + ConsoleID + ")_" + Archive.MakeValidFileName(Title) + "(" + ID + ")_Badges";
+        }
+
+        public async Task<bool> SaveReleasedDate()
+        {
+            return await GameDao.InsertReleasedDate(this);
         }
 
         public async static Task<bool> SaveList(IList<Game> list)

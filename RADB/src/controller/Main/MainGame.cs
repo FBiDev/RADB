@@ -48,8 +48,8 @@ namespace RADB
 
             dgvGames.Columns.Format(CellStyle.StringCenter, 0);
             dgvGames.Columns.Format(CellStyle.Image, 1);
-            dgvGames.Columns.Format(CellStyle.NumberCenter, 4, 5, 6);
-            dgvGames.Columns.Format(CellStyle.DateCenter, 7);
+            dgvGames.Columns.Format(CellStyle.NumberCenter, 4, 5, 6, 7);
+            dgvGames.Columns.Format(CellStyle.DateCenter, 8);
 
             dgvGames.MouseDown += (sender, e) => dgvGames.ShowContextMenu(e, mnuGames);
             dgvGames.CellDoubleClick += MainCommon.ChangeBindGame;
@@ -90,6 +90,7 @@ namespace RADB
             Browser.dlGames.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
             Browser.dlGamesIcon.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
             Browser.dlGamesBadges.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
+            Browser.dlGameExtendList.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
 
             BIND.lstDgvGames.Add(dgvGames);
 
@@ -192,7 +193,10 @@ namespace RADB
             else
                 lstGamesAll.Clear();
 
-            lstGamesAll.AddRange(await Game.Search(BIND.Console.ID));
+            var gamesFiltered = await Game.Search(BIND.Console.ID);
+            lstGamesAll.AddRange(gamesFiltered);
+
+            //var gameExList = await RA.DownloadGameExtendList(gamesFiltered, Browser.dlGameExtendList);
 
             MainCommon.WriteOutput("[" + DateTime.Now.ToTimeLong() + "] " + BIND.Console.Name + " Updated!");
             BIND.GameListChanged();

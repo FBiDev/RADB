@@ -40,6 +40,7 @@ namespace RADB
 
         public static Download dlGameExtend = new Download { Overwrite = true, FolderBase = Folder.GameDataExtendBase, };
         public static Download dlGameExtendImages = new Download { Overwrite = false, FolderBase = Folder.Images, };
+        public static Download dlGameExtendList = new Download { Overwrite = false, FolderBase = Folder.GameDataExtendBase, };
 
         public static WebClientExtend RALogin = new WebClientExtend();
 

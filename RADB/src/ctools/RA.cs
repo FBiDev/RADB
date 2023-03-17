@@ -182,6 +182,54 @@ namespace RADB
         #endregion
 
         #region _GameExtend
+        //To get Year from all games
+        //public Task<List<GameExtend>> DownloadGameExtendList(List<Game> gameList, Download dlExtend)
+        //{
+        //    return Task.Run(async () =>
+        //    {
+        //        var gameListToDownload = new List<Game>();
+        //        gameList.ForEach(x =>
+        //        {
+        //            if (File.Exists(x.ExtendFile.Path) == false)
+        //                gameListToDownload.Add(x);
+        //        });
+
+        //        int max = gameListToDownload.Count;
+        //        int itemsToGet = 4;
+        //        var gameExList = new List<GameExtend>();
+
+        //        for (int i = 0; i < max; i += itemsToGet)
+        //        {
+        //            MainCommon.WriteOutput(i + " of " + max);
+        //            var gamesTaken = gameListToDownload.Skip(i).Take(itemsToGet);
+        //            dlExtend.Files = gamesTaken.Select(x => x.ExtendFile).ToList();
+
+        //            if (await (dlExtend.Start()))
+        //            {
+        //                foreach (var game in gamesTaken)
+        //                {
+        //                    GameExtend obj = (await DeserializeGameExtend(game));
+        //                    obj.ID = game.ID;
+        //                    obj.ConsoleID = game.ConsoleID;
+
+        //                    await obj.Delete();
+
+        //                    if (await obj.Save())
+        //                    {
+        //                        game.SetYear(obj.ReleasedDate);
+        //                        await game.SaveReleasedDate();
+        //                        gameExList.Add(obj);
+        //                    }
+
+        //                    if (game.NumAchievements == 0)
+        //                        File.Delete(game.ExtendFile.Path);
+        //                }
+        //            }
+        //        }
+        //        return gameExList;
+        //    });
+        //}
+
         public Task<GameExtend> DownloadGameExtend(Game game, Download dlExtend)
         {
             return Task.Run(async () =>

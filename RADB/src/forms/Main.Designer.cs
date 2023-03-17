@@ -114,6 +114,7 @@ namespace RADB
             this.gIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
             this.gTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -157,14 +158,6 @@ namespace RADB
             this.tabGamesToPlay = new System.Windows.Forms.TabPage();
             this.lblNotFoundGamesToPlay = new RADB.FlatLabelA();
             this.dgvGamesToPlay = new RADB.FlatDataGridA();
-            this.gpID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
-            this.gpTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGamesToHide = new System.Windows.Forms.TabPage();
             this.lblNotFoundGamesToHide = new RADB.FlatLabelA();
             this.dgvGamesToHide = new RADB.FlatDataGridA();
@@ -231,6 +224,14 @@ namespace RADB
             this.picFBiDevIcon = new RADB.FlatPictureBoxA();
             this.lblAbTitle = new RADB.FlatLabelB();
             this.lblAbYear = new RADB.FlatLabelB();
+            this.gpID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
+            this.gpTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuGames.SuspendLayout();
             this.mnuGamesToHide.SuspendLayout();
             this.mnuConsoles.SuspendLayout();
@@ -841,6 +842,8 @@ namespace RADB
             this.txtSearchGames.Location = new System.Drawing.Point(586, 5);
             this.txtSearchGames.Name = "txtSearchGames";
             this.txtSearchGames.previousText = "";
+            this.txtSearchGames.SelectionLength = 0;
+            this.txtSearchGames.SelectionStart = 0;
             this.txtSearchGames.Size = new System.Drawing.Size(182, 34);
             this.txtSearchGames.TabIndex = 2;
             // 
@@ -931,6 +934,7 @@ namespace RADB
             this.gIconBitmap,
             this.gTitle,
             this.gConsole,
+            this.gYear,
             this.gNumAchievements,
             this.gPoints,
             this.gNumLeaderboards,
@@ -988,6 +992,14 @@ namespace RADB
             this.gConsole.HeaderText = "Console";
             this.gConsole.Name = "gConsole";
             this.gConsole.ReadOnly = true;
+            // 
+            // gYear
+            // 
+            this.gYear.DataPropertyName = "Year";
+            this.gYear.HeaderText = "Year";
+            this.gYear.Name = "gYear";
+            this.gYear.ReadOnly = true;
+            this.gYear.Width = 65;
             // 
             // gNumAchievements
             // 
@@ -1277,6 +1289,8 @@ namespace RADB
             this.txtSearchAchiev.Location = new System.Drawing.Point(688, 16);
             this.txtSearchAchiev.Name = "txtSearchAchiev";
             this.txtSearchAchiev.previousText = "";
+            this.txtSearchAchiev.SelectionLength = 0;
+            this.txtSearchAchiev.SelectionStart = 0;
             this.txtSearchAchiev.Size = new System.Drawing.Size(182, 34);
             this.txtSearchAchiev.TabIndex = 37;
             // 
@@ -1536,70 +1550,6 @@ namespace RADB
             this.dgvGamesToPlay.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGamesToPlay.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToPlay.TabIndex = 3;
-            // 
-            // gpID
-            // 
-            this.gpID.DataPropertyName = "ID";
-            this.gpID.HeaderText = "ID";
-            this.gpID.Name = "gpID";
-            this.gpID.ReadOnly = true;
-            this.gpID.Width = 45;
-            // 
-            // gpIconBitmap
-            // 
-            this.gpIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.gpIconBitmap.DataPropertyName = "ImageIconBitmap";
-            this.gpIconBitmap.HeaderText = "Icon";
-            this.gpIconBitmap.Name = "gpIconBitmap";
-            this.gpIconBitmap.ReadOnly = true;
-            this.gpIconBitmap.Width = 36;
-            // 
-            // gpTitle
-            // 
-            this.gpTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.gpTitle.DataPropertyName = "Title";
-            this.gpTitle.HeaderText = "Title";
-            this.gpTitle.Name = "gpTitle";
-            this.gpTitle.ReadOnly = true;
-            // 
-            // gpConsole
-            // 
-            this.gpConsole.DataPropertyName = "ConsoleName";
-            this.gpConsole.HeaderText = "Console";
-            this.gpConsole.Name = "gpConsole";
-            this.gpConsole.ReadOnly = true;
-            // 
-            // gpNumAchievements
-            // 
-            this.gpNumAchievements.DataPropertyName = "NumAchievements";
-            this.gpNumAchievements.HeaderText = "Trophies";
-            this.gpNumAchievements.Name = "gpNumAchievements";
-            this.gpNumAchievements.ReadOnly = true;
-            this.gpNumAchievements.Width = 80;
-            // 
-            // gpPoints
-            // 
-            this.gpPoints.DataPropertyName = "Points";
-            this.gpPoints.HeaderText = "Points";
-            this.gpPoints.Name = "gpPoints";
-            this.gpPoints.ReadOnly = true;
-            this.gpPoints.Width = 65;
-            // 
-            // gpNumLeaderboards
-            // 
-            this.gpNumLeaderboards.DataPropertyName = "NumLeaderboards";
-            this.gpNumLeaderboards.HeaderText = "Scores";
-            this.gpNumLeaderboards.Name = "gpNumLeaderboards";
-            this.gpNumLeaderboards.ReadOnly = true;
-            this.gpNumLeaderboards.Width = 70;
-            // 
-            // gpLastUpdated
-            // 
-            this.gpLastUpdated.DataPropertyName = "DateModified";
-            this.gpLastUpdated.HeaderText = "Last Updated";
-            this.gpLastUpdated.Name = "gpLastUpdated";
-            this.gpLastUpdated.ReadOnly = true;
-            this.gpLastUpdated.Width = 105;
             // 
             // tabGamesToHide
             // 
@@ -2252,6 +2202,8 @@ namespace RADB
             this.txtUsername.Location = new System.Drawing.Point(6, 6);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.previousText = "";
+            this.txtUsername.SelectionLength = 0;
+            this.txtUsername.SelectionStart = 0;
             this.txtUsername.Size = new System.Drawing.Size(146, 34);
             this.txtUsername.TabIndex = 30;
             // 
@@ -2432,6 +2384,70 @@ namespace RADB
             this.lblAbYear.Size = new System.Drawing.Size(48, 24);
             this.lblAbYear.TabIndex = 1;
             this.lblAbYear.Text = "2023";
+            // 
+            // gpID
+            // 
+            this.gpID.DataPropertyName = "ID";
+            this.gpID.HeaderText = "ID";
+            this.gpID.Name = "gpID";
+            this.gpID.ReadOnly = true;
+            this.gpID.Width = 45;
+            // 
+            // gpIconBitmap
+            // 
+            this.gpIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.gpIconBitmap.DataPropertyName = "ImageIconBitmap";
+            this.gpIconBitmap.HeaderText = "Icon";
+            this.gpIconBitmap.Name = "gpIconBitmap";
+            this.gpIconBitmap.ReadOnly = true;
+            this.gpIconBitmap.Width = 36;
+            // 
+            // gpTitle
+            // 
+            this.gpTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.gpTitle.DataPropertyName = "Title";
+            this.gpTitle.HeaderText = "Title";
+            this.gpTitle.Name = "gpTitle";
+            this.gpTitle.ReadOnly = true;
+            // 
+            // gpConsole
+            // 
+            this.gpConsole.DataPropertyName = "ConsoleName";
+            this.gpConsole.HeaderText = "Console";
+            this.gpConsole.Name = "gpConsole";
+            this.gpConsole.ReadOnly = true;
+            // 
+            // gpNumAchievements
+            // 
+            this.gpNumAchievements.DataPropertyName = "NumAchievements";
+            this.gpNumAchievements.HeaderText = "Trophies";
+            this.gpNumAchievements.Name = "gpNumAchievements";
+            this.gpNumAchievements.ReadOnly = true;
+            this.gpNumAchievements.Width = 80;
+            // 
+            // gpPoints
+            // 
+            this.gpPoints.DataPropertyName = "Points";
+            this.gpPoints.HeaderText = "Points";
+            this.gpPoints.Name = "gpPoints";
+            this.gpPoints.ReadOnly = true;
+            this.gpPoints.Width = 65;
+            // 
+            // gpNumLeaderboards
+            // 
+            this.gpNumLeaderboards.DataPropertyName = "NumLeaderboards";
+            this.gpNumLeaderboards.HeaderText = "Scores";
+            this.gpNumLeaderboards.Name = "gpNumLeaderboards";
+            this.gpNumLeaderboards.ReadOnly = true;
+            this.gpNumLeaderboards.Width = 70;
+            // 
+            // gpLastUpdated
+            // 
+            this.gpLastUpdated.DataPropertyName = "DateModified";
+            this.gpLastUpdated.HeaderText = "Last Updated";
+            this.gpLastUpdated.Name = "gpLastUpdated";
+            this.gpLastUpdated.ReadOnly = true;
+            this.gpLastUpdated.Width = 105;
             // 
             // Main
             // 
@@ -2674,6 +2690,15 @@ namespace RADB
         internal FlatPictureBoxA picAwardFloating;
         internal FlatLabelA lblAwardFloatingTitle;
         internal FlatLabelA lblAwardFloatingDesc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gID;
+        private System.Windows.Forms.DataGridViewImageColumn gIconBitmap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gConsole;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gYear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gNumAchievements;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gPoints;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gNumLeaderboards;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gLastUpdated;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpID;
         private System.Windows.Forms.DataGridViewImageColumn gpIconBitmap;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpTitle;
@@ -2682,14 +2707,6 @@ namespace RADB
         private System.Windows.Forms.DataGridViewTextBoxColumn gpPoints;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpNumLeaderboards;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpLastUpdated;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gID;
-        private System.Windows.Forms.DataGridViewImageColumn gIconBitmap;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gTitle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gConsole;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gNumAchievements;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gPoints;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gNumLeaderboards;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gLastUpdated;
     }
 }
 

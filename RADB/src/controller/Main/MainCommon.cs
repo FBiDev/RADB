@@ -90,7 +90,10 @@ namespace RADB
 
         public static void WriteOutput(string text)
         {
-            form.lblOutput.Text = text + Environment.NewLine + form.lblOutput.Text;
+            form.lblOutput.InvokeIfRequired(() =>
+            {
+                form.lblOutput.Text = text + Environment.NewLine + form.lblOutput.Text;
+            });
         }
 
         public static void ChangeBindGame(object sender, DataGridViewCellEventArgs e)

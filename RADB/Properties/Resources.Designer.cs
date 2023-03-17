@@ -96,7 +96,7 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized string similar to --
         ///SELECT 
-        ///	 co.ID 
+        ///	  co.ID
         ///	, c.Name AS Company 
         ///	,(CASE WHEN ci.ConsoleNameComplete IS NULL THEN 
         ///		CASE WHEN co.Name IS NULL THEN c.Name ELSE co.Name END 
@@ -105,9 +105,9 @@ namespace RADB.Properties {
         ///	, Count(g.ID) AS TotalGames 
         ///FROM Company AS c 
         ///	LEFT JOIN CompanyItems AS ci ON ci.CompanyID = c.ID 
-        ///		--AND ci.Active = 1 
         ///	LEFT JOIN Console AS co ON co.ID = ci.ConsoleID 
-        ///	LEFT JOIN GameData AS g ON (g.ConsoleID = co.ID OR co.Name [rest of string was truncated]&quot;;.
+        ///	LEFT JOIN GameData AS g ON g.ConsoleID = co.ID 
+        ///		AND g.ConsoleID &lt;&gt; 100 AND g.Co [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ConsoleList {
             get {
@@ -289,6 +289,23 @@ namespace RADB.Properties {
         internal static string GameInsert {
             get {
                 return ResourceManager.GetString("GameInsert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///INSERT INTO GameData ( 
+        ///	  ID 
+        ///	, ReleasedDate 
+        ///	) VALUES ( 
+        ///	  @ID 
+        ///	, ReleasedDate 
+        ///);
+        ///--.
+        /// </summary>
+        internal static string GameInsertReleasedDate {
+            get {
+                return ResourceManager.GetString("GameInsertReleasedDate", resourceCulture);
             }
         }
         

@@ -19,7 +19,7 @@ namespace RADB
             T list = new T();
             foreach (DataRow row in table.Rows)
             {
-                list.Add(new Game()
+                var obj = new Game()
                 {
                     ID = row.Value<int>("ID"),
                     Title = row.Value<string>("Title"),
@@ -31,7 +31,10 @@ namespace RADB
                     NumLeaderboards = row.Value<int>("NumLeaderboards"),
                     DateModified = row.ValueNullable<DateTime>("DateModified"),
                     ForumTopicID = row.ValueNullable<int>("ForumTopicID"),
-                });
+                };
+
+                obj.SetYear(row.ValueNullable<DateTime>("ReleasedDate"));
+                list.Add(obj);
             }
             return list;
         }
@@ -122,6 +125,19 @@ namespace RADB
         {
             string sql = Resources.GameInsert;
             var parameters = MountParameters(obj);
+
+            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
+        }
+
+        public async static Task<bool> InsertReleasedDate(Game obj)
+        {
+            string sql = Resources.GameInsertReleasedDate;
+            var parameters = new List<cSqlParameter>
+            {
+                new cSqlParameter("@ID", obj.ID),
+                new cSqlParameter("@ConsoleID", obj.ConsoleID),
+                new cSqlParameter("@ReleasedDate", obj.ReleasedDate),
+            };
 
             return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
         }
