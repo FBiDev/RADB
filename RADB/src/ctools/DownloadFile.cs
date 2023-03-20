@@ -18,7 +18,7 @@ namespace RADB
         {
             URL = url;
             Path = path;
-            string[] pathSplit = Path.Split(new string[] { @"\" }, StringSplitOptions.None);
+            var pathSplit = Path.Split(new string[] { @"\" }, StringSplitOptions.None);
 
             Name = pathSplit.Last();
             Extension = Name.Split(new string[] { @"." }, StringSplitOptions.None).Last().ToLower();

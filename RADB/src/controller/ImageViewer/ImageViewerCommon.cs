@@ -46,15 +46,15 @@ namespace RADB
         static void frmImageViewer_MouseWheel(object sender, MouseEventArgs e)
         {
             //Up = 1 Down = -1
-            int mousedelta = Math.Sign(e.Delta);
-            int zoomTimes = (int)(((form.ClientSize.Height / UnitImageSize.Height) - 1) / zoomFactor);
+            var mousedelta = Math.Sign(e.Delta);
+            var zoomTimes = (int)(((form.ClientSize.Height / UnitImageSize.Height) - 1) / zoomFactor);
             double maxZoom = (1.0 + (zoomTimes * zoomFactor));
 
             if (mousedelta == 1 && zoomPercent >= maxZoom || mousedelta == -1 && zoomPercent <= zoomFactor) { return; }
 
             zoomPercent += mousedelta * zoomFactor;
 
-            Size newSize = new Size((int)(PictureInitial.Width * zoomPercent), (int)(PictureInitial.Height * zoomPercent));
+            var newSize = new Size((int)(PictureInitial.Width * zoomPercent), (int)(PictureInitial.Height * zoomPercent));
 
             if (mousedelta == -1 && zoomPercent <= zoomFactor)
             {
@@ -93,7 +93,7 @@ namespace RADB
             PictureInitial = new Picture(pic.Path);
 
             //SmallPicture
-            Size sizeSmall = new Size((int)(pic.Width * zoomFactor), (int)(pic.Height * zoomFactor));
+            var sizeSmall = new Size((int)(pic.Width * zoomFactor), (int)(pic.Height * zoomFactor));
             PictureSmall = new Picture(new List<string> { pic.Path }, true, 1, sizeSmall, true);
 
             form.Text += " - " + PictureInitial.Name;

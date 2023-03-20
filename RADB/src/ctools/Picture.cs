@@ -216,7 +216,7 @@ namespace RADB
                 exeNewFile.Write(exeResource, 0, exeResource.Length);
             }
 
-            string output = CMD.Execute(exeCmd);
+            var output = CMD.Execute(exeCmd);
 
             File.Delete(exeFilePath);
 
@@ -251,7 +251,7 @@ namespace RADB
                     continue;
                 }
 
-                Bitmap image = FromFile(imageFile);
+                var image = FromFile(imageFile);
 
                 //update the width of the final bitmap
                 if (index <= imagesPerRow && width <= maxWidth)
@@ -323,7 +323,7 @@ namespace RADB
 
                 foreach (string imageFile in ImageFiles)
                 {
-                    Bitmap image = FromFile(imageFile);
+                    var image = FromFile(imageFile);
 
                     if (index > imagesPerRow)
                     {
@@ -375,7 +375,7 @@ namespace RADB
         #region Effects Grayscale
         Bitmap MakeGrayscale(Bitmap original)
         {
-            Bitmap newBitmap = new Bitmap(original.Width, original.Height);
+            var newBitmap = new Bitmap(original.Width, original.Height);
 
             using (Graphics g = Graphics.FromImage(newBitmap))
             {

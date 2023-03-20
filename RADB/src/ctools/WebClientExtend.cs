@@ -51,7 +51,7 @@ namespace RADB
         long GZipSizeUncompressed { get; set; }
         public DownloadFile FileDownloaded;
 
-        public static Dictionary<string, string> CustomErrorMessages = new Dictionary<string, string>() { };
+        public static Dictionary<string, string> CustomErrorMessages = new Dictionary<string, string> { };
 
         bool _Error;
         public bool Error { get { return _Error; } }
@@ -129,11 +129,11 @@ namespace RADB
 
             if (ContentType.IndexOf("ISO-8859-1", 0, StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                Encoding iso = Encoding.GetEncoding("ISO-8859-1");
+                var iso = Encoding.GetEncoding("ISO-8859-1");
                 Encoding utf8 = Encoding.UTF8;
 
                 byte[] isoBytes = data;
-                byte[] utfBytes = Encoding.Convert(iso, utf8, isoBytes);
+                var utfBytes = Encoding.Convert(iso, utf8, isoBytes);
                 msg = utf8.GetString(utfBytes);
             }
             else if (ContentType.IndexOf("image/", 0, StringComparison.OrdinalIgnoreCase) >= 0)
@@ -168,7 +168,7 @@ namespace RADB
                 }
                 else
                 {
-                    HttpWebResponse response = we.Response as HttpWebResponse;
+                    var response = we.Response as HttpWebResponse;
                     ErrorMessage = "Download Error: \r\n\r\n" + "Status Code: " + (int)response.StatusCode + " " + response.StatusDescription;
                 }
             }
@@ -183,7 +183,7 @@ namespace RADB
 
         protected override WebRequest GetWebRequest(Uri address)
         {
-            HttpWebRequest request = base.GetWebRequest(address) as HttpWebRequest;
+            var request = base.GetWebRequest(address) as HttpWebRequest;
             request.CookieContainer = CookieContainer;
 
             if (FileDownloaded == null)
@@ -260,7 +260,7 @@ namespace RADB
 
             if (IsGZipContent)
             {
-                FileInfo fileToDecompress = new FileInfo(FileDownloaded.Path);
+                var fileToDecompress = new FileInfo(FileDownloaded.Path);
 
                 string oldName = fileToDecompress.FullName;
                 string gzName = oldName + GZipExtension;
@@ -299,7 +299,7 @@ namespace RADB
 
         void RevertTempFile(string fileName)
         {
-            string newFile = fileName.Substring(0, fileName.Length - 4);
+            var newFile = fileName.Substring(0, fileName.Length - 4);
             FileDownloaded.Path = newFile;
 
             if (File.Exists(newFile))
@@ -328,7 +328,7 @@ namespace RADB
         {
             using (MemoryStream ms = new MemoryStream())
             {
-                int msgLength = BitConverter.ToInt32(gzBuffer, 0);
+                var msgLength = BitConverter.ToInt32(gzBuffer, 0);
                 ms.Write(gzBuffer, 0, gzBuffer.Length);
 
                 byte[] buffer = new byte[msgLength];

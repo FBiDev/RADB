@@ -85,11 +85,11 @@ namespace RADB
                                     (Folder.User + userName.ToLower() + "_CompletedGames.json"));
         }
 
-        Dictionary<string, string> LinkMessages = new Dictionary<string, string>()
+        Dictionary<string, string> LinkMessages = new Dictionary<string, string>
         {
             {API_URL_Consoles,"API Consoles File"},
             {API_URL_UserInfo,"API User Summary File - Username not found!"},
-            {Login_URL, "Failed to Login in RA"},
+            {Login_URL, "Failed to Login in RA"}
         };
 
         public const int MIN_POINTS = 250;
@@ -140,7 +140,7 @@ namespace RADB
         {
             return Task.Run(() =>
             {
-                List<Console> consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(API_File_Consoles().Path));
+                var consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(API_File_Consoles().Path));
                 return consoles.OrderBy(x => x.ID).ToList();
             });
         }
@@ -251,9 +251,9 @@ namespace RADB
 
         Task<GameExtend> DeserializeGameExtend(Game game)
         {
-            string AllText = File.ReadAllText(game.ExtendFile.Path);
-            string gameData = AllText.GetBetween("{", ",\"Achievements\":");
-            string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
+            var AllText = File.ReadAllText(game.ExtendFile.Path);
+            var gameData = AllText.GetBetween("{", ",\"Achievements\":");
+            var cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
             gameData = "{" + gameData + "}";
             cheevos = "{" + cheevos + "}";
 
@@ -270,10 +270,10 @@ namespace RADB
             await Task.Run(async () =>
             {
                 GameExtend gamex = await GameExtend.Find(game.ID);
-                Browser.dlGameExtendImages.Files = new List<DownloadFile>() {
+                Browser.dlGameExtendImages.Files = new List<DownloadFile> {
                     gamex.ImageTitleFile,
                     gamex.ImageIngameFile,
-                    gamex.ImageBoxArtFile,
+                    gamex.ImageBoxArtFile
                 };
                 await (Browser.dlGameExtendImages.Start());
             });
@@ -291,7 +291,7 @@ namespace RADB
 
                 if (userData.IsEmpty()) return null;
 
-                UserProgress user = JsonConvert.DeserializeObject<UserProgress>(userData);
+                var user = JsonConvert.DeserializeObject<UserProgress>(userData);
                 user.UserName = userName;
                 user.GameID = gameID;
 
@@ -372,7 +372,7 @@ namespace RADB
 
                 if (awardsList.Count() > 0)
                 {
-                    float? totalPctWon = awardsList.Sum(x => x.PctWon);
+                    var totalPctWon = awardsList.Sum(x => x.PctWon);
                     float avgPctWon = ((float)totalPctWon / awardsList.Count()) * 100f;
                     user.AverageCompletion = avgPctWon;
 

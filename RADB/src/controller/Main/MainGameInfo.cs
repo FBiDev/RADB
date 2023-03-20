@@ -125,11 +125,11 @@ namespace RADB
 
             if (File.Exists(BIND.Game.ExtendFile.Path))
             {
-                string AllText = File.ReadAllText(BIND.Game.ExtendFile.Path);
-                string cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
+                var AllText = File.ReadAllText(BIND.Game.ExtendFile.Path);
+                var cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
                 cheevos = "{" + cheevos + "}";
 
-                JToken jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
+                var jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
                 BIND.GameExtend.SetAchievements(jcheevos);
 
                 lstCheevos = new ListBind<Achievement>(BIND.GameExtend.AchievementsList);
@@ -194,7 +194,7 @@ namespace RADB
 
         static void txtSearchAchiev_TextChanged(object sender, EventArgs e)
         {
-            ListBind<Achievement> newSearch = new ListBind<Achievement>();
+            var newSearch = new ListBind<Achievement>();
             foreach (Achievement obj in lstAchievs)
             {
                 bool title = (obj.Title != null && (obj.Title.IndexOf(txtSearchAchiev.Text, StringComparison.CurrentCultureIgnoreCase) > -1));

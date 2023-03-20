@@ -110,7 +110,7 @@ namespace RADB
         static void dgvConsoles_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowHeader()) return;
-            Console ConsoleSelected = dgvConsoles.GetSelectedItem<Console>();
+            var ConsoleSelected = dgvConsoles.GetSelectedItem<Console>();
             BIND.LastConsole = BIND.Console;
             BIND.Console = ConsoleSelected;
         }

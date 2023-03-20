@@ -128,7 +128,7 @@ namespace RADB
                 lblUserCompletion.Text = BIND.User.AverageCompletionString;
                 var completedGames = BIND.User.PlayedGames.Where(x => x.PctWon.Equals(1.0f));
 
-                var dl = new Download() { Overwrite = false };
+                var dl = new Download { Overwrite = false };
                 dl.Files = completedGames.Select(x => x.ImageIconFile).ToList();
                 await dl.Start();
 
@@ -185,7 +185,7 @@ namespace RADB
             pnlAwardFloating.BringToFront();
 
             var pos = Cursor.Position;
-            Point point = lsvGameAwards.PointToClient(pos);
+            var point = lsvGameAwards.PointToClient(pos);
 
             var hitInfo = lsvGameAwards.HitTest(point);
 
@@ -197,7 +197,7 @@ namespace RADB
 
             var itemIndex = hitInfo.Item.Index;
 
-            Point pointParent = form.PointToClient(pos);
+            var pointParent = form.PointToClient(pos);
             pointParent.X += 15;
             pointParent.Y += 5;
 

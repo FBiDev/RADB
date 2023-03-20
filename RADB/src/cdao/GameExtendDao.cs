@@ -13,10 +13,10 @@ namespace RADB
         #region " _Load "
         static T Load<T>(DataTable table) where T : IList, new()
         {
-            T list = new T();
+            var list = new T();
             foreach (DataRow row in table.Rows)
             {
-                list.Add(new GameExtend()
+                list.Add(new GameExtend
                 {
                     ID = row.Value<int>("ID"),
                     ConsoleID = row.Value<int>("ConsoleID"),
@@ -27,7 +27,7 @@ namespace RADB
                     Released = row.Value<string>("Released"),
                     ImageTitle = row.Value<string>("ImageTitle"),
                     ImageIngame = row.Value<string>("ImageIngame"),
-                    ImageBoxArt = row.Value<string>("ImageBoxArt"),
+                    ImageBoxArt = row.Value<string>("ImageBoxArt")
                     //Flags = row.Value<string>("Flags"),
                     //IsFinal = row.Value<bool>("IsFinal"),
                     //RichPresencePatch = row.Value<string>("RichPresencePatch"),
@@ -45,7 +45,7 @@ namespace RADB
             return new List<cSqlParameter>
             {
                 new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID),
+                new cSqlParameter("@ConsoleID", obj.ConsoleID)
             };
         }
         #endregion
@@ -63,7 +63,7 @@ namespace RADB
                 new cSqlParameter("@Released", obj.Released),
                 new cSqlParameter("@ImageTitle", obj.ImageTitle),
                 new cSqlParameter("@ImageIngame", obj.ImageIngame),
-                new cSqlParameter("@ImageBoxArt", obj.ImageBoxArt),
+                new cSqlParameter("@ImageBoxArt", obj.ImageBoxArt)
             };
         }
         #endregion
@@ -106,7 +106,7 @@ namespace RADB
             var parameters = new List<cSqlParameter>
             {
                 new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID),
+                new cSqlParameter("@ConsoleID", obj.ConsoleID)
             };
 
             return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;

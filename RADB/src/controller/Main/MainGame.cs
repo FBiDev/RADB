@@ -246,7 +246,7 @@ namespace RADB
                 { chkHomebrew, new[]{RA.GameType.Homebrew }},
                 { chkSubset, new[]{RA.GameType.Subset }},
                 { chkTestKit, new[]{RA.GameType.TestKit }},
-                { chkDemoted, new[]{RA.GameType.Demoted }},
+                { chkDemoted, new[]{RA.GameType.Demoted }}
             };
 
             foreach (var gameType in gameTypes)

@@ -16,10 +16,10 @@ namespace RADB
         #region " _Load "
         static T Load<T>(DataTable table) where T : IList, new()
         {
-            T list = new T();
+            var list = new T();
             foreach (DataRow row in table.Rows)
             {
-                var obj = new Game()
+                var obj = new Game
                 {
                     ID = row.Value<int>("ID"),
                     Title = row.Value<string>("Title"),
@@ -30,7 +30,7 @@ namespace RADB
                     Points = row.Value<int>("Points"),
                     NumLeaderboards = row.Value<int>("NumLeaderboards"),
                     DateModified = row.ValueNullable<DateTime>("DateModified"),
-                    ForumTopicID = row.ValueNullable<int>("ForumTopicID"),
+                    ForumTopicID = row.ValueNullable<int>("ForumTopicID")
                 };
 
                 obj.SetYear(row.ValueNullable<DateTime>("ReleasedDate"));
@@ -48,7 +48,7 @@ namespace RADB
                 new cSqlParameter("@ID", obj.ID),
                 new cSqlParameter("@Title", obj.Title),
                 new cSqlParameter("@ConsoleID", obj.ConsoleID),
-                new cSqlParameter("@ImageIcon", obj.ImageIcon),
+                new cSqlParameter("@ImageIcon", obj.ImageIcon)
             };
         }
         #endregion
@@ -66,7 +66,7 @@ namespace RADB
                 new cSqlParameter("@Points", obj.Points),
                 new cSqlParameter("@NumLeaderboards", obj.NumLeaderboards),
                 new cSqlParameter("@DateModified", obj.DateModified),
-                new cSqlParameter("@ForumTopicID", obj.ForumTopicID),
+                new cSqlParameter("@ForumTopicID", obj.ForumTopicID)
             };
         }
         #endregion
@@ -136,7 +136,7 @@ namespace RADB
             {
                 new cSqlParameter("@ID", obj.ID),
                 new cSqlParameter("@ConsoleID", obj.ConsoleID),
-                new cSqlParameter("@ReleasedDate", obj.ReleasedDate),
+                new cSqlParameter("@ReleasedDate", obj.ReleasedDate)
             };
 
             return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
@@ -149,7 +149,7 @@ namespace RADB
                 "NumLeaderboards, DateModified, ForumTopicID, ImageIcon)" +
             " VALUES " + Environment.NewLine;
 
-            StringBuilder s = new StringBuilder();
+            var s = new StringBuilder();
             int index = 0;
             foreach (var i in list)
             {
@@ -181,7 +181,7 @@ namespace RADB
             var parameters = new List<cSqlParameter>
             {
                 new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID),
+                new cSqlParameter("@ConsoleID", obj.ConsoleID)
             };
 
             return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
@@ -209,7 +209,7 @@ namespace RADB
             string sql = Resources.GameDeleteFromHide;
             var parameters = new List<cSqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID),
+                new cSqlParameter("@ID", obj.ID)
             };
 
             return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
@@ -237,7 +237,7 @@ namespace RADB
 
             var parameters = new List<cSqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID),
+                new cSqlParameter("@ID", obj.ID)
             };
 
             return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;

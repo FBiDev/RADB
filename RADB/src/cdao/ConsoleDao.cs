@@ -15,16 +15,16 @@ namespace RADB
         #region " _Load "
         static T Load<T>(DataTable table) where T : IList, new()
         {
-            T list = new T();
+            var list = new T();
             foreach (DataRow row in table.Rows)
             {
-                list.Add(new Console()
+                list.Add(new Console
                 {
                     ID = row.Value<int>("ID"),
                     Company = row.Value<string>("Company"),
                     Name = row.Value<string>("CName"),
                     NumGames = row.Value<int>("NumGames"),
-                    TotalGames = row.Value<int>("TotalGames"),
+                    TotalGames = row.Value<int>("TotalGames")
                 });
             }
             return list;
@@ -37,7 +37,7 @@ namespace RADB
             return new List<cSqlParameter>
             {
                 new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@Name", obj.Name),
+                new cSqlParameter("@Name", obj.Name)
             };
         }
         #endregion
@@ -48,7 +48,7 @@ namespace RADB
             return new List<cSqlParameter>
             {
                 new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@Name", obj.Name),
+                new cSqlParameter("@Name", obj.Name)
             };
         }
         #endregion
@@ -62,7 +62,7 @@ namespace RADB
             var list = Load<List<Console>>(await Banco.ExecutarSelect(sql, MountFilters(obj)));
             if (list.Count == 0) return list;
 
-            var allGames = new Console()
+            var allGames = new Console
             {
                 Name = "All Games",
                 Company = "All Games",
@@ -97,7 +97,7 @@ namespace RADB
                 parameters.AddRange(new List<cSqlParameter>
                 {
                     new cSqlParameter("@ID" + index, i.ID),
-                    new cSqlParameter("@Name" + index, i.Name),
+                    new cSqlParameter("@Name" + index, i.Name)
                 });
 
                 sql += "(" + "@ID" + index + ", @Name" + index + ")";
@@ -117,7 +117,7 @@ namespace RADB
             var parameters = new List<cSqlParameter>
             {
                 new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@Name", obj.Name),
+                new cSqlParameter("@Name", obj.Name)
             };
 
             return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;

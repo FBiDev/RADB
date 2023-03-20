@@ -31,16 +31,16 @@ namespace RADB
         }
 
         //===Downloads
-        public static Download dlConsoles = new Download { Overwrite = true, FolderBase = Folder.Console, };
-        public static Download dlConsolesGamesIcon = new Download() { Overwrite = false, FolderBase = Folder.IconsBase, };
+        public static Download dlConsoles = new Download { Overwrite = true, FolderBase = Folder.Console };
+        public static Download dlConsolesGamesIcon = new Download { Overwrite = false, FolderBase = Folder.IconsBase };
 
-        public static Download dlGames = new Download { Overwrite = true, FolderBase = Folder.GameData, };
-        public static Download dlGamesIcon = new Download() { Overwrite = false, FolderBase = Folder.IconsBase, };
-        public static Download dlGamesBadges = new Download() { Overwrite = false, FolderBase = Folder.BadgesBase, };
+        public static Download dlGames = new Download { Overwrite = true, FolderBase = Folder.GameData };
+        public static Download dlGamesIcon = new Download { Overwrite = false, FolderBase = Folder.IconsBase };
+        public static Download dlGamesBadges = new Download { Overwrite = false, FolderBase = Folder.BadgesBase };
 
-        public static Download dlGameExtend = new Download { Overwrite = true, FolderBase = Folder.GameDataExtendBase, };
-        public static Download dlGameExtendImages = new Download { Overwrite = false, FolderBase = Folder.Images, };
-        public static Download dlGameExtendList = new Download { Overwrite = false, FolderBase = Folder.GameDataExtendBase, };
+        public static Download dlGameExtend = new Download { Overwrite = true, FolderBase = Folder.GameDataExtendBase };
+        public static Download dlGameExtendImages = new Download { Overwrite = false, FolderBase = Folder.Images };
+        public static Download dlGameExtendList = new Download { Overwrite = false, FolderBase = Folder.GameDataExtendBase };
 
         public static WebClientExtend RALogin = new WebClientExtend();
 

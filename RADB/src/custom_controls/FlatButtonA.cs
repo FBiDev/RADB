@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-//
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace RADB
 {
-    public partial class FlatButtonA : GNX.FlatButton
+    public class FlatButtonA : GNX.FlatButton
     {
         public FlatButtonA()
         {
+            ForeColor = ForeColor;
             //this.BackgroundColor = Color.FromArgb(0, 132, 255);
             //this.BackgroundColorFocus = this.BackgroundColor;
             //TextColor = Color.White;

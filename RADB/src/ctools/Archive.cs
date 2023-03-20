@@ -19,15 +19,15 @@ namespace RADB
 
         public static string RelativePath(string fileName)
         {
-            FileInfo info = new FileInfo(fileName);
+            var info = new FileInfo(fileName);
             string path = ".\\" + info.DirectoryName.Replace(AppDomain.CurrentDomain.BaseDirectory, "") + "\\";
             return path;
         }
 
         public static string MakeValidFileName(string name)
         {
-            string invalidChars = Regex.Escape(new string(Path.GetInvalidFileNameChars()));
-            string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
+            var invalidChars = Regex.Escape(new string(Path.GetInvalidFileNameChars()));
+            var invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
 
             return Regex.Replace(name, invalidRegStr, "_");
         }
@@ -59,7 +59,7 @@ namespace RADB
         {
             var files = list.Where(f =>
             {
-                Picture pic = new Picture(f);
+                var pic = new Picture(f);
 
                 return pic.Size != size;
             });
@@ -73,7 +73,7 @@ namespace RADB
             {
                 foreach (string item in list)
                 {
-                    string imageName = item.Split('\\').Last();
+                    var imageName = item.Split('\\').Last();
                     Game game = games.FirstOrDefault(g => g.ImageIcon == imageName) ?? new Game();
                     string GameID = game.ID.ToString().PadLeft(5) + " => " + game.Title;
                     sw.WriteLine(imageName + " => " + GameID);
@@ -87,7 +87,7 @@ namespace RADB
             {
                 foreach (string item in badges)
                 {
-                    string imageName = item.Split('\\').Last().PadLeft(12);
+                    var imageName = item.Split('\\').Last().PadLeft(12);
 
                     sw.WriteLine(imageName);
                 }

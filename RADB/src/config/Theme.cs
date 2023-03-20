@@ -5,7 +5,7 @@ using GNX;
 
 namespace RADB
 {
-    public class Theme
+    public static class Theme
     {
         public static Color BackColor1;
         public static Color BackColor2;
@@ -86,7 +86,7 @@ namespace RADB
             ChangeTheme(f);
         }
 
-        private static void ChangeTheme(Form f)
+        static void ChangeTheme(Form f)
         {
             f.BackColor = BackColor1;
 

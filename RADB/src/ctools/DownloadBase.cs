@@ -58,7 +58,7 @@ namespace RADB
             TimeCompleted = TimeStart;
             TimeElapsed = default(TimeSpan);
 
-            List<Task> Tasks = new List<Task>();
+            var Tasks = new List<Task>();
             //Remove Files with same URL
             Files = Files.Distinct().ToList();
             FilesCompleted = 0;
@@ -77,8 +77,8 @@ namespace RADB
 
             if (Overwrite == false)
             {
-                DirectoryInfo di = new DirectoryInfo(FolderBase);
-                IEnumerable<string> physicalFiles = di.GetFiles("*.*", SearchOption.AllDirectories)
+                var di = new DirectoryInfo(FolderBase);
+                var physicalFiles = di.GetFiles("*.*", SearchOption.AllDirectories)
                                     .Where(fs => fs.Length > 0)
                                     .Select(f => Archive.RelativePath(f.FullName) + Path.GetFileName(f.Name));
 
@@ -230,7 +230,7 @@ namespace RADB
 
         string DownloadedProgress(double bytesIn, double bytesTotal)
         {
-            string bytesProgress = Archive.CalculateSize(bytesIn);
+            var bytesProgress = Archive.CalculateSize(bytesIn);
             double bytesCalc = bytesTotal <= 0 ? bytesIn : bytesTotal;
             bytesProgress += " of " + Archive.CalculateSize(bytesCalc);
 
