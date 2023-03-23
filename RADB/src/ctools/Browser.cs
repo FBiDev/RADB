@@ -53,11 +53,21 @@ namespace RADB
             var j = JsonConvert.DeserializeObject<JObject>("{\"LoadJsonDLL\":\"...\"}");
         }
 
+        public static void showError(WebClientExtend client)
+        {
+            if (client.Error)
+            {
+                MessageBox.Show(client.ErrorMessage);
+            }
+        }
+
         public static async Task SystemLogin()
         {
             BIND.RALogged = false;
 
             var html = await RALogin.DownloadString(RA.HOST_URL);
+            if (string.IsNullOrWhiteSpace(html)) { showError(RALogin); return; }
+
             var token = html.GetBetween("_token\" value=\"", "\">");
 
             var values = new NameValueCollection
@@ -67,13 +77,9 @@ namespace RADB
                 { "p", "RADatabase123" }
             };
 
-            await RALogin.UploadValuesTaskAsync(new Uri(RA.Login_URL), values);
-            if (RALogin.Error)
-            {
-                MessageBox.Show(RALogin.ErrorMessage);
-            }
+            var html2 = await RALogin.UploadValuesTaskAsync(new Uri(RA.Login_URL), values);
+            if (string.IsNullOrWhiteSpace(html2)) { showError(RALogin); return; }
 
-            var html2 = await RALogin.DownloadString(RA.HOST_URL);
             var login = html2.GetBetween("request/auth/login", "php");
 
             BIND.RALogged = login != ".";

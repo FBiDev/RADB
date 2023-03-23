@@ -12,6 +12,7 @@ namespace RADB
         public string Title { get; set; }
         public int ConsoleID { get; set; }
         public string ConsoleName { get; set; }
+        public string ConsoleNameShort { get; set; }
         public int NumAchievements { get; set; }
 
         public int Points { get; set; }
@@ -91,6 +92,11 @@ namespace RADB
         {
             var obj = new Game { ConsoleID = consoleID };
             return (await GameDao.Search(obj, allTables));
+        }
+
+        public async static Task<List<Game>> ListNotInReleasedDate(int consoleID)
+        {
+            return await GameDao.ListNotInReleasedDate(consoleID);
         }
 
         public async static Task<List<Game>> ListToPlay()

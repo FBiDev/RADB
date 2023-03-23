@@ -294,12 +294,18 @@ namespace RADB.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to --
-        ///INSERT INTO GameData ( 
-        ///	  ID 
-        ///	, ReleasedDate 
-        ///	) VALUES ( 
-        ///	  @ID 
-        ///	, ReleasedDate 
+        ///DELETE FROM GameReleasedDate WHERE ID = @ID AND ReleasedDate IS NULL AND @ReleasedDate IS NOT NULL;
+        ///INSERT INTO GameReleasedDate (
+        ///	  ID
+        ///	, ReleasedDate
+        ///	, ConsoleID
+        ///	) SELECT * FROM (SELECT 
+        ///		  @ID AS ID 
+        ///		, @ReleasedDate AS ReleasedDate 
+        ///		, @ConsoleID AS ConsoleID 
+        ///	) AS tmp
+        ///WHERE NOT EXISTS (
+        ///	SELECT * FROM GameReleasedDate AS GRD WHERE ID = @ID 
         ///);
         ///--.
         /// </summary>
@@ -344,8 +350,10 @@ namespace RADB.Properties {
         ///SELECT
         ///	  g.ID 
         ///	, Title 
-        ///	, ConsoleID 
+        ///	, g.ConsoleID 
         ///	, c.Name AS ConsoleName 
+        ///	, CASE WHEN ci.ConsoleNameShort IS NULL THEN c.Name ELSE ci.ConsoleNameShort END AS ConsoleNameShort 
+        ///	, strftime(&apos;%Y-%m-%d&apos;, rd.ReleasedDate) AS ReleasedDate 
         ///	, ImageIcon 
         ///	, NumAchievements 
         ///	, Points 
@@ -354,9 +362,8 @@ namespace RADB.Properties {
         ///	, ForumTopicID 
         ///FROM GameData AS g 
         ///	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
-        ///WHERE 1 = 1 
-        ///	AND g.ID != (CASE WHEN @allTables = 1 THEN (SELECT -1) ELSE COALESCE((SELECT ID FROM GameToPlay AS p WHERE p.ID = g.ID), -1) END) 
-        ///	AND g.ID != (CASE WHEN @allTables = 1 THEN (SELECT -1) ELSE COALESCE((SELECT ID FROM GameToHide AS h WHERE h.ID =  [rest of string was truncated]&quot;;.
+        ///	LEFT JOIN CompanyItems AS ci ON ci.ConsoleID = c.ID 
+        ///	LEFT JOIN GameReleasedDate AS rd ON rd.ID [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GameList {
             get {
@@ -369,8 +376,10 @@ namespace RADB.Properties {
         ///SELECT
         ///	  g.ID 
         ///	, Title 
-        ///	, ConsoleID 
+        ///	, g.ConsoleID 
         ///	, c.Name AS ConsoleName 
+        ///	, CASE WHEN ci.ConsoleNameShort IS NULL THEN c.Name ELSE ci.ConsoleNameShort END AS ConsoleNameShort 
+        ///	, strftime(&apos;%Y-%m-%d&apos;, rd.ReleasedDate) AS ReleasedDate 
         ///	, ImageIcon 
         ///	, NumAchievements 
         ///	, Points 
@@ -380,8 +389,7 @@ namespace RADB.Properties {
         ///FROM GameData AS g 
         ///	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
         ///	INNER JOIN GameToHide AS gh ON gh.ID = g.ID 
-        ///WHERE 1 = 1 
-        ///	.
+        ///	LEFT JOIN CompanyItems AS ci ON ci.ConsoleID = c. [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GameListToHide {
             get {
@@ -394,8 +402,10 @@ namespace RADB.Properties {
         ///SELECT
         ///	  g.ID 
         ///	, Title 
-        ///	, ConsoleID 
+        ///	, g.ConsoleID 
         ///	, c.Name AS ConsoleName 
+        ///	, CASE WHEN ci.ConsoleNameShort IS NULL THEN c.Name ELSE ci.ConsoleNameShort END AS ConsoleNameShort 
+        ///	, strftime(&apos;%Y-%m-%d&apos;, rd.ReleasedDate) AS ReleasedDate 
         ///	, ImageIcon 
         ///	, NumAchievements 
         ///	, Points 
@@ -405,12 +415,25 @@ namespace RADB.Properties {
         ///FROM GameData AS g 
         ///	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
         ///	INNER JOIN GameToPlay AS gh ON gh.ID = g.ID 
-        ///WHERE 1 = 1 
-        ///	.
+        ///	LEFT JOIN CompanyItems AS ci ON ci.ConsoleID = c. [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GameListToPlay {
             get {
                 return ResourceManager.GetString("GameListToPlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --
+        ///SELECT g.ID FROM GameData AS g
+        ///	WHERE NOT EXISTS(
+        ///		SELECT ID FROM GameReleasedDate AS gr WHERE ID = g.ID
+        ///);
+        ///--.
+        /// </summary>
+        internal static string GameNotInReleasedDate {
+            get {
+                return ResourceManager.GetString("GameNotInReleasedDate", resourceCulture);
             }
         }
         

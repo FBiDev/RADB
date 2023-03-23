@@ -158,17 +158,18 @@ namespace RADB
             this.tabGamesToPlay = new System.Windows.Forms.TabPage();
             this.lblNotFoundGamesToPlay = new RADB.FlatLabelA();
             this.dgvGamesToPlay = new RADB.FlatDataGridA();
+            this.gpID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
+            this.gpTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gpLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGamesToHide = new System.Windows.Forms.TabPage();
             this.lblNotFoundGamesToHide = new RADB.FlatLabelA();
             this.dgvGamesToHide = new RADB.FlatDataGridA();
-            this.ghID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ghTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabUserInfo = new System.Windows.Forms.TabPage();
             this.btnUserPage = new RADB.FlatButtonA();
             this.pnlAwardFloating = new RADB.FlatPanelA();
@@ -224,14 +225,15 @@ namespace RADB
             this.picFBiDevIcon = new RADB.FlatPictureBoxA();
             this.lblAbTitle = new RADB.FlatLabelB();
             this.lblAbYear = new RADB.FlatLabelB();
-            this.gpID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
-            this.gpTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ghTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuGames.SuspendLayout();
             this.mnuGamesToHide.SuspendLayout();
             this.mnuConsoles.SuspendLayout();
@@ -370,6 +372,7 @@ namespace RADB
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlBottomOutput.BackColor = System.Drawing.Color.Transparent;
             this.pnlBottomOutput.Controls.Add(this.pnlOutput);
+            this.pnlBottomOutput.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pnlBottomOutput.Location = new System.Drawing.Point(12, 592);
             this.pnlBottomOutput.Name = "pnlBottomOutput";
             this.pnlBottomOutput.Size = new System.Drawing.Size(913, 66);
@@ -411,6 +414,7 @@ namespace RADB
             this.tabMain.Controls.Add(this.tabGamesToHide);
             this.tabMain.Controls.Add(this.tabUserInfo);
             this.tabMain.Controls.Add(this.tabAbout);
+            this.tabMain.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tabMain.Location = new System.Drawing.Point(10, 12);
             this.tabMain.myBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.tabMain.myBackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(208)))), ((int)(((byte)(200)))));
@@ -450,6 +454,7 @@ namespace RADB
             // 
             this.picLoaderConsole.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.picLoaderConsole.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picLoaderConsole.Image = global::RADB.Properties.Resources.loader;
             this.picLoaderConsole.Location = new System.Drawing.Point(6, 146);
             this.picLoaderConsole.Name = "picLoaderConsole";
@@ -626,6 +631,7 @@ namespace RADB
             this.pnlFilters.Controls.Add(this.chkSubset);
             this.pnlFilters.Controls.Add(this.chkTestKit);
             this.pnlFilters.Controls.Add(this.chkDemoted);
+            this.pnlFilters.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pnlFilters.Location = new System.Drawing.Point(780, 83);
             this.pnlFilters.Name = "pnlFilters";
             this.pnlFilters.Size = new System.Drawing.Size(100, 406);
@@ -788,6 +794,7 @@ namespace RADB
             // 
             this.picLoaderGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.picLoaderGameList.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picLoaderGameList.Image = global::RADB.Properties.Resources.loader;
             this.picLoaderGameList.Location = new System.Drawing.Point(6, 146);
             this.picLoaderGameList.Name = "picLoaderGameList";
@@ -805,6 +812,7 @@ namespace RADB
             this.pnlGamesConsoleName.Controls.Add(this.lblConsoleName);
             this.pnlGamesConsoleName.Controls.Add(this.txtSearchGames);
             this.pnlGamesConsoleName.Controls.Add(this.btnGameFilters);
+            this.pnlGamesConsoleName.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pnlGamesConsoleName.Location = new System.Drawing.Point(6, 32);
             this.pnlGamesConsoleName.Name = "pnlGamesConsoleName";
             this.pnlGamesConsoleName.Size = new System.Drawing.Size(896, 44);
@@ -988,7 +996,7 @@ namespace RADB
             // 
             // gConsole
             // 
-            this.gConsole.DataPropertyName = "ConsoleName";
+            this.gConsole.DataPropertyName = "ConsoleNameShort";
             this.gConsole.HeaderText = "Console";
             this.gConsole.Name = "gConsole";
             this.gConsole.ReadOnly = true;
@@ -1055,6 +1063,7 @@ namespace RADB
             this.pnlInfoScroll.BorderSize = 0;
             this.pnlInfoScroll.Controls.Add(this.gpbInfo);
             this.pnlInfoScroll.Controls.Add(this.gpbInfoAchievements);
+            this.pnlInfoScroll.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pnlInfoScroll.Location = new System.Drawing.Point(0, 62);
             this.pnlInfoScroll.Margin = new System.Windows.Forms.Padding(0);
             this.pnlInfoScroll.Name = "pnlInfoScroll";
@@ -1079,6 +1088,7 @@ namespace RADB
             this.pnlInfoBoxArt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.pnlInfoBoxArt.BorderSize = 0;
             this.pnlInfoBoxArt.Controls.Add(this.picInfoBoxArt);
+            this.pnlInfoBoxArt.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pnlInfoBoxArt.Location = new System.Drawing.Point(558, 19);
             this.pnlInfoBoxArt.Name = "pnlInfoBoxArt";
             this.pnlInfoBoxArt.Size = new System.Drawing.Size(312, 295);
@@ -1088,6 +1098,7 @@ namespace RADB
             // 
             this.picInfoBoxArt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.picInfoBoxArt.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.picInfoBoxArt.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picInfoBoxArt.Location = new System.Drawing.Point(6, 6);
             this.picInfoBoxArt.Margin = new System.Windows.Forms.Padding(6);
             this.picInfoBoxArt.MaximumSize = new System.Drawing.Size(300, 283);
@@ -1103,6 +1114,7 @@ namespace RADB
             this.pnlInfoImages.BorderSize = 0;
             this.pnlInfoImages.Controls.Add(this.pnlInfoInGame);
             this.pnlInfoImages.Controls.Add(this.pnlInfoTitle);
+            this.pnlInfoImages.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pnlInfoImages.Location = new System.Drawing.Point(6, 152);
             this.pnlInfoImages.MinimumSize = new System.Drawing.Size(538, 156);
             this.pnlInfoImages.Name = "pnlInfoImages";
@@ -1113,6 +1125,7 @@ namespace RADB
             // 
             this.pnlInfoInGame.BorderSize = 0;
             this.pnlInfoInGame.Controls.Add(this.picInfoInGame);
+            this.pnlInfoInGame.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pnlInfoInGame.Location = new System.Drawing.Point(280, 6);
             this.pnlInfoInGame.Name = "pnlInfoInGame";
             this.pnlInfoInGame.Size = new System.Drawing.Size(260, 150);
@@ -1121,6 +1134,7 @@ namespace RADB
             // picInfoInGame
             // 
             this.picInfoInGame.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.picInfoInGame.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picInfoInGame.Location = new System.Drawing.Point(0, 0);
             this.picInfoInGame.Margin = new System.Windows.Forms.Padding(6);
             this.picInfoInGame.MaximumSize = new System.Drawing.Size(260, 240);
@@ -1134,6 +1148,7 @@ namespace RADB
             // 
             this.pnlInfoTitle.BorderSize = 0;
             this.pnlInfoTitle.Controls.Add(this.picInfoTitle);
+            this.pnlInfoTitle.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pnlInfoTitle.Location = new System.Drawing.Point(6, 6);
             this.pnlInfoTitle.Name = "pnlInfoTitle";
             this.pnlInfoTitle.Size = new System.Drawing.Size(260, 150);
@@ -1142,6 +1157,7 @@ namespace RADB
             // picInfoTitle
             // 
             this.picInfoTitle.BackColor = System.Drawing.Color.LightGray;
+            this.picInfoTitle.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picInfoTitle.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picInfoTitle.Location = new System.Drawing.Point(0, 0);
             this.picInfoTitle.Margin = new System.Windows.Forms.Padding(6);
@@ -1216,6 +1232,7 @@ namespace RADB
             // 
             // picInfoIcon
             // 
+            this.picInfoIcon.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picInfoIcon.Location = new System.Drawing.Point(0, 0);
             this.picInfoIcon.Margin = new System.Windows.Forms.Padding(0);
             this.picInfoIcon.Name = "picInfoIcon";
@@ -1524,6 +1541,7 @@ namespace RADB
             this.gpIconBitmap,
             this.gpTitle,
             this.gpConsole,
+            this.gpYear,
             this.gpNumAchievements,
             this.gpPoints,
             this.gpNumLeaderboards,
@@ -1550,6 +1568,78 @@ namespace RADB
             this.dgvGamesToPlay.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGamesToPlay.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToPlay.TabIndex = 3;
+            // 
+            // gpID
+            // 
+            this.gpID.DataPropertyName = "ID";
+            this.gpID.HeaderText = "ID";
+            this.gpID.Name = "gpID";
+            this.gpID.ReadOnly = true;
+            this.gpID.Width = 45;
+            // 
+            // gpIconBitmap
+            // 
+            this.gpIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.gpIconBitmap.DataPropertyName = "ImageIconBitmap";
+            this.gpIconBitmap.HeaderText = "Icon";
+            this.gpIconBitmap.Name = "gpIconBitmap";
+            this.gpIconBitmap.ReadOnly = true;
+            this.gpIconBitmap.Width = 36;
+            // 
+            // gpTitle
+            // 
+            this.gpTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.gpTitle.DataPropertyName = "Title";
+            this.gpTitle.HeaderText = "Title";
+            this.gpTitle.Name = "gpTitle";
+            this.gpTitle.ReadOnly = true;
+            // 
+            // gpConsole
+            // 
+            this.gpConsole.DataPropertyName = "ConsoleNameShort";
+            this.gpConsole.HeaderText = "Console";
+            this.gpConsole.Name = "gpConsole";
+            this.gpConsole.ReadOnly = true;
+            // 
+            // gpYear
+            // 
+            this.gpYear.DataPropertyName = "Year";
+            this.gpYear.HeaderText = "Year";
+            this.gpYear.Name = "gpYear";
+            this.gpYear.ReadOnly = true;
+            this.gpYear.Width = 65;
+            // 
+            // gpNumAchievements
+            // 
+            this.gpNumAchievements.DataPropertyName = "NumAchievements";
+            this.gpNumAchievements.HeaderText = "Trophies";
+            this.gpNumAchievements.Name = "gpNumAchievements";
+            this.gpNumAchievements.ReadOnly = true;
+            this.gpNumAchievements.Width = 80;
+            // 
+            // gpPoints
+            // 
+            this.gpPoints.DataPropertyName = "Points";
+            this.gpPoints.HeaderText = "Points";
+            this.gpPoints.Name = "gpPoints";
+            this.gpPoints.ReadOnly = true;
+            this.gpPoints.Width = 65;
+            // 
+            // gpNumLeaderboards
+            // 
+            this.gpNumLeaderboards.DataPropertyName = "NumLeaderboards";
+            this.gpNumLeaderboards.HeaderText = "Scores";
+            this.gpNumLeaderboards.Name = "gpNumLeaderboards";
+            this.gpNumLeaderboards.ReadOnly = true;
+            this.gpNumLeaderboards.Width = 70;
+            // 
+            // gpLastUpdated
+            // 
+            this.gpLastUpdated.DataPropertyName = "DateModified";
+            this.gpLastUpdated.HeaderText = "Last Updated";
+            this.gpLastUpdated.Name = "gpLastUpdated";
+            this.gpLastUpdated.ReadOnly = true;
+            this.gpLastUpdated.Width = 105;
             // 
             // tabGamesToHide
             // 
@@ -1594,6 +1684,7 @@ namespace RADB
             this.ghIconBitmap,
             this.ghTitle,
             this.ghConsole,
+            this.ghYear,
             this.ghNumAchievements,
             this.ghPoints,
             this.ghNumLeaderboards,
@@ -1620,69 +1711,6 @@ namespace RADB
             this.dgvGamesToHide.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGamesToHide.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToHide.TabIndex = 2;
-            // 
-            // ghID
-            // 
-            this.ghID.DataPropertyName = "ID";
-            this.ghID.HeaderText = "ID";
-            this.ghID.Name = "ghID";
-            this.ghID.ReadOnly = true;
-            this.ghID.Width = 45;
-            // 
-            // ghIconBitmap
-            // 
-            this.ghIconBitmap.DataPropertyName = "ImageIconBitmap";
-            this.ghIconBitmap.HeaderText = "Icon";
-            this.ghIconBitmap.Name = "ghIconBitmap";
-            this.ghIconBitmap.ReadOnly = true;
-            this.ghIconBitmap.Width = 36;
-            // 
-            // ghTitle
-            // 
-            this.ghTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ghTitle.DataPropertyName = "Title";
-            this.ghTitle.HeaderText = "Title";
-            this.ghTitle.Name = "ghTitle";
-            this.ghTitle.ReadOnly = true;
-            // 
-            // ghConsole
-            // 
-            this.ghConsole.DataPropertyName = "ConsoleName";
-            this.ghConsole.HeaderText = "Console";
-            this.ghConsole.Name = "ghConsole";
-            this.ghConsole.ReadOnly = true;
-            // 
-            // ghNumAchievements
-            // 
-            this.ghNumAchievements.DataPropertyName = "NumAchievements";
-            this.ghNumAchievements.HeaderText = "Trophies";
-            this.ghNumAchievements.Name = "ghNumAchievements";
-            this.ghNumAchievements.ReadOnly = true;
-            this.ghNumAchievements.Width = 80;
-            // 
-            // ghPoints
-            // 
-            this.ghPoints.DataPropertyName = "Points";
-            this.ghPoints.HeaderText = "Points";
-            this.ghPoints.Name = "ghPoints";
-            this.ghPoints.ReadOnly = true;
-            this.ghPoints.Width = 65;
-            // 
-            // ghNumLeaderboards
-            // 
-            this.ghNumLeaderboards.DataPropertyName = "NumLeaderboards";
-            this.ghNumLeaderboards.HeaderText = "Scores";
-            this.ghNumLeaderboards.Name = "ghNumLeaderboards";
-            this.ghNumLeaderboards.ReadOnly = true;
-            this.ghNumLeaderboards.Width = 70;
-            // 
-            // ghLastUpdated
-            // 
-            this.ghLastUpdated.DataPropertyName = "DateModified";
-            this.ghLastUpdated.HeaderText = "Last Updated";
-            this.ghLastUpdated.Name = "ghLastUpdated";
-            this.ghLastUpdated.ReadOnly = true;
-            this.ghLastUpdated.Width = 105;
             // 
             // tabUserInfo
             // 
@@ -1724,6 +1752,7 @@ namespace RADB
             this.pnlAwardFloating.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlAwardFloating.Controls.Add(this.picAwardFloating);
             this.pnlAwardFloating.Controls.Add(this.tblAwardFloating);
+            this.pnlAwardFloating.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pnlAwardFloating.Location = new System.Drawing.Point(410, 4);
             this.pnlAwardFloating.Name = "pnlAwardFloating";
             this.pnlAwardFloating.Padding = new System.Windows.Forms.Padding(1);
@@ -1733,6 +1762,7 @@ namespace RADB
             // 
             // picAwardFloating
             // 
+            this.picAwardFloating.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picAwardFloating.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picAwardFloating.Location = new System.Drawing.Point(1, 1);
             this.picAwardFloating.Margin = new System.Windows.Forms.Padding(0);
@@ -1806,6 +1836,7 @@ namespace RADB
             // 
             this.picLoaderUserAwards.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.picLoaderUserAwards.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picLoaderUserAwards.Image = global::RADB.Properties.Resources.loader;
             this.picLoaderUserAwards.Location = new System.Drawing.Point(23, 68);
             this.picLoaderUserAwards.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
@@ -1879,6 +1910,7 @@ namespace RADB
             // 
             // picUserName
             // 
+            this.picUserName.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picUserName.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picUserName.Location = new System.Drawing.Point(161, 6);
             this.picUserName.Margin = new System.Windows.Forms.Padding(6);
@@ -1944,6 +1976,7 @@ namespace RADB
             // 
             // picUserLastGame
             // 
+            this.picUserLastGame.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picUserLastGame.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picUserLastGame.Location = new System.Drawing.Point(9, 324);
             this.picUserLastGame.Margin = new System.Windows.Forms.Padding(6);
@@ -2276,6 +2309,7 @@ namespace RADB
             // 
             // picUserCheevos
             // 
+            this.picUserCheevos.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picUserCheevos.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picUserCheevos.Location = new System.Drawing.Point(11, 11);
             this.picUserCheevos.Margin = new System.Windows.Forms.Padding(6);
@@ -2354,6 +2388,7 @@ namespace RADB
             // picFBiDevIcon
             // 
             this.picFBiDevIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.picFBiDevIcon.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picFBiDevIcon.Image = global::RADB.Properties.Resources.fbidev;
             this.picFBiDevIcon.Location = new System.Drawing.Point(407, 118);
             this.picFBiDevIcon.Name = "picFBiDevIcon";
@@ -2385,69 +2420,76 @@ namespace RADB
             this.lblAbYear.TabIndex = 1;
             this.lblAbYear.Text = "2023";
             // 
-            // gpID
+            // ghID
             // 
-            this.gpID.DataPropertyName = "ID";
-            this.gpID.HeaderText = "ID";
-            this.gpID.Name = "gpID";
-            this.gpID.ReadOnly = true;
-            this.gpID.Width = 45;
+            this.ghID.DataPropertyName = "ID";
+            this.ghID.HeaderText = "ID";
+            this.ghID.Name = "ghID";
+            this.ghID.ReadOnly = true;
+            this.ghID.Width = 45;
             // 
-            // gpIconBitmap
+            // ghIconBitmap
             // 
-            this.gpIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.gpIconBitmap.DataPropertyName = "ImageIconBitmap";
-            this.gpIconBitmap.HeaderText = "Icon";
-            this.gpIconBitmap.Name = "gpIconBitmap";
-            this.gpIconBitmap.ReadOnly = true;
-            this.gpIconBitmap.Width = 36;
+            this.ghIconBitmap.DataPropertyName = "ImageIconBitmap";
+            this.ghIconBitmap.HeaderText = "Icon";
+            this.ghIconBitmap.Name = "ghIconBitmap";
+            this.ghIconBitmap.ReadOnly = true;
+            this.ghIconBitmap.Width = 36;
             // 
-            // gpTitle
+            // ghTitle
             // 
-            this.gpTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.gpTitle.DataPropertyName = "Title";
-            this.gpTitle.HeaderText = "Title";
-            this.gpTitle.Name = "gpTitle";
-            this.gpTitle.ReadOnly = true;
+            this.ghTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ghTitle.DataPropertyName = "Title";
+            this.ghTitle.HeaderText = "Title";
+            this.ghTitle.Name = "ghTitle";
+            this.ghTitle.ReadOnly = true;
             // 
-            // gpConsole
+            // ghConsole
             // 
-            this.gpConsole.DataPropertyName = "ConsoleName";
-            this.gpConsole.HeaderText = "Console";
-            this.gpConsole.Name = "gpConsole";
-            this.gpConsole.ReadOnly = true;
+            this.ghConsole.DataPropertyName = "ConsoleNameShort";
+            this.ghConsole.HeaderText = "Console";
+            this.ghConsole.Name = "ghConsole";
+            this.ghConsole.ReadOnly = true;
             // 
-            // gpNumAchievements
+            // ghYear
             // 
-            this.gpNumAchievements.DataPropertyName = "NumAchievements";
-            this.gpNumAchievements.HeaderText = "Trophies";
-            this.gpNumAchievements.Name = "gpNumAchievements";
-            this.gpNumAchievements.ReadOnly = true;
-            this.gpNumAchievements.Width = 80;
+            this.ghYear.DataPropertyName = "Year";
+            this.ghYear.HeaderText = "Year";
+            this.ghYear.Name = "ghYear";
+            this.ghYear.ReadOnly = true;
+            this.ghYear.Width = 65;
             // 
-            // gpPoints
+            // ghNumAchievements
             // 
-            this.gpPoints.DataPropertyName = "Points";
-            this.gpPoints.HeaderText = "Points";
-            this.gpPoints.Name = "gpPoints";
-            this.gpPoints.ReadOnly = true;
-            this.gpPoints.Width = 65;
+            this.ghNumAchievements.DataPropertyName = "NumAchievements";
+            this.ghNumAchievements.HeaderText = "Trophies";
+            this.ghNumAchievements.Name = "ghNumAchievements";
+            this.ghNumAchievements.ReadOnly = true;
+            this.ghNumAchievements.Width = 80;
             // 
-            // gpNumLeaderboards
+            // ghPoints
             // 
-            this.gpNumLeaderboards.DataPropertyName = "NumLeaderboards";
-            this.gpNumLeaderboards.HeaderText = "Scores";
-            this.gpNumLeaderboards.Name = "gpNumLeaderboards";
-            this.gpNumLeaderboards.ReadOnly = true;
-            this.gpNumLeaderboards.Width = 70;
+            this.ghPoints.DataPropertyName = "Points";
+            this.ghPoints.HeaderText = "Points";
+            this.ghPoints.Name = "ghPoints";
+            this.ghPoints.ReadOnly = true;
+            this.ghPoints.Width = 65;
             // 
-            // gpLastUpdated
+            // ghNumLeaderboards
             // 
-            this.gpLastUpdated.DataPropertyName = "DateModified";
-            this.gpLastUpdated.HeaderText = "Last Updated";
-            this.gpLastUpdated.Name = "gpLastUpdated";
-            this.gpLastUpdated.ReadOnly = true;
-            this.gpLastUpdated.Width = 105;
+            this.ghNumLeaderboards.DataPropertyName = "NumLeaderboards";
+            this.ghNumLeaderboards.HeaderText = "Scores";
+            this.ghNumLeaderboards.Name = "ghNumLeaderboards";
+            this.ghNumLeaderboards.ReadOnly = true;
+            this.ghNumLeaderboards.Width = 70;
+            // 
+            // ghLastUpdated
+            // 
+            this.ghLastUpdated.DataPropertyName = "DateModified";
+            this.ghLastUpdated.HeaderText = "Last Updated";
+            this.ghLastUpdated.Name = "ghLastUpdated";
+            this.ghLastUpdated.ReadOnly = true;
+            this.ghLastUpdated.Width = 105;
             // 
             // Main
             // 
@@ -2547,14 +2589,6 @@ namespace RADB
         private System.Windows.Forms.DataGridViewTextBoxColumn cName;
         private System.Windows.Forms.DataGridViewTextBoxColumn cNumGames;
         private System.Windows.Forms.DataGridViewTextBoxColumn cTotalGames;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ghID;
-        private System.Windows.Forms.DataGridViewImageColumn ghIconBitmap;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ghTitle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ghConsole;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ghNumAchievements;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ghPoints;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ghNumLeaderboards;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ghLastUpdated;
         private System.Windows.Forms.DataGridViewTextBoxColumn aOrder;
         private System.Windows.Forms.DataGridViewTextBoxColumn aIconBitmap;
         private System.Windows.Forms.DataGridViewTextBoxColumn aDescription;
@@ -2703,10 +2737,20 @@ namespace RADB
         private System.Windows.Forms.DataGridViewImageColumn gpIconBitmap;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpConsole;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gpYear;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpNumAchievements;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpPoints;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpNumLeaderboards;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpLastUpdated;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ghID;
+        private System.Windows.Forms.DataGridViewImageColumn ghIconBitmap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ghTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ghConsole;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ghYear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ghNumAchievements;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ghPoints;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ghNumLeaderboards;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ghLastUpdated;
     }
 }
 

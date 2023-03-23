@@ -25,6 +25,7 @@ namespace RADB
                     Title = row.Value<string>("Title"),
                     ConsoleID = row.Value<int>("ConsoleID"),
                     ConsoleName = row.Value<string>("ConsoleName"),
+                    ConsoleNameShort = row.Value<string>("ConsoleNameShort"),
                     ImageIcon = row.Value<string>("ImageIcon"),
                     NumAchievements = row.Value<int>("NumAchievements"),
                     Points = row.Value<int>("Points"),
@@ -125,19 +126,6 @@ namespace RADB
         {
             string sql = Resources.GameInsert;
             var parameters = MountParameters(obj);
-
-            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
-        }
-
-        public async static Task<bool> InsertReleasedDate(Game obj)
-        {
-            string sql = Resources.GameInsertReleasedDate;
-            var parameters = new List<cSqlParameter>
-            {
-                new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID),
-                new cSqlParameter("@ReleasedDate", obj.ReleasedDate)
-            };
 
             return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
         }
@@ -243,5 +231,44 @@ namespace RADB
             return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
         }
         #endregion
+
+        public async static Task<bool> InsertReleasedDate(Game obj)
+        {
+            string sql = Resources.GameInsertReleasedDate;
+            var parameters = new List<cSqlParameter>
+            {
+                new cSqlParameter("@ID", obj.ID),
+                new cSqlParameter("@ConsoleID", obj.ConsoleID),
+                new cSqlParameter("@ReleasedDate", obj.ReleasedDate)
+            };
+
+            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
+        }
+
+        public async static Task<List<Game>> ListNotInReleasedDate(int consoleID)
+        {
+            string sql = Resources.GameNotInReleasedDate;
+            var parameters = new List<cSqlParameter>
+            {
+                new cSqlParameter("@ConsoleID", consoleID),
+            };
+            return LoadReleasedDate<List<Game>>(await Banco.ExecutarSelect(sql, parameters));
+        }
+
+        static T LoadReleasedDate<T>(DataTable table) where T : IList, new()
+        {
+            var list = new T();
+            foreach (DataRow row in table.Rows)
+            {
+                var obj = new Game
+                {
+                    ID = row.Value<int>("ID"),
+                    ConsoleID = row.Value<int>("ConsoleID"),
+                };
+
+                list.Add(obj);
+            }
+            return list;
+        }
     }
 }

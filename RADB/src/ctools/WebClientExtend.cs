@@ -101,19 +101,22 @@ namespace RADB
             return base.DownloadFileTaskAsync(address, fileName);
         }
 
-        public new async Task<byte[]> UploadValuesTaskAsync(Uri address, NameValueCollection data)
+        public new async Task<string> UploadValuesTaskAsync(Uri address, NameValueCollection data)
         {
-            byte[] x = default(byte[]);
+            byte[] response = default(byte[]);
+            string responseString = string.Empty;
             try
             {
-                x = await base.UploadValuesTaskAsync(address, data);
+                response = await base.UploadValuesTaskAsync(address, "POST", data);
+                response = DecodeGZip(response);
+                responseString = Encoding.UTF8.GetString(response);
             }
             catch (WebException we)
             {
                 _Error = true;
                 ErrorMessage = we.Message;
             }
-            return x;
+            return responseString;
         }
 
         public async new Task<string> DownloadString(string address)
@@ -326,6 +329,9 @@ namespace RADB
 
         byte[] DecodeGZip(byte[] gzBuffer)
         {
+            var isGZip = (gzBuffer.Length >= 2 && gzBuffer[0] == 31 && gzBuffer[1] == 139);
+            if (isGZip == false) { return gzBuffer; }
+
             using (MemoryStream ms = new MemoryStream())
             {
                 var msgLength = BitConverter.ToInt32(gzBuffer, 0);

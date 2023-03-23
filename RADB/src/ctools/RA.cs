@@ -187,12 +187,12 @@ namespace RADB
         //{
         //    return Task.Run(async () =>
         //    {
-        //        var gameListToDownload = new List<Game>();
-        //        gameList.ForEach(x =>
-        //        {
-        //            if (File.Exists(x.ExtendFile.Path) == false)
-        //                gameListToDownload.Add(x);
-        //        });
+        //        var gameListToDownload = await Game.ListNotInReleasedDate(BIND.Console.ID);
+        //        //gameList.ForEach(x =>
+        //        //{
+        //        //    if (File.Exists(x.ExtendFile.Path) == false)
+        //        //        gameListToDownload.Add(x);
+        //        //});
 
         //        int max = gameListToDownload.Count;
         //        int itemsToGet = 4;

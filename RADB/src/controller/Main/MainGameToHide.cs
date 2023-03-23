@@ -29,8 +29,8 @@ namespace RADB
 
             dgvGamesToHide.Columns.Format(CellStyle.StringCenter, 0);
             dgvGamesToHide.Columns.Format(CellStyle.Image, 1);
-            dgvGamesToHide.Columns.Format(CellStyle.NumberCenter, 4, 5, 6);
-            dgvGamesToHide.Columns.Format(CellStyle.DateCenter, 7);
+            dgvGamesToHide.Columns.Format(CellStyle.NumberCenter, 4, 5, 6, 7);
+            dgvGamesToHide.Columns.Format(CellStyle.DateCenter, 8);
 
             dgvGamesToHide.MouseDown += (sender, e) => dgvGamesToHide.ShowContextMenu(e, mnuGamesToHide);
             dgvGamesToHide.CellDoubleClick += MainCommon.ChangeBindGame;

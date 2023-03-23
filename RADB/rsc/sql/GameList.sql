@@ -4,6 +4,7 @@ SELECT
 	, Title 
 	, g.ConsoleID 
 	, c.Name AS ConsoleName 
+	, CASE WHEN ci.ConsoleNameShort IS NULL THEN c.Name ELSE ci.ConsoleNameShort END AS ConsoleNameShort 
 	, strftime('%Y-%m-%d', rd.ReleasedDate) AS ReleasedDate 
 	, ImageIcon 
 	, NumAchievements 
@@ -13,6 +14,7 @@ SELECT
 	, ForumTopicID 
 FROM GameData AS g 
 	INNER JOIN Console AS c ON c.ID = g.ConsoleID 
+	LEFT JOIN CompanyItems AS ci ON ci.ConsoleID = c.ID 
 	LEFT JOIN GameReleasedDate AS rd ON rd.ID = g.ID 
 WHERE 1 = 1 
 	AND g.ID != (CASE WHEN @allTables = 1 THEN (SELECT -1) ELSE COALESCE((SELECT ID FROM GameToPlay AS p WHERE p.ID = g.ID), -1) END) 

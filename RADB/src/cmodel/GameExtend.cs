@@ -60,6 +60,11 @@ namespace RADB
 
                 if (string.IsNullOrWhiteSpace(Released)) return;
 
+                //value = value.Trim();
+                //value = value.Replace("st,", ",");
+                //value = value.Replace("th,", ",");
+                //value = value.Replace("nd,", ",");
+
                 DateTime d;
                 if (DateTime.TryParse(value, out d)) { ReleasedDate = d; return; }
                 if (DateTime.TryParseExact(value, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out d)) { ReleasedDate = d; }
