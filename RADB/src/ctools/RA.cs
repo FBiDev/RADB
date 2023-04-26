@@ -87,8 +87,12 @@ namespace RADB
 
         Dictionary<string, string> LinkMessages = new Dictionary<string, string>
         {
-            {API_URL_Consoles,"API Consoles File"},
-            {API_URL_UserInfo,"API User Summary File - Username not found!"},
+            {API_URL_Consoles,"API ConsoleIDs"},
+            {API_URL_GameList, "API GameList"},
+            {API_URL_GameExtend,"API GameExtend"},
+            {API_URL_UserInfo,"API UserSummary"},
+            {API_URL_UserProgress, "API UserProgress"},
+            {API_URL_UserCompletedGames, "API UserCompletedGames"},
             {Login_URL, "Failed to Login in RA"}
         };
 
