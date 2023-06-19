@@ -4,7 +4,6 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//
 using System.IO;
 using System.IO.Compression;
 using System.ComponentModel;
@@ -107,7 +106,7 @@ namespace RADB
             string responseString = string.Empty;
             try
             {
-                response = await base.UploadValuesTaskAsync(address, "POST", data);
+                response = await UploadValuesTaskAsync(address, "POST", data);
                 response = DecodeGZip(response);
                 responseString = Encoding.UTF8.GetString(response);
             }

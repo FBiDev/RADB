@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//
 using System.Data;
 using RADB.Properties;
 using GNX;
@@ -250,7 +249,7 @@ namespace RADB
             string sql = Resources.GameNotInReleasedDate;
             var parameters = new List<cSqlParameter>
             {
-                new cSqlParameter("@ConsoleID", consoleID),
+                new cSqlParameter("@ConsoleID", consoleID)
             };
             return LoadReleasedDate<List<Game>>(await Banco.ExecutarSelect(sql, parameters));
         }
@@ -263,7 +262,7 @@ namespace RADB
                 var obj = new Game
                 {
                     ID = row.Value<int>("ID"),
-                    ConsoleID = row.Value<int>("ConsoleID"),
+                    ConsoleID = row.Value<int>("ConsoleID")
                 };
 
                 list.Add(obj);

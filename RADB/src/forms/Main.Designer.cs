@@ -170,6 +170,15 @@ namespace RADB
             this.tabGamesToHide = new System.Windows.Forms.TabPage();
             this.lblNotFoundGamesToHide = new RADB.FlatLabelA();
             this.dgvGamesToHide = new RADB.FlatDataGridA();
+            this.ghID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ghTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabUserInfo = new System.Windows.Forms.TabPage();
             this.btnUserPage = new RADB.FlatButtonA();
             this.pnlAwardFloating = new RADB.FlatPanelA();
@@ -225,15 +234,6 @@ namespace RADB
             this.picFBiDevIcon = new RADB.FlatPictureBoxA();
             this.lblAbTitle = new RADB.FlatLabelB();
             this.lblAbYear = new RADB.FlatLabelB();
-            this.ghID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ghTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuGames.SuspendLayout();
             this.mnuGamesToHide.SuspendLayout();
             this.mnuConsoles.SuspendLayout();
@@ -1712,6 +1712,77 @@ namespace RADB
             this.dgvGamesToHide.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToHide.TabIndex = 2;
             // 
+            // ghID
+            // 
+            this.ghID.DataPropertyName = "ID";
+            this.ghID.HeaderText = "ID";
+            this.ghID.Name = "ghID";
+            this.ghID.ReadOnly = true;
+            this.ghID.Width = 45;
+            // 
+            // ghIconBitmap
+            // 
+            this.ghIconBitmap.DataPropertyName = "ImageIconBitmap";
+            this.ghIconBitmap.HeaderText = "Icon";
+            this.ghIconBitmap.Name = "ghIconBitmap";
+            this.ghIconBitmap.ReadOnly = true;
+            this.ghIconBitmap.Width = 36;
+            // 
+            // ghTitle
+            // 
+            this.ghTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ghTitle.DataPropertyName = "Title";
+            this.ghTitle.HeaderText = "Title";
+            this.ghTitle.Name = "ghTitle";
+            this.ghTitle.ReadOnly = true;
+            // 
+            // ghConsole
+            // 
+            this.ghConsole.DataPropertyName = "ConsoleNameShort";
+            this.ghConsole.HeaderText = "Console";
+            this.ghConsole.Name = "ghConsole";
+            this.ghConsole.ReadOnly = true;
+            // 
+            // ghYear
+            // 
+            this.ghYear.DataPropertyName = "Year";
+            this.ghYear.HeaderText = "Year";
+            this.ghYear.Name = "ghYear";
+            this.ghYear.ReadOnly = true;
+            this.ghYear.Width = 65;
+            // 
+            // ghNumAchievements
+            // 
+            this.ghNumAchievements.DataPropertyName = "NumAchievements";
+            this.ghNumAchievements.HeaderText = "Trophies";
+            this.ghNumAchievements.Name = "ghNumAchievements";
+            this.ghNumAchievements.ReadOnly = true;
+            this.ghNumAchievements.Width = 80;
+            // 
+            // ghPoints
+            // 
+            this.ghPoints.DataPropertyName = "Points";
+            this.ghPoints.HeaderText = "Points";
+            this.ghPoints.Name = "ghPoints";
+            this.ghPoints.ReadOnly = true;
+            this.ghPoints.Width = 65;
+            // 
+            // ghNumLeaderboards
+            // 
+            this.ghNumLeaderboards.DataPropertyName = "NumLeaderboards";
+            this.ghNumLeaderboards.HeaderText = "Scores";
+            this.ghNumLeaderboards.Name = "ghNumLeaderboards";
+            this.ghNumLeaderboards.ReadOnly = true;
+            this.ghNumLeaderboards.Width = 70;
+            // 
+            // ghLastUpdated
+            // 
+            this.ghLastUpdated.DataPropertyName = "DateModified";
+            this.ghLastUpdated.HeaderText = "Last Updated";
+            this.ghLastUpdated.Name = "ghLastUpdated";
+            this.ghLastUpdated.ReadOnly = true;
+            this.ghLastUpdated.Width = 105;
+            // 
             // tabUserInfo
             // 
             this.tabUserInfo.BackColor = System.Drawing.Color.Transparent;
@@ -1888,6 +1959,7 @@ namespace RADB
             // 
             // lblUserName
             // 
+            this.lblUserName.AutoSize = true;
             this.lblUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserName.Location = new System.Drawing.Point(234, 29);
             this.lblUserName.Name = "lblUserName";
@@ -2419,77 +2491,6 @@ namespace RADB
             this.lblAbYear.Size = new System.Drawing.Size(48, 24);
             this.lblAbYear.TabIndex = 1;
             this.lblAbYear.Text = "2023";
-            // 
-            // ghID
-            // 
-            this.ghID.DataPropertyName = "ID";
-            this.ghID.HeaderText = "ID";
-            this.ghID.Name = "ghID";
-            this.ghID.ReadOnly = true;
-            this.ghID.Width = 45;
-            // 
-            // ghIconBitmap
-            // 
-            this.ghIconBitmap.DataPropertyName = "ImageIconBitmap";
-            this.ghIconBitmap.HeaderText = "Icon";
-            this.ghIconBitmap.Name = "ghIconBitmap";
-            this.ghIconBitmap.ReadOnly = true;
-            this.ghIconBitmap.Width = 36;
-            // 
-            // ghTitle
-            // 
-            this.ghTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ghTitle.DataPropertyName = "Title";
-            this.ghTitle.HeaderText = "Title";
-            this.ghTitle.Name = "ghTitle";
-            this.ghTitle.ReadOnly = true;
-            // 
-            // ghConsole
-            // 
-            this.ghConsole.DataPropertyName = "ConsoleNameShort";
-            this.ghConsole.HeaderText = "Console";
-            this.ghConsole.Name = "ghConsole";
-            this.ghConsole.ReadOnly = true;
-            // 
-            // ghYear
-            // 
-            this.ghYear.DataPropertyName = "Year";
-            this.ghYear.HeaderText = "Year";
-            this.ghYear.Name = "ghYear";
-            this.ghYear.ReadOnly = true;
-            this.ghYear.Width = 65;
-            // 
-            // ghNumAchievements
-            // 
-            this.ghNumAchievements.DataPropertyName = "NumAchievements";
-            this.ghNumAchievements.HeaderText = "Trophies";
-            this.ghNumAchievements.Name = "ghNumAchievements";
-            this.ghNumAchievements.ReadOnly = true;
-            this.ghNumAchievements.Width = 80;
-            // 
-            // ghPoints
-            // 
-            this.ghPoints.DataPropertyName = "Points";
-            this.ghPoints.HeaderText = "Points";
-            this.ghPoints.Name = "ghPoints";
-            this.ghPoints.ReadOnly = true;
-            this.ghPoints.Width = 65;
-            // 
-            // ghNumLeaderboards
-            // 
-            this.ghNumLeaderboards.DataPropertyName = "NumLeaderboards";
-            this.ghNumLeaderboards.HeaderText = "Scores";
-            this.ghNumLeaderboards.Name = "ghNumLeaderboards";
-            this.ghNumLeaderboards.ReadOnly = true;
-            this.ghNumLeaderboards.Width = 70;
-            // 
-            // ghLastUpdated
-            // 
-            this.ghLastUpdated.DataPropertyName = "DateModified";
-            this.ghLastUpdated.HeaderText = "Last Updated";
-            this.ghLastUpdated.Name = "ghLastUpdated";
-            this.ghLastUpdated.ReadOnly = true;
-            this.ghLastUpdated.Width = 105;
             // 
             // Main
             // 
