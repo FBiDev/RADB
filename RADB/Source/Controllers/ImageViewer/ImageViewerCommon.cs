@@ -84,6 +84,7 @@ namespace RADB
         public static void SetImage(Picture pic, Size perImageSize = default(Size))
         {
             var newForm = new ImageViewer();
+
             Form.ActiveForm.BeginInvoke((Action)(() =>
             {
                 newForm.Hide();

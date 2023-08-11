@@ -390,7 +390,15 @@ namespace RADB
         #region MergeImages
         public async Task MergeGameBadges(Game game)
         {
-            GameExtend gameExtend = await DownloadGameExtend(game, Browser.dlGames);
+            var gameExtend = await DeserializeGameExtend(game);
+            if (gameExtend.ID == 0)
+                gameExtend = await DownloadGameExtend(game, Browser.dlGames);
+            if (gameExtend.IsNull())
+            {
+                MessageBox.Show("GameFile Not Found");
+                return;
+            }
+            
             var badgeFiles = gameExtend.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
 
             Browser.dlGamesBadges.Files = badgeFiles;
@@ -451,7 +459,7 @@ namespace RADB
                 Picture pic = await Task.Run(() =>
                 {
                     pic = new Picture(gamesIcon, true, 11, GameIconSize, false);
-                    pic.Save(Game.MergedIconsPath(console.Name), PictureFormat.Png, false);
+                    pic.Save(Game.MergedIconsPath(console.Name), PictureFormat.Jpg, false);
 
                     Archive.SaveGamesIcon(games, gamesIcon, Game.MergedIconsPath(console.Name) + ".txt");
 

@@ -23,6 +23,11 @@ namespace RADB
             return HeaderExist(headerName) ? ResponseHeaders.AllKeys.Single(h => h.ToLower() == headerName.ToLower()) : string.Empty;
         }
 
+        bool IsBrotliContent
+        {
+            get { return HeaderExist("Content-Encoding") && ResponseHeaders[HttpResponseHeader.ContentEncoding] == "br"; }
+        }
+
         bool IsGZipContent
         {
             get { return HeaderExist("Content-Encoding") && ResponseHeaders[HttpResponseHeader.ContentEncoding] == "gzip"; }
@@ -107,7 +112,16 @@ namespace RADB
             try
             {
                 response = await UploadValuesTaskAsync(address, "POST", data);
-                response = DecodeGZip(response);
+
+                if (IsGZipContent)
+                {
+                    response = DecodeGZip(response);
+                }
+                else if (IsBrotliContent)
+                {
+                    response = GNX.Brotli.Decompress(response);
+                }
+
                 responseString = Encoding.UTF8.GetString(response);
             }
             catch (WebException we)
@@ -124,6 +138,11 @@ namespace RADB
             byte[] data = await DownloadData(address);
 
             if (_Error) { return msg; }
+
+            if (IsBrotliContent)
+            {
+                data = GNX.Brotli.Decompress(data);
+            }
 
             if (ResponseHeaders == null) { return msg; }
 

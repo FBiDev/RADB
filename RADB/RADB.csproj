@@ -51,21 +51,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>rsc\image\favicon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Icons\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GNX">
-      <HintPath>x64\referenced\GNX.dll</HintPath>
+    <Reference Include="GNX, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Plugins\GNX.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>x64\referenced\Newtonsoft.Json.dll</HintPath>
+      <HintPath>Plugins\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.116.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>x64\referenced\System.Data.SQLite.dll</HintPath>
+      <HintPath>Plugins\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Net.Http" />
@@ -84,136 +85,136 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="src\cmodel\GameProgress.cs" />
-    <Compile Include="src\cmodel\User.cs" />
-    <Compile Include="src\config\Banco.cs" />
-    <Compile Include="src\config\Config.cs" />
-    <Compile Include="src\cmodel\Console.cs" />
-    <Compile Include="src\config\Theme.cs" />
-    <Compile Include="src\controller\HashViewer\HashViewerCommon.cs" />
-    <Compile Include="src\controller\HashViewer\HashViewerControls.cs" />
-    <Compile Include="src\ctools\Browser.cs" />
-    <Compile Include="src\ctools\DownloadBase.cs" />
-    <Compile Include="src\cmodel\GameExtend.cs" />
-    <Compile Include="src\ctools\JsonExtension.cs" />
-    <Compile Include="src\ctools\UserProgress.cs" />
-    <Compile Include="src\ctools\WebClientExtend.cs">
+    <Compile Include="Source\Classes\GameProgress.cs" />
+    <Compile Include="Source\Classes\User.cs" />
+    <Compile Include="Source\Config\Banco.cs" />
+    <Compile Include="Source\Config\Config.cs" />
+    <Compile Include="Source\Classes\Console.cs" />
+    <Compile Include="Source\Config\Theme.cs" />
+    <Compile Include="Source\Controllers\HashViewer\HashViewerCommon.cs" />
+    <Compile Include="Source\Controllers\HashViewer\HashViewerControls.cs" />
+    <Compile Include="Source\Utils\Browser.cs" />
+    <Compile Include="Source\Utils\DownloadBase.cs" />
+    <Compile Include="Source\Classes\GameExtend.cs" />
+    <Compile Include="Source\Utils\JsonExtension.cs" />
+    <Compile Include="Source\Utils\UserProgress.cs" />
+    <Compile Include="Source\Utils\WebClientExtend.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatLabelB.cs">
+    <Compile Include="Resources\CustomControls\FlatLabelB.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatLabelB.Designer.cs">
+    <Compile Include="Resources\CustomControls\FlatLabelB.Designer.cs">
       <DependentUpon>FlatLabelB.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\custom_controls\FlatCheckBoxA.cs">
+    <Compile Include="Resources\CustomControls\FlatCheckBoxA.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatCheckBoxA.Designer.cs">
+    <Compile Include="Resources\CustomControls\FlatCheckBoxA.Designer.cs">
       <DependentUpon>FlatCheckBoxA.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\custom_controls\FlatButtonA.cs">
+    <Compile Include="Resources\CustomControls\FlatButtonA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatDataGridA.cs">
+    <Compile Include="Resources\CustomControls\FlatDataGridA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatDataGridA.Designer.cs">
+    <Compile Include="Resources\CustomControls\FlatDataGridA.Designer.cs">
       <DependentUpon>FlatDataGridA.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\custom_controls\FlatGroupBoxA.cs">
+    <Compile Include="Resources\CustomControls\FlatGroupBoxA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatGroupBoxA.Designer.cs">
+    <Compile Include="Resources\CustomControls\FlatGroupBoxA.Designer.cs">
       <DependentUpon>FlatGroupBoxA.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\custom_controls\FlatLabelA.cs">
+    <Compile Include="Resources\CustomControls\FlatLabelA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatLabelA.Designer.cs">
+    <Compile Include="Resources\CustomControls\FlatLabelA.Designer.cs">
       <DependentUpon>FlatLabelA.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\custom_controls\FlatListViewA.cs">
+    <Compile Include="Resources\CustomControls\FlatListViewA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatPanelA.cs">
+    <Compile Include="Resources\CustomControls\FlatPanelA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatProgressBarA.cs">
+    <Compile Include="Resources\CustomControls\FlatProgressBarA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatProgressBarA.Designer.cs">
+    <Compile Include="Resources\CustomControls\FlatProgressBarA.Designer.cs">
       <DependentUpon>FlatProgressBarA.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\custom_controls\FlatTabControlA.cs">
+    <Compile Include="Resources\CustomControls\FlatTabControlA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatTextBoxA.cs">
+    <Compile Include="Resources\CustomControls\FlatTextBoxA.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\custom_controls\FlatTextBoxA.Designer.cs">
+    <Compile Include="Resources\CustomControls\FlatTextBoxA.Designer.cs">
       <DependentUpon>FlatTextBoxA.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\custom_controls\FlatPictureBoxA.cs">
+    <Compile Include="Resources\CustomControls\FlatPictureBoxA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\cdao\ConsoleDao.cs" />
-    <Compile Include="src\cdao\GameExtendDao.cs" />
-    <Compile Include="src\cdao\GameDao.cs" />
-    <Compile Include="src\forms\BaseForm.cs">
+    <Compile Include="Source\Classes\ClassesDao\ConsoleDao.cs" />
+    <Compile Include="Source\Classes\ClassesDao\GameExtendDao.cs" />
+    <Compile Include="Source\Classes\ClassesDao\GameDao.cs" />
+    <Compile Include="Source\Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\forms\BaseForm.Designer.cs">
+    <Compile Include="Source\Forms\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\forms\FlatArticle.cs">
+    <Compile Include="Source\Forms\FlatArticle.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\forms\HashViewer.cs">
+    <Compile Include="Source\Forms\HashViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\forms\HashViewer.Designer.cs">
+    <Compile Include="Source\Forms\HashViewer.Designer.cs">
       <DependentUpon>HashViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\forms\ImageViewer.cs">
+    <Compile Include="Source\Forms\ImageViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\forms\ImageViewer.Designer.cs">
+    <Compile Include="Source\Forms\ImageViewer.Designer.cs">
       <DependentUpon>ImageViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\forms\Main.cs">
+    <Compile Include="Source\Forms\Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\forms\Main.Designer.cs">
+    <Compile Include="Source\Forms\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\ctools\Download.cs" />
-    <Compile Include="src\ctools\Archive.cs" />
-    <Compile Include="src\ctools\DownloadFile.cs" />
-    <Compile Include="src\forms\TestForm.cs">
+    <Compile Include="Source\Utils\Download.cs" />
+    <Compile Include="Source\Utils\Archive.cs" />
+    <Compile Include="Source\Utils\DownloadFile.cs" />
+    <Compile Include="Source\Forms\TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\forms\TestForm.Designer.cs">
+    <Compile Include="Source\Forms\TestForm.Designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="temp\extensions.cs" />
     <Compile Include="temp\FileUpdate.cs" />
-    <Compile Include="src\ctools\Folder.cs" />
-    <Compile Include="src\cmodel\Game.cs" />
+    <Compile Include="Source\Utils\Folder.cs" />
+    <Compile Include="Source\Classes\Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\cmodel\Achievement.cs" />
-    <Compile Include="src\ctools\Picture.cs" />
-    <Compile Include="src\ctools\RA.cs" />
+    <Compile Include="Source\Classes\Achievement.cs" />
+    <Compile Include="Source\Utils\Picture.cs" />
+    <Compile Include="Source\Utils\RA.cs" />
     <Compile Include="temp\Temp.cs" />
-    <EmbeddedResource Include="src\forms\HashViewer.resx">
+    <EmbeddedResource Include="Source\Forms\HashViewer.resx">
       <DependentUpon>HashViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\forms\ImageViewer.resx">
+    <EmbeddedResource Include="Source\Forms\ImageViewer.resx">
       <DependentUpon>ImageViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\forms\Main.resx">
+    <EmbeddedResource Include="Source\Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -222,7 +223,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\forms\TestForm.resx">
+    <EmbeddedResource Include="Source\Forms\TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -234,22 +235,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <ContentWithTargetPath Include="rsc\db\database.db">
+    <ContentWithTargetPath Include="Resources\Database\database.db">
       <TargetPath>Data\database.db</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <Compile Include="src\cmodel\BIND.cs" />
-    <Compile Include="src\controller\Main\MainAbout.cs" />
-    <Compile Include="src\controller\Main\MainControls.cs" />
-    <Compile Include="src\controller\Main\MainConsole.cs" />
-    <Compile Include="src\controller\Main\MainGame.cs" />
-    <Compile Include="src\controller\Main\MainGameToHide.cs" />
-    <Compile Include="src\controller\Main\MainGameToPlay.cs" />
-    <Compile Include="src\controller\Main\MainGameInfo.cs" />
-    <Compile Include="src\controller\Main\MainUserInfo.cs" />
-    <Compile Include="src\controller\Main\MainCommon.cs" />
-    <Compile Include="src\controller\ImageViewer\ImageViewerCommon.cs" />
-    <Compile Include="src\controller\ImageViewer\ImageViewerControls.cs" />
+    <Compile Include="Source\Classes\BIND.cs" />
+    <Compile Include="Source\Controllers\Main\MainAbout.cs" />
+    <Compile Include="Source\Controllers\Main\MainControls.cs" />
+    <Compile Include="Source\Controllers\Main\MainConsole.cs" />
+    <Compile Include="Source\Controllers\Main\MainGame.cs" />
+    <Compile Include="Source\Controllers\Main\MainGameToHide.cs" />
+    <Compile Include="Source\Controllers\Main\MainGameToPlay.cs" />
+    <Compile Include="Source\Controllers\Main\MainGameInfo.cs" />
+    <Compile Include="Source\Controllers\Main\MainUserInfo.cs" />
+    <Compile Include="Source\Controllers\Main\MainCommon.cs" />
+    <Compile Include="Source\Controllers\ImageViewer\ImageViewerCommon.cs" />
+    <Compile Include="Source\Controllers\ImageViewer\ImageViewerControls.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -257,43 +258,47 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="rsc\exe\jpegoptim_1.5.0.exe" />
-    <Content Include="rsc\exe\pngcrush_1_8_11_w64.exe" />
-    <Content Include="rsc\exe\pngcrush_1_8_13_w64.exe" />
-    <Content Include="rsc\image\favicon.ico" />
-    <Content Include="rsc\image\favicon.png" />
-    <Content Include="rsc\image\fbidev.png" />
-    <Content Include="rsc\image\iconForm.png" />
-    <Content Include="rsc\image\loader.gif" />
-    <Content Include="rsc\image\notfound.png" />
-    <Content Include="rsc\sql\ConsoleList.sql" />
-    <Content Include="rsc\sql\ConsoleInsert.sql" />
-    <Content Include="rsc\sql\ConsoleDelete.sql" />
-    <Content Include="rsc\sql\GameNotInReleasedDate.sql" />
-    <Content Include="rsc\sql\GameInsertReleasedDate.sql" />
-    <Content Include="rsc\sql\GameDeleteFromPlay.sql" />
-    <Content Include="rsc\sql\GameInsertToPlay.sql" />
-    <Content Include="rsc\sql\GameListToPlay.sql" />
-    <Content Include="rsc\sql\GameDeleteFromHide.sql" />
-    <Content Include="rsc\sql\GameInsertToHide.sql" />
-    <Content Include="rsc\sql\GameListToHide.sql" />
-    <Content Include="rsc\sql\GameExtendDelete.sql" />
-    <Content Include="rsc\sql\GameExtendInsert.sql" />
-    <Content Include="rsc\sql\GameExtendList.sql" />
-    <Content Include="rsc\sql\GameDuplicateForumTopicID.sql" />
-    <Content Include="rsc\sql\GameList.sql" />
-    <Content Include="rsc\sql\GameDelete.sql" />
-    <Content Include="rsc\sql\GameInsert.sql" />
+    <Content Include="Plugins\GNX.dll" />
+    <Content Include="Resources\App\jpegoptim_1.5.0.exe" />
+    <Content Include="Resources\App\jpegoptim_1.5.5.exe" />
+    <Content Include="Resources\App\pngcrush_1_8_11_w64.exe" />
+    <Content Include="Resources\App\pngcrush_1_8_13_w64.exe" />
+    <Content Include="Resources\Icons\favicon.ico" />
+    <Content Include="Resources\Images\favicon.png" />
+    <Content Include="Resources\Images\fbidev.png" />
+    <Content Include="Resources\Images\iconForm.png" />
+    <Content Include="Resources\Images\loader.gif" />
+    <Content Include="Resources\Images\notfound.png" />
+    <Content Include="Resources\Sql\ConsoleList.sql" />
+    <Content Include="Resources\Sql\ConsoleInsert.sql" />
+    <Content Include="Resources\Sql\ConsoleDelete.sql" />
+    <Content Include="Resources\Sql\GameNotInReleasedDate.sql" />
+    <Content Include="Resources\Sql\GameInsertReleasedDate.sql" />
+    <Content Include="Resources\Sql\GameDeleteFromPlay.sql" />
+    <Content Include="Resources\Sql\GameInsertToPlay.sql" />
+    <Content Include="Resources\Sql\GameListToPlay.sql" />
+    <Content Include="Resources\Sql\GameDeleteFromHide.sql" />
+    <Content Include="Resources\Sql\GameInsertToHide.sql" />
+    <Content Include="Resources\Sql\GameListToHide.sql" />
+    <Content Include="Resources\Sql\GameExtendDelete.sql" />
+    <Content Include="Resources\Sql\GameExtendInsert.sql" />
+    <Content Include="Resources\Sql\GameExtendList.sql" />
+    <Content Include="Resources\Sql\GameDuplicateForumTopicID.sql" />
+    <Content Include="Resources\Sql\GameList.sql" />
+    <Content Include="Resources\Sql\GameDelete.sql" />
+    <Content Include="Resources\Sql\GameInsert.sql" />
     <Content Include="temp\ToDo.txt" />
-    <Content Include="x64\referenced\Newtonsoft.Json.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Plugins\brolib_x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="x64\referenced\PhotoSauce.MagicScaler.dll" />
-    <Content Include="x64\referenced\System.Data.SQLite.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Plugins\Brotli.Core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="x64\SQLite.Interop.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Plugins\Newtonsoft.Json.dll" />
+    <Content Include="Plugins\PhotoSauce.MagicScaler.dll" />
+    <Content Include="Plugins\System.Data.SQLite.dll" />
+    <Content Include="Plugins\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -313,18 +318,16 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="x86\referenced\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>:: Move all assemblies and related files to lib folder
-ROBOCOPY "$(SolutionDir)..\_DLL\ " "$(TargetDir)x64\referenced\ " "GNX.pdb" /XO
-ROBOCOPY "$(TargetDir) " "$(TargetDir)x64\referenced\ " /XF *.exe *.config *.manifest $(SolutionName).pdb /XD x64 Data /E /IS /MOV 
+ROBOCOPY "$(SolutionDir)..\_DLL\ " "$(TargetDir)Plugins\ " "GNX.pdb" /XO
+ROBOCOPY "$(TargetDir) " "$(TargetDir)Plugins\ " /XF *.exe *.config *.manifest $(SolutionName).pdb /XD Plugins Data /E /IS /MOV 
 if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>ROBOCOPY "$(SolutionDir)..\_DLL\ " "$(ProjectDir)x64\referenced\ " "GNX.dll" /XO
+    <PreBuildEvent>ROBOCOPY "$(SolutionDir)..\_DLL\ " "$(ProjectDir)Plugins\ " "GNX.dll" /XO
 if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

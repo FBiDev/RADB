@@ -425,9 +425,11 @@ namespace RADB.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to --
-        ///SELECT g.ID FROM GameData AS g
-        ///	WHERE NOT EXISTS(
-        ///		SELECT ID FROM GameReleasedDate AS gr WHERE ID = g.ID
+        ///SELECT ID, ConsoleID FROM GameData AS g
+        ///WHERE (
+        ///	g.ConsoleID = @ConsoleID OR COALESCE(@ConsoleID, 0) = 0) 
+        ///	AND NOT EXISTS(
+        ///		SELECT ID FROM GameReleasedDate AS gr WHERE ID = g.ID 
         ///);
         ///--.
         /// </summary>
@@ -450,9 +452,9 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] jpegoptim_1_5_0 {
+        internal static byte[] jpegoptim_1_5_5 {
             get {
-                object obj = ResourceManager.GetObject("jpegoptim_1_5_0", resourceCulture);
+                object obj = ResourceManager.GetObject("jpegoptim_1_5_5", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -474,16 +476,6 @@ namespace RADB.Properties {
             get {
                 object obj = ResourceManager.GetObject("notfound", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] pngcrush_1_8_11_w64 {
-            get {
-                object obj = ResourceManager.GetObject("pngcrush_1_8_11_w64", resourceCulture);
-                return ((byte[])(obj));
             }
         }
         
