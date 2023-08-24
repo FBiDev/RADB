@@ -2,7 +2,7 @@
 
 namespace RADB
 {
-    public class FlatListViewA : GNX.FlatListView
+    public class FlatListViewA : GNX.Desktop.FlatListView
     {
         public FlatListViewA()
         {

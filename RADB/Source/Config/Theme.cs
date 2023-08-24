@@ -1,7 +1,7 @@
-﻿using System.Windows.Forms;
-using System.Drawing;
-//
+﻿using System.Drawing;
+using System.Windows.Forms;
 using GNX;
+using GNX.Desktop;
 
 namespace RADB
 {
@@ -167,10 +167,12 @@ namespace RADB
 
             foreach (var c in f.GetControls<FlatCheckBoxA>())
             {
+                /*
                 if (Config.DarkMode)
                     c.DarkMode();
                 else
                     c.LightMode();
+                */
             }
 
             foreach (var c in f.GetControls<FlatTextBoxA>())

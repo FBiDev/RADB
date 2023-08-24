@@ -13,7 +13,7 @@ namespace RADB
 
         public void Init(Form frm)
         {
-            Icon = GNX.cConvert.ToIco(Resources.iconForm, new Size(250, 250));
+            Icon = GNX.Cast.ToIco(Resources.iconForm, new Size(250, 250));
 
             Theme.CheckTheme(frm);
         }

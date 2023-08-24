@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-//
 using System.Data;
 using System.Data.SQLite;
-using GNX;
 using System.Threading.Tasks;
+using GNX;
 
 namespace RADB
 {
     public static class Banco
     {
-        public static ListBind<cLogSQL> Log { get { return DB.Log; } set { DB.Log = value; } }
-        static cDataBase DB { get; set; }
+        public static List<cLogSQL> Log { get { return DB.Log; } set { DB.Log = value; } }
+        static DataBaseManager DB { get; set; }
         public static bool Loaded { get; set; }
 
         public static void Carregar(string servidor = "", string database = "")
         {
-            DB = new cDataBase
+            DB = new DataBaseManager
             {
                 DatabaseSystem = DbSystem.SQLite,
                 Connection = new SQLiteConnection(),

@@ -1,15 +1,14 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
-//
-using System.Windows.Forms;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Diagnostics;
-//
+using System.Windows.Forms;
+using RADB.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RADB.Properties;
 using GNX;
 
 namespace RADB
@@ -132,11 +131,12 @@ namespace RADB
 
             if (await Browser.dlConsoles.Start())
             {
-                await Console.DeleteAll();
-
                 var list = await DeserializeConsoles();
                 if (list.Any())
+                {
+                    await Console.DeleteAll();
                     await Console.SaveList(await DeserializeConsoles());
+                }
             }
         }
 
@@ -144,7 +144,7 @@ namespace RADB
         {
             return Task.Run(() =>
             {
-                var consoles = JsonConvert.DeserializeObject<List<Console>>(File.ReadAllText(API_File_Consoles().Path));
+                var consoles = Json.DeserializeObject<List<Console>>(File.ReadAllText(API_File_Consoles().Path));
                 return consoles.OrderBy(x => x.ID).ToList();
             });
         }
@@ -159,18 +159,23 @@ namespace RADB
 
                 if (await Browser.dlGames.Start())
                 {
-                    await Game.Delete(console.ID);
-
-                    List<Game> list = await DeserializeGameList(console);
+                    var list = await DeserializeGameList(console);
                     if (list.Any())
+                    {
+                        await Game.Delete(console.ID);
                         await Game.SaveList(list);
+                    }
                 }
             });
         }
 
         Task<List<Game>> DeserializeGameList(Console console)
         {
-            var list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(API_File_GameList(console).Path));
+            var list = new List<Game>();
+
+            try { list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(API_File_GameList(console).Path)); }
+            catch (Exception) { }
+
             return Task.FromResult(list);
         }
 
@@ -398,7 +403,7 @@ namespace RADB
                 MessageBox.Show("GameFile Not Found");
                 return;
             }
-            
+
             var badgeFiles = gameExtend.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
 
             Browser.dlGamesBadges.Files = badgeFiles;

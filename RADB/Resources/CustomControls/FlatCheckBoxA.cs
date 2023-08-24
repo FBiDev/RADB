@@ -1,6 +1,6 @@
 ﻿namespace RADB
 {
-    public partial class FlatCheckBoxA : GNX.FlatCheckBox
+    public partial class FlatCheckBoxA : GNX.Desktop.FlatCheckBox
     {
         public FlatCheckBoxA()
         {

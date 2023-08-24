@@ -16,7 +16,7 @@ namespace RADB
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            GNX.cApp.SingleProcess(Config.Singleton, new Mutex(true, Config.SystemName));
+            GNX.Desktop.AppManager.SingleProcess(Config.Singleton, new Mutex(true, Config.SystemName), Config.SystemName);
             Config.Start();
 
             //Application.Run(new TestForm());

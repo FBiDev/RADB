@@ -2,7 +2,7 @@
 
 namespace RADB
 {
-    public class FlatButtonA : GNX.FlatButton
+    public class FlatButtonA : GNX.Desktop.FlatButton
     {
         public FlatButtonA()
         {

@@ -279,7 +279,13 @@ namespace RADB
 
             RevertTempFile(FileDownloaded.Path);
 
-            if (IsGZipContent)
+            if (IsBrotliContent)
+            {
+                var encfileData = File.ReadAllBytes(FileDownloaded.Path);
+                var decfileData = GNX.Brotli.Decompress(encfileData);
+                File.WriteAllBytes(FileDownloaded.Path, decfileData);
+            }
+            else if (IsGZipContent)
             {
                 var fileToDecompress = new FileInfo(FileDownloaded.Path);
 

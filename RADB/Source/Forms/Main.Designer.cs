@@ -640,7 +640,7 @@ namespace RADB
             // 
             // chkOfficial
             // 
-            this.chkOfficial._Legend = "Official";
+            this.chkOfficial.TextLegend = "Official";
             this.chkOfficial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkOfficial.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chkOfficial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
@@ -654,7 +654,7 @@ namespace RADB
             // 
             // chkPrototype
             // 
-            this.chkPrototype._Legend = "Prototype";
+            this.chkPrototype.TextLegend = "Prototype";
             this.chkPrototype.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkPrototype.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chkPrototype.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
@@ -668,7 +668,7 @@ namespace RADB
             // 
             // chkUnlicensed
             // 
-            this.chkUnlicensed._Legend = "Unlicensed";
+            this.chkUnlicensed.TextLegend = "Unlicensed";
             this.chkUnlicensed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkUnlicensed.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chkUnlicensed.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
@@ -682,7 +682,7 @@ namespace RADB
             // 
             // chkDemo
             // 
-            this.chkDemo._Legend = "Demo";
+            this.chkDemo.TextLegend = "Demo";
             this.chkDemo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkDemo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chkDemo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
@@ -696,7 +696,7 @@ namespace RADB
             // 
             // chkWithoutAchievements
             // 
-            this.chkWithoutAchievements._Legend = "No Trophy";
+            this.chkWithoutAchievements.TextLegend = "No Trophy";
             this.chkWithoutAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkWithoutAchievements.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chkWithoutAchievements.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
@@ -710,7 +710,7 @@ namespace RADB
             // 
             // chkHack
             // 
-            this.chkHack._Legend = "Hack";
+            this.chkHack.TextLegend = "Hack";
             this.chkHack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkHack.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chkHack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
@@ -724,7 +724,7 @@ namespace RADB
             // 
             // chkHomebrew
             // 
-            this.chkHomebrew._Legend = "Homebrew";
+            this.chkHomebrew.TextLegend = "Homebrew";
             this.chkHomebrew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkHomebrew.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chkHomebrew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
@@ -738,7 +738,7 @@ namespace RADB
             // 
             // chkSubset
             // 
-            this.chkSubset._Legend = "Subset";
+            this.chkSubset.TextLegend = "Subset";
             this.chkSubset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkSubset.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chkSubset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
@@ -752,7 +752,7 @@ namespace RADB
             // 
             // chkTestKit
             // 
-            this.chkTestKit._Legend = "TestKit";
+            this.chkTestKit.TextLegend = "TestKit";
             this.chkTestKit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkTestKit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chkTestKit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
@@ -766,7 +766,7 @@ namespace RADB
             // 
             // chkDemoted
             // 
-            this.chkDemoted._Legend = "gRAveyard";
+            this.chkDemoted.TextLegend = "gRAveyard";
             this.chkDemoted.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkDemoted.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chkDemoted.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));

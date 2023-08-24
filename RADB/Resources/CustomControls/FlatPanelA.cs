@@ -1,6 +1,6 @@
 ﻿namespace RADB
 {
-    public class FlatPanelA : GNX.FlatPanel
+    public class FlatPanelA : GNX.Desktop.FlatPanel
     {
         public FlatPanelA()
         {

@@ -2,7 +2,7 @@
 
 namespace RADB
 {
-    public partial class FlatDataGridA : GNX.FlatDataGrid
+    public partial class FlatDataGridA : GNX.Desktop.FlatDataGrid
     {
         public FlatDataGridA()
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using GNX;
+using GNX.Desktop;
 
 namespace RADB
 {
@@ -15,9 +16,9 @@ namespace RADB
 
         public static void Start()
         {
-            cApp.SetLanguage(Language);
-            cApp.SetLanguageNumbers(LanguageNumbers);
-            cApp.Start();
+            LanguageManager.SetLanguage(Language);
+            LanguageManager.SetLanguageNumbers(LanguageNumbers);
+            AppManager.Start();
 
             //Carregar Config
             Banco.Loaded = CarregarXML();
@@ -26,7 +27,7 @@ namespace RADB
             //Carregar BaseSistema
             Banco.Carregar();
 
-            cDebug.LogSQLSistema = Banco.Log;
+            cDebug.LogSQLSistema = new ListBind<cLogSQL>(Banco.Log);
         }
 
         public static bool CarregarXML()

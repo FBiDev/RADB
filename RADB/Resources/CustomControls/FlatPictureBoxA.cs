@@ -1,6 +1,6 @@
 ﻿namespace RADB
 {
-    public class FlatPictureBoxA : GNX.FlatPictureBox
+    public class FlatPictureBoxA : GNX.Desktop.FlatPictureBox
     {
         public FlatPictureBoxA()
         {
