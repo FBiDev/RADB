@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -10,6 +9,7 @@ using RADB.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using GNX;
+using GNX.Desktop;
 
 namespace RADB
 {
@@ -33,7 +33,8 @@ namespace RADB
         const string API_UserName = "RADatabase";
         const string API_Key = "GRaWk9onm4B0LSWSFaDt5a2dQE3N8Yme";
 
-        public const string Login_URL = HOST_URL + "request/auth/login.php";
+        public const string LOGOUT_URL = HOST_URL + "logout";
+        public const string LOGIN_URL = HOST_URL + "login";
 
         const string API_URL_Consoles = "API_GetConsoleIDs.php";
         const string API_URL_GameList = "API_GetGameList.php";
@@ -92,7 +93,7 @@ namespace RADB
             {API_URL_UserInfo,"API UserSummary"},
             {API_URL_UserProgress, "API UserProgress"},
             {API_URL_UserCompletedGames, "API UserCompletedGames"},
-            {Login_URL, "Failed to Login in RA"}
+            {LOGIN_URL, "Failed to Login in RA"}
         };
 
         public const int MIN_POINTS = 250;
@@ -127,17 +128,20 @@ namespace RADB
         #region _Consoles
         public async Task DownloadConsoles()
         {
-            Browser.dlConsoles.SetFile(API_File_Consoles());
-
-            if (await Browser.dlConsoles.Start())
+            await Task.Run(async () =>
             {
-                var list = await DeserializeConsoles();
-                if (list.Any())
+                Browser.dlConsoles.SetFile(API_File_Consoles());
+
+                if (await Browser.dlConsoles.Start())
                 {
-                    await Console.DeleteAll();
-                    await Console.SaveList(await DeserializeConsoles());
+                    var list = await DeserializeConsoles();
+                    if (list.Any())
+                    {
+                        await Console.DeleteAll();
+                        await Console.SaveList(list);
+                    }
                 }
-            }
+            });
         }
 
         Task<List<Console>> DeserializeConsoles()
@@ -171,12 +175,11 @@ namespace RADB
 
         Task<List<Game>> DeserializeGameList(Console console)
         {
-            var list = new List<Game>();
-
-            try { list = JsonConvert.DeserializeObject<List<Game>>(File.ReadAllText(API_File_GameList(console).Path)); }
-            catch (Exception) { }
-
-            return Task.FromResult(list);
+            return Task.Run(() =>
+            {
+                var games = Json.DeserializeObject<List<Game>>(File.ReadAllText(API_File_GameList(console).Path));
+                return games;
+            });
         }
 
         public async Task DownloadGamesIcon(Console console, Download dl)
@@ -260,6 +263,8 @@ namespace RADB
 
         Task<GameExtend> DeserializeGameExtend(Game game)
         {
+            if (File.Exists(game.ExtendFile.Path) == false) return Task.FromResult(new GameExtend());
+
             var AllText = File.ReadAllText(game.ExtendFile.Path);
             var gameData = AllText.GetBetween("{", ",\"Achievements\":");
             var cheevos = AllText.GetBetween("\"Achievements\":{", "}}");

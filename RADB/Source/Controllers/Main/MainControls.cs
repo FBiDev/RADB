@@ -4,7 +4,7 @@ namespace RADB
 {
     public partial class MainCommon
     {
-        static Main form { get { return BIND.f; } }
+        static Main form { get { return Session.MainForm; } }
         //Main
         static FlatTabControlA tabMain { get { return form.tabMain; } }
         //static TabPage tabConsoles { get { return form.tabConsoles; } }
@@ -18,7 +18,7 @@ namespace RADB
 
     public partial class MainConsole
     {
-        static Main form { get { return BIND.f; } }
+        static Main form { get { return Session.MainForm; } }
         //Consoles
         static Panel pnlDownloadConsoles { get { return form.pnlDownloadConsoles; } }
         static FlatButtonA btnUpdateConsoles { get { return form.btnUpdateConsoles; } }
@@ -37,7 +37,7 @@ namespace RADB
 
     public partial class MainGame
     {
-        static Main form { get { return BIND.f; } }
+        static Main form { get { return Session.MainForm; } }
         //Games
         static Panel pnlDownloadGameList { get { return form.pnlDownloadGameList; } }
         static FlatButtonA btnUpdateGameList { get { return form.btnUpdateGameList; } }
@@ -76,7 +76,7 @@ namespace RADB
 
     public partial class MainGameInfo
     {
-        static Main form { get { return BIND.f; } }
+        static Main form { get { return Session.MainForm; } }
         //GameInfo
         static FlatButtonA btnUpdateInfo { get { return form.btnUpdateInfo; } }
         static FlatLabelA lblProgressInfo { get { return form.lblProgressInfo; } }
@@ -112,7 +112,7 @@ namespace RADB
 
     public partial class MainGameToPlay
     {
-        static Main form { get { return BIND.f; } }
+        static Main form { get { return Session.MainForm; } }
         //GameToPlay
         static FlatDataGridA dgvGamesToPlay { get { return form.dgvGamesToPlay; } }
         static ContextMenuStrip mnuGamesToPlay { get { return form.mnuGamesToPlay; } }
@@ -122,7 +122,7 @@ namespace RADB
 
     public partial class MainGameToHide
     {
-        static Main form { get { return BIND.f; } }
+        static Main form { get { return Session.MainForm; } }
         //GameToHide
         static FlatDataGridA dgvGamesToHide { get { return form.dgvGamesToHide; } }
         static ContextMenuStrip mnuGamesToHide { get { return form.mnuGamesToHide; } }
@@ -132,7 +132,7 @@ namespace RADB
 
     public partial class MainUserInfo
     {
-        static Main form { get { return BIND.f; } }
+        static Main form { get { return Session.MainForm; } }
         //UserInfo
         static FlatTextBoxA txtUsername { get { return form.txtUsername; } }
         static FlatButtonA btnGetUserInfo { get { return form.btnGetUserInfo; } }
@@ -170,7 +170,7 @@ namespace RADB
 
     public partial class MainAbout
     {
-        static Main form { get { return BIND.f; } }
+        static Main form { get { return Session.MainForm; } }
         //About
         static FlatButtonA btnRALogin { get { return form.btnRALogin; } }
         static FlatLabelA lblRALogin { get { return form.lblSystemReLogin; } }
@@ -181,5 +181,8 @@ namespace RADB
         static FlatButtonA btnUserCheevos { get { return form.btnUserCheevos; } }
         static Label lblCheevoLoopUpdate { get { return form.lblCheevoLoopUpdate; } }
         static CheckBox chkUserCheevos { get { return form.chkUserCheevos; } }
+
+        static FlatCheckBoxA chkDarkMode { get { return form.chkDarkMode; } }
+        static FlatCheckBoxA chkDebugMode { get { return form.chkDebugMode; } }
     }
 }

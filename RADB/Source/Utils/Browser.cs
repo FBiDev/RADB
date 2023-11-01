@@ -61,28 +61,45 @@ namespace RADB
             }
         }
 
+        static string UserToken;
         public static async Task SystemLogin()
         {
-            BIND.RALogged = false;
+            Session.RALogged = false;
 
-            var html = await RALogin.DownloadString(RA.HOST_URL);
+            var html = await RALogin.DownloadString(RA.LOGIN_URL);
             if (string.IsNullOrWhiteSpace(html)) { showError(RALogin); return; }
 
-            var token = html.GetBetween("_token\" value=\"", "\">");
+            UserToken = html.GetBetween("_token\" value=\"", "\">");
 
             var values = new NameValueCollection
             {
-                {"_token", token},
-                { "u", "RADatabase" },
-                { "p", "RADatabase123" }
+                {"_token", UserToken},
+                { "User", "RADatabase" },
+                { "password", "RADatabase123" }
             };
 
-            var html2 = await RALogin.UploadValuesTaskAsync(new Uri(RA.Login_URL), values);
-            if (string.IsNullOrWhiteSpace(html2)) { showError(RALogin); return; }
+            var html2 = await RALogin.UploadValuesTaskAsync(new Uri(RA.LOGIN_URL), values);
+            Session.RALogged = SystemCheckLogin(html2);
+        }
 
-            var login = html2.GetBetween("request/auth/login", "php");
+        public static async Task SystemLogout()
+        {
+            var values = new NameValueCollection
+            {
+                {"_token", UserToken}
+            };
 
-            BIND.RALogged = login != ".";
+            var html = await RALogin.UploadValuesTaskAsync(new Uri(RA.LOGOUT_URL), values);
+            Session.RALogged = SystemCheckLogin(html);
+        }
+
+        public static bool SystemCheckLogin(string htmlLogin)
+        {
+            if (string.IsNullOrWhiteSpace(htmlLogin)) { showError(RALogin); return false; }
+
+            var login = htmlLogin.GetBetween("<form action=\"https://retroachievements.org/", "\"");
+
+            return login != "login";
         }
 
         static readonly Random rand = new Random();

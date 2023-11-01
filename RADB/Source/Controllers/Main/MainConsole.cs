@@ -15,8 +15,8 @@ namespace RADB
         #region Consoles
         public static async Task Console_Init()
         {
-            BIND.OnGameListChanged += UpdateConsoleList;
-            BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabConsoles) { dgvConsoles.Focus(); } };
+            Session.OnGameListChanged += UpdateConsoleList;
+            Session.OnTabMainChanged += () => { if (Session.SelectedTab == form.tabConsoles) { dgvConsoles.Focus(); } };
 
             mniMergeGamesIcon.MouseDown += mniMergeGamesIcon_MouseDown;
             mniMergeGamesIconBadSize.MouseDown += mniMergeGamesIconBadSize_MouseDown;
@@ -93,7 +93,7 @@ namespace RADB
             if (lstConsoles.IsEmpty())
                 btnUpdateConsoles_Click(null, null);
 
-            if (BIND.SelectedTab == form.tabConsoles)
+            if (Session.SelectedTab == form.tabConsoles)
                 dgvConsoles.Focus();
         }
 
@@ -111,9 +111,9 @@ namespace RADB
         static void dgvConsoles_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowHeader()) return;
-            var ConsoleSelected = dgvConsoles.GetSelectedItem<Console>();
-            BIND.LastConsole = BIND.Console;
-            BIND.Console = ConsoleSelected;
+            var ConsoleSelected = dgvConsoles.GetCurrentRowObject<Console>();
+            Session.LastConsole = Session.Console;
+            Session.Console = ConsoleSelected;
         }
 
         static void dgvConsoles_KeyPress(object sender, KeyPressEventArgs e)
@@ -134,7 +134,7 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var console = dgvConsoles.GetSelectedItem<Console>();
+            var console = dgvConsoles.GetCurrentRowObject<Console>();
 
             DisablePanelConsoles();
             await RA.MergeGamesIcon(console);
@@ -145,7 +145,7 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var console = dgvConsoles.GetSelectedItem<Console>();
+            var console = dgvConsoles.GetCurrentRowObject<Console>();
 
             DisablePanelConsoles();
             await RA.MergeGamesIcon(console, true);

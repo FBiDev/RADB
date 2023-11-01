@@ -16,7 +16,7 @@ namespace RADB
         public static void HashViewer_Init(HashViewer formDesign)
         {
             form = formDesign;
-            form.Init(form);
+            form.Init();
 
             txtHashes.KeyDown += HashViewer_KeyDown;
         }
@@ -31,10 +31,10 @@ namespace RADB
 
         public static async Task Open(Game game)
         {
-            if (BIND.RALogged)
+            if (Session.RALogged)
             {
                 var newForm = new HashViewer();
-                Form.ActiveForm.BeginInvoke((Action)(() =>
+                Session.MainForm.BeginInvoke((Action)(() =>
                 {
                     newForm.Hide();
                     newForm.ShowDialog();

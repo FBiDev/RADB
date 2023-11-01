@@ -88,8 +88,8 @@
     <Compile Include="Source\Classes\GameProgress.cs" />
     <Compile Include="Source\Classes\User.cs" />
     <Compile Include="Source\Config\Banco.cs" />
-    <Compile Include="Source\Config\Config.cs" />
     <Compile Include="Source\Classes\Console.cs" />
+    <Compile Include="Source\Config\Options.cs" />
     <Compile Include="Source\Config\Theme.cs" />
     <Compile Include="Source\Controllers\HashViewer\HashViewerCommon.cs" />
     <Compile Include="Source\Controllers\HashViewer\HashViewerControls.cs" />
@@ -239,7 +239,7 @@
       <TargetPath>Data\database.db</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <Compile Include="Source\Classes\BIND.cs" />
+    <Compile Include="Source\Config\Session.cs" />
     <Compile Include="Source\Controllers\Main\MainAbout.cs" />
     <Compile Include="Source\Controllers\Main\MainControls.cs" />
     <Compile Include="Source\Controllers\Main\MainConsole.cs" />
@@ -323,7 +323,7 @@
   <PropertyGroup>
     <PostBuildEvent>:: Move all assemblies and related files to lib folder
 ROBOCOPY "$(SolutionDir)..\_DLL\ " "$(TargetDir)Plugins\ " "GNX.pdb" /XO
-ROBOCOPY "$(TargetDir) " "$(TargetDir)Plugins\ " /XF *.exe *.config *.manifest $(SolutionName).pdb /XD Plugins Data /E /IS /MOV 
+ROBOCOPY "$(TargetDir) " "$(TargetDir)Plugins\ " /XF *.exe *.config *.manifest $(SolutionName).pdb *.json /XD Plugins Data /E /IS /MOV 
 if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

@@ -14,9 +14,9 @@ namespace RADB
         #region GamesToPlay
         public async static Task GamesToPlay_Init()
         {
-            BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabGamesToPlay) { dgvGamesToPlay.Focus(); } };
-            BIND.OnGameListChanged += LoadGamesToPlay;
-            BIND.OnAddGamesToPlay += (game) =>
+            Session.OnTabMainChanged += () => { if (Session.SelectedTab == form.tabGamesToPlay) { dgvGamesToPlay.Focus(); } };
+            Session.OnGameListChanged += LoadGamesToPlay;
+            Session.OnAddGamesToPlay += (game) =>
             {
                 lstGamesToPlay.Insert(0, game);
                 lblNotFoundGamesToPlay.Visible = lstGamesToPlay.IsEmpty();
@@ -41,7 +41,7 @@ namespace RADB
             dgvGamesToPlay.MouseWheel += dgvGamesToPlay_MouseWheel;
             dgvGamesToPlay.Scroll += dgvGamesToPlay_Scroll;
 
-            BIND.lstDgvGames.Add(dgvGamesToPlay);
+            Session.lstDgvGames.Add(dgvGamesToPlay);
 
             await GamesToPlay_Shown(null, null);
         }
@@ -77,16 +77,16 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var game = dgvGamesToPlay.GetSelectedItem<Game>();
+            var game = dgvGamesToPlay.GetCurrentRowObject<Game>();
 
             if (await game.DeleteFromPlay())
             {
                 lstGamesToPlay.Remove(game);
                 lblNotFoundGamesToPlay.Visible = lstGamesToPlay.IsEmpty();
 
-                if (BIND.Console.NotNull() && (BIND.Console.ID == game.ConsoleID || BIND.Console.ID == 0))
+                if (Session.Console.NotNull() && (Session.Console.ID == game.ConsoleID || Session.Console.ID == 0))
                 {
-                    BIND.AddGames(game);
+                    Session.AddGames(game);
                 }
             }
         }

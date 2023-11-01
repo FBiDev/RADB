@@ -63,6 +63,11 @@ namespace RADB
             ImageIconBitmap = RA.DefaultIcon;
         }
 
+        public override string ToString() 
+        {
+            return ID + " - " + Title;
+        }
+
         public static string MergedIconsPath(string consoleName = "")
         {
             return Folder.MergedIcons + Archive.MakeValidFileName(consoleName) + "_Icons";

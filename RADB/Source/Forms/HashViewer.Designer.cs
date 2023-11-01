@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.pnlHashes = new RADB.FlatPanelA();
-            this.picLoaderHash = new System.Windows.Forms.PictureBox();
+            this.picLoaderHash = new RADB.FlatPictureBoxA();
             this.txtHashes = new System.Windows.Forms.RichTextBox();
             this.pnlHashes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoaderHash)).BeginInit();
@@ -37,11 +37,9 @@
             // 
             // pnlHashes
             // 
-            this.pnlHashes.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pnlHashes.BorderRound = false;
-            this.pnlHashes.BorderSize = 0;
             this.pnlHashes.Controls.Add(this.picLoaderHash);
             this.pnlHashes.Controls.Add(this.txtHashes);
+            this.pnlHashes.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pnlHashes.Location = new System.Drawing.Point(12, 12);
             this.pnlHashes.Name = "pnlHashes";
             this.pnlHashes.Size = new System.Drawing.Size(719, 238);
@@ -51,7 +49,6 @@
             // 
             this.picLoaderHash.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.picLoaderHash.BackColor = System.Drawing.Color.Transparent;
             this.picLoaderHash.Image = global::RADB.Properties.Resources.loader;
             this.picLoaderHash.Location = new System.Drawing.Point(0, 93);
             this.picLoaderHash.Name = "picLoaderHash";
@@ -65,7 +62,7 @@
             this.txtHashes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtHashes.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.txtHashes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.txtHashes.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtHashes.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtHashes.Location = new System.Drawing.Point(0, 0);
@@ -96,6 +93,6 @@
 
         private FlatPanelA pnlHashes;
         internal System.Windows.Forms.RichTextBox txtHashes;
-        internal System.Windows.Forms.PictureBox picLoaderHash;
+        internal FlatPictureBoxA picLoaderHash;
     }
 }

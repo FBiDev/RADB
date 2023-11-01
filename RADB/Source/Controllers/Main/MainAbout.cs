@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GNX;
+using GNX.Desktop;
 
 namespace RADB
 {
@@ -18,6 +19,13 @@ namespace RADB
             btnRAProfileAbout.Click += btnRAProfileAbout_Click;
             btnUserCheevos.Click += btnUserCheevos_Click;
 
+            //Initial Value
+            chkDarkMode.Checked = Session.Options.DarkMode;
+            chkDarkMode.CheckedChanged += (sender, e) => Session.Options.ToggleDarkMode();
+
+            chkDebugMode.Checked = Session.Options.DebugMode;
+            chkDebugMode.CheckedChanged += (sender, e) => Session.Options.ToggleDebugMode();
+
             await About_Shown(null, null);
         }
 
@@ -29,21 +37,22 @@ namespace RADB
 
         static async void btnRALogin_Click(object sender, EventArgs e)
         {
-            lblRALogin.ForeColor = Color.Coral;
+            //lblRALogin.ForeColor = Color.Coral;
+            lblRALogin.ForeColorType = LabelType.primary;
             lblRALogin.Text = "logging in...";
 
             btnRALogin.Enabled = false;
             await Browser.SystemLogin();
             btnRALogin.Enabled = true;
 
-            if (BIND.RALogged)
+            if (Session.RALogged)
             {
-                lblRALogin.ForeColor = Color.Green;
+                lblRALogin.ForeColorType = LabelType.success;
                 lblRALogin.Text = "logged in!";
             }
             else
             {
-                lblRALogin.ForeColor = Color.Firebrick;
+                lblRALogin.ForeColorType = LabelType.danger;
                 lblRALogin.Text = "not logged in";
             }
         }
@@ -57,7 +66,7 @@ namespace RADB
         static UserProgress LastUser = new UserProgress();
         static async void btnUserCheevos_Click(object sender, EventArgs e)
         {
-            if (BIND.Game.IsNull())
+            if (Session.Game.IsNull())
             {
                 MessageBox.Show("Select a Game in Games Tab First");
                 return;
@@ -76,9 +85,9 @@ namespace RADB
 
             do
             {
-                UserProgress user = await RA.GetUserProgress(form.txtUsername.Text, BIND.Game.ID);
-                picUserCheevos.Image = BIND.Game.ImageIconBitmap;
-                lblUserCheevos.Text = user.NumAchieved + " / " + BIND.Game.NumAchievements;
+                UserProgress user = await RA.GetUserProgress(form.txtUsername.Text, Session.Game.ID);
+                picUserCheevos.Image = Session.Game.ImageIconBitmap;
+                lblUserCheevos.Text = user.NumAchieved + " / " + Session.Game.NumAchievements;
 
                 if (user.SameProgress(LastUser))
                 {

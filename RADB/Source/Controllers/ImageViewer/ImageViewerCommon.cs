@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace RADB
 {
     public static partial class ImageViewerCommon
     {
         static Size FormInitialSize;
-        static Size MinimumClientSize = new Size(192, 192);//96*2 x 96*2
-        static Size MaximumClientSize = new Size(1056, 576);//96*11 x 96*6
+        static Size MinimumClientSize;
+        static Size MaximumClientSize;
         static Size UnitImageSize;
         static Picture PictureInitial;
         static Picture PictureSmall;
-        static double zoomFactor = 0.25;
-        static double zoomPercent = 1.0;
+        static double zoomFactor;
+        static double zoomPercent;
 
         #region MAIN
         public static void ImageViewer_Init(ImageViewer formDesign)
         {
             form = formDesign;
-            form.Init(form);
+            form.Init();
 
             form.FormClosing += frmImageViewer_FormClosing;
             form.KeyDown += frmImageViewer_KeyDown;
@@ -28,6 +28,12 @@ namespace RADB
 
             form.VerticalScroll.SmallChange = 16;
             form.HorizontalScroll.SmallChange = 16;
+
+            MinimumClientSize = new Size(192, 192);//96*2 x 96*2
+            MaximumClientSize = new Size(1056, 576);//96*11 x 96*6
+
+            zoomFactor = 0.25;
+            zoomPercent = 1.0;
         }
 
         static void frmImageViewer_FormClosing(object sender, FormClosingEventArgs e)
@@ -85,7 +91,7 @@ namespace RADB
         {
             var newForm = new ImageViewer();
 
-            Form.ActiveForm.BeginInvoke((Action)(() =>
+            Session.MainForm.BeginInvoke((Action)(() =>
             {
                 newForm.Hide();
                 newForm.ShowDialog();

@@ -14,9 +14,9 @@ namespace RADB
         #region GamesToHide
         public static async Task GamesToHide_Init()
         {
-            BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabGamesToHide) { dgvGamesToHide.Focus(); } };
-            BIND.OnGameListChanged += LoadGamesToHide;
-            BIND.OnAddGamesToHide += (game) =>
+            Session.OnTabMainChanged += () => { if (Session.SelectedTab == form.tabGamesToHide) { dgvGamesToHide.Focus(); } };
+            Session.OnGameListChanged += LoadGamesToHide;
+            Session.OnAddGamesToHide += (game) =>
             {
                 lstGamesToHide.Insert(0, game);
                 lblNotFoundGamesToHide.Visible = lstGamesToHide.IsEmpty();
@@ -41,7 +41,7 @@ namespace RADB
             dgvGamesToHide.MouseWheel += dgvGamesToHide_MouseWheel;
             dgvGamesToHide.Scroll += dgvGamesToHide_Scroll;
 
-            BIND.lstDgvGames.Add(dgvGamesToHide);
+            Session.lstDgvGames.Add(dgvGamesToHide);
 
             await GamesToHide_Shown(null, null);
         }
@@ -77,16 +77,16 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var game = dgvGamesToHide.GetSelectedItem<Game>();
+            var game = dgvGamesToHide.GetCurrentRowObject<Game>();
 
             if (await game.DeleteFromHide())
             {
                 lstGamesToHide.Remove(game);
                 lblNotFoundGamesToHide.Visible = lstGamesToHide.IsEmpty();
 
-                if (BIND.Console.NotNull() && (BIND.Console.ID == game.ConsoleID || BIND.Console.ID == 0))
+                if (Session.Console.NotNull() && (Session.Console.ID == game.ConsoleID || Session.Console.ID == 0))
                 {
-                    BIND.AddGames(game);
+                    Session.AddGames(game);
                 }
             }
         }

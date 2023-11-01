@@ -68,13 +68,13 @@ namespace RADB
             this.mnuGamesToPlay = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mniRemoveGameToPlay = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlBottomOutput = new RADB.FlatPanelA();
-            this.pnlOutput = new System.Windows.Forms.Panel();
+            this.pnlOutput = new RADB.FlatPanelA();
             this.lblOutput = new System.Windows.Forms.Label();
             this.tabMain = new RADB.FlatTabControlA();
             this.tabConsoles = new System.Windows.Forms.TabPage();
             this.lblNotFoundConsoles = new RADB.FlatLabelA();
             this.picLoaderConsole = new RADB.FlatPictureBoxA();
-            this.pnlDownloadConsoles = new System.Windows.Forms.Panel();
+            this.pnlDownloadConsoles = new RADB.FlatPanelA();
             this.btnUpdateConsoles = new RADB.FlatButtonA();
             this.lblUpdateConsoles = new RADB.FlatLabelA();
             this.pgbConsoles = new RADB.FlatProgressBarA();
@@ -104,7 +104,7 @@ namespace RADB
             this.lblConsoleName = new RADB.FlatLabelB();
             this.txtSearchGames = new RADB.FlatTextBoxA();
             this.btnGameFilters = new RADB.FlatButtonA();
-            this.pnlDownloadGameList = new System.Windows.Forms.Panel();
+            this.pnlDownloadGameList = new RADB.FlatPanelA();
             this.btnUpdateGameList = new RADB.FlatButtonA();
             this.lblUpdateGameList = new RADB.FlatLabelA();
             this.pgbGameList = new RADB.FlatProgressBarA();
@@ -129,7 +129,7 @@ namespace RADB
             this.picInfoInGame = new RADB.FlatPictureBoxA();
             this.pnlInfoTitle = new RADB.FlatPanelA();
             this.picInfoTitle = new RADB.FlatPictureBoxA();
-            this.pnlInfoTop = new System.Windows.Forms.Panel();
+            this.pnlInfoTop = new RADB.FlatPanelA();
             this.lblInfoReleased1 = new RADB.FlatLabelA();
             this.lblInfoDeveloper1 = new RADB.FlatLabelA();
             this.lblInfoGenre1 = new RADB.FlatLabelA();
@@ -150,7 +150,7 @@ namespace RADB
             this.btnGamePage = new RADB.FlatButtonA();
             this.lblInfoAchievements = new RADB.FlatLabelA();
             this.lblInfoName = new RADB.FlatLabelA();
-            this.pnlDownloadInfo = new System.Windows.Forms.Panel();
+            this.pnlDownloadInfo = new RADB.FlatPanelA();
             this.btnUpdateInfo = new RADB.FlatButtonA();
             this.lblUpdateInfo = new RADB.FlatLabelA();
             this.pgbInfo = new RADB.FlatProgressBarA();
@@ -220,8 +220,9 @@ namespace RADB
             this.flatLabelA1 = new RADB.FlatLabelA();
             this.txtUsername = new RADB.FlatTextBoxA();
             this.tabAbout = new System.Windows.Forms.TabPage();
+            this.chkDarkMode = new RADB.FlatCheckBoxA();
             this.gpbOverlay = new RADB.FlatGroupBoxA();
-            this.pnlUserCheevos = new System.Windows.Forms.Panel();
+            this.pnlUserCheevos = new RADB.FlatPanelA();
             this.lblCheevos = new RADB.FlatLabelA();
             this.lblUserCheevos = new RADB.FlatLabelA();
             this.picUserCheevos = new RADB.FlatPictureBoxA();
@@ -234,6 +235,7 @@ namespace RADB
             this.picFBiDevIcon = new RADB.FlatPictureBoxA();
             this.lblAbTitle = new RADB.FlatLabelB();
             this.lblAbYear = new RADB.FlatLabelB();
+            this.chkDebugMode = new RADB.FlatCheckBoxA();
             this.mnuGames.SuspendLayout();
             this.mnuGamesToHide.SuspendLayout();
             this.mnuConsoles.SuspendLayout();
@@ -370,9 +372,10 @@ namespace RADB
             // 
             this.pnlBottomOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlBottomOutput.BackColor = System.Drawing.Color.Transparent;
+            this.pnlBottomOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.pnlBottomOutput.BackColorType = GNX.Desktop.PanelType.controlDark;
             this.pnlBottomOutput.Controls.Add(this.pnlOutput);
-            this.pnlBottomOutput.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pnlBottomOutput.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlBottomOutput.Location = new System.Drawing.Point(12, 592);
             this.pnlBottomOutput.Name = "pnlBottomOutput";
             this.pnlBottomOutput.Size = new System.Drawing.Size(913, 66);
@@ -385,6 +388,7 @@ namespace RADB
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlOutput.AutoScroll = true;
             this.pnlOutput.Controls.Add(this.lblOutput);
+            this.pnlOutput.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlOutput.Location = new System.Drawing.Point(2, 2);
             this.pnlOutput.Name = "pnlOutput";
             this.pnlOutput.Size = new System.Drawing.Size(902, 61);
@@ -426,11 +430,12 @@ namespace RADB
             // 
             // tabConsoles
             // 
-            this.tabConsoles.BackColor = System.Drawing.Color.Transparent;
+            this.tabConsoles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.tabConsoles.Controls.Add(this.lblNotFoundConsoles);
             this.tabConsoles.Controls.Add(this.picLoaderConsole);
             this.tabConsoles.Controls.Add(this.pnlDownloadConsoles);
             this.tabConsoles.Controls.Add(this.dgvConsoles);
+            this.tabConsoles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.tabConsoles.Location = new System.Drawing.Point(4, 25);
             this.tabConsoles.Name = "tabConsoles";
             this.tabConsoles.Padding = new System.Windows.Forms.Padding(3);
@@ -442,6 +447,7 @@ namespace RADB
             // 
             this.lblNotFoundConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNotFoundConsoles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblNotFoundConsoles.Location = new System.Drawing.Point(9, 162);
             this.lblNotFoundConsoles.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblNotFoundConsoles.Name = "lblNotFoundConsoles";
@@ -449,6 +455,7 @@ namespace RADB
             this.lblNotFoundConsoles.TabIndex = 3;
             this.lblNotFoundConsoles.Text = "No Consoles Found";
             this.lblNotFoundConsoles.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblNotFoundConsoles.Visible = false;
             // 
             // picLoaderConsole
             // 
@@ -462,7 +469,6 @@ namespace RADB
             this.picLoaderConsole.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picLoaderConsole.TabIndex = 4;
             this.picLoaderConsole.TabStop = false;
-            this.picLoaderConsole.Visible = false;
             // 
             // pnlDownloadConsoles
             // 
@@ -475,17 +481,15 @@ namespace RADB
             this.pnlDownloadConsoles.Location = new System.Drawing.Point(0, 0);
             this.pnlDownloadConsoles.Name = "pnlDownloadConsoles";
             this.pnlDownloadConsoles.Size = new System.Drawing.Size(902, 31);
-            this.pnlDownloadConsoles.TabIndex = 0;
+            this.pnlDownloadConsoles.TabIndex = 5;
             // 
             // btnUpdateConsoles
             // 
-            this.btnUpdateConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.btnUpdateConsoles.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.btnUpdateConsoles.FlatAppearance.BorderSize = 0;
             this.btnUpdateConsoles.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.btnUpdateConsoles.Location = new System.Drawing.Point(5, 3);
             this.btnUpdateConsoles.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
-            this.btnUpdateConsoles.MinimumSize = new System.Drawing.Size(24, 24);
             this.btnUpdateConsoles.Name = "btnUpdateConsoles";
             this.btnUpdateConsoles.Size = new System.Drawing.Size(144, 24);
             this.btnUpdateConsoles.TabIndex = 36;
@@ -493,6 +497,7 @@ namespace RADB
             // 
             // lblUpdateConsoles
             // 
+            this.lblUpdateConsoles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUpdateConsoles.Location = new System.Drawing.Point(155, 3);
             this.lblUpdateConsoles.Name = "lblUpdateConsoles";
             this.lblUpdateConsoles.Size = new System.Drawing.Size(110, 24);
@@ -512,6 +517,7 @@ namespace RADB
             // lblProgressConsoles
             // 
             this.lblProgressConsoles.AutoSize = true;
+            this.lblProgressConsoles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblProgressConsoles.Location = new System.Drawing.Point(421, 7);
             this.lblProgressConsoles.MinimumSize = new System.Drawing.Size(110, 0);
             this.lblProgressConsoles.Name = "lblProgressConsoles";
@@ -526,6 +532,16 @@ namespace RADB
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
             this.dgvConsoles.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvConsoles.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.dgvConsoles.ColorBackground = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.dgvConsoles.ColorColumnHeader = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.dgvConsoles.ColorColumnSelection = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.dgvConsoles.ColorFontRow = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dgvConsoles.ColorFontRowSelection = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dgvConsoles.ColorGrid = System.Drawing.Color.Silver;
+            this.dgvConsoles.ColorRow = System.Drawing.Color.White;
+            this.dgvConsoles.ColorRowAlternate = System.Drawing.Color.White;
+            this.dgvConsoles.ColorRowMouseHover = System.Drawing.Color.FromArgb(((int)(((byte)(189)))), ((int)(((byte)(237)))), ((int)(((byte)(255)))));
+            this.dgvConsoles.ColorRowSelection = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
@@ -603,13 +619,14 @@ namespace RADB
             // 
             // tabGames
             // 
-            this.tabGames.BackColor = System.Drawing.Color.Transparent;
+            this.tabGames.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.tabGames.Controls.Add(this.pnlFilters);
             this.tabGames.Controls.Add(this.lblNotFoundGameList);
             this.tabGames.Controls.Add(this.picLoaderGameList);
             this.tabGames.Controls.Add(this.pnlGamesConsoleName);
             this.tabGames.Controls.Add(this.pnlDownloadGameList);
             this.tabGames.Controls.Add(this.dgvGames);
+            this.tabGames.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.tabGames.Location = new System.Drawing.Point(4, 25);
             this.tabGames.Name = "tabGames";
             this.tabGames.Padding = new System.Windows.Forms.Padding(3);
@@ -620,7 +637,8 @@ namespace RADB
             // pnlFilters
             // 
             this.pnlFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlFilters.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.pnlFilters.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.pnlFilters.BackColorType = GNX.Desktop.PanelType.controlLight;
             this.pnlFilters.Controls.Add(this.chkOfficial);
             this.pnlFilters.Controls.Add(this.chkPrototype);
             this.pnlFilters.Controls.Add(this.chkUnlicensed);
@@ -631,7 +649,7 @@ namespace RADB
             this.pnlFilters.Controls.Add(this.chkSubset);
             this.pnlFilters.Controls.Add(this.chkTestKit);
             this.pnlFilters.Controls.Add(this.chkDemoted);
-            this.pnlFilters.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pnlFilters.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlFilters.Location = new System.Drawing.Point(780, 83);
             this.pnlFilters.Name = "pnlFilters";
             this.pnlFilters.Size = new System.Drawing.Size(100, 406);
@@ -640,148 +658,109 @@ namespace RADB
             // 
             // chkOfficial
             // 
-            this.chkOfficial.TextLegend = "Official";
             this.chkOfficial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkOfficial.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkOfficial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkOfficial.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkOfficial.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkOfficial.Checked = true;
             this.chkOfficial.Location = new System.Drawing.Point(18, 47);
             this.chkOfficial.Name = "chkOfficial";
             this.chkOfficial.Size = new System.Drawing.Size(64, 34);
             this.chkOfficial.TabIndex = 13;
+            this.chkOfficial.TextLegend = "Official";
             // 
             // chkPrototype
             // 
-            this.chkPrototype.TextLegend = "Prototype";
             this.chkPrototype.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkPrototype.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkPrototype.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkPrototype.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkPrototype.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkPrototype.Checked = true;
             this.chkPrototype.Location = new System.Drawing.Point(18, 87);
             this.chkPrototype.Name = "chkPrototype";
             this.chkPrototype.Size = new System.Drawing.Size(64, 34);
             this.chkPrototype.TabIndex = 12;
+            this.chkPrototype.TextLegend = "Prototype";
             // 
             // chkUnlicensed
             // 
-            this.chkUnlicensed.TextLegend = "Unlicensed";
             this.chkUnlicensed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkUnlicensed.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkUnlicensed.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkUnlicensed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkUnlicensed.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkUnlicensed.Checked = true;
             this.chkUnlicensed.Location = new System.Drawing.Point(18, 127);
             this.chkUnlicensed.Name = "chkUnlicensed";
             this.chkUnlicensed.Size = new System.Drawing.Size(64, 34);
             this.chkUnlicensed.TabIndex = 11;
+            this.chkUnlicensed.TextLegend = "Unlicensed";
             // 
             // chkDemo
             // 
-            this.chkDemo.TextLegend = "Demo";
             this.chkDemo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkDemo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkDemo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkDemo.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkDemo.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkDemo.Checked = true;
             this.chkDemo.Location = new System.Drawing.Point(18, 167);
             this.chkDemo.Name = "chkDemo";
             this.chkDemo.Size = new System.Drawing.Size(64, 34);
             this.chkDemo.TabIndex = 10;
+            this.chkDemo.TextLegend = "Demo";
             // 
             // chkWithoutAchievements
             // 
-            this.chkWithoutAchievements.TextLegend = "No Trophy";
             this.chkWithoutAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkWithoutAchievements.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkWithoutAchievements.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkWithoutAchievements.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkWithoutAchievements.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkWithoutAchievements.Checked = true;
             this.chkWithoutAchievements.Location = new System.Drawing.Point(18, 7);
             this.chkWithoutAchievements.Name = "chkWithoutAchievements";
             this.chkWithoutAchievements.Size = new System.Drawing.Size(64, 34);
             this.chkWithoutAchievements.TabIndex = 3;
+            this.chkWithoutAchievements.TextLegend = "No Trophy";
             // 
             // chkHack
             // 
-            this.chkHack.TextLegend = "Hack";
             this.chkHack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkHack.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkHack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkHack.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkHack.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkHack.Checked = true;
             this.chkHack.Location = new System.Drawing.Point(18, 207);
             this.chkHack.Name = "chkHack";
             this.chkHack.Size = new System.Drawing.Size(64, 34);
             this.chkHack.TabIndex = 9;
+            this.chkHack.TextLegend = "Hack";
             // 
             // chkHomebrew
             // 
-            this.chkHomebrew.TextLegend = "Homebrew";
             this.chkHomebrew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkHomebrew.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkHomebrew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkHomebrew.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkHomebrew.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkHomebrew.Checked = true;
             this.chkHomebrew.Location = new System.Drawing.Point(18, 247);
             this.chkHomebrew.Name = "chkHomebrew";
             this.chkHomebrew.Size = new System.Drawing.Size(64, 34);
             this.chkHomebrew.TabIndex = 8;
+            this.chkHomebrew.TextLegend = "Homebrew";
             // 
             // chkSubset
             // 
-            this.chkSubset.TextLegend = "Subset";
             this.chkSubset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkSubset.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkSubset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkSubset.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkSubset.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkSubset.Checked = true;
             this.chkSubset.Location = new System.Drawing.Point(18, 287);
             this.chkSubset.Name = "chkSubset";
             this.chkSubset.Size = new System.Drawing.Size(64, 34);
             this.chkSubset.TabIndex = 14;
+            this.chkSubset.TextLegend = "Subset";
             // 
             // chkTestKit
             // 
-            this.chkTestKit.TextLegend = "TestKit";
             this.chkTestKit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkTestKit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkTestKit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkTestKit.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkTestKit.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkTestKit.Checked = true;
             this.chkTestKit.Location = new System.Drawing.Point(18, 327);
             this.chkTestKit.Name = "chkTestKit";
             this.chkTestKit.Size = new System.Drawing.Size(64, 34);
             this.chkTestKit.TabIndex = 15;
+            this.chkTestKit.TextLegend = "TestKit";
             // 
             // chkDemoted
             // 
-            this.chkDemoted.TextLegend = "gRAveyard";
             this.chkDemoted.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkDemoted.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chkDemoted.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkDemoted.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
-            this.chkDemoted.BorderColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             this.chkDemoted.Checked = true;
             this.chkDemoted.Location = new System.Drawing.Point(18, 367);
             this.chkDemoted.Name = "chkDemoted";
             this.chkDemoted.Size = new System.Drawing.Size(64, 34);
             this.chkDemoted.TabIndex = 16;
+            this.chkDemoted.TextLegend = "gRAveyard";
             // 
             // lblNotFoundGameList
             // 
             this.lblNotFoundGameList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNotFoundGameList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblNotFoundGameList.Location = new System.Drawing.Point(9, 162);
             this.lblNotFoundGameList.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblNotFoundGameList.Name = "lblNotFoundGameList";
@@ -812,7 +791,7 @@ namespace RADB
             this.pnlGamesConsoleName.Controls.Add(this.lblConsoleName);
             this.pnlGamesConsoleName.Controls.Add(this.txtSearchGames);
             this.pnlGamesConsoleName.Controls.Add(this.btnGameFilters);
-            this.pnlGamesConsoleName.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pnlGamesConsoleName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlGamesConsoleName.Location = new System.Drawing.Point(6, 32);
             this.pnlGamesConsoleName.Name = "pnlGamesConsoleName";
             this.pnlGamesConsoleName.Size = new System.Drawing.Size(896, 44);
@@ -822,7 +801,8 @@ namespace RADB
             // 
             this.lblConsoleGamesTotal.AutoSize = true;
             this.lblConsoleGamesTotal.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConsoleGamesTotal.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.lblConsoleGamesTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
+            this.lblConsoleGamesTotal.ForeColorType = GNX.Desktop.LabelType.primary;
             this.lblConsoleGamesTotal.Location = new System.Drawing.Point(7, 24);
             this.lblConsoleGamesTotal.MinimumSize = new System.Drawing.Size(48, 14);
             this.lblConsoleGamesTotal.Name = "lblConsoleGamesTotal";
@@ -834,7 +814,8 @@ namespace RADB
             // 
             this.lblConsoleName.AutoSize = true;
             this.lblConsoleName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConsoleName.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.lblConsoleName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
+            this.lblConsoleName.ForeColorType = GNX.Desktop.LabelType.primary;
             this.lblConsoleName.Location = new System.Drawing.Point(3, 3);
             this.lblConsoleName.MinimumSize = new System.Drawing.Size(48, 22);
             this.lblConsoleName.Name = "lblConsoleName";
@@ -850,8 +831,6 @@ namespace RADB
             this.txtSearchGames.Location = new System.Drawing.Point(586, 5);
             this.txtSearchGames.Name = "txtSearchGames";
             this.txtSearchGames.previousText = "";
-            this.txtSearchGames.SelectionLength = 0;
-            this.txtSearchGames.SelectionStart = 0;
             this.txtSearchGames.Size = new System.Drawing.Size(182, 34);
             this.txtSearchGames.TabIndex = 2;
             // 
@@ -862,7 +841,6 @@ namespace RADB
             this.btnGameFilters.FlatAppearance.BorderSize = 0;
             this.btnGameFilters.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.btnGameFilters.Location = new System.Drawing.Point(774, 5);
-            this.btnGameFilters.MinimumSize = new System.Drawing.Size(24, 24);
             this.btnGameFilters.Name = "btnGameFilters";
             this.btnGameFilters.Size = new System.Drawing.Size(100, 34);
             this.btnGameFilters.TabIndex = 11;
@@ -879,17 +857,15 @@ namespace RADB
             this.pnlDownloadGameList.Location = new System.Drawing.Point(0, 0);
             this.pnlDownloadGameList.Name = "pnlDownloadGameList";
             this.pnlDownloadGameList.Size = new System.Drawing.Size(902, 31);
-            this.pnlDownloadGameList.TabIndex = 0;
+            this.pnlDownloadGameList.TabIndex = 11;
             // 
             // btnUpdateGameList
             // 
-            this.btnUpdateGameList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.btnUpdateGameList.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.btnUpdateGameList.FlatAppearance.BorderSize = 0;
             this.btnUpdateGameList.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.btnUpdateGameList.Location = new System.Drawing.Point(5, 3);
             this.btnUpdateGameList.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
-            this.btnUpdateGameList.MinimumSize = new System.Drawing.Size(24, 24);
             this.btnUpdateGameList.Name = "btnUpdateGameList";
             this.btnUpdateGameList.Size = new System.Drawing.Size(144, 24);
             this.btnUpdateGameList.TabIndex = 35;
@@ -897,6 +873,7 @@ namespace RADB
             // 
             // lblUpdateGameList
             // 
+            this.lblUpdateGameList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUpdateGameList.Location = new System.Drawing.Point(155, 3);
             this.lblUpdateGameList.Name = "lblUpdateGameList";
             this.lblUpdateGameList.Size = new System.Drawing.Size(110, 24);
@@ -916,6 +893,7 @@ namespace RADB
             // lblProgressGameList
             // 
             this.lblProgressGameList.AutoSize = true;
+            this.lblProgressGameList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblProgressGameList.Location = new System.Drawing.Point(421, 7);
             this.lblProgressGameList.MinimumSize = new System.Drawing.Size(110, 0);
             this.lblProgressGameList.Name = "lblProgressGameList";
@@ -930,6 +908,16 @@ namespace RADB
             dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
             this.dgvGames.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvGames.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.dgvGames.ColorBackground = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.dgvGames.ColorColumnHeader = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.dgvGames.ColorColumnSelection = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.dgvGames.ColorFontRow = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dgvGames.ColorFontRowSelection = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dgvGames.ColorGrid = System.Drawing.Color.Silver;
+            this.dgvGames.ColorRow = System.Drawing.Color.White;
+            this.dgvGames.ColorRowAlternate = System.Drawing.Color.White;
+            this.dgvGames.ColorRowMouseHover = System.Drawing.Color.FromArgb(((int)(((byte)(189)))), ((int)(((byte)(237)))), ((int)(((byte)(255)))));
+            this.dgvGames.ColorRowSelection = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
             dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
@@ -1043,10 +1031,11 @@ namespace RADB
             // 
             // tabGameInfo
             // 
-            this.tabGameInfo.BackColor = System.Drawing.Color.Transparent;
+            this.tabGameInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.tabGameInfo.Controls.Add(this.pnlInfoScroll);
             this.tabGameInfo.Controls.Add(this.lblInfoName);
             this.tabGameInfo.Controls.Add(this.pnlDownloadInfo);
+            this.tabGameInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.tabGameInfo.Location = new System.Drawing.Point(4, 25);
             this.tabGameInfo.Name = "tabGameInfo";
             this.tabGameInfo.Padding = new System.Windows.Forms.Padding(3);
@@ -1060,10 +1049,9 @@ namespace RADB
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlInfoScroll.AutoScroll = true;
-            this.pnlInfoScroll.BorderSize = 0;
             this.pnlInfoScroll.Controls.Add(this.gpbInfo);
             this.pnlInfoScroll.Controls.Add(this.gpbInfoAchievements);
-            this.pnlInfoScroll.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pnlInfoScroll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlInfoScroll.Location = new System.Drawing.Point(0, 62);
             this.pnlInfoScroll.Margin = new System.Windows.Forms.Padding(0);
             this.pnlInfoScroll.Name = "pnlInfoScroll";
@@ -1076,6 +1064,7 @@ namespace RADB
             this.gpbInfo.Controls.Add(this.pnlInfoBoxArt);
             this.gpbInfo.Controls.Add(this.pnlInfoImages);
             this.gpbInfo.Controls.Add(this.pnlInfoTop);
+            this.gpbInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.gpbInfo.Location = new System.Drawing.Point(6, 3);
             this.gpbInfo.Name = "gpbInfo";
             this.gpbInfo.Size = new System.Drawing.Size(876, 320);
@@ -1086,9 +1075,9 @@ namespace RADB
             // pnlInfoBoxArt
             // 
             this.pnlInfoBoxArt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.pnlInfoBoxArt.BorderSize = 0;
+            this.pnlInfoBoxArt.BackColorType = GNX.Desktop.PanelType.controlDark;
             this.pnlInfoBoxArt.Controls.Add(this.picInfoBoxArt);
-            this.pnlInfoBoxArt.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pnlInfoBoxArt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlInfoBoxArt.Location = new System.Drawing.Point(558, 19);
             this.pnlInfoBoxArt.Name = "pnlInfoBoxArt";
             this.pnlInfoBoxArt.Size = new System.Drawing.Size(312, 295);
@@ -1097,7 +1086,7 @@ namespace RADB
             // picInfoBoxArt
             // 
             this.picInfoBoxArt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picInfoBoxArt.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.picInfoBoxArt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.picInfoBoxArt.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picInfoBoxArt.Location = new System.Drawing.Point(6, 6);
             this.picInfoBoxArt.Margin = new System.Windows.Forms.Padding(6);
@@ -1111,10 +1100,10 @@ namespace RADB
             // pnlInfoImages
             // 
             this.pnlInfoImages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.pnlInfoImages.BorderSize = 0;
+            this.pnlInfoImages.BackColorType = GNX.Desktop.PanelType.controlDark;
             this.pnlInfoImages.Controls.Add(this.pnlInfoInGame);
             this.pnlInfoImages.Controls.Add(this.pnlInfoTitle);
-            this.pnlInfoImages.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pnlInfoImages.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlInfoImages.Location = new System.Drawing.Point(6, 152);
             this.pnlInfoImages.MinimumSize = new System.Drawing.Size(538, 156);
             this.pnlInfoImages.Name = "pnlInfoImages";
@@ -1123,9 +1112,10 @@ namespace RADB
             // 
             // pnlInfoInGame
             // 
-            this.pnlInfoInGame.BorderSize = 0;
+            this.pnlInfoInGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.pnlInfoInGame.BackColorType = GNX.Desktop.PanelType.controlLight;
             this.pnlInfoInGame.Controls.Add(this.picInfoInGame);
-            this.pnlInfoInGame.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pnlInfoInGame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlInfoInGame.Location = new System.Drawing.Point(280, 6);
             this.pnlInfoInGame.Name = "pnlInfoInGame";
             this.pnlInfoInGame.Size = new System.Drawing.Size(260, 150);
@@ -1133,7 +1123,6 @@ namespace RADB
             // 
             // picInfoInGame
             // 
-            this.picInfoInGame.BackColor = System.Drawing.Color.PaleTurquoise;
             this.picInfoInGame.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picInfoInGame.Location = new System.Drawing.Point(0, 0);
             this.picInfoInGame.Margin = new System.Windows.Forms.Padding(6);
@@ -1146,9 +1135,10 @@ namespace RADB
             // 
             // pnlInfoTitle
             // 
-            this.pnlInfoTitle.BorderSize = 0;
+            this.pnlInfoTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.pnlInfoTitle.BackColorType = GNX.Desktop.PanelType.controlLight;
             this.pnlInfoTitle.Controls.Add(this.picInfoTitle);
-            this.pnlInfoTitle.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pnlInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlInfoTitle.Location = new System.Drawing.Point(6, 6);
             this.pnlInfoTitle.Name = "pnlInfoTitle";
             this.pnlInfoTitle.Size = new System.Drawing.Size(260, 150);
@@ -1156,7 +1146,6 @@ namespace RADB
             // 
             // picInfoTitle
             // 
-            this.picInfoTitle.BackColor = System.Drawing.Color.LightGray;
             this.picInfoTitle.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picInfoTitle.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picInfoTitle.Location = new System.Drawing.Point(0, 0);
@@ -1189,6 +1178,7 @@ namespace RADB
             // lblInfoReleased1
             // 
             this.lblInfoReleased1.AutoSize = true;
+            this.lblInfoReleased1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInfoReleased1.Location = new System.Drawing.Point(190, 76);
             this.lblInfoReleased1.Margin = new System.Windows.Forms.Padding(4);
             this.lblInfoReleased1.MinimumSize = new System.Drawing.Size(48, 16);
@@ -1200,6 +1190,7 @@ namespace RADB
             // lblInfoDeveloper1
             // 
             this.lblInfoDeveloper1.AutoSize = true;
+            this.lblInfoDeveloper1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInfoDeveloper1.Location = new System.Drawing.Point(190, 4);
             this.lblInfoDeveloper1.Margin = new System.Windows.Forms.Padding(4);
             this.lblInfoDeveloper1.MinimumSize = new System.Drawing.Size(48, 16);
@@ -1211,6 +1202,7 @@ namespace RADB
             // lblInfoGenre1
             // 
             this.lblInfoGenre1.AutoSize = true;
+            this.lblInfoGenre1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInfoGenre1.Location = new System.Drawing.Point(190, 52);
             this.lblInfoGenre1.Margin = new System.Windows.Forms.Padding(4);
             this.lblInfoGenre1.MinimumSize = new System.Drawing.Size(48, 16);
@@ -1222,6 +1214,7 @@ namespace RADB
             // lblInfoPublisher1
             // 
             this.lblInfoPublisher1.AutoSize = true;
+            this.lblInfoPublisher1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInfoPublisher1.Location = new System.Drawing.Point(190, 28);
             this.lblInfoPublisher1.Margin = new System.Windows.Forms.Padding(4);
             this.lblInfoPublisher1.MinimumSize = new System.Drawing.Size(48, 16);
@@ -1232,6 +1225,7 @@ namespace RADB
             // 
             // picInfoIcon
             // 
+            this.picInfoIcon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.picInfoIcon.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picInfoIcon.Location = new System.Drawing.Point(0, 0);
             this.picInfoIcon.Margin = new System.Windows.Forms.Padding(0);
@@ -1244,6 +1238,7 @@ namespace RADB
             // lblInfoReleased0
             // 
             this.lblInfoReleased0.AutoSize = true;
+            this.lblInfoReleased0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInfoReleased0.Location = new System.Drawing.Point(112, 76);
             this.lblInfoReleased0.Margin = new System.Windows.Forms.Padding(4);
             this.lblInfoReleased0.MinimumSize = new System.Drawing.Size(48, 16);
@@ -1255,6 +1250,7 @@ namespace RADB
             // lblInfoDeveloper0
             // 
             this.lblInfoDeveloper0.AutoSize = true;
+            this.lblInfoDeveloper0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInfoDeveloper0.Location = new System.Drawing.Point(105, 4);
             this.lblInfoDeveloper0.Margin = new System.Windows.Forms.Padding(4);
             this.lblInfoDeveloper0.MinimumSize = new System.Drawing.Size(48, 16);
@@ -1266,6 +1262,7 @@ namespace RADB
             // lblInfoGenre0
             // 
             this.lblInfoGenre0.AutoSize = true;
+            this.lblInfoGenre0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInfoGenre0.Location = new System.Drawing.Point(127, 52);
             this.lblInfoGenre0.Margin = new System.Windows.Forms.Padding(4);
             this.lblInfoGenre0.MinimumSize = new System.Drawing.Size(48, 16);
@@ -1277,6 +1274,7 @@ namespace RADB
             // lblInfoPublisher0
             // 
             this.lblInfoPublisher0.AutoSize = true;
+            this.lblInfoPublisher0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInfoPublisher0.Location = new System.Drawing.Point(109, 28);
             this.lblInfoPublisher0.Margin = new System.Windows.Forms.Padding(4);
             this.lblInfoPublisher0.MinimumSize = new System.Drawing.Size(48, 16);
@@ -1292,6 +1290,7 @@ namespace RADB
             this.gpbInfoAchievements.Controls.Add(this.dgvAchievements);
             this.gpbInfoAchievements.Controls.Add(this.btnGamePage);
             this.gpbInfoAchievements.Controls.Add(this.lblInfoAchievements);
+            this.gpbInfoAchievements.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.gpbInfoAchievements.Location = new System.Drawing.Point(6, 329);
             this.gpbInfoAchievements.MinimumSize = new System.Drawing.Size(557, 54);
             this.gpbInfoAchievements.Name = "gpbInfoAchievements";
@@ -1302,23 +1301,21 @@ namespace RADB
             // 
             // txtSearchAchiev
             // 
+            this.txtSearchAchiev.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.txtSearchAchiev.BackgroundColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.txtSearchAchiev.LabelText = "Search Trophy";
             this.txtSearchAchiev.Location = new System.Drawing.Point(688, 16);
             this.txtSearchAchiev.Name = "txtSearchAchiev";
             this.txtSearchAchiev.previousText = "";
-            this.txtSearchAchiev.SelectionLength = 0;
-            this.txtSearchAchiev.SelectionStart = 0;
             this.txtSearchAchiev.Size = new System.Drawing.Size(182, 34);
             this.txtSearchAchiev.TabIndex = 37;
             // 
             // btnHashes
             // 
-            this.btnHashes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.btnHashes.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.btnHashes.FlatAppearance.BorderSize = 0;
             this.btnHashes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.btnHashes.Location = new System.Drawing.Point(112, 16);
-            this.btnHashes.MinimumSize = new System.Drawing.Size(24, 24);
             this.btnHashes.Name = "btnHashes";
             this.btnHashes.Size = new System.Drawing.Size(100, 34);
             this.btnHashes.TabIndex = 36;
@@ -1331,6 +1328,16 @@ namespace RADB
             this.dgvAchievements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvAchievements.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.dgvAchievements.ColorBackground = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.dgvAchievements.ColorColumnHeader = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.dgvAchievements.ColorColumnSelection = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.dgvAchievements.ColorFontRow = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dgvAchievements.ColorFontRowSelection = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dgvAchievements.ColorGrid = System.Drawing.Color.Silver;
+            this.dgvAchievements.ColorRow = System.Drawing.Color.White;
+            this.dgvAchievements.ColorRowAlternate = System.Drawing.Color.White;
+            this.dgvAchievements.ColorRowMouseHover = System.Drawing.Color.FromArgb(((int)(((byte)(189)))), ((int)(((byte)(237)))), ((int)(((byte)(255)))));
+            this.dgvAchievements.ColorRowSelection = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
             dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle10.ForeColor = System.Drawing.Color.White;
@@ -1411,12 +1418,10 @@ namespace RADB
             // 
             // btnGamePage
             // 
-            this.btnGamePage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.btnGamePage.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.btnGamePage.FlatAppearance.BorderSize = 0;
             this.btnGamePage.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.btnGamePage.Location = new System.Drawing.Point(6, 16);
-            this.btnGamePage.MinimumSize = new System.Drawing.Size(24, 24);
             this.btnGamePage.Name = "btnGamePage";
             this.btnGamePage.Size = new System.Drawing.Size(100, 34);
             this.btnGamePage.TabIndex = 6;
@@ -1426,6 +1431,7 @@ namespace RADB
             // 
             this.lblInfoAchievements.AutoSize = true;
             this.lblInfoAchievements.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInfoAchievements.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInfoAchievements.Location = new System.Drawing.Point(218, 23);
             this.lblInfoAchievements.Name = "lblInfoAchievements";
             this.lblInfoAchievements.Size = new System.Drawing.Size(146, 24);
@@ -1437,6 +1443,7 @@ namespace RADB
             // 
             this.lblInfoName.AutoSize = true;
             this.lblInfoName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInfoName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblInfoName.Location = new System.Drawing.Point(6, 34);
             this.lblInfoName.Name = "lblInfoName";
             this.lblInfoName.Size = new System.Drawing.Size(101, 25);
@@ -1458,13 +1465,11 @@ namespace RADB
             // 
             // btnUpdateInfo
             // 
-            this.btnUpdateInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.btnUpdateInfo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.btnUpdateInfo.FlatAppearance.BorderSize = 0;
             this.btnUpdateInfo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.btnUpdateInfo.Location = new System.Drawing.Point(5, 3);
             this.btnUpdateInfo.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
-            this.btnUpdateInfo.MinimumSize = new System.Drawing.Size(24, 24);
             this.btnUpdateInfo.Name = "btnUpdateInfo";
             this.btnUpdateInfo.Size = new System.Drawing.Size(144, 24);
             this.btnUpdateInfo.TabIndex = 35;
@@ -1472,6 +1477,7 @@ namespace RADB
             // 
             // lblUpdateInfo
             // 
+            this.lblUpdateInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUpdateInfo.Location = new System.Drawing.Point(155, 3);
             this.lblUpdateInfo.Name = "lblUpdateInfo";
             this.lblUpdateInfo.Size = new System.Drawing.Size(110, 24);
@@ -1491,6 +1497,7 @@ namespace RADB
             // lblProgressInfo
             // 
             this.lblProgressInfo.AutoSize = true;
+            this.lblProgressInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblProgressInfo.Location = new System.Drawing.Point(421, 7);
             this.lblProgressInfo.MinimumSize = new System.Drawing.Size(110, 0);
             this.lblProgressInfo.Name = "lblProgressInfo";
@@ -1500,9 +1507,10 @@ namespace RADB
             // 
             // tabGamesToPlay
             // 
-            this.tabGamesToPlay.BackColor = System.Drawing.Color.Transparent;
+            this.tabGamesToPlay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.tabGamesToPlay.Controls.Add(this.lblNotFoundGamesToPlay);
             this.tabGamesToPlay.Controls.Add(this.dgvGamesToPlay);
+            this.tabGamesToPlay.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.tabGamesToPlay.Location = new System.Drawing.Point(4, 25);
             this.tabGamesToPlay.Name = "tabGamesToPlay";
             this.tabGamesToPlay.Size = new System.Drawing.Size(908, 545);
@@ -1513,6 +1521,7 @@ namespace RADB
             // 
             this.lblNotFoundGamesToPlay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNotFoundGamesToPlay.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblNotFoundGamesToPlay.Location = new System.Drawing.Point(9, 162);
             this.lblNotFoundGamesToPlay.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblNotFoundGamesToPlay.Name = "lblNotFoundGamesToPlay";
@@ -1529,6 +1538,16 @@ namespace RADB
             dataGridViewCellStyle17.BackColor = System.Drawing.Color.White;
             this.dgvGamesToPlay.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
             this.dgvGamesToPlay.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.dgvGamesToPlay.ColorBackground = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.dgvGamesToPlay.ColorColumnHeader = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.dgvGamesToPlay.ColorColumnSelection = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.dgvGamesToPlay.ColorFontRow = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dgvGamesToPlay.ColorFontRowSelection = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dgvGamesToPlay.ColorGrid = System.Drawing.Color.Silver;
+            this.dgvGamesToPlay.ColorRow = System.Drawing.Color.White;
+            this.dgvGamesToPlay.ColorRowAlternate = System.Drawing.Color.White;
+            this.dgvGamesToPlay.ColorRowMouseHover = System.Drawing.Color.FromArgb(((int)(((byte)(189)))), ((int)(((byte)(237)))), ((int)(((byte)(255)))));
+            this.dgvGamesToPlay.ColorRowSelection = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
             dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle18.ForeColor = System.Drawing.Color.White;
@@ -1643,9 +1662,10 @@ namespace RADB
             // 
             // tabGamesToHide
             // 
-            this.tabGamesToHide.BackColor = System.Drawing.Color.Transparent;
+            this.tabGamesToHide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.tabGamesToHide.Controls.Add(this.lblNotFoundGamesToHide);
             this.tabGamesToHide.Controls.Add(this.dgvGamesToHide);
+            this.tabGamesToHide.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.tabGamesToHide.Location = new System.Drawing.Point(4, 25);
             this.tabGamesToHide.Name = "tabGamesToHide";
             this.tabGamesToHide.Size = new System.Drawing.Size(908, 545);
@@ -1656,6 +1676,7 @@ namespace RADB
             // 
             this.lblNotFoundGamesToHide.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNotFoundGamesToHide.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblNotFoundGamesToHide.Location = new System.Drawing.Point(9, 162);
             this.lblNotFoundGamesToHide.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblNotFoundGamesToHide.Name = "lblNotFoundGamesToHide";
@@ -1672,6 +1693,16 @@ namespace RADB
             dataGridViewCellStyle21.BackColor = System.Drawing.Color.White;
             this.dgvGamesToHide.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
             this.dgvGamesToHide.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.dgvGamesToHide.ColorBackground = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.dgvGamesToHide.ColorColumnHeader = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.dgvGamesToHide.ColorColumnSelection = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.dgvGamesToHide.ColorFontRow = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dgvGamesToHide.ColorFontRowSelection = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dgvGamesToHide.ColorGrid = System.Drawing.Color.Silver;
+            this.dgvGamesToHide.ColorRow = System.Drawing.Color.White;
+            this.dgvGamesToHide.ColorRowAlternate = System.Drawing.Color.White;
+            this.dgvGamesToHide.ColorRowMouseHover = System.Drawing.Color.FromArgb(((int)(((byte)(189)))), ((int)(((byte)(237)))), ((int)(((byte)(255)))));
+            this.dgvGamesToHide.ColorRowSelection = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(226)))), ((int)(((byte)(244)))));
             dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
             dataGridViewCellStyle22.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle22.ForeColor = System.Drawing.Color.White;
@@ -1785,7 +1816,7 @@ namespace RADB
             // 
             // tabUserInfo
             // 
-            this.tabUserInfo.BackColor = System.Drawing.Color.Transparent;
+            this.tabUserInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.tabUserInfo.Controls.Add(this.btnUserPage);
             this.tabUserInfo.Controls.Add(this.pnlAwardFloating);
             this.tabUserInfo.Controls.Add(this.gpbAwards);
@@ -1796,6 +1827,7 @@ namespace RADB
             this.tabUserInfo.Controls.Add(this.picUserName);
             this.tabUserInfo.Controls.Add(this.gpbUserInfo);
             this.tabUserInfo.Controls.Add(this.txtUsername);
+            this.tabUserInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.tabUserInfo.Location = new System.Drawing.Point(4, 25);
             this.tabUserInfo.Name = "tabUserInfo";
             this.tabUserInfo.Padding = new System.Windows.Forms.Padding(3);
@@ -1805,13 +1837,11 @@ namespace RADB
             // 
             // btnUserPage
             // 
-            this.btnUserPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.btnUserPage.Enabled = false;
             this.btnUserPage.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.btnUserPage.FlatAppearance.BorderSize = 0;
             this.btnUserPage.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.btnUserPage.Location = new System.Drawing.Point(78, 46);
-            this.btnUserPage.MinimumSize = new System.Drawing.Size(24, 24);
             this.btnUserPage.Name = "btnUserPage";
             this.btnUserPage.Size = new System.Drawing.Size(74, 24);
             this.btnUserPage.TabIndex = 45;
@@ -1820,10 +1850,11 @@ namespace RADB
             // pnlAwardFloating
             // 
             this.pnlAwardFloating.AutoSize = true;
-            this.pnlAwardFloating.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pnlAwardFloating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.pnlAwardFloating.BackColorType = GNX.Desktop.PanelType.controlLight;
             this.pnlAwardFloating.Controls.Add(this.picAwardFloating);
             this.pnlAwardFloating.Controls.Add(this.tblAwardFloating);
-            this.pnlAwardFloating.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.pnlAwardFloating.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlAwardFloating.Location = new System.Drawing.Point(410, 4);
             this.pnlAwardFloating.Name = "pnlAwardFloating";
             this.pnlAwardFloating.Padding = new System.Windows.Forms.Padding(1);
@@ -1833,6 +1864,7 @@ namespace RADB
             // 
             // picAwardFloating
             // 
+            this.picAwardFloating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.picAwardFloating.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picAwardFloating.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picAwardFloating.Location = new System.Drawing.Point(1, 1);
@@ -1866,6 +1898,7 @@ namespace RADB
             this.lblAwardFloatingTitle.AutoSize = true;
             this.lblAwardFloatingTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblAwardFloatingTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAwardFloatingTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblAwardFloatingTitle.Location = new System.Drawing.Point(1, 1);
             this.lblAwardFloatingTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblAwardFloatingTitle.MaximumSize = new System.Drawing.Size(250, 0);
@@ -1880,6 +1913,7 @@ namespace RADB
             // 
             this.lblAwardFloatingDesc.AutoSize = true;
             this.lblAwardFloatingDesc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblAwardFloatingDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblAwardFloatingDesc.Location = new System.Drawing.Point(1, 17);
             this.lblAwardFloatingDesc.Margin = new System.Windows.Forms.Padding(0);
             this.lblAwardFloatingDesc.MaximumSize = new System.Drawing.Size(250, 0);
@@ -1922,7 +1956,7 @@ namespace RADB
             // 
             this.lsvGameAwards.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.lsvGameAwards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.lsvGameAwards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.lsvGameAwards.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lsvGameAwards.Location = new System.Drawing.Point(1, 17);
             this.lsvGameAwards.Name = "lsvGameAwards";
@@ -1937,6 +1971,7 @@ namespace RADB
             // 
             this.lblUserStatus.AutoSize = true;
             this.lblUserStatus.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserStatus.Location = new System.Drawing.Point(235, 7);
             this.lblUserStatus.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserStatus.MinimumSize = new System.Drawing.Size(48, 16);
@@ -1949,6 +1984,7 @@ namespace RADB
             // 
             this.lblUserMotto.AutoSize = true;
             this.lblUserMotto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserMotto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserMotto.Location = new System.Drawing.Point(235, 58);
             this.lblUserMotto.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserMotto.MinimumSize = new System.Drawing.Size(48, 16);
@@ -1961,6 +1997,7 @@ namespace RADB
             // 
             this.lblUserName.AutoSize = true;
             this.lblUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserName.Location = new System.Drawing.Point(234, 29);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(100, 25);
@@ -1969,12 +2006,10 @@ namespace RADB
             // 
             // btnGetUserInfo
             // 
-            this.btnGetUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.btnGetUserInfo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.btnGetUserInfo.FlatAppearance.BorderSize = 0;
             this.btnGetUserInfo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.btnGetUserInfo.Location = new System.Drawing.Point(6, 46);
-            this.btnGetUserInfo.MinimumSize = new System.Drawing.Size(24, 24);
             this.btnGetUserInfo.Name = "btnGetUserInfo";
             this.btnGetUserInfo.Size = new System.Drawing.Size(66, 24);
             this.btnGetUserInfo.TabIndex = 32;
@@ -2019,6 +2054,7 @@ namespace RADB
             this.gpbUserInfo.Controls.Add(this.flatLabelA3);
             this.gpbUserInfo.Controls.Add(this.lblUserMemberSince);
             this.gpbUserInfo.Controls.Add(this.flatLabelA1);
+            this.gpbUserInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.gpbUserInfo.Location = new System.Drawing.Point(6, 76);
             this.gpbUserInfo.Name = "gpbUserInfo";
             this.gpbUserInfo.Size = new System.Drawing.Size(318, 463);
@@ -2048,6 +2084,7 @@ namespace RADB
             // 
             // picUserLastGame
             // 
+            this.picUserLastGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.picUserLastGame.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picUserLastGame.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picUserLastGame.Location = new System.Drawing.Point(9, 324);
@@ -2061,6 +2098,7 @@ namespace RADB
             // lblUserLastConsole
             // 
             this.lblUserLastConsole.AutoSize = true;
+            this.lblUserLastConsole.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserLastConsole.Location = new System.Drawing.Point(134, 299);
             this.lblUserLastConsole.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserLastConsole.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2073,6 +2111,7 @@ namespace RADB
             // 
             this.lblUserRichPresence.AutoSize = true;
             this.lblUserRichPresence.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserRichPresence.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserRichPresence.Location = new System.Drawing.Point(67, 347);
             this.lblUserRichPresence.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserRichPresence.MaximumSize = new System.Drawing.Size(244, 0);
@@ -2086,6 +2125,7 @@ namespace RADB
             // flatLabelA2
             // 
             this.flatLabelA2.AutoSize = true;
+            this.flatLabelA2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.flatLabelA2.Location = new System.Drawing.Point(55, 299);
             this.flatLabelA2.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA2.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2098,6 +2138,7 @@ namespace RADB
             // 
             this.lblUserLastGame.AutoSize = true;
             this.lblUserLastGame.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserLastGame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserLastGame.Location = new System.Drawing.Point(67, 323);
             this.lblUserLastGame.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserLastGame.MaximumSize = new System.Drawing.Size(244, 0);
@@ -2112,6 +2153,7 @@ namespace RADB
             // 
             this.lblUserCompletion.AutoSize = true;
             this.lblUserCompletion.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserCompletion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserCompletion.Location = new System.Drawing.Point(134, 236);
             this.lblUserCompletion.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserCompletion.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2123,6 +2165,7 @@ namespace RADB
             // lblUserSoftRank
             // 
             this.lblUserSoftRank.AutoSize = true;
+            this.lblUserSoftRank.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserSoftRank.Location = new System.Drawing.Point(134, 212);
             this.lblUserSoftRank.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserSoftRank.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2134,6 +2177,7 @@ namespace RADB
             // lblUserSoftPoints
             // 
             this.lblUserSoftPoints.AutoSize = true;
+            this.lblUserSoftPoints.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserSoftPoints.Location = new System.Drawing.Point(134, 188);
             this.lblUserSoftPoints.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserSoftPoints.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2146,6 +2190,7 @@ namespace RADB
             // 
             this.lblUserRetroRatio.AutoSize = true;
             this.lblUserRetroRatio.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserRetroRatio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserRetroRatio.Location = new System.Drawing.Point(134, 152);
             this.lblUserRetroRatio.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserRetroRatio.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2157,6 +2202,7 @@ namespace RADB
             // lblUserHCPoints
             // 
             this.lblUserHCPoints.AutoSize = true;
+            this.lblUserHCPoints.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserHCPoints.Location = new System.Drawing.Point(134, 104);
             this.lblUserHCPoints.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserHCPoints.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2169,6 +2215,7 @@ namespace RADB
             // 
             this.lblUserAccountType.AutoSize = true;
             this.lblUserAccountType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserAccountType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserAccountType.Location = new System.Drawing.Point(134, 20);
             this.lblUserAccountType.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserAccountType.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2181,6 +2228,7 @@ namespace RADB
             // 
             this.lblUserLastActivity.AutoSize = true;
             this.lblUserLastActivity.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserLastActivity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserLastActivity.Location = new System.Drawing.Point(134, 68);
             this.lblUserLastActivity.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserLastActivity.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2192,6 +2240,7 @@ namespace RADB
             // flatLabelA10
             // 
             this.flatLabelA10.AutoSize = true;
+            this.flatLabelA10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.flatLabelA10.Location = new System.Drawing.Point(7, 236);
             this.flatLabelA10.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA10.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2203,6 +2252,7 @@ namespace RADB
             // flatLabelA9
             // 
             this.flatLabelA9.AutoSize = true;
+            this.flatLabelA9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.flatLabelA9.Location = new System.Drawing.Point(58, 152);
             this.flatLabelA9.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA9.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2214,6 +2264,7 @@ namespace RADB
             // flatLabelA8
             // 
             this.flatLabelA8.AutoSize = true;
+            this.flatLabelA8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.flatLabelA8.Location = new System.Drawing.Point(68, 128);
             this.flatLabelA8.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA8.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2225,6 +2276,7 @@ namespace RADB
             // flatLabelA7
             // 
             this.flatLabelA7.AutoSize = true;
+            this.flatLabelA7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.flatLabelA7.Location = new System.Drawing.Point(31, 104);
             this.flatLabelA7.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA7.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2236,6 +2288,7 @@ namespace RADB
             // flatLabelA6
             // 
             this.flatLabelA6.AutoSize = true;
+            this.flatLabelA6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.flatLabelA6.Location = new System.Drawing.Point(43, 212);
             this.flatLabelA6.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA6.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2247,6 +2300,7 @@ namespace RADB
             // flatLabelA5
             // 
             this.flatLabelA5.AutoSize = true;
+            this.flatLabelA5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.flatLabelA5.Location = new System.Drawing.Point(36, 188);
             this.flatLabelA5.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA5.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2258,6 +2312,7 @@ namespace RADB
             // flatLabelA4
             // 
             this.flatLabelA4.AutoSize = true;
+            this.flatLabelA4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.flatLabelA4.Location = new System.Drawing.Point(42, 20);
             this.flatLabelA4.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA4.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2269,6 +2324,7 @@ namespace RADB
             // flatLabelA3
             // 
             this.flatLabelA3.AutoSize = true;
+            this.flatLabelA3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.flatLabelA3.Location = new System.Drawing.Point(52, 68);
             this.flatLabelA3.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA3.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2281,6 +2337,7 @@ namespace RADB
             // 
             this.lblUserMemberSince.AutoSize = true;
             this.lblUserMemberSince.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserMemberSince.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblUserMemberSince.Location = new System.Drawing.Point(134, 44);
             this.lblUserMemberSince.Margin = new System.Windows.Forms.Padding(4);
             this.lblUserMemberSince.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2292,6 +2349,7 @@ namespace RADB
             // flatLabelA1
             // 
             this.flatLabelA1.AutoSize = true;
+            this.flatLabelA1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.flatLabelA1.Location = new System.Drawing.Point(40, 44);
             this.flatLabelA1.Margin = new System.Windows.Forms.Padding(4);
             this.flatLabelA1.MinimumSize = new System.Drawing.Size(48, 16);
@@ -2307,14 +2365,14 @@ namespace RADB
             this.txtUsername.Location = new System.Drawing.Point(6, 6);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.previousText = "";
-            this.txtUsername.SelectionLength = 0;
-            this.txtUsername.SelectionStart = 0;
             this.txtUsername.Size = new System.Drawing.Size(146, 34);
             this.txtUsername.TabIndex = 30;
             // 
             // tabAbout
             // 
-            this.tabAbout.BackColor = System.Drawing.Color.Transparent;
+            this.tabAbout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.tabAbout.Controls.Add(this.chkDebugMode);
+            this.tabAbout.Controls.Add(this.chkDarkMode);
             this.tabAbout.Controls.Add(this.gpbOverlay);
             this.tabAbout.Controls.Add(this.lblSystemReLogin);
             this.tabAbout.Controls.Add(this.btnRALogin);
@@ -2322,21 +2380,30 @@ namespace RADB
             this.tabAbout.Controls.Add(this.picFBiDevIcon);
             this.tabAbout.Controls.Add(this.lblAbTitle);
             this.tabAbout.Controls.Add(this.lblAbYear);
+            this.tabAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.tabAbout.Location = new System.Drawing.Point(4, 25);
             this.tabAbout.Name = "tabAbout";
             this.tabAbout.Size = new System.Drawing.Size(908, 545);
             this.tabAbout.TabIndex = 4;
             this.tabAbout.Text = "About";
             // 
+            // chkDarkMode
+            // 
+            this.chkDarkMode.Location = new System.Drawing.Point(132, 3);
+            this.chkDarkMode.Name = "chkDarkMode";
+            this.chkDarkMode.Size = new System.Drawing.Size(100, 34);
+            this.chkDarkMode.TabIndex = 37;
+            this.chkDarkMode.TextLegend = "DarkMode";
+            // 
             // gpbOverlay
             // 
-            this.gpbOverlay.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.gpbOverlay.Controls.Add(this.pnlUserCheevos);
             this.gpbOverlay.Controls.Add(this.lblCheevoLoopUpdate);
             this.gpbOverlay.Controls.Add(this.chkUserCheevos);
             this.gpbOverlay.Controls.Add(this.btnUserCheevos);
             this.gpbOverlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gpbOverlay.Location = new System.Drawing.Point(6, 125);
+            this.gpbOverlay.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.gpbOverlay.Location = new System.Drawing.Point(3, 415);
             this.gpbOverlay.Name = "gpbOverlay";
             this.gpbOverlay.Size = new System.Drawing.Size(237, 127);
             this.gpbOverlay.TabIndex = 36;
@@ -2346,11 +2413,13 @@ namespace RADB
             // pnlUserCheevos
             // 
             this.pnlUserCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pnlUserCheevos.BackColor = System.Drawing.Color.Black;
+            this.pnlUserCheevos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.pnlUserCheevos.BackColorType = GNX.Desktop.PanelType.controlDark;
             this.pnlUserCheevos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlUserCheevos.Controls.Add(this.lblCheevos);
             this.pnlUserCheevos.Controls.Add(this.lblUserCheevos);
             this.pnlUserCheevos.Controls.Add(this.picUserCheevos);
+            this.pnlUserCheevos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlUserCheevos.Location = new System.Drawing.Point(8, 19);
             this.pnlUserCheevos.Name = "pnlUserCheevos";
             this.pnlUserCheevos.Size = new System.Drawing.Size(221, 72);
@@ -2359,7 +2428,6 @@ namespace RADB
             // lblCheevos
             // 
             this.lblCheevos.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCheevos.ForeColor = System.Drawing.Color.White;
             this.lblCheevos.Location = new System.Drawing.Point(60, 45);
             this.lblCheevos.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
             this.lblCheevos.Name = "lblCheevos";
@@ -2371,7 +2439,6 @@ namespace RADB
             // lblUserCheevos
             // 
             this.lblUserCheevos.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserCheevos.ForeColor = System.Drawing.Color.White;
             this.lblUserCheevos.Location = new System.Drawing.Point(60, 6);
             this.lblUserCheevos.Name = "lblUserCheevos";
             this.lblUserCheevos.Size = new System.Drawing.Size(156, 48);
@@ -2417,7 +2484,6 @@ namespace RADB
             this.btnUserCheevos.FlatAppearance.BorderSize = 0;
             this.btnUserCheevos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.btnUserCheevos.Location = new System.Drawing.Point(8, 97);
-            this.btnUserCheevos.MinimumSize = new System.Drawing.Size(24, 24);
             this.btnUserCheevos.Name = "btnUserCheevos";
             this.btnUserCheevos.Size = new System.Drawing.Size(146, 24);
             this.btnUserCheevos.TabIndex = 28;
@@ -2434,12 +2500,10 @@ namespace RADB
             // 
             // btnRALogin
             // 
-            this.btnRALogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRALogin.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.btnRALogin.FlatAppearance.BorderSize = 0;
             this.btnRALogin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.btnRALogin.Location = new System.Drawing.Point(3, 3);
-            this.btnRALogin.MinimumSize = new System.Drawing.Size(24, 24);
             this.btnRALogin.Name = "btnRALogin";
             this.btnRALogin.Size = new System.Drawing.Size(124, 24);
             this.btnRALogin.TabIndex = 34;
@@ -2447,11 +2511,11 @@ namespace RADB
             // 
             // btnRAProfileAbout
             // 
+            this.btnRAProfileAbout.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnRAProfileAbout.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.btnRAProfileAbout.FlatAppearance.BorderSize = 0;
             this.btnRAProfileAbout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.btnRAProfileAbout.Location = new System.Drawing.Point(407, 220);
-            this.btnRAProfileAbout.MinimumSize = new System.Drawing.Size(24, 24);
             this.btnRAProfileAbout.Name = "btnRAProfileAbout";
             this.btnRAProfileAbout.Size = new System.Drawing.Size(96, 32);
             this.btnRAProfileAbout.TabIndex = 5;
@@ -2473,7 +2537,8 @@ namespace RADB
             this.lblAbTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblAbTitle.AutoSize = true;
             this.lblAbTitle.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAbTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(137)))), ((int)(((byte)(207)))));
+            this.lblAbTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
+            this.lblAbTitle.ForeColorType = GNX.Desktop.LabelType.primary;
             this.lblAbTitle.Location = new System.Drawing.Point(369, 64);
             this.lblAbTitle.Name = "lblAbTitle";
             this.lblAbTitle.Size = new System.Drawing.Size(173, 31);
@@ -2485,12 +2550,21 @@ namespace RADB
             this.lblAbYear.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblAbYear.AutoSize = true;
             this.lblAbYear.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAbYear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(137)))), ((int)(((byte)(207)))));
+            this.lblAbYear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
+            this.lblAbYear.ForeColorType = GNX.Desktop.LabelType.primary;
             this.lblAbYear.Location = new System.Drawing.Point(433, 94);
             this.lblAbYear.Name = "lblAbYear";
             this.lblAbYear.Size = new System.Drawing.Size(48, 24);
             this.lblAbYear.TabIndex = 1;
             this.lblAbYear.Text = "2023";
+            // 
+            // chkDebugMode
+            // 
+            this.chkDebugMode.Location = new System.Drawing.Point(238, 3);
+            this.chkDebugMode.Name = "chkDebugMode";
+            this.chkDebugMode.Size = new System.Drawing.Size(100, 34);
+            this.chkDebugMode.TabIndex = 38;
+            this.chkDebugMode.TextLegend = "Debug Mode";
             // 
             // Main
             // 
@@ -2574,12 +2648,12 @@ namespace RADB
 
         public System.Windows.Forms.ToolTip Ttip;
         private FlatLabelA lblInfoDeveloper0;
-        private System.Windows.Forms.Panel pnlInfoTop;
+        private FlatPanelA pnlInfoTop;
         private FlatLabelA lblInfoReleased0;
         private FlatLabelA lblInfoGenre0;
         private FlatLabelA lblInfoPublisher0;
-        private System.Windows.Forms.Panel pnlDownloadInfo;
-        private System.Windows.Forms.Panel pnlOutput;
+        private FlatPanelA pnlDownloadInfo;
+        private FlatPanelA pnlOutput;
         private FlatLabelB lblAbTitle;
         private FlatLabelB lblAbYear;
         private FlatPictureBoxA picFBiDevIcon;
@@ -2607,7 +2681,7 @@ namespace RADB
         private FlatLabelA flatLabelA2;
         private FlatGroupBoxA gpbAwards;
         private FlatGroupBoxA gpbOverlay;
-        private System.Windows.Forms.Panel pnlUserCheevos;
+        private FlatPanelA pnlUserCheevos;
         private FlatLabelA lblCheevos;
         private System.Windows.Forms.TableLayoutPanel tblAwardFloating;
         internal FlatCheckBoxA chkPrototype;
@@ -2626,7 +2700,7 @@ namespace RADB
         internal System.Windows.Forms.TabPage tabGames;
         internal System.Windows.Forms.Label lblOutput;
         internal FlatDataGridA dgvConsoles;
-        internal System.Windows.Forms.Panel pnlDownloadConsoles;
+        internal FlatPanelA pnlDownloadConsoles;
         internal FlatLabelA lblUpdateConsoles;
         internal FlatLabelA lblProgressConsoles;
         internal FlatLabelA lblNotFoundConsoles;
@@ -2647,7 +2721,7 @@ namespace RADB
         internal System.Windows.Forms.Label lblCheevoLoopUpdate;
         internal FlatButtonA btnUserCheevos;
         internal FlatButtonA btnUpdateConsoles;
-        internal System.Windows.Forms.Panel pnlDownloadGameList;
+        internal FlatPanelA pnlDownloadGameList;
         internal FlatLabelA lblNotFoundGameList;
         internal FlatPictureBoxA picLoaderGameList;
         internal FlatPanelA pnlGamesConsoleName;
@@ -2752,6 +2826,8 @@ namespace RADB
         private System.Windows.Forms.DataGridViewTextBoxColumn ghPoints;
         private System.Windows.Forms.DataGridViewTextBoxColumn ghNumLeaderboards;
         private System.Windows.Forms.DataGridViewTextBoxColumn ghLastUpdated;
+        internal FlatCheckBoxA chkDarkMode;
+        internal FlatCheckBoxA chkDebugMode;
     }
 }
 

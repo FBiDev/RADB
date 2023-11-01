@@ -11,8 +11,8 @@ namespace RADB
         #region MAIN
         public static void Main_Init(Main formDesign)
         {
-            BIND.f = formDesign;
-            form.Init(form);
+            Session.MainForm = formDesign;
+            form.Init();
 
             form.Load += Main_Load;
             form.Shown += Main_Shown;
@@ -33,6 +33,9 @@ namespace RADB
 
         static async void Main_Shown(object sender, EventArgs e)
         {
+            Theme.SetTheme();
+            Session.MainForm.CenterWindow();
+
             await Task.Delay(10);
 
             await MainConsole.Console_Init();
@@ -77,7 +80,7 @@ namespace RADB
         static void tabMain_SelectedIndexChanged(object sender, EventArgs e)
         {
             var tab = sender as TabControl;
-            BIND.TabMainChanged(tab.SelectedTab);
+            Session.TabMainChanged(tab.SelectedTab);
         }
         #endregion
 
@@ -101,7 +104,7 @@ namespace RADB
         {
             if (e.RowHeader()) return;
             var dgv = sender as FlatDataGridA;
-            BIND.Game = dgv.GetSelectedItem<Game>();
+            Session.Game = dgv.GetCurrentRowObject<Game>();
         }
 
         public static async Task LoadGridIcons(DataGridView dgv)
@@ -129,7 +132,7 @@ namespace RADB
 
         public static async Task LoadAllGamesIcon()
         {
-            foreach (DataGridView dgv in BIND.lstDgvGames)
+            foreach (DataGridView dgv in Session.lstDgvGames)
             {
                 await LoadGridIcons(dgv);
             }

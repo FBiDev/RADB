@@ -15,7 +15,7 @@ namespace RADB
         #region UserInfo
         public static async Task User_Init()
         {
-            BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabUserInfo) { txtUsername.Focus(); } };
+            Session.OnTabMainChanged += () => { if (Session.SelectedTab == form.tabUserInfo) { txtUsername.Focus(); } };
             txtUsername.KeyDown += txtUsername_KeyDown;
             btnGetUserInfo.Click += btnGetUserInfo_Click;
             btnUserPage.Click += OnButtonUserPageClicked;
@@ -37,13 +37,13 @@ namespace RADB
 
         static void OnButtonUserPageClicked(object sender, EventArgs e)
         {
-            if (BIND.User.ID > 0)
+            if (Session.User.ID > 0)
                 Process.Start(RA.User_URL(txtUsername.Text));
         }
 
         static void OnLinkUserRankClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var rankOffset = (BIND.User.Rank - 1) / 25 * 25;
+            var rankOffset = (Session.User.Rank - 1) / 25 * 25;
             Process.Start(RA.HOST_URL + "globalRanking.php?s=5&t=2&o=" + rankOffset);
         }
 
@@ -72,15 +72,15 @@ namespace RADB
             DisablePanelUser();
 
             //UserInfo
-            BIND.User = await RA.GetUserInfo(txtUsername.Text.Trim());
-            if (BIND.User.Invalid)
+            Session.User = await RA.GetUserInfo(txtUsername.Text.Trim());
+            if (Session.User.Invalid)
             {
                 EnablePanelUser();
                 return;
             }
 
             //Valid User
-            txtUsername.Text = BIND.User.Name;
+            txtUsername.Text = Session.User.Name;
             txtUsername.SelectionLength = 0;
             txtUsername.SelectionStart = txtUsername.Text.Length;
 
@@ -90,43 +90,43 @@ namespace RADB
             picLoaderUserAwards.Visible = true;
 
             //Set Basic Info
-            lblUserStatus.Text = BIND.User.Status;
-            lblUserName.Text = BIND.User.Name;
-            lblUserMotto.Text = BIND.User.Motto;
+            lblUserStatus.Text = Session.User.Status;
+            lblUserName.Text = Session.User.Name;
+            lblUserMotto.Text = Session.User.Motto;
 
-            lblUserMemberSince.Text = BIND.User.MemberSinceString;
-            lblUserLastActivity.Text = BIND.User.LastupdateString;
-            lblUserAccountType.Text = BIND.User.AccountType;
+            lblUserMemberSince.Text = Session.User.MemberSinceString;
+            lblUserLastActivity.Text = Session.User.LastupdateString;
+            lblUserAccountType.Text = Session.User.AccountType;
 
-            lblUserHCPoints.Text = BIND.User.TotalPointsString;
-            lnkUserRank.Text = BIND.User.RankString;
+            lblUserHCPoints.Text = Session.User.TotalPointsString;
+            lnkUserRank.Text = Session.User.RankString;
             lnkUserRank.Size = lnkUserRank.PreferredSize;
-            lnkUserRank.LinkArea = new LinkArea(0, BIND.User.RankLength);
+            lnkUserRank.LinkArea = new LinkArea(0, Session.User.RankLength);
 
-            lblUserRetroRatio.Text = BIND.User.RetroRatioString;
-            lblUserSoftPoints.Text = BIND.User.TotalSoftcorePointsString;
-            lblUserSoftRank.Text = BIND.User.RankSoft;
+            lblUserRetroRatio.Text = Session.User.RetroRatioString;
+            lblUserSoftPoints.Text = Session.User.TotalSoftcorePointsString;
+            lblUserSoftRank.Text = Session.User.RankSoft;
 
             //UserPciture
-            BIND.User = await RA.GetUserInfoPic(BIND.User);
-            picUserName.Image = BIND.User.UserPicBitmap;
+            Session.User = await RA.GetUserInfoPic(Session.User);
+            picUserName.Image = Session.User.UserPicBitmap;
 
             //UserLastGame
-            BIND.User = await RA.GetUserInfoLastGame(BIND.User);
-            picUserLastGame.Image = BIND.User.LastGameImage;
-            lblUserLastConsole.Text = BIND.User.LastGame.ConsoleName;
-            lblUserLastGame.Text = BIND.User.LastGameTitle;
+            Session.User = await RA.GetUserInfoLastGame(Session.User);
+            picUserLastGame.Image = Session.User.LastGameImage;
+            lblUserLastConsole.Text = Session.User.LastGame.ConsoleName;
+            lblUserLastGame.Text = Session.User.LastGameTitle;
 
             //--Reallocate RichPresence
-            lblUserRichPresence.Text = BIND.User.RichPresenceMsg;
+            lblUserRichPresence.Text = Session.User.RichPresenceMsg;
             lblUserRichPresence.Location = new Point(lblUserRichPresence.Location.X, lblUserLastGame.Location.Y + lblUserLastGame.Size.Height + lblUserRichPresence.Margin.Top);
 
             //UserAwards
             {
-                BIND.User = await RA.GetUserInfoAwards(BIND.User);
+                Session.User = await RA.GetUserInfoAwards(Session.User);
 
-                lblUserCompletion.Text = BIND.User.AverageCompletionString;
-                var completedGames = BIND.User.PlayedGames.Where(x => x.PctWon.Equals(1.0f));
+                lblUserCompletion.Text = Session.User.AverageCompletionString;
+                var completedGames = Session.User.PlayedGames.Where(x => x.PctWon.Equals(1.0f));
 
                 var dl = new Download { Overwrite = false };
                 dl.Files = completedGames.Select(x => x.ImageIconFile).ToList();

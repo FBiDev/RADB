@@ -20,9 +20,9 @@ namespace RADB
         #region GameInfo
         public static async Task GameInfo_Init()
         {
-            BIND.OnRALoggedChanged += GameInfo_Login;
-            BIND.OnGameChanged += LoadSelectedGame;
-            BIND.OnTabMainChanged += () => { if (BIND.SelectedTab == form.tabGameInfo) { pnlInfoScroll.Focus(); } };
+            Session.OnRALoggedChanged += GameInfo_Login;
+            Session.OnGameChanged += LoadSelectedGame;
+            Session.OnTabMainChanged += () => { if (Session.SelectedTab == form.tabGameInfo) { pnlInfoScroll.Focus(); } };
 
             btnUpdateInfo.Click += btnUpdateInfo_Click;
             btnGamePage.Click += OnButtonGamePageClicked;
@@ -56,7 +56,7 @@ namespace RADB
 
         static async Task LoadSelectedGame()
         {
-            if (BIND.Game.IsNull()) { return; }
+            if (Session.Game.IsNull()) { return; }
 
             HideDownloadControls();
 
@@ -67,7 +67,7 @@ namespace RADB
             await LoadGameExtend();
 
             //Update GameExtend
-            if (BIND.GameExtend.IsNull() || BIND.GameExtend.ConsoleID == 0)
+            if (Session.GameExtend.IsNull() || Session.GameExtend.ConsoleID == 0)
             {
                 btnUpdateInfo_Click(null, null);
             }
@@ -79,28 +79,28 @@ namespace RADB
 
         static void LoadGameExtendBase()
         {
-            lblInfoName.Text = BIND.Game.Title + " (" + BIND.Game.ConsoleName + ")";
-            picInfoIcon.Image = BIND.Game.ImageIconBitmap;
+            lblInfoName.Text = Session.Game.Title + " (" + Session.Game.ConsoleName + ")";
+            picInfoIcon.Image = Session.Game.ImageIconBitmap;
 
-            lblInfoAchievements.Text = BIND.Game.NumAchievements.ToString() + " Trophies: " + BIND.Game.Points + " points";
+            lblInfoAchievements.Text = Session.Game.NumAchievements.ToString() + " Trophies: " + Session.Game.Points + " points";
         }
 
         static async Task LoadGameExtend()
         {
-            if (BIND.Game.IsNull()) { return; }
+            if (Session.Game.IsNull()) { return; }
 
-            BIND.GameExtend = await GameExtend.Find(BIND.Game.ID);
+            Session.GameExtend = await GameExtend.Find(Session.Game.ID);
 
-            lblInfoDeveloper1.Text = BIND.GameExtend.Developer;
-            lblInfoPublisher1.Text = BIND.GameExtend.Publisher;
-            lblInfoGenre1.Text = BIND.GameExtend.Genre;
-            lblInfoReleased1.Text = BIND.GameExtend.Released;
+            lblInfoDeveloper1.Text = Session.GameExtend.Developer;
+            lblInfoPublisher1.Text = Session.GameExtend.Publisher;
+            lblInfoGenre1.Text = Session.GameExtend.Genre;
+            lblInfoReleased1.Text = Session.GameExtend.Released;
 
-            BIND.GameExtend.SetImagesBitmap();
+            Session.GameExtend.SetImagesBitmap();
 
-            picInfoTitle.ScaleTo(BIND.GameExtend.ImageTitleBitmap);
-            picInfoInGame.ScaleTo(BIND.GameExtend.ImageIngameBitmap);
-            picInfoBoxArt.ScaleTo(BIND.GameExtend.ImageBoxArtBitmap);
+            picInfoTitle.ScaleTo(Session.GameExtend.ImageTitleBitmap);
+            picInfoInGame.ScaleTo(Session.GameExtend.ImageIngameBitmap);
+            picInfoBoxArt.ScaleTo(Session.GameExtend.ImageBoxArtBitmap);
 
             {//Scale Boxes
                 pnlInfoTitle.Height = (picInfoTitle.Height > picInfoInGame.Height ? picInfoTitle.Height : picInfoInGame.Height);
@@ -111,7 +111,7 @@ namespace RADB
                 pnlInfoBoxArt.Height = pnlInfoImages.Location.Y + pnlInfoImages.Height - 19;
 
                 picInfoBoxArt.MaximumSize = new Size(pnlInfoBoxArt.Width - 12, pnlInfoBoxArt.Height - 12);
-                picInfoBoxArt.ScaleTo(BIND.GameExtend.ImageBoxArtBitmap);
+                picInfoBoxArt.ScaleTo(Session.GameExtend.ImageBoxArtBitmap);
 
                 picInfoTitle.Location = new Point(pnlInfoTitle.Width / 2 - picInfoTitle.Width / 2, (pnlInfoTitle.Height / 2) - (picInfoTitle.Height / 2));
                 picInfoInGame.Location = new Point(pnlInfoInGame.Width / 2 - picInfoInGame.Width / 2, (pnlInfoInGame.Height / 2) - (picInfoInGame.Height / 2));
@@ -124,16 +124,16 @@ namespace RADB
             var lstCheevos = new ListBind<Achievement>();
             dgvAchievements.DataSource = lstCheevos;
 
-            if (File.Exists(BIND.Game.ExtendFile.Path))
+            if (File.Exists(Session.Game.ExtendFile.Path))
             {
-                var AllText = File.ReadAllText(BIND.Game.ExtendFile.Path);
+                var AllText = File.ReadAllText(Session.Game.ExtendFile.Path);
                 var cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
                 cheevos = "{" + cheevos + "}";
 
                 var jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
-                BIND.GameExtend.SetAchievements(jcheevos);
+                Session.GameExtend.SetAchievements(jcheevos);
 
-                lstCheevos = new ListBind<Achievement>(BIND.GameExtend.AchievementsList);
+                lstCheevos = new ListBind<Achievement>(Session.GameExtend.AchievementsList);
                 dgvAchievements.DataSource = lstCheevos;
             }
             lstAchievs = lstCheevos;
@@ -142,7 +142,7 @@ namespace RADB
         static async void btnUpdateInfo_Click(object sender, EventArgs e)
         {
             //Download GameExtend
-            if (BIND.Game.IsNull())
+            if (Session.Game.IsNull())
             {
                 MessageBox.Show("Select a Game in Games Tab First");
                 return;
@@ -151,10 +151,10 @@ namespace RADB
             btnUpdateInfo.Enabled = false;
             txtSearchAchiev.Enabled = false;
             //Download GameExtend
-            await RA.DownloadGameExtend(BIND.Game, Browser.dlGameExtend);
+            await RA.DownloadGameExtend(Session.Game, Browser.dlGameExtend);
 
             //Download game images
-            await RA.DownloadGameExtendImages(BIND.Game);
+            await RA.DownloadGameExtendImages(Session.Game);
 
             //Load Game
             await LoadGameExtend();
@@ -162,29 +162,29 @@ namespace RADB
             txtSearchAchiev.Enabled = true;
             pnlInfoScroll.Focus();
 
-            MainCommon.WriteOutput("[" + DateTime.Now.ToLongTimeString() + "] Game " + BIND.Game.ID + " Updated!");
+            MainCommon.WriteOutput("[" + DateTime.Now.ToLongTimeString() + "] Game " + Session.Game.ID + " Updated!");
         }
 
         static void GameInfo_Login()
         {
-            btnHashes.Enabled = BIND.RALogged;
+            btnHashes.Enabled = Session.RALogged;
         }
 
         static void OnButtonGamePageClicked(object sender, EventArgs e)
         {
-            if (BIND.Game.IsNull()) { return; }
-            Process.Start(RA.Game_URL(BIND.Game.ID));
+            if (Session.Game.IsNull()) { return; }
+            Process.Start(RA.Game_URL(Session.Game.ID));
         }
 
         static async void OnButtonHashesClicked(object sender, EventArgs e)
         {
-            if (BIND.Game.IsNull())
+            if (Session.Game.IsNull())
             {
                 MessageBox.Show("Select a Game in Games Tab First");
                 return;
             }
 
-            await HashViewerCommon.Open(BIND.Game);
+            await HashViewerCommon.Open(Session.Game);
         }
 
         static void txtSearchAchiev_KeyDown(object sender, KeyEventArgs e)

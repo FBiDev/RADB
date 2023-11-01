@@ -2,12 +2,46 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GNX;
+using GNX.Desktop;
 
 namespace RADB
 {
-    public static class BIND
+    public static class Session
     {
-        public static Main f;
+        #region Options
+        public static Options Options = new Options();
+
+        public static bool LoadOptions()
+        { return Options.Loaded = Json.Load(ref Options, Options.FileName); }
+
+        public static bool UpdateOptions()
+        { return Json.Save(Options, Options.FileName); }
+        #endregion
+
+        #region Main
+        public const bool Singleton = true;
+        public const string SystemName = "RADatabase";
+
+        public const CultureID Language = CultureID.UnitedStates_English;
+        public const CultureID LanguageNumbers = CultureID.Brazil_Portuguese;
+
+        public static void Start()
+        {
+            LanguageManager.SetLanguage(Language);
+            LanguageManager.SetLanguageNumbers(LanguageNumbers);
+            AppManager.Start();
+
+            LoadOptions();
+
+            Banco.Load();
+
+            cDebug.LogSQLSistema = new ListBind<cLogSQL>(Banco.Log);
+        }
+        #endregion
+
+        #region Forms
+        public static Main MainForm;
 
         public delegate Task AsyncAction();
         public delegate bool ActionWithGame(Game game);
@@ -36,6 +70,13 @@ namespace RADB
             }
         }
 
+        public static TabPage SelectedTab;
+        public static void TabMainChanged(TabPage tab)
+        {
+            SelectedTab = tab;
+            OnTabMainChanged();
+        }
+
         static User _User;
         public static User User
         {
@@ -47,12 +88,7 @@ namespace RADB
             }
         }
 
-        public static TabPage SelectedTab;
-        public static void TabMainChanged(TabPage tab)
-        {
-            SelectedTab = tab;
-            OnTabMainChanged();
-        }
+        public static List<DataGridView> lstDgvGames = new List<DataGridView>();
 
         public static void GameListChanged(bool changed = true)
         {
@@ -97,7 +133,6 @@ namespace RADB
                 OnGameExtendChanged();
             }
         }
-
-        public static List<DataGridView> lstDgvGames = new List<DataGridView>();
+        #endregion
     }
 }

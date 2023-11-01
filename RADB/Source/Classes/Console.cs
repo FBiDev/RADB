@@ -16,6 +16,11 @@ namespace RADB
             Company = Name = string.Empty;
         }
 
+        public override string ToString()
+        {
+            return ID + " - " + Name;
+        }
+
         public async static Task<bool> SaveList(IList<Console> list)
         {
             return await ConsoleDao.InsertList(list);

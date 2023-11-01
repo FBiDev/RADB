@@ -4,51 +4,70 @@ using System.Data;
 using System.Data.SQLite;
 using System.Threading.Tasks;
 using GNX;
+using GNX.Desktop;
 
 namespace RADB
 {
     public static class Banco
     {
-        public static List<cLogSQL> Log { get { return DB.Log; } set { DB.Log = value; } }
-        static DataBaseManager DB { get; set; }
+        static DataBaseManager Database { get; set; }
+        public static ListSynced<cLogSQL> Log { get { return Database.Log; } }
         public static bool Loaded { get; set; }
 
-        public static void Carregar(string servidor = "", string database = "")
+        public static void Load()
         {
-            DB = new DataBaseManager
+            Database = new DataBaseManager
             {
                 DatabaseSystem = DbSystem.SQLite,
                 Connection = new SQLiteConnection(),
-                ServerAddress = servidor,
-                DatabaseName = database,
-                DataBaseFile = @"Data\database.db",
+                ServerAddress = "",
+                DatabaseName = "",
+                DataBaseFile = Session.Options.SystemDatabaseFile,
                 Username = "",
                 Password = "",
                 ConnectionString = ""
             };
+
+            Loaded = true;
         }
 
         public async static Task<DataTable> ExecutarSelect(string sql, List<cSqlParameter> parameters = null, string storedProcedure = default(string))
         {
-            if (Loaded) { return await DB.ExecuteSelect(sql, parameters, storedProcedure); }
+            if (Loaded)
+            {
+                try { return await Database.ExecuteSelect(sql, parameters, storedProcedure); }
+                catch (Exception ex) { ExceptionManager.Resolve(ex); }
+            }
             return new DataTable();
         }
 
-        public async static Task<cSqlResult> Executar(string sql, DbAction movimento, List<cSqlParameter> parameters)
+        public async static Task<cSqlResult> Executar(string sql, DbAction action, List<cSqlParameter> parameters)
         {
-            if (Loaded) { return await DB.Execute(sql, movimento, parameters); }
+            if (Loaded)
+            {
+                try { return await Database.Execute(sql, action, parameters); }
+                catch (Exception ex) { ExceptionManager.Resolve(ex); }
+            }
             return new cSqlResult();
         }
 
         public async static Task<int> GetLastID()
         {
-            if (Loaded) { return await DB.GetLastID(); }
+            if (Loaded)
+            {
+                try { return await Database.GetLastID(); }
+                catch (Exception ex) { ExceptionManager.Resolve(ex); }
+            }
             return 0;
         }
 
         public async static Task<DateTime> DataServidor()
         {
-            if (Loaded) { return await DB.DateTimeServer(); }
+            if (Loaded)
+            {
+                try { return await Database.DateTimeServer(); }
+                catch (Exception ex) { ExceptionManager.Resolve(ex); }
+            }
             return DateTime.MinValue;
         }
     }

@@ -21,17 +21,17 @@ namespace RADB
         #region Games
         public static async Task Games_Init()
         {
-            BIND.OnConsoleChanged += ResetGamesLabels;
-            BIND.OnConsoleChanged += LoadGames;
-            BIND.OnTabMainChanged += () =>
+            Session.OnConsoleChanged += ResetGamesLabels;
+            Session.OnConsoleChanged += LoadGames;
+            Session.OnTabMainChanged += () =>
             {
-                if (BIND.SelectedTab == form.tabGames)
+                if (Session.SelectedTab == form.tabGames)
                 {
-                    pnlGamesConsoleName.Visible = BIND.Console.NotNull();
+                    pnlGamesConsoleName.Visible = Session.Console.NotNull();
                     dgvGames.Focus();
                 }
             };
-            BIND.OnAddGames += (game) =>
+            Session.OnAddGames += (game) =>
             {
                 lstGamesAll.Insert(0, game);
                 lstGamesByFilters.Insert(0, game);
@@ -93,7 +93,7 @@ namespace RADB
             Browser.dlGamesBadges.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
             Browser.dlGameExtendList.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
 
-            BIND.lstDgvGames.Add(dgvGames);
+            Session.lstDgvGames.Add(dgvGames);
 
             HideDownloadControls();
             lstGamesAll = await Game.Search(0);
@@ -127,7 +127,7 @@ namespace RADB
 
         static Task ResetGamesLabels()
         {
-            if (BIND.LastConsole.NotNull() && BIND.Console.ID == BIND.LastConsole.ID)
+            if (Session.LastConsole.NotNull() && Session.Console.ID == Session.LastConsole.ID)
             {
                 MainCommon.ChangeTab(form.tabGames);
                 return Task.CompletedTask;
@@ -144,7 +144,7 @@ namespace RADB
             txtSearchGames.Text = "";
             txtSearchGames.TextChanged += txtSearchGames_TextChanged;
 
-            dgvGames.Columns["gConsole"].Visible = BIND.Console.ID == 0;
+            dgvGames.Columns["gConsole"].Visible = Session.Console.ID == 0;
 
             MainCommon.ChangeTab(form.tabGames);
 
@@ -153,18 +153,18 @@ namespace RADB
 
         static async Task LoadGames()
         {
-            if (BIND.Console.IsNull() || BIND.LastConsole.NotNull() && BIND.Console.ID == BIND.LastConsole.ID) { return; }
+            if (Session.Console.IsNull() || Session.LastConsole.NotNull() && Session.Console.ID == Session.LastConsole.ID) { return; }
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             lstGamesByPlataform = lstGamesAll;
-            if (BIND.Console.ID > 0)
-                lstGamesByPlataform = lstGamesAll.Where(x => x.ConsoleID == BIND.Console.ID);
+            if (Session.Console.ID > 0)
+                lstGamesByPlataform = lstGamesAll.Where(x => x.ConsoleID == Session.Console.ID);
 
             if (lstGamesByPlataform.IsEmpty())
             {
-                var fileName = Folder.GameData + BIND.Console.Name + ".json";
+                var fileName = Folder.GameData + Session.Console.Name + ".json";
                 if (File.Exists(fileName) == false)
                 {
                     btnUpdateGameList_Click(null, null);
@@ -181,37 +181,37 @@ namespace RADB
 
         static async void btnUpdateGameList_Click(object sender, EventArgs e)
         {
-            if (BIND.Console.IsNull()) { MessageBox.Show("No Console Selected"); return; }
+            if (Session.Console.IsNull()) { MessageBox.Show("No Console Selected"); return; }
 
             DisablePanelGames();
             lstGamesByFilters.Clear();
 
-            await RA.DownloadGameList(BIND.Console);
-            await RA.DownloadGamesIcon(BIND.Console, Browser.dlGamesIcon);
+            await RA.DownloadGameList(Session.Console);
+            await RA.DownloadGamesIcon(Session.Console, Browser.dlGamesIcon);
 
-            if (BIND.Console.ID > 0)
-                lstGamesAll.RemoveAll(x => x.ConsoleID == BIND.Console.ID);
+            if (Session.Console.ID > 0)
+                lstGamesAll.RemoveAll(x => x.ConsoleID == Session.Console.ID);
             else
                 lstGamesAll.Clear();
 
-            var gamesFiltered = await Game.Search(BIND.Console.ID);
+            var gamesFiltered = await Game.Search(Session.Console.ID);
             lstGamesAll.AddRange(gamesFiltered);
 
             //var gameExList = await RA.DownloadGameExtendList(gamesFiltered, Browser.dlGameExtendList);
 
-            MainCommon.WriteOutput("[" + DateTime.Now.ToTimeLong() + "] " + BIND.Console.Name + " Updated!");
-            BIND.GameListChanged();
+            MainCommon.WriteOutput("[" + DateTime.Now.ToTimeLong() + "] " + Session.Console.Name + " Updated!");
+            Session.GameListChanged();
 
             await LoadGames();
         }
 
         static void UpdateConsoleLabels()
         {
-            if (BIND.Console == null) return;
+            if (Session.Console == null) return;
 
             var numGames = lstGamesByFilters.Count(g => g.NumAchievements > 0);
             var totalGames = lstGamesByFilters.Count();
-            lblConsoleName.Text = BIND.Console.Name;
+            lblConsoleName.Text = Session.Console.Name;
             lblConsoleGamesTotal.Text = numGames + " of " + totalGames + " Games";
 
             int scrollPosition = dgvGames.FirstDisplayedScrollingRowIndex;
@@ -346,9 +346,9 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var game = dgvGames.GetSelectedItem<Game>();
+            var game = dgvGames.GetCurrentRowObject<Game>();
 
-            if (await game.SaveToPlay() && BIND.AddGamesToPlay(game))
+            if (await game.SaveToPlay() && Session.AddGamesToPlay(game))
             {
                 lstGamesAll.Remove(game);
                 lstGamesByFilters.Remove(game);
@@ -359,9 +359,9 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var game = dgvGames.GetSelectedItem<Game>();
+            var game = dgvGames.GetCurrentRowObject<Game>();
 
-            if (await game.SaveToHide() && BIND.AddGamesToHide(game))
+            if (await game.SaveToHide() && Session.AddGamesToHide(game))
             {
                 lstGamesAll.Remove(game);
                 lstGamesByFilters.Remove(game);
@@ -372,7 +372,7 @@ namespace RADB
         {
             if (e.Button != MouseButtons.Left) return;
 
-            var game = dgvGames.GetSelectedItem<Game>();
+            var game = dgvGames.GetCurrentRowObject<Game>();
 
             DisablePanelGames();
             await RA.MergeGameBadges(game);
