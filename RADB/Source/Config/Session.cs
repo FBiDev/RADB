@@ -30,13 +30,15 @@ namespace RADB
         {
             LanguageManager.SetLanguage(Language);
             LanguageManager.SetLanguageNumbers(LanguageNumbers);
-            AppManager.Start();
+            //AppManager.Start();
 
             LoadOptions();
 
             Banco.Load();
 
-            cDebug.LogSQLSistema = new ListBind<cLogSQL>(Banco.Log);
+            cDebug.Enable = Options.DebugMode;
+            cDebug.LogSQLSistema.SyncList(Banco.Log);
+            cDebug.Open();
         }
         #endregion
 

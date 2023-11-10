@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
+using GNX;
 
 namespace RADB
 {
@@ -37,10 +38,17 @@ namespace RADB
         public string ImageIcon { get { return _ImageIcon; } set { _ImageIcon = value.Replace(@"/Images/", ""); } }
         public DownloadFile ImageIconFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageIcon, Folder.Icons(ConsoleID) + ImageIcon); } }
         public Bitmap ImageIconBitmap { get; set; }
+        public Bitmap ImageIconGridBitmap { get; set; }
         public void SetImageIconBitmap()
         {
-            if (ImageIconBitmap != RA.DefaultIcon) { return; }
-            ImageIconBitmap = Picture.Create(ImageIconFile.Path, RA.ErrorIcon).Bitmap;
+            if (ImageIconBitmap != null) { return; }
+            //ImageIconBitmap = Picture.Create(ImageIconFile.Path).Bitmap;
+            ImageIconBitmap = BitmapExtension.SuperFastLoad(ImageIconFile.Path, RA.ErrorIcon);
+        }
+        public void SetImageIconGridBitmap()
+        {
+            if (ImageIconGridBitmap != RA.DefaultIconGrid) { return; }
+            ImageIconGridBitmap = BitmapExtension.FromFile(ImageIconFile.Path, new Size(32, 32), RA.ErrorIcon);
         }
         #endregion
 
@@ -60,10 +68,11 @@ namespace RADB
 
         public Game()
         {
-            ImageIconBitmap = RA.DefaultIcon;
+            //ImageIconBitmap = RA.DefaultIcon;
+            ImageIconGridBitmap = RA.DefaultIconGrid;
         }
 
-        public override string ToString() 
+        public override string ToString()
         {
             return ID + " - " + Title;
         }

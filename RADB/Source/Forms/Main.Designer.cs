@@ -110,15 +110,6 @@ namespace RADB
             this.pgbGameList = new RADB.FlatProgressBarA();
             this.lblProgressGameList = new RADB.FlatLabelA();
             this.dgvGames = new RADB.FlatDataGridA();
-            this.gID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
-            this.gTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGameInfo = new System.Windows.Forms.TabPage();
             this.pnlInfoScroll = new RADB.FlatPanelA();
             this.gpbInfo = new RADB.FlatGroupBoxA();
@@ -220,6 +211,7 @@ namespace RADB
             this.flatLabelA1 = new RADB.FlatLabelA();
             this.txtUsername = new RADB.FlatTextBoxA();
             this.tabAbout = new System.Windows.Forms.TabPage();
+            this.chkDebugMode = new RADB.FlatCheckBoxA();
             this.chkDarkMode = new RADB.FlatCheckBoxA();
             this.gpbOverlay = new RADB.FlatGroupBoxA();
             this.pnlUserCheevos = new RADB.FlatPanelA();
@@ -235,7 +227,15 @@ namespace RADB
             this.picFBiDevIcon = new RADB.FlatPictureBoxA();
             this.lblAbTitle = new RADB.FlatLabelB();
             this.lblAbYear = new RADB.FlatLabelB();
-            this.chkDebugMode = new RADB.FlatCheckBoxA();
+            this.gID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gIconBitmap = new System.Windows.Forms.DataGridViewImageColumn();
+            this.gTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gNumAchievements = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gNumLeaderboards = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gLastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuGames.SuspendLayout();
             this.mnuGamesToHide.SuspendLayout();
             this.mnuConsoles.SuspendLayout();
@@ -573,7 +573,7 @@ namespace RADB
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvConsoles.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dgvConsoles.RowTemplate.Height = 37;
+            this.dgvConsoles.RowTemplate.Height = 36;
             this.dgvConsoles.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvConsoles.Size = new System.Drawing.Size(896, 459);
             this.dgvConsoles.TabIndex = 0;
@@ -827,9 +827,12 @@ namespace RADB
             // txtSearchGames
             // 
             this.txtSearchGames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearchGames.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.txtSearchGames.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearchGames.LabelText = "Search Game";
             this.txtSearchGames.Location = new System.Drawing.Point(586, 5);
             this.txtSearchGames.Name = "txtSearchGames";
+            this.txtSearchGames.Padding = new System.Windows.Forms.Padding(1);
             this.txtSearchGames.previousText = "";
             this.txtSearchGames.Size = new System.Drawing.Size(182, 34);
             this.txtSearchGames.TabIndex = 2;
@@ -953,81 +956,10 @@ namespace RADB
             dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvGames.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
-            this.dgvGames.RowTemplate.Height = 37;
+            this.dgvGames.RowTemplate.Height = 36;
             this.dgvGames.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGames.Size = new System.Drawing.Size(896, 459);
             this.dgvGames.TabIndex = 1;
-            // 
-            // gID
-            // 
-            this.gID.DataPropertyName = "ID";
-            this.gID.HeaderText = "ID";
-            this.gID.Name = "gID";
-            this.gID.ReadOnly = true;
-            this.gID.Width = 45;
-            // 
-            // gIconBitmap
-            // 
-            this.gIconBitmap.DataPropertyName = "ImageIconBitmap";
-            this.gIconBitmap.HeaderText = "Icon";
-            this.gIconBitmap.Name = "gIconBitmap";
-            this.gIconBitmap.ReadOnly = true;
-            this.gIconBitmap.Width = 36;
-            // 
-            // gTitle
-            // 
-            this.gTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.gTitle.DataPropertyName = "Title";
-            this.gTitle.HeaderText = "Title";
-            this.gTitle.Name = "gTitle";
-            this.gTitle.ReadOnly = true;
-            // 
-            // gConsole
-            // 
-            this.gConsole.DataPropertyName = "ConsoleNameShort";
-            this.gConsole.HeaderText = "Console";
-            this.gConsole.Name = "gConsole";
-            this.gConsole.ReadOnly = true;
-            // 
-            // gYear
-            // 
-            this.gYear.DataPropertyName = "Year";
-            this.gYear.HeaderText = "Year";
-            this.gYear.Name = "gYear";
-            this.gYear.ReadOnly = true;
-            this.gYear.Width = 65;
-            // 
-            // gNumAchievements
-            // 
-            this.gNumAchievements.DataPropertyName = "NumAchievements";
-            this.gNumAchievements.HeaderText = "Trophies";
-            this.gNumAchievements.Name = "gNumAchievements";
-            this.gNumAchievements.ReadOnly = true;
-            this.gNumAchievements.Width = 80;
-            // 
-            // gPoints
-            // 
-            this.gPoints.DataPropertyName = "Points";
-            this.gPoints.HeaderText = "Points";
-            this.gPoints.Name = "gPoints";
-            this.gPoints.ReadOnly = true;
-            this.gPoints.Width = 65;
-            // 
-            // gNumLeaderboards
-            // 
-            this.gNumLeaderboards.DataPropertyName = "NumLeaderboards";
-            this.gNumLeaderboards.HeaderText = "Scores";
-            this.gNumLeaderboards.Name = "gNumLeaderboards";
-            this.gNumLeaderboards.ReadOnly = true;
-            this.gNumLeaderboards.Width = 70;
-            // 
-            // gLastUpdated
-            // 
-            this.gLastUpdated.DataPropertyName = "DateModified";
-            this.gLastUpdated.HeaderText = "Last Updated";
-            this.gLastUpdated.Name = "gLastUpdated";
-            this.gLastUpdated.ReadOnly = true;
-            this.gLastUpdated.Width = 105;
             // 
             // tabGameInfo
             // 
@@ -1085,75 +1017,94 @@ namespace RADB
             // 
             // picInfoBoxArt
             // 
+            this.picInfoBoxArt.Align = GNX.Desktop.Align.Center;
             this.picInfoBoxArt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picInfoBoxArt.AutoScale = true;
             this.picInfoBoxArt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.picInfoBoxArt.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.picInfoBoxArt.Image = null;
             this.picInfoBoxArt.Location = new System.Drawing.Point(6, 6);
             this.picInfoBoxArt.Margin = new System.Windows.Forms.Padding(6);
             this.picInfoBoxArt.MaximumSize = new System.Drawing.Size(300, 283);
             this.picInfoBoxArt.Name = "picInfoBoxArt";
             this.picInfoBoxArt.Size = new System.Drawing.Size(300, 283);
-            this.picInfoBoxArt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picInfoBoxArt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.picInfoBoxArt.TabIndex = 20;
             this.picInfoBoxArt.TabStop = false;
             // 
             // pnlInfoImages
             // 
+            this.pnlInfoImages.AutoSize = true;
             this.pnlInfoImages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.pnlInfoImages.BackColorType = GNX.Desktop.PanelType.controlDark;
             this.pnlInfoImages.Controls.Add(this.pnlInfoInGame);
             this.pnlInfoImages.Controls.Add(this.pnlInfoTitle);
             this.pnlInfoImages.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlInfoImages.Location = new System.Drawing.Point(6, 152);
-            this.pnlInfoImages.MinimumSize = new System.Drawing.Size(538, 156);
+            this.pnlInfoImages.MinimumSize = new System.Drawing.Size(546, 162);
             this.pnlInfoImages.Name = "pnlInfoImages";
             this.pnlInfoImages.Size = new System.Drawing.Size(546, 162);
             this.pnlInfoImages.TabIndex = 16;
             // 
             // pnlInfoInGame
             // 
+            this.pnlInfoInGame.AutoSize = true;
             this.pnlInfoInGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.pnlInfoInGame.BackColorType = GNX.Desktop.PanelType.controlLight;
             this.pnlInfoInGame.Controls.Add(this.picInfoInGame);
             this.pnlInfoInGame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlInfoInGame.Location = new System.Drawing.Point(280, 6);
+            this.pnlInfoInGame.Margin = new System.Windows.Forms.Padding(6);
+            this.pnlInfoInGame.MaximumSize = new System.Drawing.Size(260, 240);
+            this.pnlInfoInGame.MinimumSize = new System.Drawing.Size(260, 150);
             this.pnlInfoInGame.Name = "pnlInfoInGame";
             this.pnlInfoInGame.Size = new System.Drawing.Size(260, 150);
             this.pnlInfoInGame.TabIndex = 16;
             // 
             // picInfoInGame
             // 
+            this.picInfoInGame.Align = GNX.Desktop.Align.Center;
+            this.picInfoInGame.AutoScale = true;
             this.picInfoInGame.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.picInfoInGame.Location = new System.Drawing.Point(0, 0);
-            this.picInfoInGame.Margin = new System.Windows.Forms.Padding(6);
+            this.picInfoInGame.Image = null;
+            this.picInfoInGame.Location = new System.Drawing.Point(3, 3);
             this.picInfoInGame.MaximumSize = new System.Drawing.Size(260, 240);
+            this.picInfoInGame.MinimumSize = new System.Drawing.Size(14, 16);
             this.picInfoInGame.Name = "picInfoInGame";
-            this.picInfoInGame.Size = new System.Drawing.Size(260, 150);
-            this.picInfoInGame.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picInfoInGame.Size = new System.Drawing.Size(254, 144);
+            this.picInfoInGame.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.picInfoInGame.TabIndex = 14;
             this.picInfoInGame.TabStop = false;
             // 
             // pnlInfoTitle
             // 
+            this.pnlInfoTitle.AutoSize = true;
             this.pnlInfoTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.pnlInfoTitle.BackColorType = GNX.Desktop.PanelType.controlLight;
             this.pnlInfoTitle.Controls.Add(this.picInfoTitle);
             this.pnlInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlInfoTitle.Location = new System.Drawing.Point(6, 6);
+            this.pnlInfoTitle.Margin = new System.Windows.Forms.Padding(6);
+            this.pnlInfoTitle.MaximumSize = new System.Drawing.Size(260, 240);
+            this.pnlInfoTitle.MinimumSize = new System.Drawing.Size(260, 150);
             this.pnlInfoTitle.Name = "pnlInfoTitle";
             this.pnlInfoTitle.Size = new System.Drawing.Size(260, 150);
             this.pnlInfoTitle.TabIndex = 15;
             // 
             // picInfoTitle
             // 
+            this.picInfoTitle.Align = GNX.Desktop.Align.Center;
+            this.picInfoTitle.AutoScale = true;
             this.picInfoTitle.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.picInfoTitle.Image = null;
             this.picInfoTitle.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            this.picInfoTitle.Location = new System.Drawing.Point(0, 0);
-            this.picInfoTitle.Margin = new System.Windows.Forms.Padding(6);
+            this.picInfoTitle.Location = new System.Drawing.Point(3, 3);
+            this.picInfoTitle.Margin = new System.Windows.Forms.Padding(0);
             this.picInfoTitle.MaximumSize = new System.Drawing.Size(260, 240);
+            this.picInfoTitle.MinimumSize = new System.Drawing.Size(14, 16);
             this.picInfoTitle.Name = "picInfoTitle";
-            this.picInfoTitle.Size = new System.Drawing.Size(260, 150);
-            this.picInfoTitle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picInfoTitle.Size = new System.Drawing.Size(254, 144);
+            this.picInfoTitle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.picInfoTitle.TabIndex = 13;
             this.picInfoTitle.TabStop = false;
             // 
@@ -1227,6 +1178,7 @@ namespace RADB
             // 
             this.picInfoIcon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.picInfoIcon.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.picInfoIcon.Image = null;
             this.picInfoIcon.Location = new System.Drawing.Point(0, 0);
             this.picInfoIcon.Margin = new System.Windows.Forms.Padding(0);
             this.picInfoIcon.Name = "picInfoIcon";
@@ -1301,11 +1253,14 @@ namespace RADB
             // 
             // txtSearchAchiev
             // 
+            this.txtSearchAchiev.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
             this.txtSearchAchiev.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.txtSearchAchiev.BackgroundColorFocus = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.txtSearchAchiev.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearchAchiev.LabelText = "Search Trophy";
             this.txtSearchAchiev.Location = new System.Drawing.Point(688, 16);
             this.txtSearchAchiev.Name = "txtSearchAchiev";
+            this.txtSearchAchiev.Padding = new System.Windows.Forms.Padding(1);
             this.txtSearchAchiev.previousText = "";
             this.txtSearchAchiev.Size = new System.Drawing.Size(182, 34);
             this.txtSearchAchiev.TabIndex = 37;
@@ -1583,7 +1538,7 @@ namespace RADB
             dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvGamesToPlay.RowHeadersDefaultCellStyle = dataGridViewCellStyle20;
-            this.dgvGamesToPlay.RowTemplate.Height = 37;
+            this.dgvGamesToPlay.RowTemplate.Height = 36;
             this.dgvGamesToPlay.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGamesToPlay.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToPlay.TabIndex = 3;
@@ -1738,7 +1693,7 @@ namespace RADB
             dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvGamesToHide.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
-            this.dgvGamesToHide.RowTemplate.Height = 37;
+            this.dgvGamesToHide.RowTemplate.Height = 36;
             this.dgvGamesToHide.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGamesToHide.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToHide.TabIndex = 2;
@@ -1866,6 +1821,7 @@ namespace RADB
             // 
             this.picAwardFloating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.picAwardFloating.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.picAwardFloating.Image = null;
             this.picAwardFloating.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picAwardFloating.Location = new System.Drawing.Point(1, 1);
             this.picAwardFloating.Margin = new System.Windows.Forms.Padding(0);
@@ -2018,6 +1974,7 @@ namespace RADB
             // picUserName
             // 
             this.picUserName.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.picUserName.Image = null;
             this.picUserName.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picUserName.Location = new System.Drawing.Point(161, 6);
             this.picUserName.Margin = new System.Windows.Forms.Padding(6);
@@ -2086,6 +2043,7 @@ namespace RADB
             // 
             this.picUserLastGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
             this.picUserLastGame.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.picUserLastGame.Image = null;
             this.picUserLastGame.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picUserLastGame.Location = new System.Drawing.Point(9, 324);
             this.picUserLastGame.Margin = new System.Windows.Forms.Padding(6);
@@ -2361,9 +2319,12 @@ namespace RADB
             // txtUsername
             // 
             this.txtUsername.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(223)))), ((int)(((byte)(229)))));
+            this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUsername.LabelText = "Username";
             this.txtUsername.Location = new System.Drawing.Point(6, 6);
             this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Padding = new System.Windows.Forms.Padding(1);
             this.txtUsername.previousText = "";
             this.txtUsername.Size = new System.Drawing.Size(146, 34);
             this.txtUsername.TabIndex = 30;
@@ -2386,6 +2347,14 @@ namespace RADB
             this.tabAbout.Size = new System.Drawing.Size(908, 545);
             this.tabAbout.TabIndex = 4;
             this.tabAbout.Text = "About";
+            // 
+            // chkDebugMode
+            // 
+            this.chkDebugMode.Location = new System.Drawing.Point(238, 3);
+            this.chkDebugMode.Name = "chkDebugMode";
+            this.chkDebugMode.Size = new System.Drawing.Size(100, 34);
+            this.chkDebugMode.TabIndex = 38;
+            this.chkDebugMode.TextLegend = "Debug Mode";
             // 
             // chkDarkMode
             // 
@@ -2449,6 +2418,7 @@ namespace RADB
             // picUserCheevos
             // 
             this.picUserCheevos.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.picUserCheevos.Image = null;
             this.picUserCheevos.Interpolation = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.picUserCheevos.Location = new System.Drawing.Point(11, 11);
             this.picUserCheevos.Margin = new System.Windows.Forms.Padding(6);
@@ -2526,7 +2496,7 @@ namespace RADB
             this.picFBiDevIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.picFBiDevIcon.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picFBiDevIcon.Image = global::RADB.Properties.Resources.fbidev;
-            this.picFBiDevIcon.Location = new System.Drawing.Point(407, 118);
+            this.picFBiDevIcon.Location = new System.Drawing.Point(407, 121);
             this.picFBiDevIcon.Name = "picFBiDevIcon";
             this.picFBiDevIcon.Size = new System.Drawing.Size(96, 96);
             this.picFBiDevIcon.TabIndex = 4;
@@ -2558,13 +2528,76 @@ namespace RADB
             this.lblAbYear.TabIndex = 1;
             this.lblAbYear.Text = "2023";
             // 
-            // chkDebugMode
+            // gID
             // 
-            this.chkDebugMode.Location = new System.Drawing.Point(238, 3);
-            this.chkDebugMode.Name = "chkDebugMode";
-            this.chkDebugMode.Size = new System.Drawing.Size(100, 34);
-            this.chkDebugMode.TabIndex = 38;
-            this.chkDebugMode.TextLegend = "Debug Mode";
+            this.gID.DataPropertyName = "ID";
+            this.gID.HeaderText = "ID";
+            this.gID.Name = "gID";
+            this.gID.ReadOnly = true;
+            this.gID.Width = 45;
+            // 
+            // gIconBitmap
+            // 
+            this.gIconBitmap.DataPropertyName = "ImageIconGridBitmap";
+            this.gIconBitmap.HeaderText = "Icon";
+            this.gIconBitmap.Name = "gIconBitmap";
+            this.gIconBitmap.ReadOnly = true;
+            this.gIconBitmap.Width = 36;
+            // 
+            // gTitle
+            // 
+            this.gTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.gTitle.DataPropertyName = "Title";
+            this.gTitle.HeaderText = "Title";
+            this.gTitle.Name = "gTitle";
+            this.gTitle.ReadOnly = true;
+            // 
+            // gConsole
+            // 
+            this.gConsole.DataPropertyName = "ConsoleNameShort";
+            this.gConsole.HeaderText = "Console";
+            this.gConsole.Name = "gConsole";
+            this.gConsole.ReadOnly = true;
+            // 
+            // gYear
+            // 
+            this.gYear.DataPropertyName = "Year";
+            this.gYear.HeaderText = "Year";
+            this.gYear.Name = "gYear";
+            this.gYear.ReadOnly = true;
+            this.gYear.Width = 65;
+            // 
+            // gNumAchievements
+            // 
+            this.gNumAchievements.DataPropertyName = "NumAchievements";
+            this.gNumAchievements.HeaderText = "Trophies";
+            this.gNumAchievements.Name = "gNumAchievements";
+            this.gNumAchievements.ReadOnly = true;
+            this.gNumAchievements.Width = 80;
+            // 
+            // gPoints
+            // 
+            this.gPoints.DataPropertyName = "Points";
+            this.gPoints.HeaderText = "Points";
+            this.gPoints.Name = "gPoints";
+            this.gPoints.ReadOnly = true;
+            this.gPoints.Width = 65;
+            // 
+            // gNumLeaderboards
+            // 
+            this.gNumLeaderboards.DataPropertyName = "NumLeaderboards";
+            this.gNumLeaderboards.HeaderText = "Scores";
+            this.gNumLeaderboards.Name = "gNumLeaderboards";
+            this.gNumLeaderboards.ReadOnly = true;
+            this.gNumLeaderboards.Width = 70;
+            // 
+            // gLastUpdated
+            // 
+            this.gLastUpdated.DataPropertyName = "DateModified";
+            this.gLastUpdated.HeaderText = "Last Updated";
+            this.gLastUpdated.Name = "gLastUpdated";
+            this.gLastUpdated.ReadOnly = true;
+            this.gLastUpdated.Width = 105;
             // 
             // Main
             // 
@@ -2601,12 +2634,17 @@ namespace RADB
             this.tabGameInfo.PerformLayout();
             this.pnlInfoScroll.ResumeLayout(false);
             this.gpbInfo.ResumeLayout(false);
+            this.gpbInfo.PerformLayout();
             this.pnlInfoBoxArt.ResumeLayout(false);
+            this.pnlInfoBoxArt.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoBoxArt)).EndInit();
             this.pnlInfoImages.ResumeLayout(false);
+            this.pnlInfoImages.PerformLayout();
             this.pnlInfoInGame.ResumeLayout(false);
+            this.pnlInfoInGame.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoInGame)).EndInit();
             this.pnlInfoTitle.ResumeLayout(false);
+            this.pnlInfoTitle.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picInfoTitle)).EndInit();
             this.pnlInfoTop.ResumeLayout(false);
             this.pnlInfoTop.PerformLayout();
@@ -2799,15 +2837,6 @@ namespace RADB
         internal FlatPictureBoxA picAwardFloating;
         internal FlatLabelA lblAwardFloatingTitle;
         internal FlatLabelA lblAwardFloatingDesc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gID;
-        private System.Windows.Forms.DataGridViewImageColumn gIconBitmap;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gTitle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gConsole;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gYear;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gNumAchievements;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gPoints;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gNumLeaderboards;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gLastUpdated;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpID;
         private System.Windows.Forms.DataGridViewImageColumn gpIconBitmap;
         private System.Windows.Forms.DataGridViewTextBoxColumn gpTitle;
@@ -2828,6 +2857,15 @@ namespace RADB
         private System.Windows.Forms.DataGridViewTextBoxColumn ghLastUpdated;
         internal FlatCheckBoxA chkDarkMode;
         internal FlatCheckBoxA chkDebugMode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gID;
+        private System.Windows.Forms.DataGridViewImageColumn gIconBitmap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gConsole;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gYear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gNumAchievements;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gPoints;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gNumLeaderboards;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gLastUpdated;
     }
 }
 

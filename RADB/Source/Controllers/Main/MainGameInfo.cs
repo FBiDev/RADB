@@ -57,14 +57,28 @@ namespace RADB
         static async Task LoadSelectedGame()
         {
             if (Session.Game.IsNull()) { return; }
+            if (Session.GameExtend.NotNull() && Session.Game.ID == Session.GameExtend.ID)
+            {
+                form.tabMain.SelectedTab = form.tabGameInfo;
+                return;
+            }
 
             HideDownloadControls();
 
             pnlInfoScroll.AutoScrollPosition = new Point(pnlInfoScroll.AutoScrollPosition.X, 0);
             pnlInfoScroll.VerticalScroll.Value = 0;
 
+            //var emptyImage = RA.ErrorIcon;
+            //picInfoIcon.Image = emptyImage;
+            //picInfoTitle.Image = emptyImage;
+            //picInfoInGame.Image = emptyImage;
+            //picInfoBoxArt.Image = emptyImage;
+            //dgvAchievements.DataSource = null;
+
             LoadGameExtendBase();
             await LoadGameExtend();
+
+            form.tabMain.SelectedTab = form.tabGameInfo;
 
             //Update GameExtend
             if (Session.GameExtend.IsNull() || Session.GameExtend.ConsoleID == 0)
@@ -72,14 +86,13 @@ namespace RADB
                 btnUpdateInfo_Click(null, null);
             }
 
-            form.tabMain.SelectedTab = form.tabGameInfo;
-
             dgvAchievements.Focus();
         }
 
         static void LoadGameExtendBase()
         {
             lblInfoName.Text = Session.Game.Title + " (" + Session.Game.ConsoleName + ")";
+            Session.Game.SetImageIconBitmap();
             picInfoIcon.Image = Session.Game.ImageIconBitmap;
 
             lblInfoAchievements.Text = Session.Game.NumAchievements.ToString() + " Trophies: " + Session.Game.Points + " points";
@@ -98,24 +111,25 @@ namespace RADB
 
             Session.GameExtend.SetImagesBitmap();
 
-            picInfoTitle.ScaleTo(Session.GameExtend.ImageTitleBitmap);
-            picInfoInGame.ScaleTo(Session.GameExtend.ImageIngameBitmap);
-            picInfoBoxArt.ScaleTo(Session.GameExtend.ImageBoxArtBitmap);
-
             {//Scale Boxes
-                pnlInfoTitle.Height = (picInfoTitle.Height > picInfoInGame.Height ? picInfoTitle.Height : picInfoInGame.Height);
-                if (pnlInfoTitle.Height < pnlInfoImages.MinimumSize.Height - 12) pnlInfoTitle.Height = pnlInfoImages.MinimumSize.Height - 12;
+                picInfoTitle.Image = Session.GameExtend.ImageTitleBitmap;
+                picInfoInGame.Image = Session.GameExtend.ImageIngameBitmap;
+
+
+                var imageTitleSize = Session.GameExtend.ImageTitleBitmap.Height;
+                var imageIngameSize = Session.GameExtend.ImageIngameBitmap.Height;
+                var imageTitleIsBigger = imageTitleSize > imageIngameSize;
+                var picMargin = 12;
+
+                pnlInfoTitle.Height = (imageTitleIsBigger ? imageTitleSize : imageIngameSize);
+                //pnlInfoTitle.MinimumSize = new Size(14, pnlInfoImages.MinimumSize.Height - picMargin / 2);
                 pnlInfoInGame.Height = pnlInfoTitle.Height;
 
-                pnlInfoImages.Height = pnlInfoTitle.Height + 12;
-                pnlInfoBoxArt.Height = pnlInfoImages.Location.Y + pnlInfoImages.Height - 19;
+                //pnlInfoImages.Height = pnlInfoTitle.Height + picMargin;
+                pnlInfoBoxArt.Height = (pnlInfoImages.Location.Y + pnlInfoImages.Height) - pnlInfoBoxArt.Location.Y;
+                picInfoBoxArt.MaximumSize = new Size(pnlInfoBoxArt.Width - picMargin, pnlInfoBoxArt.Height - picMargin);
+                picInfoBoxArt.Image = Session.GameExtend.ImageBoxArtBitmap;
 
-                picInfoBoxArt.MaximumSize = new Size(pnlInfoBoxArt.Width - 12, pnlInfoBoxArt.Height - 12);
-                picInfoBoxArt.ScaleTo(Session.GameExtend.ImageBoxArtBitmap);
-
-                picInfoTitle.Location = new Point(pnlInfoTitle.Width / 2 - picInfoTitle.Width / 2, (pnlInfoTitle.Height / 2) - (picInfoTitle.Height / 2));
-                picInfoInGame.Location = new Point(pnlInfoInGame.Width / 2 - picInfoInGame.Width / 2, (pnlInfoInGame.Height / 2) - (picInfoInGame.Height / 2));
-                picInfoBoxArt.Location = new Point(pnlInfoBoxArt.Width / 2 - picInfoBoxArt.Width / 2, (pnlInfoBoxArt.Height / 2) - (picInfoBoxArt.Height / 2));
 
                 gpbInfo.Height = gpbInfo.PreferredSize.Height - 13;
                 gpbInfoAchievements.Location = new Point(gpbInfoAchievements.Location.X, (gpbInfo.Height - pnlInfoScroll.VerticalScroll.Value) + 9);

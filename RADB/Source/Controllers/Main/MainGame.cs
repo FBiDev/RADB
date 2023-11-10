@@ -275,6 +275,7 @@ namespace RADB
                     lstGamesByFilters.Add(obj);
                 }
             }
+            var newFilterList = new ListBind<Game>(lstGamesByFilters);
 
             dgvGames.InvokeIfRequired(() =>
             {

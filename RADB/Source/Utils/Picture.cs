@@ -20,7 +20,16 @@ namespace RADB
     {
         public Bitmap Bitmap { get; set; }
         Size _Size { get; set; }
-        public Size Size { get { return _Size; } set { _Size = value; Width = value.Width; Height = _Size.Height; } }
+        public Size Size
+        {
+            get { return _Size; }
+            set
+            {
+                _Size = value;
+                Width = value.Width;
+                Height = value.Height;
+            }
+        }
         public int Width { get; set; }
         public int Height { get; set; }
         EncoderParameters Parameters { get; set; }
@@ -36,7 +45,16 @@ namespace RADB
         }
 
         public string Path { get; set; }
-        public string Name { get { return System.IO.Path.GetFileName(Path); } }
+        string _Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                if (_Name == null)
+                    _Name = System.IO.Path.GetFileName(Path);
+                return _Name;
+            }
+        }
         ImageFormat Format { get; set; }
         PictureFormat FormatEnum { get; set; }
 
@@ -87,7 +105,8 @@ namespace RADB
         {
             DefaultValues();
 
-            Bitmap = new Bitmap(width, height);
+            Bitmap = new Bitmap(width, height, PixelFormat.Format32bppPArgb);
+
             Size = Bitmap.Size;
 
             //Default Background
@@ -108,15 +127,13 @@ namespace RADB
             Path = fileName;
             FormatEnum = format;
 
-            try
-            {
-                Bitmap = FromFile(Path);
-                Size = Bitmap.Size;
-            }
-            catch (Exception e)
-            {
-                var a = e.Message;
-            }
+            Bitmap = BitmapExtension.SuperFastLoad(Path, RA.ErrorIcon);
+            Size = Bitmap.Size;
+        }
+
+        public static Picture Create(string fileName)
+        {
+            return new Picture(fileName);
         }
 
         public Picture(List<string> imagesToMerge, bool merge = true, int imagesPerRow = 11, Size fixedPerImage = default(Size), bool stretchImage = false)
@@ -133,21 +150,12 @@ namespace RADB
             if (merge) { MergeImages(); }
         }
 
-        public static Picture Create(string fileName, Bitmap errorBitmap = null)
-        {
-            if (File.Exists(fileName) == false || new FileInfo(fileName).Length == 0)
-            {
-                return new Picture(errorBitmap);
-            }
-            return new Picture(fileName);
-        }
-
-        public Bitmap FromFile(string filePath)
-        {
-            var bytes = File.ReadAllBytes(filePath);
-            var ms = new MemoryStream(bytes);
-            return (Bitmap)Image.FromStream(ms);
-        }
+        //public Bitmap FromFile(string filePath)
+        //{
+        //    var bytes = File.ReadAllBytes(filePath);
+        //    var ms = new MemoryStream(bytes);
+        //    return ((Bitmap)Image.FromStream(ms)).Clone32bpp();
+        //}
 
         #region Saves
         ImageCodecInfo GetEncoder(ImageFormat format)
@@ -251,7 +259,7 @@ namespace RADB
                     continue;
                 }
 
-                var image = FromFile(imageFile);
+                var image = BitmapExtension.SuperFastLoad(imageFile, null);
 
                 //update the width of the final bitmap
                 if (index <= imagesPerRow && width <= maxWidth)
@@ -323,7 +331,7 @@ namespace RADB
 
                 foreach (string imageFile in ImageFiles)
                 {
-                    var image = FromFile(imageFile);
+                    var image = BitmapExtension.SuperFastLoad(imageFile, null);
 
                     if (index > imagesPerRow)
                     {

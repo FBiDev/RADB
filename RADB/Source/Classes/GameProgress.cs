@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using Newtonsoft.Json;
+using GNX;
 
 namespace RADB
 {
@@ -25,7 +26,7 @@ namespace RADB
         public void SetImageIconBitmap()
         {
             if (ImageIconBitmap != RA.DefaultIcon) { return; }
-            ImageIconBitmap = Picture.Create(ImageIconFile.Path, RA.ErrorIcon).Bitmap;
+            ImageIconBitmap = BitmapExtension.SuperFastLoad(ImageIconFile.Path, RA.ErrorIcon);
         }
         #endregion
 

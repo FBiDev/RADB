@@ -59,7 +59,7 @@ namespace RADB
         public void SetUserPicBitmap()
         {
             if (UserPicBitmap != RA.DefaultIcon) { return; }
-            UserPicBitmap = Picture.Create(UserPicFile.Path, RA.ErrorIcon).Bitmap;
+            UserPicBitmap = BitmapExtension.SuperFastLoad(UserPicFile.Path, RA.ErrorIcon);
         }
 
         public int TotalPoints { get; set; }

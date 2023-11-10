@@ -39,9 +39,9 @@ namespace RADB
 
         public void SetImagesBitmap()
         {
-            if (ImageTitleBitmap == RA.DefaultTitleImage) { ImageTitleBitmap = Picture.Create(ImageTitleFile.Path, RA.ErrorIcon).Bitmap; }
-            if (ImageIngameBitmap == RA.DefaultIngameImage) { ImageIngameBitmap = Picture.Create(ImageIngameFile.Path, RA.ErrorIcon).Bitmap; }
-            if (ImageBoxArtBitmap == RA.DefaultBoxArtImage) { ImageBoxArtBitmap = Picture.Create(ImageBoxArtFile.Path, RA.ErrorIcon).Bitmap; }
+            if (ImageTitleBitmap == RA.DefaultTitleImage) { ImageTitleBitmap = BitmapExtension.SuperFastLoad(ImageTitleFile.Path, RA.ErrorIcon); }
+            if (ImageIngameBitmap == RA.DefaultIngameImage) { ImageIngameBitmap = BitmapExtension.SuperFastLoad(ImageIngameFile.Path, RA.ErrorIcon); }
+            if (ImageBoxArtBitmap == RA.DefaultBoxArtImage) { ImageBoxArtBitmap = BitmapExtension.SuperFastLoad(ImageBoxArtFile.Path, RA.ErrorIcon); }
         }
         #endregion
 

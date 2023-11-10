@@ -124,7 +124,7 @@ namespace RADB
                 {
                     if (i >= list.Count) { break; }
 
-                    list[i].SetImageIconBitmap();
+                    list[i].SetImageIconGridBitmap();
                 }
             });
             dgv.Refresh();

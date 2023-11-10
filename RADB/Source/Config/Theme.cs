@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Windows.Forms;
 using GNX.Desktop;
 
 namespace RADB
@@ -46,8 +45,8 @@ namespace RADB
             }
             else
             {
-                CheevoTitle = Control.DefaultForeColor;
-                CheevoDescription = Control.DefaultForeColor;
+                CheevoTitle = Color.FromArgb(204, 153, 0);
+                CheevoDescription = Color.FromArgb(44, 151, 250);
             }
         }
     }

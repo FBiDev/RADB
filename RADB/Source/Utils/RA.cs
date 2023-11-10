@@ -100,8 +100,10 @@ namespace RADB
 
         static readonly Size GameIconSize = new Size(96, 96);
         static readonly Size GameBadgesSize = new Size(64, 64);
+        static readonly Size GameIconGridSize = new Size(32, 32);
 
         public static readonly Bitmap DefaultIcon = new Picture(GameIconSize).Bitmap;
+        public static readonly Bitmap DefaultIconGrid = new Picture(GameIconGridSize).Bitmap;
         public static readonly Bitmap ErrorIcon = Resources.notfound;
 
         public static readonly Bitmap DefaultTitleImage = new Picture(200, 150).Bitmap;
@@ -359,7 +361,7 @@ namespace RADB
                 var file = user.LastGame.ImageIconFile;
                 var dl = new Download(file);
                 if (await (dl.Start()))
-                    user.LastGame.SetImageIconBitmap();
+                    user.LastGame.SetImageIconGridBitmap();
 
                 return user;
             });
