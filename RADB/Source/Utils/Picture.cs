@@ -150,13 +150,6 @@ namespace RADB
             if (merge) { MergeImages(); }
         }
 
-        //public Bitmap FromFile(string filePath)
-        //{
-        //    var bytes = File.ReadAllBytes(filePath);
-        //    var ms = new MemoryStream(bytes);
-        //    return ((Bitmap)Image.FromStream(ms)).Clone32bpp();
-        //}
-
         #region Saves
         ImageCodecInfo GetEncoder(ImageFormat format)
         {

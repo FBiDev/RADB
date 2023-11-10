@@ -1554,7 +1554,7 @@ namespace RADB
             // gpIconBitmap
             // 
             this.gpIconBitmap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.gpIconBitmap.DataPropertyName = "ImageIconBitmap";
+            this.gpIconBitmap.DataPropertyName = "ImageIconGridBitmap";
             this.gpIconBitmap.HeaderText = "Icon";
             this.gpIconBitmap.Name = "gpIconBitmap";
             this.gpIconBitmap.ReadOnly = true;
@@ -1708,7 +1708,7 @@ namespace RADB
             // 
             // ghIconBitmap
             // 
-            this.ghIconBitmap.DataPropertyName = "ImageIconBitmap";
+            this.ghIconBitmap.DataPropertyName = "ImageIconGridBitmap";
             this.ghIconBitmap.HeaderText = "Icon";
             this.ghIconBitmap.Name = "ghIconBitmap";
             this.ghIconBitmap.ReadOnly = true;
