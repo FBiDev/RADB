@@ -573,7 +573,7 @@ namespace RADB
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvConsoles.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dgvConsoles.RowTemplate.Height = 36;
+            this.dgvConsoles.RowTemplate.Height = 37;
             this.dgvConsoles.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvConsoles.Size = new System.Drawing.Size(896, 459);
             this.dgvConsoles.TabIndex = 0;
@@ -956,7 +956,7 @@ namespace RADB
             dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvGames.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
-            this.dgvGames.RowTemplate.Height = 36;
+            this.dgvGames.RowTemplate.Height = 37;
             this.dgvGames.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGames.Size = new System.Drawing.Size(896, 459);
             this.dgvGames.TabIndex = 1;
@@ -1538,7 +1538,7 @@ namespace RADB
             dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvGamesToPlay.RowHeadersDefaultCellStyle = dataGridViewCellStyle20;
-            this.dgvGamesToPlay.RowTemplate.Height = 36;
+            this.dgvGamesToPlay.RowTemplate.Height = 37;
             this.dgvGamesToPlay.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGamesToPlay.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToPlay.TabIndex = 3;
@@ -1558,7 +1558,7 @@ namespace RADB
             this.gpIconBitmap.HeaderText = "Icon";
             this.gpIconBitmap.Name = "gpIconBitmap";
             this.gpIconBitmap.ReadOnly = true;
-            this.gpIconBitmap.Width = 36;
+            this.gpIconBitmap.Width = 37;
             // 
             // gpTitle
             // 
@@ -1693,7 +1693,7 @@ namespace RADB
             dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvGamesToHide.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
-            this.dgvGamesToHide.RowTemplate.Height = 36;
+            this.dgvGamesToHide.RowTemplate.Height = 37;
             this.dgvGamesToHide.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvGamesToHide.Size = new System.Drawing.Size(896, 459);
             this.dgvGamesToHide.TabIndex = 2;
@@ -1712,7 +1712,7 @@ namespace RADB
             this.ghIconBitmap.HeaderText = "Icon";
             this.ghIconBitmap.Name = "ghIconBitmap";
             this.ghIconBitmap.ReadOnly = true;
-            this.ghIconBitmap.Width = 36;
+            this.ghIconBitmap.Width = 37;
             // 
             // ghTitle
             // 
@@ -2542,7 +2542,7 @@ namespace RADB
             this.gIconBitmap.HeaderText = "Icon";
             this.gIconBitmap.Name = "gIconBitmap";
             this.gIconBitmap.ReadOnly = true;
-            this.gIconBitmap.Width = 36;
+            this.gIconBitmap.Width = 37;
             // 
             // gTitle
             // 
