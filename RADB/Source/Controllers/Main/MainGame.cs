@@ -235,6 +235,12 @@ namespace RADB
         static Task FilterGameList()
         {
             //if (txtSearchGames.Text.Count() > 0 && txtSearchGames.Text.Count() < 3) { return; }
+            if (Session.Console.ID == 0 && txtSearchGames.Text.Count() == 0)
+            {
+                lstGamesByFilters = new ListBind<Game>(lstGamesAll);
+                SetDataSource(lstGamesByFilters);
+                return Task.CompletedTask;
+            }
             var predicates = new List<Predicate<Game>>();
 
             var gameTypes = new Dictionary<FlatCheckBoxA, string[]>
@@ -275,16 +281,19 @@ namespace RADB
                     lstGamesByFilters.Add(obj);
                 }
             }
-            var newFilterList = new ListBind<Game>(lstGamesByFilters);
 
+            SetDataSource(lstGamesByFilters);
+            return Task.CompletedTask;
+        }
+
+        static void SetDataSource(ListBind<Game> listGames)
+        {
             dgvGames.InvokeIfRequired(() =>
             {
-                dgvGames.DataSource = lstGamesByFilters;
+                dgvGames.DataSource = listGames;
                 UpdateConsoleLabels();
                 EnablePanelGames();
-            });
-
-            return Task.CompletedTask;
+            });            
         }
 
         static async void LoadGamesIcons(object sender, EventArgs e)
