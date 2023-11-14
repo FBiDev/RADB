@@ -234,14 +234,8 @@ namespace RADB
 
         static Task FilterGameList()
         {
-            //if (txtSearchGames.Text.Count() > 0 && txtSearchGames.Text.Count() < 3) { return; }
-            if (Session.Console.ID == 0 && txtSearchGames.Text.Count() == 0)
-            {
-                lstGamesByFilters = new ListBind<Game>(lstGamesAll);
-                SetDataSource(lstGamesByFilters);
-                return Task.CompletedTask;
-            }
-            var predicates = new List<Predicate<Game>>();
+            string search = txtSearchGames.Text;
+            bool WithoutAchievements = !chkWithoutAchievements.Checked;
 
             var gameTypes = new Dictionary<FlatCheckBoxA, string[]>
             {
@@ -256,6 +250,14 @@ namespace RADB
                 { chkDemoted, new[]{RA.GameType.Demoted }}
             };
 
+            if (Session.Console.ID == 0 && search.Length == 0 && WithoutAchievements == false && gameTypes.All(x => x.Key.Checked))
+            {
+                lstGamesByFilters = new ListBind<Game>(lstGamesAll);
+                SetDataSource(lstGamesByFilters);
+                return Task.CompletedTask;
+            }
+
+            var predicates = new List<Predicate<Game>>();
             foreach (var gameType in gameTypes)
             {
                 if (gameType.Key.Checked)
@@ -266,9 +268,6 @@ namespace RADB
                         predicates.Add(g => g.Title.ContainsExtend(gameType.Value[0]));
                 }
             }
-
-            string search = txtSearchGames.Text;
-            bool WithoutAchievements = !chkWithoutAchievements.Checked;
 
             lstGamesByFilters = new ListBind<Game>();
             foreach (Game obj in lstGamesByPlataform)
@@ -293,7 +292,7 @@ namespace RADB
                 dgvGames.DataSource = listGames;
                 UpdateConsoleLabels();
                 EnablePanelGames();
-            });            
+            });
         }
 
         static async void LoadGamesIcons(object sender, EventArgs e)
