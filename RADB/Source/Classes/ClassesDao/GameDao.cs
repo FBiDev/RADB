@@ -48,8 +48,7 @@ namespace RADB
             {
                 new cSqlParameter("@ID", obj.ID),
                 new cSqlParameter("@Title", obj.Title),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID),
-                new cSqlParameter("@ImageIcon", obj.ImageIcon)
+                new cSqlParameter("@ConsoleID", obj.ConsoleID)
             };
         }
         #endregion

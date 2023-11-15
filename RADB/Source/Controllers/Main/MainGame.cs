@@ -289,7 +289,9 @@ namespace RADB
         {
             dgvGames.InvokeIfRequired(() =>
             {
+                dgvGames.DisposeCells();
                 dgvGames.DataSource = listGames;
+
                 UpdateConsoleLabels();
                 EnablePanelGames();
             });
@@ -344,7 +346,8 @@ namespace RADB
             if (e.KeyData == Keys.Enter)
             {
                 e.Handled = true;
-                MainCommon.ChangeBindGame(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
+                if (((DataGridView)sender).CurrentRow != null)
+                    MainCommon.ChangeBindGame(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
             }
 
             if (e.KeyData == Keys.Escape) { txtSearchGames.Focus(); }
