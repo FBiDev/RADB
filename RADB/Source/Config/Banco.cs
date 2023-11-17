@@ -19,7 +19,7 @@ namespace RADB
             Database = new DatabaseManager
             {
                 DatabaseSystem = DbSystem.SQLite,
-                Connection = new SQLiteConnection() { DefaultTimeout = DatabaseManager.DefaultCommandTimeout },
+                Connection = new SQLiteConnection { DefaultTimeout = DatabaseManager.DefaultCommandTimeout },
                 ServerAddress = "",
                 DatabaseName = "",
                 DataBaseFile = Session.Options.SystemDatabaseFile,

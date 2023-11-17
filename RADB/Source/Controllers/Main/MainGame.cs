@@ -289,7 +289,6 @@ namespace RADB
         {
             dgvGames.InvokeIfRequired(() =>
             {
-                dgvGames.DisposeCells();
                 dgvGames.DataSource = listGames;
 
                 UpdateConsoleLabels();
