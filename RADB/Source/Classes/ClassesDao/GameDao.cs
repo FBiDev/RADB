@@ -146,7 +146,7 @@ namespace RADB
                         ", " + i.NumAchievements +
                         ", " + i.Points +
                         ", " + i.NumLeaderboards +
-                        ", " + i.DateModified.ToDB() +
+                        ", " + i.DateModified.ToDBquoted() + "" +
                         ", " + i.ForumTopicID.ToDB() +
                         ", '" + i.ImageIcon + "')");
 
