@@ -28,7 +28,7 @@ namespace RADB
         public bool ToggleDebugMode()
         {
             DebugMode = !DebugMode;
-            cDebug.Enable = DebugMode;
+            DebugManager.Enable = DebugMode;
             MainBaseForm.DebugMode = DebugMode;
 
             return Session.UpdateOptions();

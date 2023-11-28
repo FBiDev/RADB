@@ -36,8 +36,8 @@ namespace RADB
 
             Banco.Load();
 
-            cDebug.Enable = Options.DebugMode;
-            cDebug.LogSQLSistema.SyncList(Banco.Log);
+            DebugManager.Enable = Options.DebugMode;
+            DebugManager.LogSQLSistema.SyncList(Banco.Log);
             //cDebug.Open();
         }
         #endregion

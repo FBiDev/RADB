@@ -420,9 +420,9 @@ namespace RADB
             this.tabMain.Controls.Add(this.tabAbout);
             this.tabMain.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tabMain.Location = new System.Drawing.Point(10, 12);
-            this.tabMain.myBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            this.tabMain.myBackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(208)))), ((int)(((byte)(200)))));
-            this.tabMain.myBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+            this.tabMain.MyBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.tabMain.MyBackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(208)))), ((int)(((byte)(200)))));
+            this.tabMain.MyBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
             this.tabMain.Size = new System.Drawing.Size(916, 574);
@@ -833,7 +833,7 @@ namespace RADB
             this.txtSearchGames.Location = new System.Drawing.Point(586, 5);
             this.txtSearchGames.Name = "txtSearchGames";
             this.txtSearchGames.Padding = new System.Windows.Forms.Padding(1);
-            this.txtSearchGames.previousText = "";
+            this.txtSearchGames.PreviousText = "";
             this.txtSearchGames.Size = new System.Drawing.Size(182, 34);
             this.txtSearchGames.TabIndex = 2;
             // 
@@ -1261,7 +1261,7 @@ namespace RADB
             this.txtSearchAchiev.Location = new System.Drawing.Point(688, 16);
             this.txtSearchAchiev.Name = "txtSearchAchiev";
             this.txtSearchAchiev.Padding = new System.Windows.Forms.Padding(1);
-            this.txtSearchAchiev.previousText = "";
+            this.txtSearchAchiev.PreviousText = "";
             this.txtSearchAchiev.Size = new System.Drawing.Size(182, 34);
             this.txtSearchAchiev.TabIndex = 37;
             // 
@@ -2325,7 +2325,7 @@ namespace RADB
             this.txtUsername.Location = new System.Drawing.Point(6, 6);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Padding = new System.Windows.Forms.Padding(1);
-            this.txtUsername.previousText = "";
+            this.txtUsername.PreviousText = "";
             this.txtUsername.Size = new System.Drawing.Size(146, 34);
             this.txtUsername.TabIndex = 30;
             // 

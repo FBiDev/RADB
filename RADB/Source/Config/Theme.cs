@@ -23,11 +23,11 @@ namespace RADB
 
             if (Session.Options.DarkMode)
             {
-                ThemeBase.SetTheme(ThemeBase.eTheme.Dark);
+                ThemeBase.SetTheme(ThemeBase.ThemeNames.Dark);
             }
             else
             {
-                ThemeBase.SetTheme(ThemeBase.eTheme.Light);
+                ThemeBase.SetTheme(ThemeBase.ThemeNames.Light);
             }
 
             CustomColors();

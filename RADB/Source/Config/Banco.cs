@@ -11,18 +11,18 @@ namespace RADB
     public static class Banco
     {
         static DatabaseManager Database { get; set; }
-        public static ListSynced<cLogSQL> Log { get { return Database.Log; } }
+        public static ListSynced<SqlLog> Log { get { return Database.Log; } }
         public static bool Loaded { get; set; }
 
         public static void Load()
         {
             Database = new DatabaseManager
             {
-                DatabaseSystem = DbSystem.SQLite,
+                DatabaseType = DatabaseType.SQLite,
                 Connection = new SQLiteConnection { DefaultTimeout = DatabaseManager.DefaultCommandTimeout },
                 ServerAddress = "",
                 DatabaseName = "",
-                DataBaseFile = Session.Options.SystemDatabaseFile,
+                DatabaseFile = Session.Options.SystemDatabaseFile,
                 Username = "",
                 Password = "",
                 ConnectionString = ""
@@ -31,7 +31,7 @@ namespace RADB
             Loaded = true;
         }
 
-        public async static Task<DataTable> ExecutarSelect(string sql, List<cSqlParameter> parameters = null, string storedProcedure = default(string))
+        public async static Task<DataTable> ExecutarSelect(string sql, List<SqlParameter> parameters = null, string storedProcedure = default(string))
         {
             if (Loaded)
             {
@@ -41,14 +41,14 @@ namespace RADB
             return new DataTable();
         }
 
-        public async static Task<cSqlResult> Executar(string sql, DbAction action, List<cSqlParameter> parameters)
+        public async static Task<SqlResult> Executar(string sql, DatabaseAction action, List<SqlParameter> parameters)
         {
             if (Loaded)
             {
                 try { return await Database.Execute(sql, action, parameters); }
                 catch (Exception ex) { ExceptionManager.Resolve(ex); }
             }
-            return new cSqlResult();
+            return new SqlResult();
         }
 
         public async static Task<DateTime> DataServidor()

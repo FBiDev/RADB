@@ -42,31 +42,31 @@ namespace RADB
         #endregion
 
         #region " _MountFilters "
-        static List<cSqlParameter> MountFilters(Game obj)
+        static List<SqlParameter> MountFilters(Game obj)
         {
-            return new List<cSqlParameter>
+            return new List<SqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@Title", obj.Title),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID)
+                new SqlParameter("@ID", obj.ID),
+                new SqlParameter("@Title", obj.Title),
+                new SqlParameter("@ConsoleID", obj.ConsoleID)
             };
         }
         #endregion
 
         #region " _MountParameters "
-        static List<cSqlParameter> MountParameters(Game obj)
+        static List<SqlParameter> MountParameters(Game obj)
         {
-            return new List<cSqlParameter>
+            return new List<SqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@Title", obj.Title),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID),
-                new cSqlParameter("@ImageIcon", obj.ImageIcon),
-                new cSqlParameter("@NumAchievements", obj.NumAchievements),
-                new cSqlParameter("@Points", obj.Points),
-                new cSqlParameter("@NumLeaderboards", obj.NumLeaderboards),
-                new cSqlParameter("@DateModified", obj.DateModified),
-                new cSqlParameter("@ForumTopicID", obj.ForumTopicID)
+                new SqlParameter("@ID", obj.ID),
+                new SqlParameter("@Title", obj.Title),
+                new SqlParameter("@ConsoleID", obj.ConsoleID),
+                new SqlParameter("@ImageIcon", obj.ImageIcon),
+                new SqlParameter("@NumAchievements", obj.NumAchievements),
+                new SqlParameter("@Points", obj.Points),
+                new SqlParameter("@NumLeaderboards", obj.NumLeaderboards),
+                new SqlParameter("@DateModified", obj.DateModified),
+                new SqlParameter("@ForumTopicID", obj.ForumTopicID)
             };
         }
         #endregion
@@ -90,7 +90,7 @@ namespace RADB
             sql += " ORDER BY NumAchievements=0, Title ASC ";
 
             var parameters = MountFilters(obj);
-            parameters.Add(new cSqlParameter("@allTables", allTables));
+            parameters.Add(new SqlParameter("@allTables", allTables));
 
             return Load<List<Game>>(await Banco.ExecutarSelect(sql, parameters));
         }
@@ -126,7 +126,7 @@ namespace RADB
             string sql = Resources.GameInsert;
             var parameters = MountParameters(obj);
 
-            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
+            return (await Banco.Executar(sql, DatabaseAction.Insert, parameters)).AffectedRows > 0;
         }
 
         public async static Task<bool> InsertList(IList<Game> list)
@@ -155,9 +155,9 @@ namespace RADB
             }
             sql += s.ToString();
 
-            var parameters = new List<cSqlParameter>();
+            var parameters = new List<SqlParameter>();
 
-            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
+            return (await Banco.Executar(sql, DatabaseAction.Insert, parameters)).AffectedRows > 0;
         }
         #endregion
 
@@ -165,13 +165,13 @@ namespace RADB
         public async static Task<bool> Delete(Game obj)
         {
             string sql = Resources.GameDelete;
-            var parameters = new List<cSqlParameter>
+            var parameters = new List<SqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID)
+                new SqlParameter("@ID", obj.ID),
+                new SqlParameter("@ConsoleID", obj.ConsoleID)
             };
 
-            return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
+            return (await Banco.Executar(sql, DatabaseAction.Delete, parameters)).AffectedRows > 0;
         }
         #endregion
 
@@ -188,18 +188,18 @@ namespace RADB
             string sql = Resources.GameInsertToHide;
             var parameters = MountParameters(obj);
 
-            return await Task.Run(async () => (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0);
+            return await Task.Run(async () => (await Banco.Executar(sql, DatabaseAction.Insert, parameters)).AffectedRows > 0);
         }
 
         public async static Task<bool> DeleteFromHide(Game obj)
         {
             string sql = Resources.GameDeleteFromHide;
-            var parameters = new List<cSqlParameter>
+            var parameters = new List<SqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID)
+                new SqlParameter("@ID", obj.ID)
             };
 
-            return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
+            return (await Banco.Executar(sql, DatabaseAction.Delete, parameters)).AffectedRows > 0;
         }
         #endregion
 
@@ -215,41 +215,41 @@ namespace RADB
             string sql = Resources.GameInsertToPlay;
             var parameters = MountParameters(obj);
 
-            return await Task.Run(async () => (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0);
+            return await Task.Run(async () => (await Banco.Executar(sql, DatabaseAction.Insert, parameters)).AffectedRows > 0);
         }
 
         public async static Task<bool> DeleteFromPlay(Game obj)
         {
             string sql = Resources.GameDeleteFromPlay;
 
-            var parameters = new List<cSqlParameter>
+            var parameters = new List<SqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID)
+                new SqlParameter("@ID", obj.ID)
             };
 
-            return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
+            return (await Banco.Executar(sql, DatabaseAction.Delete, parameters)).AffectedRows > 0;
         }
         #endregion
 
         public async static Task<bool> InsertReleasedDate(Game obj)
         {
             string sql = Resources.GameInsertReleasedDate;
-            var parameters = new List<cSqlParameter>
+            var parameters = new List<SqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID),
-                new cSqlParameter("@ReleasedDate", obj.ReleasedDate)
+                new SqlParameter("@ID", obj.ID),
+                new SqlParameter("@ConsoleID", obj.ConsoleID),
+                new SqlParameter("@ReleasedDate", obj.ReleasedDate)
             };
 
-            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
+            return (await Banco.Executar(sql, DatabaseAction.Insert, parameters)).AffectedRows > 0;
         }
 
         public async static Task<List<Game>> ListNotInReleasedDate(int consoleID)
         {
             string sql = Resources.GameNotInReleasedDate;
-            var parameters = new List<cSqlParameter>
+            var parameters = new List<SqlParameter>
             {
-                new cSqlParameter("@ConsoleID", consoleID)
+                new SqlParameter("@ConsoleID", consoleID)
             };
             return LoadReleasedDate<List<Game>>(await Banco.ExecutarSelect(sql, parameters));
         }

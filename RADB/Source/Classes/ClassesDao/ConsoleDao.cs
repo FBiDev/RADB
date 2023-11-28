@@ -32,23 +32,23 @@ namespace RADB
         #endregion
 
         #region " _MountFilters "
-        static List<cSqlParameter> MountFilters(Console obj)
+        static List<SqlParameter> MountFilters(Console obj)
         {
-            return new List<cSqlParameter>
+            return new List<SqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@Name", obj.Name)
+                new SqlParameter("@ID", obj.ID),
+                new SqlParameter("@Name", obj.Name)
             };
         }
         #endregion
 
         #region " _MountParameters "
-        static List<cSqlParameter> MountParameters(Console obj)
+        static List<SqlParameter> MountParameters(Console obj)
         {
-            return new List<cSqlParameter>
+            return new List<SqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@Name", obj.Name)
+                new SqlParameter("@ID", obj.ID),
+                new SqlParameter("@Name", obj.Name)
             };
         }
         #endregion
@@ -83,21 +83,21 @@ namespace RADB
 
             var parameters = MountParameters(obj);
 
-            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
+            return (await Banco.Executar(sql, DatabaseAction.Insert, parameters)).AffectedRows > 0;
         }
 
         public async static Task<bool> InsertList(IList<Console> list)
         {
             string sql = "INSERT INTO Console (ID, Name) VALUES " + Environment.NewLine;
-            var parameters = new List<cSqlParameter>();
+            var parameters = new List<SqlParameter>();
 
             int index = 0;
             foreach (var i in list)
             {
-                parameters.AddRange(new List<cSqlParameter>
+                parameters.AddRange(new List<SqlParameter>
                 {
-                    new cSqlParameter("@ID" + index, i.ID),
-                    new cSqlParameter("@Name" + index, i.Name)
+                    new SqlParameter("@ID" + index, i.ID),
+                    new SqlParameter("@Name" + index, i.Name)
                 });
 
                 sql += "(" + "@ID" + index + ", @Name" + index + ")";
@@ -106,7 +106,7 @@ namespace RADB
                 if (index < list.Count) { sql += "," + Environment.NewLine; }
             }
 
-            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
+            return (await Banco.Executar(sql, DatabaseAction.Insert, parameters)).AffectedRows > 0;
         }
         #endregion
 
@@ -114,13 +114,13 @@ namespace RADB
         public async static Task<bool> Delete(Console obj)
         {
             string sql = Resources.ConsoleDelete;
-            var parameters = new List<cSqlParameter>
+            var parameters = new List<SqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@Name", obj.Name)
+                new SqlParameter("@ID", obj.ID),
+                new SqlParameter("@Name", obj.Name)
             };
 
-            return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
+            return (await Banco.Executar(sql, DatabaseAction.Delete, parameters)).AffectedRows > 0;
         }
         #endregion
     }

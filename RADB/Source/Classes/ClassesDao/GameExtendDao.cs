@@ -40,30 +40,30 @@ namespace RADB
         #endregion
 
         #region " _MountFilters "
-        static List<cSqlParameter> MountFilters(GameExtend obj)
+        static List<SqlParameter> MountFilters(GameExtend obj)
         {
-            return new List<cSqlParameter>
+            return new List<SqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID)
+                new SqlParameter("@ID", obj.ID),
+                new SqlParameter("@ConsoleID", obj.ConsoleID)
             };
         }
         #endregion
 
         #region " _MountParameters "
-        static List<cSqlParameter> MountParameters(GameExtend obj)
+        static List<SqlParameter> MountParameters(GameExtend obj)
         {
-            return new List<cSqlParameter>
+            return new List<SqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID),
-                new cSqlParameter("@Developer", obj.Developer),
-                new cSqlParameter("@Publisher", obj.Publisher),
-                new cSqlParameter("@Genre", obj.Genre),
-                new cSqlParameter("@Released", obj.Released),
-                new cSqlParameter("@ImageTitle", obj.ImageTitle),
-                new cSqlParameter("@ImageIngame", obj.ImageIngame),
-                new cSqlParameter("@ImageBoxArt", obj.ImageBoxArt)
+                new SqlParameter("@ID", obj.ID),
+                new SqlParameter("@ConsoleID", obj.ConsoleID),
+                new SqlParameter("@Developer", obj.Developer),
+                new SqlParameter("@Publisher", obj.Publisher),
+                new SqlParameter("@Genre", obj.Genre),
+                new SqlParameter("@Released", obj.Released),
+                new SqlParameter("@ImageTitle", obj.ImageTitle),
+                new SqlParameter("@ImageIngame", obj.ImageIngame),
+                new SqlParameter("@ImageBoxArt", obj.ImageBoxArt)
             };
         }
         #endregion
@@ -95,7 +95,7 @@ namespace RADB
             string sql = Resources.GameExtendInsert;
             var parameters = MountParameters(obj);
 
-            return (await Banco.Executar(sql, DbAction.Insert, parameters)).AffectedRows > 0;
+            return (await Banco.Executar(sql, DatabaseAction.Insert, parameters)).AffectedRows > 0;
         }
         #endregion
 
@@ -103,13 +103,13 @@ namespace RADB
         public async static Task<bool> Delete(GameExtend obj)
         {
             string sql = Resources.GameExtendDelete;
-            var parameters = new List<cSqlParameter>
+            var parameters = new List<SqlParameter>
             {
-                new cSqlParameter("@ID", obj.ID),
-                new cSqlParameter("@ConsoleID", obj.ConsoleID)
+                new SqlParameter("@ID", obj.ID),
+                new SqlParameter("@ConsoleID", obj.ConsoleID)
             };
 
-            return (await Banco.Executar(sql, DbAction.Delete, parameters)).AffectedRows > 0;
+            return (await Banco.Executar(sql, DatabaseAction.Delete, parameters)).AffectedRows > 0;
         }
         #endregion
     }
