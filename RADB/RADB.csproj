@@ -260,6 +260,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Deps\ndp48-web.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deps\vcredist2012_x64.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Plugins\GNX.dll" />
     <Content Include="Resources\App\jpegoptim_1.5.0.exe" />
     <Content Include="Resources\App\jpegoptim_1.5.5.exe" />
@@ -325,7 +331,7 @@
   <PropertyGroup>
     <PostBuildEvent>:: Move all assemblies and related files to lib folder
 ROBOCOPY "$(SolutionDir)..\_DLL\ " "$(TargetDir)Plugins\ " "GNX.pdb" /XO
-ROBOCOPY "$(TargetDir) " "$(TargetDir)Plugins\ " /XF *.exe *.config *.manifest $(SolutionName).pdb *.json /XD Plugins Data /E /IS /MOV 
+ROBOCOPY "$(TargetDir) " "$(TargetDir)Plugins\ " /XF *.exe *.config *.manifest $(SolutionName).pdb *.json /XD Plugins Data Deps /E /IS /MOV 
 if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

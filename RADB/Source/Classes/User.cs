@@ -9,6 +9,7 @@ namespace RADB
     public class User
     {
         public int ID { get; set; }
+        [JsonProperty("User")]
         public string Name { get; set; }
         public string Motto { get; set; }
 
@@ -21,10 +22,10 @@ namespace RADB
         public DateTime? Lastupdate { get; set; }
         public string LastupdateString { get { return Lastupdate.ToString("dd MMM yyyy, HH:mm"); } }
 
-        public int Permissions { get; set; }
-
         [JsonConverter(typeof(BoolConverter))]
         public bool Untracked { get; set; }
+
+        public int Permissions { get; set; }
 
         public string AccountType
         {
@@ -44,16 +45,7 @@ namespace RADB
             }
         }
 
-        string _UserPic { get; set; }
-        public string UserPic
-        {
-            get { return _UserPic; }
-            set
-            {
-                if (LastActivity != null)
-                    _UserPic = value = LastActivity.User.ToString() + PictureFormat.Png.ToStringHex();
-            }
-        }
+        public string UserPic { get { return Name + PictureFormat.Png.ToStringHex(); } }
         public DownloadFile UserPicFile { get { return new DownloadFile(RA.USER_HOST + UserPic, Folder.User + UserPic); } }
         public Bitmap UserPicBitmap { get; set; }
         public void SetUserPicBitmap()
@@ -81,9 +73,9 @@ namespace RADB
         }
 
         [JsonProperty("Rank")]
-        public int? _Rank { get; set; }
+        public int? RankValue { get; set; }
         [JsonProperty("RankInt")]
-        public int Rank { get { return _Rank ?? 0; } set { _Rank = value; } }
+        public int Rank { get { return RankValue ?? 0; } set { RankValue = value; } }
 
         public int TotalRanked { get; set; }
 
@@ -152,14 +144,21 @@ namespace RADB
 
         public Bitmap LastGameImage
         {
-            get { return string.IsNullOrWhiteSpace(LastGame.ImageIcon) ? null : LastGame.ImageIconBitmap; }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(LastGame.ImageIcon))
+                    return null;
+
+                LastGame.SetImageIconBitmap();
+                return LastGame.ImageIconBitmap;
+            }
         }
 
-        string _RichPresenceMsg { get; set; }
+        string RichPresenceValue { get; set; }
         public string RichPresenceMsg
         {
-            get { return string.IsNullOrWhiteSpace(_RichPresenceMsg) || _RichPresenceMsg == "Unknown" ? "" : _RichPresenceMsg; }
-            set { _RichPresenceMsg = value; }
+            get { return string.IsNullOrWhiteSpace(RichPresenceValue) || RichPresenceValue == "Unknown" ? "" : RichPresenceValue; }
+            set { RichPresenceValue = value; }
         }
 
         public User()

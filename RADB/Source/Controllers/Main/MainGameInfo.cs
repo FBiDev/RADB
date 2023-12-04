@@ -115,21 +115,14 @@ namespace RADB
                 picInfoTitle.Image = Session.GameExtend.ImageTitleBitmap;
                 picInfoInGame.Image = Session.GameExtend.ImageIngameBitmap;
 
-
-                var imageTitleSize = Session.GameExtend.ImageTitleBitmap.Height;
-                var imageIngameSize = Session.GameExtend.ImageIngameBitmap.Height;
-                var imageTitleIsBigger = imageTitleSize > imageIngameSize;
+                var bigHeight = picInfoTitle.Height > picInfoInGame.Height ? picInfoTitle.Height : picInfoInGame.Height;
                 var picMargin = 12;
 
-                pnlInfoTitle.Height = (imageTitleIsBigger ? imageTitleSize : imageIngameSize);
-                //pnlInfoTitle.MinimumSize = new Size(14, pnlInfoImages.MinimumSize.Height - picMargin / 2);
-                pnlInfoInGame.Height = pnlInfoTitle.Height;
+                pnlInfoImages.Height = bigHeight + picMargin;
 
-                //pnlInfoImages.Height = pnlInfoTitle.Height + picMargin;
                 pnlInfoBoxArt.Height = (pnlInfoImages.Location.Y + pnlInfoImages.Height) - pnlInfoBoxArt.Location.Y;
                 picInfoBoxArt.MaximumSize = new Size(pnlInfoBoxArt.Width - picMargin, pnlInfoBoxArt.Height - picMargin);
                 picInfoBoxArt.Image = Session.GameExtend.ImageBoxArtBitmap;
-
 
                 gpbInfo.Height = gpbInfo.PreferredSize.Height - 13;
                 gpbInfoAchievements.Location = new Point(gpbInfoAchievements.Location.X, (gpbInfo.Height - pnlInfoScroll.VerticalScroll.Value) + 9);

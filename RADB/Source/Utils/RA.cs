@@ -332,7 +332,6 @@ namespace RADB
 
                 if (user.LastActivity != null)
                 {
-                    user.Name = user.LastActivity.User;
                     user.Lastupdate = user.LastActivity.lastupdate;
                 }
                 return user;
