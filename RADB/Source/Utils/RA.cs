@@ -355,6 +355,9 @@ namespace RADB
         {
             return await Task.Run(async () =>
             {
+                if (user.LastGameID == 0) { return user; }
+
+                user.LastGame = await Game.Find(user.LastGameID);
                 if (user.LastGame.ID == 0) { return user; }
 
                 var file = user.LastGame.ImageIconFile;

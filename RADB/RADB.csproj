@@ -53,7 +53,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Icons\favicon.ico</ApplicationIcon>
+    <ApplicationIcon>ResourcesLocal\Icons\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GNX, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -103,66 +103,66 @@
     <Compile Include="Source\Utils\WebClientExtend.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatLabelB.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatLabelB.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatLabelB.Designer.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatLabelB.Designer.cs">
       <DependentUpon>FlatLabelB.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatCheckBoxA.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatCheckBoxA.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatCheckBoxA.Designer.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatCheckBoxA.Designer.cs">
       <DependentUpon>FlatCheckBoxA.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatButtonA.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatButtonA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatDataGridA.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatDataGridA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatDataGridA.Designer.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatDataGridA.Designer.cs">
       <DependentUpon>FlatDataGridA.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatGroupBoxA.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatGroupBoxA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatGroupBoxA.Designer.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatGroupBoxA.Designer.cs">
       <DependentUpon>FlatGroupBoxA.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatLabelA.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatLabelA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatLabelA.Designer.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatLabelA.Designer.cs">
       <DependentUpon>FlatLabelA.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatListViewA.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatListViewA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatPanelA.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatPanelA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatProgressBarA.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatProgressBarA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatProgressBarA.Designer.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatProgressBarA.Designer.cs">
       <DependentUpon>FlatProgressBarA.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatTabControlA.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatTabControlA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatTextBoxA.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatTextBoxA.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatTextBoxA.Designer.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatTextBoxA.Designer.cs">
       <DependentUpon>FlatTextBoxA.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resources\CustomControls\FlatPictureBoxA.cs">
+    <Compile Include="ResourcesLocal\CustomControls\FlatPictureBoxA.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Source\Classes\ClassesDao\ConsoleDao.cs" />
-    <Compile Include="Source\Classes\ClassesDao\GameExtendDao.cs" />
-    <Compile Include="Source\Classes\ClassesDao\GameDao.cs" />
+    <Compile Include="Source\ClassesDao\ConsoleDao.cs" />
+    <Compile Include="Source\ClassesDao\GameExtendDao.cs" />
+    <Compile Include="Source\ClassesDao\GameDao.cs" />
     <Compile Include="Source\Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,7 +237,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <ContentWithTargetPath Include="Resources\Database\database.db">
+    <ContentWithTargetPath Include="ResourcesLocal\Database\database.db">
       <TargetPath>Data\database.db</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
@@ -267,34 +267,32 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Plugins\GNX.dll" />
-    <Content Include="Resources\App\jpegoptim_1.5.0.exe" />
-    <Content Include="Resources\App\jpegoptim_1.5.5.exe" />
-    <Content Include="Resources\App\pngcrush_1_8_11_w64.exe" />
-    <Content Include="Resources\App\pngcrush_1_8_13_w64.exe" />
-    <Content Include="Resources\Icons\favicon.ico" />
-    <Content Include="Resources\Images\favicon.png" />
-    <Content Include="Resources\Images\fbidev.png" />
-    <Content Include="Resources\Images\iconForm.png" />
-    <Content Include="Resources\Images\loader.gif" />
-    <Content Include="Resources\Images\notfound.png" />
-    <Content Include="Resources\Sql\ConsoleList.sql" />
-    <Content Include="Resources\Sql\ConsoleInsert.sql" />
-    <Content Include="Resources\Sql\ConsoleDelete.sql" />
-    <Content Include="Resources\Sql\GameNotInReleasedDate.sql" />
-    <Content Include="Resources\Sql\GameInsertReleasedDate.sql" />
-    <Content Include="Resources\Sql\GameDeleteFromPlay.sql" />
-    <Content Include="Resources\Sql\GameInsertToPlay.sql" />
-    <Content Include="Resources\Sql\GameListToPlay.sql" />
-    <Content Include="Resources\Sql\GameDeleteFromHide.sql" />
-    <Content Include="Resources\Sql\GameInsertToHide.sql" />
-    <Content Include="Resources\Sql\GameListToHide.sql" />
-    <Content Include="Resources\Sql\GameExtendDelete.sql" />
-    <Content Include="Resources\Sql\GameExtendInsert.sql" />
-    <Content Include="Resources\Sql\GameExtendList.sql" />
-    <Content Include="Resources\Sql\GameDuplicateForumTopicID.sql" />
-    <Content Include="Resources\Sql\GameList.sql" />
-    <Content Include="Resources\Sql\GameDelete.sql" />
-    <Content Include="Resources\Sql\GameInsert.sql" />
+    <Content Include="ResourcesLocal\App\jpegoptim_1.5.5.exe" />
+    <Content Include="ResourcesLocal\App\pngcrush_1_8_13_w64.exe" />
+    <Content Include="ResourcesLocal\Icons\favicon.ico" />
+    <Content Include="ResourcesLocal\Images\favicon.png" />
+    <Content Include="ResourcesLocal\Images\fbidev.png" />
+    <Content Include="ResourcesLocal\Images\iconForm.png" />
+    <Content Include="ResourcesLocal\Images\loader.gif" />
+    <Content Include="ResourcesLocal\Images\notfound.png" />
+    <Content Include="ResourcesLocal\Sql\ConsoleList.sql" />
+    <Content Include="ResourcesLocal\Sql\ConsoleInsert.sql" />
+    <Content Include="ResourcesLocal\Sql\ConsoleDelete.sql" />
+    <Content Include="ResourcesLocal\Sql\GameNotInReleasedDate.sql" />
+    <Content Include="ResourcesLocal\Sql\GameInsertReleasedDate.sql" />
+    <Content Include="ResourcesLocal\Sql\GameDeleteFromPlay.sql" />
+    <Content Include="ResourcesLocal\Sql\GameInsertToPlay.sql" />
+    <Content Include="ResourcesLocal\Sql\GameListToPlay.sql" />
+    <Content Include="ResourcesLocal\Sql\GameDeleteFromHide.sql" />
+    <Content Include="ResourcesLocal\Sql\GameInsertToHide.sql" />
+    <Content Include="ResourcesLocal\Sql\GameListToHide.sql" />
+    <Content Include="ResourcesLocal\Sql\GameExtendDelete.sql" />
+    <Content Include="ResourcesLocal\Sql\GameExtendInsert.sql" />
+    <Content Include="ResourcesLocal\Sql\GameExtendList.sql" />
+    <Content Include="ResourcesLocal\Sql\GameDuplicateForumTopicID.sql" />
+    <Content Include="ResourcesLocal\Sql\GameList.sql" />
+    <Content Include="ResourcesLocal\Sql\GameDelete.sql" />
+    <Content Include="ResourcesLocal\Sql\GameInsert.sql" />
     <Content Include="temp\ToDo.txt" />
     <Content Include="Plugins\brolib_x64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

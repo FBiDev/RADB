@@ -102,6 +102,11 @@ namespace RADB
             return await GameDao.Delete(new Game { ConsoleID = ConsoleID });
         }
 
+        public async static Task<Game> Find(int id)
+        {
+            return await GameDao.Find(id);
+        }
+
         public async static Task<List<Game>> Search(int consoleID, bool allTables = false)
         {
             var obj = new Game { ConsoleID = consoleID };

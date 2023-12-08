@@ -59,7 +59,7 @@ namespace RADB
 
         public string TotalPointsString
         {
-            get { return TotalPoints + " (" + TotalTruePoints + ")"; }
+            get { return TotalPoints.ToNumber() + " (" + TotalTruePoints.ToNumber() + ")"; }
         }
 
         public float RetroRatio
@@ -69,7 +69,7 @@ namespace RADB
 
         public string RetroRatioString
         {
-            get { return string.Format("{0:N2}", RetroRatio); }
+            get { return RetroRatio.ToNumber(); }
         }
 
         [JsonProperty("Rank")]
@@ -81,7 +81,7 @@ namespace RADB
 
         string RankTop
         {
-            get { return string.Format("{0:N2}", (((float)Rank / TotalRanked) * 100f)); }
+            get { return (((float)Rank / TotalRanked) * 100f).ToNumber(); }
         }
 
         public string RankString
@@ -93,7 +93,7 @@ namespace RADB
                 if (TotalPoints < RA.MIN_POINTS)
                     return "Needs at least " + RA.MIN_POINTS + " points.";
                 if (Rank > 0 && TotalRanked > 0)
-                    return Rank + " / " + TotalRanked + " (Top " + RankTop + "%)";
+                    return "#" + Rank.ToNumber() + " / " + TotalRanked.ToNumber() + " (Top " + RankTop + "%)";
                 return "-";
             }
         }
@@ -123,7 +123,7 @@ namespace RADB
 
         public string AverageCompletionString
         {
-            get { return string.Format("{0:N2}", AverageCompletion) + "%"; }
+            get { return AverageCompletion.ToNumber() + "%"; }
         }
 
         //Achievements Won By Others
@@ -137,6 +137,7 @@ namespace RADB
         public IEnumerable<GameProgress> PlayedGames { get; set; }
         public Game LastGame { get; set; }
 
+        public int LastGameID { get; set; }
         public string LastGameTitle
         {
             get { return LastGame == null ? "" : LastGame.Title; }
@@ -170,6 +171,13 @@ namespace RADB
 
         public bool Invalid { get { return ID == 0; } }
         public bool RankInvalid { get { return Untracked || Rank == 0 || TotalPoints < RA.MIN_POINTS; } }
-        public int RankLength { get { return RankInvalid == false && Rank > 0 ? Rank.ToString().Length : 0; } }
+        public int RankLength
+        {
+            get
+            {
+                if (RankInvalid || Rank <= 0) return 0;
+                return ("#" + Rank.ToNumber()).Length;
+            }
+        }
     }
 }

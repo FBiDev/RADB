@@ -69,7 +69,7 @@ namespace RADB
             var html = await RALogin.DownloadString(RA.LOGIN_URL);
             if (string.IsNullOrWhiteSpace(html)) { showError(RALogin); return; }
 
-            UserToken = html.GetBetween("_token\" value=\"", "\">");
+            UserToken = html.GetBetween("_token\" value=\"", "\"");
 
             var values = new NameValueCollection
             {
