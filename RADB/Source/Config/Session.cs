@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RADB.Properties;
 using GNX;
 using GNX.Desktop;
 
@@ -30,7 +31,6 @@ namespace RADB
         {
             LanguageManager.SetLanguage(Language);
             LanguageManager.SetLanguageNumbers(LanguageNumbers);
-            //AppManager.Start();
 
             LoadOptions();
 
@@ -38,7 +38,16 @@ namespace RADB
 
             DebugManager.Enable = Options.DebugMode;
             DebugManager.LogSQLSistema.SyncList(Banco.Log);
-            //cDebug.Open();
+
+            Picture.PngCompressor = Resources.pngcrush_1_8_13_w64;
+            Picture.JpgCompressor = Resources.jpegoptim_1_5_5;
+
+            //Internet
+            Browser.Load();
+            RASite.Load();
+
+            //Folders
+            Folder.CreateFolders();
         }
         #endregion
 

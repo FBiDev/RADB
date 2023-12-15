@@ -39,8 +39,8 @@ namespace RADB
 
         static async Task Console_Shown(object sender, EventArgs e)
         {
-            Browser.dlConsoles.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
-            Browser.dlConsolesGamesIcon.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
+            RASite.dlConsoles.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
+            RASite.dlConsolesGamesIcon.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
 
             MainCommon.ChangeTab(form.tabConsoles);
             ResetConsolesLabels();

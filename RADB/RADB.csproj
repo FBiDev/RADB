@@ -95,14 +95,11 @@
     <Compile Include="Source\Config\Theme.cs" />
     <Compile Include="Source\Controllers\HashViewer\HashViewerCommon.cs" />
     <Compile Include="Source\Controllers\HashViewer\HashViewerControls.cs" />
-    <Compile Include="Source\Utils\Browser.cs" />
-    <Compile Include="Source\Utils\DownloadBase.cs" />
     <Compile Include="Source\Classes\GameExtend.cs" />
     <Compile Include="Source\Utils\JsonExtension.cs" />
-    <Compile Include="Source\Utils\UserProgress.cs" />
-    <Compile Include="Source\Utils\WebClientExtend.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Source\Utils\RAMedia.cs" />
+    <Compile Include="Source\Utils\RASite.cs" />
+    <Compile Include="Source\Classes\UserProgress.cs" />
     <Compile Include="ResourcesLocal\CustomControls\FlatLabelB.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -190,9 +187,6 @@
     <Compile Include="Source\Forms\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Utils\Download.cs" />
-    <Compile Include="Source\Utils\Archive.cs" />
-    <Compile Include="Source\Utils\DownloadFile.cs" />
     <Compile Include="Source\Forms\TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,7 +200,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Classes\Achievement.cs" />
-    <Compile Include="Source\Utils\Picture.cs" />
     <Compile Include="Source\Utils\RA.cs" />
     <Compile Include="temp\Temp.cs" />
     <EmbeddedResource Include="Source\Forms\HashViewer.resx">
@@ -274,7 +267,6 @@
     <Content Include="ResourcesLocal\Images\fbidev.png" />
     <Content Include="ResourcesLocal\Images\iconForm.png" />
     <Content Include="ResourcesLocal\Images\loader.gif" />
-    <Content Include="ResourcesLocal\Images\notfound.png" />
     <Content Include="ResourcesLocal\Sql\ConsoleList.sql" />
     <Content Include="ResourcesLocal\Sql\ConsoleInsert.sql" />
     <Content Include="ResourcesLocal\Sql\ConsoleDelete.sql" />

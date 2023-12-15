@@ -53,7 +53,7 @@ namespace RADB
             form.Text = "RA HashViewer - " + game.Title + " (" + game.ConsoleName + ")";
             txtHashes.Text = string.Empty;
 
-            var html = await Browser.RALogin.DownloadString(RA.HOST_URL + "linkedhashes.php?g=" + game.ID);
+            var html = await RASite.Client.DownloadString(RA.HOST_URL + "linkedhashes.php?g=" + game.ID);
             var ul = html.GetBetween("registered for this game.</p></div><ul>", "</ul>").HtmlDecode();
 
             var listLi = ul.GetBetweenList("<li>", "</li>");

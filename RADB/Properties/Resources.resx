@@ -184,9 +184,6 @@
   <data name="loader" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resourceslocal\images\loader.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="notfound" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resourceslocal\images\notfound.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="pngcrush_1_8_13_w64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resourceslocal\app\pngcrush_1_8_13_w64.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

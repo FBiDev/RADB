@@ -22,11 +22,6 @@ namespace RADB
 
             tabMain.KeyDown += tabMain_KeyDown;
             tabMain.SelectedIndexChanged += tabMain_SelectedIndexChanged;
-
-            //Internet
-            Browser.Load();
-            //Folders
-            Folder.CreateFolders();
         }
 
         static void Main_Load(object sender, EventArgs e) { }

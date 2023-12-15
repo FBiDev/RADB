@@ -6,7 +6,6 @@ namespace RADB
     public static class Folder
     {
         public const string Base = @".\Data\";
-        public const string Temp = Base + @"Temp\";
         const string Json = Base + @"Json\";
 
         public const string User = Json + @"User\";
@@ -24,7 +23,6 @@ namespace RADB
         public static void CreateFolders()
         {
             Directory.CreateDirectory(Base);
-            Directory.CreateDirectory(Temp);
             Directory.CreateDirectory(Json);
 
             Directory.CreateDirectory(User);

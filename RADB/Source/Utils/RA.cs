@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RADB.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using GNX;
@@ -104,7 +103,6 @@ namespace RADB
 
         public static readonly Bitmap DefaultIcon = new Picture(GameIconSize).Bitmap;
         public static readonly Bitmap DefaultIconGrid = new Picture(GameIconGridSize).Bitmap;
-        public static readonly Bitmap ErrorIcon = Resources.notfound;
 
         public static readonly Bitmap DefaultTitleImage = new Picture(200, 150).Bitmap;
         public static readonly Bitmap DefaultIngameImage = new Picture(200, 150).Bitmap;
@@ -132,9 +130,9 @@ namespace RADB
         {
             await Task.Run(async () =>
             {
-                Browser.dlConsoles.SetFile(API_File_Consoles());
+                RASite.dlConsoles.SetFile(API_File_Consoles());
 
-                if (await Browser.dlConsoles.Start())
+                if (await RASite.dlConsoles.Start())
                 {
                     var list = await DeserializeConsoles();
                     if (list.Any())
@@ -161,9 +159,9 @@ namespace RADB
         {
             await Task.Run(async () =>
             {
-                Browser.dlGames.SetFile(API_File_GameList(console));
+                RASite.dlGames.SetFile(API_File_GameList(console));
 
-                if (await Browser.dlGames.Start())
+                if (await RASite.dlGames.Start())
                 {
                     var list = await DeserializeGameList(console);
                     if (list.Any())
@@ -286,12 +284,12 @@ namespace RADB
             await Task.Run(async () =>
             {
                 GameExtend gamex = await GameExtend.Find(game.ID);
-                Browser.dlGameExtendImages.Files = new List<DownloadFile> {
+                RASite.dlGameExtendImages.Files = new List<DownloadFile> {
                     gamex.ImageTitleFile,
                     gamex.ImageIngameFile,
                     gamex.ImageBoxArtFile
                 };
-                await (Browser.dlGameExtendImages.Start());
+                await (RASite.dlGameExtendImages.Start());
             });
         }
         #endregion
@@ -406,7 +404,7 @@ namespace RADB
         {
             var gameExtend = await DeserializeGameExtend(game);
             if (gameExtend.ID == 0)
-                gameExtend = await DownloadGameExtend(game, Browser.dlGames);
+                gameExtend = await DownloadGameExtend(game, RASite.dlGames);
             if (gameExtend.IsNull())
             {
                 MessageBox.Show("GameFile Not Found");
@@ -415,8 +413,8 @@ namespace RADB
 
             var badgeFiles = gameExtend.AchievementsList.Select(a => new DownloadFile(a.BadgeURL(), a.BadgeFile())).ToList();
 
-            Browser.dlGamesBadges.Files = badgeFiles;
-            await Browser.dlGamesBadges.Start();
+            RASite.dlGamesBadges.Files = badgeFiles;
+            await RASite.dlGamesBadges.Start();
 
             var badgeNames = badgeFiles.Select(a => a.Path).ToList();
 
@@ -433,9 +431,9 @@ namespace RADB
                 Picture pic = await Task.Run(() =>
                 {
                     pic = new Picture(badgeNames, true, 11, GameBadgesSize, false);
-                    pic.Save(game.MergedBadgesPath(), PictureFormat.Png, false);
+                    pic.Save(game.MergedBadgesPath(), PictureFormat.Jpg, true);
 
-                    Archive.SaveGameBadges(badgeNames, game.MergedBadgesPath() + ".txt");
+                    RAMedia.SaveGameBadges(badgeNames, game.MergedBadgesPath() + ".txt");
                     return pic;
                 });
 
@@ -455,7 +453,7 @@ namespace RADB
         {
             if (console.IsNull()) { MessageBox.Show("No Console Selected"); return; }
 
-            await DownloadGamesIcon(console, Browser.dlConsolesGamesIcon);
+            await DownloadGamesIcon(console, RASite.dlConsolesGamesIcon);
             var games = (await Game.Search(console.ID, true)).Where(g => g.NumAchievements > 0).ToList();
             var gamesIcon = games.Select(g => g.ImageIconFile.Path).ToList();
 
@@ -475,8 +473,7 @@ namespace RADB
                     pic = new Picture(gamesIcon, true, 11, GameIconSize, false);
                     pic.Save(Game.MergedIconsPath(console.Name), PictureFormat.Jpg, false);
 
-                    Archive.SaveGamesIcon(games, gamesIcon, Game.MergedIconsPath(console.Name) + ".txt");
-
+                    RAMedia.SaveGamesIcon(games, gamesIcon, Game.MergedIconsPath(console.Name) + ".txt");
                     return pic;
                 });
 

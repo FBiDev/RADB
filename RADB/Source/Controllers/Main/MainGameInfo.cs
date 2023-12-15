@@ -40,8 +40,8 @@ namespace RADB
 
         static Task GameInfo_Shown(object sender, EventArgs e)
         {
-            Browser.dlGameExtend.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
-            Browser.dlGameExtendImages.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
+            RASite.dlGameExtend.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
+            RASite.dlGameExtendImages.SetControls(lblProgressInfo, pgbInfo, lblUpdateInfo);
             HideDownloadControls();
             return Task.CompletedTask;
         }
@@ -158,7 +158,7 @@ namespace RADB
             btnUpdateInfo.Enabled = false;
             txtSearchAchiev.Enabled = false;
             //Download GameExtend
-            await RA.DownloadGameExtend(Session.Game, Browser.dlGameExtend);
+            await RA.DownloadGameExtend(Session.Game, RASite.dlGameExtend);
 
             //Download game images
             await RA.DownloadGameExtendImages(Session.Game);

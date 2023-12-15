@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 using GNX;
+using GNX.Desktop;
 
 namespace RADB
 {
@@ -43,12 +44,12 @@ namespace RADB
         {
             if (ImageIconBitmap != null) { return; }
             //ImageIconBitmap = Picture.Create(ImageIconFile.Path).Bitmap;
-            ImageIconBitmap = BitmapExtension.SuperFastLoad(ImageIconFile.Path, RA.ErrorIcon);
+            ImageIconBitmap = BitmapExtension.SuperFastLoad(ImageIconFile.Path);
         }
         public void SetImageIconGridBitmap()
         {
             if (ImageIconGridBitmap != RA.DefaultIconGrid) { return; }
-            ImageIconGridBitmap = BitmapExtension.FromFile(ImageIconFile.Path, new Size(32, 32), RA.ErrorIcon);
+            ImageIconGridBitmap = BitmapExtension.FromFile(ImageIconFile.Path, new Size(32, 32));
         }
         #endregion
 

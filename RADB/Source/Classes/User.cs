@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Newtonsoft.Json;
 using GNX;
+using GNX.Desktop;
 
 namespace RADB
 {
@@ -51,7 +52,7 @@ namespace RADB
         public void SetUserPicBitmap()
         {
             if (UserPicBitmap != RA.DefaultIcon) { return; }
-            UserPicBitmap = BitmapExtension.SuperFastLoad(UserPicFile.Path, RA.ErrorIcon);
+            UserPicBitmap = BitmapExtension.SuperFastLoad(UserPicFile.Path);
         }
 
         public int TotalPoints { get; set; }

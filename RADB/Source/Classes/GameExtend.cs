@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-//
 using System.Drawing;
 using System.Globalization;
-//
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using GNX;
+using GNX.Desktop;
 
 namespace RADB
 {
@@ -39,9 +38,9 @@ namespace RADB
 
         public void SetImagesBitmap()
         {
-            if (ImageTitleBitmap == RA.DefaultTitleImage) { ImageTitleBitmap = BitmapExtension.SuperFastLoad(ImageTitleFile.Path, RA.ErrorIcon); }
-            if (ImageIngameBitmap == RA.DefaultIngameImage) { ImageIngameBitmap = BitmapExtension.SuperFastLoad(ImageIngameFile.Path, RA.ErrorIcon); }
-            if (ImageBoxArtBitmap == RA.DefaultBoxArtImage) { ImageBoxArtBitmap = BitmapExtension.SuperFastLoad(ImageBoxArtFile.Path, RA.ErrorIcon); }
+            if (ImageTitleBitmap == RA.DefaultTitleImage) { ImageTitleBitmap = BitmapExtension.SuperFastLoad(ImageTitleFile.Path); }
+            if (ImageIngameBitmap == RA.DefaultIngameImage) { ImageIngameBitmap = BitmapExtension.SuperFastLoad(ImageIngameFile.Path); }
+            if (ImageBoxArtBitmap == RA.DefaultBoxArtImage) { ImageBoxArtBitmap = BitmapExtension.SuperFastLoad(ImageBoxArtFile.Path); }
         }
         #endregion
 

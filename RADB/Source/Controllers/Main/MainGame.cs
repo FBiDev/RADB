@@ -88,10 +88,10 @@ namespace RADB
 
         static async Task Games_Shown(object sender, EventArgs e)
         {
-            Browser.dlGames.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
-            Browser.dlGamesIcon.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
-            Browser.dlGamesBadges.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
-            Browser.dlGameExtendList.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
+            RASite.dlGames.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
+            RASite.dlGamesIcon.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
+            RASite.dlGamesBadges.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
+            RASite.dlGameExtendList.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
 
             Session.lstDgvGames.Add(dgvGames);
 
@@ -187,7 +187,7 @@ namespace RADB
             lstGamesByFilters.Clear();
 
             await RA.DownloadGameList(Session.Console);
-            await RA.DownloadGamesIcon(Session.Console, Browser.dlGamesIcon);
+            await RA.DownloadGamesIcon(Session.Console, RASite.dlGamesIcon);
 
             if (Session.Console.ID > 0)
                 lstGamesAll.RemoveAll(x => x.ConsoleID == Session.Console.ID);

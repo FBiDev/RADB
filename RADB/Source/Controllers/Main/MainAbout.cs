@@ -42,7 +42,7 @@ namespace RADB
             lblRALogin.Text = "logging in...";
 
             btnRALogin.Enabled = false;
-            await Browser.SystemLogin();
+            await RASite.Login();
             btnRALogin.Enabled = true;
 
             if (Session.RALogged)
