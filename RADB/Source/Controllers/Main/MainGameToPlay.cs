@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GNX;
@@ -28,10 +29,10 @@ namespace RADB
             dgvGamesToPlay.AutoGenerateColumns = false;
             //dgvGamesToPlay.DataSource = lstGamesToPlay;
 
-            dgvGamesToPlay.Columns.Format(CellStyle.StringCenter, 0);
-            dgvGamesToPlay.Columns.Format(CellStyle.Image, 1);
-            dgvGamesToPlay.Columns.Format(CellStyle.NumberCenter, 4, 5, 6, 7);
-            dgvGamesToPlay.Columns.Format(CellStyle.DateCenter, 8);
+            dgvGamesToPlay.Columns.Format(ColumnFormat.StringCenter, 0);
+            dgvGamesToPlay.Columns.Format(ColumnFormat.Image, 1);
+            dgvGamesToPlay.Columns.Format(ColumnFormat.NumberCenter, 4, 5, 6, 7);
+            dgvGamesToPlay.Columns.Format(ColumnFormat.DateCenter, 8);
 
             dgvGamesToPlay.MouseDown += (sender, e) => dgvGamesToPlay.ShowContextMenu(e, mnuGamesToPlay);
             dgvGamesToPlay.CellDoubleClick += MainCommon.ChangeBindGame;

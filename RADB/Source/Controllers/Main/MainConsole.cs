@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -26,8 +27,8 @@ namespace RADB
             dgvConsoles.AutoGenerateColumns = true;
             dgvConsoles.DataSource = lstConsoles;
 
-            dgvConsoles.Columns.Format(CellStyle.StringCenter, 0);
-            dgvConsoles.Columns.Format(CellStyle.NumberCenter, 3, 4);
+            dgvConsoles.Columns.Format(ColumnFormat.StringCenter, 0);
+            dgvConsoles.Columns.Format(ColumnFormat.NumberCenter, 3, 4);
 
             dgvConsoles.MouseDown += (sender, e) => dgvConsoles.ShowContextMenu(e, mnuConsoles);
             dgvConsoles.CellDoubleClick += dgvConsoles_CellDoubleClick;
