@@ -31,7 +31,7 @@ namespace RADB
 
         static Task About_Shown(object sender, EventArgs e)
         {
-            btnRALogin_Click(null, null);
+            //btnRALogin_Click(null, null);
             return Task.FromResult(0);
         }
 

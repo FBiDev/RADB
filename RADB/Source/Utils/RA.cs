@@ -431,7 +431,7 @@ namespace RADB
                 Picture pic = await Task.Run(() =>
                 {
                     pic = new Picture(badgeNames, true, 11, GameBadgesSize, false);
-                    pic.Save(game.MergedBadgesPath(), PictureFormat.Jpg, true);
+                    pic.Save(game.MergedBadgesPath(), PictureFormat.Png, true);
 
                     RAMedia.SaveGameBadges(badgeNames, game.MergedBadgesPath() + ".txt");
                     return pic;
@@ -471,7 +471,7 @@ namespace RADB
                 Picture pic = await Task.Run(() =>
                 {
                     pic = new Picture(gamesIcon, true, 11, GameIconSize, false);
-                    pic.Save(Game.MergedIconsPath(console.Name), PictureFormat.Jpg, false);
+                    pic.Save(Game.MergedIconsPath(console.Name), PictureFormat.Png, true);
 
                     RAMedia.SaveGamesIcon(games, gamesIcon, Game.MergedIconsPath(console.Name) + ".txt");
                     return pic;
