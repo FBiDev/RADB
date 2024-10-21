@@ -29,10 +29,10 @@ namespace RADB
             dgvGamesToHide.AutoGenerateColumns = false;
             //dgvGamesToHide.DataSource = lstGamesToHide;
 
-            dgvGamesToHide.Columns.Format(ColumnFormat.StringCenter, 0);
-            dgvGamesToHide.Columns.Format(ColumnFormat.Image, 1);
-            dgvGamesToHide.Columns.Format(ColumnFormat.NumberCenter, 4, 5, 6, 7);
-            dgvGamesToHide.Columns.Format(ColumnFormat.DateCenter, 8);
+            dgvGamesToHide.Columns.Format(ColumnFormat.StringCenter, cols: 0);
+            dgvGamesToHide.Columns.Format(ColumnFormat.Image, cols: 1);
+            dgvGamesToHide.Columns.Format(ColumnFormat.NumberCenter, cols: new[] { 4, 5, 6, 7 });
+            dgvGamesToHide.Columns.Format(ColumnFormat.DateCenter, cols: 8);
 
             dgvGamesToHide.MouseDown += (sender, e) => dgvGamesToHide.ShowContextMenu(e, mnuGamesToHide);
             dgvGamesToHide.CellDoubleClick += MainCommon.ChangeBindGame;

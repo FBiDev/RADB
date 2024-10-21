@@ -48,10 +48,10 @@ namespace RADB
 
             dgvGames.AutoGenerateColumns = false;
 
-            dgvGames.Columns.Format(ColumnFormat.StringCenter, 0);
-            dgvGames.Columns.Format(ColumnFormat.Image, 1);
-            dgvGames.Columns.Format(ColumnFormat.NumberCenter, 4, 5, 6, 7);
-            dgvGames.Columns.Format(ColumnFormat.DateCenter, 8);
+            dgvGames.Columns.Format(ColumnFormat.StringCenter, cols: 0);
+            dgvGames.Columns.Format(ColumnFormat.Image, cols: 1);
+            dgvGames.Columns.Format(ColumnFormat.NumberCenter, cols: new[] { 4, 5, 6, 7 });
+            dgvGames.Columns.Format(ColumnFormat.DateCenter, cols: 8);
 
             dgvGames.MouseDown += (sender, e) => dgvGames.ShowContextMenu(e, mnuGames);
             dgvGames.CellDoubleClick += MainCommon.ChangeBindGame;

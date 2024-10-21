@@ -29,10 +29,10 @@ namespace RADB
             dgvGamesToPlay.AutoGenerateColumns = false;
             //dgvGamesToPlay.DataSource = lstGamesToPlay;
 
-            dgvGamesToPlay.Columns.Format(ColumnFormat.StringCenter, 0);
-            dgvGamesToPlay.Columns.Format(ColumnFormat.Image, 1);
-            dgvGamesToPlay.Columns.Format(ColumnFormat.NumberCenter, 4, 5, 6, 7);
-            dgvGamesToPlay.Columns.Format(ColumnFormat.DateCenter, 8);
+            dgvGamesToPlay.Columns.Format(ColumnFormat.StringCenter, cols: 0);
+            dgvGamesToPlay.Columns.Format(ColumnFormat.Image, cols: 1);
+            dgvGamesToPlay.Columns.Format(ColumnFormat.NumberCenter, cols: new[] { 4, 5, 6, 7 });
+            dgvGamesToPlay.Columns.Format(ColumnFormat.DateCenter, cols: 8);
 
             dgvGamesToPlay.MouseDown += (sender, e) => dgvGamesToPlay.ShowContextMenu(e, mnuGamesToPlay);
             dgvGamesToPlay.CellDoubleClick += MainCommon.ChangeBindGame;
