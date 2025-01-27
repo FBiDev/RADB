@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using GNX;
-using GNX.Desktop;
+using App.Core;
+using App.Core.Desktop;
+using App.File.Json;
 
 namespace RADB
 {
@@ -92,7 +91,7 @@ namespace RADB
 
             foreach (JProperty cheevo in result)
             {
-                AchievementsList.Add(JsonConvert.DeserializeObject<Achievement>(cheevo.Value.ToString()));
+                AchievementsList.Add(Json.DeserializeObject<Achievement>(cheevo.Value.ToString()));
             }
 
             AchievementsList.ForEach(c => { c.GameID = ID; c.ConsoleID = ConsoleID; });

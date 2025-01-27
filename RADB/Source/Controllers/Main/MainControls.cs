@@ -2,9 +2,43 @@
 
 namespace RADB
 {
+    public partial class MainContentController
+    {
+        private MainContentForm Page
+        {
+            get { return Session.MainContentForm; }
+            set { Session.MainContentForm = value; }
+        }
+
+        private FlatPanelA ContentLPanel { get { return Page.ContentLPanel; } }
+
+        private FlatPanelA ContentRPanel { get { return Page.ContentRPanel; } }
+
+        private FlatPanelA ContentRInsidePanel { get { return Page.ContentRInsidePanel; } }
+
+        private FlatButtonA ConfigTabButton { get { return Page.ConfigTabButton; } }
+
+        private FlatButtonA SpeedRunTabButton { get { return Page.SpeedRunTabButton; } }
+    }
+
+    public partial class SpeedRunController
+    {
+        private SpeedRunForm Page
+        {
+            get { return Session.SpeedRunForm; }
+            set { Session.SpeedRunForm = value; }
+        }
+
+        private FlatTextBoxA SearchGameTextBox { get { return Page.SearchGameTextBox; } }
+
+        private FlatButtonA SearchGameButton { get { return Page.SearchGameButton; } }
+
+        private FlatDataGridA SearchGameGrid { get { return Page.SearchGameGrid; } }
+    }
+
     public partial class MainCommon
     {
-        static Main form { get { return Session.MainForm; } }
+        static Main form { get { return Session.MainFormRA; } }
         //Main
         static FlatTabControlA tabMain { get { return form.tabMain; } }
         //static TabPage tabConsoles { get { return form.tabConsoles; } }
@@ -18,7 +52,7 @@ namespace RADB
 
     public partial class MainConsole
     {
-        static Main form { get { return Session.MainForm; } }
+        static Main form { get { return Session.MainFormRA; } }
         //Consoles
         static Panel pnlDownloadConsoles { get { return form.pnlDownloadConsoles; } }
         static FlatButtonA btnUpdateConsoles { get { return form.btnUpdateConsoles; } }
@@ -37,7 +71,7 @@ namespace RADB
 
     public partial class MainGame
     {
-        static Main form { get { return Session.MainForm; } }
+        static Main form { get { return Session.MainFormRA; } }
         //Games
         static Panel pnlDownloadGameList { get { return form.pnlDownloadGameList; } }
         static FlatButtonA btnUpdateGameList { get { return form.btnUpdateGameList; } }
@@ -76,7 +110,7 @@ namespace RADB
 
     public partial class MainGameInfo
     {
-        static Main form { get { return Session.MainForm; } }
+        static Main form { get { return Session.MainFormRA; } }
         //GameInfo
         static FlatButtonA btnUpdateInfo { get { return form.btnUpdateInfo; } }
         static FlatLabelA lblProgressInfo { get { return form.lblProgressInfo; } }
@@ -112,7 +146,7 @@ namespace RADB
 
     public partial class MainGameToPlay
     {
-        static Main form { get { return Session.MainForm; } }
+        static Main form { get { return Session.MainFormRA; } }
         //GameToPlay
         static FlatDataGridA dgvGamesToPlay { get { return form.dgvGamesToPlay; } }
         static ContextMenuStrip mnuGamesToPlay { get { return form.mnuGamesToPlay; } }
@@ -122,7 +156,7 @@ namespace RADB
 
     public partial class MainGameToHide
     {
-        static Main form { get { return Session.MainForm; } }
+        static Main form { get { return Session.MainFormRA; } }
         //GameToHide
         static FlatDataGridA dgvGamesToHide { get { return form.dgvGamesToHide; } }
         static ContextMenuStrip mnuGamesToHide { get { return form.mnuGamesToHide; } }
@@ -132,7 +166,7 @@ namespace RADB
 
     public partial class MainUserInfo
     {
-        static Main form { get { return Session.MainForm; } }
+        static Main form { get { return Session.MainFormRA; } }
         //UserInfo
         static FlatTextBoxA txtUsername { get { return form.txtUsername; } }
         static FlatButtonA btnGetUserInfo { get { return form.btnGetUserInfo; } }
@@ -170,7 +204,7 @@ namespace RADB
 
     public partial class MainAbout
     {
-        static Main form { get { return Session.MainForm; } }
+        static Main form { get { return Session.MainFormRA; } }
         //About
         static FlatButtonA btnRALogin { get { return form.btnRALogin; } }
         static FlatLabelA lblRALogin { get { return form.lblSystemReLogin; } }

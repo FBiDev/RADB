@@ -1,37 +1,52 @@
-﻿using Newtonsoft.Json;
-using GNX.Desktop;
+﻿using App.Core.Desktop;
+using App.File.Json;
 
 namespace RADB
 {
     public class Options
     {
+        #region Options
         [JsonIgnore]
         public const string FileName = "Options.json";
         [JsonIgnore]
-        public static bool Loaded;
+        public static bool IsLoaded;
 
-        bool _DarkMode = true;
-        bool _DebugMode = true;
+        public Options()
+        {
+            IsDarkMode = true;
+            IsDebugMode = true;
+        }
 
-        [JsonConverter(typeof(BoolConverter))]
-        public bool DarkMode { get { return _DarkMode; } set { _DarkMode = value; } }
+        [JsonConverter(JsonType.Boolean)]
+        public bool IsDarkMode { get; set; }
 
-        [JsonConverter(typeof(BoolConverter))]
-        public bool DebugMode { get { return _DebugMode; } set { _DebugMode = value; } }
+        [JsonConverter(JsonType.Boolean)]
+        public bool IsDebugMode { get; set; }
 
         public bool ToggleDarkMode()
         {
-            DarkMode = Theme.ToggleDarkTheme();
-            return Session.UpdateOptions();
+            IsDarkMode = Theme.ToggleDarkTheme();
+            return Update();
         }
 
         public bool ToggleDebugMode()
         {
-            DebugMode = !DebugMode;
-            DebugManager.Enable = DebugMode;
-            MainBaseForm.DebugMode = DebugMode;
+            IsDebugMode = !IsDebugMode;
+            DebugManager.Enable = IsDebugMode;
+            MainBaseForm.DebugMode = IsDebugMode;
 
-            return Session.UpdateOptions();
+            return Update();
+        }
+        #endregion
+
+        public bool Load()
+        {
+            return IsLoaded = Json.Load(this, FileName);
+        }
+
+        public bool Update()
+        {
+            return Json.Save(this, FileName);
         }
 
         #region System

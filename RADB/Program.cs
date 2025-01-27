@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Threading;
 
 namespace RADB
 {
-    static class Program
+    internal static class Program
     {
         [STAThread]
-        static void Main()
+        internal static void Main()
         {
-            //AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures.3", true);
-            //AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures.2", true);
-            //AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures", true);
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            GNX.Desktop.AppManager.SingleProcess(Session.Singleton, new Mutex(true, Session.SystemName), Session.SystemName);
-            Session.Start();
-
-            //Application.Run(new TestForm());
-            Application.Run(new Main());
+            using (App.Core.Desktop.AppManager.SingleProcess(Session.SystemLock, Session.SystemName))
+            {
+                Session.Start();
+                Application.Run(new Main());
+                //Application.Run(new MainForm());
+                //Application.Run(new TestForm());
+            }
         }
     }
 }

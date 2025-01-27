@@ -5,10 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using GNX;
-using GNX.Desktop;
+using App.Core;
+using App.Core.Desktop;
+using App.File.Json;
 
 namespace RADB
 {
@@ -271,8 +270,8 @@ namespace RADB
             gameData = "{" + gameData + "}";
             cheevos = "{" + cheevos + "}";
 
-            var obj = JsonConvert.DeserializeObject<GameExtend>(gameData);
-            var jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
+            var obj = Json.DeserializeObject<GameExtend>(gameData);
+            var jcheevos = Json.DeserializeObject<JToken>(cheevos);
 
             obj.SetAchievements(jcheevos);
 
@@ -305,7 +304,7 @@ namespace RADB
 
                 if (userData.IsEmpty()) return null;
 
-                var user = JsonConvert.DeserializeObject<UserProgress>(userData);
+                var user = Json.DeserializeObject<UserProgress>(userData);
                 user.UserName = userName;
                 user.GameID = gameID;
 
@@ -326,7 +325,7 @@ namespace RADB
                 var userData = File.ReadAllText(file.Path);
                 if (userData.IsEmpty()) { return user; }
 
-                user = JsonConvert.DeserializeObject<User>(userData);
+                user = Json.DeserializeObject<User>(userData);
 
                 if (user.LastActivity != null)
                 {
@@ -379,7 +378,7 @@ namespace RADB
 
                 var awardsJson = File.ReadAllText(file.Path);
 
-                var awardsList = JsonConvert.DeserializeObject<IEnumerable<GameProgress>>(awardsJson);
+                var awardsList = Json.DeserializeObject<IEnumerable<GameProgress>>(awardsJson);
                 awardsList = awardsList.Where(x => x.PctWon > 0 && x.ConsoleName != "Hubs" && x.ConsoleName != "Events");
 
                 //Remove SoftCore Duplicates

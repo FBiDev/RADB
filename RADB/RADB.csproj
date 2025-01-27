@@ -56,20 +56,17 @@
     <ApplicationIcon>ResourcesLocal\Icons\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GNX, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Plugins\GNX.dll</HintPath>
+    <Reference Include="App.Core">
+      <HintPath>..\..\App\Bin\App.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Plugins\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="App.Data.SQLite">
+      <HintPath>..\..\App\Bin\App.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="App.File.Json">
+      <HintPath>..\..\App\Bin\App.File.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.116.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Plugins\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
@@ -87,7 +84,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ResourcesLocal\CustomControls\FlatTableA.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Source\Classes\GameProgress.cs" />
+    <Compile Include="Source\Classes\SpeedRunGame.cs" />
+    <Compile Include="Source\Classes\SpeedRunPlataform.cs" />
     <Compile Include="Source\Classes\User.cs" />
     <Compile Include="Source\Config\Banco.cs" />
     <Compile Include="Source\Classes\Console.cs" />
@@ -96,7 +98,34 @@
     <Compile Include="Source\Controllers\HashViewer\HashViewerCommon.cs" />
     <Compile Include="Source\Controllers\HashViewer\HashViewerControls.cs" />
     <Compile Include="Source\Classes\GameExtend.cs" />
-    <Compile Include="Source\Utils\JsonExtension.cs" />
+    <Compile Include="Source\Controllers\Main\MainContentController.cs" />
+    <Compile Include="Source\Controllers\Main\MainController.cs" />
+    <Compile Include="Source\Controllers\SpeedRun\SpeedRunController.cs" />
+    <Compile Include="Source\Classes\SpeedRunGameSearch.cs" />
+    <Compile Include="Source\Forms\ConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Forms\ConfigForm.Designer.cs">
+      <DependentUpon>ConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Forms\MainContentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Forms\MainContentForm.Designer.cs">
+      <DependentUpon>MainContentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Forms\SpeedRunForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Forms\SpeedRunForm.Designer.cs">
+      <DependentUpon>SpeedRunForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\Utils\RAMedia.cs" />
     <Compile Include="Source\Utils\RASite.cs" />
     <Compile Include="Source\Classes\UserProgress.cs" />
@@ -117,9 +146,6 @@
     </Compile>
     <Compile Include="ResourcesLocal\CustomControls\FlatDataGridA.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ResourcesLocal\CustomControls\FlatDataGridA.Designer.cs">
-      <DependentUpon>FlatDataGridA.cs</DependentUpon>
     </Compile>
     <Compile Include="ResourcesLocal\CustomControls\FlatGroupBoxA.cs">
       <SubType>Component</SubType>
@@ -202,6 +228,9 @@
     <Compile Include="Source\Classes\Achievement.cs" />
     <Compile Include="Source\Utils\RA.cs" />
     <Compile Include="temp\Temp.cs" />
+    <EmbeddedResource Include="Source\Forms\ConfigForm.resx">
+      <DependentUpon>ConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Forms\HashViewer.resx">
       <DependentUpon>HashViewer.cs</DependentUpon>
     </EmbeddedResource>
@@ -217,6 +246,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Forms\MainContentForm.resx">
+      <DependentUpon>MainContentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Forms\SpeedRunForm.resx">
+      <DependentUpon>SpeedRunForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Forms\TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
@@ -246,6 +281,8 @@
     <Compile Include="Source\Controllers\Main\MainCommon.cs" />
     <Compile Include="Source\Controllers\ImageViewer\ImageViewerCommon.cs" />
     <Compile Include="Source\Controllers\ImageViewer\ImageViewerControls.cs" />
+    <None Include="Source\Asset\Script\PostMovePlugins.bat" />
+    <None Include="Source\Asset\Script\PrePurgePlugins.bat" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -259,7 +296,6 @@
     <Content Include="Deps\vcredist2012_x64.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Plugins\GNX.dll" />
     <Content Include="ResourcesLocal\App\jpegoptim_1.5.5.exe" />
     <Content Include="ResourcesLocal\App\pngcrush_1_8_13_w64.exe" />
     <Content Include="ResourcesLocal\Icons\favicon.ico" />
@@ -292,12 +328,6 @@
     <Content Include="Plugins\Brotli.Core.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Plugins\Newtonsoft.Json.dll" />
-    <Content Include="Plugins\PhotoSauce.MagicScaler.dll" />
-    <Content Include="Plugins\System.Data.SQLite.dll" />
-    <Content Include="Plugins\SQLite.Interop.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -319,14 +349,10 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>:: Move all assemblies and related files to lib folder
-ROBOCOPY "$(SolutionDir)..\_DLL\_DLL\Plugins\Core\ " "$(TargetDir)Plugins\ " "GNX.pdb" /XO
-ROBOCOPY "$(TargetDir) " "$(TargetDir)Plugins\ " /XF *.exe *.config *.manifest $(SolutionName).pdb *.json /XD Plugins Data Deps /E /IS /MOV 
-if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PostBuildEvent>
+    <PostBuildEvent>call "$(ProjectDir)Source\Asset\Script\PostMovePlugins.bat" $(ProjectName), $(Platform), $(ProjectDir)$(ProjectFileName)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>ROBOCOPY "$(SolutionDir)..\_DLL\_DLL\Plugins\Core\ " "$(ProjectDir)Plugins\ " "GNX.dll" /XO
-if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PreBuildEvent>
+    <PreBuildEvent>call "$(ProjectDir)Source\Asset\Script\PrePurgePlugins.bat"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

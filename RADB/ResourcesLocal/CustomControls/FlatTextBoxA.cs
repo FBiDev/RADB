@@ -2,7 +2,7 @@
 
 namespace RADB
 {
-    public partial class FlatTextBoxA : GNX.Desktop.FlatTextBox
+    public partial class FlatTextBoxA : App.Core.Desktop.FlatTextBox
     {
         public FlatTextBoxA()
         {

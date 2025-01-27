@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using RADB.Properties;
-using GNX.Desktop;
+using App.Core.Desktop;
 
 namespace RADB
 {
@@ -23,7 +23,7 @@ namespace RADB
 
         public void Init()
         {
-            Icon = GNX.Cast.ToIco(Resources.iconForm, new Size(250, 250));
+            Icon = App.Core.Cast.ToIco(Resources.iconForm, new Size(250, 250));
         }
 
         public void CenterWindow()

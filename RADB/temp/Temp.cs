@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Net;
-using Newtonsoft.Json;
+using App.File.Json;
 //using System.Drawing.Imaging;
 //using PhotoSauce.MagicScaler;//Need System.Memory Reference
 
@@ -84,14 +84,14 @@ namespace RADB.temp
         {
             //Read and Convert File
             var text = File.ReadAllText(filePath);
-            var objList = JsonConvert.DeserializeObject<List<T>>(text);
+            var objList = Json.DeserializeObject<List<T>>(text);
             return objList;
         }
 
         public static void UpdateFile<T>(T list, string path)
         {
             //Serialize List and Save Json File
-            var jsonData = JsonConvert.SerializeObject(list);
+            var jsonData = Json.SerializeObject(list);
             File.WriteAllText(path, jsonData);
         }
 

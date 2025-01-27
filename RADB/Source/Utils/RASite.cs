@@ -3,8 +3,8 @@ using System.Collections.Specialized;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
-using GNX;
-using GNX.Desktop;
+using App.Core;
+using App.Core.Desktop;
 
 namespace RADB
 {
@@ -12,7 +12,7 @@ namespace RADB
     {
         public static void Load()
         {
-            Browser.UseProxy = Environment.MachineName.Equals("COHAB-CT0920");
+            Browser.UseProxy = Environment.MachineName.Equals("cohab-ct0157", StringComparison.InvariantCultureIgnoreCase);
             Browser.DefaultProxy = new WebProxy
             {
                 Address = new Uri("http://cohab-proxy.cohabct.com.br:3128"),

@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using RADB.Properties;
-using GNX;
-using GNX.Desktop;
+using App.Core;
+using App.Core.Desktop;
 
 namespace RADB
 {

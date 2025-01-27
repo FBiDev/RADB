@@ -1,6 +1,6 @@
 ﻿namespace RADB
 {
-    public partial class FlatProgressBarA : GNX.Desktop.FlatProgressBar
+    public partial class FlatProgressBarA : App.Core.Desktop.FlatProgressBar
     {
         public FlatProgressBarA()
         {

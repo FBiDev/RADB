@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Newtonsoft.Json;
-using GNX;
-using GNX.Desktop;
+using App.Core;
+using App.Core.Desktop;
+using App.File.Json;
 
 namespace RADB
 {
@@ -23,7 +23,7 @@ namespace RADB
         public DateTime? Lastupdate { get; set; }
         public string LastupdateString { get { return Lastupdate.ToString("dd MMM yyyy, HH:mm"); } }
 
-        [JsonConverter(typeof(BoolConverter))]
+        [JsonConverter(JsonType.Boolean)]
         public bool Untracked { get; set; }
 
         public int Permissions { get; set; }
@@ -132,7 +132,7 @@ namespace RADB
         //Points Awarded to Others
         public int ContribYield { get; set; }
 
-        [JsonConverter(typeof(BoolConverter))]
+        [JsonConverter(JsonType.Boolean)]
         public bool UserWallActive { get; set; }
 
         public IEnumerable<GameProgress> PlayedGames { get; set; }

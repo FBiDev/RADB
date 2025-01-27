@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using GNX.Desktop;
+using App.Core.Desktop;
 
 namespace RADB
 {
@@ -92,7 +92,7 @@ namespace RADB
         {
             var newForm = new ImageViewer();
 
-            Session.MainForm.BeginInvoke((Action)(() =>
+            Session.MainFormRA.BeginInvoke((Action)(() =>
             {
                 newForm.Hide();
                 newForm.ShowDialog();

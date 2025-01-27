@@ -3,8 +3,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GNX;
-using GNX.Desktop;
+using App.Core;
+using App.Core.Desktop;
 
 namespace RADB
 {
@@ -20,10 +20,10 @@ namespace RADB
             btnUserCheevos.Click += btnUserCheevos_Click;
 
             //Initial Value
-            chkDarkMode.Checked = Session.Options.DarkMode;
+            chkDarkMode.Checked = Session.Options.IsDarkMode;
             chkDarkMode.CheckedChanged += (sender, e) => Session.Options.ToggleDarkMode();
 
-            chkDebugMode.Checked = Session.Options.DebugMode;
+            chkDebugMode.Checked = Session.Options.IsDebugMode;
             chkDebugMode.CheckedChanged += (sender, e) => Session.Options.ToggleDebugMode();
 
             await About_Shown(null, null);

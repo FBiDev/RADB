@@ -1,6 +1,6 @@
 ﻿namespace RADB
 {
-    public partial class FlatLabelB : GNX.Desktop.FlatLabel
+    public partial class FlatLabelB : App.Core.Desktop.FlatLabel
     {
         public FlatLabelB()
         {

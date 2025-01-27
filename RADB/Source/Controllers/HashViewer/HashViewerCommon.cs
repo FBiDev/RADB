@@ -4,9 +4,9 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Threading.Tasks;
-using GNX;
-using GNX.Desktop;
-using GNX.Web;
+using App.Core;
+using App.Core.Desktop;
+using App.Core.Web;
 
 namespace RADB
 {
@@ -34,7 +34,7 @@ namespace RADB
             if (Session.RALogged)
             {
                 var newForm = new HashViewer();
-                Session.MainForm.BeginInvoke((Action)(() =>
+                Session.MainFormRA.BeginInvoke((Action)(() =>
                 {
                     newForm.Hide();
                     newForm.ShowDialog();

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using Newtonsoft.Json;
-using GNX;
-using GNX.Desktop;
+using App.Core;
+using App.Core.Desktop;
+using App.File.Json;
 
 namespace RADB
 {
@@ -16,7 +16,7 @@ namespace RADB
         public int NumAwarded { get; set; }
         public float? PctWon { get; set; }
 
-        [JsonConverter(typeof(BoolConverter))]
+        [JsonConverter(JsonType.Boolean)]
         public bool HardcoreMode { get; set; }
 
         #region _ImageIcon_

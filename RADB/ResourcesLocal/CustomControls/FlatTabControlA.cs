@@ -1,6 +1,6 @@
 ﻿namespace RADB
 {
-    public class FlatTabControlA : GNX.Desktop.FlatTabControl
+    public class FlatTabControlA : App.Core.Desktop.FlatTabControl
     {
     }
 }

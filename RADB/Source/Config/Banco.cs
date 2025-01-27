@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
 using System.Threading.Tasks;
-using GNX;
-using GNX.Desktop;
+using App.Core;
+using App.Data.SQLite;
 
 namespace RADB
 {
@@ -19,7 +18,7 @@ namespace RADB
             Database = new DatabaseManager
             {
                 DatabaseType = DatabaseType.SQLite,
-                Connection = new SQLiteConnection { DefaultTimeout = DatabaseManager.DefaultCommandTimeout },
+                Connection = new SQLite { DefaultTimeout = DatabaseManager.DefaultCommandTimeout }.Connection(),
                 ServerAddress = "",
                 DatabaseName = "",
                 DatabaseFile = Session.Options.SystemDatabaseFile,

@@ -2,7 +2,7 @@
 
 namespace RADB
 {
-    public class FlatButtonA : GNX.Desktop.FlatButton
+    public class FlatButtonA : App.Core.Desktop.FlatButton
     {
         public void DarkMode()
         {

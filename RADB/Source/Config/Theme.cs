@@ -1,27 +1,38 @@
 ﻿using System.Drawing;
-using GNX.Desktop;
+using App.Core.Desktop;
 
 namespace RADB
 {
     public static class Theme
     {
-        public static bool DesignMode = true;
+        private static bool isDesignMode = true;
+
+        public static Color CheevoTitle { get; private set; }
+
+        public static Color CheevoDescription { get; private set; }
 
         public static bool ToggleDarkTheme()
         {
-            if (DesignMode) return false;
+            if (isDesignMode)
+            {
+                return false;
+            }
 
             var result = ThemeBase.ToggleDarkMode();
             CustomColors();
             return result;
         }
 
-        public static void SetTheme()
+        public static void SetTheme(bool pageIsDesignMode)
         {
-            DesignMode = Session.MainForm.isDesignMode;
-            if (DesignMode) return;
+            isDesignMode = pageIsDesignMode;
 
-            if (Session.Options.DarkMode)
+            if (isDesignMode)
+            {
+                return;
+            }
+
+            if (Session.Options.IsDarkMode)
             {
                 ThemeBase.SetTheme(ThemeBase.ThemeNames.Dark);
             }
@@ -33,12 +44,9 @@ namespace RADB
             CustomColors();
         }
 
-        public static Color CheevoTitle;
-        public static Color CheevoDescription;
-
-        static void CustomColors()
+        private static void CustomColors()
         {
-            if (Session.Options.DarkMode)
+            if (Session.Options.IsDarkMode)
             {
                 CheevoTitle = Color.FromArgb(204, 153, 0);
                 CheevoDescription = Color.FromArgb(44, 151, 250);

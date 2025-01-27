@@ -2,8 +2,8 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GNX;
-using GNX.Desktop;
+using App.Core;
+using App.Core.Desktop;
 
 namespace RADB
 {

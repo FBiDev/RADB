@@ -1,89 +1,36 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GNX;
-using GNX.Desktop;
+using App.Core;
+using App.Core.Desktop;
 
 namespace RADB
 {
     public static partial class MainCommon
     {
+        private static FormWindowState? lastWindowState;
+
         #region MAIN
         public static void Main_Init(Main formDesign)
         {
-            Session.MainForm = formDesign;
+            Session.MainFormRA = formDesign;
             form.Init();
 
             form.Load += Main_Load;
             form.Shown += Main_Shown;
             form.KeyDown += Main_KeyDown;
             form.Resize += Main_Resize;
-            //KeyPreview = true;
+            ////KeyPreview = true;
 
-            tabMain.KeyDown += tabMain_KeyDown;
-            tabMain.SelectedIndexChanged += tabMain_SelectedIndexChanged;
+            tabMain.KeyDown += MainTab_KeyDown;
+            tabMain.SelectedIndexChanged += MainTab_SelectedIndexChanged;
         }
-
-        static void Main_Load(object sender, EventArgs e) { }
-
-        static async void Main_Shown(object sender, EventArgs e)
-        {
-            Theme.SetTheme();
-            Session.MainForm.CenterWindow();
-
-            await Task.Delay(10);
-
-            await MainConsole.Console_Init();
-            await MainGame.Games_Init();
-            await MainGameInfo.GameInfo_Init();
-            await MainGameToPlay.GamesToPlay_Init();
-            await MainGameToHide.GamesToHide_Init();
-            await MainUserInfo.User_Init();
-            await MainAbout.About_Init();
-
-            await LoadAllGamesIcon();
-        }
-
-        static void Main_KeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = e.Modifiers == Keys.Alt;
-        }
-
-        static FormWindowState? LastWindowState;
-        static async void Main_Resize(object sender, EventArgs e)
-        {
-            if (form.WindowState != LastWindowState)
-            {
-                if (form.WindowState == FormWindowState.Maximized)
-                {
-                    await LoadAllGamesIcon();
-                }
-                else if (form.WindowState == FormWindowState.Normal) { }
-                LastWindowState = form.WindowState;
-            }
-        }
-        #endregion
-
-        #region TABMAIN
-        static void tabMain_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Modifiers != Keys.Alt) { return; }
-            if (e.KeyCode == Keys.Right && tabMain.SelectedIndex < tabMain.TabPages.Count) { tabMain.SelectedIndex += 1; }
-            if (e.KeyCode == Keys.Left && tabMain.SelectedIndex > 0) { tabMain.SelectedIndex -= 1; }
-        }
-
-        static void tabMain_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var tab = sender as TabControl;
-            Session.TabMainChanged(tab.SelectedTab);
-        }
-        #endregion
 
         #region Common
         public static void ChangeTab(TabPage tab)
         {
             form.tabMain.SelectedTab = tab;
-            tabMain_SelectedIndexChanged(tabMain, null);
+            MainTab_SelectedIndexChanged(tabMain, null);
             form.tabMain.Refresh();
         }
 
@@ -97,7 +44,11 @@ namespace RADB
 
         public static void ChangeBindGame(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowHeader()) return;
+            if (e.RowHeader())
+            {
+                return;
+            }
+
             var dgv = sender as FlatDataGridA;
             Session.Game = dgv.GetCurrentRowObject<Game>();
         }
@@ -106,18 +57,27 @@ namespace RADB
         {
             await Task.Run(() =>
             {
-                if (dgv.DataSource.IsNull() || dgv.RowCount == 0) { return; }
+                if (dgv.DataSource.IsNull() || dgv.RowCount == 0)
+                {
+                    return;
+                }
 
                 int index = dgv.FirstDisplayedScrollingRowIndex;
                 int nItems = (int)Math.Ceiling((double)(dgv.Height - 29) / 37) + 12;
 
                 var list = dgv.DataSource as ListBind<Game>;
 
-                if (list == null) return;
+                if (list == null)
+                {
+                    return;
+                }
 
                 for (int i = index; i < index + nItems; i++)
                 {
-                    if (i >= list.Count) { break; }
+                    if (i >= list.Count)
+                    {
+                        break;
+                    }
 
                     list[i].SetImageIconGridBitmap();
                 }
@@ -138,7 +98,10 @@ namespace RADB
             var dgv = sender as DataGridView;
             var typedChar = e.KeyChar;
 
-            if (char.IsLetter(typedChar) == false) return;
+            if (char.IsLetter(typedChar) == false)
+            {
+                return;
+            }
 
             int firstIndex = -1;
             int nextIndex = -1;
@@ -146,13 +109,94 @@ namespace RADB
             {
                 if (row.Cells[columnName].Value.ToString().StartsWith(typedChar.ToString(), StringComparison.OrdinalIgnoreCase))
                 {
-                    if (firstIndex == -1) { firstIndex = row.Index; }
-                    if (nextIndex == -1 && dgv.CurrentRow.Index < row.Index) { nextIndex = row.Index; }
+                    if (firstIndex == -1)
+                    {
+                        firstIndex = row.Index;
+                    }
+
+                    if (nextIndex == -1 && dgv.CurrentRow.Index < row.Index)
+                    {
+                        nextIndex = row.Index;
+                    }
                 }
             }
 
-            if (nextIndex == -1) { nextIndex = firstIndex; }
+            if (nextIndex == -1)
+            {
+                nextIndex = firstIndex;
+            }
+
             dgv.Rows[nextIndex].Cells[0].Selected = true;
+        }
+        #endregion
+
+        private static void Main_Load(object sender, EventArgs e)
+        {
+        }
+
+        private static async void Main_Shown(object sender, EventArgs e)
+        {
+            Theme.SetTheme(Session.MainFormRA.isDesignMode);
+            Session.MainFormRA.CenterWindow();
+
+            await Task.Delay(10);
+
+            await MainConsole.Console_Init();
+            await MainGame.Games_Init();
+            await MainGameInfo.GameInfo_Init();
+            await MainGameToPlay.GamesToPlay_Init();
+            await MainGameToHide.GamesToHide_Init();
+            await MainUserInfo.User_Init();
+            await MainAbout.About_Init();
+
+            await LoadAllGamesIcon();
+        }
+
+        private static void Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = e.Modifiers == Keys.Alt;
+        }
+
+        private static async void Main_Resize(object sender, EventArgs e)
+        {
+            if (form.WindowState != lastWindowState)
+            {
+                if (form.WindowState == FormWindowState.Maximized)
+                {
+                    await LoadAllGamesIcon();
+                }
+                else if (form.WindowState == FormWindowState.Normal)
+                {
+                }
+
+                lastWindowState = form.WindowState;
+            }
+        }
+        #endregion
+
+        #region MainTab
+        private static void MainTab_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers != Keys.Alt)
+            {
+                return;
+            }
+
+            if (e.KeyCode == Keys.Right && tabMain.SelectedIndex < tabMain.TabPages.Count)
+            {
+                tabMain.SelectedIndex += 1;
+            }
+
+            if (e.KeyCode == Keys.Left && tabMain.SelectedIndex > 0)
+            {
+                tabMain.SelectedIndex -= 1;
+            }
+        }
+
+        private static void MainTab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var tab = sender as TabControl;
+            Session.TabMainChanged(tab.SelectedTab);
         }
         #endregion
     }

@@ -1,6 +1,6 @@
 ﻿namespace RADB
 {
-    public partial class FlatGroupBoxA : GNX.Desktop.FlatGroupBox
+    public partial class FlatGroupBoxA : App.Core.Desktop.FlatGroupBox
     {
         public FlatGroupBoxA()
         {

@@ -600,7 +600,7 @@ namespace RADB
             // 
             this.pnlFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlFilters.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            this.pnlFilters.BackColorType = GNX.Desktop.PanelType.controlLight;
+            this.pnlFilters.BackColorType = App.Core.Desktop.PanelType.controlLight;
             this.pnlFilters.Controls.Add(this.chkOfficial);
             this.pnlFilters.Controls.Add(this.chkPrototype);
             this.pnlFilters.Controls.Add(this.chkUnlicensed);
@@ -764,7 +764,7 @@ namespace RADB
             this.lblConsoleGamesTotal.AutoSize = true;
             this.lblConsoleGamesTotal.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblConsoleGamesTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
-            this.lblConsoleGamesTotal.ForeColorType = GNX.Desktop.LabelType.primary;
+            this.lblConsoleGamesTotal.ForeColorType = App.Core.Desktop.LabelType.primary;
             this.lblConsoleGamesTotal.Location = new System.Drawing.Point(7, 24);
             this.lblConsoleGamesTotal.MinimumSize = new System.Drawing.Size(48, 14);
             this.lblConsoleGamesTotal.Name = "lblConsoleGamesTotal";
@@ -777,7 +777,7 @@ namespace RADB
             this.lblConsoleName.AutoSize = true;
             this.lblConsoleName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblConsoleName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
-            this.lblConsoleName.ForeColorType = GNX.Desktop.LabelType.primary;
+            this.lblConsoleName.ForeColorType = App.Core.Desktop.LabelType.primary;
             this.lblConsoleName.Location = new System.Drawing.Point(3, 3);
             this.lblConsoleName.MinimumSize = new System.Drawing.Size(48, 22);
             this.lblConsoleName.Name = "lblConsoleName";
@@ -1040,7 +1040,7 @@ namespace RADB
             // pnlInfoBoxArt
             // 
             this.pnlInfoBoxArt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.pnlInfoBoxArt.BackColorType = GNX.Desktop.PanelType.controlDark;
+            this.pnlInfoBoxArt.BackColorType = App.Core.Desktop.PanelType.controlDark;
             this.pnlInfoBoxArt.Controls.Add(this.picInfoBoxArt);
             this.pnlInfoBoxArt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlInfoBoxArt.Location = new System.Drawing.Point(558, 19);
@@ -1050,7 +1050,7 @@ namespace RADB
             // 
             // picInfoBoxArt
             // 
-            this.picInfoBoxArt.Align = GNX.Desktop.Align.Center;
+            this.picInfoBoxArt.Align = App.Core.Desktop.Align.Center;
             this.picInfoBoxArt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.picInfoBoxArt.AutoScale = true;
             this.picInfoBoxArt.BackColor = System.Drawing.Color.Transparent;
@@ -1069,7 +1069,7 @@ namespace RADB
             // pnlInfoImages
             // 
             this.pnlInfoImages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.pnlInfoImages.BackColorType = GNX.Desktop.PanelType.controlDark;
+            this.pnlInfoImages.BackColorType = App.Core.Desktop.PanelType.controlDark;
             this.pnlInfoImages.BorderRound = true;
             this.pnlInfoImages.Controls.Add(this.pnlInfoInGame);
             this.pnlInfoImages.Controls.Add(this.pnlInfoTitle);
@@ -1095,7 +1095,7 @@ namespace RADB
             // 
             // picInfoInGame
             // 
-            this.picInfoInGame.Align = GNX.Desktop.Align.Center;
+            this.picInfoInGame.Align = App.Core.Desktop.Align.Center;
             this.picInfoInGame.AutoScale = true;
             this.picInfoInGame.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picInfoInGame.Image = null;
@@ -1123,7 +1123,7 @@ namespace RADB
             // 
             // picInfoTitle
             // 
-            this.picInfoTitle.Align = GNX.Desktop.Align.Center;
+            this.picInfoTitle.Align = App.Core.Desktop.Align.Center;
             this.picInfoTitle.AutoScale = true;
             this.picInfoTitle.ForeColor = System.Drawing.SystemColors.ControlText;
             this.picInfoTitle.Image = null;
@@ -1835,7 +1835,7 @@ namespace RADB
             // 
             this.pnlAwardFloating.AutoSize = true;
             this.pnlAwardFloating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
-            this.pnlAwardFloating.BackColorType = GNX.Desktop.PanelType.controlLight;
+            this.pnlAwardFloating.BackColorType = App.Core.Desktop.PanelType.controlLight;
             this.pnlAwardFloating.Controls.Add(this.picAwardFloating);
             this.pnlAwardFloating.Controls.Add(this.tblAwardFloating);
             this.pnlAwardFloating.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -2412,7 +2412,7 @@ namespace RADB
             // 
             this.pnlUserCheevos.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pnlUserCheevos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.pnlUserCheevos.BackColorType = GNX.Desktop.PanelType.controlDark;
+            this.pnlUserCheevos.BackColorType = App.Core.Desktop.PanelType.controlDark;
             this.pnlUserCheevos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlUserCheevos.Controls.Add(this.lblCheevos);
             this.pnlUserCheevos.Controls.Add(this.lblUserCheevos);
@@ -2537,7 +2537,7 @@ namespace RADB
             this.lblAbTitle.AutoSize = true;
             this.lblAbTitle.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAbTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
-            this.lblAbTitle.ForeColorType = GNX.Desktop.LabelType.primary;
+            this.lblAbTitle.ForeColorType = App.Core.Desktop.LabelType.primary;
             this.lblAbTitle.Location = new System.Drawing.Point(369, 64);
             this.lblAbTitle.Name = "lblAbTitle";
             this.lblAbTitle.Size = new System.Drawing.Size(173, 31);
@@ -2550,7 +2550,7 @@ namespace RADB
             this.lblAbYear.AutoSize = true;
             this.lblAbYear.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAbYear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
-            this.lblAbYear.ForeColorType = GNX.Desktop.LabelType.primary;
+            this.lblAbYear.ForeColorType = App.Core.Desktop.LabelType.primary;
             this.lblAbYear.Location = new System.Drawing.Point(433, 94);
             this.lblAbYear.Name = "lblAbYear";
             this.lblAbYear.Size = new System.Drawing.Size(48, 24);
@@ -2562,7 +2562,7 @@ namespace RADB
             this.pnlBottomOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlBottomOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.pnlBottomOutput.BackColorType = GNX.Desktop.PanelType.controlDark;
+            this.pnlBottomOutput.BackColorType = App.Core.Desktop.PanelType.controlDark;
             this.pnlBottomOutput.Controls.Add(this.pnlOutput);
             this.pnlBottomOutput.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.pnlBottomOutput.Location = new System.Drawing.Point(12, 592);

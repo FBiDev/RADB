@@ -3,40 +3,53 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RADB.Properties;
-using GNX;
-using GNX.Desktop;
+using App.Core;
+using App.Core.Desktop;
 
 namespace RADB
 {
     public static class Session
     {
-        #region Options
-        public static Options Options = new Options();
+        #region Fields
+        public const CultureID Language = CultureID.Brazil_Portuguese;
+        public const CultureID LanguageNumbers = CultureID.Brazil_Portuguese;
 
-        public static bool LoadOptions()
-        { return Options.Loaded = Json.Load(ref Options, Options.FileName); }
+        public const bool SystemLock = true;
+        public static readonly string SystemName = AppManager.Name;
 
-        public static bool UpdateOptions()
-        { return Json.Save(Options, Options.FileName); }
+        private static Options _options = new Options();
         #endregion
 
-        #region Main
-        public const bool Singleton = true;
-        public const string SystemName = "RADatabase";
+        #region Properties
+        public static Options Options
+        {
+            get { return _options; }
+            private set { _options = value; }
+        }
 
-        public const CultureID Language = CultureID.UnitedStates_English;
-        public const CultureID LanguageNumbers = CultureID.Brazil_Portuguese;
+        public static MainForm MainForm { get; set; }
+
+        public static MainContentForm MainContentForm { get; set; }
+
+        public static ConfigForm ConfigForm { get; set; }
+
+        public static Main MainFormRA { get; set; }
+
+        public static SpeedRunForm SpeedRunForm { get; set; }
+        #endregion
 
         public static void Start()
         {
             LanguageManager.SetLanguage(Language);
             LanguageManager.SetLanguageNumbers(LanguageNumbers);
 
-            LoadOptions();
+            Options.Load();
 
             Banco.Load();
 
-            DebugManager.Enable = Options.DebugMode;
+            MainBaseForm.DebugMode = Options.IsDebugMode;
+
+            DebugManager.Enable = Options.IsDebugMode;
             DebugManager.LogSQLSistema.SyncList(Banco.Log);
 
             Picture.PngCompressor = Resources.pngcrush_1_8_13_w64;
@@ -49,11 +62,13 @@ namespace RADB
             //Folders
             Folder.CreateFolders();
         }
-        #endregion
 
-        #region Forms
-        public static Main MainForm;
+        public static void SetFormIcon()
+        {
+            //MainBaseForm.Ico = Properties.Resources.ico_app;
+        }
 
+        #region Actions
         public delegate Task AsyncAction();
         public delegate bool ActionWithGame(Game game);
 

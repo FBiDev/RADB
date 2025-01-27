@@ -4,10 +4,9 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using GNX;
-using GNX.Desktop;
+using App.Core;
+using App.Core.Desktop;
+using App.File.Json;
 
 namespace RADB
 {
@@ -137,7 +136,7 @@ namespace RADB
                 var cheevos = AllText.GetBetween("\"Achievements\":{", "}}");
                 cheevos = "{" + cheevos + "}";
 
-                var jcheevos = JsonConvert.DeserializeObject<JToken>(cheevos);
+                var jcheevos = Json.DeserializeObject<JToken>(cheevos);
                 Session.GameExtend.SetAchievements(jcheevos);
 
                 lstCheevos = new ListBind<Achievement>(Session.GameExtend.AchievementsList);
