@@ -12,7 +12,7 @@
             Session.MainForm.Shown += ShownForm;
 
             var contentForm = new MainContentForm();
-            Session.MainForm.SetMainFormContent(contentForm);
+            Session.MainForm.SetMainContentPage(contentForm);
         }
 
         private void ShownForm(object sender, System.EventArgs e)

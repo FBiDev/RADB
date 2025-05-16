@@ -141,7 +141,7 @@ namespace RADB
 
         private async Task CenterMainWindow<T>(T contentForm) where T : ContentBaseForm, new()
         {
-            Session.MainForm.CenterWindow();
+            await Session.MainForm.CenterWindow();
             await Task.Delay(50);
 
             contentForm.FinalLoadOnShow();
