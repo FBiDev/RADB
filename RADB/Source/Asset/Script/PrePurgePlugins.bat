@@ -1,9 +1,28 @@
 @echo off
-setlocal EnableDelayedExpansion
+setlocal EnableDelayedExpansion EnableExtensions
 
-echo -------------------------------------------------------------------------------
-echo    Pre-buid     ::     Clean Plugins
+set "EventType=Pre-build"
+set "EventName=Clean Plugins"
 
-robocopy "..\..\Plugins\ " "Plugins\ " /PURGE /XF .gitkeep
+set "ProjectName=%1"
+set "TargetDir=%2"
 
-if %errorlevel% leq 4 echo Pre-buid ExitCode: %errorlevel%&echo:& exit 0 else exit %errorlevel%
+echo ===============================================================================
+echo    Project      ::     %ProjectName%
+echo    Event        ::     Begin %EventType% -^> %EventName%
+echo ===============================================================================
+
+rd /s /q "%TargetDir%Plugins\"
+
+echo ===============================================================================
+echo    Project      ::     %ProjectName%
+echo    Event        ::     End %EventType% -^> %EventName%
+echo    Result       ::     ExitCode: %errorlevel%
+echo ===============================================================================
+echo:
+
+if %errorlevel% leq 4 (
+	exit 0
+) else (
+	exit %errorlevel%
+)

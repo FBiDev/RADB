@@ -42,7 +42,7 @@ namespace RADB
 
                 if (e.KeyData == Keys.Space)
                 {
-                    Window.SendKey(Keys.Enter);
+                    Native.Window.SendKey(Keys.Enter);
                 }
 
                 if (e.KeyData == Keys.Enter)

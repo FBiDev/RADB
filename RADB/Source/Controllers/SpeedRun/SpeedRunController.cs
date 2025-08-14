@@ -58,7 +58,7 @@ namespace RADB
                 var a = cheevo.Value.ToString();
             }
 
-            searchObj.data = null;
+            //searchObj.data = null;
             searchObj.data.ForEach(x =>
             {
                 x.PlatformsIDs.ForEach(id =>
