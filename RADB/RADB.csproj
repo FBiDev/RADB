@@ -350,7 +350,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>call "$(ProjectDir)Source\Asset\Script\PostMovePlugins.bat" ^
-$(ProjectName), $(TargetDir)</PostBuildEvent>
+$(ProjectName), $(TargetDir), $(SolutionDir), ^
+$(Platform), $(ProjectDir)$(ProjectFileName)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>call "$(ProjectDir)Source\Asset\Script\PrePurgePlugins.bat" ^
