@@ -5,11 +5,12 @@ namespace RADB
 {
     public class Options
     {
-        #region Options
+        #region Fields
         [JsonIgnore]
-        public const string FileName = "Options.json";
+        private const string FileName = "Options.json";
         [JsonIgnore]
-        public static bool IsLoaded;
+        public readonly string SystemDatabaseFile = @"Data\database.db";
+        #endregion
 
         public Options()
         {
@@ -17,15 +18,36 @@ namespace RADB
             IsDebugMode = true;
         }
 
+        #region Properties
+        [JsonIgnore]
+        public static bool IsLoaded { get; private set; }
+
         [JsonConverter(JsonType.Boolean)]
         public bool IsDarkMode { get; set; }
 
         [JsonConverter(JsonType.Boolean)]
         public bool IsDebugMode { get; set; }
+        #endregion
+
+        public bool Load()
+        {
+            IsLoaded = Json.Load(this, FileName);
+
+            MainBaseForm.DebugMode = IsDebugMode;
+            DebugManager.Enable = IsDebugMode;
+
+            return IsLoaded;
+        }
+
+        public bool Update()
+        {
+            return Json.Save(this, FileName);
+        }
 
         public bool ToggleDarkMode()
         {
             IsDarkMode = Theme.ToggleDarkTheme();
+
             return Update();
         }
 
@@ -37,21 +59,5 @@ namespace RADB
 
             return Update();
         }
-        #endregion
-
-        public bool Load()
-        {
-            return IsLoaded = Json.Load(this, FileName);
-        }
-
-        public bool Update()
-        {
-            return Json.Save(this, FileName);
-        }
-
-        #region System
-        [JsonIgnore]
-        public string SystemDatabaseFile = @"Data\database.db";
-        #endregion
     }
 }

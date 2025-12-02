@@ -5,40 +5,46 @@ namespace RADB
 {
     public class Console
     {
-        public int ID { get; set; }
-        public string Company { get; set; }
-        public string Name { get; set; }
-        public int NumGames { get; set; }
-        public int TotalGames { get; set; }
+        private static readonly ConsoleDao DAO = new ConsoleDao();
 
         public Console()
         {
             Company = Name = string.Empty;
         }
 
-        public override string ToString()
+        public int ID { get; set; }
+
+        public string Company { get; set; }
+
+        public string Name { get; set; }
+
+        public int NumGames { get; set; }
+
+        public int TotalGames { get; set; }
+
+        public static async Task<List<Console>> List()
         {
-            return ID + " - " + Name;
+            return await DAO.List();
         }
 
-        public async static Task<bool> SaveList(IList<Console> list)
+        public static async Task<bool> SaveList(IList<Console> list)
         {
-            return await ConsoleDao.InsertList(list);
+            return await DAO.InsertList(list);
         }
 
-        public async static Task<bool> DeleteAll()
+        public static async Task<bool> DeleteAll()
         {
-            return await ConsoleDao.Delete(new Console());
+            return await DAO.Delete(new Console());
         }
 
         public async Task<bool> Delete()
         {
-            return await ConsoleDao.Delete(this);
+            return await DAO.Delete(this);
         }
 
-        public async static Task<List<Console>> List()
+        public override string ToString()
         {
-            return await ConsoleDao.List();
+            return ID + " - " + Name;
         }
     }
 }

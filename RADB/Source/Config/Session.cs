@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RADB.Properties;
 using App.Core;
 using App.Core.Desktop;
+using RADB.Properties;
 
 namespace RADB
 {
@@ -18,6 +18,39 @@ namespace RADB
         public static readonly string SystemName = AppManager.Name;
 
         private static Options _options = new Options();
+
+        private static bool _raLogged;
+        private static Console _consoleSelected;
+        private static Game _gameSelected;
+        private static GameExtend _gameExtendSelected;
+        private static User _userSelected;
+        #endregion
+
+        #region Events
+        public delegate Task AsyncAction();
+
+        public delegate bool ActionWithGame(Game game);
+
+        public static event Action OnTabMainChanged = delegate { };
+
+        public static event Action OnRALoggedChanged = delegate { };
+
+        public static event Action OnUserChanged = delegate { };
+
+        public static event AsyncAction OnConsoleChanged = delegate { return Task.Run(() => { }); };
+
+        public static event AsyncAction OnGameChanged = delegate { return Task.Run(() => { }); };
+
+        public static event AsyncAction OnGameExtendChanged = delegate { return Task.Run(() => { }); };
+
+        public static event AsyncAction OnGameListChanged = delegate { return Task.Run(() => { }); };
+
+        public static event ActionWithGame OnAddGames = delegate { return false; };
+
+        public static event ActionWithGame OnAddGamesToPlay = delegate { return false; };
+
+        public static event ActionWithGame OnAddGamesToHide = delegate { return false; };
+
         #endregion
 
         #region Properties
@@ -36,6 +69,42 @@ namespace RADB
         public static Main MainFormRA { get; set; }
 
         public static SpeedRunForm SpeedRunForm { get; set; }
+
+        public static TabPage SelectedTab { get; set; }
+
+        public static bool RALogged
+        {
+            get { return _raLogged; }
+            set { SetRALogged(value); }
+        }
+
+        public static List<DataGridView> MainGameList { get; set; }
+
+        public static Console LastConsole { get; set; }
+
+        public static Console ConsoleSelected
+        {
+            get { return _consoleSelected; }
+            set { SetConsole(value); }
+        }
+
+        public static Game GameSelected
+        {
+            get { return _gameSelected; }
+            set { SetGame(value); }
+        }
+
+        public static GameExtend GameExtendSelected
+        {
+            get { return _gameExtendSelected; }
+            set { SetGameExtend(value); }
+        }
+
+        public static User UserSelected
+        {
+            get { return _userSelected; }
+            set { SetUser(value); }
+        }
         #endregion
 
         public static void Start()
@@ -55,109 +124,77 @@ namespace RADB
             Picture.PngCompressor = Resources.pngcrush_1_8_13_w64;
             Picture.JpgCompressor = Resources.jpegoptim_1_5_5;
 
-            //Internet
+            // Internet
             Browser.Load();
             RASite.Load();
 
-            //Folders
+            // Folders
             Folder.CreateFolders();
+
+            // Game List
+            MainGameList = new List<DataGridView>();
         }
 
         public static void SetFormIcon()
         {
-            //MainBaseForm.Ico = Properties.Resources.ico_app;
+            // MainBaseForm.Ico = Properties.Resources.ico_app;
         }
 
         #region Actions
-        public delegate Task AsyncAction();
-        public delegate bool ActionWithGame(Game game);
-
-        public static event Action OnRALoggedChanged = delegate { };
-        public static event Action OnUserChanged = delegate { };
-        public static event Action OnTabMainChanged = delegate { };
-
-        public static event AsyncAction OnGameListChanged = delegate { return Task.Run(() => { }); };
-        public static event AsyncAction OnConsoleChanged = delegate { return Task.Run(() => { }); };
-        public static event AsyncAction OnGameChanged = delegate { return Task.Run(() => { }); };
-        public static event AsyncAction OnGameExtendChanged = delegate { return Task.Run(() => { }); };
-
-        public static event ActionWithGame OnAddGamesToPlay = delegate { return false; };
-        public static event ActionWithGame OnAddGamesToHide = delegate { return false; };
-        public static event ActionWithGame OnAddGames = delegate { return false; };
-
-        static bool _RALogged;
-        public static bool RALogged
+        private static void SetRALogged(bool value)
         {
-            get { return _RALogged; }
-            set
-            {
-                _RALogged = value;
-                OnRALoggedChanged();
-            }
+            _raLogged = value;
+            OnRALoggedChanged();
         }
 
-        public static TabPage SelectedTab;
+        private static void SetConsole(Console value)
+        {
+            _consoleSelected = value;
+            OnConsoleChanged();
+        }
+
+        private static void SetGame(Game value)
+        {
+            _gameSelected = value;
+            OnGameChanged();
+        }
+
+        private static void SetGameExtend(GameExtend value)
+        {
+            _gameExtendSelected = value;
+            OnGameExtendChanged();
+        }
+
+        private static void SetUser(User value)
+        {
+            _userSelected = value;
+            OnUserChanged();
+        }
+
         public static void TabMainChanged(TabPage tab)
         {
             SelectedTab = tab;
             OnTabMainChanged();
         }
 
-        static User _User;
-        public static User User
+        public static void GameListChanged()
         {
-            get { return _User; }
-            set
-            {
-                _User = value;
-                OnUserChanged();
-            }
+            OnGameListChanged();
         }
 
-        public static List<DataGridView> lstDgvGames = new List<DataGridView>();
-
-        public static void GameListChanged(bool changed = true)
+        public static bool AddGames(Game game)
         {
-            if (changed)
-                OnGameListChanged();
+            return OnAddGames(game);
         }
 
-        public static bool AddGamesToPlay(Game game) { return OnAddGamesToPlay(game); }
-        public static bool AddGamesToHide(Game game) { return OnAddGamesToHide(game); }
-        public static bool AddGames(Game game) { return OnAddGames(game); }
-
-        public static Console LastConsole { get; set; }
-        static Console _Console;
-        public static Console Console
+        public static bool AddGamesToPlay(Game game)
         {
-            get { return _Console; }
-            set
-            {
-                _Console = value;
-                OnConsoleChanged();
-            }
+            return OnAddGamesToPlay(game);
         }
 
-        static Game _Game;
-        public static Game Game
+        public static bool AddGamesToHide(Game game)
         {
-            get { return _Game; }
-            set
-            {
-                _Game = value;
-                OnGameChanged();
-            }
-        }
-
-        static GameExtend _GameExtend;
-        public static GameExtend GameExtend
-        {
-            get { return _GameExtend; }
-            set
-            {
-                _GameExtend = value;
-                OnGameExtendChanged();
-            }
+            return OnAddGamesToHide(game);
         }
         #endregion
     }

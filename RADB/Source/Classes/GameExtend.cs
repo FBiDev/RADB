@@ -11,71 +11,7 @@ namespace RADB
 {
     public class GameExtend
     {
-        //GameExtended
-        public int ID { get; set; }
-        public int ConsoleID { get; set; }
-
-        public string Developer { get; set; }
-        public string Publisher { get; set; }
-        public string Genre { get; set; }
-
-        #region _Images
-        string _ImageTitle { get; set; }
-        public string ImageTitle { get { return _ImageTitle; } set { _ImageTitle = value.Replace(@"/Images/", ""); } }
-        public DownloadFile ImageTitleFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageTitle, Folder.Titles(ConsoleID) + ImageTitle); } }
-        public Bitmap ImageTitleBitmap { get; set; }
-
-        string _ImageIngame { get; set; }
-        public string ImageIngame { get { return _ImageIngame; } set { _ImageIngame = value.Replace(@"/Images/", ""); } }
-        public DownloadFile ImageIngameFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageIngame, Folder.Ingame(ConsoleID) + ImageIngame); } }
-        public Bitmap ImageIngameBitmap { get; set; }
-
-        string _ImageBoxArt { get; set; }
-        public string ImageBoxArt { get { return _ImageBoxArt; } set { _ImageBoxArt = value.Replace(@"/Images/", ""); } }
-        public DownloadFile ImageBoxArtFile { get { return new DownloadFile(RA.IMAGE_HOST + ImageBoxArt, Folder.BoxArt(ConsoleID) + ImageBoxArt); } }
-        public Bitmap ImageBoxArtBitmap { get; set; }
-
-        public void SetImagesBitmap()
-        {
-            if (ImageTitleBitmap == RA.DefaultTitleImage) { ImageTitleBitmap = BitmapExtension.SuperFastLoad(ImageTitleFile.Path); }
-            if (ImageIngameBitmap == RA.DefaultIngameImage) { ImageIngameBitmap = BitmapExtension.SuperFastLoad(ImageIngameFile.Path); }
-            if (ImageBoxArtBitmap == RA.DefaultBoxArtImage) { ImageBoxArtBitmap = BitmapExtension.SuperFastLoad(ImageBoxArtFile.Path); }
-        }
-        #endregion
-
-        public string Flags { get; set; }
-
-        string _Released { get; set; }
-        public string Released
-        {
-            get
-            {
-                return _Released;
-            }
-            set
-            {
-                _Released = value;
-
-                if (string.IsNullOrWhiteSpace(Released)) return;
-
-                //value = value.Trim();
-                //value = value.Replace("st,", ",");
-                //value = value.Replace("th,", ",");
-                //value = value.Replace("nd,", ",");
-
-                DateTime d;
-                if (DateTime.TryParse(value, out d)) { ReleasedDate = d; return; }
-                if (DateTime.TryParseExact(value, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out d)) { ReleasedDate = d; }
-            }
-        }
-        public DateTime? ReleasedDate { get; set; }
-
-        public bool IsFinal { get; set; }
-        public int NumDistinctPlayersCasual { get; set; }
-        public int NumDistinctPlayersHardcore { get; set; }
-        public string RichPresencePatch { get; set; }
-
-        public List<Achievement> AchievementsList { get; set; }
+        private static readonly GameExtendDao DAO = new GameExtendDao();
 
         public GameExtend()
         {
@@ -85,9 +21,148 @@ namespace RADB
             AchievementsList = new List<Achievement>();
         }
 
+        // GameExtended
+        public int ID { get; set; }
+
+        public int ConsoleID { get; set; }
+
+        public string Developer { get; set; }
+
+        public string Publisher { get; set; }
+
+        public string Genre { get; set; }
+
+        #region _Images
+        private string _ImageTitle { get; set; }
+
+        public string ImageTitle
+        {
+            get { return _ImageTitle; }
+            set { _ImageTitle = value.Replace(@"/Images/", string.Empty); }
+        }
+
+        public DownloadFile ImageTitleFile
+        {
+            get { return new DownloadFile(RA.ImageBaseUrl + ImageTitle, Folder.Titles(ConsoleID) + ImageTitle); }
+        }
+
+        public Bitmap ImageTitleBitmap { get; set; }
+
+        private string _ImageIngame { get; set; }
+
+        public string ImageIngame
+        {
+            get { return _ImageIngame; }
+            set { _ImageIngame = value.Replace(@"/Images/", string.Empty); }
+        }
+
+        public DownloadFile ImageIngameFile
+        {
+            get { return new DownloadFile(RA.ImageBaseUrl + ImageIngame, Folder.Ingame(ConsoleID) + ImageIngame); }
+        }
+
+        public Bitmap ImageIngameBitmap { get; set; }
+
+        private string _ImageBoxArt { get; set; }
+
+        public string ImageBoxArt
+        {
+            get { return _ImageBoxArt; }
+            set { _ImageBoxArt = value.Replace(@"/Images/", string.Empty); }
+        }
+
+        public DownloadFile ImageBoxArtFile
+        {
+            get { return new DownloadFile(RA.ImageBaseUrl + ImageBoxArt, Folder.BoxArt(ConsoleID) + ImageBoxArt); }
+        }
+
+        public Bitmap ImageBoxArtBitmap { get; set; }
+        #endregion
+
+        public string Flags { get; set; }
+
+        private string _Released { get; set; }
+
+        public string Released
+        {
+            get
+            {
+                return _Released;
+            }
+
+            set
+            {
+                _Released = value;
+
+                if (string.IsNullOrWhiteSpace(Released))
+                {
+                    return;
+                }
+
+                // value = value.Trim();
+                // value = value.Replace("st,", ",");
+                // value = value.Replace("th,", ",");
+                // value = value.Replace("nd,", ",");
+                DateTime d;
+                if (DateTime.TryParse(value, out d))
+                {
+                    ReleasedDate = d;
+                    return;
+                }
+
+                if (DateTime.TryParseExact(value, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out d))
+                {
+                    ReleasedDate = d;
+                }
+            }
+        }
+
+        public DateTime? ReleasedDate { get; set; }
+
+        public bool IsFinal { get; set; }
+
+        public int NumDistinctPlayersCasual { get; set; }
+
+        public int NumDistinctPlayersHardcore { get; set; }
+
+        public string RichPresencePatch { get; set; }
+
+        public List<Achievement> AchievementsList { get; set; }
+
+        public static async Task<List<GameExtend>> List()
+        {
+            return await DAO.List();
+        }
+
+        public static async Task<GameExtend> Find(int gameID)
+        {
+            return await DAO.Find(gameID);
+        }
+
+        public void SetImagesBitmap()
+        {
+            if (ImageTitleBitmap == RA.DefaultTitleImage)
+            {
+                ImageTitleBitmap = BitmapExtension.SuperFastLoad(ImageTitleFile.Path);
+            }
+
+            if (ImageIngameBitmap == RA.DefaultIngameImage)
+            {
+                ImageIngameBitmap = BitmapExtension.SuperFastLoad(ImageIngameFile.Path);
+            }
+
+            if (ImageBoxArtBitmap == RA.DefaultBoxArtImage)
+            {
+                ImageBoxArtBitmap = BitmapExtension.SuperFastLoad(ImageBoxArtFile.Path);
+            }
+        }
+
         public void SetAchievements(JToken result)
         {
-            if (AchievementsList.IsNull()) { return; }
+            if (AchievementsList.IsNull())
+            {
+                return;
+            }
 
             foreach (JProperty cheevo in result)
             {
@@ -99,22 +174,12 @@ namespace RADB
 
         public async Task<bool> Save()
         {
-            return await GameExtendDao.Insert(this);
+            return await DAO.Insert(this);
         }
 
         public async Task<bool> Delete()
         {
-            return await GameExtendDao.Delete(this);
-        }
-
-        public async static Task<List<GameExtend>> List()
-        {
-            return await GameExtendDao.List();
-        }
-
-        public async static Task<GameExtend> Find(int gameID)
-        {
-            return await GameExtendDao.Find(gameID);
+            return await DAO.Delete(this);
         }
     }
 }

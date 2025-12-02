@@ -5,7 +5,8 @@
         public ConfigForm()
         {
             InitializeComponent();
-            //var _ = new ConfigController(this);
+
+            // var _ = new ConfigController(this);
         }
     }
 }

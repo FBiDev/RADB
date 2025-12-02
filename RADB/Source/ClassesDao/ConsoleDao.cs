@@ -1,66 +1,92 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using RADB.Properties;
 using App.Core;
-using App.Core.Desktop;
+using RADB.Properties;
 
 namespace RADB
 {
-    public static class ConsoleDao
+    public class ConsoleDao : DaoBase
     {
-        #region " _Load "
-        static T Load<T>(DataTable table) where T : IList, new()
+        #region " _Select "
+        public async Task<List<Console>> List()
         {
-            var list = new T();
-            foreach (DataRow row in table.Rows)
+            return await Select();
+        }
+        #endregion
+
+        #region " _Actions_Custom "
+        public async Task<bool> InsertList(IList<Console> list)
+        {
+            string query = "INSERT INTO Console (ID, Name) VALUES " + Environment.NewLine;
+
+            var parameters = new List<SqlParameter>();
+
+            int index = 0;
+            foreach (var i in list)
             {
-                list.Add(new Console
+                parameters.AddRange(new List<SqlParameter>
                 {
-                    ID = row.Value<int>("ID"),
-                    Company = row.Value<string>("Company"),
-                    Name = row.Value<string>("CName"),
-                    NumGames = row.Value<int>("NumGames"),
-                    TotalGames = row.Value<int>("TotalGames")
+                    new SqlParameter("@ID" + index, i.ID),
+                    new SqlParameter("@Name" + index, i.Name)
                 });
+
+                query += "(" + "@ID" + index + ", @Name" + index + ")";
+
+                index++;
+                if (index < list.Count)
+                {
+                    query += "," + Environment.NewLine;
+                }
             }
-            return list;
+
+            var sql = new SqlQuery(query, DatabaseAction.Insert);
+            sql.Parameters.AddRange(parameters);
+
+            return (await Banco.Executar(sql)).AffectedRows > 0;
         }
         #endregion
 
-        #region " _MountFilters "
-        static List<SqlParameter> MountFilters(Console obj)
+        #region " _Actions "
+        public async Task<bool> Insert(Console obj)
         {
-            return new List<SqlParameter>
+            var sql = new SqlQuery(
+                Resources.ConsoleInsert,
+                DatabaseAction.Insert,
+                P("@ID", obj.ID),
+                P("@Name", obj.Name));
+
+            return (await Banco.Executar(sql)).AffectedRows > 0;
+        }
+
+        public async Task<bool> Delete(Console obj)
+        {
+            var sql = new SqlQuery(
+                Resources.ConsoleDelete,
+                DatabaseAction.Delete,
+                P("@ID", obj.ID),
+                P("@Name", obj.Name));
+
+            return (await Banco.Executar(sql)).AffectedRows > 0;
+        }
+
+        private async Task<List<Console>> Select(Console obj = null)
+        {
+            obj = obj ?? new Console();
+
+            var sql = new SqlQuery(
+                Resources.ConsoleList,
+                DatabaseAction.Select,
+                P("@ID", obj.ID),
+                P("@Name", obj.Name));
+
+            var list = Load(await Banco.ExecutarSelect(sql));
+            if (list.Count == 0)
             {
-                new SqlParameter("@ID", obj.ID),
-                new SqlParameter("@Name", obj.Name)
-            };
-        }
-        #endregion
-
-        #region " _MountParameters "
-        static List<SqlParameter> MountParameters(Console obj)
-        {
-            return new List<SqlParameter>
-            {
-                new SqlParameter("@ID", obj.ID),
-                new SqlParameter("@Name", obj.Name)
-            };
-        }
-        #endregion
-
-        #region " _List "
-        public async static Task<List<Console>> List()
-        {
-            string sql = Resources.ConsoleList;
-            var obj = new Console();
-
-            var list = Load<List<Console>>(await Banco.ExecutarSelect(sql, MountFilters(obj)));
-            if (list.Count == 0) return list;
+                return list;
+            }
 
             var allGames = new Console
             {
@@ -76,51 +102,22 @@ namespace RADB
         }
         #endregion
 
-        #region " _Insert "
-        public async static Task<bool> Insert(Console obj)
+        #region " _Load "
+        private List<Console> Load(DataTable table)
         {
-            string sql = Resources.ConsoleInsert;
-
-            var parameters = MountParameters(obj);
-
-            return (await Banco.Executar(sql, DatabaseAction.Insert, parameters)).AffectedRows > 0;
-        }
-
-        public async static Task<bool> InsertList(IList<Console> list)
-        {
-            string sql = "INSERT INTO Console (ID, Name) VALUES " + Environment.NewLine;
-            var parameters = new List<SqlParameter>();
-
-            int index = 0;
-            foreach (var i in list)
+            return table.ProcessRows<Console>((row, lst) =>
             {
-                parameters.AddRange(new List<SqlParameter>
+                var entity = new Console
                 {
-                    new SqlParameter("@ID" + index, i.ID),
-                    new SqlParameter("@Name" + index, i.Name)
-                });
+                    ID = row.Value<int>("ID"),
+                    Company = row.Value<string>("Company"),
+                    Name = row.Value<string>("CName"),
+                    NumGames = row.Value<int>("NumGames"),
+                    TotalGames = row.Value<int>("TotalGames")
+                };
 
-                sql += "(" + "@ID" + index + ", @Name" + index + ")";
-
-                index++;
-                if (index < list.Count) { sql += "," + Environment.NewLine; }
-            }
-
-            return (await Banco.Executar(sql, DatabaseAction.Insert, parameters)).AffectedRows > 0;
-        }
-        #endregion
-
-        #region " _Delete "
-        public async static Task<bool> Delete(Console obj)
-        {
-            string sql = Resources.ConsoleDelete;
-            var parameters = new List<SqlParameter>
-            {
-                new SqlParameter("@ID", obj.ID),
-                new SqlParameter("@Name", obj.Name)
-            };
-
-            return (await Banco.Executar(sql, DatabaseAction.Delete, parameters)).AffectedRows > 0;
+                lst.Add(entity);
+            });
         }
         #endregion
     }

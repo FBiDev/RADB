@@ -2,8 +2,11 @@
 {
     public partial class ImageViewerCommon
     {
-        static ImageViewer form;
+        private static ImageViewer form;
 
-        static FlatPictureBoxA picImage { get { return form.picImage; } }
+        private static FlatPictureBoxA PicImage
+        {
+            get { return form.picImage; }
+        }
     }
 }

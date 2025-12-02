@@ -4,9 +4,16 @@ namespace RADB
 {
     public partial class HashViewerCommon
     {
-        static HashViewer form;
+        private static HashViewer form;
 
-        static RichTextBox txtHashes { get { return form.txtHashes; } }
-        static PictureBox picLoaderHash { get { return form.picLoaderHash; } }
+        private static RichTextBox TxtHashes
+        {
+            get { return form.txtHashes; }
+        }
+
+        private static PictureBox PicLoaderHash
+        {
+            get { return form.picLoaderHash; }
+        }
     }
 }

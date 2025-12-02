@@ -14,8 +14,8 @@ namespace RADB
                 {
                     var imageName = item.Split('\\').Last();
                     Game game = games.FirstOrDefault(g => g.ImageIcon == imageName) ?? new Game();
-                    string GameID = game.ID.ToString().PadLeft(5) + " => " + game.Title;
-                    sw.WriteLine(imageName + " => " + GameID);
+                    string gameID = game.ID.ToString().PadLeft(5) + " => " + game.Title;
+                    sw.WriteLine(imageName + " => " + gameID);
                 }
             }
         }

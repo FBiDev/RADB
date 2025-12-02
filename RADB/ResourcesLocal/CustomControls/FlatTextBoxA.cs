@@ -7,7 +7,8 @@ namespace RADB
         public FlatTextBoxA()
         {
             InitializeComponent();
-            //BackgroundColorFocus = BackgroundColor;
+            
+            // BackgroundColorFocus = BackgroundColor;
         }
 
         public void DarkMode()
@@ -18,7 +19,8 @@ namespace RADB
             TextColor = ColorTranslator.FromHtml("#D2D2D2");
             TextColorFocus = TextColor;
             BorderColor = ColorTranslator.FromHtml("#424242");
-            //BorderColor = BorderColorFocus;
+            
+            // BorderColor = BorderColorFocus;
         }
     }
 }

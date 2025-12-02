@@ -6,7 +6,7 @@ namespace RADB
     public static class Folder
     {
         public const string Base = @".\Data\";
-        const string Json = Base + @"Json\";
+        private const string Json = Base + @"Json\";
 
         public const string User = Json + @"User\";
         public const string Console = Json + @"Console\";
@@ -47,7 +47,11 @@ namespace RADB
 
         public static string Icons(int consoleID)
         {
-            if (consoleID == 0) MessageBox.Show("X");
+            if (consoleID == 0)
+            {
+                MessageBox.Show("X");
+            }
+
             string folder = IconsBase + consoleID + @"\";
             Directory.CreateDirectory(folder);
             return folder;

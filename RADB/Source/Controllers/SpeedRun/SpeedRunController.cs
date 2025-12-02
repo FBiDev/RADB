@@ -11,9 +11,13 @@ namespace RADB
 {
     public partial class SpeedRunController
     {
-        const string SpeedRunAPI = "https://www.speedrun.com/api/v1/";
-        const string SpeedRunFolder = "Data/SpeedRun/";
-        const string SpeedRunPlatformsFile = SpeedRunFolder + "platforms.json";
+        private const string RASiteURL = "https://retroachievements.org/";
+        private const string RAAPI = RASiteURL + "API/";
+        private const string RAAPIGameList = "API_GetGameList.php";
+
+        private const string SpeedRunAPI = "https://www.speedrun.com/api/v1/";
+        private const string SpeedRunFolder = "Data/SpeedRun/";
+        private const string SpeedRunPlatformsFile = SpeedRunFolder + "platforms.json";
 
         #region Entrada
         public SpeedRunController(SpeedRunForm pageForm)
@@ -41,16 +45,16 @@ namespace RADB
             var plataforms = await GetPlataforms();
 
             var searchGameURL = SpeedRunAPI + "games?name=";
-            var searchGameOptions = "&orderby=released&direction=asc&max=20&offset=0";//&romhack=false
+            var searchGameOptions = "&orderby=released&direction=asc&max=20&offset=0"; // &romhack=false
 
             var searchName = SearchGameTextBox.Text.Trim();
             searchName = searchName.Replace(" ", "+");
 
             var searchJson = await Browser.DownloadString(searchGameURL + searchName + searchGameOptions);
             var searchObj = Json.DeserializeObject<SpeedRunGameSearch>(searchJson);
-            //var jsonNew = Newtonsoft.Json.JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JToken>(searchJson);
-            //var jsonNew2 = Json.DeserializeObject<Newtonsoft.Json.Linq.JToken>(searchJson);
 
+            // var jsonNew = Newtonsoft.Json.JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JToken>(searchJson);
+            // var jsonNew2 = Json.DeserializeObject<Newtonsoft.Json.Linq.JToken>(searchJson);
             var jsonNew3 = Json.DeserializeObject<JToken>(searchJson);
 
             foreach (JProperty cheevo in jsonNew3)
@@ -58,8 +62,8 @@ namespace RADB
                 var a = cheevo.Value.ToString();
             }
 
-            //searchObj.data = null;
-            searchObj.data.ForEach(x =>
+            // searchObj.data = null;
+            searchObj.Data.ForEach(x =>
             {
                 x.PlatformsIDs.ForEach(id =>
                 {
@@ -77,13 +81,12 @@ namespace RADB
                 }
             });
 
-            //RemoveHackGames(searchObj.data);
+            // RemoveHackGames(searchObj.data);
+            SearchGameGrid.DataSource = new ListBind<SpeedRunGame>(searchObj.Data);
 
-            SearchGameGrid.DataSource = new ListBind<SpeedRunGame>(searchObj.data);
+            var se = Json.Save(searchObj.Data, "test.json");
 
-            var se = Json.Save(searchObj.data, "test.json");
-
-            //await RA.DownloadGameList(Session.Console);
+            // await RA.DownloadGameList(Session.Console);
         }
 
         private void RemoveHackGames(List<SpeedRunGame> gamesData)
@@ -115,31 +118,29 @@ namespace RADB
             searchJson = File.ReadAllText(SpeedRunPlatformsFile);
             var searchObj = Json.DeserializeObject<SpeedRunPlatformSearch>(searchJson);
 
-            return searchObj.data;
+            return searchObj.Data;
         }
         #endregion
 
-        public const string HOST_URL = "https://retroachievements.org/";
-        const string API_HOST = HOST_URL + "API/";
-
-        string GetURL(string target, string parames = "")
-        { return API_HOST + target + "&" + parames; }
-
-        const string API_URL_GameList = "API_GetGameList.php";
-
-        public DownloadFile API_File_GameList(Console console)
+        private string GetURL(string target, string parames = "")
         {
-            return new DownloadFile(GetURL(API_URL_GameList, "i=" + console.ID),
-                                    (Folder.GameData + console.Name + ".json").Replace("/", "-"));
+            return RAAPI + target + "&" + parames;
+        }
+
+        public DownloadFile APIGameListFile(Console console)
+        {
+            return new DownloadFile(
+                GetURL(RAAPIGameList, "i=" + console.ID),
+                (Folder.GameData + console.Name + ".json").Replace("/", "-"));
         }
 
         public async Task DownloadGameList(Console console)
         {
             await Task.Run(async () =>
             {
-                RASite.dlGames.SetFile(API_File_GameList(console));
+                RASite.DLGames.SetFile(APIGameListFile(console));
 
-                if (await RASite.dlGames.Start())
+                if (await RASite.DLGames.Start())
                 {
                     var list = await DeserializeGameList(console);
                     if (list.Any())
@@ -151,11 +152,11 @@ namespace RADB
             });
         }
 
-        Task<List<Game>> DeserializeGameList(Console console)
+        private Task<List<Game>> DeserializeGameList(Console console)
         {
             return Task.Run(() =>
             {
-                var games = Json.DeserializeObject<List<Game>>(File.ReadAllText(API_File_GameList(console).Path));
+                var games = Json.DeserializeObject<List<Game>>(File.ReadAllText(APIGameListFile(console).Path));
                 return games;
             });
         }

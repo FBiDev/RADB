@@ -9,13 +9,20 @@ namespace RADB
 {
     public static partial class MainGameToPlay
     {
-        static RA RA = new RA();
-        static ListBind<Game> lstGamesToPlay = new ListBind<Game>();
+        private static RA ra = new RA();
+        private static ListBind<Game> lstGamesToPlay = new ListBind<Game>();
+        private static int gamesToPlayWheelCounter;
 
         #region GamesToPlay
-        public async static Task GamesToPlay_Init()
+        public static async Task GamesToPlay_Init()
         {
-            Session.OnTabMainChanged += () => { if (Session.SelectedTab == form.tabGamesToPlay) { dgvGamesToPlay.Focus(); } };
+            Session.OnTabMainChanged += () =>
+            {
+                if (Session.SelectedTab == Page.tabGamesToPlay)
+                {
+                    dgvGamesToPlay.Focus();
+                }
+            };
             Session.OnGameListChanged += LoadGamesToPlay;
             Session.OnAddGamesToPlay += (game) =>
             {
@@ -24,11 +31,11 @@ namespace RADB
                 return true;
             };
 
-            mniRemoveGameToPlay.MouseDown += mniRemoveGameToPlay_MouseDown;
+            mniRemoveGameToPlay.MouseDown += MniRemoveGameToPlay_MouseDown;
 
             dgvGamesToPlay.AutoGenerateColumns = false;
-            //dgvGamesToPlay.DataSource = lstGamesToPlay;
 
+            // dgvGamesToPlay.DataSource = lstGamesToPlay;
             dgvGamesToPlay.Columns.Format(ColumnFormat.StringCenter, cols: 0);
             dgvGamesToPlay.Columns.Format(ColumnFormat.Image, cols: 1);
             dgvGamesToPlay.Columns.Format(ColumnFormat.NumberCenter, cols: new[] { 4, 5, 6, 7 });
@@ -39,20 +46,20 @@ namespace RADB
 
             dgvGamesToPlay.DataSourceChanged += LoadGamesToPlayIcons;
             dgvGamesToPlay.Sorted += LoadGamesToPlayIcons;
-            dgvGamesToPlay.MouseWheel += dgvGamesToPlay_MouseWheel;
-            dgvGamesToPlay.Scroll += dgvGamesToPlay_Scroll;
+            dgvGamesToPlay.MouseWheel += DgvGamesToPlay_MouseWheel;
+            dgvGamesToPlay.Scroll += DgvGamesToPlay_Scroll;
 
-            Session.lstDgvGames.Add(dgvGamesToPlay);
+            Session.MainGameList.Add(dgvGamesToPlay);
 
             await GamesToPlay_Shown(null, null);
         }
 
-        static async Task GamesToPlay_Shown(object sender, EventArgs e)
+        private static async Task GamesToPlay_Shown(object sender, EventArgs e)
         {
             await LoadGamesToPlay();
         }
 
-        static async Task LoadGamesToPlay()
+        private static async Task LoadGamesToPlay()
         {
             lstGamesToPlay = new ListBind<Game>(await Game.ListToPlay());
             dgvGamesToPlay.DataSource = lstGamesToPlay;
@@ -60,23 +67,34 @@ namespace RADB
             lblNotFoundGamesToPlay.Visible = lstGamesToPlay.IsEmpty();
         }
 
-        static async void LoadGamesToPlayIcons(object sender, EventArgs e)
+        private static async void LoadGamesToPlayIcons(object sender, EventArgs e)
         {
             await MainCommon.LoadGridIcons(dgvGamesToPlay);
         }
 
-        static int gamesToPlayWheelCounter;
-        static void dgvGamesToPlay_MouseWheel(object sender, MouseEventArgs e) { gamesToPlayWheelCounter = 1; }
-        static void dgvGamesToPlay_Scroll(object sender, EventArgs e)
+        private static void DgvGamesToPlay_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (gamesToPlayWheelCounter > 0 && gamesToPlayWheelCounter < 3) { gamesToPlayWheelCounter++; return; }
+            gamesToPlayWheelCounter = 1;
+        }
+
+        private static void DgvGamesToPlay_Scroll(object sender, EventArgs e)
+        {
+            if (gamesToPlayWheelCounter > 0 && gamesToPlayWheelCounter < 3)
+            {
+                gamesToPlayWheelCounter++;
+                return;
+            }
+
             gamesToPlayWheelCounter = 0;
             LoadGamesToPlayIcons(sender, e);
         }
 
-        static async void mniRemoveGameToPlay_MouseDown(object sender, MouseEventArgs e)
+        private static async void MniRemoveGameToPlay_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left) return;
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
 
             var game = dgvGamesToPlay.GetCurrentRowObject<Game>();
 
@@ -85,7 +103,7 @@ namespace RADB
                 lstGamesToPlay.Remove(game);
                 lblNotFoundGamesToPlay.Visible = lstGamesToPlay.IsEmpty();
 
-                if (Session.Console.NotNull() && (Session.Console.ID == game.ConsoleID || Session.Console.ID == 0))
+                if (Session.ConsoleSelected.NotNull() && (Session.ConsoleSelected.ID == game.ConsoleID || Session.ConsoleSelected.ID == 0))
                 {
                     Session.AddGames(game);
                 }

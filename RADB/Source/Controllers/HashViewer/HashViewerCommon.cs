@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using App.Core;
 using App.Core.Desktop;
 using App.Core.Web;
@@ -18,10 +18,10 @@ namespace RADB
             form = formDesign;
             form.Init();
 
-            txtHashes.KeyDown += HashViewer_KeyDown;
+            TxtHashes.KeyDown += HashViewer_KeyDown;
         }
 
-        static void HashViewer_KeyDown(object sender, KeyEventArgs e)
+        private static void HashViewer_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
@@ -48,12 +48,12 @@ namespace RADB
             }
         }
 
-        static async Task GetHashCode(Game game)
+        private static async Task GetHashCode(Game game)
         {
             form.Text = "RA HashViewer - " + game.Title + " (" + game.ConsoleName + ")";
-            txtHashes.Text = string.Empty;
+            TxtHashes.Text = string.Empty;
 
-            var html = await RASite.Client.DownloadString(RA.HOST_URL + "linkedhashes.php?g=" + game.ID);
+            var html = await RASite.Client.DownloadString(RA.SiteURL + "linkedhashes.php?g=" + game.ID);
             var ul = html.GetBetween("registered for this game.</p></div><ul>", "</ul>").HtmlDecode();
 
             var listLi = ul.GetBetweenList("<li>", "</li>");
@@ -66,26 +66,32 @@ namespace RADB
                 var title = item.GetBetween("<b>", "</b>").Trim();
                 var hash = item.GetBetween("<code>", "</code>").Trim().ToUpper();
                 var warn = item.GetBetween("> [", "]").Trim();
-                if (warn != string.Empty) { warn = " - [" + warn + "]"; }
+                if (warn != string.Empty)
+                {
+                    warn = " - [" + warn + "]";
+                }
 
                 var labels = string.Empty;
                 var imgs = item.GetBetweenList("labels/", ".");
                 imgs.ForEach(x => labels += "-(" + x + ")");
 
                 if (labels == string.Empty)
+                {
                     labels = "-( unknown )";
+                }
 
                 var userLabel = item.GetBetween("user/", "'");
-                var user = userLabel != "" ? " - linked by " + userLabel : "";
+                var user = userLabel != string.Empty ? " - linked by " + userLabel : string.Empty;
 
                 listItems.Add(new { Title = title, Warn = warn, Hash = hash, Labels = labels, User = user });
             }
 
             listItems = listItems.OrderBy(x => x.Labels.Length).ThenBy(x => x.Title.Contains(".") ?
-                           (x.Title.Substring(0, x.Title.LastIndexOf(".", StringComparison.OrdinalIgnoreCase))) : x.Title).ToList();
+                           x.Title.Substring(0, x.Title.LastIndexOf(".", StringComparison.OrdinalIgnoreCase)) : x.Title).ToList();
 
             var mainItems = listItems.Where(x => x.Labels.Contains(")-") == false);
-            //mainItems.Reverse();
+
+            // mainItems.Reverse();
             mainItems = mainItems.OrderByDescending(x => x.Title.Length + x.Warn.Length).ThenByDescending(x => x.Title);
 
             listItems.MoveToFirst(mainItems.Where(x => x.Title.Contains(" (Europe)")));
@@ -101,25 +107,25 @@ namespace RADB
             var lastItem = listItems.LastOrDefault();
             foreach (var item in listItems)
             {
-                txtHashes.AppendText(item.Title, Theme.CheevoTitle);
-                txtHashes.AppendText(item.Warn + Environment.NewLine);
-                txtHashes.AppendText(item.Hash, Theme.CheevoDescription, new Font(new FontFamily("Courier New"), txtHashes.Font.Size, txtHashes.Font.Style));
-                txtHashes.AppendText(item.Labels, txtHashes.ForeColor);
-                txtHashes.AppendText(item.User, txtHashes.ForeColor);
+                TxtHashes.AppendText(item.Title, Theme.CheevoTitle);
+                TxtHashes.AppendText(item.Warn + Environment.NewLine);
+                TxtHashes.AppendText(item.Hash, Theme.CheevoDescription, new Font(new FontFamily("Courier New"), TxtHashes.Font.Size, TxtHashes.Font.Style));
+                TxtHashes.AppendText(item.Labels, TxtHashes.ForeColor);
+                TxtHashes.AppendText(item.User, TxtHashes.ForeColor);
 
                 if (item != lastItem)
                 {
-                    txtHashes.AppendText(Environment.NewLine + Environment.NewLine, txtHashes.ForeColor);
+                    TxtHashes.AppendText(Environment.NewLine + Environment.NewLine, TxtHashes.ForeColor);
                 }
             }
 
             if (listItems.IsEmpty())
             {
-                txtHashes.Text = "No Hashes Available for this Game";
+                TxtHashes.Text = "No Hashes Available for this Game";
             }
 
-            txtHashes.SelectionStart = 0;
-            picLoaderHash.Visible = false;
+            TxtHashes.SelectionStart = 0;
+            PicLoaderHash.Visible = false;
         }
         #endregion
     }

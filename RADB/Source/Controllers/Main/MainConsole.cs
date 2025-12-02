@@ -10,71 +10,77 @@ namespace RADB
 {
     public static partial class MainConsole
     {
-        static RA RA = new RA();
-        static ListBind<Console> lstConsoles = new ListBind<Console>();
+        private static RA ra = new RA();
+        private static ListBind<Console> lstConsoles = new ListBind<Console>();
 
         #region Consoles
         public static async Task Console_Init()
         {
             Session.OnGameListChanged += UpdateConsoleList;
-            Session.OnTabMainChanged += () => { if (Session.SelectedTab == form.tabConsoles) { dgvConsoles.Focus(); } };
+            Session.OnTabMainChanged += () =>
+            {
+                if (Session.SelectedTab == Page.tabConsoles)
+                {
+                    ConsolesDataGridView.Focus();
+                }
+            };
 
-            mniMergeGamesIcon.MouseDown += mniMergeGamesIcon_MouseDown;
-            mniMergeGamesIconBadSize.MouseDown += mniMergeGamesIconBadSize_MouseDown;
+            MergeGamesIconMenuItem.MouseDown += MergeGamesIconMenuItem_MouseDown;
+            MergeGamesIconBadSizeMenuItem.MouseDown += MergeGamesIconBadSizeMenuItem_MouseDown;
 
-            btnUpdateConsoles.Click += btnUpdateConsoles_Click;
+            UpdateConsolesButton.Click += UpdateConsolesButton_Click;
 
-            dgvConsoles.AutoGenerateColumns = true;
-            dgvConsoles.DataSource = lstConsoles;
+            ConsolesDataGridView.AutoGenerateColumns = true;
+            ConsolesDataGridView.DataSource = lstConsoles;
 
-            dgvConsoles.Columns.Format(ColumnFormat.StringCenter, cols: 0);
-            dgvConsoles.Columns.Format(ColumnFormat.NumberCenter, cols: new[] { 3, 4 });
+            ConsolesDataGridView.Columns.Format(ColumnFormat.StringCenter, cols: 0);
+            ConsolesDataGridView.Columns.Format(ColumnFormat.NumberCenter, cols: new[] { 3, 4 });
 
-            dgvConsoles.MouseDown += (sender, e) => dgvConsoles.ShowContextMenu(e, mnuConsoles);
-            dgvConsoles.CellDoubleClick += dgvConsoles_CellDoubleClick;
-            dgvConsoles.KeyPress += dgvConsoles_KeyPress;
-            dgvConsoles.KeyDown += dgvConsoles_KeyDown;
+            ConsolesDataGridView.MouseDown += (sender, e) => ConsolesDataGridView.ShowContextMenu(e, mnuConsoles);
+            ConsolesDataGridView.CellDoubleClick += ConsolesDataGridView_CellDoubleClick;
+            ConsolesDataGridView.KeyPress += ConsolesDataGridView_KeyPress;
+            ConsolesDataGridView.KeyDown += ConsolesDataGridView_KeyDown;
 
             await Console_Shown(null, null);
         }
 
-        static async Task Console_Shown(object sender, EventArgs e)
+        private static async Task Console_Shown(object sender, EventArgs e)
         {
-            RASite.dlConsoles.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
-            RASite.dlConsolesGamesIcon.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
+            RASite.DLConsoles.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
+            RASite.DLConsolesGamesIcon.SetControls(lblProgressConsoles, pgbConsoles, lblUpdateConsoles);
 
-            MainCommon.ChangeTab(form.tabConsoles);
+            MainCommon.ChangeTab(Page.tabConsoles);
             ResetConsolesLabels();
             await LoadConsoles();
         }
 
-        static async Task UpdateConsoleList()
+        private static async Task UpdateConsoleList()
         {
             lstConsoles = new ListBind<Console>(await Console.List());
-            dgvConsoles.DataSource = lstConsoles;
+            ConsolesDataGridView.DataSource = lstConsoles;
 
             var console = lstConsoles.First(x => x.Name == "All Games");
             console.NumGames = lstConsoles.Except(new[] { console }).Sum(x => x.NumGames);
             console.TotalGames = lstConsoles.Except(new[] { console }).Sum(x => x.TotalGames);
         }
 
-        static void DisablePanelConsoles()
+        private static void DisablePanelConsoles()
         {
             pnlDownloadConsoles.Enabled = false;
             lblNotFoundConsoles.Visible = false;
             picLoaderConsole.Visible = true;
-            dgvConsoles.Enabled = false;
+            ConsolesDataGridView.Enabled = false;
         }
 
-        static void EnablePanelConsoles()
+        private static void EnablePanelConsoles()
         {
             pnlDownloadConsoles.Enabled = true;
-            lblNotFoundConsoles.Visible = (dgvConsoles.RowCount == 0);
+            lblNotFoundConsoles.Visible = ConsolesDataGridView.RowCount == 0;
             picLoaderConsole.Visible = false;
-            dgvConsoles.Enabled = true;
+            ConsolesDataGridView.Enabled = true;
         }
 
-        static void ResetConsolesLabels()
+        private static void ResetConsolesLabels()
         {
             lblUpdateConsoles.Text = string.Empty;
             lblProgressConsoles.Text = string.Empty;
@@ -82,74 +88,88 @@ namespace RADB
             pgbConsoles.Visible = false;
         }
 
-        static async Task LoadConsoles()
+        private static async Task LoadConsoles()
         {
             DisablePanelConsoles();
 
             lstConsoles = new ListBind<Console>(await Console.List());
-            dgvConsoles.DataSource = lstConsoles;
+            ConsolesDataGridView.DataSource = lstConsoles;
 
             EnablePanelConsoles();
 
             if (lstConsoles.IsEmpty())
-                btnUpdateConsoles_Click(null, null);
+            {
+                UpdateConsolesButton_Click(null, null);
+            }
 
-            if (Session.SelectedTab == form.tabConsoles)
-                dgvConsoles.Focus();
+            if (Session.SelectedTab == Page.tabConsoles)
+            {
+                ConsolesDataGridView.Focus();
+            }
         }
 
-        static async void btnUpdateConsoles_Click(object sender, EventArgs e)
+        private static async void UpdateConsolesButton_Click(object sender, EventArgs e)
         {
             DisablePanelConsoles();
             lstConsoles.Clear();
-            await RA.DownloadConsoles();
+            await ra.DownloadConsoles();
             await LoadConsoles();
             EnablePanelConsoles();
 
             MainCommon.WriteOutput("[" + DateTime.Now.ToTimeLong() + "] " + "Consoles Updated!");
         }
 
-        static void dgvConsoles_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private static void ConsolesDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowHeader()) return;
-            var ConsoleSelected = dgvConsoles.GetCurrentRowObject<Console>();
-            Session.LastConsole = Session.Console;
-            Session.Console = ConsoleSelected;
+            if (e.RowHeader())
+            {
+                return;
+            }
+
+            var consoleSelected = ConsolesDataGridView.GetCurrentRowObject<Console>();
+            Session.LastConsole = Session.ConsoleSelected;
+            Session.ConsoleSelected = consoleSelected;
         }
 
-        static void dgvConsoles_KeyPress(object sender, KeyPressEventArgs e)
+        private static void ConsolesDataGridView_KeyPress(object sender, KeyPressEventArgs e)
         {
             MainCommon.GridViewKeyPress(sender, e, "cName");
         }
 
-        static void dgvConsoles_KeyDown(object sender, KeyEventArgs e)
+        private static void ConsolesDataGridView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter)
             {
                 e.Handled = true;
-                dgvConsoles_CellDoubleClick(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
+                ConsolesDataGridView_CellDoubleClick(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
             }
         }
 
-        static async void mniMergeGamesIcon_MouseDown(object sender, MouseEventArgs e)
+        private static async void MergeGamesIconMenuItem_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left) return;
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
 
-            var console = dgvConsoles.GetCurrentRowObject<Console>();
+            var console = ConsolesDataGridView.GetCurrentRowObject<Console>();
 
             DisablePanelConsoles();
-            await RA.MergeGamesIcon(console);
+            await ra.MergeGamesIcon(console);
             EnablePanelConsoles();
         }
 
-        static async void mniMergeGamesIconBadSize_MouseDown(object sender, MouseEventArgs e)
+        private static async void MergeGamesIconBadSizeMenuItem_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left) return;
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
 
-            var console = dgvConsoles.GetCurrentRowObject<Console>();
+            var console = ConsolesDataGridView.GetCurrentRowObject<Console>();
 
             DisablePanelConsoles();
-            await RA.MergeGamesIcon(console, true);
+            await ra.MergeGamesIcon(console, true);
             EnablePanelConsoles();
         }
         #endregion

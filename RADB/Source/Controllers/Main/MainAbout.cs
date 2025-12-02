@@ -10,16 +10,18 @@ namespace RADB
 {
     public static partial class MainAbout
     {
-        static RA RA = new RA();
+        private static RA ra = new RA();
+        private static bool userCheevosIsRunning;
+        private static UserProgress lastUser = new UserProgress();
 
         #region About
         public static async Task About_Init()
         {
-            btnRALogin.Click += btnRALogin_Click;
-            btnRAProfileAbout.Click += btnRAProfileAbout_Click;
-            btnUserCheevos.Click += btnUserCheevos_Click;
+            RALoginButton.Click += RALoginButton_Click;
+            RAProfileButton.Click += RAProfileButton_Click;
+            UserCheevosButton.Click += UserCheevosButton_Click;
 
-            //Initial Value
+            // Initial Value
             chkDarkMode.Checked = Session.Options.IsDarkMode;
             chkDarkMode.CheckedChanged += (sender, e) => Session.Options.ToggleDarkMode();
 
@@ -29,21 +31,21 @@ namespace RADB
             await About_Shown(null, null);
         }
 
-        static Task About_Shown(object sender, EventArgs e)
+        private static Task About_Shown(object sender, EventArgs e)
         {
-            //btnRALogin_Click(null, null);
+            // RALoginButton_Click(null, null);
             return Task.FromResult(0);
         }
 
-        static async void btnRALogin_Click(object sender, EventArgs e)
+        private static async void RALoginButton_Click(object sender, EventArgs e)
         {
-            //lblRALogin.ForeColor = Color.Coral;
+            // lblRALogin.ForeColor = Color.Coral;
             lblRALogin.ForeColorType = LabelType.primary;
             lblRALogin.Text = "logging in...";
 
-            btnRALogin.Enabled = false;
+            RALoginButton.Enabled = false;
             await RASite.Login();
-            btnRALogin.Enabled = true;
+            RALoginButton.Enabled = true;
 
             if (Session.RALogged)
             {
@@ -57,56 +59,58 @@ namespace RADB
             }
         }
 
-        static void btnRAProfileAbout_Click(object sender, EventArgs e)
+        private static void RAProfileButton_Click(object sender, EventArgs e)
         {
             Process.Start(RA.User_URL("FBiDev"));
         }
 
-        static bool UserCheevosIsRunning;
-        static UserProgress LastUser = new UserProgress();
-        static async void btnUserCheevos_Click(object sender, EventArgs e)
+        private static async void UserCheevosButton_Click(object sender, EventArgs e)
         {
-            if (Session.Game.IsNull())
+            if (Session.GameSelected.IsNull())
             {
                 MessageBox.Show("Select a Game in Games Tab First");
                 return;
             }
-            if (form.txtUsername.Text.Length < 2)
+
+            if (Page.txtUsername.Text.Length < 2)
             {
                 MessageBox.Show("Username need 2 letters or more.");
                 return;
             }
 
-            if (UserCheevosIsRunning) { return; }
+            if (userCheevosIsRunning)
+            {
+                return;
+            }
 
-            UserCheevosIsRunning = true;
-            btnUserCheevos.Enabled = false;
+            userCheevosIsRunning = true;
+            UserCheevosButton.Enabled = false;
             lblUserCheevos.Text = string.Empty;
 
             do
             {
-                UserProgress user = await RA.GetUserProgress(form.txtUsername.Text, Session.Game.ID);
-                picUserCheevos.Image = Session.Game.ImageIconBitmap;
-                lblUserCheevos.Text = user.NumAchieved + " / " + Session.Game.NumAchievements;
+                UserProgress user = await ra.GetUserProgress(Page.txtUsername.Text, Session.GameSelected.ID);
+                picUserCheevos.Image = Session.GameSelected.ImageIconBitmap;
+                lblUserCheevos.Text = user.NumAchieved + " / " + Session.GameSelected.NumAchievements;
 
-                if (user.SameProgress(LastUser))
+                if (user.SameProgress(lastUser))
                 {
                     lblCheevoLoopUpdate.BackColor = Color.Orange;
                 }
                 else
                 {
                     lblCheevoLoopUpdate.BackColor = Color.LightGreen;
-                    LastUser = user;
+                    lastUser = user;
                 }
 
                 await Task.Delay(500);
                 lblCheevoLoopUpdate.BackColor = Color.Transparent;
                 await Task.Delay(2500);
+            }
+            while (chkUserCheevos.Checked);
 
-            } while (chkUserCheevos.Checked);
-
-            UserCheevosIsRunning = false;
-            btnUserCheevos.Enabled = true;
+            userCheevosIsRunning = false;
+            UserCheevosButton.Enabled = true;
         }
         #endregion
     }

@@ -14,12 +14,12 @@ namespace RADB
         public static void Main_Init(Main formDesign)
         {
             Session.MainFormRA = formDesign;
-            form.Init();
+            Page.Init();
 
-            form.Load += Main_Load;
-            form.Shown += Main_Shown;
-            form.KeyDown += Main_KeyDown;
-            form.Resize += Main_Resize;
+            Page.Load += Main_Load;
+            Page.Shown += Main_Shown;
+            Page.KeyDown += Main_KeyDown;
+            Page.Resize += Main_Resize;
             ////KeyPreview = true;
 
             tabMain.KeyDown += MainTab_KeyDown;
@@ -29,16 +29,16 @@ namespace RADB
         #region Common
         public static void ChangeTab(TabPage tab)
         {
-            form.tabMain.SelectedTab = tab;
+            Page.tabMain.SelectedTab = tab;
             MainTab_SelectedIndexChanged(tabMain, null);
-            form.tabMain.Refresh();
+            Page.tabMain.Refresh();
         }
 
         public static void WriteOutput(string text)
         {
-            form.lblOutput.InvokeIfRequired(() =>
+            Page.lblOutput.InvokeIfRequired(() =>
             {
-                form.lblOutput.Text = text + Environment.NewLine + form.lblOutput.Text;
+                Page.lblOutput.Text = text + Environment.NewLine + Page.lblOutput.Text;
             });
         }
 
@@ -50,7 +50,7 @@ namespace RADB
             }
 
             var dgv = sender as FlatDataGridA;
-            Session.Game = dgv.GetCurrentRowObject<Game>();
+            Session.GameSelected = dgv.GetCurrentRowObject<Game>();
         }
 
         public static async Task LoadGridIcons(DataGridView dgv)
@@ -87,7 +87,7 @@ namespace RADB
 
         public static async Task LoadAllGamesIcon()
         {
-            foreach (DataGridView dgv in Session.lstDgvGames)
+            foreach (DataGridView dgv in Session.MainGameList)
             {
                 await LoadGridIcons(dgv);
             }
@@ -136,7 +136,7 @@ namespace RADB
 
         private static async void Main_Shown(object sender, EventArgs e)
         {
-            Theme.SetTheme(Session.MainFormRA.isDesignMode);
+            Theme.SetTheme(Session.MainFormRA.IsDesignMode);
             Session.MainFormRA.CenterWindow();
 
             await Task.Delay(10);
@@ -159,17 +159,17 @@ namespace RADB
 
         private static async void Main_Resize(object sender, EventArgs e)
         {
-            if (form.WindowState != lastWindowState)
+            if (Page.WindowState != lastWindowState)
             {
-                if (form.WindowState == FormWindowState.Maximized)
+                if (Page.WindowState == FormWindowState.Maximized)
                 {
                     await LoadAllGamesIcon();
                 }
-                else if (form.WindowState == FormWindowState.Normal)
+                else if (Page.WindowState == FormWindowState.Normal)
                 {
                 }
 
-                lastWindowState = form.WindowState;
+                lastWindowState = Page.WindowState;
             }
         }
         #endregion

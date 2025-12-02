@@ -9,19 +9,36 @@ namespace RADB
 {
     public class User
     {
+        public User()
+        {
+            UserPicBitmap = RA.DefaultIcon;
+            LastGame = new Game();
+            PlayedGames = new List<GameProgress>();
+        }
+
         public int ID { get; set; }
         [JsonProperty("User")]
         public string Name { get; set; }
+
         public string Motto { get; set; }
 
         public string Status { get; set; }
 
         public DateTime? MemberSince { get; set; }
-        public string MemberSinceString { get { return MemberSince.ToString("dd MMM yyyy, HH:mm"); } }
+
+        public string MemberSinceString
+        {
+            get { return MemberSince.ToString("dd MMM yyyy, HH:mm"); }
+        }
 
         public dynamic LastActivity { get; set; }
+
         public DateTime? Lastupdate { get; set; }
-        public string LastupdateString { get { return Lastupdate.ToString("dd MMM yyyy, HH:mm"); } }
+
+        public string LastupdateString
+        {
+            get { return Lastupdate.ToString("dd MMM yyyy, HH:mm"); }
+        }
 
         [JsonConverter(JsonType.Boolean)]
         public bool Untracked { get; set; }
@@ -46,16 +63,20 @@ namespace RADB
             }
         }
 
-        public string UserPic { get { return Name + PictureFormat.Png.ToStringHex(); } }
-        public DownloadFile UserPicFile { get { return new DownloadFile(RA.USER_HOST + UserPic, Folder.User + UserPic); } }
-        public Bitmap UserPicBitmap { get; set; }
-        public void SetUserPicBitmap()
+        public string UserPic
         {
-            if (UserPicBitmap != RA.DefaultIcon) { return; }
-            UserPicBitmap = BitmapExtension.SuperFastLoad(UserPicFile.Path);
+            get { return Name + PictureFormat.Png.ToStringHex(); }
         }
 
+        public DownloadFile UserPicFile
+        {
+            get { return new DownloadFile(RA.UserPicBaseUrl + UserPic, Folder.User + UserPic); }
+        }
+
+        public Bitmap UserPicBitmap { get; set; }
+
         public int TotalPoints { get; set; }
+
         public int TotalTruePoints { get; set; }
 
         public string TotalPointsString
@@ -76,11 +97,15 @@ namespace RADB
         [JsonProperty("Rank")]
         public int? RankValue { get; set; }
         [JsonProperty("RankInt")]
-        public int Rank { get { return RankValue ?? 0; } set { RankValue = value; } }
+        public int Rank
+        {
+            get { return RankValue ?? 0; }
+            set { RankValue = value; }
+        }
 
         public int TotalRanked { get; set; }
 
-        string RankTop
+        private string RankTop
         {
             get { return (((float)Rank / TotalRanked) * 100f).ToNumber(); }
         }
@@ -90,11 +115,20 @@ namespace RADB
             get
             {
                 if (Untracked)
+                {
                     return "Untracked";
-                if (TotalPoints < RA.MIN_POINTS)
-                    return "Needs at least " + RA.MIN_POINTS + " points.";
+                }
+
+                if (TotalPoints < RA.MinimumPoints)
+                {
+                    return "Needs at least " + RA.MinimumPoints + " points.";
+                }
+
                 if (Rank > 0 && TotalRanked > 0)
+                {
                     return "#" + Rank.ToNumber() + " / " + TotalRanked.ToNumber() + " (Top " + RankTop + "%)";
+                }
+
                 return "-";
             }
         }
@@ -106,16 +140,26 @@ namespace RADB
             get { return TotalSoftcorePoints.ToString(); }
         }
 
-        string RankSoftTop { get { return "-"; } }
+        private string RankSoftTop
+        {
+            get { return "-"; }
+        }
+
         public string RankSoft
         {
             get
             {
                 if (Untracked)
+                {
                     return "Untracked";
-                if (TotalSoftcorePoints < RA.MIN_POINTS)
-                    return "Needs at least " + RA.MIN_POINTS + " points.";
-                //Need Soft Rank and SoftTop
+                }
+
+                if (TotalSoftcorePoints < RA.MinimumPoints)
+                {
+                    return "Needs at least " + RA.MinimumPoints + " points.";
+                }
+
+                // Need Soft Rank and SoftTop
                 return "Unknown";
             }
         }
@@ -127,21 +171,24 @@ namespace RADB
             get { return AverageCompletion.ToNumber() + "%"; }
         }
 
-        //Achievements Won By Others
+        // Achievements Won By Others
         public int ContribCount { get; set; }
-        //Points Awarded to Others
+
+        // Points Awarded to Others
         public int ContribYield { get; set; }
 
         [JsonConverter(JsonType.Boolean)]
         public bool UserWallActive { get; set; }
 
         public IEnumerable<GameProgress> PlayedGames { get; set; }
+
         public Game LastGame { get; set; }
 
         public int LastGameID { get; set; }
+
         public string LastGameTitle
         {
-            get { return LastGame == null ? "" : LastGame.Title; }
+            get { return LastGame == null ? string.Empty : LastGame.Title; }
         }
 
         public Bitmap LastGameImage
@@ -149,36 +196,54 @@ namespace RADB
             get
             {
                 if (string.IsNullOrWhiteSpace(LastGame.ImageIcon))
+                {
                     return null;
+                }
 
                 LastGame.SetImageIconBitmap();
                 return LastGame.ImageIconBitmap;
             }
         }
 
-        string RichPresenceValue { get; set; }
+        private string RichPresenceValue { get; set; }
+
         public string RichPresenceMsg
         {
-            get { return string.IsNullOrWhiteSpace(RichPresenceValue) || RichPresenceValue == "Unknown" ? "" : RichPresenceValue; }
+            get { return string.IsNullOrWhiteSpace(RichPresenceValue) || RichPresenceValue == "Unknown" ? string.Empty : RichPresenceValue; }
             set { RichPresenceValue = value; }
         }
 
-        public User()
+        public bool Invalid
         {
-            UserPicBitmap = RA.DefaultIcon;
-            LastGame = new Game();
-            PlayedGames = new List<GameProgress>();
+            get { return ID == 0; }
         }
 
-        public bool Invalid { get { return ID == 0; } }
-        public bool RankInvalid { get { return Untracked || Rank == 0 || TotalPoints < RA.MIN_POINTS; } }
+        public bool RankInvalid
+        {
+            get { return Untracked || Rank == 0 || TotalPoints < RA.MinimumPoints; }
+        }
+
         public int RankLength
         {
             get
             {
-                if (RankInvalid || Rank <= 0) return 0;
+                if (RankInvalid || Rank <= 0)
+                {
+                    return 0;
+                }
+
                 return ("#" + Rank.ToNumber()).Length;
             }
+        }
+
+        public void SetUserPicBitmap()
+        {
+            if (UserPicBitmap != RA.DefaultIcon)
+            {
+                return;
+            }
+
+            UserPicBitmap = BitmapExtension.SuperFastLoad(UserPicFile.Path);
         }
     }
 }

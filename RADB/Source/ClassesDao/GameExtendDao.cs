@@ -1,22 +1,81 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using RADB.Properties;
 using App.Core;
-using App.Core.Desktop;
+using RADB.Properties;
 
 namespace RADB
 {
-    public static class GameExtendDao
+    public class GameExtendDao : DaoBase
     {
-        #region " _Load "
-        static T Load<T>(DataTable table) where T : IList, new()
+        #region " _Select "
+        public async Task<List<GameExtend>> List()
         {
-            var list = new T();
-            foreach (DataRow row in table.Rows)
+            return await Select();
+        }
+
+        public async Task<List<GameExtend>> Search(GameExtend obj)
+        {
+            return await Select(obj);
+        }
+
+        public async Task<GameExtend> Find(int gameID)
+        {
+            var obj = new GameExtend { ID = gameID };
+            return (await Select(obj)).FirstOrNew();
+        }
+        #endregion
+
+        #region " _Actions "
+        public async Task<bool> Insert(GameExtend obj)
+        {
+            var sql = new SqlQuery(
+                Resources.GameExtendInsert,
+                DatabaseAction.Insert,
+                P("@ID", obj.ID),
+                P("@ConsoleID", obj.ConsoleID),
+                P("@Developer", obj.Developer),
+                P("@Publisher", obj.Publisher),
+                P("@Genre", obj.Genre),
+                P("@Released", obj.Released),
+                P("@ImageTitle", obj.ImageTitle),
+                P("@ImageIngame", obj.ImageIngame),
+                P("@ImageBoxArt", obj.ImageBoxArt));
+
+            return (await Banco.Executar(sql)).AffectedRows > 0;
+        }
+
+        public async Task<bool> Delete(GameExtend obj)
+        {
+            var sql = new SqlQuery(
+                Resources.GameExtendDelete,
+                DatabaseAction.Delete,
+                P("@ID", obj.ID),
+                P("@ConsoleID", obj.ConsoleID));
+
+            return (await Banco.Executar(sql)).AffectedRows > 0;
+        }
+
+        private async Task<List<GameExtend>> Select(GameExtend obj = null)
+        {
+            obj = obj ?? new GameExtend();
+
+            var sql = new SqlQuery(
+                Resources.GameExtendList,
+                DatabaseAction.Select,
+                P("@ID", obj.ID),
+                P("@ConsoleID", obj.ConsoleID));
+
+            return Load(await Banco.ExecutarSelect(sql));
+        }
+        #endregion
+
+        #region " _Load "
+        private List<GameExtend> Load(DataTable table)
+        {
+            return table.ProcessRows<GameExtend>((row, lst) =>
             {
-                list.Add(new GameExtend
+                var entity = new GameExtend
                 {
                     ID = row.Value<int>("ID"),
                     ConsoleID = row.Value<int>("ConsoleID"),
@@ -28,88 +87,16 @@ namespace RADB
                     ImageTitle = row.Value<string>("ImageTitle"),
                     ImageIngame = row.Value<string>("ImageIngame"),
                     ImageBoxArt = row.Value<string>("ImageBoxArt")
-                    //Flags = row.Value<string>("Flags"),
-                    //IsFinal = row.Value<bool>("IsFinal"),
-                    //RichPresencePatch = row.Value<string>("RichPresencePatch"),
-                    //NumDistinctPlayersCasual = row.Value<int>("NumDistinctPlayersCasual"),
-                    //NumDistinctPlayersHardcore = row.Value<int>("NumDistinctPlayersHardcore"),
-                });
-            }
-            return list;
-        }
-        #endregion
 
-        #region " _MountFilters "
-        static List<SqlParameter> MountFilters(GameExtend obj)
-        {
-            return new List<SqlParameter>
-            {
-                new SqlParameter("@ID", obj.ID),
-                new SqlParameter("@ConsoleID", obj.ConsoleID)
-            };
-        }
-        #endregion
+                    // Flags = row.Value<string>("Flags"),
+                    // IsFinal = row.Value<bool>("IsFinal"),
+                    // RichPresencePatch = row.Value<string>("RichPresencePatch"),
+                    // NumDistinctPlayersCasual = row.Value<int>("NumDistinctPlayersCasual"),
+                    // NumDistinctPlayersHardcore = row.Value<int>("NumDistinctPlayersHardcore"),
+                };
 
-        #region " _MountParameters "
-        static List<SqlParameter> MountParameters(GameExtend obj)
-        {
-            return new List<SqlParameter>
-            {
-                new SqlParameter("@ID", obj.ID),
-                new SqlParameter("@ConsoleID", obj.ConsoleID),
-                new SqlParameter("@Developer", obj.Developer),
-                new SqlParameter("@Publisher", obj.Publisher),
-                new SqlParameter("@Genre", obj.Genre),
-                new SqlParameter("@Released", obj.Released),
-                new SqlParameter("@ImageTitle", obj.ImageTitle),
-                new SqlParameter("@ImageIngame", obj.ImageIngame),
-                new SqlParameter("@ImageBoxArt", obj.ImageBoxArt)
-            };
-        }
-        #endregion
-
-        #region " _List "
-        public async static Task<List<GameExtend>> List()
-        {
-            var obj = new GameExtend();
-            return (await Search(obj));
-        }
-
-        public static async Task<GameExtend> Find(int gameID)
-        {
-            var obj = new GameExtend { ID = gameID };
-
-            return (await Search(obj)).FirstOrNew();
-        }
-
-        public async static Task<List<GameExtend>> Search(GameExtend obj)
-        {
-            string sql = Resources.GameExtendList;
-            return Load<List<GameExtend>>(await Banco.ExecutarSelect(sql, MountFilters(obj)));
-        }
-        #endregion
-
-        #region " _Insert "
-        public async static Task<bool> Insert(GameExtend obj)
-        {
-            string sql = Resources.GameExtendInsert;
-            var parameters = MountParameters(obj);
-
-            return (await Banco.Executar(sql, DatabaseAction.Insert, parameters)).AffectedRows > 0;
-        }
-        #endregion
-
-        #region " _Delete "
-        public async static Task<bool> Delete(GameExtend obj)
-        {
-            string sql = Resources.GameExtendDelete;
-            var parameters = new List<SqlParameter>
-            {
-                new SqlParameter("@ID", obj.ID),
-                new SqlParameter("@ConsoleID", obj.ConsoleID)
-            };
-
-            return (await Banco.Executar(sql, DatabaseAction.Delete, parameters)).AffectedRows > 0;
+                lst.Add(entity);
+            });
         }
         #endregion
     }

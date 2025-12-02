@@ -15,8 +15,9 @@ namespace RADB
             {
                 Session.Start();
                 Application.Run(new Main());
-                //Application.Run(new MainForm());
-                //Application.Run(new TestForm());
+
+                // Application.Run(new MainForm());
+                // Application.Run(new TestForm());
             }
         }
     }

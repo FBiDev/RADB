@@ -1,62 +1,91 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using App.Core;
-using App.Data.SQLite;
+using DbConnection = App.Data.SQLite;
 
 namespace RADB
 {
     public static class Banco
     {
-        static DatabaseManager Database { get; set; }
-        public static ListSynced<SqlLog> Log { get { return Database.Log; } }
-        public static bool Loaded { get; set; }
+        public static ListSynced<SqlLog> Log
+        {
+            get { return Database.Log; }
+        }
+
+        private static DatabaseManager Database { get; set; }
+
+        private static bool IsLoaded { get; set; }
 
         public static void Load()
         {
-            Database = new DatabaseManager
-            {
-                DatabaseType = DatabaseType.SQLite,
-                Connection = new SQLite { DefaultTimeout = DatabaseManager.DefaultCommandTimeout }.Connection(),
-                ServerAddress = "",
-                DatabaseName = "",
-                DatabaseFile = Session.Options.SystemDatabaseFile,
-                Username = "",
-                Password = "",
-                ConnectionString = ""
-            };
-
-            Loaded = true;
+            IsLoaded = false;
+            Database = new DatabaseManager { };
+            Reload();
+            IsLoaded = true;
         }
 
-        public async static Task<DataTable> ExecutarSelect(string sql, List<SqlParameter> parameters = null, string storedProcedure = default(string))
+        public static void Reload()
         {
-            if (Loaded)
+            Database.DatabaseName = string.Empty;
+            Database.DatabaseType = DatabaseType.SQLite;
+            Database.Connection = new DbConnection.SQLite { DefaultTimeout = DatabaseManager.DefaultCommandTimeout }.Connection();
+            Database.ServerAddress = string.Empty;
+
+            Database.Username = string.Empty;
+            Database.Password = string.Empty;
+            Database.DatabaseFile = Session.Options.SystemDatabaseFile;
+            Database.ConnectionString = string.Empty;
+        }
+
+        public static async Task<DataTable> ExecutarSelect(SqlQuery sql)
+        {
+            if (IsLoaded)
             {
-                try { return await Database.ExecuteSelect(sql, parameters, storedProcedure); }
-                catch (Exception ex) { ExceptionManager.Resolve(ex); }
+                try
+                {
+                    return await Database.ExecuteSelect(sql);
+                }
+                catch (Exception ex)
+                {
+                    ExceptionManager.Resolve(ex);
+                }
             }
+
             return new DataTable();
         }
 
-        public async static Task<SqlResult> Executar(string sql, DatabaseAction action, List<SqlParameter> parameters)
+        public static async Task<SqlResult> Executar(SqlQuery sql)
         {
-            if (Loaded)
+            if (IsLoaded)
             {
-                try { return await Database.Execute(sql, action, parameters); }
-                catch (Exception ex) { ExceptionManager.Resolve(ex); }
+                try
+                {
+                    return await Database.Execute(sql);
+                }
+                catch (Exception ex)
+                {
+                    ExceptionManager.Resolve(ex);
+                }
             }
+
             return new SqlResult();
         }
 
-        public async static Task<DateTime> DataServidor()
+        public static async Task<DateTime> DataServidor()
         {
-            if (Loaded)
+            if (IsLoaded)
             {
-                try { return await Database.DateTimeServer(); }
-                catch (Exception ex) { ExceptionManager.Resolve(ex); }
+                try
+                {
+                    return await Database.DateTimeServer();
+                }
+                catch (Exception ex)
+                {
+                    ExceptionManager.Resolve(ex);
+                }
             }
+
             return DateTime.MinValue;
         }
     }

@@ -6,8 +6,40 @@ namespace RADB
 {
     public class FlatArticle : FlowLayoutPanel
     {
-        readonly Label lblTitle = new Label();
-        readonly Label lblDesc = new Label();
+        private readonly Label lblTitle = new Label();
+        private readonly Label lblDesc = new Label();
+
+        public FlatArticle()
+        {
+            AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            FlowDirection = FlowDirection.TopDown;
+            WrapContents = false;
+
+            Padding = new Padding(1);
+
+            lblTitle.AutoSize = true;
+            lblTitle.Text = "Title";
+            lblTitle.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point);
+            lblTitle.TextAlign = ContentAlignment.MiddleLeft;
+            lblTitle.UseMnemonic = false;
+            lblTitle.Margin = new Padding(0);
+            lblTitle.Padding = new Padding(1, 0, 0, 0);
+
+            lblDesc.AutoSize = true;
+            lblDesc.Text = "Desc";
+            lblDesc.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point);
+            lblDesc.TextAlign = ContentAlignment.MiddleLeft;
+            lblDesc.UseMnemonic = false;
+            lblDesc.Margin = new Padding(0);
+            lblTitle.Padding = new Padding(0);
+
+            BackColor = Color.Transparent;
+            BorderColor = Color.Transparent;
+
+            Controls.Add(lblTitle);
+            Controls.Add(lblDesc);
+        }
 
         [DefaultValue(typeof(string), "LabelTitle")]
         public string TextTitle
@@ -47,14 +79,18 @@ namespace RADB
         [DefaultValue(typeof(Size), "0, 0")]
         public new Size MaximumSize
         {
-            get { return base.MaximumSize; }
+            get
+            {
+                return base.MaximumSize;
+            }
+
             set
             {
                 base.MaximumSize = value;
 
-                //var nSize = new Size(MaximumSize.Width - (Padding.Left + Padding.Right), 0);
-                //lblTitle.MaximumSize = nSize;
-                //lblTitle.MaximumSize = nSize;
+                // var nSize = new Size(MaximumSize.Width - (Padding.Left + Padding.Right), 0);
+                // lblTitle.MaximumSize = nSize;
+                // lblTitle.MaximumSize = nSize;
             }
         }
 
@@ -75,7 +111,11 @@ namespace RADB
         [DefaultValue(typeof(Color), "Transparent")]
         public new Color BackColor
         {
-            get { return lblTitle.BackColor; }
+            get
+            {
+                return lblTitle.BackColor;
+            }
+
             set
             {
                 lblTitle.BackColor = value;
@@ -123,38 +163,6 @@ namespace RADB
         {
             get { return base.WrapContents; }
             set { base.WrapContents = value; }
-        }
-
-        public FlatArticle()
-        {
-            AutoSize = true;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            FlowDirection = FlowDirection.TopDown;
-            WrapContents = false;
-
-            Padding = new Padding(1);
-
-            lblTitle.AutoSize = true;
-            lblTitle.Text = "Title";
-            lblTitle.Font = new Font("Segoe UI", 9.0f, FontStyle.Bold, GraphicsUnit.Point);
-            lblTitle.TextAlign = ContentAlignment.MiddleLeft;
-            lblTitle.UseMnemonic = false;
-            lblTitle.Margin = new Padding(0);
-            lblTitle.Padding = new Padding(1, 0, 0, 0);
-
-            lblDesc.AutoSize = true;
-            lblDesc.Text = "Desc";
-            lblDesc.Font = new Font("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point);
-            lblDesc.TextAlign = ContentAlignment.MiddleLeft;
-            lblDesc.UseMnemonic = false;
-            lblDesc.Margin = new Padding(0);
-            lblTitle.Padding = new Padding(0);
-
-            BackColor = Color.Transparent;
-            BorderColor = Color.Transparent;
-
-            Controls.Add(lblTitle);
-            Controls.Add(lblDesc);
         }
     }
 }
