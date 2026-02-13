@@ -148,6 +148,7 @@ namespace RADB
             txtSearchGames.TextChanged += TxtSearchGames_TextChanged;
 
             dgvGames.Columns["gConsole"].Visible = Session.ConsoleSelected.ID == 0;
+            btnUpdateGameList.Visible = Session.ConsoleSelected.ID > 0;
 
             MainCommon.ChangeTab(Page.tabGames);
 

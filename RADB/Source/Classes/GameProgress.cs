@@ -40,7 +40,7 @@ namespace RADB
 
         public DownloadFile ImageIconFile
         {
-            get { return new DownloadFile(RA.ImageBaseUrl + ImageIcon, Folder.Icons(ConsoleID) + ImageIcon); }
+            get { return new DownloadFile(RAMedia.GameImageBaseUrl + ImageIcon, Folder.Icons(ConsoleID) + ImageIcon); }
         }
 
         public Bitmap ImageIconBitmap { get; set; }

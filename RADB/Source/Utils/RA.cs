@@ -14,10 +14,7 @@ namespace RADB
     public class RA
     {
         #region _Main
-        // https://s3-eu-west-1.amazonaws.com/i.retroachievements.org
-        public const string ImageBaseUrl = "http://media.retroachievements.org/Images/";
-        public const string BadgeBaseUrl = "http://media.retroachievements.org/Badge/";
-        public const string UserPicBaseUrl = "http://media.retroachievements.org/UserPic/";
+        
 
         // Site
         public const string SiteURL = "https://retroachievements.org/";

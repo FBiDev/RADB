@@ -20,7 +20,7 @@ namespace RADB
         #region " _Actions_Custom "
         public async Task<bool> InsertList(IList<Console> list)
         {
-            string query = "INSERT INTO Console (ID, Name) VALUES " + Environment.NewLine;
+            string query = "INSERT INTO Console (ID, Name, Icon, Active, IsGameSystem) VALUES " + Environment.NewLine;
 
             var parameters = new List<SqlParameter>();
 
@@ -30,10 +30,14 @@ namespace RADB
                 parameters.AddRange(new List<SqlParameter>
                 {
                     new SqlParameter("@ID" + index, i.ID),
-                    new SqlParameter("@Name" + index, i.Name)
+                    new SqlParameter("@Name" + index, i.Name),
+                    new SqlParameter("@Icon" + index, i.Icon),
+                    new SqlParameter("@Active" + index, i.Active),
+                    new SqlParameter("@IsGameSystem" + index, i.IsGameSystem)
                 });
 
-                query += "(" + "@ID" + index + ", @Name" + index + ")";
+                query += "(" + "@ID" + index + ", @Name" + index + ", " +
+                               "@Icon" + index + ", @Active" + index + ", @IsGameSystem" + index + ")";
 
                 index++;
                 if (index < list.Count)
@@ -110,6 +114,12 @@ namespace RADB
                 var entity = new Console
                 {
                     ID = row.Value<int>("ID"),
+                    Active = row.Value<bool>("Active"),
+                    IsGameSystem = row.Value<bool>("IsGameSystem"),
+                    ReleasedDate = row.Value<DateTime>("ReleasedDate"),
+                    Generation = row.Value<int>("Generation"),
+                    DeviceType = row.Value<int>("DeviceType"),
+                    Icon = row.Value<string>("Icon"),
                     Company = row.Value<string>("Company"),
                     Name = row.Value<string>("CName"),
                     NumGames = row.Value<int>("NumGames"),

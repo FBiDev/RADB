@@ -6,6 +6,12 @@ namespace RADB
 {
     public static class RAMedia
     {
+        // https://s3-eu-west-1.amazonaws.com/i.retroachievements.org
+        public const string ConsoleIconBaseUrl = "https://static.retroachievements.org/assets/images/system/";
+        public const string GameImageBaseUrl = "http://media.retroachievements.org/Images/";
+        public const string BadgeBaseUrl = "http://media.retroachievements.org/Badge/";
+        public const string UserPicBaseUrl = "http://media.retroachievements.org/UserPic/";
+
         public static void SaveGamesIcon(List<Game> games, List<string> list, string fileName)
         {
             using (StreamWriter sw = File.CreateText(fileName))

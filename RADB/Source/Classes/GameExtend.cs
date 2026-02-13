@@ -43,7 +43,7 @@ namespace RADB
 
         public DownloadFile ImageTitleFile
         {
-            get { return new DownloadFile(RA.ImageBaseUrl + ImageTitle, Folder.Titles(ConsoleID) + ImageTitle); }
+            get { return new DownloadFile(RAMedia.GameImageBaseUrl + ImageTitle, Folder.Titles(ConsoleID) + ImageTitle); }
         }
 
         public Bitmap ImageTitleBitmap { get; set; }
@@ -58,7 +58,7 @@ namespace RADB
 
         public DownloadFile ImageIngameFile
         {
-            get { return new DownloadFile(RA.ImageBaseUrl + ImageIngame, Folder.Ingame(ConsoleID) + ImageIngame); }
+            get { return new DownloadFile(RAMedia.GameImageBaseUrl + ImageIngame, Folder.Ingame(ConsoleID) + ImageIngame); }
         }
 
         public Bitmap ImageIngameBitmap { get; set; }
@@ -73,7 +73,7 @@ namespace RADB
 
         public DownloadFile ImageBoxArtFile
         {
-            get { return new DownloadFile(RA.ImageBaseUrl + ImageBoxArt, Folder.BoxArt(ConsoleID) + ImageBoxArt); }
+            get { return new DownloadFile(RAMedia.GameImageBaseUrl + ImageBoxArt, Folder.BoxArt(ConsoleID) + ImageBoxArt); }
         }
 
         public Bitmap ImageBoxArtBitmap { get; set; }

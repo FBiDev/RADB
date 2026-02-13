@@ -70,7 +70,7 @@ namespace RADB
 
         public DownloadFile UserPicFile
         {
-            get { return new DownloadFile(RA.UserPicBaseUrl + UserPic, Folder.User + UserPic); }
+            get { return new DownloadFile(RAMedia.UserPicBaseUrl + UserPic, Folder.User + UserPic); }
         }
 
         public Bitmap UserPicBitmap { get; set; }
