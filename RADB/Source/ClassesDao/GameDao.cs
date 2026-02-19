@@ -27,7 +27,7 @@ namespace RADB
         public async Task<Game> Find(int id)
         {
             var obj = new Game { ID = id };
-            return (await Select(obj, false)).FirstOrNew();
+            return (await Select(obj, false)).First();
         }
 
         private async Task<List<Game>> Select(Game obj = null, bool allTables = false)

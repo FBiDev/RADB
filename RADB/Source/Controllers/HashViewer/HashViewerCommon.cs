@@ -94,15 +94,15 @@ namespace RADB
             // mainItems.Reverse();
             mainItems = mainItems.OrderByDescending(x => x.Title.Length + x.Warn.Length).ThenByDescending(x => x.Title);
 
-            listItems.MoveToFirst(mainItems.Where(x => x.Title.Contains(" (Europe)")));
-            listItems.MoveToFirst(mainItems.Where(x => x.Title.Contains(" (Japan)")));
-            listItems.MoveToFirst(mainItems.Where(x => x.Title.Contains(" (Japan, USA)")));
-            listItems.MoveToFirst(mainItems.Where(x => x.Title.Contains(" (USA, Europe)")));
-            listItems.MoveToFirst(mainItems.Where(x => x.Title.Contains(" (USA)")));
-            listItems.MoveToFirst(mainItems.Where(x => x.Title.Contains(" (World)")));
+            listItems.MoveToStart(mainItems.Where(x => x.Title.Contains(" (Europe)")));
+            listItems.MoveToStart(mainItems.Where(x => x.Title.Contains(" (Japan)")));
+            listItems.MoveToStart(mainItems.Where(x => x.Title.Contains(" (Japan, USA)")));
+            listItems.MoveToStart(mainItems.Where(x => x.Title.Contains(" (USA, Europe)")));
+            listItems.MoveToStart(mainItems.Where(x => x.Title.Contains(" (USA)")));
+            listItems.MoveToStart(mainItems.Where(x => x.Title.Contains(" (World)")));
 
-            listItems.MoveToLast(listItems.Where(x => x.Labels.Contains("msu1")));
-            listItems.MoveToLast(listItems.Where(x => x.Title.Contains("Unlabeled")));
+            listItems.MoveToEnd(listItems.Where(x => x.Labels.Contains("msu1")));
+            listItems.MoveToEnd(listItems.Where(x => x.Title.Contains("Unlabeled")));
 
             var lastItem = listItems.LastOrDefault();
             foreach (var item in listItems)

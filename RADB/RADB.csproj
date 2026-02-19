@@ -222,16 +222,12 @@
     <Compile Include="Source\Forms\TestForm.Designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="temp\CustomComparer.cs" />
-    <Compile Include="temp\Extensions.cs" />
-    <Compile Include="temp\FileUpdate.cs" />
     <Compile Include="Source\Utils\Folder.cs" />
     <Compile Include="Source\Classes\Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Classes\Achievement.cs" />
     <Compile Include="Source\Utils\RA.cs" />
-    <Compile Include="temp\Temp.cs" />
     <EmbeddedResource Include="Source\Forms\ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -294,9 +290,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Deps\ndp48-web.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="ResourcesLocal\App\jpegoptim_1.5.5.exe" />
     <Content Include="ResourcesLocal\App\pngcrush_1_8_13_w64.exe" />
     <Content Include="ResourcesLocal\Icons\favicon.ico" />
@@ -322,7 +315,6 @@
     <Content Include="ResourcesLocal\Sql\GameList.sql" />
     <Content Include="ResourcesLocal\Sql\GameDelete.sql" />
     <Content Include="ResourcesLocal\Sql\GameInsert.sql" />
-    <Content Include="temp\ToDo.txt" />
     <Content Include="Plugins\brolib_x64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

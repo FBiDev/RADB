@@ -22,7 +22,7 @@ namespace RADB
         public async Task<GameExtend> Find(int gameID)
         {
             var obj = new GameExtend { ID = gameID };
-            return (await Select(obj)).FirstOrNew();
+            return (await Select(obj)).First();
         }
         #endregion
 
