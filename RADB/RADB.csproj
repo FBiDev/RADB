@@ -59,6 +59,9 @@
     <Reference Include="App.Core">
       <HintPath>..\..\App\Bin\App.Core.dll</HintPath>
     </Reference>
+    <Reference Include="App.Data.Compression.Brotli">
+      <HintPath>..\..\App\Bin\App.Data.Compression.Brotli.dll</HintPath>
+    </Reference>
     <Reference Include="App.Data.SQLite">
       <HintPath>..\..\App\Bin\App.Data.SQLite.dll</HintPath>
     </Reference>
@@ -315,12 +318,6 @@
     <Content Include="ResourcesLocal\Sql\GameList.sql" />
     <Content Include="ResourcesLocal\Sql\GameDelete.sql" />
     <Content Include="ResourcesLocal\Sql\GameInsert.sql" />
-    <Content Include="Plugins\brolib_x64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Plugins\Brotli.Core.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -339,7 +336,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Plugins\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>call "$(ProjectDir)Source\Asset\Script\PostMovePlugins.bat" ^

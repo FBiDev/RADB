@@ -26,6 +26,7 @@ if /I %PlatformName%==AnyCPU (
 )
 
 robocopy "%SolutionDir%..\App\Bin\%Platform%\ " "%TargetDir%Plugins\%Platform%\ " System.Data.SQLite.dll /XO
+robocopy "%SolutionDir%..\App\Bin\ " "%TargetDir%Plugins " brolib_%Platform%.dll /XO
 
 robocopy "%TargetDir% " "%TargetDir%Plugins\ " /XF %ProjectName%.* *.json /IS /MOV /XD Plugins Data Deps
 
