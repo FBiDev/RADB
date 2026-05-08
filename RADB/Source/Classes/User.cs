@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using App.Core;
 using App.Core.Desktop;
-using App.File.Json;
+using App.Serialization;
 
 namespace RADB
 {
@@ -17,6 +17,7 @@ namespace RADB
         }
 
         public int ID { get; set; }
+
         [JsonProperty("User")]
         public string Name { get; set; }
 
@@ -96,6 +97,7 @@ namespace RADB
 
         [JsonProperty("Rank")]
         public int? RankValue { get; set; }
+
         [JsonProperty("RankInt")]
         public int Rank
         {

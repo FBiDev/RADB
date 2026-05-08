@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using App.Core;
 using App.Core.Desktop;
-using App.File.Json;
+using App.Serialization;
 
 namespace RADB
 {

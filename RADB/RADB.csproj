@@ -56,17 +56,17 @@
     <ApplicationIcon>ResourcesLocal\Icons\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="App.Compression.Brotli">
+      <HintPath>..\..\App\Bin\App.Compression.Brotli.dll</HintPath>
+    </Reference>
     <Reference Include="App.Core">
       <HintPath>..\..\App\Bin\App.Core.dll</HintPath>
     </Reference>
-    <Reference Include="App.Data.Compression.Brotli">
-      <HintPath>..\..\App\Bin\App.Data.Compression.Brotli.dll</HintPath>
+    <Reference Include="App.Serialization.Json">
+      <HintPath>..\..\App\Bin\App.Serialization.Json.dll</HintPath>
     </Reference>
-    <Reference Include="App.Data.SQLite">
-      <HintPath>..\..\App\Bin\App.Data.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="App.File.Json">
-      <HintPath>..\..\App\Bin\App.File.Json.dll</HintPath>
+    <Reference Include="App.Storage.SQLite">
+      <HintPath>..\..\App\Bin\App.Storage.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

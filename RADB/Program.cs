@@ -13,6 +13,7 @@ namespace RADB
 
             using (App.Core.Desktop.AppManager.SingleProcess(Session.SystemLock, Session.SystemName))
             {
+                //App.Storage.Properties.Resources.
                 Session.Start();
                 Application.Run(new Main());
 
