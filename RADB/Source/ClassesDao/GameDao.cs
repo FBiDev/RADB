@@ -60,7 +60,7 @@ namespace RADB
             return LoadReleasedDate(await Banco.ExecutarSelect(sql));
         }
 
-        public ListBind<Game> OrderList(List<Game> list)
+        public DataList<Game> OrderList(List<Game> list)
         {
             // Get NotOffical
             var lNotOffical = list.Where(x => RA.GameType.NotOfficial.Any(x.Title.ContainsExtend));
@@ -86,7 +86,7 @@ namespace RADB
             list.AddRange(lNoCheevos.OrderBy(x => x.Title));
             list.AddRange(lNotOfficalNoCheevos.OrderBy(x => x.Title));
 
-            return new ListBind<Game>(list);
+            return new DataList<Game>(list);
         }
         #endregion
 

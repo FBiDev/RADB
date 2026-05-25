@@ -16,7 +16,7 @@ namespace RADB
         private static RA ra = new RA();
 
         private static List<Game> lstGamesAll = new List<Game>();
-        private static ListBind<Game> lstGamesByFilters = new ListBind<Game>();
+        private static DataList<Game> lstGamesByFilters = new DataList<Game>();
         private static IEnumerable<Game> lstGamesByPlataform;
         private static int gamesWheelCounter;
 
@@ -278,7 +278,7 @@ namespace RADB
 
             if (Session.ConsoleSelected.ID == 0 && search.Length == 0 && withoutAchievements == false && gameTypes.All(x => x.Key.Checked))
             {
-                lstGamesByFilters = new ListBind<Game>(lstGamesAll);
+                lstGamesByFilters = new DataList<Game>(lstGamesAll);
                 SetDataSource(lstGamesByFilters);
                 return Task.CompletedTask;
             }
@@ -299,10 +299,10 @@ namespace RADB
                 }
             }
 
-            lstGamesByFilters = new ListBind<Game>();
+            lstGamesByFilters = new DataList<Game>();
             foreach (Game obj in lstGamesByPlataform)
             {
-                bool title = obj.Title.HasValue() && obj.Title.ContainsExtend(search);
+                bool title = obj.Title.IsNotEmpty() && obj.Title.ContainsExtend(search);
                 bool noCheevos = withoutAchievements && obj.NumAchievements == 0;
 
                 if (title && !noCheevos && predicates.Any(p => p(obj)))
@@ -315,7 +315,7 @@ namespace RADB
             return Task.CompletedTask;
         }
 
-        private static void SetDataSource(ListBind<Game> listGames)
+        private static void SetDataSource(DataList<Game> listGames)
         {
             dgvGames.InvokeIfRequired(() =>
             {

@@ -10,7 +10,7 @@ namespace RADB
     public static partial class MainGameToPlay
     {
         private static RA ra = new RA();
-        private static ListBind<Game> lstGamesToPlay = new ListBind<Game>();
+        private static DataList<Game> lstGamesToPlay = new DataList<Game>();
         private static int gamesToPlayWheelCounter;
 
         #region GamesToPlay
@@ -61,7 +61,7 @@ namespace RADB
 
         private static async Task LoadGamesToPlay()
         {
-            lstGamesToPlay = new ListBind<Game>(await Game.ListToPlay());
+            lstGamesToPlay = new DataList<Game>(await Game.ListToPlay());
             dgvGamesToPlay.DataSource = lstGamesToPlay;
 
             lblNotFoundGamesToPlay.Visible = lstGamesToPlay.IsEmpty();

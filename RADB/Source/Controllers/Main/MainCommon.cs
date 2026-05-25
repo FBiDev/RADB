@@ -65,7 +65,7 @@ namespace RADB
                 int index = dgv.FirstDisplayedScrollingRowIndex;
                 int nItems = (int)Math.Ceiling((double)(dgv.Height - 29) / 37) + 12;
 
-                var list = dgv.DataSource as ListBind<Game>;
+                var list = dgv.DataSource as DataList<Game>;
 
                 if (list == null)
                 {

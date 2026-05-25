@@ -10,7 +10,7 @@ namespace RADB
     public static partial class MainGameToHide
     {
         private static RA ra = new RA();
-        private static ListBind<Game> lstGamesToHide = new ListBind<Game>();
+        private static DataList<Game> lstGamesToHide = new DataList<Game>();
         private static int gamesToHideWheelCounter;
 
         #region GamesToHide
@@ -61,7 +61,7 @@ namespace RADB
 
         private static async Task LoadGamesToHide()
         {
-            lstGamesToHide = new ListBind<Game>(await Game.ListToHide());
+            lstGamesToHide = new DataList<Game>(await Game.ListToHide());
             dgvGamesToHide.DataSource = lstGamesToHide;
 
             lblNotFoundGamesToHide.Visible = lstGamesToHide.IsEmpty();

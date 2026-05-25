@@ -11,7 +11,7 @@ namespace RADB
     public static partial class MainConsole
     {
         private static RA ra = new RA();
-        private static ListBind<Console> lstConsoles = new ListBind<Console>();
+        private static DataList<Console> lstConsoles = new DataList<Console>();
 
         #region Consoles
         public static async Task Console_Init()
@@ -56,7 +56,7 @@ namespace RADB
 
         private static async Task UpdateConsoleList()
         {
-            lstConsoles = new ListBind<Console>(await Console.List());
+            lstConsoles = new DataList<Console>(await Console.List());
             ConsolesDataGridView.DataSource = lstConsoles;
 
             var console = lstConsoles.First(x => x.Name == "All Games");
@@ -92,7 +92,7 @@ namespace RADB
         {
             DisablePanelConsoles();
 
-            lstConsoles = new ListBind<Console>(await Console.List());
+            lstConsoles = new DataList<Console>(await Console.List());
             ConsolesDataGridView.DataSource = lstConsoles;
 
             EnablePanelConsoles();

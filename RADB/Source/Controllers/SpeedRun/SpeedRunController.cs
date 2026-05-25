@@ -82,7 +82,7 @@ namespace RADB
             });
 
             // RemoveHackGames(searchObj.data);
-            SearchGameGrid.DataSource = new ListBind<SpeedRunGame>(searchObj.Data);
+            SearchGameGrid.DataSource = new DataList<SpeedRunGame>(searchObj.Data);
 
             var se = Json.Save(searchObj.Data, "test.json");
 

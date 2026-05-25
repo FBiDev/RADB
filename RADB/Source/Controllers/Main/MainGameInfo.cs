@@ -13,8 +13,8 @@ namespace RADB
     public static partial class MainGameInfo
     {
         private static RA ra = new RA();
-        private static ListBind<Achievement> lstAchievs = new ListBind<Achievement>();
-        private static ListBind<Achievement> lstAchievsSearch = new ListBind<Achievement>();
+        private static DataList<Achievement> lstAchievs = new DataList<Achievement>();
+        private static DataList<Achievement> lstAchievsSearch = new DataList<Achievement>();
 
         #region GameInfo
         public static async Task GameInfo_Init()
@@ -140,7 +140,7 @@ namespace RADB
                 gpbInfoAchievements.Location = new Point(gpbInfoAchievements.Location.X, (gpbInfo.Height - pnlInfoScroll.VerticalScroll.Value) + 9);
             }
 
-            var lstCheevos = new ListBind<Achievement>();
+            var lstCheevos = new DataList<Achievement>();
             dgvAchievements.DataSource = lstCheevos;
 
             if (File.Exists(Session.GameSelected.ExtendFile.Path))
@@ -152,7 +152,7 @@ namespace RADB
                 var jcheevos = Json.DeserializeObject<JToken>(cheevos);
                 Session.GameExtendSelected.SetAchievements(jcheevos);
 
-                lstCheevos = new ListBind<Achievement>(Session.GameExtendSelected.AchievementsList);
+                lstCheevos = new DataList<Achievement>(Session.GameExtendSelected.AchievementsList);
                 dgvAchievements.DataSource = lstCheevos;
             }
 
@@ -222,7 +222,7 @@ namespace RADB
 
         private static void TxtSearchAchiev_TextChanged(object sender, EventArgs e)
         {
-            var newSearch = new ListBind<Achievement>();
+            var newSearch = new DataList<Achievement>();
             foreach (Achievement obj in lstAchievs)
             {
                 bool title = obj.Title != null && (obj.Title.IndexOf(txtSearchAchiev.Text, StringComparison.CurrentCultureIgnoreCase) > -1);
