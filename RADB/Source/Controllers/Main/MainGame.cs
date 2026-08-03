@@ -13,7 +13,7 @@ namespace RADB
 {
     public partial class MainGame
     {
-        private static RA ra = new RA();
+        private static readonly RA Ra = new RA();
 
         private static List<Game> lstGamesAll = new List<Game>();
         private static DataList<Game> lstGamesByFilters = new DataList<Game>();
@@ -86,10 +86,10 @@ namespace RADB
                 checkBox.CheckedChanged += ChkUpdateDataGrid;
             }
 
-            await Games_Shown(null, null);
+            await Games_Shown();
         }
 
-        private static async Task Games_Shown(object sender, EventArgs e)
+        private static async Task Games_Shown()
         {
             RASite.DLGames.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
             RASite.DLGamesIcon.SetControls(lblProgressGameList, pgbGameList, lblUpdateGameList);
@@ -192,15 +192,15 @@ namespace RADB
         {
             if (Session.ConsoleSelected.IsNull())
             {
-                MessageBox.Show("No Console Selected");
+                MessageBox.Show(@"No Console Selected");
                 return;
             }
 
             DisablePanelGames();
             lstGamesByFilters.Clear();
 
-            await ra.DownloadGameList(Session.ConsoleSelected);
-            await ra.DownloadGamesIcon(Session.ConsoleSelected, RASite.DLGamesIcon);
+            await Ra.DownloadGameList(Session.ConsoleSelected);
+            await Ra.DownloadGamesIcon(Session.ConsoleSelected, RASite.DLGamesIcon);
 
             if (Session.ConsoleSelected.ID > 0)
             {
@@ -229,32 +229,29 @@ namespace RADB
             }
 
             var numGames = lstGamesByFilters.Count(g => g.NumAchievements > 0);
-            var totalGames = lstGamesByFilters.Count();
+            var totalGames = lstGamesByFilters.Count;
             lblConsoleName.Text = Session.ConsoleSelected.Name;
-            lblConsoleGamesTotal.Text = numGames + " of " + totalGames + " Games";
+            lblConsoleGamesTotal.Text = numGames + @" of " + totalGames + @" Games";
 
-            int scrollPosition = dgvGames.FirstDisplayedScrollingRowIndex;
-            bool maintainScroll = true;
-            if (maintainScroll)
+            var scrollPosition = dgvGames.FirstDisplayedScrollingRowIndex;
+
+            var txtFocus = txtSearchGames.Focused;
+
+            if (dgvGames.RowCount > 0 && scrollPosition > -1)
             {
-                bool txtFocus = txtSearchGames.Focused;
-
-                if (dgvGames.RowCount > 0 && scrollPosition > -1)
+                if (scrollPosition >= dgvGames.RowCount)
                 {
-                    if (scrollPosition >= dgvGames.RowCount)
-                    {
-                        dgvGames.FirstDisplayedScrollingRowIndex = dgvGames.RowCount - 1;
-                    }
-                    else
-                    {
-                        dgvGames.FirstDisplayedScrollingRowIndex = scrollPosition;
-                    }
+                    dgvGames.FirstDisplayedScrollingRowIndex = dgvGames.RowCount - 1;
                 }
-
-                if (txtFocus)
+                else
                 {
-                    txtSearchGames.Focus();
+                    dgvGames.FirstDisplayedScrollingRowIndex = scrollPosition;
                 }
+            }
+
+            if (txtFocus)
+            {
+                txtSearchGames.Focus();
             }
         }
 
@@ -286,24 +283,23 @@ namespace RADB
             var predicates = new List<Predicate<Game>>();
             foreach (var gameType in gameTypes)
             {
-                if (gameType.Key.Checked)
+                if (!gameType.Key.Checked) { continue; }
+
+                if (gameType.Key == chkOfficial)
                 {
-                    if (gameType.Key == chkOfficial)
-                    {
-                        predicates.Add(g => g.Title.NotContains(gameType.Value));
-                    }
-                    else
-                    {
-                        predicates.Add(g => g.Title.ContainsExtend(gameType.Value[0]));
-                    }
+                    predicates.Add(g => g.Title.NotContains(gameType.Value));
+                }
+                else
+                {
+                    predicates.Add(g => g.Title.ContainsExtend(gameType.Value[0]));
                 }
             }
 
             lstGamesByFilters = new DataList<Game>();
-            foreach (Game obj in lstGamesByPlataform)
+            foreach (var obj in lstGamesByPlataform)
             {
-                bool title = obj.Title.IsNotEmpty() && obj.Title.ContainsExtend(search);
-                bool noCheevos = withoutAchievements && obj.NumAchievements == 0;
+                var title = obj.Title.IsNotEmpty() && obj.Title.ContainsExtend(search);
+                var noCheevos = withoutAchievements && obj.NumAchievements == 0;
 
                 if (title && !noCheevos && predicates.Any(p => p(obj)))
                 {
@@ -319,7 +315,13 @@ namespace RADB
         {
             dgvGames.InvokeIfRequired(() =>
             {
+                dgvGames.SuspendLayout();
+                ((ISupportInitialize)dgvGames).BeginInit();
+
                 dgvGames.DataSource = listGames;
+
+                ((ISupportInitialize)dgvGames).EndInit();
+                dgvGames.ResumeLayout();
 
                 UpdateConsoleLabels();
                 EnablePanelGames();
@@ -383,9 +385,11 @@ namespace RADB
             if (e.KeyData == Keys.Enter)
             {
                 e.Handled = true;
-                if (((DataGridView)sender).CurrentRow != null)
+                var dataGridViewRow = ((DataGridView)sender).CurrentRow;
+
+                if (dataGridViewRow != null)
                 {
-                    MainCommon.ChangeBindGame(sender, new DataGridViewCellEventArgs(0, ((DataGridView)sender).CurrentRow.Index));
+                    MainCommon.ChangeBindGame(sender, new DataGridViewCellEventArgs(0, dataGridViewRow.Index));
                 }
             }
 
@@ -442,7 +446,7 @@ namespace RADB
             var game = dgvGames.GetCurrentRowObject<Game>();
 
             DisablePanelGames();
-            await ra.MergeGameBadges(game);
+            await Ra.MergeGameBadges(game);
             EnablePanelGames();
         }
         #endregion

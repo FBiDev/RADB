@@ -96,18 +96,22 @@ namespace RADB.Properties {
         /// <summary>
         ///   Looks up a localized string similar to --
         ///SELECT 
-        ///	  co.ID
+        ///	  co.ID 
         ///	, c.Name AS Company 
         ///	,(CASE WHEN ci.ConsoleNameComplete IS NULL THEN 
         ///		CASE WHEN co.Name IS NULL THEN c.Name ELSE co.Name END 
         ///	  ELSE ci.ConsoleNameComplete END) AS CName 
         ///	, SUM(CASE WHEN g.NumAchievements &gt; 0 THEN 1 ELSE 0 END) NumGames 
         ///	, Count(g.ID) AS TotalGames 
+        ///	, co.Icon 
+        ///	, co.Active 
+        ///	, co.IsGameSystem 
+        ///	, ci.Generation 
+        ///	, ci.DeviceType 
+        ///	, ci.ReleasedDate 
         ///FROM Company AS c 
         ///	LEFT JOIN CompanyItems AS ci ON ci.CompanyID = c.ID 
-        ///	LEFT JOIN Console AS co ON co.ID = ci.ConsoleID 
-        ///	LEFT JOIN GameData AS g ON g.ConsoleID = co.ID 
-        ///		AND g.ConsoleID &lt;&gt; 100 AND g.Co [rest of string was truncated]&quot;;.
+        ///	LEFT JOIN Console AS co  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ConsoleList {
             get {
